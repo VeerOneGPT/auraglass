@@ -1380,6 +1380,54 @@ Advanced chat input component with attachments, formatting, voice messages, and 
 - `preview?: string` - Preview URL for media files
 - `size: number` - File size in bytes
 
+### GlassCommentThread
+
+Threaded comment system with nested replies and glassmorphism styling.
+
+```tsx
+const comments = [
+  {
+    id: '1',
+    author: 'John Doe',
+    text: 'This is a great component! Love the glassmorphism effects.',
+    createdAt: '2024-01-15T10:30:00Z',
+    replies: [
+      {
+        id: '1-1',
+        author: 'Jane Smith',
+        text: 'Agreed! The animations are smooth too.',
+        createdAt: '2024-01-15T11:45:00Z'
+      }
+    ]
+  },
+  {
+    id: '2',
+    author: 'Bob Wilson',
+    text: 'Has anyone tried using this in a production app?',
+    createdAt: '2024-01-15T14:20:00Z'
+  }
+];
+
+<GlassCommentThread
+  comments={comments}
+  onReply={(parentId, text) => {
+    console.log('New reply:', parentId, text);
+    // Handle reply submission
+  }}
+/>
+```
+
+**Props:**
+- `comments: Comment[]` - Array of comment objects
+- `onReply?: (parentId: string, text: string) => void` - Reply handler function
+
+**Comment Interface:**
+- `id: string` - Unique comment identifier
+- `author: string` - Comment author name
+- `text: string` - Comment content
+- `createdAt?: string` - ISO timestamp of comment creation
+- `replies?: Comment[]` - Nested reply comments
+
 ### GlassCoachmarks
 
 Guided tour component with step-by-step instructions and glassmorphism styling.
@@ -1434,6 +1482,462 @@ const tourSteps = [
 **CoachmarkStep Interface:**
 - `id: string` - Unique step identifier
 - `content: ReactNode` - Step content to display
+
+### GlassFacetSearch
+
+Advanced faceted search interface with filters, search suggestions, and result management.
+
+```tsx
+const facets = [
+  {
+    id: 'category',
+    label: 'Category',
+    type: 'checkbox',
+    options: [
+      { id: 'docs', label: 'Documentation', count: 25 },
+      { id: 'tutorials', label: 'Tutorials', count: 18 },
+      { id: 'examples', label: 'Examples', count: 42 }
+    ]
+  },
+  {
+    id: 'dateRange',
+    label: 'Date Range',
+    type: 'daterange'
+  },
+  {
+    id: 'rating',
+    label: 'Rating',
+    type: 'range',
+    min: 1,
+    max: 5,
+    step: 1
+  }
+];
+
+const facetValues = {
+  category: ['docs', 'tutorials'],
+  dateRange: { from: new Date('2024-01-01'), to: new Date() },
+  rating: { min: 3, max: 5 }
+};
+
+const results = [
+  {
+    id: '1',
+    title: 'Getting Started Guide',
+    description: 'Learn how to set up and configure your project',
+    category: 'docs',
+    tags: ['setup', 'configuration'],
+    score: 0.95
+  }
+];
+
+<GlassFacetSearch
+  query="getting started"
+  onQueryChange={setQuery}
+  facets={facets}
+  facetValues={facetValues}
+  onFacetChange={(facetId, value) => {
+    setFacetValues(prev => ({ ...prev, [facetId]: value }));
+  }}
+  results={results}
+  onResultSelect={(result) => console.log('Selected:', result)}
+  enableHistory={true}
+  enableSavedSearches={true}
+  suggestions={['getting started', 'setup guide', 'configuration']}
+  onSuggestionSelect={(suggestion) => setQuery(suggestion)}
+  variant="default"
+  size="md"
+/>
+```
+
+**Props:**
+- `query: string` - Search query string
+- `onQueryChange: (query: string) => void` - Query change handler
+- `facets: Facet[]` - Available filter facets
+- `facetValues: Record<string, any>` - Current filter values
+- `onFacetChange: (facetId: string, value: any) => void` - Filter change handler
+- `results: SearchResult[]` - Search results array
+- `onResultSelect?: (result: SearchResult) => void` - Result selection handler
+- `placeholder?: string` - Search input placeholder
+- `loading?: boolean` - Loading state
+- `showFilters?: boolean` - Show/hide filter panel
+- `showResults?: boolean` - Show/hide results
+- `maxResults?: number` - Maximum results to display
+- `onSearch?: (query: string, filters: Record<string, any>) => void` - Search execution handler
+- `suggestions?: string[]` - Search suggestions
+- `onSuggestionSelect?: (suggestion: string) => void` - Suggestion selection handler
+- `recentSearches?: string[]` - Recent searches
+- `onRecentSearchSelect?: (search: string) => void` - Recent search selection handler
+- `variant?: 'default' | 'compact' | 'minimal'` - Component variant
+- `size?: 'sm' | 'md' | 'lg'` - Component size
+- `elevation?: 'low' | 'medium' | 'high'` - Glass elevation
+- `className?: string` - Additional CSS classes
+
+**Facet Interface:**
+- `id: string` - Unique facet identifier
+- `label: string` - Facet display label
+- `type: 'checkbox' | 'range' | 'select' | 'daterange'` - Facet type
+- `options?: FacetOption[]` - Available options (for checkbox/select)
+- `min?: number` - Minimum value (for range)
+- `max?: number` - Maximum value (for range)
+- `step?: number` - Step increment (for range)
+- `collapsed?: boolean` - Initially collapsed state
+- `showCount?: boolean` - Show result counts
+
+**FacetOption Interface:**
+- `id: string` - Option identifier
+- `label: string` - Option label
+- `value: string` - Option value
+- `count?: number` - Result count
+- `selected?: boolean` - Selection state
+- `disabled?: boolean` - Disabled state
+
+**SearchResult Interface:**
+- `id: string` - Result identifier
+- `title: string` - Result title
+- `description?: string` - Result description
+- `category?: string` - Result category
+- `tags?: string[]` - Result tags
+- `score?: number` - Search relevance score
+- `metadata?: Record<string, any>` - Additional metadata
+
+### GlassFileTree
+
+Hierarchical file tree component with search, CRUD operations, and glassmorphism styling.
+
+```tsx
+const fileTreeData = [
+  {
+    id: '1',
+    name: 'src',
+    type: 'folder',
+    path: '/src',
+    children: [
+      {
+        id: '2',
+        name: 'components',
+        type: 'folder',
+        path: '/src/components',
+        children: [
+          {
+            id: '3',
+            name: 'Button.tsx',
+            type: 'file',
+            path: '/src/components/Button.tsx',
+            size: 2048,
+            extension: 'tsx',
+            modifiedAt: new Date('2024-01-15')
+          },
+          {
+            id: '4',
+            name: 'Input.tsx',
+            type: 'file',
+            path: '/src/components/Input.tsx',
+            size: 1536,
+            extension: 'tsx',
+            modifiedAt: new Date('2024-01-14')
+          }
+        ]
+      },
+      {
+        id: '5',
+        name: 'utils',
+        type: 'folder',
+        path: '/src/utils',
+        children: [
+          {
+            id: '6',
+            name: 'helpers.ts',
+            type: 'file',
+            path: '/src/utils/helpers.ts',
+            size: 1024,
+            extension: 'ts'
+          }
+        ]
+      }
+    ]
+  }
+];
+
+<GlassFileTree
+  nodes={fileTreeData}
+  selectedNodeId="3"
+  onNodeSelect={(node) => console.log('Selected:', node)}
+  onNodeToggle={(nodeId, expanded) => console.log('Toggle:', nodeId, expanded)}
+  onNodeCreate={(parentId, name, type) => console.log('Create:', parentId, name, type)}
+  onNodeDelete={(nodeId) => console.log('Delete:', nodeId)}
+  onNodeRename={(nodeId, newName) => console.log('Rename:', nodeId, newName)}
+  showIcons={true}
+  showSize={true}
+  showModified={true}
+  allowCreate={true}
+  allowDelete={true}
+  allowRename={true}
+  maxHeight="500px"
+  variant="default"
+  size="md"
+/>
+```
+
+**Props:**
+- `nodes: TreeNode[]` - Tree node data
+- `onNodeSelect?: (node: TreeNode) => void` - Node selection handler
+- `onNodeToggle?: (nodeId: string, expanded: boolean) => void` - Node expand/collapse handler
+- `onNodeCreate?: (parentId: string, name: string, type: 'file' | 'folder') => void` - Node creation handler
+- `onNodeDelete?: (nodeId: string) => void` - Node deletion handler
+- `onNodeRename?: (nodeId: string, newName: string) => void` - Node rename handler
+- `onNodeMove?: (nodeId: string, newParentId: string) => void` - Node move handler
+- `onNodeCopy?: (nodeId: string, newParentId: string) => void` - Node copy handler
+- `selectedNodeId?: string` - Currently selected node ID
+- `expandedNodes?: string[]` - Expanded node IDs
+- `onExpandedChange?: (expandedNodes: string[]) => void` - Expanded nodes change handler
+- `searchQuery?: string` - Search query
+- `onSearchChange?: (query: string) => void` - Search query change handler
+- `showIcons?: boolean` - Show file/folder icons
+- `showSize?: boolean` - Show file sizes
+- `showModified?: boolean` - Show modification dates
+- `allowCreate?: boolean` - Enable node creation
+- `allowDelete?: boolean` - Enable node deletion
+- `allowRename?: boolean` - Enable node renaming
+- `allowMove?: boolean` - Enable node moving
+- `allowCopy?: boolean` - Enable node copying
+- `className?: string` - Additional CSS classes
+- `maxHeight?: string | number` - Maximum tree height
+- `virtualize?: boolean` - Enable virtualization for large trees
+- `variant?: 'default' | 'compact' | 'minimal'` - Visual variant
+- `size?: 'sm' | 'md' | 'lg'` - Component size
+- `elevation?: 'low' | 'medium' | 'high'` - Glass elevation
+
+**TreeNode Interface:**
+- `id: string` - Unique node identifier
+- `name: string` - Node name
+- `type: 'file' | 'folder'` - Node type
+- `path: string` - Full node path
+- `size?: number` - File size in bytes
+- `modifiedAt?: Date` - Last modification date
+- `extension?: string` - File extension
+- `children?: TreeNode[]` - Child nodes
+- `isExpanded?: boolean` - Expansion state
+- `isLoading?: boolean` - Loading state
+- `canExpand?: boolean` - Whether node can be expanded
+- `level: number` - Node depth level
+
+### GlassFileUpload
+
+Advanced file upload component with drag-and-drop, progress tracking, and preview capabilities.
+
+```tsx
+// Basic file upload
+<GlassFileUpload
+  accept="image/*,.pdf,.doc,.docx"
+  multiple={true}
+  maxSize={5 * 1024 * 1024} // 5MB
+  maxFiles={10}
+  onChange={(files) => console.log('Files changed:', files)}
+  onUpload={async (file) => {
+    // Simulate upload
+    return new Promise((resolve) => {
+      setTimeout(() => resolve({ url: `https://example.com/${file.name}` }), 2000);
+    });
+  }}
+  showPreviews={true}
+  showProgress={true}
+  instruction="Drag and drop files here or click to browse"
+  variant="default"
+  size="md"
+/>
+
+// Custom file renderer
+<GlassFileUpload
+  files={uploadedFiles}
+  onRemove={(fileId) => {
+    setUploadedFiles(prev => prev.filter(f => f.id !== fileId));
+  }}
+  onPreview={(file) => {
+    window.open(file.url, '_blank');
+  }}
+  customFileRenderer={(file) => (
+    <div className="flex items-center gap-3 p-3 bg-white/5 rounded-lg">
+      <FileIcon className="w-8 h-8" />
+      <div className="flex-1">
+        <div className="font-medium">{file.name}</div>
+        <div className="text-sm text-white/60">{(file.size / 1024).toFixed(1)} KB</div>
+      </div>
+      <GlassButton variant="ghost" size="sm">Remove</GlassButton>
+    </div>
+  )}
+/>
+```
+
+**Props:**
+- `accept?: string` - Accepted file types (e.g., "image/*,.pdf")
+- `multiple?: boolean` - Allow multiple file selection
+- `maxSize?: number` - Maximum file size in bytes
+- `maxFiles?: number` - Maximum number of files
+- `variant?: 'default' | 'compact' | 'minimal' | 'grid'` - Upload variant
+- `size?: 'sm' | 'md' | 'lg'` - Component size
+- `disabled?: boolean` - Disabled state
+- `files?: UploadedFile[]` - Uploaded files array
+- `onChange?: (files: UploadedFile[]) => void` - Files change handler
+- `onUpload?: (file: File) => Promise<{ url: string } | void>` - Upload function
+- `onRemove?: (fileId: string) => void` - File removal handler
+- `onPreview?: (file: UploadedFile) => void` - File preview handler
+- `showPreviews?: boolean` - Show file previews
+- `showProgress?: boolean` - Show upload progress
+- `instruction?: string` - Upload instruction text
+- `helperText?: string` - Helper text
+- `error?: string` - Error message
+- `autoUpload?: boolean` - Auto-upload on file selection
+- `customFileRenderer?: (file: UploadedFile) => ReactNode` - Custom file display
+- `className?: string` - Additional CSS classes
+
+**UploadedFile Interface:**
+- `id: string` - Unique file identifier
+- `file: File` - Original File object
+- `name: string` - File name
+- `size: number` - File size in bytes
+- `type: string` - MIME type
+- `url?: string` - Uploaded file URL
+- `preview?: string` - Preview URL for images
+- `status: 'pending' | 'uploading' | 'completed' | 'error'` - Upload status
+- `progress?: number` - Upload progress (0-100)
+- `error?: string` - Error message
+
+### GlassFilterPanel
+
+Advanced filtering panel with multiple filter types, presets, and collapsible groups.
+
+```tsx
+const filterGroups = [
+  {
+    id: 'status',
+    label: 'Status',
+    type: 'checkbox',
+    options: [
+      { id: 'active', label: 'Active', count: 25 },
+      { id: 'inactive', label: 'Inactive', count: 10 },
+      { id: 'pending', label: 'Pending', count: 5 }
+    ]
+  },
+  {
+    id: 'category',
+    label: 'Category',
+    type: 'select',
+    options: [
+      { id: 'work', label: 'Work', count: 15 },
+      { id: 'personal', label: 'Personal', count: 20 },
+      { id: 'other', label: 'Other', count: 5 }
+    ]
+  },
+  {
+    id: 'priority',
+    label: 'Priority',
+    type: 'slider',
+    min: 1,
+    max: 5,
+    step: 1
+  },
+  {
+    id: 'dateRange',
+    label: 'Date Range',
+    type: 'daterange'
+  }
+];
+
+const filterValues = {
+  status: ['active'],
+  category: 'work',
+  priority: { min: 3, max: 5 },
+  dateRange: { from: new Date('2024-01-01'), to: new Date() }
+};
+
+const filterPresets = [
+  {
+    id: 'urgent',
+    name: 'Urgent Tasks',
+    filters: {
+      priority: { min: 4, max: 5 },
+      status: ['active', 'pending']
+    }
+  },
+  {
+    id: 'completed',
+    name: 'Completed This Month',
+    filters: {
+      status: ['completed'],
+      dateRange: {
+        from: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+        to: new Date()
+      }
+    }
+  }
+];
+
+<GlassFilterPanel
+  filters={filterGroups}
+  values={filterValues}
+  onChange={(filters) => {
+    setFilterValues(filters);
+    console.log('Filters changed:', filters);
+  }}
+  onApply={() => console.log('Filters applied')}
+  onClear={() => {
+    setFilterValues({});
+    console.log('Filters cleared');
+  }}
+  presets={filterPresets}
+  onSavePreset={(name) => console.log('Save preset:', name)}
+  title="Filter Tasks"
+  collapsible={true}
+  showSearch={true}
+  showPresets={true}
+  variant="default"
+  size="md"
+/>
+```
+
+**Props:**
+- `filters: FilterGroup[]` - Filter group definitions
+- `values: Record<string, any>` - Current filter values
+- `onChange: (filters: Record<string, any>) => void` - Filter change handler
+- `onApply?: () => void` - Apply filters handler
+- `onClear?: () => void` - Clear filters handler
+- `presets?: FilterPreset[]` - Saved filter presets
+- `onSavePreset?: (name: string) => void` - Save preset handler
+- `className?: string` - Additional CSS classes
+- `title?: string` - Panel title
+- `collapsible?: boolean` - Enable collapsible groups
+- `showSearch?: boolean` - Show search input
+- `showPresets?: boolean` - Show presets dropdown
+- `showApplyButton?: boolean` - Show apply button
+- `showClearButton?: boolean` - Show clear button
+- `variant?: 'default' | 'compact' | 'minimal'` - Panel variant
+- `size?: 'sm' | 'md' | 'lg'` - Component size
+- `elevation?: 'low' | 'medium' | 'high'` - Glass elevation
+
+**FilterGroup Interface:**
+- `id: string` - Unique filter identifier
+- `label: string` - Filter display label
+- `type: 'checkbox' | 'select' | 'slider' | 'daterange' | 'search'` - Filter type
+- `options?: FilterOption[]` - Available options (for checkbox/select)
+- `min?: number` - Minimum value (for slider)
+- `max?: number` - Maximum value (for slider)
+- `step?: number` - Step increment (for slider)
+- `placeholder?: string` - Input placeholder (for search)
+- `collapsed?: boolean` - Initially collapsed state
+- `required?: boolean` - Required filter
+
+**FilterOption Interface:**
+- `id: string` - Option identifier
+- `label: string` - Option label
+- `value: string` - Option value
+- `count?: number` - Result count
+- `disabled?: boolean` - Disabled state
+
+**FilterPreset Interface:**
+- `id: string` - Preset identifier
+- `name: string` - Preset display name
+- `filters: Record<string, any>` - Preset filter values
 
 ### GlassDatePicker
 
@@ -2424,6 +2928,81 @@ const radioOptions = [
 - `disabled?: boolean` - Whether option is disabled
 - `icon?: ReactNode` - Optional icon
 
+### GlassDateRangePicker
+
+Advanced date range picker with calendar interface, presets, and glassmorphism styling.
+
+```tsx
+// Basic date range picker
+<GlassDateRangePicker
+  value={dateRange}
+  onChange={setDateRange}
+  placeholder="Select date range"
+/>
+
+// With presets and constraints
+<GlassDateRangePicker
+  value={dateRange}
+  onChange={setDateRange}
+  placeholder="Select date range"
+  minDate={new Date('2020-01-01')}
+  maxDate={new Date('2030-12-31')}
+  presets={[
+    {
+      label: 'Last 7 days',
+      getValue: () => ({
+        from: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+        to: new Date()
+      })
+    },
+    {
+      label: 'Last 30 days',
+      getValue: () => ({
+        from: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+        to: new Date()
+      })
+    },
+    {
+      label: 'This month',
+      getValue: () => {
+        const now = new Date();
+        return {
+          from: new Date(now.getFullYear(), now.getMonth(), 1),
+          to: new Date(now.getFullYear(), now.getMonth() + 1, 0)
+        };
+      }
+    }
+  ]}
+  size="lg"
+  showClear={true}
+/>
+```
+
+**Props:**
+- `value?: DateRange` - Selected date range
+- `defaultValue?: DateRange` - Default date range
+- `onChange?: (range: DateRange) => void` - Range change handler
+- `placeholder?: string` - Input placeholder text
+- `dateFormat?: 'short' | 'long' | 'numeric'` - Date display format
+- `locale?: string` - Date locale
+- `minDate?: Date` - Minimum selectable date
+- `maxDate?: Date` - Maximum selectable date
+- `disabled?: boolean` - Disabled state
+- `size?: 'sm' | 'md' | 'lg'` - Component size
+- `className?: string` - Additional CSS classes
+- `popoverClassName?: string` - Popover CSS classes
+- `showClear?: boolean` - Show clear button
+- `presets?: Preset[]` - Predefined date ranges
+- `rangeLabel?: string` - Custom range label
+
+**DateRange Interface:**
+- `from: Date | null` - Start date
+- `to: Date | null` - End date
+
+**Preset Interface:**
+- `label: string` - Preset label
+- `getValue: () => DateRange` - Function to get preset range
+
 ### GlassSwitch
 
 Toggle switch component with glassmorphism styling, smooth animations, and customizable states.
@@ -2476,6 +3055,59 @@ Toggle switch component with glassmorphism styling, smooth animations, and custo
 - `focusRing?: boolean` - Show focus ring
 - `thumbContent?: ReactNode` - Custom thumb content
 - `className?: string` - Additional CSS classes
+
+### GlassFocusRing
+
+Animated focus indicator ring with glassmorphism effects for accessible focus management.
+
+```tsx
+// Basic usage with any focusable element
+<GlassFocusRing>
+  <GlassButton>Focusable Button</GlassButton>
+</GlassFocusRing>
+
+// Custom styling
+<GlassFocusRing
+  color="primary"
+  variant="rounded"
+  offset={4}
+  thickness={3}
+  borderRadius={8}
+>
+  <GlassInput placeholder="Type something..." />
+</GlassFocusRing>
+
+// Disabled focus ring
+<GlassFocusRing disabled={true}>
+  <div>Content without focus ring</div>
+</GlassFocusRing>
+
+// With form elements
+<form>
+  <GlassFocusRing variant="primary">
+    <GlassInput
+      type="email"
+      placeholder="Enter your email"
+      required
+    />
+  </GlassFocusRing>
+
+  <GlassFocusRing variant="secondary" offset={2}>
+    <GlassButton type="submit">
+      Submit Form
+    </GlassButton>
+  </GlassFocusRing>
+</form>
+```
+
+**Props:**
+- `children: ReactNode` - Focusable element to wrap
+- `color?: string` - Focus ring color theme
+- `variant?: string` - Visual variant of the focus ring
+- `offset?: number` - Distance from element edge (default: 0)
+- `thickness?: number` - Ring thickness in pixels (default: 2)
+- `borderRadius?: number` - Ring border radius
+- `disabled?: boolean` - Disable focus ring (default: false)
 
 ## Data Display Components
 
