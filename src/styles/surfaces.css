@@ -1,0 +1,217 @@
+/* Surface system mapped to design tokens */
+.surface-1 {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 16px;
+}
+.surface-2 {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 16px;
+}
+.surface-3 {
+  background: linear-gradient(135deg, rgba(59,130,246,0.10), rgba(147,51,234,0.08));
+  border: 1px solid rgba(255,255,255,0.16);
+  border-radius: 20px;
+}
+
+/* Brand-tinted surfaces */
+.surface-emerald { background: linear-gradient(135deg, rgba(16,185,129,0.10), rgba(16,185,129,0.05)); border: 1px solid rgba(16,185,129,0.20); }
+.surface-blue    { background: linear-gradient(135deg, rgba(59,130,246,0.10), rgba(59,130,246,0.05)); border: 1px solid rgba(59,130,246,0.20); }
+.surface-purple  { background: linear-gradient(135deg, rgba(147,51,234,0.10), rgba(147,51,234,0.05)); border: 1px solid rgba(147,51,234,0.20); }
+
+/* Micro‑interactions for tiles/panels */
+.interactive-tile {
+  position: relative;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease, background-color 200ms ease;
+  will-change: transform;
+}
+.interactive-tile:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 64px rgba(0,0,0,0.24);
+  border-color: rgba(255,255,255,0.20);
+}
+.interactive-tile:focus-visible {
+  outline: 2px solid rgba(59,130,246,0.6);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interactive-tile {
+    transition: background-color .001s, border-color .001s, opacity .001s !important;
+  }
+  .interactive-tile:hover {
+    transform: none !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12) !important;
+  }
+  /* Make sheen change instantaneous with reduced motion */
+  .interactive-sheen::after {
+    transition: none !important;
+  }
+}
+
+/* Sheen overlay */
+.interactive-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.10), transparent 35%);
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: none;
+}
+.interactive-tile:hover::after { opacity: 0.22; }
+
+/* Sheen-only for GlassCard (no transform) */
+.interactive-sheen { position: relative; }
+.interactive-sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.08), transparent 40%);
+  opacity: 0;
+  transition: opacity 200ms ease;
+  pointer-events: none;
+}
+.interactive-sheen:hover::after { opacity: 0.2; }
+
+/* Subtle hover surface utility for links/buttons */
+.surface-hover {
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease;
+  border-radius: 12px;
+}
+.surface-hover:hover {
+  background: rgba(255,255,255,0.06);
+}
+.surface-hover:focus-visible {
+  outline: 2px solid rgba(59,130,246,0.6);
+  outline-offset: 2px;
+}
+
+/* Ensure sheen elements show a clear focus ring */
+.interactive-sheen:focus-visible {
+  outline: 2px solid rgba(59,130,246,0.6);
+  outline-offset: 2px;
+}
+
+/* Table tokens */
+.table-glass {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.table-glass thead th {
+  text-align: left;
+  font-weight: 600;
+  color: rgba(255,255,255,0.85);
+  padding: 0.75rem 1rem;
+  background: rgba(255,255,255,0.05);
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.table-glass tbody td {
+  padding: 0.75rem 1rem;
+  color: rgba(255,255,255,0.75);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.table-glass tbody tr:hover {
+  background: rgba(255,255,255,0.04);
+}
+.table-selectable tbody tr { cursor: pointer; }
+.table-glass tbody tr[aria-selected="true"],
+.table-glass tbody tr.is-selected {
+  background: rgba(59,130,246,0.10);
+  outline: 1px solid rgba(59,130,246,0.25);
+}
+.table-compact thead th { padding: 0.5rem 0.75rem; }
+.table-compact tbody td { padding: 0.5rem 0.75rem; }
+.table-comfortable thead th { padding: 1rem 1.25rem; }
+.table-comfortable tbody td { padding: 1rem 1.25rem; }
+
+/* Skeleton tokens */
+.skeleton { position: relative; overflow: hidden; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); }
+.skeleton-line { height: 12px; border-radius: 9999px; background: rgba(255,255,255,0.08); }
+.skeleton-avatar { width: 48px; height: 48px; border-radius: 9999px; background: rgba(255,255,255,0.08); }
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.12), rgba(255,255,255,0));
+  animation: skeleton-shimmer 1.2s infinite;
+}
+@keyframes skeleton-shimmer {
+  100% { transform: translateX(100%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after { animation: none; }
+}
+
+/* State tokens for active/selected */
+.surface-hover:active { background: rgba(255,255,255,0.10); }
+[aria-pressed="true"].surface-hover,
+[aria-selected="true"].surface-hover,
+[data-state="on"].surface-hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.24); }
+
+/* High contrast adjustments */
+@media (prefers-contrast: high) {
+  .chip { background: rgba(0,0,0,0.85) !important; border: 2px solid rgba(255,255,255,0.7) !important; color: #fff !important; }
+}
+
+/* Text balance utility */
+.text-balance { text-wrap: balance; }
+
+/* Balance and center the paragraph immediately following titles site‑wide */
+.container-responsive h1 + p,
+.container-responsive h2 + p {
+  text-wrap: balance;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 72ch;
+}
+
+/* Edge fades for horizontal carousels/tickers */
+.edge-fade-x { position: relative; }
+.edge-fade-x::before,
+.edge-fade-x::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0; width: 80px;
+  pointer-events: none;
+}
+.edge-fade-x::before { left: 0; background: linear-gradient(to right, rgba(0,0,0,0.8), rgba(0,0,0,0)); }
+.edge-fade-x::after  { right: 0; background: linear-gradient(to left, rgba(0,0,0,0.8), rgba(0,0,0,0)); }
+
+/* Chip tokens: neutral and brand-tinted variants */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem; /* ~6px */
+  padding: 0.25rem 0.625rem; /* px-2 py-1-ish */
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.8);
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+.chip:hover { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.20); }
+.chip:focus-visible { outline: 2px solid rgba(59,130,246,0.6); outline-offset: 2px; }
+
+/* Slightly softer neutral */
+.chip-muted { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.18); color: rgba(255,255,255,0.75); }
+
+/* Brand chips */
+.chip-blue    { background: linear-gradient(135deg, rgba(59,130,246,0.12), rgba(59,130,246,0.06));    border-color: rgba(59,130,246,0.22);    color: rgba(147,197,253,0.92); }
+.chip-cyan    { background: linear-gradient(135deg, rgba(6,182,212,0.12),  rgba(6,182,212,0.06));     border-color: rgba(6,182,212,0.22);     color: rgba(165,243,252,0.92); }
+.chip-emerald { background: linear-gradient(135deg, rgba(16,185,129,0.12), rgba(16,185,129,0.06));    border-color: rgba(16,185,129,0.22);    color: rgba(167,243,208,0.92); }
+.chip-green   { background: linear-gradient(135deg, rgba(34,197,94,0.12),  rgba(34,197,94,0.06));     border-color: rgba(34,197,94,0.22);     color: rgba(187,247,208,0.92); }
+.chip-purple  { background: linear-gradient(135deg, rgba(147,51,234,0.12),  rgba(147,51,234,0.06));    border-color: rgba(147,51,234,0.22);     color: rgba(216,180,254,0.92); }
+.chip-red     { background: linear-gradient(135deg, rgba(239,68,68,0.12),   rgba(239,68,68,0.06));     border-color: rgba(239,68,68,0.22);      color: rgba(252,165,165,0.92); }
+.chip-orange  { background: linear-gradient(135deg, rgba(249,115,22,0.12),  rgba(249,115,22,0.06));    border-color: rgba(249,115,22,0.22);     color: rgba(254,215,170,0.92); }
+.chip-yellow  { background: linear-gradient(135deg, rgba(234,179,8,0.12),   rgba(234,179,8,0.06));     border-color: rgba(234,179,8,0.22);      color: rgba(254,240,138,0.92); }
+
+@media (prefers-reduced-motion: reduce) {
+  .chip { transition: none !important; }
+}

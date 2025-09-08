@@ -1,0 +1,154 @@
+/**
+ * Theme Transition Utilities
+ * Smooth transitions when switching themes
+ */
+
+/* Disable transitions during theme change */
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition: none !important;
+  animation-duration: 0s !important;
+}
+
+/* Theme transition for specific properties */
+[data-theme] {
+  transition: 
+    background-color 200ms ease-out,
+    color 200ms ease-out,
+    border-color 200ms ease-out,
+    box-shadow 200ms ease-out,
+    fill 200ms ease-out,
+    stroke 200ms ease-out;
+}
+
+/* Smooth transitions for theme-aware elements */
+[data-theme] .glass,
+[data-theme] .glass-surface,
+[data-theme] .glass-border {
+  transition: 
+    background 200ms ease-out,
+    backdrop-filter 200ms ease-out,
+    border-color 200ms ease-out,
+    box-shadow 200ms ease-out;
+}
+
+/* Dark theme styles */
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* Light theme styles */
+[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* High contrast theme styles */
+[data-theme="high-contrast"] {
+  color-scheme: dark;
+  
+  /* Forced colors mode support */
+  @media (prefers-contrast: high) {
+    forced-colors: active;
+  }
+}
+
+/* Theme-specific focus styles */
+[data-theme="dark"] *:focus-visible {
+  outline-color: var(--primary);
+  outline-offset: 2px;
+}
+
+[data-theme="light"] *:focus-visible {
+  outline-color: var(--primary);
+  outline-offset: 2px;
+}
+
+[data-theme="high-contrast"] *:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Theme-specific selection styles */
+[data-theme="dark"] ::selection {
+  background-color: hsla(210, 100%, 60%, 0.3);
+  color: var(--foreground);
+}
+
+[data-theme="light"] ::selection {
+  background-color: hsla(210, 100%, 60%, 0.2);
+  color: var(--foreground);
+}
+
+[data-theme="high-contrast"] ::selection {
+  background-color: var(--accent);
+  color: var(--background);
+}
+
+/* Theme-specific scrollbar styles */
+[data-theme="dark"] {
+  scrollbar-color: hsla(217, 33%, 30%, 0.5) transparent;
+}
+
+[data-theme="light"] {
+  scrollbar-color: hsla(220, 14%, 70%, 0.5) transparent;
+}
+
+[data-theme="high-contrast"] {
+  scrollbar-color: var(--foreground) var(--background);
+}
+
+/* WebKit scrollbar styling */
+[data-theme="dark"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-theme="dark"]::-webkit-scrollbar-thumb {
+  background: hsla(217, 33%, 30%, 0.5);
+  border-radius: var(--radius-full);
+}
+
+[data-theme="dark"]::-webkit-scrollbar-thumb:hover {
+  background: hsla(217, 33%, 40%, 0.7);
+}
+
+[data-theme="light"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-theme="light"]::-webkit-scrollbar-thumb {
+  background: hsla(220, 14%, 70%, 0.5);
+  border-radius: var(--radius-full);
+}
+
+[data-theme="light"]::-webkit-scrollbar-thumb:hover {
+  background: hsla(220, 14%, 60%, 0.7);
+}
+
+[data-theme="high-contrast"]::-webkit-scrollbar-track {
+  background: var(--background);
+  border: 1px solid var(--border);
+}
+
+[data-theme="high-contrast"]::-webkit-scrollbar-thumb {
+  background: var(--foreground);
+  border: 1px solid var(--border);
+}
+
+/* Print styles for themes */
+@media print {
+  [data-theme="dark"],
+  [data-theme="high-contrast"] {
+    background: white !important;
+    color: black !important;
+  }
+  
+  [data-theme="dark"] *,
+  [data-theme="high-contrast"] * {
+    background: transparent !important;
+    color: black !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}
