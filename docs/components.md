@@ -3056,6 +3056,353 @@ Toggle switch component with glassmorphism styling, smooth animations, and custo
 - `thumbContent?: ReactNode` - Custom thumb content
 - `className?: string` - Additional CSS classes
 
+### GlassFormBuilder
+
+Dynamic form builder with drag-and-drop field configuration, validation, and conditional logic.
+
+```tsx
+const formSchema = [
+  {
+    id: 'personal',
+    title: 'Personal Information',
+    description: 'Tell us about yourself',
+    fields: [
+      {
+        id: 'name',
+        type: 'text',
+        label: 'Full Name',
+        placeholder: 'Enter your full name',
+        required: true,
+        validation: {
+          minLength: 2,
+          maxLength: 50
+        }
+      },
+      {
+        id: 'email',
+        type: 'email',
+        label: 'Email Address',
+        placeholder: 'Enter your email',
+        required: true
+      },
+      {
+        id: 'age',
+        type: 'number',
+        label: 'Age',
+        placeholder: 'Enter your age',
+        validation: {
+          min: 18,
+          max: 100
+        }
+      }
+    ]
+  },
+  {
+    id: 'preferences',
+    title: 'Preferences',
+    description: 'Customize your experience',
+    collapsible: true,
+    fields: [
+      {
+        id: 'theme',
+        type: 'select',
+        label: 'Theme',
+        options: [
+          { value: 'light', label: 'Light' },
+          { value: 'dark', label: 'Dark' },
+          { value: 'auto', label: 'Auto' }
+        ],
+        defaultValue: 'auto'
+      },
+      {
+        id: 'notifications',
+        type: 'checkbox',
+        label: 'Enable Notifications',
+        defaultValue: true
+      }
+    ]
+  }
+];
+
+<GlassFormBuilder
+  schema={formSchema}
+  values={formValues}
+  onChange={(values) => {
+    setFormValues(values);
+    console.log('Form values:', values);
+  }}
+  onSubmit={(values) => {
+    console.log('Form submitted:', values);
+    // Handle form submission
+  }}
+  onValidate={(values) => {
+    const errors: FormError = {};
+    if (!values.email?.includes('@')) {
+      errors.email = 'Please enter a valid email address';
+    }
+    return errors;
+  }}
+  variant="default"
+  size="md"
+/>
+```
+
+**Props:**
+- `schema?: FormSection[]` - Form schema with sections and fields
+- `values?: FormValue` - Current form values
+- `errors?: FormError` - Form validation errors
+- `onChange?: (values: FormValue) => void` - Values change handler
+- `onSubmit?: (values: FormValue) => void` - Form submission handler
+- `onValidate?: (values: FormValue) => FormError` - Custom validation function
+- `variant?: 'default' | 'compact' | 'wizard' | 'inline'` - Form layout variant
+- `size?: 'sm' | 'md' | 'lg'` - Form size
+- `loading?: boolean` - Loading state
+- `disabled?: boolean` - Disabled state
+- `submitButtonText?: string` - Custom submit button text
+- `cancelButtonText?: string` - Custom cancel button text
+- `showProgress?: boolean` - Show form completion progress
+- `autoSave?: boolean` - Enable auto-save functionality
+- `className?: string` - Additional CSS classes
+
+**FormField Interface:**
+- `id: string` - Unique field identifier
+- `type: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'textarea' | 'select' | 'checkbox' | 'radio' | 'date' | 'file'` - Field type
+- `label: string` - Field label
+- `placeholder?: string` - Field placeholder
+- `description?: string` - Field description
+- `required?: boolean` - Required field
+- `disabled?: boolean` - Disabled field
+- `options?: { value: string; label: string }[]` - Select/radio options
+- `validation?: { min?, max?, minLength?, maxLength?, pattern?, custom? }` - Validation rules
+- `defaultValue?: any` - Default field value
+- `conditional?: { field: string; operator: string; value: any }` - Conditional logic
+- `layout?: { width?: 'full' | 'half' | 'third' | 'quarter'; order?: number }` - Layout options
+
+**FormSection Interface:**
+- `id: string` - Unique section identifier
+- `title: string` - Section title
+- `description?: string` - Section description
+- `fields: FormField[]` - Section fields
+- `collapsible?: boolean` - Section can be collapsed
+- `defaultExpanded?: boolean` - Section initially expanded
+
+### GlassGallery
+
+Responsive image gallery with grid, masonry, and list layouts, lightbox viewing, and interactive features.
+
+```tsx
+const galleryImages = [
+  {
+    id: '1',
+    src: '/images/nature-1.jpg',
+    alt: 'Beautiful landscape',
+    title: 'Mountain Vista',
+    description: 'A stunning view of the mountains at sunset',
+    thumbnail: '/images/nature-1-thumb.jpg',
+    width: 1920,
+    height: 1080,
+    tags: ['nature', 'mountains', 'sunset'],
+    likes: 42,
+    views: 1250,
+    createdAt: new Date('2024-01-15'),
+    category: 'nature'
+  },
+  {
+    id: '2',
+    src: '/images/city-1.jpg',
+    alt: 'Urban skyline',
+    title: 'City Lights',
+    description: 'Modern cityscape at night',
+    thumbnail: '/images/city-1-thumb.jpg',
+    width: 1600,
+    height: 900,
+    tags: ['city', 'urban', 'night'],
+    likes: 28,
+    views: 890,
+    createdAt: new Date('2024-01-14'),
+    category: 'urban'
+  },
+  {
+    id: '3',
+    src: '/images/portrait-1.jpg',
+    alt: 'Portrait photography',
+    title: 'Golden Hour Portrait',
+    description: 'Beautiful portrait captured during golden hour',
+    thumbnail: '/images/portrait-1-thumb.jpg',
+    width: 1200,
+    height: 1600,
+    tags: ['portrait', 'photography', 'golden-hour'],
+    likes: 67,
+    views: 2100,
+    createdAt: new Date('2024-01-13'),
+    category: 'portrait'
+  }
+];
+
+// Grid layout
+<GlassGallery
+  images={galleryImages}
+  layout="grid"
+  columns={3}
+  aspectRatio="square"
+  showInfo={true}
+  showActions={true}
+  enableLightbox={true}
+  showFilters={true}
+  onImageClick={(image, index) => {
+    console.log('Image clicked:', image.title);
+  }}
+/>
+
+// Masonry layout
+<GlassGallery
+  images={galleryImages}
+  layout="masonry"
+  columns={4}
+  aspectRatio="auto"
+  showInfo={true}
+  enableLightbox={true}
+  enableSelection={true}
+  onSelectionChange={(selectedImages) => {
+    console.log('Selected images:', selectedImages.length);
+  }}
+/>
+
+// List layout with filters
+<GlassGallery
+  images={galleryImages}
+  layout="list"
+  showInfo={true}
+  showActions={true}
+  showFilters={true}
+  enableLightbox={false}
+  onImageClick={(image, index) => {
+    console.log('Viewing image:', image.title);
+  }}
+/>
+```
+
+**Props:**
+- `images: GalleryImage[]` - Array of gallery images
+- `layout?: 'grid' | 'masonry' | 'list'` - Gallery layout type
+- `columns?: number` - Number of columns (for grid/masonry)
+- `aspectRatio?: 'square' | 'portrait' | 'landscape' | 'auto'` - Image aspect ratio
+- `showInfo?: boolean` - Show image title and description
+- `showActions?: boolean` - Show like, share, and view actions
+- `enableLightbox?: boolean` - Enable lightbox/modal viewing
+- `showFilters?: boolean` - Show category/tag filters
+- `enableSelection?: boolean` - Enable multi-select mode
+- `className?: string` - Additional CSS classes
+- `onImageClick?: (image: GalleryImage, index: number) => void` - Image click handler
+- `onSelectionChange?: (selectedImages: GalleryImage[]) => void` - Selection change handler
+
+**GalleryImage Interface:**
+- `id: string` - Unique image identifier
+- `src: string` - Full-size image URL
+- `alt?: string` - Alt text for accessibility
+- `title?: string` - Image title
+- `description?: string` - Image description
+- `thumbnail?: string` - Thumbnail image URL
+- `width?: number` - Image width in pixels
+- `height?: number` - Image height in pixels
+- `tags?: string[]` - Image tags for filtering
+- `likes?: number` - Number of likes
+- `views?: number` - Number of views
+- `createdAt?: Date` - Image creation date
+- `category?: string` - Image category
+
+### GlassGradientPicker
+
+Advanced gradient picker with preset gradients, custom color stop editing, and multiple gradient types.
+
+```tsx
+const customPresets = [
+  {
+    id: 'sunset',
+    name: 'Sunset',
+    type: 'linear',
+    angle: 45,
+    stops: [
+      { color: '#ff6b35', position: 0 },
+      { color: '#f7931e', position: 50 },
+      { color: '#ffb627', position: 100 }
+    ]
+  },
+  {
+    id: 'ocean',
+    name: 'Ocean Deep',
+    type: 'radial',
+    stops: [
+      { color: '#1e3a8a', position: 0 },
+      { color: '#3b82f6', position: 70 },
+      { color: '#60a5fa', position: 100 }
+    ]
+  },
+  {
+    id: 'forest',
+    name: 'Forest',
+    type: 'conic',
+    stops: [
+      { color: '#166534', position: 0 },
+      { color: '#16a34a', position: 33 },
+      { color: '#22c55e', position: 66 },
+      { color: '#4ade80', position: 100 }
+    ]
+  }
+];
+
+// Basic gradient picker
+<GlassGradientPicker
+  value="linear-gradient(45deg, #667eea 0%, #764ba2 100%)"
+  presets={customPresets}
+  enableCustom={true}
+  onChange={(gradient, stops, type, angle) => {
+    console.log('Gradient changed:', gradient);
+    setSelectedGradient(gradient);
+  }}
+  onPresetSelect={(preset) => {
+    console.log('Preset selected:', preset.name);
+  }}
+/>
+
+// Full-featured gradient picker
+<GlassGradientPicker
+  presets={customPresets}
+  enableCustom={true}
+  showTypeSelector={true}
+  showAngleControl={true}
+  showStopsEditor={true}
+  maxStops={6}
+  onChange={(gradient, stops, type, angle) => {
+    console.log('Custom gradient:', { gradient, stops, type, angle });
+  }}
+  className="w-full max-w-2xl"
+/>
+```
+
+**Props:**
+- `value?: string` - Current gradient CSS value
+- `presets?: GradientPreset[]` - Array of gradient presets
+- `enableCustom?: boolean` - Allow custom gradient creation
+- `showTypeSelector?: boolean` - Show gradient type selector
+- `showAngleControl?: boolean` - Show angle control for linear gradients
+- `showStopsEditor?: boolean` - Show color stops editor
+- `maxStops?: number` - Maximum number of color stops
+- `onChange?: (gradient: string, stops: GradientStop[], type: string, angle?: number) => void` - Gradient change handler
+- `onPresetSelect?: (preset: GradientPreset) => void` - Preset selection handler
+- `className?: string` - Additional CSS classes
+
+**GradientPreset Interface:**
+- `id: string` - Unique preset identifier
+- `name: string` - Preset display name
+- `type: 'linear' | 'radial' | 'conic'` - Gradient type
+- `angle?: number` - Angle for linear gradients (0-360)
+- `stops: GradientStop[]` - Color stops array
+
+**GradientStop Interface:**
+- `color: string` - Color value (hex, rgb, hsl, etc.)
+- `position: number` - Position along gradient (0-100)
+
 ### GlassFocusRing
 
 Animated focus indicator ring with glassmorphism effects for accessible focus management.
