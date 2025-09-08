@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassVideoPlayer } from './GlassVideoPlayer';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassVideoPlayer> = {
   title: 'Components/Interactive/GlassVideoPlayer',
@@ -56,8 +57,8 @@ export const Default: Story = {
       },
     ],
     poster: 'https://via.placeholder.com/640x360/0066cc/ffffff?text=Video+Poster',
-    onPlay: () => console.log('Video started'),
-    onPause: () => console.log('Video paused'),
+    onPlay: fn(),
+    onPause: fn(),
   },
 };
 

@@ -39,7 +39,7 @@ const GlassFormField = <
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
   return (
-    <FormFieldContext.Provider value={{ name: props.name }}>
+    <FormFieldContext.Provider value={{ name: props?.name }}>
       <Controller {...props} />
     </FormFieldContext.Provider>
   );
@@ -87,7 +87,7 @@ const GlassFormItem = React.forwardRef<HTMLDivElement, GlassFormItemProps>(
             ref={ref}
             className={cn(
               'glass-form-item',
-              spacingConfig[spacing],
+              spacingConfig?.[spacing],
               className
             )}
             {...props}
@@ -97,7 +97,7 @@ const GlassFormItem = React.forwardRef<HTMLDivElement, GlassFormItemProps>(
             ref={ref}
             className={cn(
               'glass-form-item',
-              spacingConfig[spacing],
+              spacingConfig?.[spacing],
               className
             )}
             {...props}
@@ -208,8 +208,8 @@ const GlassFormDescription = React.forwardRef<
       id={formDescriptionId}
       className={cn(
         'glass-form-description',
-        sizeConfig[size],
-        variantConfig[variant],
+        sizeConfig?.[size],
+        variantConfig?.[variant],
         className
       )}
       {...props}
@@ -271,14 +271,14 @@ const GlassFormMessage = React.forwardRef<
       id={formMessageId}
       className={cn(
         'glass-form-message font-medium flex items-center gap-1.5',
-        sizeConfig[size],
-        variantConfig[variant],
+        sizeConfig?.[size],
+        variantConfig?.[variant],
         className
       )}
       {...props}
     >
       {showIcon && variant === 'error' && (
-        <AlertCircle className={iconSize[size]} />
+        <AlertCircle className={iconSize?.[size]} />
       )}
       {body}
     </p>

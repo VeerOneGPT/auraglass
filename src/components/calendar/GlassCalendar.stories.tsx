@@ -94,6 +94,11 @@ const sampleEvents = [
 ];
 
 export const Default: Story = {
+  render: (args) => (
+    <div className="w-full max-w-4xl">
+      <GlassCalendar {...args} />
+    </div>
+  ),
   args: {
     events: sampleEvents,
   },
@@ -101,17 +106,17 @@ export const Default: Story = {
 
 export const Views: Story = {
   render: (args) => (
-    <div className="space-y-6">
+    <div className="space-y-8 w-full max-w-4xl">
       <div>
-        <h4 className="text-sm font-medium mb-2">Month View</h4>
+        <h4 className="text-lg font-semibold mb-4 text-white">Month View</h4>
         <GlassCalendar {...args} view="month" />
       </div>
       <div>
-        <h4 className="text-sm font-medium mb-2">Week View</h4>
+        <h4 className="text-lg font-semibold mb-4 text-white">Week View</h4>
         <GlassCalendar {...args} view="week" />
       </div>
       <div>
-        <h4 className="text-sm font-medium mb-2">Day View</h4>
+        <h4 className="text-lg font-semibold mb-4 text-white">Day View</h4>
         <GlassCalendar {...args} view="day" />
       </div>
     </div>
@@ -122,6 +127,11 @@ export const Views: Story = {
 };
 
 export const WithEvents: Story = {
+  render: (args) => (
+    <div className="w-full max-w-4xl">
+      <GlassCalendar {...args} />
+    </div>
+  ),
   args: {
     events: sampleEvents,
     showEvents: true,
@@ -129,6 +139,11 @@ export const WithEvents: Story = {
 };
 
 export const WithoutWeekends: Story = {
+  render: (args) => (
+    <div className="w-full max-w-4xl">
+      <GlassCalendar {...args} />
+    </div>
+  ),
   args: {
     showWeekends: false,
     events: sampleEvents,
@@ -136,12 +151,22 @@ export const WithoutWeekends: Story = {
 };
 
 export const Loading: Story = {
+  render: (args) => (
+    <div className="w-full max-w-4xl">
+      <GlassCalendar {...args} />
+    </div>
+  ),
   args: {
     loading: true,
   },
 };
 
 export const CustomDate: Story = {
+  render: (args) => (
+    <div className="w-full max-w-4xl">
+      <GlassCalendar {...args} />
+    </div>
+  ),
   args: {
     selectedDate: new Date(2024, 11, 25), // Christmas
     events: [

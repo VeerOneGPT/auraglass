@@ -92,7 +92,7 @@ export interface GlassAccordionProps {
 export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
   (
     {
-      items,
+      items = [],
       variant = 'default',
       size = 'md',
       multiple = false,
@@ -130,17 +130,17 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
         setInternalValue(newValue);
       }
 
-      const result = multiple ? newValue : newValue[0] || '';
+      const result = multiple ? newValue : newValue?.[0] || '';
       onValueChange?.(result);
     };
 
     // Toggle item open/closed
     const toggleItem = (itemId: string) => {
-      const isOpen = openItems.includes(itemId);
+      const isOpen = (openItems || []).includes(itemId);
 
       if (multiple) {
         const newValue = isOpen
-          ? openItems.filter(id => id !== itemId)
+          ? (openItems || []).filter(id => id !== itemId)
           : [...openItems, itemId];
         handleValueChange(newValue);
       } else {
@@ -178,8 +178,10 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
 
     // Focus management helpers
     const focusNextItem = (currentId: string) => {
-      const currentIndex = items.findIndex(item => item.id === currentId);
-      const nextIndex = (currentIndex + 1) % items.length;
+      if (!items || !Array.isArray(items) || (items?.length || 0) === 0) return;
+      const currentIndex = (items || []).findIndex(item => item?.id === currentId);
+      if (currentIndex === -1) return;
+      const nextIndex = (currentIndex + 1) % (items?.length || 0);
       const nextButton = document.querySelector(
         `[data-accordion-trigger="${items[nextIndex].id}"]`
       ) as HTMLButtonElement;
@@ -187,8 +189,10 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
     };
 
     const focusPreviousItem = (currentId: string) => {
-      const currentIndex = items.findIndex(item => item.id === currentId);
-      const prevIndex = currentIndex === 0 ? items.length - 1 : currentIndex - 1;
+      if (!items || !Array.isArray(items) || (items?.length || 0) === 0) return;
+      const currentIndex = (items || []).findIndex(item => item?.id === currentId);
+      if (currentIndex === -1) return;
+      const prevIndex = currentIndex === 0 ? (items?.length || 0) - 1 : currentIndex - 1;
       const prevButton = document.querySelector(
         `[data-accordion-trigger="${items[prevIndex].id}"]`
       ) as HTMLButtonElement;
@@ -204,7 +208,7 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
 
     const focusLastItem = () => {
       const lastButton = document.querySelector(
-        `[data-accordion-trigger="${items[items.length - 1]?.id}"]`
+        `[data-accordion-trigger="${items[(items?.length || 0) - 1]?.id}"]`
       ) as HTMLButtonElement;
       lastButton?.focus();
     };
@@ -258,10 +262,10 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
         role="tablist"
         {...props}
       >
-        {items.map((item, index) => {
-          const isOpen = openItems.includes(item.id);
+        {(items || []).map((item, index) => {
+          const isOpen = (openItems || []).includes(item?.id);
           const isFirst = index === 0;
-          const isLast = index === items.length - 1;
+          const isLast = index === (items?.length || 1) - 1;
 
           return (
             <OptimizedGlass
@@ -273,7 +277,7 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
               border="subtle"
               animation="none"
               performanceMode="medium"
-              key={item.id}
+              key={item?.id}
 
 
 
@@ -298,28 +302,28 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
                   sizeClasses[size].trigger,
                   {
                     'bg-muted/10': isOpen,
-                    'opacity-50 cursor-not-allowed': item.disabled,
+                    'opacity-50 cursor-not-allowed': item?.disabled,
                     'border-b border-border/10': variant === 'flush' && isOpen,
                   }
                 )}
-                onClick={() => !item.disabled && toggleItem(item.id)}
-                onKeyDown={(e) => !item.disabled && handleKeyDown(e, item.id)}
-                disabled={item.disabled}
+                onClick={() => !item?.disabled && toggleItem(item?.id)}
+                onKeyDown={(e) => !item?.disabled && handleKeyDown(e, item?.id)}
+                disabled={item?.disabled}
                 aria-expanded={isOpen}
-                aria-controls={`accordion-content-${item.id}`}
-                data-accordion-trigger={item.id}
+                aria-controls={`accordion-content-${item?.id}`}
+                data-accordion-trigger={item?.id}
                 role="tab"
               >
                 <div className="flex items-center gap-3">
-                  {item.icon && (
+                  {item?.icon && (
                     <span className="flex-shrink-0 text-muted-foreground">
-                      {item.icon}
+                      {item?.icon}
                     </span>
                   )}
-                  <span>{item.title}</span>
+                  <span>{item?.title}</span>
                 </div>
 
-                {showIcons && !item.disabled && (
+                {showIcons && !item?.disabled && (
                   <span
                     className={cn(
                       'flex-shrink-0 text-muted-foreground transition-transform duration-200',
@@ -336,15 +340,15 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
 
               {/* Accordion Content */}
               <AccordionContent
-                id={`accordion-content-${item.id}`}
+                id={`accordion-content-${item?.id}`}
                 isOpen={isOpen}
                 animated={animated}
                 duration={animationDuration}
                 className={sizeClasses[size].content}
                 role="tabpanel"
-                aria-labelledby={`accordion-trigger-${item.id}`}
+                aria-labelledby={`accordion-trigger-${item?.id}`}
               >
-                {item.content}
+                {item?.content}
               </AccordionContent>
             </OptimizedGlass>
           );

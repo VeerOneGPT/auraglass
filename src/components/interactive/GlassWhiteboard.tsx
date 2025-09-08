@@ -230,21 +230,21 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
       drawingData.forEach(item => {
         if ('points' in item) {
           // Check if path intersects with selection box
-          const intersects = item.points.some(point =>
+          const intersects = item?.points.some(point =>
             point.x >= x && point.x <= x + width &&
             point.y >= y && point.y <= y + height
           );
-          if (intersects) selected.add(item.id);
+          if (intersects) selected.add(item?.id);
         } else {
           // Check if shape intersects with selection box
           const intersects = (
-            item.startX >= x && item.startX <= x + width &&
-            item.startY >= y && item.startY <= y + height
+            item?.startX >= x && item?.startX <= x + width &&
+            item?.startY >= y && item?.startY <= y + height
           ) || (
-            item.endX >= x && item.endX <= x + width &&
-            item.endY >= y && item.endY <= y + height
+            item?.endX >= x && item?.endX <= x + width &&
+            item?.endY >= y && item?.endY <= y + height
           );
-          if (intersects) selected.add(item.id);
+          if (intersects) selected.add(item?.id);
         }
       });
 
@@ -314,7 +314,7 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
 
       if ('points' in element) {
         // Draw path
-        if (element.points.length > 1) {
+        if ((element.points?.length || 0) > 1) {
           ctx.strokeStyle = element.color;
           ctx.lineWidth = element.width;
           ctx.lineCap = 'round';
@@ -323,7 +323,7 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
           ctx.beginPath();
           ctx.moveTo(element.points[0].x, element.points[0].y);
 
-          for (let i = 1; i < element.points.length; i++) {
+          for (let i = 1; i < (element.points?.length || 0); i++) {
             ctx.lineTo(element.points[i].x, element.points[i].y);
           }
 
@@ -375,14 +375,14 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
   // Draw selection highlights
   const drawSelection = useCallback((ctx: CanvasRenderingContext2D) => {
     selectedElements.forEach(elementId => {
-      const element = drawingData.find(item => item.id === elementId);
+      const element = drawingData.find(item => item?.id === elementId);
       if (!element) return;
 
       ctx.strokeStyle = '#ffffff';
       ctx.lineWidth = 2;
       ctx.setLineDash([5, 5]);
 
-      if ('points' in element && element.points.length > 0) {
+      if ('points' in element && (element.points?.length || 0) > 0) {
         const bounds = element.points.reduce(
           (acc, point) => ({
             minX: Math.min(acc.minX, point.x),
@@ -477,7 +477,7 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
 
   // Delete selected elements
   const deleteSelected = () => {
-    const newData = drawingData.filter(item => !selectedElements.has(item.id));
+    const newData = drawingData.filter(item => !selectedElements.has(item?.id));
     updateDrawingData(newData);
     setSelectedElements(new Set());
   };

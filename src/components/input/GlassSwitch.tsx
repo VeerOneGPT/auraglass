@@ -79,7 +79,7 @@ export const GlassSwitch = forwardRef<HTMLButtonElement, GlassSwitchProps>(
 
       onChange?.(newChecked);
       onCheckedChange?.(newChecked);
-      props.onClick?.(event);
+      props?.onClick?.(event);
     };
 
     const sizeConfig = {
@@ -159,8 +159,8 @@ export const GlassSwitch = forwardRef<HTMLButtonElement, GlassSwitchProps>(
       },
     };
 
-    const config = sizeConfig[size];
-    const colors = variantConfig[variant];
+    const config = sizeConfig?.[size];
+    const colors = variantConfig?.[variant];
 
     const switchElement = (
       <GlassButton

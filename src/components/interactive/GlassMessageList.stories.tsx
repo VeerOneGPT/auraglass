@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassMessageList } from './GlassMessageList';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassMessageList> = {
   title: 'Components/Interactive/GlassMessageList',
@@ -86,8 +87,8 @@ export const Default: Story = {
         type: 'text' as const,
       },
     ],
-    onMessageClick: (message) => console.log('Message clicked:', message.id),
-    onMessageReaction: (messageId, emoji) => console.log('Reaction:', messageId, emoji),
+    onMessageClick: fn(),
+    onMessageReaction: fn(),
   },
 };
 
@@ -135,6 +136,6 @@ export const WithAttachments: Story = {
         ],
       },
     ],
-    onAttachmentDownload: (attachment) => console.log('Download:', attachment.name),
+    onAttachmentDownload: fn(),
   },
 };

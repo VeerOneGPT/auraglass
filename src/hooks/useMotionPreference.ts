@@ -17,7 +17,7 @@ export function useMotionAwareAnimation(): MotionAwareAnimationConfig {
       return {
         ...props,
         transition: 'none',
-        animate: props.initial || {},
+        animate: props?.initial || {},
       };
     }
     return props;

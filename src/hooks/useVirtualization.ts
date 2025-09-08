@@ -80,11 +80,11 @@ export function useVirtualization<T>(
   // Calculate total dimensions
   const totalHeight = useMemo(() => {
     if (typeof itemHeight === 'number') {
-      return items.length * itemHeight;
+        return (items?.length || 0) * itemHeight;
     }
     
     let total = 0;
-    for (let i = 0; i < items.length; i++) {
+    for (let i = 0; i < (items?.length || 0); i++) {
       total += getItemHeight(i);
     }
     return total;
@@ -96,7 +96,7 @@ export function useVirtualization<T>(
     }
     
     let total = 0;
-    for (let i = 0; i < items.length; i++) {
+    for (let i = 0; i < (items?.length || 0); i++) {
       total += getItemWidth(i);
     }
     return total;
@@ -111,7 +111,7 @@ export function useVirtualization<T>(
       // Fixed height optimization
       startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
       endIndex = Math.min(
-        items.length - 1,
+        (items?.length || 1) - 1,
         Math.ceil((scrollTop + containerHeight) / itemHeight) + overscan
       );
     } else {
@@ -119,7 +119,7 @@ export function useVirtualization<T>(
       let currentOffset = 0;
       
       // Find start index
-      for (let i = 0; i < items.length; i++) {
+      for (let i = 0; i < (items?.length || 0); i++) {
         const height = getItemHeight(i);
         if (currentOffset + height > scrollTop) {
           startIndex = Math.max(0, i - overscan);
@@ -244,10 +244,10 @@ export function useVirtualization<T>(
 
   // Performance optimization: disable virtualization for small lists
   const shouldVirtualize = useMemo(() => {
-    if (performanceMode === 'high') return items.length > threshold * 2;
-    if (performanceMode === 'low') return items.length > threshold / 2;
-    return items.length > threshold;
-  }, [items.length, threshold, performanceMode]);
+        if (performanceMode === 'high') return (items?.length || 0) > threshold * 2;
+    if (performanceMode === 'low') return (items?.length || 0) > threshold / 2;
+    return (items?.length || 0) > threshold;
+  }, [items?.length, threshold, performanceMode]);
 
   // Container props
   const containerProps: React.HTMLAttributes<HTMLDivElement> & { ref: React.RefObject<HTMLDivElement> } = {
@@ -338,7 +338,7 @@ export function useGridVirtualization<T>(
     for (let row = startRow; row <= endRow; row++) {
       for (let col = 0; col < columns; col++) {
         const index = row * columns + col;
-        if (index >= items.length) break;
+        if (index >= (items?.length || 0)) break;
 
         result.push({
           index,
@@ -436,7 +436,7 @@ export function useInfiniteVirtualization<T>(
   return {
     ...virtualization,
     isLoadingMore: loadingRef.current,
-    totalItems: allItems.length,
+        totalItems: allItems?.length || 0,
   };
 }
 
@@ -476,7 +476,7 @@ export function useWindowVirtualization<T>(
     if (typeof itemHeight === 'number') {
       const startIndex = Math.max(0, Math.floor(scrollY / itemHeight) - overscan);
       const endIndex = Math.min(
-        items.length - 1,
+        (items?.length || 1) - 1,
         Math.ceil((scrollY + windowHeight) / itemHeight) + overscan
       );
       return { startIndex, endIndex };
@@ -488,7 +488,7 @@ export function useWindowVirtualization<T>(
     let endIndex = items.length - 1;
 
     // Find start index
-    for (let i = 0; i < items.length; i++) {
+    for (let i = 0; i < (items?.length || 0); i++) {
       const height = typeof itemHeight === 'function' ? itemHeight(i) : itemHeight;
       if (currentOffset + height > scrollY) {
         startIndex = Math.max(0, i - overscan);

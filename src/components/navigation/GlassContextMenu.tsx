@@ -261,8 +261,8 @@ export const GlassContextMenuContent: React.FC<GlassContextMenuContentProps> = (
             >
                 <div className="py-1">
                     {items.map((item, index) => (
-                        <React.Fragment key={item.id}>
-                            {item.separator && index > 0 && (
+                        <React.Fragment key={item?.id}>
+                            {item?.separator && index > 0 && (
                                 <div className="h-px bg-white/20 mx-2 my-1" />
                             )}
                             <GlassContextMenuItem
@@ -281,10 +281,10 @@ export const GlassContextMenuContent: React.FC<GlassContextMenuContentProps> = (
                                 onClose={onClose}
                                 isSubmenu={false}
                             />
-                            {item.children && submenuOpen === item.id && (
+                            {item?.children && submenuOpen === item?.id && (
                                 <div className="absolute left-full top-0 ml-1">
                                     <GlassContextMenuContent
-                                        items={item.children}
+                                        items={item?.children}
                                         position={{ x: 0, y: 0 }}
                                         onClose={() => setSubmenuOpen(null)}
                                     />
@@ -311,7 +311,7 @@ export const GlassContextMenuItem: React.FC<GlassContextMenuItemProps> = ({
 }) => {
     const [isHovered, setIsHovered] = useState(false);
 
-    if (item.separator) {
+    if (item?.separator) {
         return <div className="h-px bg-white/20 mx-2 my-1" />;
     }
 
@@ -324,31 +324,31 @@ export const GlassContextMenuItem: React.FC<GlassContextMenuItemProps> = ({
                 'glass-press',
                 {
                     'bg-white/20 text-white': isSelected,
-                    'opacity-50 cursor-not-allowed': item.disabled,
-                    'text-red-400 hover:text-red-300': item.destructive,
+                    'opacity-50 cursor-not-allowed': item?.disabled,
+                    'text-red-400 hover:text-red-300': item?.destructive,
                 }
             )}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            onClick={() => !item.disabled && onClick(item)}
+            onClick={() => !item?.disabled && onClick(item)}
         >
-            {item.icon && (
+            {item?.icon && (
                 <div className="flex items-center justify-center w-4 h-4 mr-3">
-                    {item.icon}
+                    {item?.icon}
                 </div>
             )}
 
             <span className="flex-1 text-sm font-medium truncate">
-                {item.label}
+                {item?.label}
             </span>
 
-            {item.shortcut && (
+            {item?.shortcut && (
                 <span className="ml-6 text-xs text-white/50 font-mono">
-                    {item.shortcut}
+                    {item?.shortcut}
                 </span>
             )}
 
-            {item.children && (
+            {item?.children && (
                 <div className="ml-3 text-white/50">
                     ▶
                 </div>

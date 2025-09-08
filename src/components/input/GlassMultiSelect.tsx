@@ -671,7 +671,7 @@ const GlassMultiSelectInternal = <T extends string | number = string>(
   const [internalValue, setInternalValue] = useState<MultiSelectOption<T>[]>(() => {
     if (controlledValue && Array.isArray(controlledValue)) {
       // Convert T[] to MultiSelectOption<T>[] by finding matching options
-      return controlledValue.map(value =>
+      return (controlledValue || []).map(value =>
         options.find(option => option.value === value) || { value, label: String(value) }
       );
     }
@@ -755,7 +755,7 @@ const GlassMultiSelectInternal = <T extends string | number = string>(
   useEffect(() => {
     if (controlledValue !== undefined) {
       const controlledArray = Array.isArray(controlledValue) ? controlledValue : [];
-      const controlledOptions = controlledArray.map(value =>
+      const controlledOptions = (controlledArray || []).map(value =>
         options.find(option => option.value === value) || { value, label: String(value) }
       );
       if (!areOptionsEqual(controlledOptions, internalValue)) {
@@ -909,7 +909,7 @@ const GlassMultiSelectInternal = <T extends string | number = string>(
       if (onSelect) onSelect(option);
     }
     if (controlledValue === undefined) setInternalValue(newValue);
-    if (onChange) onChange(newValue.map(opt => opt.value));
+    if (onChange) onChange((newValue || []).map(opt => opt.value));
     if (clearInputOnSelect) setInputValue('');
     if (!closeOnSelect) inputRef.current?.focus();
     else setIsDropdownOpen(false);
@@ -919,7 +919,7 @@ const GlassMultiSelectInternal = <T extends string | number = string>(
   const handleRemoveTokenActual = useCallback((idToRemove: string | number) => {
     const newValue = internalValue.filter(v => v.id !== idToRemove);
     if (controlledValue === undefined) setInternalValue(newValue);
-    if (onChange) onChange(newValue.map(opt => opt.value));
+    if (onChange) onChange((newValue || []).map(opt => opt.value));
     // Find the original option for the onRemove callback
     const removedOption = internalValue.find(v => v.id === idToRemove);
     if (removedOption && onRemove) onRemove(removedOption.value);
@@ -1121,16 +1121,16 @@ const GlassMultiSelectInternal = <T extends string | number = string>(
             {!loading && flatOptions.length === 0 && <NoOptions>{defaultNoOptionsMessage}</NoOptions>}
             {!loading && flatOptions.length > 0 && (
                 <OptionsList ref={listRef} role="listbox" id={`listbox-${id || 'gms'}`}>
-                    {groupedOptions.map((groupInfo, groupIndex) => (
+                    {(groupedOptions || []).map((groupInfo, groupIndex) => (
                         <React.Fragment key={groupInfo.group?.id || `group-${groupIndex}`}>
                             {groupInfo.group && (
                                 renderGroup ? renderGroup(groupInfo.group as OptionGroup<T>) :
                                 <GroupHeader $size={size}>{groupInfo.group.label}</GroupHeader>
                             )}
-                            {groupInfo.options.map(option => {
+                            {(groupInfo.options || []).map(option => {
                                 const isSelected = internalValue.some(v => v.id === option.id);
                                 const isDisabled = option.disabled || disabled;
-                                const currentIndex = flatOptions.findIndex(opt => opt.id === option.id);
+                                const currentIndex = (flatOptions || []).findIndex(opt => opt.id === option.id);
                                 const isFocused = currentIndex === focusedOptionIndex;
                                 const optionContent = renderOption ? renderOption(option, isSelected) :
                                     <>{option.label} {isSelected && <span>✓</span>}</>; 
@@ -1210,7 +1210,7 @@ const GlassMultiSelectInternal = <T extends string | number = string>(
       >
         <TokensContainer>
           {/* Render with AnimatedTokenWrapper */}
-          {internalValue.map((option) => (
+          {(internalValue || []).map((option) => (
             <AnimatedTokenWrapper<T>
               key={option.id} // Key must be here for React list diffing
               option={option}

@@ -519,7 +519,7 @@ export const GlassTooltip = forwardRef<HTMLDivElement, GlassTooltipProps>(
     ref
   ) => {
     if (disabled) {
-      return props.children;
+      return props?.children;
     }
 
     const [open, setOpen] = React.useState(false)

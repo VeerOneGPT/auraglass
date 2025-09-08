@@ -125,29 +125,29 @@ export const GlassNavigationMenu: React.FC<GlassNavigationMenuProps> = ({
     const [openSubmenus, setOpenSubmenus] = useState<Set<string>>(new Set());
 
     const handleItemClick = (item: NavigationItem) => {
-        if (item.disabled) return;
+        if (item?.disabled) return;
 
-        if (item.children && item.children.length > 0) {
+        if (item?.children && item?.children.length > 0) {
             // Toggle submenu
             setOpenSubmenus(prev => {
                 const newSet = new Set(prev);
-                if (newSet.has(item.id)) {
-                    newSet.delete(item.id);
+                if (newSet.has(item?.id)) {
+                    newSet.delete(item?.id);
                 } else {
-                    newSet.add(item.id);
+                    newSet.add(item?.id);
                 }
                 return newSet;
             });
         } else {
             // Execute action
-            if (item.href) {
-                if (item.external) {
-                    window.open(item.href, '_blank');
+            if (item?.href) {
+                if (item?.external) {
+                    window.open(item?.href, '_blank');
                 } else {
-                    window.location.href = item.href;
+                    window.location.href = item?.href;
                 }
             } else {
-                item.action?.();
+                item?.action?.();
             }
             onItemClick?.(item);
         }
@@ -183,14 +183,14 @@ export const GlassNavigationMenu: React.FC<GlassNavigationMenuProps> = ({
             performanceMode="medium"
 
             className={cn(
-                variantClasses[variant],
+                variantClasses?.[variant],
                 orientation === 'horizontal' ? 'flex flex-row' : 'flex flex-col',
                 className
             )}
         >
             {items.map((item, index) => (
-                <React.Fragment key={item.id}>
-                    {item.separator && (
+                <React.Fragment key={item?.id}>
+                    {item?.separator && (
                         <div className={cn(
                             'bg-white/20',
                             orientation === 'horizontal' ? 'w-px h-8 mx-4' : 'h-px w-full my-2 mx-4'
@@ -199,8 +199,8 @@ export const GlassNavigationMenu: React.FC<GlassNavigationMenuProps> = ({
 
                     <GlassNavigationMenuItem
                         item={item}
-                        isActive={activeItem === item.id}
-                        hasSubmenuOpen={openSubmenus.has(item.id)}
+                        isActive={activeItem === item?.id}
+                        hasSubmenuOpen={openSubmenus.has(item?.id)}
                         collapsed={collapsed}
                         size={size}
                         onClick={handleItemClick}
@@ -208,7 +208,7 @@ export const GlassNavigationMenu: React.FC<GlassNavigationMenuProps> = ({
                     />
 
                     {/* Submenu */}
-                    {item.children && openSubmenus.has(item.id) && !collapsed && (
+                    {item?.children && openSubmenus.has(item?.id) && !collapsed && (
                         <Motion
                             preset="slideDown"
                             duration={200}
@@ -218,7 +218,7 @@ export const GlassNavigationMenu: React.FC<GlassNavigationMenuProps> = ({
                                 orientation === 'horizontal' && 'absolute top-full left-0 mt-2 z-50'
                             )}>
                                 <GlassNavigationMenu
-                                    items={item.children}
+                                    items={item?.children}
                                     orientation="vertical"
                                     variant="default"
                                     size={size}
@@ -281,18 +281,18 @@ export const GlassNavigationMenuItem: React.FC<GlassNavigationMenuItemProps> = (
     };
 
     const onHoverEnter = () => {
-        if (!item.children || item.children.length === 0 || collapsed) return;
+        if (!item?.children || item?.children.length === 0 || collapsed) return;
         clearHoverTimer();
         hoverTimer.current = window.setTimeout(() => {
-            if (!hasSubmenuOpen) onToggleSubmenu(item.id);
+            if (!hasSubmenuOpen) onToggleSubmenu(item?.id);
         }, 120);
     };
 
     const onHoverLeave = () => {
-        if (!item.children || item.children.length === 0 || collapsed) return;
+        if (!item?.children || item?.children.length === 0 || collapsed) return;
         clearHoverTimer();
         hoverTimer.current = window.setTimeout(() => {
-            if (hasSubmenuOpen) onToggleSubmenu(item.id);
+            if (hasSubmenuOpen) onToggleSubmenu(item?.id);
         }, 180);
     };
 
@@ -315,10 +315,10 @@ export const GlassNavigationMenuItem: React.FC<GlassNavigationMenuItemProps> = (
 
     const handleSubmenuToggle = (e: React.MouseEvent) => {
         e.stopPropagation();
-        onToggleSubmenu(item.id);
+        onToggleSubmenu(item?.id);
     };
 
-    if (item.separator) {
+    if (item?.separator) {
         return (
             <div className="h-px bg-white/20 mx-4 my-2" />
         );
@@ -336,7 +336,7 @@ export const GlassNavigationMenuItem: React.FC<GlassNavigationMenuItemProps> = (
                         'hover:bg-white/10 rounded-lg',
                         'focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-transparent',
                         'disabled:opacity-50 disabled:cursor-not-allowed',
-                        sizeClasses[size],
+                        sizeClasses?.[size],
                         {
                             'bg-white/20 text-white': isActive,
                             'text-white': isActive,
@@ -344,19 +344,19 @@ export const GlassNavigationMenuItem: React.FC<GlassNavigationMenuItemProps> = (
                         className
                     )}
                     onClick={handleClick}
-                    disabled={item.disabled}
-                    title={item.label}
+                    disabled={item?.disabled}
+                    title={item?.label}
                     type="button"
                 >
-                    {item.icon && (
+                    {item?.icon && (
                         <div className="flex items-center justify-center">
-                            {item.icon}
+                            {item?.icon}
                         </div>
                     )}
 
-                    {item.badge && (
+                    {item?.badge && (
                         <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-xs font-bold text-white">
-                            {typeof item.badge === 'number' && item.badge > 99 ? '99+' : item.badge}
+                            {typeof item?.badge === 'number' && item?.badge > 99 ? '99+' : item?.badge}
                         </div>
                     )}
                 </button>
@@ -375,7 +375,7 @@ export const GlassNavigationMenuItem: React.FC<GlassNavigationMenuItemProps> = (
                     'hover:bg-white/10 rounded-lg',
                     'focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-transparent',
                     'disabled:opacity-50 disabled:cursor-not-allowed',
-                    sizeClasses[size],
+                    sizeClasses?.[size],
                     {
                         'bg-white/20 text-white shadow-md': isActive,
                         'text-white': isActive,
@@ -385,14 +385,14 @@ export const GlassNavigationMenuItem: React.FC<GlassNavigationMenuItemProps> = (
                 onClick={handleClick}
                 onMouseEnter={onHoverEnter}
                 onMouseLeave={onHoverLeave}
-                disabled={item.disabled}
+                disabled={item?.disabled}
                 type="button"
             >
                 <div className="flex items-center gap-3 flex-1 min-w-0">
                     {/* Icon */}
-                    {item.icon && (
+                    {item?.icon && (
                         <div className="flex items-center justify-center flex-shrink-0">
-                            {item.icon}
+                            {item?.icon}
                         </div>
                     )}
 
@@ -400,19 +400,19 @@ export const GlassNavigationMenuItem: React.FC<GlassNavigationMenuItemProps> = (
                     <div className="flex-1 min-w-0 text-left">
                         <div className="flex items-center gap-2">
                             <span className="truncate font-medium">
-                                {item.label}
+                                {item?.label}
                             </span>
 
-                            {item.badge && (
+                            {item?.badge && (
                                 <span className="flex-shrink-0 px-2 py-0.5 bg-red-500/20 text-red-300 rounded-full text-xs font-medium">
-                                    {typeof item.badge === 'number' && item.badge > 99 ? '99+' : item.badge}
+                                    {typeof item?.badge === 'number' && item?.badge > 99 ? '99+' : item?.badge}
                                 </span>
                             )}
                         </div>
 
-                        {item.description && (
+                        {item?.description && (
                             <p className="text-white/50 text-sm truncate mt-0.5">
-                                {item.description}
+                                {item?.description}
                             </p>
                         )}
                     </div>
@@ -421,19 +421,19 @@ export const GlassNavigationMenuItem: React.FC<GlassNavigationMenuItemProps> = (
                 {/* Right side actions */}
                 <div className="flex items-center gap-2 flex-shrink-0">
                     {/* External link indicator */}
-                    {item.external && (
+                    {item?.external && (
                         <div className="w-3 h-3 text-white/50">
                             ↗
                         </div>
                     )}
 
                     {/* Featured indicator */}
-                    {item.featured && (
+                    {item?.featured && (
                         <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
                     )}
 
                     {/* Submenu toggle */}
-                    {item.children && item.children.length > 0 && (
+                    {item?.children && item?.children.length > 0 && (
                         <button
                             onClick={handleSubmenuToggle}
                             className="p-1 hover:bg-white/10 rounded transition-colors duration-200"
@@ -461,15 +461,15 @@ export const useNavigationMenu = (initialActiveItem?: string) => {
     const [collapsed, setCollapsed] = useState(false);
 
     const navigateTo = (item: NavigationItem) => {
-        setActiveItem(item.id);
-        if (item.href) {
-            if (item.external) {
-                window.open(item.href, '_blank');
+        setActiveItem(item?.id);
+        if (item?.href) {
+            if (item?.external) {
+                window.open(item?.href, '_blank');
             } else {
-                window.location.href = item.href;
+                window.location.href = item?.href;
             }
         } else {
-            item.action?.();
+            item?.action?.();
         }
     };
 

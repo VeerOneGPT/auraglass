@@ -180,7 +180,7 @@ StepIndicator.displayName = 'StepIndicator';
 export const GlassFormWizardSteps = forwardRef<HTMLDivElement, GlassFormWizardStepsProps>(
   (
     {
-      steps,
+      steps = [],
       currentStep,
       completedSteps,
       onStepClick,
@@ -193,8 +193,8 @@ export const GlassFormWizardSteps = forwardRef<HTMLDivElement, GlassFormWizardSt
     },
     ref
   ) => {
-    const totalSteps = steps.length;
-    const progressValue = ((currentStep + 1) / totalSteps) * 100;
+    const totalSteps = steps?.length || 0;
+    const progressValue = totalSteps > 0 ? ((currentStep + 1) / totalSteps) * 100 : 0;
 
     const handleStepClick = (stepIndex: number) => {
       if (clickable && onStepClick) {
@@ -239,7 +239,14 @@ export const GlassFormWizardSteps = forwardRef<HTMLDivElement, GlassFormWizardSt
         return (
           <VStack space="md">
             {steps.map((step, index) => (
-              <Motion key={step.id} preset="slideLeft" delay={index * 100}>
+              <div 
+                key={step.id}
+                className="animate-slide-in-left"
+                style={{ 
+                  animationDelay: `${Math.min(index, 5) * 100}ms`,
+                  animationFillMode: 'both'
+                }}
+              >
                 <StepIndicator
                   step={step}
                   index={index}
@@ -249,7 +256,7 @@ export const GlassFormWizardSteps = forwardRef<HTMLDivElement, GlassFormWizardSt
                   onClick={() => handleStepClick(index)}
                   layout={layout}
                 />
-              </Motion>
+              </div>
             ))}
           </VStack>
         );
@@ -262,7 +269,13 @@ export const GlassFormWizardSteps = forwardRef<HTMLDivElement, GlassFormWizardSt
         )}>
           {steps.map((step, index) => (
             <React.Fragment key={step.id}>
-              <Motion preset="slideUp" delay={index * 100}>
+              <div
+                className="animate-slide-in-up"
+                style={{ 
+                  animationDelay: `${Math.min(index, 5) * 100}ms`,
+                  animationFillMode: 'both'
+                }}
+              >
                 <StepIndicator
                   step={step}
                   index={index}
@@ -272,7 +285,7 @@ export const GlassFormWizardSteps = forwardRef<HTMLDivElement, GlassFormWizardSt
                   onClick={() => handleStepClick(index)}
                   layout={layout}
                 />
-              </Motion>
+              </div>
               
               {/* Connector line */}
               {index < totalSteps - 1 && layout !== 'compact' && (

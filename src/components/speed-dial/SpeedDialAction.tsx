@@ -76,7 +76,7 @@ const ActionRoot = styled.div<{
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   cursor: ${props => (props.$disabled ? 'default' : 'pointer')};
   opacity: ${props => (props.$visible ? 1 : 0)};
-  transform: ${props => (props.$visible ? 'scale(1)' : 'scale(0.5)')};
+  transform: ${props => { if (props.$visible) return 'translate3d(0,0,0) scale(1)'; const d = 10; switch (props.$direction) { case 'up': return `translate3d(0, ${d}px, 0) scale(0.6)`; case 'down': return `translate3d(0, -${d}px, 0) scale(0.6)`; case 'left': return `translate3d(${d}px, 0, 0) scale(0.6)`; case 'right': return `translate3d(-${d}px, 0, 0) scale(0.6)`; default: return 'scale(0.6)'; } }};
   ${props => props.$position.top !== undefined && `top: ${props.$position.top};`}
   ${props => props.$position.right !== undefined && `right: ${props.$position.right};`}
   ${props => props.$position.bottom !== undefined && `bottom: ${props.$position.bottom};`}
@@ -97,9 +97,9 @@ const ActionRoot = styled.div<{
     props.$transition &&
     !props.$reducedMotion &&
     `
-    transition-property: transform, opacity;
-    transition-duration: 0.2s;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-property: transform, opacity, box-shadow, background-color;
+    transition-duration: 220ms;
+    transition-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
     transition-delay: ${getTransitionDelay(props.$index, props.$totalActions, props.$visible)}ms;
   `}
   
@@ -117,6 +117,12 @@ const ActionRoot = styled.div<{
     `
     &:hover {
       background-color: ${props.$glass ? 'rgba(48, 48, 48, 0.5)' : 'rgba(48, 48, 48, 0.85)'};
+      transform: translate3d(0,0,0) scale(1.02);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.2);
+    }
+    &:active {
+      transform: translate3d(0,0,0) scale(0.96);
+      box-shadow: inset 0 6px 12px rgba(0,0,0,0.25);
     }
   `}
 `;
@@ -314,8 +320,7 @@ const SpeedDialActionComponent = (
   } = usePhysicsInteraction(finalInteractionConfig);
 
   const position = getPosition(direction, index, totalActions, size);
-
-  const visible = true;
+  const visible = !!(props as any).open;
 
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();

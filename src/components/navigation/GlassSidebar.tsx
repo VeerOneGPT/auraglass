@@ -155,7 +155,7 @@ export const GlassSidebar = forwardRef<HTMLDivElement, GlassSidebarProps>(
     };
 
     const handleItemClick = (item: NavigationItem) => {
-      if (item.disabled) return;
+      if (item?.disabled) return;
       onNavigate?.(item);
       if (variant === 'overlay') {
         onOpenChange?.(false);
@@ -232,8 +232,8 @@ export const GlassSidebar = forwardRef<HTMLDivElement, GlassSidebarProps>(
             performanceMode="medium"
             className={cn(
               'h-screen max-h-screen flex flex-col transition-colors overflow-visible',
-              widthClasses[width],
-              variantClasses[variant],
+              widthClasses?.[width],
+              variantClasses?.[variant],
               variant === 'floating' ? 'squiricle' : '',
               className
             )}
@@ -353,7 +353,7 @@ function SidebarNavigation({ items, level = 0 }: SidebarNavigationProps) {
   return (
     <ul className={cn('space-y-2', level > 0 && 'ml-4')}>
       {(items || []).map((item) => (
-        <SidebarNavigationItem key={item.id} item={item} level={level} />
+        <SidebarNavigationItem key={item?.id} item={item} level={level} />
       ))}
     </ul>
   );
@@ -370,11 +370,11 @@ interface SidebarNavigationItemProps {
 function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
   const { collapsed, activeId, onNavigate, renderItem } = useSidebarContext();
   // Only expand the most essential group by default
-  const shouldExpandByDefault = level === 0 && item.id === 'home';
+  const shouldExpandByDefault = level === 0 && item?.id === 'home';
   const [isExpanded, setIsExpanded] = useState(shouldExpandByDefault);
 
-  const isActive = activeId === item.id;
-  const hasChildren = item.children && item.children.length > 0;
+  const isActive = activeId === item?.id;
+  const hasChildren = item?.children && item?.children.length > 0;
 
   if (renderItem) {
     return <li>{renderItem(item, level)}</li>;
@@ -385,7 +385,7 @@ function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
       setIsExpanded(!isExpanded);
     } else {
       onNavigate?.(item);
-      item.onClick?.();
+      item?.onClick?.();
     }
   };
 
@@ -393,7 +393,7 @@ function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
     <GlassButton
       variant="ghost"
       onClick={handleClick}
-      disabled={item.disabled}
+      disabled={item?.disabled}
       className={cn(
         'w-full flex items-center gap-3 rounded-md transition-all duration-200 relative group',
         'hover:bg-white/10 focus:outline-none',
@@ -401,15 +401,15 @@ function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
         'text-sm font-medium',
         isActive ? 'bg-primary/15 text-primary shadow-[0_0_0_2px_rgba(59,130,246,0.2)]' : '',
         !isActive && 'text-muted-foreground hover:text-foreground',
-        item.disabled && 'opacity-50 cursor-not-allowed'
+        item?.disabled && 'opacity-50 cursor-not-allowed'
       )}
     >
       {/* Icon */}
-      {item.icon && (
+      {item?.icon && (
         <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center text-lg">
-          {React.cloneElement(item.icon as React.ReactElement, {
+          {React.cloneElement(item?.icon as React.ReactElement, {
             className: cn(
-              (item.icon as React.ReactElement).props.className,
+              (item?.icon as React.ReactElement).props?.className,
               collapsed ? "w-6 h-6" : "w-5 h-5"
             )
           })}
@@ -419,9 +419,9 @@ function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
       {/* Label and badge */}
       {!collapsed && (
         <>
-          <span className="flex-1 text-left whitespace-nowrap truncate leading-5">{item.label}</span>
+          <span className="flex-1 text-left whitespace-nowrap truncate leading-5">{item?.label}</span>
 
-          {item.badge && (
+          {item?.badge && (
             <span
               className={cn(
                 'flex-shrink-0 px-2 py-1 text-xs rounded-full font-medium transition-all duration-200',
@@ -433,7 +433,7 @@ function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
                 color: '#ffffff', // white text on dark background
               }}
             >
-              {item.badge}
+              {item?.badge}
             </span>
           )}
 
@@ -462,9 +462,9 @@ function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
 
   return (
     <li>
-      {collapsed && item.label ? (
+      {collapsed && item?.label ? (
         <GlassTooltip
-          content={item.label}
+          content={item?.label}
           placement="right"
           zIndex={9999}
           showDelay={300}
@@ -482,7 +482,7 @@ function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
           className="mt-1"
         >
           <div className="ml-2 pl-4 border-l border-border/20">
-            <SidebarNavigation items={item.children!} level={level + 1} />
+            <SidebarNavigation items={item?.children!} level={level + 1} />
           </div>
         </Motion>
       )}

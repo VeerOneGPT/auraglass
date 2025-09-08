@@ -58,7 +58,7 @@ export const AtmosphericEffects: React.FC<AtmosphericEffectsProps> = ({
 
   // Animate particles
   useEffect(() => {
-    if (isReducedMotion || particles.length === 0) return;
+        if (isReducedMotion || !particles || particles.length === 0) return;
 
     const animate = () => {
       setParticles(prevParticles =>

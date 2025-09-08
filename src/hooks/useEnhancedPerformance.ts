@@ -246,15 +246,15 @@ export function usePerformanceAwareRendering<T>(
   const { metrics } = useEnhancedPerformance();
 
   const shouldVirtualize = enableVirtualization && (
-    data.length > performanceThreshold ||
+    (data?.length || 0) > performanceThreshold ||
     (metrics?.frameRate || 60) < 30 ||
     (metrics?.memoryUsage || 0) > 0.8
   );
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil((data?.length || 0) / itemsPerPage);
   
   const visibleData = shouldVirtualize
-    ? data.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
+    ? data?.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
     : data;
 
   const setPage = useCallback((page: number) => {

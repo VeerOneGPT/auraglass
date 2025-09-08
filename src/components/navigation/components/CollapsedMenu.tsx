@@ -24,9 +24,9 @@ const CollapsedMenu: React.FC<CollapsedMenuProps> = ({
         zIndex: 1000,
       }}
     >
-      {items.map((item, index) => (
+      {(items || []).map((item, index) => (
         <button
-          key={item.id || index}
+          key={item?.id || index}
           style={{
             display: 'block',
             width: '100%',
@@ -40,8 +40,8 @@ const CollapsedMenu: React.FC<CollapsedMenuProps> = ({
           }}
           onClick={() => onItemClick?.(item)}
         >
-          {item.icon && <span style={{ marginRight: '8px' }}>{item.icon}</span>}
-          {item.label}
+          {item?.icon && <span style={{ marginRight: '8px' }}>{item?.icon}</span>}
+          {item?.label}
         </button>
       ))}
     </div>

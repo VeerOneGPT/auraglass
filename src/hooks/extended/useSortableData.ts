@@ -97,7 +97,7 @@ export function useSortableData<T>(
 
   // Sort data based on configurations
   const sortedData = useMemo(() => {
-    if (sortConfigs.length === 0) return data;
+        if (!sortConfigs || (sortConfigs?.length || 0) === 0) return data;
 
     const sortFn = finalOptions.customSort || defaultSort;
 
@@ -139,12 +139,14 @@ export function useSortableData<T>(
         } else {
           // Change to desc
           const newConfigs = [...prevConfigs];
-          newConfigs[existingIndex] = { ...newConfigs[existingIndex], direction: 'desc' as const };
+          if (newConfigs) {
+            newConfigs[existingIndex] = { ...newConfigs?.[existingIndex], direction: 'desc' as const };
+          }
           return newConfigs;
         }
       } else {
         // Add new sort level
-        if (prevConfigs.length >= finalOptions.maxSortLevels) {
+        if ((prevConfigs?.length || 0) >= finalOptions.maxSortLevels) {
           // Remove oldest if at max levels
           return [...prevConfigs.slice(1), { key, direction: direction || 'asc' }];
         } else {
@@ -239,7 +241,7 @@ export function useSearchableSortableData<T>(
 
     const query = caseSensitive ? debouncedQuery : debouncedQuery.toLowerCase();
 
-    return data.filter(item => {
+    return data?.filter(item => {
       return searchFields.some(field => {
         const value = String((item as any)[field] || '').trim();
         const normalizedValue = caseSensitive ? value : value.toLowerCase();
@@ -261,8 +263,8 @@ export function useSearchableSortableData<T>(
     ...sortableResult,
     filteredData,
     searchQuery: debouncedQuery,
-    totalCount: data.length,
-    filteredCount: filteredData.length,
+    totalCount: (data?.length || 0),
+    filteredCount: (filteredData?.length || 0),
   };
 }
 
@@ -281,10 +283,10 @@ export function usePaginatedSortableData<T>(
   const sortableResult = useSortableData(data, sortOptions);
 
   // Calculate pagination
-  const totalPages = Math.ceil(sortableResult.data.length / itemsPerPage);
+  const totalPages = Math.ceil((sortableResult.data?.length || 0) / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  const paginatedData = sortableResult.data.slice(startIndex, endIndex);
+  const paginatedData = sortableResult.data?.slice(startIndex, endIndex);
 
   const goToPage = useCallback((page: number) => {
     const validPage = Math.max(1, Math.min(page, totalPages));
@@ -310,7 +312,7 @@ export function usePaginatedSortableData<T>(
     currentPage,
     totalPages,
     itemsPerPage,
-    totalItems: sortableResult.data.length,
+    totalItems: sortableResult.data?.length || 0,
     goToPage,
     nextPage,
     previousPage,
@@ -327,7 +329,7 @@ export const sortUtils = {
     const aParts = a.match(regex) || [];
     const bParts = b.match(regex) || [];
 
-    for (let i = 0; i < Math.max(aParts.length, bParts.length); i++) {
+    for (let i = 0; i < Math.max((aParts?.length || 0), (bParts?.length || 0)); i++) {
       const aPart = aParts[i] || '';
       const bPart = bParts[i] || '';
 
@@ -361,7 +363,7 @@ export const sortUtils = {
 
       for (const criterion of criteria) {
         const aValue = a[criterion.key];
-        const bValue = b[criterion.key];
+        const bValue = b?.[criterion.key];
         const direction = criterion.direction || 'asc';
         const multiplier = direction === 'asc' ? 1 : -1;
 
@@ -387,7 +389,7 @@ export const sortUtils = {
 
     // Group items
     items.forEach(item => {
-      const groupKey = item[groupBy];
+      const groupKey = item?.[groupBy];
       if (!groups.has(groupKey)) {
         groups.set(groupKey, []);
       }
@@ -398,10 +400,12 @@ export const sortUtils = {
     groups.forEach(group => {
       group.sort((a, b) => {
         const aValue = a[sortBy];
-        const bValue = b[sortBy];
+        const bValue = b?.[sortBy];
 
-        if (aValue < bValue) return direction === 'asc' ? -1 : 1;
-        if (aValue > bValue) return direction === 'asc' ? 1 : -1;
+        if (aValue != null && bValue != null) {
+          if (aValue < bValue) return direction === 'asc' ? -1 : 1;
+          if (aValue > bValue) return direction === 'asc' ? 1 : -1;
+        }
         return 0;
       });
     });

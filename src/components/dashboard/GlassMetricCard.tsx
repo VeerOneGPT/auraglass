@@ -216,8 +216,8 @@ export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
         },
     };
 
-    const config = sizeConfigs[size];
-    const variantConfig = variantConfigs[variant];
+    const config = sizeConfigs?.[size];
+    const variantConfig = variantConfigs?.[variant];
     const displayIcon = icon || getTypeIcon();
 
     // Loading skeleton
@@ -405,10 +405,10 @@ export const GlassMetricGrid: React.FC<GlassMetricGridProps> = ({
     };
 
     return (
-        <div className={cn('grid gap-6', gridCols[columns as keyof typeof gridCols], className)}>
+        <div className={cn('grid gap-6', gridCols?.[columns as keyof typeof gridCols], className)}>
             {metrics.map((metric, index) => (
                 <GlassMetricCard
-                    key={metric.title}
+                    key={metric?.title}
                     {...metric}
                     size={size}
                 />

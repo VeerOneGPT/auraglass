@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassMentionList } from './GlassMentionList';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassMentionList> = {
   title: 'Components/Interactive/GlassMentionList',
@@ -33,7 +34,7 @@ export const Default: Story = {
       { id: '2', label: '@jane_smith', meta: 'Jane Smith' },
       { id: '3', label: '@mike_wilson', meta: 'Mike Wilson' },
     ],
-    onSelect: (id) => console.log('Selected mention:', id),
+    onSelect: fn(),
   },
 };
 
@@ -45,6 +46,6 @@ export const WithMeta: Story = {
       { id: 'user3', label: '@charlie', meta: 'Charlie Brown - Manager' },
       { id: 'user4', label: '@diana', meta: 'Diana Prince - QA Engineer' },
     ],
-    onSelect: (id) => console.log('Selected user:', id),
+    onSelect: fn(),
   },
 };

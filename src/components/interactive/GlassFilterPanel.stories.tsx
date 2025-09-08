@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassFilterPanel } from './GlassFilterPanel';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassFilterPanel> = {
   title: 'Components/Interactive/GlassFilterPanel',
@@ -80,9 +81,9 @@ const meta: Meta<typeof GlassFilterPanel> = {
     showPresets: true,
     showApplyButton: true,
     variant: 'default',
-    onChange: () => {},
-    onApply: () => {},
-    onClear: () => {},
+    onChange: fn(),
+    onApply: fn(),
+    onClear: fn(),
   },
 };
 
@@ -115,9 +116,9 @@ export const Default: Story = {
     ],
     values: {},
     title: 'Task Filters',
-    onChange: () => {},
-    onApply: () => {},
-    onClear: () => {},
+    onChange: fn(),
+    onApply: fn(),
+    onClear: fn(),
   },
 };
 
@@ -135,8 +136,8 @@ export const Variants: Story = {
     title: 'Date Filters',
     variant: 'compact',
     showSearch: false,
-    onChange: () => {},
-    onApply: () => {},
-    onClear: () => {},
+    onChange: fn(),
+    onApply: fn(),
+    onClear: fn(),
   },
 };

@@ -53,11 +53,11 @@ const GalileoElementInteractionPlugin = {
 
 const convertToChartJsDatasetWithEffects = (dataset: ChartDataset, index: number, chartType: ChartVariant, palette: string[], animation: any) => ({
   ...dataset,
-  backgroundColor: dataset.style?.fillColor || palette[index % palette.length] + '40',
-  borderColor: dataset.style?.lineColor || palette[index % palette.length],
+  backgroundColor: dataset.style?.fillColor || palette[index % (palette?.length || 0)] + '40',
+  borderColor: dataset.style?.lineColor || palette[index % (palette?.length || 0)],
   borderWidth: dataset.style?.borderWidth || 2,
-  pointBackgroundColor: dataset.style?.pointColor || palette[index % palette.length],
-  pointBorderColor: dataset.style?.pointColor || palette[index % palette.length],
+  pointBackgroundColor: dataset.style?.pointColor || palette[index % (palette?.length || 0)],
+  pointBorderColor: dataset.style?.pointColor || palette[index % (palette?.length || 0)],
   pointRadius: dataset.style?.pointRadius || 4,
   tension: dataset.style?.tension || 0.4,
   fill: chartType === 'area',
@@ -374,7 +374,7 @@ ChartJS.register(
 const pathAnimationPlugin: Plugin<ChartType> = {
   id: 'pathAnimation',
   afterDraw: (chart) => {
-    chart.data.datasets.forEach((dataset, datasetIndex) => {
+    chart.data?.datasets.forEach((dataset, datasetIndex) => {
       const meta = chart.getDatasetMeta(datasetIndex);
       if (meta.type === 'line' && meta.dataset) {
         const element = meta.dataset as any; // Keep 'as any': _path is likely internal/non-standard for path animation
@@ -395,7 +395,7 @@ const pathAnimationPlugin: Plugin<ChartType> = {
               path.style.strokeDashoffset = `${pathLength}`;
               
               // Create animation with WAAPI
-              path.animate(
+                path.animate && path.animate(
                 [
                   { strokeDashoffset: pathLength },
                   { strokeDashoffset: 0 }
@@ -710,7 +710,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
   // Quality tier system integration
   const qualityTier = useQualityTier(
     {
-      dataPointCount: datasets?.reduce((sum, dataset) => sum + dataset.data.length, 0) || 0,
+      dataPointCount: datasets?.reduce((sum, dataset) => sum + (dataset.data?.length || 0), 0) || 0,
       seriesCount: datasets?.length || 0,
       animationComplexity: 'medium',
       interactionComplexity: 'medium',
@@ -877,12 +877,12 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
   if (chartType === 'pie' || chartType === 'doughnut') {
     // Access processedLabels from the *first* dataset's conversion result
     // Type assertion might be needed if TypeScript cannot infer the added property
-    const firstConvertedDataset = convertedDatasets[0] as any; 
-    if (firstConvertedDataset?.processedLabels && firstConvertedDataset.processedLabels.length > 0) {
+    const firstConvertedDataset = convertedDatasets?.[0] as any; 
+      if (firstConvertedDataset?.processedLabels && (firstConvertedDataset.processedLabels?.length || 0) > 0) {
       chartLabels = firstConvertedDataset.processedLabels;
     } else if (datasets && datasets[0]?.data) {
       // Fallback to original data labels if processed labels aren't available
-      chartLabels = datasets[0].data.map((point: any) => point.label || String(point.x));
+      chartLabels = datasets[0].data?.map((point: any) => point.label || String(point.x));
     }
   } else if (chartType === 'polarArea' && datasets) {
       // Use original labels for polarArea
@@ -973,7 +973,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
       false
     );
     
-    if (points.length > 0) {
+    if ((points?.length || 0) > 0) {
       const firstPoint = points[0];
       const datasetIndex = firstPoint.datasetIndex;
       const dataIndex = firstPoint.index;
@@ -1046,7 +1046,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
     
     let currentHoveredKey: string | null = null;
     
-    if (points.length > 0) {
+    if ((points?.length || 0) > 0) {
       const firstPoint = points[0];
       const datasetIndex = firstPoint.datasetIndex;
       const dataIndex = firstPoint.index;
@@ -1093,7 +1093,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
               dataset: dataset.label,
               label: dataPoint.label || dataPoint.x,
               value: dataPoint.y,
-              color: dataset.style?.lineColor || palette[datasetIndex % palette.length],
+              color: dataset.style?.lineColor || palette[datasetIndex % (palette?.length || 0)],
               extra: dataPoint.extra,
               formatType: dataPoint.formatType,
               formatOptions: dataPoint.formatOptions,
@@ -1386,11 +1386,11 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
               const safeHex = hex || '#FFFFFF';
               const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(safeHex);
               return result 
-                ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
+                ? `${parseInt(result?.[1], 16)}, ${parseInt(result?.[2], 16)}, ${parseInt(result?.[3], 16)}`
                 : '255, 255, 255';
             };
             
-            const color = dataset.style?.lineColor || palette[index % palette.length];
+            const color = dataset.style?.lineColor || palette[index % (palette?.length || 0)];
             const rgbColor = hexToRgb(color);
             const isActive = !selectedDatasets.includes(index);
             
@@ -1424,11 +1424,11 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
               const safeHex = hex || '#FFFFFF';
               const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(safeHex);
               return result 
-                ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}`
+                ? `${parseInt(result?.[1], 16)}, ${parseInt(result?.[2], 16)}, ${parseInt(result?.[3], 16)}`
                 : '255, 255, 255';
             };
             
-            const color = dataset.style?.lineColor || palette[index % palette.length];
+            const color = dataset.style?.lineColor || palette[index % (palette?.length || 0)];
             const rgbColor = hexToRgb(color);
             const isActive = !selectedDatasets.includes(index);
             

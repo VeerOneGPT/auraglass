@@ -112,11 +112,11 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
     const handleClear = () => {
       if (onClear) {
         onClear();
-      } else if (props.onChange) {
+      } else if (props?.onChange) {
         const event = {
           target: { value: '' },
         } as React.ChangeEvent<HTMLInputElement>;
-        props.onChange(event);
+        props?.onChange(event);
       }
     };
 
@@ -135,9 +135,9 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
           press
           className={cn(
             'relative flex items-center transition-all duration-200 rounded-2xl',
-            sizeClasses[size],
-            variantClasses[variant],
-            stateClasses[currentState],
+            sizeClasses?.[size],
+            variantClasses?.[variant],
+            stateClasses?.[currentState],
             {
               'opacity-50': disabled,
               'ring-2 ring-primary/20': isFocused && currentState === 'default',
@@ -150,7 +150,7 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
           aria-busy={loading || undefined}
         >
           {leftIcon && (
-            <div className={cn('flex items-center justify-center mr-3 text-muted-foreground', iconSize[size])}>
+            <div className={cn('flex items-center justify-center mr-3 text-muted-foreground', iconSize?.[size])}>
               {leftIcon}
             </div>
           )}
@@ -168,11 +168,11 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
             disabled={disabled || loading}
             onFocus={(e) => {
               setIsFocused(true);
-              props.onFocus?.(e);
+              props?.onFocus?.(e);
             }}
             onBlur={(e) => {
               setIsFocused(false);
-              props.onBlur?.(e);
+              props?.onBlur?.(e);
             }}
             {...((() => {
               const {
@@ -196,16 +196,16 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
 
           <div className="flex items-center gap-1">
             {loading && (
-              <div className={cn('animate-spin rounded-full border-2 border-current border-t-transparent', iconSize[size])} />
+              <div className={cn('animate-spin rounded-full border-2 border-current border-t-transparent', iconSize?.[size])} />
             )}
 
-            {clearable && props.value && !loading && (
+            {clearable && props?.value && !loading && (
               <GlassButton
                 type="button"
                 onClick={handleClear}
                 className={cn(
                   'flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors',
-                  iconSize[size]
+                  iconSize?.[size]
                 )}
               >
                 ×
@@ -213,7 +213,7 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
             )}
 
             {rightIcon && !loading && (
-              <div className={cn('flex items-center justify-center text-muted-foreground', iconSize[size])}>
+              <div className={cn('flex items-center justify-center text-muted-foreground', iconSize?.[size])}>
                 {rightIcon}
               </div>
             )}

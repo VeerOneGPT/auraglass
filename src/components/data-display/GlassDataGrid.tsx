@@ -29,8 +29,8 @@ const StyledTable = styled.table`
   width: 100%;
   border-collapse: separate; /* Needed for border-radius on cells/rows */
   border-spacing: 0;
-  font-family: ${props => (props.theme as any).typography?.body?.fontFamily || 'sans-serif'}; // Use theme hook instead?
-  color: ${props => (props.theme as any).colors?.text?.primary || '#000'}; // Use theme hook instead?
+  font-family: ${props => (props?.theme as any).typography?.body?.fontFamily || 'sans-serif'}; // Use theme hook instead?
+  color: ${props => (props?.theme as any).colors?.text?.primary || '#000'}; // Use theme hook instead?
   // Glass surface effect applied via DimensionalGlass wrapper
 `;
 
@@ -41,7 +41,7 @@ const SortIndicator = styled.span`
   top: 50%;
   /* transform: translateY(-50%); // Initial transform set by style prop now */
   font-size: 0.8em;
-  color: ${props => (props.theme as any).colors?.text?.secondary || '#555'};
+  color: ${props => (props?.theme as any).colors?.text?.secondary || '#555'};
   /* REMOVED transition: transform 0.2s ease, opacity 0.2s ease; */
   opacity: 0; /* Start hidden, animation controls visibility */
   transform-origin: center center; /* Useful for scale/rotate transforms */
@@ -52,27 +52,27 @@ const StyledTh = styled.th<{ $isSortable?: boolean; $sortDirection?: 'asc' | 'de
   /* Use useStyleUtils hook in component for dynamic values */
   padding: 12px 32px 12px 16px; /* Adjust padding */
   text-align: left;
-  font-weight: ${props => (props.theme as any).typography?.h6?.fontWeight || '600'};
-  font-size: ${props => (props.theme as any).typography?.bodySmall?.fontSize || '0.875rem'};
-  color: ${props => (props.theme as any).colors?.text?.secondary || '#555'};
-  border-bottom: 1px solid ${props => (props.theme as any).colors?.divider || '#ccc'};
-  background-color: ${props => (props.theme as any).colors?.background?.level1 || '#f9f9f9'}; // Example background
+  font-weight: ${props => (props?.theme as any).typography?.h6?.fontWeight || '600'};
+  font-size: ${props => (props?.theme as any).typography?.bodySmall?.fontSize || '0.875rem'};
+  color: ${props => (props?.theme as any).colors?.text?.secondary || '#555'};
+  border-bottom: 1px solid ${props => (props?.theme as any).colors?.divider || '#ccc'};
+  background-color: ${props => (props?.theme as any).colors?.background?.level1 || '#f9f9f9'}; // Example background
   cursor: ${props => props.$isSortable ? 'pointer' : 'default'};
   user-select: ${props => props.$isSortable ? 'none' : 'auto'};
   position: relative; 
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: ${props => props.$isSortable ? ((props.theme as any).colors?.action?.hover || '#f0f0f0') : 'transparent'};
+    background-color: ${props => props.$isSortable ? ((props?.theme as any).colors?.action?.hover || '#f0f0f0') : 'transparent'};
   }
 `;
 
 const StyledTd = styled.td`
   /* Use useStyleUtils hook in component for dynamic values */
   padding: 12px 16px; 
-  border-bottom: 1px solid ${props => (props.theme as any).colors?.divider || '#eee'};
-  font-size: ${props => (props.theme as any).typography?.body?.fontSize || '1rem'};
-  color: ${props => (props.theme as any).colors?.text?.primary || '#000'};
+  border-bottom: 1px solid ${props => (props?.theme as any).colors?.divider || '#eee'};
+  font-size: ${props => (props?.theme as any).typography?.body?.fontSize || '1rem'};
+  color: ${props => (props?.theme as any).colors?.text?.primary || '#000'};
 `;
 
 // Wrapper for applying Glass effect
@@ -84,7 +84,7 @@ const GlassWrapper = styled.div`
 const DragHandle = styled.span<{ $isKeyboardDraggingActive?: boolean }>`
   cursor: grab;
   padding: 0 8px;
-  color: ${props => (props.theme as any).colors?.text?.disabled || '#aaa'};
+  color: ${props => (props?.theme as any).colors?.text?.disabled || '#aaa'};
   user-select: none;
   line-height: 1;
   display: inline-block;
@@ -92,7 +92,7 @@ const DragHandle = styled.span<{ $isKeyboardDraggingActive?: boolean }>`
   outline: none;
 
   &:focus {
-    box-shadow: 0 0 0 2px ${props => (props.theme as any).colors?.primary?.main + '80'}; 
+    box-shadow: 0 0 0 2px ${props => (props?.theme as any).colors?.primary?.main + '80'}; 
     border-radius: 3px;
   }
 
@@ -102,16 +102,16 @@ const DragHandle = styled.span<{ $isKeyboardDraggingActive?: boolean }>`
 
   /* Style for when actively dragging via keyboard */
   ${props => props.$isKeyboardDraggingActive && css`
-    background-color: ${(props.theme as any).colors?.primary?.light + '40'};
-    box-shadow: 0 0 0 2px ${(props.theme as any).colors?.primary?.main}; 
+    background-color: ${(props?.theme as any).colors?.primary?.light + '40'};
+    box-shadow: 0 0 0 2px ${(props?.theme as any).colors?.primary?.main}; 
   `}
 `;
 
 // Table Row with potential dragging styles
 const StyledTr = styled.tr<{ $isPointerDragging?: boolean; $isKeyboardDraggingActive?: boolean }>`
   background-color: ${props => 
-    props.$isKeyboardDraggingActive ? ((props.theme as any).colors?.primary?.light + '20') : 
-    props.$isPointerDragging ? ((props.theme as any).colors?.action?.hover || '#f0f0f0') : 
+    props.$isKeyboardDraggingActive ? ((props?.theme as any).colors?.primary?.light + '20') : 
+    props.$isPointerDragging ? ((props?.theme as any).colors?.action?.hover || '#f0f0f0') : 
     'transparent'};
   /* Add transition for background color, transform and shadow */
   transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
@@ -139,7 +139,7 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
     
     // Create refs for each row element for the physics hook
     const rowRefs = useMemo(() => 
-        Array.from({ length: sortedData.length }, () => createRef<HTMLTableRowElement>()), 
+        Array.from({ length: sortedData?.length || 0 }, () => createRef<HTMLTableRowElement>()), 
         [sortedData.length]
     );
 
@@ -158,7 +158,7 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
         setRenderOrder(newOrderIndices);
         if (onRowOrderChange) {
             // Map original data based on the new order of *original* indices
-            const originalDataInNewOrder = newOrderIndices.map(originalIndex => initialData[originalIndex]); 
+            const originalDataInNewOrder = newOrderIndices.map(originalIndex => initialData?.[originalIndex]); 
             onRowOrderChange(originalDataInNewOrder);
         }
     }, [onRowOrderChange, initialData]);
@@ -271,7 +271,7 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
           {/* Use a relative positioned div for tbody content if rows are absolute */}
           <tbody style={{ position: 'relative' }}>
             {displayData.map((row, displayIndex) => { 
-              const originalIndex = renderOrder[displayIndex];
+              const originalIndex = renderOrder?.[displayIndex];
               if (originalIndex === undefined) return null;
 
               const rowStyle = rowStyles?.[originalIndex] || {};
@@ -282,7 +282,7 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
               return (
                 <StyledTr 
                   key={`row-${row.id ?? originalIndex}`}
-                  ref={rowRefs[originalIndex]} 
+                  ref={rowRefs?.[originalIndex]} 
                   style={rowStyle} 
                   $isPointerDragging={isDraggingThisRow} 
                   $isKeyboardDraggingActive={isDraggingThisRow} 
@@ -307,8 +307,8 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
                   {columns.map((col) => (
                     <StyledTd key={`${col.id}-${originalIndex}`}>
                       {col.cellRenderer
-                        ? col.cellRenderer(row[col.accessorKey as keyof typeof row], row)
-                        : row[col.accessorKey as keyof typeof row]}
+                        ? col.cellRenderer(row?.[col.accessorKey as keyof typeof row], row)
+                        : row?.[col.accessorKey as keyof typeof row]}
                     </StyledTd>
                   ))}
                 </StyledTr>

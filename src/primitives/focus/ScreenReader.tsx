@@ -335,7 +335,7 @@ export function ValidationAnnouncement({
   const { announce } = useAnnounce();
   
   useEffect(() => {
-    if (errors && errors.length > 0) {
+        if (errors && Array.isArray(errors) && errors.length > 0) {
       const message = `${errors.length} error${errors.length > 1 ? 's' : ''}: ${errors.join(', ')}`;
       announce(message, 'assertive');
     } else if (successMessage) {

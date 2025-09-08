@@ -145,8 +145,8 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
         className={cn(
           'w-full flex items-center justify-between',
           'transition-all duration-200',
-          sizeClasses[size],
-          variantClasses[variant],
+          sizeClasses?.[size],
+          variantClasses?.[variant],
           variant === 'floating' ? 'squiricle' : '',
           className
         )}
@@ -218,7 +218,7 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
               />
 
               {/* Search suggestions */}
-              {isSearchFocused && search.suggestions && search.suggestions.length > 0 && (
+              {isSearchFocused && search.suggestions && (search.suggestions?.length || 0) > 0 && (
                 <Motion preset="slideDown" className="absolute top-full left-0 right-0 mt-1 z-[1000]">
                   <OptimizedGlass
                     variant="frosted"
@@ -445,13 +445,13 @@ function UserMenu({ user, items }: UserMenuProps) {
   };
 
   const handleItemClick = (item: UserMenuItem) => {
-    if (item.disabled) return;
+    if (item?.disabled) return;
 
-    item.onClick?.();
+    item?.onClick?.();
     setIsOpen(false);
 
-    if (item.href) {
-      window.location.href = item.href;
+    if (item?.href) {
+      window.location.href = item?.href;
     }
   };
 
@@ -484,7 +484,7 @@ function UserMenu({ user, items }: UserMenuProps) {
           {user.status && (
             <div className={cn(
               'absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-background',
-              statusColors[user.status]
+              statusColors?.[user.status]
             )} />
           )}
         </div>
@@ -569,7 +569,7 @@ function UserMenu({ user, items }: UserMenuProps) {
                         <div className="flex items-center gap-1 mt-1">
                           <span className={cn(
                             'w-2 h-2 rounded-full',
-                            statusColors[user.status]
+                            statusColors?.[user.status]
                           )} />
                           <span className="text-xs text-white/70 capitalize">{user.status}</span>
                         </div>
@@ -581,32 +581,32 @@ function UserMenu({ user, items }: UserMenuProps) {
                 {/* Menu items */}
                 <div className="space-y-1">
                   {items.map((item) => (
-                    <React.Fragment key={item.id}>
-                      {item.divider ? (
+                    <React.Fragment key={item?.id}>
+                      {item?.divider ? (
                         <div className="my-2 border-t border-white/10" />
                       ) : (
                         <button
                           type="button"
                           onClick={() => handleItemClick(item)}
-                          disabled={item.disabled}
+                          disabled={item?.disabled}
                           className={cn(
                             'w-full flex items-center justify-between gap-3 px-3 py-2.5 rounded-[14px]',
                             'text-sm text-left transition-colors',
-                            item.id === 'logout'
+                            item?.id === 'logout'
                               ? 'text-red-300 hover:bg-red-500/10'
                               : 'text-white/90 hover:text-white hover:bg-white/10',
-                            item.disabled && 'opacity-50 cursor-not-allowed'
+                            item?.disabled && 'opacity-50 cursor-not-allowed'
                           )}
                         >
                           <span className="inline-flex items-center gap-3 truncate">
-                            {item.icon && (
-                              <span className={cn('w-4 h-4 flex items-center justify-center', item.id === 'logout' ? 'text-red-400' : 'text-white/80')}>
-                                {item.icon}
+                            {item?.icon && (
+                              <span className={cn('w-4 h-4 flex items-center justify-center', item?.id === 'logout' ? 'text-red-400' : 'text-white/80')}>
+                                {item?.icon}
                               </span>
                             )}
-                            <span className="truncate font-medium">{item.label}</span>
+                            <span className="truncate font-medium">{item?.label}</span>
                           </span>
-                          {item.id !== 'logout' && (
+                          {item?.id !== 'logout' && (
                             <svg className="w-4 h-4 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
@@ -662,24 +662,24 @@ export function HeaderBreadcrumbs({
               <span className="text-muted-foreground">{separator}</span>
             )}
 
-            {index === items.length - 1 ? (
-              <span className="font-medium text-foreground">{item.label}</span>
-            ) : item.href ? (
+            {index === (items?.length || 0) - 1 ? (
+              <span className="font-medium text-foreground">{item?.label}</span>
+            ) : item?.href ? (
               <a
-                href={item.href}
+                href={item?.href}
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
-                {item.label}
+                {item?.label}
               </a>
-            ) : item.onClick ? (
+            ) : item?.onClick ? (
               <GlassButton
-                onClick={item.onClick}
+                onClick={item?.onClick}
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
-                {item.label}
+                {item?.label}
               </GlassButton>
             ) : (
-              <span className="text-muted-foreground">{item.label}</span>
+              <span className="text-muted-foreground">{item?.label}</span>
             )}
           </li>
         ))}
@@ -710,38 +710,38 @@ export function HeaderNavigation({ items, className }: HeaderNavigationProps) {
       <ul className="flex items-center space-x-1">
         {items.map((item, index) => (
           <li key={index}>
-            {item.href ? (
+            {item?.href ? (
               <a
-                href={item.href}
+                href={item?.href}
                 className={cn(
                   'px-3 py-2 rounded-md text-sm font-medium transition-colors',
                   'hover:bg-muted/50 focus:outline-none focus:ring-2 focus:ring-primary/20',
                   {
-                    'bg-primary/10 text-primary': item.active,
-                    'text-muted-foreground hover:text-foreground': !item.active,
-                    'opacity-50 cursor-not-allowed': item.disabled,
+                    'bg-primary/10 text-primary': item?.active,
+                    'text-muted-foreground hover:text-foreground': !item?.active,
+                    'opacity-50 cursor-not-allowed': item?.disabled,
                   }
                 )}
-                aria-current={item.active ? 'page' : undefined}
+                aria-current={item?.active ? 'page' : undefined}
               >
-                {item.label}
+                {item?.label}
               </a>
             ) : (
               <GlassButton
-                onClick={item.onClick}
-                disabled={item.disabled}
+                onClick={item?.onClick}
+                disabled={item?.disabled}
                 className={cn(
                   'px-3 py-2 rounded-md text-sm font-medium transition-colors',
                   'hover:bg-muted/50 focus:outline-none focus:ring-2 focus:ring-primary/20',
                   {
-                    'bg-primary/10 text-primary': item.active,
-                    'text-muted-foreground hover:text-foreground': !item.active,
-                    'opacity-50 cursor-not-allowed': item.disabled,
+                    'bg-primary/10 text-primary': item?.active,
+                    'text-muted-foreground hover:text-foreground': !item?.active,
+                    'opacity-50 cursor-not-allowed': item?.disabled,
                   }
                 )}
-                aria-current={item.active ? 'page' : undefined}
+                aria-current={item?.active ? 'page' : undefined}
               >
-                {item.label}
+                {item?.label}
               </GlassButton>
             )}
           </li>

@@ -147,8 +147,8 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
       },
     };
 
-    const config = sizeClasses[size];
-    const colors = colorSchemes[colorScheme];
+    const config = sizeClasses?.[size];
+    const colors = colorSchemes?.[colorScheme];
 
     const defaultTrendIcons = {
       up: '↗️',
@@ -166,21 +166,21 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
     };
 
     const getTrendIcon = () => {
-      if (!data.trend) return null;
-      return icons[data.trend];
+      if (!data?.trend) return null;
+      return icons?.[data?.trend];
     };
 
     const getChangeColor = () => {
-      if (!data.change) return colors.change.neutral;
+      if (!data?.change) return colors.change.neutral;
       
-      if (data.change > 0) return colors.change.up;
-      if (data.change < 0) return colors.change.down;
+      if (data?.change > 0) return colors.change.up;
+      if (data?.change < 0) return colors.change.down;
       return colors.change.neutral;
     };
 
     const getTargetProgress = () => {
-      if (!data.target || typeof data.value !== 'number') return 0;
-      return Math.min((data.value / data.target) * 100, 100);
+      if (!data?.target || typeof data?.value !== 'number') return 0;
+      return Math.min((data?.value / data?.target) * 100, 100);
     };
 
     const renderContent = () => {
@@ -188,26 +188,26 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
         case 'minimal':
           return (
             <HStack space="sm" align="center">
-              {data.icon && (
+              {data?.icon && (
                 <div className={cn(config.icon, colors.icon)}>
-                  {data.icon}
+                  {data?.icon}
                 </div>
               )}
               <VStack space="none">
                 <div className={cn('font-bold', config.value, colors.value)}>
-                  {formatValue(data.value)}{data.unit}
+                  {formatValue(data?.value)}{data?.unit}
                 </div>
                 <div className={cn('text-muted-foreground', config.label)}>
-                  {data.label}
+                  {data?.label || 'Metric'}
                 </div>
               </VStack>
-              {showTrend && data.change && (
+              {showTrend && data?.change && (
                 <GlassBadge
                   variant="outline"
                   size="xs"
                   className={getChangeColor()}
                 >
-                  {getTrendIcon()} {data.change > 0 ? '+' : ''}{data.change}%
+                  {getTrendIcon()} {data?.change > 0 ? '+' : ''}{data?.change}%
                 </GlassBadge>
               )}
             </HStack>
@@ -218,21 +218,21 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
             <VStack space="md">
               <HStack space="sm" align="center" justify="between">
                 <div className={cn('text-muted-foreground', config.label)}>
-                  {data.label}
+                  {data?.label || 'Metric'}
                 </div>
-                {data.icon && (
+                {data?.icon && (
                   <div className={cn(config.icon, colors.icon)}>
-                    {data.icon}
+                    {data?.icon}
                   </div>
                 )}
               </HStack>
               
               <VStack space="xs">
                 <div className={cn('font-bold', config.value, colors.value)}>
-                  {formatValue(data.value)}{data.unit}
+                  {formatValue(data?.value)}{data?.unit}
                 </div>
                 
-                {showTarget && data.target && (
+                {showTarget && data?.target && (
                   <div className="w-full">
                     <div className="flex justify-between text-xs text-muted-foreground mb-1">
                       <span>Progress</span>
@@ -251,25 +251,25 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
                 )}
               </VStack>
 
-              {showTrend && (data.change || data.changeLabel) && (
+              {showTrend && (data?.change || data?.changeLabel) && (
                 <HStack space="sm" align="center">
-                  {data.change && (
+                  {data?.change && (
                     <div className={cn('text-xs font-medium flex items-center gap-1', getChangeColor())}>
                       <span>{getTrendIcon()}</span>
-                      <span>{data.change > 0 ? '+' : ''}{data.change}%</span>
+                      <span>{data?.change > 0 ? '+' : ''}{data?.change}%</span>
                     </div>
                   )}
-                  {data.changeLabel && (
+                  {data?.changeLabel && (
                     <div className="text-xs text-muted-foreground">
-                      {data.changeLabel}
+                      {data?.changeLabel}
                     </div>
                   )}
                 </HStack>
               )}
 
-              {data.description && (
+              {data?.description && (
                 <div className="text-xs text-muted-foreground">
-                  {data.description}
+                  {data?.description}
                 </div>
               )}
             </VStack>
@@ -280,15 +280,15 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
             <HStack space="sm" align="center" justify="between">
               <VStack space="none">
                 <div className={cn('font-bold text-lg', colors.value)}>
-                  {formatValue(data.value)}{data.unit}
+                  {formatValue(data?.value)}{data?.unit}
                 </div>
                 <div className="text-xs text-muted-foreground">
-                  {data.label}
+                  {data?.label || 'Metric'}
                 </div>
               </VStack>
-              {data.icon && (
+              {data?.icon && (
                 <div className={cn('text-lg', colors.icon)}>
-                  {data.icon}
+                  {data?.icon}
                 </div>
               )}
             </HStack>
@@ -299,28 +299,28 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
             <VStack space="md">
               <HStack space="sm" align="center" justify="between">
                 <div className={cn('text-muted-foreground', config.label)}>
-                  {data.label}
+                  {data?.label || 'Metric'}
                 </div>
-                {data.icon && (
+                {data?.icon && (
                   <div className={cn(config.icon, colors.icon)}>
-                    {data.icon}
+                    {data?.icon}
                   </div>
                 )}
               </HStack>
               
               <div className={cn('font-bold', config.value, colors.value)}>
-                {formatValue(data.value)}{data.unit}
+                {formatValue(data?.value)}{data?.unit}
               </div>
 
-              {showTrend && data.change && (
+              {showTrend && data?.change && (
                 <HStack space="sm" align="center">
                   <div className={cn('text-sm font-medium flex items-center gap-1', getChangeColor())}>
                     <span>{getTrendIcon()}</span>
-                    <span>{data.change > 0 ? '+' : ''}{data.change}%</span>
+                    <span>{data?.change > 0 ? '+' : ''}{data?.change}%</span>
                   </div>
-                  {data.changeLabel && (
+                  {data?.changeLabel && (
                     <div className="text-sm text-muted-foreground">
-                      {data.changeLabel}
+                      {data?.changeLabel}
                     </div>
                   )}
                 </HStack>

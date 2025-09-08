@@ -224,13 +224,13 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
         },
     };
 
-    const config = sizeConfigs[size];
-    const variantConfig = variantConfigs[variant];
+    const config = sizeConfigs?.[size];
+    const variantConfig = variantConfigs?.[variant];
     const displayIcon = icon || getTypeIcon();
 
     // Generate sparkline path
     const generateSparklinePath = (data: number[]) => {
-        if (data.length === 0) return '';
+        if ((data?.length || 0) === 0) return '';
 
         const min = Math.min(...data);
         const max = Math.max(...data);
@@ -238,8 +238,8 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
         const height = parseInt(config.sparklineHeight.replace('h-', '')) * 4; // Convert to pixels
 
         let path = '';
-        data.forEach((value, index) => {
-            const x = (index / (data.length - 1)) * 100;
+        data?.forEach((value, index) => {
+            const x = (index / ((data?.length || 0) - 1)) * 100;
             const y = height - ((value - min) / range) * height;
 
             if (index === 0) {
@@ -346,7 +346,7 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
                     </div>
 
                     {/* Sparkline */}
-                    {showSparkline && sparklineData.length > 0 && (
+                    {showSparkline && (sparklineData?.length || 0) > 0 && (
                         <div className="mb-4">
                             <svg
                                 width="100%"
@@ -392,7 +392,7 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
                     )}
 
                     {/* Additional stats */}
-                    {additionalStats && additionalStats.length > 0 && (
+                    {additionalStats && (additionalStats?.length || 0) > 0 && (
                         <div className="space-y-3">
                             {additionalStats.map((stat, index) => (
                                 <div key={index} className="flex items-center justify-between">
@@ -441,7 +441,7 @@ export const GlassStatGrid: React.FC<GlassStatGridProps> = ({
     };
 
     return (
-        <div className={cn('grid gap-6', gridCols[columns as keyof typeof gridCols], className)}>
+        <div className={cn('grid gap-6', gridCols?.[columns as keyof typeof gridCols], className)}>
             {stats.map((stat, index) => (
                 <GlassStatCard
                     key={stat.title}

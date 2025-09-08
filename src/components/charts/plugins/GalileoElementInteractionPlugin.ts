@@ -158,7 +158,7 @@ export const GalileoElementInteractionPlugin: Plugin<'line' | 'bar' | 'scatter' 
     const config = (chart as any).galileoConfig;
 
     // Draw ripples
-    if (state.ripples.length > 0) {
+    if ((state.ripples?.length || 0) > 0) {
       drawRipples(ctx, state.ripples);
       updateRipples(state.ripples, config.rippleDuration);
     }
@@ -183,7 +183,7 @@ function updateMagneticEffects(chart: any, mouseX: number, mouseY: number) {
 
   if (!meta || !meta.data) return;
 
-  meta.data.forEach((element: any, index: number) => {
+  meta.data?.forEach((element: any, index: number) => {
     const centerX = element.x;
     const centerY = element.y;
     const distance = Math.sqrt((mouseX - centerX) ** 2 + (mouseY - centerY) ** 2);
@@ -225,7 +225,7 @@ function updateHoverGlow(chart: any, mouseX: number, mouseY: number) {
   let closestElement = null;
   let minDistance = Infinity;
 
-  meta.data.forEach((element: any, index: number) => {
+  meta.data?.forEach((element: any, index: number) => {
     const distance = Math.sqrt((mouseX - element.x) ** 2 + (mouseY - element.y) ** 2);
     
     if (distance < minDistance && distance <= 20) { // 20px hover radius
@@ -270,7 +270,7 @@ function drawRipples(ctx: CanvasRenderingContext2D, ripples: any[]) {
 function updateRipples(ripples: any[], duration: number) {
   const now = Date.now();
 
-  for (let i = ripples.length - 1; i >= 0; i--) {
+  for (let i = (ripples?.length || 0) - 1; i >= 0; i--) {
     const ripple = ripples[i];
     const elapsed = now - ripple.startTime;
     const progress = elapsed / duration;

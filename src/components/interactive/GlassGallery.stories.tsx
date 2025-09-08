@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassGallery } from './GlassGallery';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassGallery> = {
   title: 'Components/Interactive/GlassGallery',
@@ -86,8 +87,8 @@ const meta: Meta<typeof GlassGallery> = {
     showInfo: true,
     showActions: true,
     enableLightbox: true,
-    onImageClick: () => {},
-    onSelectionChange: () => {},
+    onImageClick: fn(),
+    onSelectionChange: fn(),
   },
 };
 
@@ -128,8 +129,8 @@ export const Default: Story = {
         views: 67,
       },
     ],
-    onImageClick: () => {},
-    onSelectionChange: () => {},
+    onImageClick: fn(),
+    onSelectionChange: fn(),
   },
 };
 
@@ -160,7 +161,7 @@ export const Variants: Story = {
     layout: 'masonry',
     columns: 2,
     aspectRatio: 'auto',
-    onImageClick: () => {},
-    onSelectionChange: () => {},
+    onImageClick: fn(),
+    onSelectionChange: fn(),
   },
 };

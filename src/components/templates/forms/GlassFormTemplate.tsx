@@ -159,8 +159,8 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
     const [internalErrors, setInternalErrors] = useState(errors);
     const [stepValidation, setStepValidation] = useState<Record<number, boolean>>({});
 
-    const isMultiStep = multiStep && steps.length > 0;
-    const totalSteps = isMultiStep ? steps.length : 1;
+    const isMultiStep = multiStep && (steps?.length || 0) > 0;
+    const totalSteps = isMultiStep ? (steps?.length || 0) : 1;
     const currentStepData: FormStep | null = isMultiStep ? steps[currentStep] : null;
     const currentSchema = isMultiStep ? currentStepData?.sections : schema;
 

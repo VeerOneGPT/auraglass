@@ -236,7 +236,7 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
             filtered = filtered.filter(activity => activity.type === selectedFilter);
         }
 
-        if (filterBy.length > 0) {
+            if (filterBy && filterBy.length > 0) {
             filtered = filtered.filter(activity => filterBy.includes(activity.type));
         }
 
@@ -350,17 +350,19 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
                                                     const IconComponent = config.icon;
 
                                                     return (
-                                                        <Motion
+                                                        <div
                                                             key={activity.id}
-                                                            preset="slideUp"
-                                                            delay={index * 50}
                                                             className={cn(
-                                                                'flex gap-3 p-3 rounded-lg border transition-all duration-200',
-                                                                'hover:bg-white/5 cursor-pointer',
+                                                                'flex gap-3 p-3 rounded-lg border transition-all duration-200 animate-slide-in-up',
+                                                                'hover:bg-white/5 cursor-pointer glass-base backdrop-blur-md bg-glass-surface-primary border-glass-border-default shadow-glass-1',
                                                                 config.bgColor,
                                                                 config.borderColor,
                                                                 compact && 'p-2'
                                                             )}
+                                                            style={{ 
+                                                                animationDelay: `${Math.min(index, 15) * 50}ms`,
+                                                                animationFillMode: 'both'
+                                                            }}
                                                             onClick={() => onActivityClick?.(activity)}
                                                         >
                                                             {/* Activity Icon */}
@@ -480,7 +482,7 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
                                                                     )}
                                                                 </div>
                                                             </div>
-                                                        </Motion>
+                                                        </div>
                                                     );
                                                 })}
                                         </div>

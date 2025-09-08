@@ -84,7 +84,7 @@ function ToggleButtonGroupComponent(
 
         if (valueArray.includes(buttonValue)) {
           newValue = valueArray.filter(v => v !== buttonValue);
-          if (newValue.length === 0) newValue = null;
+          if ((newValue?.length || 0) === 0) newValue = null;
         } else {
           newValue = [...valueArray, buttonValue];
         }
@@ -121,7 +121,7 @@ function ToggleButtonGroupComponent(
       fullWidth,
       variant,
       glass,
-      selected: child.props.value === value,
+      selected: child.props?.value === value,
       onChange: handleButtonSelection,
       grouped: true,
       groupOrientation: orientation,

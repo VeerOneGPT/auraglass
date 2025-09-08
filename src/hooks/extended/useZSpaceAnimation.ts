@@ -115,10 +115,10 @@ export function useZSpaceAnimation(
               ...l,
               elevation: targetElevation,
               zIndex: zSpaceManagerRef.current.getLayerZIndex(layerId),
-              opacity: springTargets[`${layerId}-opacity`],
-              scale: springTargets[`${layerId}-scale`],
-              blur: springTargets[`${layerId}-blur`],
-              transform: `scale(${springTargets[`${layerId}-scale`]}) translateZ(${targetElevation}px)`,
+              opacity: springTargets?.[`${layerId}-opacity`],
+              scale: springTargets?.[`${layerId}-scale`],
+              blur: springTargets?.[`${layerId}-blur`],
+              transform: `scale(${springTargets?.[`${layerId}-scale`]}) translateZ(${targetElevation}px)`,
             }
           : l
       ));
@@ -563,13 +563,13 @@ export function useDepthNavigation(
 
   // Create navigation layers with depth-based positioning
   const navLayers: ZSpaceLayer[] = navigationItems.map((item, index) => ({
-    id: item.id,
-    zIndex: 10 - item.depth,
-    elevation: item.depth * 5,
+    id: item?.id,
+    zIndex: 10 - item?.depth,
+    elevation: item?.depth * 5,
     opacity: 1,
-    scale: 1 - (item.depth * 0.1),
-    blur: item.depth * 2,
-    transform: `scale(${1 - (item.depth * 0.1)}) translateZ(${item.depth * 5}px)`,
+    scale: 1 - (item?.depth * 0.1),
+    blur: item?.depth * 2,
+    transform: `scale(${1 - (item?.depth * 0.1)}) translateZ(${item?.depth * 5}px)`,
   }));
 
   const zSpaceAnimation = useZSpaceAnimation(navLayers, config);
@@ -609,14 +609,14 @@ export function useDepthNavigation(
   }, [navigationItems, navigationPath, zSpaceAnimation]);
 
   const goBack = useCallback(() => {
-    if (navigationPath.length > 1) {
-      const previousItem = navigationPath[navigationPath.length - 2];
+    if ((navigationPath?.length || 0) > 1) {
+      const previousItem = navigationPath[(navigationPath?.length || 0) - 2];
       navigateTo(previousItem);
     }
   }, [navigationPath, navigateTo]);
 
   const goHome = useCallback(() => {
-    if (navigationPath.length > 0) {
+    if ((navigationPath?.length || 0) > 0) {
       navigateTo(navigationPath[0]);
     }
   }, [navigationPath, navigateTo]);
@@ -628,6 +628,6 @@ export function useDepthNavigation(
     navigateTo,
     goBack,
     goHome,
-    canGoBack: navigationPath.length > 1,
+    canGoBack: (navigationPath?.length || 0) > 1,
   };
 }

@@ -94,8 +94,8 @@ export const ChartRenderer: React.FC<ChartRendererProps> = ({
       labels: datasets[0]?.data?.map((point: any) => point.x) || [],
       datasets: datasets.map((dataset, index) => ({
         label: dataset.name,
-        data: dataset.data.map((point: any) => point.y),
-        backgroundColor: dataset.color || palette[index % palette.length],
+        data: dataset.data?.map((point: any) => point.y),
+                backgroundColor: dataset.color || palette[index % (palette?.length || 1)],
         borderColor: dataset.color || palette[index % palette.length],
         borderWidth: 2,
         fill: chartType === 'area',
@@ -108,11 +108,11 @@ export const ChartRenderer: React.FC<ChartRendererProps> = ({
 
   // Handle chart interactions
   const handleChartClick = useCallback((event: any, elements: any[]) => {
-    if (elements.length > 0 && onDataPointClick) {
+    if ((elements?.length || 0) > 0 && onDataPointClick) {
       const element = elements[0];
       const datasetIndex = element.datasetIndex;
       const dataIndex = element.index;
-      const dataset = datasets[datasetIndex];
+      const dataset = datasets?.[datasetIndex];
       const dataPoint = dataset?.data[dataIndex];
 
       if (dataPoint) {
@@ -122,11 +122,11 @@ export const ChartRenderer: React.FC<ChartRendererProps> = ({
   }, [datasets, onDataPointClick]);
 
   const handleChartHoverEvent = useCallback((event: any, elements: any[]) => {
-    if (elements.length > 0 && onChartHover) {
+    if ((elements?.length || 0) > 0 && onChartHover) {
       const element = elements[0];
       const datasetIndex = element.datasetIndex;
       const dataIndex = element.index;
-      const dataset = datasets[datasetIndex];
+      const dataset = datasets?.[datasetIndex];
       const dataPoint = dataset?.data[dataIndex];
 
       if (dataPoint) {

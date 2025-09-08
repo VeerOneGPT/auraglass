@@ -66,7 +66,7 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
     const combinedRef = ref || textareaRef;
     const textareaId = id || `textarea-${Math.random().toString(36).substr(2, 9)}`;
 
-    const currentLength = typeof value === 'string' ? value.length : 0;
+    const currentLength = typeof value === 'string' ? (value?.length || 0) : 0;
 
     const sizeConfig = {
       sm: {
@@ -112,9 +112,9 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
       success: 'border-green-400 focus:border-green-400 focus:ring-green-400',
     };
 
-    const config = sizeConfig[size];
-    const variantStyles = variantConfig[variant];
-    const stateStyles = stateConfig[state];
+    const config = sizeConfig?.[size];
+    const variantStyles = variantConfig?.[variant];
+    const stateStyles = stateConfig?.[state];
     const hasError = state === 'error' || !!errorText;
 
     // Auto-resize functionality
@@ -147,11 +147,11 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
             className={cn(
               'block font-medium text-foreground mb-2',
               config.text,
-              props.disabled && 'opacity-50'
+              props?.disabled && 'opacity-50'
             )}
           >
             {label}
-            {props.required && (
+            {props?.required && (
               <span className="text-red-400 ml-1" aria-label="required">*</span>
             )}
           </label>
@@ -190,7 +190,7 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
               stateStyles,
               
               // Disabled
-              props.disabled && 'opacity-50 cursor-not-allowed',
+              props?.disabled && 'opacity-50 cursor-not-allowed',
               
               // Loading
               loading && 'animate-pulse cursor-wait',
@@ -207,7 +207,7 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
           {icon && (
             <div className={cn(
               'absolute top-3 right-3 text-muted-foreground',
-              props.disabled && 'opacity-50'
+              props?.disabled && 'opacity-50'
             )}>
               {icon}
             </div>
@@ -238,7 +238,7 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
             id={`${textareaId}-helper`}
             className={cn(
               'mt-2 text-xs text-muted-foreground',
-              props.disabled && 'opacity-50'
+              props?.disabled && 'opacity-50'
             )}
           >
             {helperText}

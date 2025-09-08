@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassWhiteboard } from './GlassWhiteboard';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassWhiteboard> = {
   title: 'Components/Interactive/GlassWhiteboard',
@@ -49,8 +50,8 @@ type Story = StoryObj<typeof GlassWhiteboard>;
 
 export const Default: Story = {
   args: {
-    onDrawingChange: (data) => console.log('Drawing changed:', data.length, 'items'),
-    onToolChange: (tool) => console.log('Tool changed to:', tool),
+    onDrawingChange: fn(),
+    onToolChange: fn(),
   },
 };
 
@@ -60,6 +61,6 @@ export const Collaborative: Story = {
     userId: 'user123',
     enabledTools: ['pen', 'eraser', 'rectangle', 'text'],
     showMinimap: true,
-    onDrawingChange: (data) => console.log('Collaborative drawing:', data),
+    onDrawingChange: fn(),
   },
 };

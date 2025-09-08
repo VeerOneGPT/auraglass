@@ -139,7 +139,7 @@ export const MotionAwareGlass = forwardRef<HTMLDivElement, MotionAwareGlassProps
       onKeyDown: (e: React.KeyboardEvent) => {
         if ((e.key === 'Enter' || e.key === ' ') && (asButton || interactive) && !disabled) {
           e.preventDefault();
-          props.onClick?.(e as any);
+          props?.onClick?.(e as any);
         }
       }
     } : {};

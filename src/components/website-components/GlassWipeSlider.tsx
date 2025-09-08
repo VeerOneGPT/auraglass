@@ -282,9 +282,9 @@ export function GlassWipeSlider({
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      if (isDragging && e.touches[0]) {
+      if (isDragging && e.touches?.[0]) {
         e.preventDefault();
-        const touch = e.touches[0];
+        const touch = e.touches?.[0];
         const clientPos = orientation === 'horizontal' ? touch.clientX : touch.clientY;
         handleMove(clientPos);
       }
@@ -314,8 +314,8 @@ export function GlassWipeSlider({
       cancelAnimationFrame(animationFrame.current);
     }
 
-    if (e.touches[0]) {
-      const touch = e.touches[0];
+    if (e.touches?.[0]) {
+      const touch = e.touches?.[0];
       const clientPos = orientation === 'horizontal' ? touch.clientX : touch.clientY;
       handleMove(clientPos);
 
@@ -376,7 +376,7 @@ export function GlassWipeSlider({
         e.preventDefault();
         const presetIndex = parseInt(e.key);
         const presetValues = Object.values(SLIDER_PRESETS);
-        if (presetIndex < presetValues.length) {
+        if (presetIndex < (presetValues?.length || 0)) {
           newPosition = presetValues[presetIndex];
           shouldSnap = true;
         }
@@ -445,7 +445,7 @@ export function GlassWipeSlider({
       aria-valuemax={100}
       aria-valuenow={Math.round(position)}
       aria-label={`${labels.before} vs ${labels.after} comparison slider. Use arrow keys, Home, End, or number keys 0-5 for presets.`}
-      aria-describedby={showMetrics && metrics.length > 0 ? 'slider-metrics' : undefined}
+      aria-describedby={showMetrics && (metrics?.length || 0) > 0 ? 'slider-metrics' : undefined}
       tabIndex={0}
       onKeyDown={handleKeyDown}
       onMouseEnter={() => setIsHovered(true)}
@@ -555,7 +555,7 @@ export function GlassWipeSlider({
         ref={handleRef}
         className={cn(
           "absolute cursor-grab active:cursor-grabbing touch-target z-20",
-          handleSizes[handleSize],
+          handleSizes?.[handleSize],
           {
             'top-1/2 -translate-y-1/2': !isVertical,
             'left-1/2 -translate-x-1/2': isVertical,
@@ -723,7 +723,7 @@ export function GlassWipeSlider({
       )}
 
       {/* Metrics comparison overlay */}
-      {showMetrics && metrics.length > 0 && (
+      {showMetrics && (metrics?.length || 0) > 0 && (
         <div
           id="slider-metrics"
           className={cn(
@@ -742,14 +742,14 @@ export function GlassWipeSlider({
                 key={index}
                 className={cn(
                   "flex items-center justify-between text-sm",
-                  metric.highlight ? 'text-cyan-300 font-semibold' : 'text-white/80'
+                  metric?.highlight ? 'text-cyan-300 font-semibold' : 'text-white/80'
                 )}
               >
-                <span className="font-medium">{metric.label}</span>
+                <span className="font-medium">{metric?.label}</span>
                 <div className="flex items-center gap-2 font-mono">
-                  <span className="text-red-300">{metric.beforeValue}{metric.unit}</span>
+                  <span className="text-red-300">{metric?.beforeValue}{metric?.unit}</span>
                   <span className="text-white/50">→</span>
-                  <span className="text-green-300">{metric.afterValue}{metric.unit}</span>
+                  <span className="text-green-300">{metric?.afterValue}{metric?.unit}</span>
                 </div>
               </div>
             ))}
@@ -809,7 +809,7 @@ export function ComparisonContent({
   return (
     <div className={cn(
       "w-full h-full flex items-center justify-center p-8 transition-all duration-300",
-      backgroundClasses[background],
+      backgroundClasses?.[background],
       className
     )}>
       {children}
@@ -837,7 +837,7 @@ export function FeatureComparison({
         )}
         <div className="space-y-2">
           {beforeFeatures.map((feature, index) => {
-            const afterFeature = afterFeatures[index];
+            const afterFeature = afterFeatures?.[index];
             return (
               <div key={feature.name} className="flex items-center justify-between py-2 px-3 surface-1">
                 <span className={cn(
@@ -892,21 +892,21 @@ export function MetricsComparison({
               <div className="text-center space-y-3">
                 <div className={cn(
                   "text-sm font-medium",
-                  metric.highlight ? 'text-cyan-300' : 'text-white/80'
+                  metric?.highlight ? 'text-cyan-300' : 'text-white/80'
                 )}>
-                  {metric.label}
+                  {metric?.label}
                 </div>
                 <div className="flex items-center justify-center gap-4">
                   <div className="text-center">
                     <div className="text-2xl font-bold text-red-300 font-mono">
-                      {metric.beforeValue}{metric.unit}
+                      {metric?.beforeValue}{metric?.unit}
                     </div>
                     <div className="text-xs text-white/50 mt-1">Before</div>
                   </div>
                   <div className="text-white/40 text-xl">→</div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-green-300 font-mono">
-                      {metric.afterValue}{metric.unit}
+                      {metric?.afterValue}{metric?.unit}
                     </div>
                     <div className="text-xs text-white/50 mt-1">After</div>
                   </div>

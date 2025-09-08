@@ -118,31 +118,31 @@ export const GlassMenubar: React.FC<GlassMenubarProps> = ({
     const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
     const handleItemClick = (item: MenuItem) => {
-        if (item.disabled) return;
+        if (item?.disabled) return;
 
-        if (item.children && item.children.length > 0) {
+        if (item?.children && item?.children.length > 0) {
             // Toggle submenu
             setOpenMenus(prev => {
                 const newSet = new Set(prev);
-                if (newSet.has(item.id)) {
-                    newSet.delete(item.id);
+                if (newSet.has(item?.id)) {
+                    newSet.delete(item?.id);
                 } else {
                     // Close other menus
                     newSet.clear();
-                    newSet.add(item.id);
+                    newSet.add(item?.id);
                 }
                 return newSet;
             });
         } else {
             // Execute action and close all menus
-            item.action?.();
+            item?.action?.();
             setOpenMenus(new Set());
         }
     };
 
     const handleMouseEnter = (item: MenuItem) => {
-        if (item.disabled) return;
-        setHoveredItem(item.id);
+        if (item?.disabled) return;
+        setHoveredItem(item?.id);
     };
 
     const handleMouseLeave = () => {
@@ -175,8 +175,8 @@ export const GlassMenubar: React.FC<GlassMenubarProps> = ({
             role="menubar"
         >
             {items.map((item, index) => (
-                <React.Fragment key={item.id}>
-                    {item.separator && (
+                <React.Fragment key={item?.id}>
+                    {item?.separator && (
                         <div className={cn(
                             'bg-white/20',
                             orientation === 'horizontal' ? 'w-px h-6 mx-2' : 'h-px w-6 my-2'
@@ -185,16 +185,16 @@ export const GlassMenubar: React.FC<GlassMenubarProps> = ({
 
                     <GlassMenubarItem
                         item={item}
-                        isHovered={hoveredItem === item.id}
-                        hasSubmenuOpen={openMenus.has(item.id)}
+                        isHovered={hoveredItem === item?.id}
+                        hasSubmenuOpen={openMenus.has(item?.id)}
                         onClick={handleItemClick}
-                        onOpenSubmenu={(item) => setOpenMenus(prev => new Set([...prev, item.id]))}
+                        onOpenSubmenu={(item) => setOpenMenus(prev => new Set([...prev, item?.id]))}
                         onCloseSubmenu={() => setOpenMenus(new Set())}
                         size={size}
                     />
 
                     {/* Submenu */}
-                    {item.children && openMenus.has(item.id) && (
+                    {item?.children && openMenus.has(item?.id) && (
                         <GlassMenubarContent
                             isOpen={true}
                             onClose={() => setOpenMenus(new Set())}
@@ -206,7 +206,7 @@ export const GlassMenubar: React.FC<GlassMenubarProps> = ({
                             )}
                         >
                             <GlassMenubar
-                                items={item.children}
+                                items={item?.children}
                                 orientation="vertical"
                                 size={size}
                                 disabled={disabled}
@@ -318,7 +318,7 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
     };
 
     const handleMouseEnter = () => {
-        if (item.children && item.children.length > 0) {
+        if (item?.children && item?.children.length > 0) {
             onOpenSubmenu(item);
         }
     };
@@ -327,7 +327,7 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
         onCloseSubmenu();
     };
 
-    if (item.separator) {
+    if (item?.separator) {
         return (
             <div className="h-px bg-white/20 mx-2 my-1" />
         );
@@ -337,17 +337,17 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
         const current = e.currentTarget;
         const menubar = current.closest('[role="menubar"]') as HTMLElement | null;
         if (!menubar) return;
-        const items = Array.from(menubar.querySelectorAll('button[role="menuitem"]')) as HTMLButtonElement[];
+        const items = Array.from(menubar.querySelectorAll('button?.[role="menuitem"]')) as HTMLButtonElement[];
         const index = items.indexOf(current);
         if (index === -1) return;
 
         if (e.key === 'ArrowRight') {
-            items[(index + 1) % items.length]?.focus();
+            items[(index + 1) % (items?.length || 0)]?.focus();
             e.preventDefault();
         } else if (e.key === 'ArrowLeft') {
-            items[(index - 1 + items.length) % items.length]?.focus();
+            items[(index - 1 + (items?.length || 0)) % (items?.length || 0)]?.focus();
             e.preventDefault();
-        } else if (e.key === 'ArrowDown' && item.children && item.children.length > 0) {
+        } else if (e.key === 'ArrowDown' && item?.children && item?.children.length > 0) {
             onOpenSubmenu(item);
             e.preventDefault();
         } else if (e.key === 'Escape') {
@@ -367,36 +367,36 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
                 (isHovered || hasSubmenuOpen) ? 'after:opacity-100 after:w-full' : 'after:opacity-0 after:w-0',
                 'focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-transparent',
                 'disabled:opacity-50 disabled:cursor-not-allowed',
-                sizeClasses[size],
+                sizeClasses?.[size],
                 {
                     'bg-white/20 text-white': isHovered || hasSubmenuOpen,
-                    'font-medium': item.checked,
+                    'font-medium': item?.checked,
                 },
                 className
             )}
             onClick={handleClick}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            disabled={item.disabled}
+            disabled={item?.disabled}
             type="button"
             role="menuitem"
             onKeyDown={handleKeyDown}
         >
             <div className="flex items-center gap-3">
                 {/* Icon */}
-                {item.icon && (
+                {item?.icon && (
                     <div className="flex items-center justify-center w-4 h-4">
-                        {item.icon}
+                        {item?.icon}
                     </div>
                 )}
 
                 {/* Checkbox/Radio indicator */}
-                {item.type === 'checkbox' && (
+                {item?.type === 'checkbox' && (
                     <div className={cn(
                         'w-4 h-4 border border-white/40 rounded',
-                        item.checked && 'bg-white border-white'
+                        item?.checked && 'bg-white border-white'
                     )}>
-                        {item.checked && (
+                        {item?.checked && (
                             <div className="w-full h-full flex items-center justify-center">
                                 <div className="w-2 h-2 bg-black rounded-sm" />
                             </div>
@@ -404,12 +404,12 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
                     </div>
                 )}
 
-                {item.type === 'radio' && (
+                {item?.type === 'radio' && (
                     <div className={cn(
                         'w-4 h-4 border border-white/40 rounded-full',
-                        item.checked && 'border-white'
+                        item?.checked && 'border-white'
                     )}>
-                        {item.checked && (
+                        {item?.checked && (
                             <div className="w-full h-full flex items-center justify-center">
                                 <div className="w-2 h-2 bg-white rounded-full" />
                             </div>
@@ -419,20 +419,20 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
 
                 {/* Label */}
                 <span className="flex-1 text-left truncate">
-                    {item.label}
+                    {item?.label}
                 </span>
             </div>
 
             <div className="flex items-center gap-2">
                 {/* Shortcut */}
-                {item.shortcut && (
+                {item?.shortcut && (
                     <span className="text-white/50 text-xs font-mono">
-                        {item.shortcut}
+                        {item?.shortcut}
                     </span>
                 )}
 
                 {/* Submenu indicator */}
-                {item.children && item.children.length > 0 && (
+                {item?.children && item?.children.length > 0 && (
                     <ChevronRight className="w-4 h-4 text-white/50" />
                 )}
             </div>

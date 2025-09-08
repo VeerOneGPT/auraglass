@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassThemeSwitcher } from './GlassThemeSwitcher';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassThemeSwitcher> = {
   title: 'Components/Interactive/GlassThemeSwitcher',
@@ -68,7 +69,7 @@ export const Default: Story = {
         colors: { primary: '#2d5a27', secondary: '#4a7c59', accent: '#7fb069' }
       }
     ],
-    onThemeChange: (themeId) => console.log('Theme changed to:', themeId),
+    onThemeChange: fn(),
   },
 };
 
@@ -89,6 +90,6 @@ export const CompactMode: Story = {
         colors: { primary: '#e91e63', secondary: '#9c27b0', accent: '#ff9800' }
       }
     ],
-    onThemeChange: (themeId) => console.log('Theme changed to:', themeId),
+    onThemeChange: fn(),
   },
 };

@@ -155,9 +155,9 @@ const ChartContainer = styled.div<{
   focused: boolean;
 }>`
   position: relative;
-  width: ${props => (typeof props.width === 'number' ? `${props.width}px` : props.width || '100%')};
+  width: ${props => (typeof props?.width === 'number' ? `${props?.width}px` : props?.width || '100%')};
   height: ${props =>
-    typeof props.height === 'number' ? `${props.height}px` : props.height || '400px'};
+    typeof props?.height === 'number' ? `${props?.height}px` : props?.height || '400px'};
   border-radius: 12px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -170,7 +170,7 @@ const ChartContainer = styled.div<{
   `}
   
   ${props =>
-    props.focused &&
+    props?.focused &&
     `
     transform: scale(1.02);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
@@ -193,13 +193,13 @@ const ChartTitle = styled.h3`
   font-size: 18px;
   font-weight: 600;
   margin: 0 0 8px 0;
-  color: ${props => ((props.theme as any).isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)')};
+  color: ${props => ((props?.theme as any).isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)')};
 `;
 
 const ChartDescription = styled.p`
   font-size: 14px;
   margin: 0 0 16px 0;
-  color: ${props => ((props.theme as any).isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)')};
+  color: ${props => ((props?.theme as any).isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)')};
 `;
 
 /**
@@ -229,8 +229,8 @@ const ToolbarContainer = styled.div`
  */
 const ChartTypeButton = styled.button<{ active: boolean; theme?: any }>`
   background: ${props =>
-    props.active
-      ? props.theme?.isDarkMode ?? false
+    props?.active
+      ? props?.theme?.isDarkMode ?? false
         ? 'rgba(255, 255, 255, 0.1)'
         : 'rgba(0, 0, 0, 0.05)'
       : 'transparent'};
@@ -244,7 +244,7 @@ const ChartTypeButton = styled.button<{ active: boolean; theme?: any }>`
 
   &:hover {
     background: ${props =>
-      props.theme?.isDarkMode ?? false ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.08)'};
+      props?.theme?.isDarkMode ?? false ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.08)'};
   }
 `;
 
@@ -254,7 +254,7 @@ const ChartTypeButton = styled.button<{ active: boolean; theme?: any }>`
 const ChartContent = styled.div<{ focused: boolean }>`
   position: relative;
   width: 100%;
-  height: ${props => (props.focused ? 'calc(100% - 120px)' : 'calc(100% - 80px)')};
+  height: ${props => (props?.focused ? 'calc(100% - 120px)' : 'calc(100% - 80px)')};
   overflow: hidden;
 `;
 
@@ -264,7 +264,7 @@ const ChartContent = styled.div<{ focused: boolean }>`
 const FooterContent = styled.div`
   padding: 8px 16px;
   font-size: 12px;
-  color: ${props => ((props.theme as any).isDarkMode ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.6)')};
+  color: ${props => ((props?.theme as any).isDarkMode ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.6)')};
   text-align: center;
 `;
 
@@ -421,12 +421,12 @@ const transformChartJsData = (chartJsData: any): any[] => {
     id: dataset.id || `dataset-${index}`,
     name: dataset.label || `Dataset ${index + 1}`,
     color: dataset.borderColor || dataset.backgroundColor, // Use borderColor or backgroundColor as series color
-    data: dataset.data.map((value: number, pointIndex: number) => ({
+    data: dataset.data?.map((value: number, pointIndex: number) => ({
       // Use value directly if data is just numbers
       // Use point object if data is {x, y} or similar (needs adjustment if x is not index)
       // Assuming simple numeric data corresponding to labels for now
       value: value,
-      label: chartJsData.labels[pointIndex] || `Point ${pointIndex + 1}`,
+      label: chartJsData.labels?.[pointIndex] || `Point ${pointIndex + 1}`,
       // Optionally include original point data if needed: ...point 
     })),
     // Add other potential ChartSeries properties if needed
@@ -534,7 +534,7 @@ export const GlassChart = forwardRef<GlassChartRef, GlassChartProps>(({
 
   // Flag to know if original data was Chart.js format
   const isChartJsDataFormat = useMemo(() => 
-    data && typeof data === 'object' && !Array.isArray(data) && data.datasets && data.labels,
+    data && typeof data === 'object' && !Array.isArray(data) && data?.datasets && data?.labels,
     [data]
   );
 
@@ -566,7 +566,7 @@ export const GlassChart = forwardRef<GlassChartRef, GlassChartProps>(({
     if (focusMode) {
       setIsFocused(!isFocused);
       if (depthAnimation && !isFocused) {
-        animationFunctionsRef.current.animate();
+            animationFunctionsRef.current?.animate && animationFunctionsRef.current.animate();
       }
     }
   };
@@ -661,17 +661,17 @@ export const GlassChart = forwardRef<GlassChartRef, GlassChartProps>(({
       let pieData: any[] = [];
 
       if (isChartJsDataFormat) {
-        const firstDataset = data.datasets[0];
+        const firstDataset = data?.datasets?.[0];
         if (firstDataset && Array.isArray(firstDataset.data)) {
-          pieData = firstDataset.data.map((value: number, index: number) => ({
-            label: data.labels[index] || `Slice ${index + 1}`,
+          pieData = firstDataset.data?.map((value: number, index: number) => ({
+            label: data?.labels?.[index] || `Slice ${index + 1}`,
             value: value,
             color: Array.isArray(firstDataset.backgroundColor)
-                     ? firstDataset.backgroundColor[index % firstDataset.backgroundColor.length]
+                     ? firstDataset.backgroundColor[index % (firstDataset.backgroundColor?.length || 0)]
                      : firstDataset.backgroundColor,
           }));
         }
-      } else if (Array.isArray(data) && data.length > 0 && data[0].value !== undefined) {
+      } else if (Array.isArray(data) && data?.length > 0 && data[0].value !== undefined) {
         // Data looks like the expected format
         pieData = data;
       } else if (Array.isArray(chartSeriesData) && chartSeriesData.length > 0) {

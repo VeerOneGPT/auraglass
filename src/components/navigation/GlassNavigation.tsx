@@ -216,7 +216,7 @@ const ActiveIndicator = styled.div.attrs<{ $style: React.CSSProperties }>(props 
   style: props.$style,
 }))<{ $style: React.CSSProperties }>`
   position: absolute;
-  background-color: ${props => (props.theme as any).palette?.primary?.main || '#1976d2'};
+  background-color: ${props => (props?.theme as any).palette?.primary?.main || '#1976d2'};
   border-radius: 2px;
   z-index: 0;
   pointer-events: none;
@@ -382,7 +382,7 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
       if (typeof defaultSpring === 'object' && defaultSpring !== null) {
         resolvedConfig = { ...baseFallback, ...defaultSpring };
       } else if (typeof defaultSpring === 'string' && defaultSpring in SpringPresets) {
-        resolvedConfig = SpringPresets[defaultSpring as keyof typeof SpringPresets];
+        resolvedConfig = SpringPresets?.[defaultSpring as keyof typeof SpringPresets];
       } else {
         resolvedConfig = baseFallback;
       }
@@ -409,7 +409,7 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
         return;
       }
 
-      const activeElement = activeItem ? itemRefs.current[activeItem] : null;
+      const activeElement = activeItem ? itemRefs.current?.[activeItem] : null;
       const containerElement = navItemsRef.current;
 
       if (activeElement && containerElement) {
@@ -450,15 +450,15 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
 
     const handleItemClick = useCallback(
       (id: string, item: NavigationItem) => {
-        if (item.onClick) {
-          item.onClick();
+        if (item?.onClick) {
+          item?.onClick();
         }
 
         if (onItemClick) {
           onItemClick(item);
         }
 
-        if (item.children && item.children.length > 0) {
+        if (item?.children && item?.children.length > 0) {
           setExpandedItems(prev =>
             prev.includes(id) ? prev.filter(itemId => itemId !== id) : [...prev, id]
           );
@@ -481,10 +481,10 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
     const childSpringTargets = useMemo(() => {
       const targets: Record<string, number> = {};
       items.forEach((item: any) => {
-        if (item.children && item.children.length > 0) {
-          const isExpanded = expandedItems.includes(item.id);
-          targets[`${item.id}_opacity`] = isExpanded ? 1 : 0;
-          targets[`${item.id}_maxHeight`] = isExpanded ? 500 : 0;
+        if (item?.children && item?.children.length > 0) {
+          const isExpanded = expandedItems.includes(item?.id);
+          targets[`${item?.id}_opacity`] = isExpanded ? 1 : 0;
+          targets[`${item?.id}_maxHeight`] = isExpanded ? 500 : 0;
         }
       });
       return targets;
@@ -497,40 +497,40 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
 
     const renderNavItem = useCallback(
       (item: NavigationItem, level = 0): ReactNode => {
-        const isActive = Boolean(activeItem === item.id || item.active);
-        const hasChildren = item.children && item.children.length > 0;
-        const isExpanded = item.id ? expandedItems.includes(item.id) : false;
+        const isActive = Boolean(activeItem === item?.id || item?.active);
+        const hasChildren = item?.children && item?.children.length > 0;
+        const isExpanded = item?.id ? expandedItems.includes(item?.id) : false;
 
         const assignRef = (el: HTMLLIElement | null) => {
-          if (item.id) {
-            itemRefs.current[item.id] = el;
+          if (item?.id) {
+            if (itemRefs.current) itemRefs.current[item?.id] = el;
           }
         };
 
-        if (item.customElement) {
+        if (item?.customElement) {
           return (
             <NavItem
               ref={assignRef}
-              key={item.id || item.key}
+              key={item?.id || item?.key}
               $isActive={isActive}
-              $disabled={!!item.disabled}
+              $disabled={!!item?.disabled}
               $variant={variant}
-              className={item.className}
+              className={item?.className}
             >
-              {item.customElement}
+              {item?.customElement}
             </NavItem>
           );
         }
 
         const content = (
           <>
-            {item.icon && <span className="nav-item-icon">{item.icon}</span>}
+            {item?.icon && <span className="nav-item-icon">{item?.icon}</span>}
 
-            {(!collapsed || level > 0) && <span className="nav-item-label">{item.label}</span>}
+            {(!collapsed || level > 0) && <span className="nav-item-label">{item?.label}</span>}
 
-            {item.badge && (
+            {item?.badge && (
               <Badge>
-                {String(item.badge)}
+                {String(item?.badge)}
               </Badge>
             )}
 
@@ -542,17 +542,17 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
           </>
         );
 
-        const navItem = item.href ? (
+        const navItem = item?.href ? (
           <a
-            href={item.href}
-            target={item.external ? '_blank' : undefined}
-            rel={item.external ? 'noopener noreferrer' : undefined}
+            href={item?.href}
+            target={item?.external ? '_blank' : undefined}
+            rel={item?.external ? 'noopener noreferrer' : undefined}
             onClick={e => {
-              if (item.disabled) {
+              if (item?.disabled) {
                 e.preventDefault();
                 return;
               }
-              handleItemClick(item.id || item.key, item);
+              handleItemClick(item?.id || item?.key, item);
             }}
           >
             {content}
@@ -560,8 +560,8 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
         ) : (
           <button
             type="button"
-            onClick={() => handleItemClick(item.id || item.key, item)}
-            disabled={item.disabled}
+            onClick={() => handleItemClick(item?.id || item?.key, item)}
+            disabled={item?.disabled}
           >
             {content}
           </button>
@@ -577,23 +577,23 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
         return (
           <NavItem
             ref={assignRef}
-            key={item.id || item.key}
+            key={item?.id || item?.key}
             $isActive={isActive}
-            $disabled={!!item.disabled}
+            $disabled={!!item?.disabled}
             $variant={variant}
-            className={item.className}
+            className={item?.className}
           >
-            {item.tooltip && !collapsed ? (
-              <Tooltip title={item.tooltip}>{navItem}</Tooltip>
+            {item?.tooltip && !collapsed ? (
+              <Tooltip title={item?.tooltip}>{navItem}</Tooltip>
             ) : collapsed && level === 0 ? (
-              <Tooltip title={item.label}>{navItem}</Tooltip>
+              <Tooltip title={item?.label}>{navItem}</Tooltip>
             ) : (
               navItem
             )}
 
             {hasChildren && (
               <ChildrenContainer $isOpen={isExpanded && !collapsed} style={childrenStyle}>
-                {item.children?.map((child: any) => renderNavItem(child, level + 1))}
+                {item?.children?.map((child: any) => renderNavItem(child, level + 1))}
               </ChildrenContainer>
             )}
           </NavItem>

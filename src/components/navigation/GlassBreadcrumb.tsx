@@ -95,7 +95,7 @@ export const GlassBreadcrumb: React.FC<GlassBreadcrumbProps> = ({
     let itemsToRender = childArray;
 
     // Handle max items with ellipsis
-    if (maxItems && childArray.length > maxItems) {
+    if (maxItems && (childArray?.length || 0) > maxItems) {
         const startItems = childArray.slice(0, Math.ceil(maxItems / 2));
         const endItems = childArray.slice(-Math.floor(maxItems / 2));
         itemsToRender = [
@@ -125,7 +125,7 @@ export const GlassBreadcrumb: React.FC<GlassBreadcrumbProps> = ({
           
             className={cn(
                 'inline-flex items-center px-3 py-1.5 backdrop-blur-sm ring-1 ring-white/10 bg-white/5',
-                sizeClasses[size],
+                sizeClasses?.[size],
                 className
             )}
         >
@@ -228,7 +228,7 @@ export const GlassBreadcrumbLink: React.FC<GlassBreadcrumbLinkProps> = ({
 
     // Use a regular button since GlassButton expects button props but we have anchor props
     return (
-        <button className={linkClasses} onClick={props.onClick as any} {...(props as any)}>
+        <button className={linkClasses} onClick={props?.onClick as any} {...(props as any)}>
             {children}
         </button>
     );
@@ -255,12 +255,12 @@ export const GlassBreadcrumbCompound: React.FC<GlassBreadcrumbCompoundProps> = (
     return (
         <GlassBreadcrumb {...props}>
             {items.map((item, index) => (
-                <GlassBreadcrumbItem key={index} isCurrentPage={item.isCurrentPage}>
+                <GlassBreadcrumbItem key={index} isCurrentPage={item?.isCurrentPage}>
                     <GlassBreadcrumbLink
-                        href={item.href}
-                        isCurrentPage={item.isCurrentPage}
+                        href={item?.href}
+                        isCurrentPage={item?.isCurrentPage}
                     >
-                        {item.label}
+                        {item?.label}
                     </GlassBreadcrumbLink>
                 </GlassBreadcrumbItem>
             ))}

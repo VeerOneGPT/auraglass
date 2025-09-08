@@ -154,8 +154,8 @@ export function StatCard({ title, value, change, description, icon, className }:
             <div className="flex items-baseline gap-2 mt-1">
               <p className="text-2xl font-bold">{value}</p>
               {change && (
-                <span className={cn('text-sm font-medium flex items-center gap-1', trendColors[change.trend])}>
-                  {trendIcons[change.trend]}
+                <span className={cn('text-sm font-medium flex items-center gap-1', trendColors?.[change.trend])}>
+                  {trendIcons?.[change.trend]}
                   {change.value}
                 </span>
               )}
@@ -275,7 +275,7 @@ export function NotificationCard({
     <GlassCard
       className={cn(
         'border-l-2',
-        typeColors[type],
+        typeColors?.[type],
         {
           'opacity-60': read,
         },
@@ -287,7 +287,7 @@ export function NotificationCard({
           {avatar ? (
             <img src={avatar} alt="" className="w-8 h-8 rounded-full object-cover" />
           ) : (
-            <span className="text-lg">{typeIcons[type]}</span>
+            <span className="text-lg">{typeIcons?.[type]}</span>
           )}
           
           <div className="flex-1 min-w-0">
@@ -417,18 +417,18 @@ export function ActivityCard({ title, items, className }: ActivityCardProps) {
       <CardContent padding="none">
         <div className="divide-y divide-border/20">
           {items.map((item) => (
-            <div key={item.id} className="p-4 hover:bg-muted/50 transition-colors">
+            <div key={item?.id} className="p-4 hover:bg-muted/50 transition-colors">
               <div className="flex justify-between items-start">
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium">{item.action}</p>
-                  {item.user && (
-                    <p className="text-xs text-muted-foreground">by {item.user}</p>
+                  <p className="text-sm font-medium">{item?.action}</p>
+                  {item?.user && (
+                    <p className="text-xs text-muted-foreground">by {item?.user}</p>
                   )}
-                  {item.details && (
-                    <p className="text-xs text-muted-foreground mt-1">{item.details}</p>
+                  {item?.details && (
+                    <p className="text-xs text-muted-foreground mt-1">{item?.details}</p>
                   )}
                 </div>
-                <time className="text-xs text-muted-foreground">{item.timestamp}</time>
+                <time className="text-xs text-muted-foreground">{item?.timestamp}</time>
               </div>
             </div>
           ))}

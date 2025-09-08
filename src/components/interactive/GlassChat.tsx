@@ -345,14 +345,16 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                                             const showAvatar = showAvatars && (!prevMessage || prevMessage.sender.id !== message.sender.id);
 
                                             return (
-                                                <Motion
+                                                <div
                                                     key={message.id}
-                                                    preset="slideUp"
-                                                    delay={index * 20}
                                                     className={cn(
-                                                        'flex gap-3 group',
+                                                        'flex gap-3 group animate-slide-in-up',
                                                         isCurrentUser ? 'flex-row-reverse' : 'flex-row'
                                                     )}
+                                                    style={{ 
+                                                        animationDelay: `${Math.min(index, 20) * 20}ms`,
+                                                        animationFillMode: 'both'
+                                                    }}
                                                 >
                                                     {/* Avatar */}
                                                     {showAvatar && showAvatars && (
@@ -478,7 +480,7 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                                                             </GlassButton>
                                                         )}
                                                     </div>
-                                                </Motion>
+                                                </div>
                                             );
                                         })}
                                     </div>

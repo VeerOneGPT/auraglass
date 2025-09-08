@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassSearchInterface } from './GlassSearchInterface';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassSearchInterface> = {
   title: 'Components/Interactive/GlassSearchInterface',
@@ -43,8 +44,8 @@ type Story = StoryObj<typeof GlassSearchInterface>;
 
 export const Default: Story = {
   args: {
-    onChange: (value) => console.log('Search changed:', value),
-    onSearch: (query, filters) => console.log('Search submitted:', query, filters),
+    onChange: fn(),
+    onSearch: fn(),
   },
 };
 
@@ -70,8 +71,8 @@ export const WithResults: Story = {
         category: 'Settings',
       },
     ],
-    onChange: (value) => console.log('Search changed:', value),
-    onSearch: (query, filters) => console.log('Search submitted:', query, filters),
+    onChange: fn(),
+    onSearch: fn(),
   },
 };
 
@@ -88,8 +89,8 @@ export const WithFilters: Story = {
         { id: 'draft', label: 'Draft', value: 'draft', count: 15 },
       ],
     },
-    onChange: (value) => console.log('Search changed:', value),
-    onSearch: (query, filters) => console.log('Search submitted:', query, filters),
-    onFiltersChange: (filters) => console.log('Filters changed:', filters),
+    onChange: fn(),
+    onSearch: fn(),
+    onFiltersChange: fn(),
   },
 };

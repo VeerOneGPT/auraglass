@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassCommentThread } from './GlassCommentThread';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassCommentThread> = {
   title: 'Components/Interactive/GlassCommentThread',
@@ -31,7 +32,7 @@ const meta: Meta<typeof GlassCommentThread> = {
         createdAt: '2024-01-01',
       },
     ],
-    onReply: () => {},
+    onReply: fn(),
   },
 };
 
@@ -54,7 +55,7 @@ export const Default: Story = {
         createdAt: '2024-01-01 10:05:00',
       },
     ],
-    onReply: (parentId, text) => console.log(`Reply to ${parentId}: ${text}`),
+    onReply: fn(),
   },
 };
 
@@ -68,6 +69,6 @@ export const Variants: Story = {
         createdAt: '2024-01-01',
       },
     ],
-    onReply: (parentId, text) => console.log(`Reply to ${parentId}: ${text}`),
+    onReply: fn(),
   },
 };

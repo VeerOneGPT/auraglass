@@ -99,10 +99,10 @@ export function useDraggableListPhysics(
     items.forEach((item, index) => {
       let newIndex = index;
 
-      if (finalOptions.multiSelect && draggedItems.length > 1) {
+      if (finalOptions.multiSelect && (draggedItems?.length || 0) > 1) {
         // Handle multi-item drag
         const draggedIndices = draggedItems.map(item =>
-          items.findIndex(i => i.id === item.id)
+          items.findIndex(i => i.id === item?.id)
         ).sort((a, b) => a - b);
 
         if (draggedIndices.includes(index)) {
@@ -112,9 +112,9 @@ export function useDraggableListPhysics(
         } else if (index >= Math.min(fromIndex, toIndex) && index <= Math.max(fromIndex, toIndex)) {
           // This item needs to shift
           if (fromIndex < toIndex) {
-            newIndex = index - draggedIndices.length;
+            newIndex = index - (draggedIndices?.length || 0);
           } else {
-            newIndex = index + draggedIndices.length;
+            newIndex = index + (draggedIndices?.length || 0);
           }
         }
       } else {
@@ -132,7 +132,9 @@ export function useDraggableListPhysics(
         }
       }
 
-      springTargets[`item-${item.id}`] = newIndex * 60; // Assume 60px item height
+      if (springTargets) {
+        springTargets[`item-${item?.id}`] = newIndex * 60; // Assume 60px item height
+      }
     });
 
     physicsSprings.start(springTargets);
@@ -159,8 +161,8 @@ export function useDraggableListPhysics(
 
     // Handle multi-select
     let draggedItems = [item];
-    if (finalOptions.multiSelect && selectedItems.length > 1 && selectedItems.includes(item.id)) {
-      draggedItems = items.filter(item => selectedItems.includes(item.id));
+    if (finalOptions.multiSelect && (selectedItems?.length || 0) > 1 && selectedItems.includes(item?.id)) {
+      draggedItems = items.filter(item => selectedItems.includes(item?.id));
     }
 
     setDragState({
@@ -226,7 +228,7 @@ export function useDraggableListPhysics(
       const elements = containerRef.current.querySelectorAll('[data-draggable-item]');
       let hoverIndex = -1;
 
-      for (let i = 0; i < elements.length; i++) {
+      for (let i = 0; i < (elements?.length || 0); i++) {
         const element = elements[i] as HTMLElement;
         const rect = element.getBoundingClientRect();
 
@@ -256,8 +258,8 @@ export function useDraggableListPhysics(
     }
 
     // Validate drop
-    const draggedItems = finalOptions.multiSelect && selectedItems.length > 1
-      ? items.filter(item => selectedItems.includes(item.id))
+    const draggedItems = finalOptions.multiSelect && (selectedItems?.length || 0) > 1
+      ? items.filter(item => selectedItems.includes(item?.id))
       : [dragState.draggedItem!];
 
     const isValidDrop = finalOptions.validateDrop(
@@ -304,15 +306,15 @@ export function useDraggableListPhysics(
   const selectItemRange = useCallback((startId: string, endId: string) => {
     if (!finalOptions.multiSelect) return;
 
-    const startIndex = items.findIndex(item => item.id === startId);
-    const endIndex = items.findIndex(item => item.id === endId);
+    const startIndex = items.findIndex(item => item?.id === startId);
+    const endIndex = items.findIndex(item => item?.id === endId);
 
     if (startIndex === -1 || endIndex === -1) return;
 
     const minIndex = Math.min(startIndex, endIndex);
     const maxIndex = Math.max(startIndex, endIndex);
 
-    const rangeIds = items.slice(minIndex, maxIndex + 1).map(item => item.id);
+    const rangeIds = items.slice(minIndex, maxIndex + 1).map(item => item?.id);
     setSelectedItems(rangeIds);
   }, [items, finalOptions.multiSelect]);
 
@@ -322,7 +324,7 @@ export function useDraggableListPhysics(
 
   // Keyboard navigation for accessibility
   const handleKeyDown = useCallback((event: KeyboardEvent, itemId: string) => {
-    const currentIndex = items.findIndex(item => item.id === itemId);
+    const currentIndex = items.findIndex(item => item?.id === itemId);
     if (currentIndex === -1) return;
 
     switch (event.key) {
@@ -336,7 +338,7 @@ export function useDraggableListPhysics(
 
       case 'ArrowDown':
         event.preventDefault();
-        if (currentIndex < items.length - 1) {
+        if (currentIndex < (items?.length || 0) - 1) {
           const targetItem = items[currentIndex + 1];
           animateListReorder(currentIndex, currentIndex + 1, [items[currentIndex]]);
         }
@@ -462,7 +464,7 @@ export function useItemTransitions(
 
   const animateAllItems = useCallback(() => {
     items.forEach((item, index) => {
-      setTimeout(() => animateItem(item.id), index * stagger);
+      setTimeout(() => animateItem(item?.id), index * stagger);
     });
   }, [items, animateItem, stagger]);
 

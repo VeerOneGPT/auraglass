@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassKeyValueEditor } from './GlassKeyValueEditor';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassKeyValueEditor> = {
   title: 'Components/Interactive/GlassKeyValueEditor',
@@ -29,7 +30,7 @@ const meta: Meta<typeof GlassKeyValueEditor> = {
       { key: 'role', value: 'developer' },
     ],
     className: '',
-    onChange: () => {},
+    onChange: fn(),
   },
 };
 
@@ -42,7 +43,7 @@ export const Default: Story = {
       { key: 'title', value: 'Sample Document' },
       { key: 'author', value: 'Jane Smith' },
     ],
-    onChange: () => {},
+    onChange: fn(),
   },
 };
 
@@ -54,6 +55,6 @@ export const Variants: Story = {
       { key: 'timeout', value: '5000' },
       { key: 'retries', value: '3' },
     ],
-    onChange: () => {},
+    onChange: fn(),
   },
 };

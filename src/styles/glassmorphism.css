@@ -78,8 +78,9 @@
 
 /* Enhanced Glass Component Base Classes */
 .glass-base {
-  /* Reduced blur to avoid text softness; handled per-component if needed */
-  /* backdrop-filter: var(--blur-medium); */
+  /* Enable backdrop-filter for true glassmorphism effects */
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
   background: var(--glass-gradient);
   border: var(--border-glass);
   border-radius: 20px;
@@ -245,21 +246,40 @@ html[data-glass-density="strong"] .glass-base {
 
 /* Glass Card Variants */
 .glass-card-default {
-  @extend .glass-base;
+  /* In plain CSS we can’t use @extend; duplicate essential base styles */
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
+  background: var(--glass-gradient);
+  border: var(--border-glass);
+  border-radius: 20px;
+  box-shadow: var(--shadow-glass);
+  position: relative;
+  transition: all 0.3s ease-out;
   padding: 1.5rem;
 }
 
 .glass-card-feature {
-  @extend .glass-strong;
-  padding: 2rem;
+  /* Stronger glass base */
+  backdrop-filter: var(--blur-strong);
+  -webkit-backdrop-filter: var(--blur-strong);
+  background: var(--glass-gradient-strong);
+  border: var(--border-glass-strong);
+  box-shadow: var(--shadow-glass-strong);
   border-radius: 20px;
+  transition: all 0.3s ease-out;
+  padding: 2rem;
 }
 
 .glass-card-elevated {
-  @extend .glass-base;
-  padding: 2.5rem;
+  backdrop-filter: var(--blur-medium);
+  -webkit-backdrop-filter: var(--blur-medium);
+  background: var(--glass-gradient);
+  border: var(--border-glass);
   border-radius: 24px;
   box-shadow: var(--shadow-glass-strong);
+  position: relative;
+  transition: all 0.3s ease-out;
+  padding: 2.5rem;
 }
 
 /* Comprehensive Motion & Animation Utilities for Reduced Motion */

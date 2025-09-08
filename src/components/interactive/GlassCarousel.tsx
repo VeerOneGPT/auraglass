@@ -155,7 +155,7 @@ export const GlassCarousel: React.FC<GlassCarouselProps> = ({
         }))
         : items;
 
-    const totalItems = carouselItems.length;
+    const totalItems = (carouselItems?.length || 0);
     const maxIndex = Math.max(0, totalItems - slidesToShow);
 
     // Handle slide change
@@ -346,16 +346,16 @@ export const GlassCarousel: React.FC<GlassCarouselProps> = ({
                         >
                             {carouselItems.map((item, index) => (
                                 <div
-                                    key={item.id}
+                                    key={item?.id}
                                     className="flex-shrink-0"
                                     style={{
                                         width: `${100 / slidesToShow}%`,
                                         paddingLeft: index === 0 ? 0 : undefined,
-                                        paddingRight: index === carouselItems.length - 1 ? 0 : undefined
+                                        paddingRight: index === (carouselItems?.length || 0) - 1 ? 0 : undefined
                                     }}
                                 >
                                     <div className="h-full w-full relative">
-                                        {item.content}
+                                        {item?.content}
                                     </div>
                                 </div>
                             ))}
@@ -568,11 +568,11 @@ export const GlassThumbnailCarousel: React.FC<GlassThumbnailCarouselProps> = ({
             )}>
                 {thumbnailItems.map((item, index) => (
                     <button
-                        key={item.id}
+                        key={item?.id}
                         onClick={() => setSelectedIndex(index)}
                         className={cn(
                             'flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-200',
-                            thumbnailSizeClasses[thumbnailSize],
+                            thumbnailSizeClasses?.[thumbnailSize],
                             selectedIndex === index
                                 ? 'border-primary scale-105 shadow-lg'
                                 : 'border-white/20 hover:border-white/40 hover:scale-102'

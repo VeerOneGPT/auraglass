@@ -267,7 +267,7 @@ export const GlassDroppable: React.FC<GlassDroppableProps> = ({
         if (disabled) return;
 
         const dragData = JSON.parse(e.dataTransfer.getData('application/json'));
-        const isAccepted = accept.length === 0 || accept.includes(dragData.type);
+        const isAccepted = (accept?.length || 0) === 0 || accept.includes(dragData.type);
 
         setIsOver(true);
         setIsValidDrop(isAccepted);
@@ -303,7 +303,7 @@ export const GlassDroppable: React.FC<GlassDroppableProps> = ({
         if (disabled) return;
 
         const dragData = JSON.parse(e.dataTransfer.getData('application/json'));
-        const isAccepted = accept.length === 0 || accept.includes(dragData.type);
+        const isAccepted = (accept?.length || 0) === 0 || accept.includes(dragData.type);
 
         setIsOver(false);
         setIsValidDrop(false);
@@ -440,7 +440,7 @@ export const GlassSortable: React.FC<GlassSortableProps> = ({
         >
             {items.map((item, index) => (
                 <div
-                    key={item.id}
+                    key={item?.id}
                     draggable
                     onDragStart={() => handleDragStart(index)}
                     onDragOver={(e) => handleDragOver(e, index)}
@@ -463,7 +463,7 @@ export const GlassSortable: React.FC<GlassSortableProps> = ({
                     <div className={cn(
                         dragOverIndex === index && 'scale-105'
                     )}>
-                        {item.content}
+                        {item?.content}
                     </div>
 
                     {/* Drop Indicator */}

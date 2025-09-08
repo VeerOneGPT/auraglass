@@ -152,9 +152,9 @@ export const GlassCommand: React.FC<GlassCommandProps> = ({
         const lowerQuery = query.toLowerCase();
         return items.filter(item => {
             const searchableText = [
-                item.label,
-                item.description,
-                ...(item.keywords || []),
+                item?.label,
+                item?.description,
+                ...(item?.keywords || []),
             ].join(' ').toLowerCase();
 
             return searchableText.includes(lowerQuery);
@@ -176,7 +176,7 @@ export const GlassCommand: React.FC<GlassCommandProps> = ({
         const groups: Record<string, CommandItem[]> = {};
         filteredItems.forEach(item => {
             const group = groupBy(item);
-            if (!groups[group]) groups[group] = [];
+              if (!groups[group]) groups[group] = [];
             groups[group].push(item);
         });
 
@@ -185,7 +185,7 @@ export const GlassCommand: React.FC<GlassCommandProps> = ({
 
     // Handle keyboard navigation
     const handleKeyDown = (e: React.KeyboardEvent) => {
-        const totalItems = filteredItems.length;
+        const totalItems = (filteredItems?.length || 0);
 
         switch (e.key) {
             case 'ArrowDown':
@@ -211,8 +211,8 @@ export const GlassCommand: React.FC<GlassCommandProps> = ({
     };
 
     const handleSelect = (item: CommandItem) => {
-        if (item.disabled) return;
-        item.action();
+        if (item?.disabled) return;
+        item?.action();
         onSelect?.(item);
     };
 
@@ -245,7 +245,7 @@ export const GlassCommand: React.FC<GlassCommandProps> = ({
                             <div className="flex items-center justify-center py-8">
                                 <div className="w-6 h-6 border-2 border-white/30 border-t-white/60 rounded-full animate-spin" />
                             </div>
-                        ) : filteredItems.length === 0 ? (
+                        ) : (filteredItems?.length || 0) === 0 ? (
                             renderEmpty ? (
                                 renderEmpty()
                             ) : (
@@ -267,13 +267,13 @@ export const GlassCommand: React.FC<GlassCommandProps> = ({
 
                                         return (
                                             <div
-                                                key={item.id}
+                                                key={item?.id}
                                                 className={cn(
                                                     'flex items-center px-3 py-2 cursor-pointer transition-all duration-200 rounded-md',
                                                     'hover:bg-white/10 hover:-translate-y-0.5',
                                                     {
                                                         'bg-white/20 text-white shadow-md ring-1 ring-white/20': isSelected,
-                                                        'opacity-50 cursor-not-allowed': item.disabled,
+                                                        'opacity-50 cursor-not-allowed': item?.disabled,
                                                     }
                                                 )}
                                                 onClick={() => handleSelect(item)}
@@ -282,18 +282,18 @@ export const GlassCommand: React.FC<GlassCommandProps> = ({
                                                     renderItem(item, isSelected)
                                                 ) : (
                                                     <>
-                                                        {item.icon && (
+                                                        {item?.icon && (
                                                             <div className="flex items-center justify-center w-5 h-5 mr-3 text-white/70">
-                                                                {item.icon}
+                                                                {item?.icon}
                                                             </div>
                                                         )}
                                                         <div className="flex-1 min-w-0">
                                                             <div className="text-white/90 font-medium truncate">
-                                                                {item.label}
+                                                                {item?.label}
                                                             </div>
-                                                            {item.description && (
+                                                            {item?.description && (
                                                                 <div className="text-white/60 text-sm truncate">
-                                                                    {item.description}
+                                                                    {item?.description}
                                                                 </div>
                                                             )}
                                                         </div>

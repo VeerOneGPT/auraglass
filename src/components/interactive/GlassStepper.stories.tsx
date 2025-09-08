@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassStepper } from './GlassStepper';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassStepper> = {
   title: 'Components/Interactive/GlassStepper',
@@ -39,7 +40,7 @@ export const Default: Story = {
       { id: 'step3', label: 'Step 3' },
       { id: 'step4', label: 'Step 4' },
     ],
-    onChange: (id) => console.log('Step changed to:', id),
+    onChange: fn(),
   },
 };
 
@@ -53,6 +54,6 @@ export const WithOptionalSteps: Story = {
       { id: 'complete', label: 'Complete' },
     ],
     active: 'account',
-    onChange: (id) => console.log('Step changed to:', id),
+    onChange: fn(),
   },
 };

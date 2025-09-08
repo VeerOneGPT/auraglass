@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassPagination } from './GlassPagination';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassPagination> = {
   title: 'Components/Navigation/GlassPagination',
@@ -54,7 +55,7 @@ type Story = StoryObj<typeof GlassPagination>;
 
 export const Default: Story = {
   args: {
-    onPageChange: (page) => console.log('Page changed to:', page),
+    onPageChange: fn(),
   },
 };
 
@@ -63,7 +64,7 @@ export const LargeDataset: Story = {
     currentPage: 5,
     totalPages: 50,
     maxPageButtons: 7,
-    onPageChange: (page) => console.log('Page changed to:', page),
+    onPageChange: fn(),
   },
 };
 
@@ -73,6 +74,6 @@ export const SmallSize: Story = {
     totalPages: 8,
     size: 'sm',
     showFirstLast: false,
-    onPageChange: (page) => console.log('Page changed to:', page),
+    onPageChange: fn(),
   },
 };

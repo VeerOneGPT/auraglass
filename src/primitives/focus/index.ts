@@ -71,7 +71,7 @@ export function getFocusableElements(
   selector?: string
 ): HTMLElement[] {
   const defaultSelector = [
-    'a[href]:not([disabled])',
+    'a?.[href]:not([disabled])',
     'button:not([disabled])',
     'textarea:not([disabled])',
     'input:not([disabled])',
@@ -106,7 +106,7 @@ export function focusNext(currentElement: HTMLElement, container?: HTMLElement):
   if (currentIndex === -1) {
     focusable[0]?.focus();
   } else {
-    const nextIndex = (currentIndex + 1) % focusable.length;
+    const nextIndex = (currentIndex + 1) % (focusable?.length || 0);
     focusable[nextIndex]?.focus();
   }
 }
@@ -120,9 +120,9 @@ export function focusPrevious(currentElement: HTMLElement, container?: HTMLEleme
   const currentIndex = focusable.indexOf(currentElement);
   
   if (currentIndex === -1) {
-    focusable[focusable.length - 1]?.focus();
+    focusable[(focusable?.length || 0) - 1]?.focus();
   } else {
-    const previousIndex = (currentIndex - 1 + focusable.length) % focusable.length;
+    const previousIndex = (currentIndex - 1 + (focusable?.length || 0)) % (focusable?.length || 0);
     focusable[previousIndex]?.focus();
   }
 }
@@ -156,12 +156,12 @@ export class RovingTabindex {
   
   private updateTabindex() {
     this.items.forEach((item, index) => {
-      item.element.setAttribute('tabindex', index === this.currentIndex ? '0' : '-1');
+      item?.element.setAttribute('tabindex', index === this.currentIndex ? '0' : '-1');
     });
   }
   
   public focus(index: number) {
-    if (index >= 0 && index < this.items.length) {
+    if (index >= 0 && index < (this.items?.length || 0)) {
       this.currentIndex = index;
       this.updateTabindex();
       this.items[index].element.focus();
@@ -169,12 +169,12 @@ export class RovingTabindex {
   }
   
   public focusNext() {
-    const nextIndex = (this.currentIndex + 1) % this.items.length;
+    const nextIndex = (this.currentIndex + 1) % (this.items?.length || 0);
     this.focus(nextIndex);
   }
   
   public focusPrevious() {
-    const previousIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
+    const previousIndex = (this.currentIndex - 1 + (this.items?.length || 0)) % (this.items?.length || 0);
     this.focus(previousIndex);
   }
   
@@ -183,7 +183,7 @@ export class RovingTabindex {
   }
   
   public focusLast() {
-    this.focus(this.items.length - 1);
+    this.focus((this.items?.length || 0) - 1);
   }
   
   public handleKeyDown(event: KeyboardEvent) {

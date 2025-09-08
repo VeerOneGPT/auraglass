@@ -194,7 +194,7 @@ function ImageListComponent(props: ImageListProps, ref: React.ForwardedRef<HTMLU
           if (React.isValidElement<React.HTMLAttributes<HTMLElement>>(child)) {
             // Clone element, merging className
             return React.cloneElement(child, {
-              className: `${child.props.className || ''} galileo-image-list-item`,
+              className: `${child.props?.className || ''} galileo-image-list-item`,
             });
           }
           return child;

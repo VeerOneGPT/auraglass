@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { TreeItem } from './TreeItem';
+import { TreeView } from './TreeView';
 
 const meta: Meta<typeof TreeItem> = {
   title: 'Components/Tree-view/TreeItem',
@@ -37,25 +38,34 @@ export default meta;
 type Story = StoryObj<typeof TreeItem>;
 
 export const Default: Story = {
-  args: {
-    children: (
-      <div className="p-4 text-center">
-        <h3 className="text-lg font-semibold mb-2">TreeItem</h3>
-        <p className="text-sm opacity-80">This is the default treeitem component.</p>
-      </div>
-    ),
-  },
+  render: (args) => (
+    <TreeView>
+      <TreeItem 
+        {...args}
+        nodeId="default-item"
+        label="TreeItem Example"
+      >
+        <TreeItem 
+          nodeId="child-1" 
+          label="Child Item 1"
+        />
+        <TreeItem 
+          nodeId="child-2" 
+          label="Child Item 2"
+        />
+      </TreeItem>
+    </TreeView>
+  ),
 };
 
 export const Variants: Story = {
   render: (args) => (
     <div className="flex flex-wrap gap-4">
-      <TreeItem {...args}>
-        Default
-      </TreeItem>
+      <TreeView>
+        <TreeItem {...args} nodeId="variant-1" label="Basic Item" />
+        <TreeItem {...args} nodeId="variant-2" label="With Icon" icon="📁" />
+        <TreeItem {...args} nodeId="variant-3" label="Disabled Item" disabled />
+      </TreeView>
     </div>
   ),
-  args: {
-    children: null,
-  },
 };

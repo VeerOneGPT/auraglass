@@ -92,6 +92,12 @@ const TreeItemContent = styled.div<{
     outline: 1px dashed var(--tree-view-color, rgba(255, 255, 255, 0.9));
   `}
 
+  /* Accessible focus ring */
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.6), 0 0 0 6px rgba(59, 130, 246, 0.15);
+  }
+
   /* Glass hover effect */
   ${props =>
     !props.$disabled &&
@@ -250,10 +256,14 @@ function TreeItemComponent(props: TreeItemProps, ref: React.ForwardedRef<HTMLLIE
   const animatedStyle = finalDisableAnimation ? {
     height: animationTargets.height,
     opacity: animationTargets.opacity,
+    transform: isExpanded ? 'perspective(800px) rotateX(0deg)' : 'perspective(800px) rotateX(-5deg)',
+    transformOrigin: 'top',
   } : {
     height: animationTargets.height,
     opacity: animationTargets.opacity,
-    transition: 'height 0.3s ease, opacity 0.3s ease',
+    transform: isExpanded ? 'perspective(800px) rotateX(0deg)' : 'perspective(800px) rotateX(-5deg)',
+    transformOrigin: 'top',
+    transition: 'height 0.3s ease, opacity 0.3s ease, transform 0.28s ease',
   };
 
   // Handle click event
@@ -366,7 +376,7 @@ function TreeItemComponent(props: TreeItemProps, ref: React.ForwardedRef<HTMLLIE
             style={{
               ...animatedStyle, // Apply animated height and opacity
               // Add will-change for performance
-              willChange: 'height, opacity',
+              willChange: 'height, opacity, transform',
             }}
           >
             {children}

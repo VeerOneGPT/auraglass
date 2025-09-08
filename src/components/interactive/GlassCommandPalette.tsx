@@ -222,7 +222,7 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
       try {
         const newRecents = [
           item,
-          ...recentCommands.filter(cmd => cmd.id !== item.id)
+          ...recentCommands.filter(cmd => cmd.id !== item?.id)
         ].slice(0, maxRecents);
 
         setRecentCommands(newRecents);
@@ -239,7 +239,7 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
       groups.forEach(group => {
         flatItems.push(...group.items.map(item => ({
           ...item,
-          category: item.category || group.label,
+          category: item?.category || group.label,
         })));
       });
 
@@ -251,9 +251,9 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
       if (!searchTerm) return true;
 
       const normalizedSearch = searchTerm.toLowerCase();
-      const label = item.label.toLowerCase();
-      const description = (item.description || '').toLowerCase();
-      const keywords = (item.keywords || []).join(' ').toLowerCase();
+      const label = item?.label.toLowerCase();
+      const description = (item?.description || '').toLowerCase();
+      const keywords = (item?.keywords || []).join(' ').toLowerCase();
 
       if (fuzzySearch) {
         // Simple fuzzy search implementation
@@ -277,10 +277,10 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
         result = result.filter(item =>
           filter ? filter(item, search) : defaultFilter(item, search)
         );
-      } else if (enableRecents && recentCommands.length > 0) {
+      } else if (enableRecents && (recentCommands?.length || 0) > 0) {
         // Show recent commands when no search
         result = recentCommands.filter(recent =>
-          allItems.some(item => item.id === recent.id)
+          allItems.some(item => item?.id === recent.id)
         );
       }
 
@@ -308,8 +308,8 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
       if (!showCategories) return { 'All': filteredItems };
 
       const grouped = filteredItems.reduce((acc, item) => {
-        const category = item.category || 'Other';
-        if (!acc[category]) acc[category] = [];
+        const category = item?.category || 'Other';
+          if (!acc[category]) acc[category] = [];
         acc[category].push(item);
         return acc;
       }, {} as Record<string, CommandItem[]>);
@@ -319,13 +319,13 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
 
     // Handle item selection
     const handleSelect = (item: CommandItem) => {
-      if (item.disabled) return;
+      if (item?.disabled) return;
 
       // Save to recents
       saveRecentCommand(item);
 
       // Execute action
-      item.action?.();
+      item?.action?.();
       onSelect?.(item);
 
       // Close palette if configured
@@ -351,7 +351,7 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
         case 'ArrowDown':
           e.preventDefault();
           setSelectedIndex(prev =>
-            prev < filteredItems.length - 1 ? prev + 1 : prev
+            prev < (filteredItems?.length || 0) - 1 ? prev + 1 : prev
           );
           break;
 
@@ -374,7 +374,7 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
 
         case 'End':
           e.preventDefault();
-          setSelectedIndex(filteredItems.length - 1);
+          setSelectedIndex((filteredItems?.length || 0) - 1);
           break;
       }
     };
@@ -394,7 +394,7 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
     // Scroll selected item into view
     useEffect(() => {
       if (selectedIndex >= 0 && listRef.current) {
-        const selectedElement = listRef.current.children[selectedIndex] as HTMLElement;
+        const selectedElement = listRef.current.children?.[selectedIndex] as HTMLElement;
         if (selectedElement) {
           selectedElement.scrollIntoView({
             block: 'nearest',
@@ -484,7 +484,7 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
                     <span className="text-muted-foreground">{loadingMessage}</span>
                   </div>
                 </div>
-              ) : filteredItems.length === 0 ? (
+              ) : (filteredItems?.length || 0) === 0 ? (
                 <div className="py-8 text-center text-muted-foreground">
                   {emptyMessage}
                 </div>
@@ -501,11 +501,11 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
                       const globalIndex = filteredItems.indexOf(item);
                       const isSelected = globalIndex === selectedIndex;
 
-                      if (item.component) {
-                        const Component = item.component;
+                      if (item?.component) {
+                        const Component = item?.component;
                         return (
                           <Component
-                            key={item.id}
+                            key={item?.id}
                             item={item}
                             isSelected={isSelected}
                           />
@@ -514,44 +514,44 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
 
                       return (
                         <GlassButton
-                          key={item.id}
+                          key={item?.id}
                           type="button"
                           className={cn(
                             'w-full flex items-center gap-3 px-4 py-3 text-left transition-colors',
                             'hover:bg-muted/20 focus:bg-muted/20 focus:outline-none',
                             {
                               'bg-primary/10 border-l-2 border-primary': isSelected,
-                              'opacity-50 cursor-not-allowed': item.disabled,
+                              'opacity-50 cursor-not-allowed': item?.disabled,
                             }
                           )}
                           onClick={() => handleSelect(item)}
-                          disabled={item.disabled}
+                          disabled={item?.disabled}
                           role="option"
                           aria-selected={isSelected}
                         >
                           {/* Icon */}
-                          {item.icon && (
+                          {item?.icon && (
                             <span className="flex-shrink-0 text-muted-foreground">
-                              {item.icon}
+                              {item?.icon}
                             </span>
                           )}
 
                           {/* Content */}
                           <div className="flex-1 min-w-0">
                             <div className="font-medium text-foreground">
-                              {item.label}
+                              {item?.label}
                             </div>
-                            {item.description && (
+                            {item?.description && (
                               <div className="text-sm text-muted-foreground truncate">
-                                {item.description}
+                                {item?.description}
                               </div>
                             )}
                           </div>
 
                           {/* Shortcut */}
-                          {showShortcuts && item.shortcut && (
+                          {showShortcuts && item?.shortcut && (
                             <GlassBadge variant="secondary" size="sm">
-                              {item.shortcut}
+                              {item?.shortcut}
                             </GlassBadge>
                           )}
                         </GlassButton>
@@ -563,11 +563,11 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
             </div>
 
             {/* Footer */}
-            {filteredItems.length > 0 && (
+            {(filteredItems?.length || 0) > 0 && (
               <div className="px-4 py-2 text-xs text-muted-foreground bg-muted/5 border-t border-border/5">
                 <div className="flex items-center justify-between">
                   <span>
-                    {filteredItems.length} {filteredItems.length === 1 ? 'result' : 'results'}
+                    {(filteredItems?.length || 0)} {(filteredItems?.length || 0) === 1 ? 'result' : 'results'}
                   </span>
                   <div className="flex items-center gap-4">
                     <span className="flex items-center gap-1">

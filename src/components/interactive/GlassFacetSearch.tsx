@@ -139,7 +139,7 @@ const GlassFacetSearch = React.forwardRef<HTMLDivElement, GlassFacetSearchProps>
 
         const hasActiveFilters = useMemo(() => {
             return Object.values(facetValues).some(value =>
-                Array.isArray(value) ? value.length > 0 : value != null
+                Array.isArray(value) ? (value?.length || 0) > 0 : value != null
             );
         }, [facetValues]);
 

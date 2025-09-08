@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassReactionBar } from './GlassReactionBar';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassReactionBar> = {
   title: 'Components/Interactive/GlassReactionBar',
@@ -35,7 +36,7 @@ export const Default: Story = {
       { key: 'wow', label: '😮', count: 3 },
       { key: 'sad', label: '😢', count: 1 },
     ],
-    onReact: (key) => console.log('Reacted with:', key),
+    onReact: fn(),
   },
 };
 
@@ -50,6 +51,6 @@ export const PopularReactions: Story = {
       { key: 'thinking', label: '🤔', count: 7 },
       { key: 'eyes', label: '👀', count: 4 },
     ],
-    onReact: (key) => console.log('Popular reaction:', key),
+    onReact: fn(),
   },
 };

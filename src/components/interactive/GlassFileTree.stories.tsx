@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassFileTree } from './GlassFileTree';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassFileTree> = {
   title: 'Components/Interactive/GlassFileTree',
@@ -110,8 +111,8 @@ const meta: Meta<typeof GlassFileTree> = {
     showModified: false,
     variant: 'default',
     size: 'md',
-    onNodeSelect: () => {},
-    onNodeToggle: () => {},
+    onNodeSelect: fn(),
+    onNodeToggle: fn(),
   },
 };
 
@@ -163,8 +164,8 @@ export const Default: Story = {
         level: 0,
       },
     ],
-    onNodeSelect: () => {},
-    onNodeToggle: () => {},
+    onNodeSelect: fn(),
+    onNodeToggle: fn(),
   },
 };
 
@@ -202,7 +203,7 @@ export const Variants: Story = {
     ],
     variant: 'compact',
     showSize: false,
-    onNodeSelect: () => {},
-    onNodeToggle: () => {},
+    onNodeSelect: fn(),
+    onNodeToggle: fn(),
   },
 };

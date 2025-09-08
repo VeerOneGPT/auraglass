@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassGradientPicker } from './GlassGradientPicker';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassGradientPicker> = {
   title: 'Components/Interactive/GlassGradientPicker',
@@ -81,8 +82,8 @@ const meta: Meta<typeof GlassGradientPicker> = {
     showAngleControl: true,
     showStopsEditor: true,
     maxStops: 5,
-    onChange: () => {},
-    onPresetSelect: () => {},
+    onChange: fn(),
+    onPresetSelect: fn(),
   },
 };
 
@@ -104,8 +105,8 @@ export const Default: Story = {
         ],
       },
     ],
-    onChange: () => {},
-    onPresetSelect: () => {},
+    onChange: fn(),
+    onPresetSelect: fn(),
   },
 };
 
@@ -139,7 +140,7 @@ export const Variants: Story = {
     showTypeSelector: true,
     showAngleControl: true,
     showStopsEditor: true,
-    onChange: () => {},
-    onPresetSelect: () => {},
+    onChange: fn(),
+    onPresetSelect: fn(),
   },
 };

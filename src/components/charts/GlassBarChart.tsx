@@ -104,7 +104,7 @@ export interface GlassBarChartProps {
  */
 export const GlassBarChart: React.FC<GlassBarChartProps> = ({
     title,
-    series,
+    series = [],
     width = 600,
     height = 400,
     showGrid = true,
@@ -143,13 +143,15 @@ export const GlassBarChart: React.FC<GlassBarChartProps> = ({
 
     // Process data for chart
     const processedData = useMemo(() => {
-        if (!series.length) return { bars: [], xLabels: [], yLabels: [] };
+        if (!series || !Array.isArray(series) || series.length === 0) {
+            return { bars: [], xLabels: [], yLabels: [] };
+        }
 
         // Combine all data points from all series
         const allDataPoints: Array<{ seriesId: string; seriesIndex: number; data: BarDataPoint; index: number }> = [];
 
         series.forEach((s, seriesIndex) => {
-            s.data.forEach((dataPoint, dataIndex) => {
+            s.data?.forEach((dataPoint, dataIndex) => {
                 allDataPoints.push({
                     seriesId: s.id,
                     seriesIndex,
@@ -163,7 +165,7 @@ export const GlassBarChart: React.FC<GlassBarChartProps> = ({
         const groupedData = new Map<string | number, Array<{ seriesId: string; seriesIndex: number; data: BarDataPoint; index: number }>>();
 
         allDataPoints.forEach(point => {
-            const key = point.data.x;
+            const key = point.data?.x;
             if (!groupedData.has(key)) {
                 groupedData.set(key, []);
             }
@@ -171,7 +173,7 @@ export const GlassBarChart: React.FC<GlassBarChartProps> = ({
         });
 
         // Find min/max values
-        const allYValues = allDataPoints.map(p => p.data.y);
+        const allYValues = allDataPoints.map(p => p.data?.y);
         const yMin = Math.min(...allYValues);
         const yMax = Math.max(...allYValues);
 
@@ -216,17 +218,17 @@ export const GlassBarChart: React.FC<GlassBarChartProps> = ({
                 ? padding.left + groupIndex * groupWidth
                 : padding.top + groupIndex * groupWidth;
 
-            const barsInGroup = group.length;
+            const barsInGroup = (group?.length || 0);
             const barWidth = ((groupWidth * barWidthRatio) - ((barsInGroup - 1) * barPadding)) / barsInGroup;
 
             group.forEach((point, barIndex) => {
-                const currentSeries = series[point.seriesIndex];
-                const color = point.data.color || currentSeries.color || colors[point.seriesIndex % colors.length];
+                const currentSeries = series?.[point.seriesIndex];
+                const color = point.data?.color || currentSeries.color || colors[point.seriesIndex % (colors?.length || 0)];
 
                 if (orientation === 'vertical') {
                     const barX = groupStart + barIndex * (barWidth + barPadding) + (groupWidth - groupWidth * barWidthRatio) / 2;
-                    const barHeight = chartHeight - scaleY(point.data.y);
-                    const barY = padding.top + scaleY(point.data.y);
+                    const barHeight = chartHeight - scaleY(point.data?.y);
+                    const barY = padding.top + scaleY(point.data?.y);
 
                     bars.push({
                         seriesId: point.seriesId,
@@ -236,14 +238,14 @@ export const GlassBarChart: React.FC<GlassBarChartProps> = ({
                         y: barY,
                         width: barWidth,
                         height: barHeight,
-                        value: point.data.y,
-                        label: point.data.label || formatXValue(point.data.x),
+                        value: point.data?.y,
+                        label: point.data?.label || formatXValue(point.data?.x),
                         color
                     });
                 } else {
                     // Horizontal bars
                     const barY = groupStart + barIndex * (barWidth + barPadding) + (groupWidth - groupWidth * barWidthRatio) / 2;
-                    const barWidthH = scaleY(point.data.y);
+                    const barWidthH = scaleY(point.data?.y);
                     const barX = padding.left;
 
                     bars.push({
@@ -254,8 +256,8 @@ export const GlassBarChart: React.FC<GlassBarChartProps> = ({
                         y: barY,
                         width: barWidthH,
                         height: barWidth,
-                        value: point.data.y,
-                        label: point.data.label || formatXValue(point.data.x),
+                        value: point.data?.y,
+                        label: point.data?.label || formatXValue(point.data?.x),
                         color
                     });
                 }
@@ -301,7 +303,7 @@ export const GlassBarChart: React.FC<GlassBarChartProps> = ({
     }, [series, width, height, orientation, barPadding, barWidthRatio, formatYValue, formatXValue, colors]);
 
     // Handle bar hover
-    const handleBarHover = (bar: typeof processedData.bars[0], _event: React.MouseEvent) => {
+      const handleBarHover = (bar: typeof processedData.bars[0], _event: React.MouseEvent) => {
         if (showTooltips) {
             const svgX = orientation === 'vertical' ? bar.x + bar.width / 2 : bar.x + bar.width;
             const svgY = orientation === 'vertical' ? bar.y : bar.y + bar.height / 2;
@@ -584,7 +586,7 @@ export const GlassBarChart: React.FC<GlassBarChartProps> = ({
                                     onMouseEnter={() => setHoveredSeriesId(s.id)}
                                     onMouseLeave={() => setHoveredSeriesId(null)}
                                 >
-                                    <div className="w-3 h-3 rounded" style={{ backgroundColor: s.color || colors[idx % colors.length] }} />
+                                    <div className="w-3 h-3 rounded" style={{ backgroundColor: s.color || colors[idx % (colors?.length || 0)] }} />
                                     <span className="text-sm text-white/80">{s.name}</span>
                                 </div>
                             ))}

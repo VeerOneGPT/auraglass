@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
 import { GlassFab } from './GlassFab';
+import { useParallax } from '../../hooks/useParallax';
 
 const meta: Meta<typeof GlassFab> = {
   title: 'Components/Button/GlassFab',
@@ -55,6 +57,33 @@ export const Variants: Story = {
       </GlassFab>
     </div>
   ),
+  args: {
+    children: null,
+  },
+};
+
+export const ParallaxFab: Story = {
+  render: (args) => {
+    const { ref, onMouseMove, onMouseLeave } = useParallax<HTMLDivElement>(8);
+    return (
+      <div
+        ref={ref}
+        onMouseMove={onMouseMove}
+        onMouseLeave={onMouseLeave}
+        style={{
+          perspective: 800,
+          padding: 24,
+          borderRadius: 16,
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+          background: 'rgba(255,255,255,0.06)',
+          border: '1px solid rgba(255,255,255,0.15)'
+        }}
+      >
+        <GlassFab {...args}>Parallax</GlassFab>
+      </div>
+    );
+  },
   args: {
     children: null,
   },

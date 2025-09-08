@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassTagInput } from './GlassTagInput';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassTagInput> = {
   title: 'Components/Interactive/GlassTagInput',
@@ -34,7 +35,7 @@ type Story = StoryObj<typeof GlassTagInput>;
 export const Default: Story = {
   args: {
     value: ['react', 'typescript'],
-    onChange: (tags) => console.log('Tags changed:', tags),
+    onChange: fn(),
     suggestions: ['javascript', 'python', 'css', 'html', 'node.js', 'express'],
   },
 };
@@ -42,7 +43,7 @@ export const Default: Story = {
 export const WithManyTags: Story = {
   args: {
     value: ['urgent', 'frontend', 'bug', 'high-priority', 'ui', 'mobile'],
-    onChange: (tags) => console.log('Tags changed:', tags),
+    onChange: fn(),
     placeholder: 'Add more tags...',
   },
 };

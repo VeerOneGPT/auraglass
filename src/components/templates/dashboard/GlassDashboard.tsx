@@ -202,9 +202,9 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
           {widget.data?.change && (
             <div className={cn(
               'text-xs font-medium',
-              widget.data.change > 0 ? 'text-success' : 'text-destructive'
+              widget.data?.change > 0 ? 'text-success' : 'text-destructive'
             )}>
-              {widget.data.change > 0 ? '+' : ''}{widget.data.change}%
+              {widget.data?.change > 0 ? '+' : ''}{widget.data?.change}%
             </div>
           )}
         </VStack>
@@ -216,7 +216,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
           </div>
           <div className="h-32 bg-muted/30 rounded flex items-center justify-center">
             <span className="text-muted-foreground">
-              {widget.data?.chartType ? `${widget.data.chartType} Chart` : 'Chart Widget'}
+              {widget.data?.chartType ? `${widget.data?.chartType} Chart` : 'Chart Widget'}
             </span>
           </div>
         </VStack>
@@ -245,8 +245,8 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
 
     // Render widget
     const renderWidget = (widget: DashboardWidget) => {
-      const WidgetRenderer = widgetRenderers[widget.type] || 
-                            defaultWidgetRenderers[widget.type as keyof typeof defaultWidgetRenderers] ||
+      const WidgetRenderer = widgetRenderers?.[widget.type] || 
+                            defaultWidgetRenderers?.[widget.type as keyof typeof defaultWidgetRenderers] ||
                             widget.component;
 
       if (!WidgetRenderer) {
@@ -262,7 +262,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
 
     // Render add widget menu
     const renderAddWidgetMenu = () => {
-      if (!editMode || availableWidgets.length === 0) return null;
+      if (!editMode || (availableWidgets?.length || 0) === 0) return null;
 
       return (
         <div className="grid grid-cols-2 gap-2 p-2">
@@ -290,7 +290,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
       );
     }
 
-    if (layout.widgets.length === 0 && emptyState) {
+    if ((layout.widgets?.length || 0) === 0 && emptyState) {
       return emptyState;
     }
 
@@ -303,7 +303,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
           actions={
             <HStack space="sm">
               {actions}
-              {availableWidgets.length > 0 && (
+              {(availableWidgets?.length || 0) > 0 && (
                 <GlassButton
                   variant={editMode ? 'primary' : 'outline'}
                   size="sm"
@@ -318,7 +318,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
         />
 
         {/* Add widget section */}
-        {editMode && availableWidgets.length > 0 && (
+        {editMode && (availableWidgets?.length || 0) > 0 && (
           <Motion preset="slideDown">
             <Glass rounded="lg" className="p-4">
               <VStack space="sm">

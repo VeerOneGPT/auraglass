@@ -85,7 +85,7 @@ export class ChartAnimationUtils {
     } = config;
 
     const startTime = Date.now() + delay;
-    const easeFn = easingFunctions[easing];
+    const easeFn = easingFunctions?.[easing];
     const animatedPoints = [...dataPoints];
 
     const animate = () => {
@@ -105,7 +105,9 @@ export class ChartAnimationUtils {
           direction
         );
 
-        animatedPoints[index] = animatedPoint;
+        if (animatedPoints) {
+          animatedPoints[index] = animatedPoint;
+        }
       });
 
       onUpdate?.(animatedPoints, progress);
@@ -142,7 +144,7 @@ export class ChartAnimationUtils {
     } = config;
 
     const startTime = Date.now() + delay;
-    const easeFn = easingFunctions[easing];
+    const easeFn = easingFunctions?.[easing];
     const animatedSeries = series.map(s => ({ ...s, data: [...s.data] }));
 
     const animate = () => {
@@ -155,14 +157,16 @@ export class ChartAnimationUtils {
         const seriesProgress = Math.max(0, Math.min(1, (elapsed - seriesDelay) / duration));
         const easedSeriesProgress = easeFn(seriesProgress);
 
-        seriesItem.data.forEach((point, pointIndex) => {
+        seriesItem.data?.forEach((point, pointIndex) => {
           const animatedPoint = this.applyDirectionalAnimation(
             point,
             easedSeriesProgress,
             direction
           );
 
-          animatedSeries[seriesIndex].data[pointIndex] = animatedPoint;
+          if (animatedSeries[seriesIndex].data) {
+            animatedSeries[seriesIndex].data[pointIndex] = animatedPoint;
+          }
         });
       });
 
@@ -199,7 +203,7 @@ export class ChartAnimationUtils {
     } = config;
 
     const startTime = Date.now() + delay;
-    const easeFn = easingFunctions[easing];
+    const easeFn = easingFunctions?.[easing];
     const morphedSeries = toSeries.map(s => ({ ...s, data: [...s.data] }));
 
     const animate = () => {
@@ -208,11 +212,11 @@ export class ChartAnimationUtils {
       const progress = easeFn(rawProgress);
 
       toSeries.forEach((toSeriesItem, seriesIndex) => {
-        const fromSeriesItem = fromSeries[seriesIndex];
+        const fromSeriesItem = fromSeries?.[seriesIndex];
         if (!fromSeriesItem) return;
 
-        toSeriesItem.data.forEach((toPoint, pointIndex) => {
-          const fromPoint = fromSeriesItem.data[pointIndex];
+        toSeriesItem.data?.forEach((toPoint, pointIndex) => {
+          const fromPoint = fromSeriesItem.data?.[pointIndex];
           if (!fromPoint) return;
 
           const morphedPoint = {
@@ -221,7 +225,9 @@ export class ChartAnimationUtils {
             y: InterpolationUtils.lerp(fromPoint.y as number, toPoint.y as number, progress),
           };
 
-          morphedSeries[seriesIndex].data[pointIndex] = morphedPoint;
+          if (morphedSeries[seriesIndex].data) {
+            morphedSeries[seriesIndex].data[pointIndex] = morphedPoint;
+          }
         });
       });
 
@@ -266,7 +272,7 @@ export class ChartAnimationUtils {
       elasticIn: { scale: 0, rotation: -180 },
     };
 
-    const effectConfig = effects[effect];
+    const effectConfig = effects?.[effect];
     const animatedSeries = series.map(s => ({ ...s, data: [...s.data] }));
 
     return this.animateSeries(
@@ -274,15 +280,17 @@ export class ChartAnimationUtils {
       { ...config, duration, stagger, delay },
       (updatedSeries, progress) => {
         updatedSeries.forEach((seriesItem, seriesIndex) => {
-          seriesItem.data.forEach((point, pointIndex) => {
-            animatedSeries[seriesIndex].data[pointIndex] = {
-              ...point,
-              ...this.interpolatePointProperties(
-                effectConfig,
-                point,
-                progress
-              ),
-            };
+          seriesItem.data?.forEach((point, pointIndex) => {
+            if (animatedSeries[seriesIndex].data) {
+              animatedSeries[seriesIndex].data[pointIndex] = {
+                ...point,
+                ...this.interpolatePointProperties(
+                  effectConfig,
+                  point,
+                  progress
+                ),
+              };
+            }
           });
         });
 
@@ -316,7 +324,7 @@ export class ChartAnimationUtils {
       bounceOut: { scale: 1 },
     };
 
-    const effectConfig = effects[effect];
+    const effectConfig = effects?.[effect];
     const animatedSeries = series.map(s => ({ ...s, data: [...s.data] }));
 
     return this.animateSeries(
@@ -326,15 +334,17 @@ export class ChartAnimationUtils {
         const exitProgress = 1 - progress;
 
         updatedSeries.forEach((seriesItem, seriesIndex) => {
-          seriesItem.data.forEach((point, pointIndex) => {
-            animatedSeries[seriesIndex].data[pointIndex] = {
-              ...point,
-              ...this.interpolatePointProperties(
-                effectConfig,
-                point,
-                exitProgress
-              ),
-            };
+          seriesItem.data?.forEach((point, pointIndex) => {
+            if (animatedSeries[seriesIndex].data) {
+              animatedSeries[seriesIndex].data[pointIndex] = {
+                ...point,
+                ...this.interpolatePointProperties(
+                  effectConfig,
+                  point,
+                  exitProgress
+                ),
+              };
+            }
           });
         });
 
@@ -413,7 +423,7 @@ export class ChartAnimationUtils {
     onComplete?: (series: ChartSeries[]) => void
   ): () => void {
     const { from, to, duration, easing, stagger } = transition;
-    const easeFn = easingFunctions[easing];
+    const easeFn = easingFunctions?.[easing];
 
     const startTime = Date.now();
     const animatedSeries = to.map(s => ({ ...s, data: [...s.data] }));
@@ -424,7 +434,7 @@ export class ChartAnimationUtils {
       const progress = easeFn(rawProgress);
 
       to.forEach((toSeriesItem, seriesIndex) => {
-        const fromSeriesItem = from[seriesIndex];
+        const fromSeriesItem = from?.[seriesIndex];
         if (!fromSeriesItem) return;
 
         const seriesDelay = seriesIndex * stagger;
@@ -433,15 +443,17 @@ export class ChartAnimationUtils {
         ));
         const easedSeriesProgress = easeFn(seriesProgress);
 
-        toSeriesItem.data.forEach((toPoint, pointIndex) => {
-          const fromPoint = fromSeriesItem.data[pointIndex];
+        toSeriesItem.data?.forEach((toPoint, pointIndex) => {
+          const fromPoint = fromSeriesItem.data?.[pointIndex];
           if (!fromPoint) return;
 
-          animatedSeries[seriesIndex].data[pointIndex] = {
-            ...toPoint,
-            x: InterpolationUtils.lerp(fromPoint.x as number, toPoint.x as number, easedSeriesProgress),
-            y: InterpolationUtils.lerp(fromPoint.y as number, toPoint.y as number, easedSeriesProgress),
-          };
+          if (animatedSeries[seriesIndex].data) {
+            animatedSeries[seriesIndex].data[pointIndex] = {
+              ...toPoint,
+              x: InterpolationUtils.lerp(fromPoint.x as number, toPoint.x as number, easedSeriesProgress),
+              y: InterpolationUtils.lerp(fromPoint.y as number, toPoint.y as number, easedSeriesProgress),
+            };
+          }
         });
       });
 

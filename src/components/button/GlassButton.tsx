@@ -131,7 +131,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
       'disabled:pointer-events-none disabled:opacity-50',
       'relative overflow-hidden',
       // Size
-      sizeClasses[size],
+      sizeClasses?.[size],
       // Full width
       {
         'w-full': fullWidth,
@@ -243,7 +243,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
       },
     };
 
-    const variantConfig = variantStyles[variant];
+    const variantConfig = variantStyles?.[variant];
 
     const getAnimationPreset = () => {
       switch (animation) {
@@ -478,7 +478,7 @@ export function ButtonGroup({
     if (connected) {
       if (orientation === 'horizontal') {
         additionalProps.className = cn(
-          (child as any).props.className,
+          (child as any).props?.className,
           {
             'rounded-r-none border-r-0': !isLast,
             'rounded-l-none': !isFirst,
@@ -486,7 +486,7 @@ export function ButtonGroup({
         );
       } else {
         additionalProps.className = cn(
-          (child as any).props.className,
+          (child as any).props?.className,
           {
             'rounded-b-none border-b-0': !isLast,
             'rounded-t-none': !isFirst,
@@ -495,7 +495,7 @@ export function ButtonGroup({
       }
     } else {
       additionalProps.className = cn(
-        (child as any).props.className,
+        (child as any).props?.className,
         orientation === 'horizontal' ? 'mr-2 last:mr-0' : 'mb-2 last:mb-0'
       );
     }
@@ -622,8 +622,8 @@ export const FloatingActionButton = forwardRef<HTMLButtonElement, FloatingAction
         className={cn(
           'shadow-lg z-50',
           'rounded-full',
-          positionClasses[position],
-          sizeClasses[size],
+          positionClasses?.[position],
+          sizeClasses?.[size],
           className
         )}
         {...props}

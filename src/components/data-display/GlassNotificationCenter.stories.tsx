@@ -7,6 +7,7 @@ import {
   GlassNotificationItem
 } from './GlassNotificationCenter';
 import { GlassButton } from '../button/GlassButton';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassNotificationCenter> = {
   title: 'Components/Data-Display/GlassNotificationCenter',
@@ -92,7 +93,7 @@ const NotificationDemo = ({ position }: { position: any }) => {
       persistent: true,
       action: {
         label: 'Learn More',
-        onClick: () => alert('Action clicked!'),
+        onClick: fn(),
       },
     });
   };
@@ -224,7 +225,7 @@ export const WithActions: Story = {
         persistent: true,
         action: {
           label: 'Review Now',
-          onClick: () => alert('Review action triggered!'),
+          onClick: fn(),
         },
       });
     };

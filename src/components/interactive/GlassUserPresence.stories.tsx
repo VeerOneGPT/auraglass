@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassUserPresence } from './GlassUserPresence';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassUserPresence> = {
   title: 'Components/Interactive/GlassUserPresence',
@@ -50,7 +51,7 @@ export const Default: Story = {
       { id: '4', name: 'Diana Prince', status: 'offline', role: 'member' },
     ],
     currentUser: { id: '1', name: 'Alice Johnson', status: 'online', role: 'admin' },
-    onUserClick: (user) => console.log('User clicked:', user.name),
+    onUserClick: fn(),
   },
 };
 
@@ -64,6 +65,6 @@ export const CompactMode: Story = {
       { id: '4', name: 'Diana', status: 'away', role: 'member' },
       { id: '5', name: 'Eve', status: 'offline', role: 'guest' },
     ],
-    onUserClick: (user) => console.log('User clicked:', user.name),
+    onUserClick: fn(),
   },
 };

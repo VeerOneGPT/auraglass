@@ -135,7 +135,7 @@ const GlassFilterPanel = React.forwardRef<HTMLDivElement, GlassFilterPanelProps>
 
         const hasActiveFilters = useMemo(() => {
             return Object.values(values).some(value =>
-                Array.isArray(value) ? value.length > 0 : value != null
+                Array.isArray(value) ? (value?.length || 0) > 0 : value != null
             );
         }, [values]);
 

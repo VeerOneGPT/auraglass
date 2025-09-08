@@ -54,8 +54,8 @@ export const GlassDropdownMenuTrigger = forwardRef<
             'focus-visible:outline-none focus-visible:ring-2',
             'focus-visible:ring-primary focus-visible:ring-offset-2',
             'disabled:pointer-events-none disabled:opacity-50',
-            sizeStyles[size],
-            variantStyles[variant],
+            sizeStyles?.[size],
+            variantStyles?.[variant],
             className
         );
 
@@ -170,7 +170,7 @@ export const GlassDropdownMenuItem = forwardRef<
                     'transition-all duration-200 hover:-translate-y-0.5',
                     'focus:bg-accent focus:text-accent-foreground ring-0',
                 'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-                    variantStyles[variant],
+                    variantStyles?.[variant],
                     className
                 )}
                 {...props}
@@ -465,7 +465,7 @@ export const GlassDropdownMenuSubContent = forwardRef<
           performanceMode="medium"
                     className="p-0 glass-radial-reveal glass-lift"
                 >
-                    {props.children}
+                    {props?.children}
                 </OptimizedGlass>
             </DropdownMenuPrimitive.SubContent>
         );

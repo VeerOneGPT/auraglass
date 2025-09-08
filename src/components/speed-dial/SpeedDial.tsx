@@ -415,6 +415,7 @@ function SpeedDialComponent(props: SpeedDialProps, ref: React.ForwardedRef<HTMLD
                   totalActions={React.Children.count(children)}
                   direction={direction}
                   transition={transition}
+                  open={open}
                   showTooltip={showTooltips}
                   size={size}
                 />

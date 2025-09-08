@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassInlineEdit } from './GlassInlineEdit';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassInlineEdit> = {
   title: 'Components/Interactive/GlassInlineEdit',
@@ -30,7 +31,7 @@ const meta: Meta<typeof GlassInlineEdit> = {
     value: 'Click to edit this text',
     placeholder: 'Click to edit...',
     className: '',
-    onChange: () => {},
+    onChange: fn(),
   },
 };
 
@@ -41,7 +42,7 @@ export const Default: Story = {
   args: {
     value: 'Edit this text inline',
     placeholder: 'Click to edit...',
-    onChange: () => {},
+    onChange: fn(),
   },
 };
 
@@ -49,6 +50,6 @@ export const Variants: Story = {
   args: {
     value: 'Sample editable text',
     placeholder: 'Enter some text...',
-    onChange: () => {},
+    onChange: fn(),
   },
 };

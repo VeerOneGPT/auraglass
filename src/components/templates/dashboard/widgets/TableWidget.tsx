@@ -141,11 +141,11 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
       },
     };
 
-    const config = sizeClasses[size];
+    const config = sizeClasses?.[size];
 
     // Handle column sort
     const handleSort = (columnId: string) => {
-      const column = data.columns.find(col => col.id === columnId);
+      const column = data?.columns.find(col => col.id === columnId);
       if (!column?.sortable && !sortable) return;
 
       const newDirection = sortColumn === columnId && sortDirection === 'asc' ? 'desc' : 'asc';
@@ -156,25 +156,25 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
 
     // Sort data if local sorting
     const sortedRows = React.useMemo(() => {
-      if (!sortColumn || onSort) return data.rows;
+      if (!sortColumn || onSort) return data?.rows || [];
 
-      const column = data.columns.find(col => col.id === sortColumn);
-      if (!column) return data.rows;
+      const column = (data?.columns || []).find(col => col.id === sortColumn);
+      if (!column) return data?.rows || [];
 
-      return [...data.rows].sort((a, b) => {
+      return [...(data?.rows || [])].sort((a, b) => {
         const aValue = a[column.accessor];
-        const bValue = b[column.accessor];
+        const bValue = b?.[column.accessor];
 
         if (aValue < bValue) return sortDirection === 'asc' ? -1 : 1;
         if (aValue > bValue) return sortDirection === 'asc' ? 1 : -1;
         return 0;
       });
-    }, [data.rows, data.columns, sortColumn, sortDirection, onSort]);
+    }, [data?.rows, data?.columns, sortColumn, sortDirection, onSort]);
 
     const displayRows = sortedRows.slice(0, maxRows);
 
     const renderCellContent = (column: TableColumn, row: TableRow) => {
-      const value = row[column.accessor];
+      const value = row?.[column.accessor];
       
       if (column.render) {
         return column.render(value, row);
@@ -209,7 +209,7 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
         );
       }
 
-      if (displayRows.length === 0) {
+      if ((displayRows?.length || 0) === 0) {
         return (
           <div className="flex items-center justify-center py-8 text-muted-foreground">
             No data available
@@ -229,7 +229,7 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
                       #
                     </th>
                   )}
-                  {data.columns.map((column) => (
+                  {(data?.columns || []).map((column) => (
                     <th
                       key={column.id}
                       className={cn(
@@ -273,19 +273,20 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
             {/* Body */}
             <tbody>
               {displayRows.map((row, index) => (
-                <Motion
+                <tr
                   key={row.id}
-                  preset="fadeIn"
-                  delay={index * 50}
-                  as="tr"
                   className={cn(
-                    'transition-colors',
+                    'transition-colors animate-fade-in',
                     {
                       'bg-muted/20': striped && index % 2 === 1,
                       'hover:bg-muted/30': hoverable,
                       'cursor-pointer': onRowClick,
                     }
                   )}
+                  style={{ 
+                    animationDelay: `${Math.min(index, 15) * 50}ms`,
+                    animationFillMode: 'both'
+                  }}
                   onClick={() => onRowClick?.(row)}
                 >
                   {showRowNumbers && (
@@ -293,7 +294,7 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
                       {index + 1}
                     </td>
                   )}
-                  {data.columns.map((column) => (
+                  {(data?.columns || []).map((column) => (
                     <td
                       key={column.id}
                       className={cn(
@@ -309,7 +310,7 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
                       {renderCellContent(column, row)}
                     </td>
                   ))}
-                </Motion>
+                </tr>
               ))}
             </tbody>
           </table>
@@ -327,7 +328,7 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
             <VStack space="sm">
               <HStack space="sm" align="center" justify="between">
                 <h3 className={cn('font-medium text-foreground', config.title)}>
-                  {data.title}
+                  {data?.title || 'Table'}
                 </h3>
                 {actions}
               </HStack>
@@ -342,11 +343,11 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
               <HStack space="sm" align="center" justify="between">
                 <VStack space="xs">
                   <h3 className={cn('font-medium text-foreground', config.title)}>
-                    {data.title}
+                    {data?.title || 'Table'}
                   </h3>
-                  {data.subtitle && (
+                  {data?.subtitle && (
                     <p className={cn('text-muted-foreground', config.subtitle)}>
-                      {data.subtitle}
+                      {data?.subtitle}
                     </p>
                   )}
                 </VStack>
@@ -354,21 +355,21 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
               </HStack>
 
               {/* Summary */}
-              {data.summary && (
+              {data?.summary && (
                 <HStack space="sm" align="center">
-                  {data.summary.total && (
+                  {data?.summary.total && (
                     <span className="text-sm text-muted-foreground">
-                      Total: {data.summary.total.toLocaleString()}
+                      Total: {data?.summary.total.toLocaleString()}
                     </span>
                   )}
-                  {data.summary.filtered && data.summary.filtered !== data.summary.total && (
+                  {data?.summary.filtered && data?.summary.filtered !== data?.summary.total && (
                     <span className="text-sm text-muted-foreground">
-                      Showing: {data.summary.filtered.toLocaleString()}
+                      Showing: {data?.summary.filtered.toLocaleString()}
                     </span>
                   )}
-                  {data.summary.message && (
+                  {data?.summary.message && (
                     <GlassBadge variant="outline" size="xs">
-                      {data.summary.message}
+                      {data?.summary.message}
                     </GlassBadge>
                   )}
                 </HStack>
@@ -380,10 +381,10 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
               </div>
 
               {/* Footer */}
-              {data.rows.length > maxRows && (
+              {(data?.rows?.length || 0) > maxRows && (
                 <HStack space="sm" align="center" justify="center">
                   <span className="text-xs text-muted-foreground">
-                    Showing {maxRows} of {data.rows.length} rows
+                    Showing {maxRows} of {data?.rows?.length || 0} rows
                   </span>
                   <GlassButton variant="ghost" size="xs">
                     View All

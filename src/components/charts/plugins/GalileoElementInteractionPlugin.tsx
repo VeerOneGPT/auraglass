@@ -245,7 +245,7 @@ export class GalileoElementInteractionPlugin implements ChartPlugin {
       },
     ];
 
-    const animation = element.animate(keyframes, {
+                const animation = element.animate ? element.animate(keyframes, {
       duration: 300,
       easing: 'ease-out',
       fill: 'forwards',
@@ -280,7 +280,7 @@ export class GalileoElementInteractionPlugin implements ChartPlugin {
     element.style.position = element.style.position || 'relative';
     element.appendChild(ripple);
 
-    const animation = ripple.animate(
+                const animation = ripple.animate ? ripple.animate(
       [
         {
           transform: 'scale(0)',
@@ -341,11 +341,11 @@ export class GalileoElementInteractionPlugin implements ChartPlugin {
   private findElementForDataPoint(data: ChartDataPoint, series?: ChartSeries): HTMLElement | null {
     // This is a simplified implementation - in a real chart library,
     // you'd need to map data points to their corresponding DOM elements
-    const elements = document.querySelectorAll('.chart-element[data-point-id]');
+    const elements = document.querySelectorAll('.chart-element?.[data-point-id]');
     for (const element of elements) {
       const el = element as HTMLElement;
       const pointId = el.getAttribute('data-point-id');
-      if (pointId === `${series?.id || 'default'}-${data.x}-${data.y}`) {
+      if (pointId === `${series?.id || 'default'}-${data?.x}-${data?.y}`) {
         return el;
       }
     }

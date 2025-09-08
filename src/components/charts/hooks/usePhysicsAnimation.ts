@@ -216,7 +216,7 @@ export function useDataPointAnimation(
     duration: number = 1000,
     onUpdate?: (points: ChartDataPoint[]) => void
   ) => {
-    if (!targetPoints.length) return;
+    if (!(targetPoints?.length || 0)) return;
 
     const animatedPoints = [...targetPoints];
 
@@ -229,7 +229,9 @@ export function useDataPointAnimation(
         0, // Start from 0
         targetY,
         (value) => {
-          animatedPoints[index] = { ...point, y: value };
+          if (animatedPoints) {
+            animatedPoints[index] = { ...point, y: value };
+          }
           onUpdate?.(animatedPoints);
         }
       );
@@ -254,14 +256,14 @@ export function useSeriesAnimation(
     staggerDelay: number = 100,
     onUpdate?: (series: ChartSeries[]) => void
   ) => {
-    if (!targetSeries.length) return;
+    if (!(targetSeries?.length || 0)) return;
 
     const animatedSeries = [...targetSeries];
 
     targetSeries.forEach((seriesItem, seriesIndex) => {
       const delay = seriesIndex * staggerDelay;
 
-      seriesItem.data.forEach((point, pointIndex) => {
+      seriesItem.data?.forEach((point, pointIndex) => {
         const key = `series-${seriesIndex}-point-${pointIndex}`;
         const targetY = typeof point.y === 'number' ? point.y : 0;
 
@@ -271,7 +273,9 @@ export function useSeriesAnimation(
             0,
             targetY,
             (value) => {
-              animatedSeries[seriesIndex].data[pointIndex] = { ...point, y: value };
+              if (animatedSeries[seriesIndex].data) {
+                animatedSeries[seriesIndex].data[pointIndex] = { ...point, y: value };
+              }
               onUpdate?.(animatedSeries);
             }
           );
@@ -300,8 +304,8 @@ export function useChartTransition(
     const keys = Object.keys(toState);
 
     keys.forEach((key) => {
-      const fromValue = fromState[key] || 0;
-      const toValue = toState[key] || 0;
+      const fromValue = fromState?.[key] || 0;
+      const toValue = toState?.[key] || 0;
 
       physics.startAnimation(
         `transition-${key}`,
@@ -310,7 +314,9 @@ export function useChartTransition(
         (value) => {
           const currentState = { ...fromState };
           keys.forEach((k) => {
-            currentState[k] = physics.getCurrentValue(`transition-${k}`);
+            if (currentState) {
+              currentState[k] = physics.getCurrentValue(`transition-${k}`);
+            }
           });
           onTransition?.(currentState);
         }

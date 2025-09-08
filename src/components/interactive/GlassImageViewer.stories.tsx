@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassImageViewer } from './GlassImageViewer';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassImageViewer> = {
   title: 'Components/Interactive/GlassImageViewer',
@@ -105,9 +106,9 @@ const meta: Meta<typeof GlassImageViewer> = {
     showImageInfo: true,
     autoPlay: false,
     autoPlayInterval: 3000,
-    onImageChange: () => {},
-    onZoomChange: () => {},
-    onFullscreenChange: () => {},
+    onImageChange: fn(),
+    onZoomChange: fn(),
+    onFullscreenChange: fn(),
   },
 };
 
@@ -124,9 +125,9 @@ export const Default: Story = {
         description: 'A sample image for the image viewer',
       },
     ],
-    onImageChange: () => {},
-    onZoomChange: () => {},
-    onFullscreenChange: () => {},
+    onImageChange: fn(),
+    onZoomChange: fn(),
+    onFullscreenChange: fn(),
   },
 };
 
@@ -157,8 +158,8 @@ export const Variants: Story = {
     showImageInfo: true,
     autoPlay: true,
     autoPlayInterval: 5000,
-    onImageChange: () => {},
-    onZoomChange: () => {},
-    onFullscreenChange: () => {},
+    onImageChange: fn(),
+    onZoomChange: fn(),
+    onFullscreenChange: fn(),
   },
 };

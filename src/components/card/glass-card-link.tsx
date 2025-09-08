@@ -41,7 +41,7 @@ export const GlassCardLink: React.FC<GlassCardLinkProps> = ({
       as="a"
       href={href}
       ref={linkRef}
-      style={{ ...cssPhysicsState, ...props.style }}
+      style={{ ...cssPhysicsState, ...props?.style }}
       {...props}
     >
       {children}

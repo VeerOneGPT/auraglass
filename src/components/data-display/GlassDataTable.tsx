@@ -262,7 +262,7 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
       return sortedData.slice(startIndex, startIndex + pageSize);
     }, [sortedData, currentPage, pageSize, pagination]);
 
-    const totalPages = Math.ceil(sortedData.length / pageSize);
+        const totalPages = Math.ceil((sortedData?.length || 0) / pageSize);
 
     // Handle sorting
     const handleSort = (columnId: string) => {
@@ -295,7 +295,7 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
       if (!onSelectionChange) return;
 
       if (selected) {
-        const allIds = paginatedData.map((row, index) => getRowId(row, index));
+        const allIds = (paginatedData || []).map((row, index) => getRowId(row, index));
         onSelectionChange(allIds);
       } else {
         onSelectionChange([]);
@@ -370,7 +370,7 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
                     </th>
                   )}
 
-                  {columns.map((column, index) => {
+                  {(columns || []).map((column, index) => {
                     const columnId = column.id || `col-${index}`;
                     const headerContent = typeof column.header === 'function' ? column.header({ column }) : column.header;
 
@@ -462,7 +462,7 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
                     </td>
                   </tr>
                 ) : (
-                  paginatedData.map((row, index) => {
+                  (paginatedData || []).map((row, index) => {
                     const rowId = getRowId(row, index);
                     const isSelected = selectedRows.includes(rowId);
                     const rowProps = getRowProps?.(row) || {};
@@ -492,7 +492,7 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
                           </td>
                         )}
 
-                        {columns.map((column, colIndex) => {
+                        {(columns || []).map((column, colIndex) => {
                           const columnId = column.id || `col-${colIndex}`;
                           const value = column.accessorFn
                             ? column.accessorFn(row)
@@ -549,7 +549,7 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
                       setPageSize(Number(e.target.value));
                       setCurrentPage(1);
                     }}
-                    options={pageSizeOptions.map(size => ({
+                    options={(pageSizeOptions || []).map(size => ({
                       value: size,
                       label: size.toString(),
                     }))}

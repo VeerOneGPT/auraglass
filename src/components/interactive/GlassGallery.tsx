@@ -174,11 +174,13 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
     const renderGridLayout = () => (
         <div className={cn('grid gap-4', getGridColumnsClass())}>
             {filteredImages.map((image, index) => (
-                <Motion
+                <div
                     key={image.id}
-                    preset="fadeIn"
-                    delay={index * 50}
-                    className="group relative"
+                    className="group relative animate-fade-in"
+                    style={{ 
+                        animationDelay: `${Math.min(index, 20) * 50}ms`,
+                        animationFillMode: 'both'
+                    }}
                 >
                     <GlassCard
                         variant="elevated"
@@ -306,7 +308,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                             )}
                         </CardContent>
                     </GlassCard>
-                </Motion>
+                </div>
             ))}
         </div>
     );
@@ -315,10 +317,13 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
     const renderListLayout = () => (
         <div className="space-y-4">
             {filteredImages.map((image, index) => (
-                <Motion
+                <div
                     key={image.id}
-                    preset="slideUp"
-                    delay={index * 50}
+                    className="animate-slide-in-up"
+                    style={{ 
+                        animationDelay: `${Math.min(index, 20) * 50}ms`,
+                        animationFillMode: 'both'
+                    }}
                 >
                     <GlassCard
                         variant="elevated"
@@ -418,7 +423,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                             </div>
                         </CardContent>
                     </GlassCard>
-                </Motion>
+                </div>
             ))}
         </div>
     );

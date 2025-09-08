@@ -35,13 +35,13 @@ const meta: Meta<typeof GlassDiffViewer> = {
     left: `function calculateTotal(items) {
   let total = 0;
   for (let item of items) {
-    total += item.price;
+    total += item?.price;
   }
   return total;
 }`,
     right: `function calculateTotal(items) {
   return items.reduce((total, item) => {
-    return total + item.price;
+    return total + item?.price;
   }, 0);
 }`,
     sideBySide: true,

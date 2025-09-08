@@ -230,6 +230,8 @@ const FabContainer = styled.button<{
   font-family: 'Inter', sans-serif;
   font-weight: 500;
   box-sizing: border-box;
+  transition: transform 140ms ease, box-shadow 160ms ease, background-color 160ms ease;
+  will-change: transform, box-shadow;
 
   /* Size styles */
   ${props => {
@@ -272,6 +274,7 @@ const FabContainer = styled.button<{
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 28px rgba(31, 38, 135, 0.28), inset 0 1px 0 rgba(255,255,255,0.35);
     `}
 
   /* Glass glow for glass variant */
@@ -288,7 +291,7 @@ const FabContainer = styled.button<{
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 50%;
     `}
-  
+
   /* Pulse animation */
   ${pulse}
   ${props =>
@@ -312,6 +315,15 @@ const FabContainer = styled.button<{
           `}
     cursor: not-allowed;
   }
+
+  /* Micro-interactions */
+  &:hover:not(:disabled) {
+    transform: translateZ(0.001px) scale(1.02);
+  }
+  &:active:not(:disabled) {
+    transform: translateZ(0.001px) scale(0.985);
+    box-shadow: inset 0 6px 14px rgba(0,0,0,0.18), 0 6px 18px rgba(0,0,0,0.18);
+  }
 `;
 
 // Tooltip component
@@ -331,7 +343,7 @@ const Tooltip = styled.span`
 
   /* Position based on parent position */
   ${props => {
-    const parent = props.className;
+    const parent = props?.className;
     if (parent === 'bottomRight' || parent === 'bottomLeft') {
       return css`
         top: -30px;
@@ -428,7 +440,7 @@ export const Fab = forwardRef<HTMLButtonElement | HTMLAnchorElement, FabProps>((
     let propResolvedConfig: Partial<PhysicsInteractionOptions> = {};
     const configProp = animationConfig;
     if (typeof configProp === 'string' && configProp in SpringPresets) {
-        const preset = SpringPresets[configProp as keyof typeof SpringPresets];
+        const preset = SpringPresets?.[configProp as keyof typeof SpringPresets];
         propResolvedConfig = {
             stiffness: preset.stiffness,
             damping: preset.damping,
@@ -479,7 +491,7 @@ export const Fab = forwardRef<HTMLButtonElement | HTMLAnchorElement, FabProps>((
       let propResolvedConfig: Partial<SpringConfig> = {};
       const configProp = animationConfig;
       if (typeof configProp === 'string' && configProp in SpringPresets) {
-        propResolvedConfig = SpringPresets[configProp as keyof typeof SpringPresets];
+        propResolvedConfig = SpringPresets?.[configProp as keyof typeof SpringPresets];
       } else if (typeof configProp === 'object' && configProp !== null) {
          if ('stiffness' in configProp || 'damping' in configProp) {
             propResolvedConfig = configProp as Partial<SpringConfig>;

@@ -322,7 +322,7 @@ export const GlassImageViewer: React.FC<GlassImageViewerProps> = ({
 
     // Auto-play functionality
     useEffect(() => {
-        if (isAutoPlaying && images.length > 1) {
+            if (isAutoPlaying && images && images.length > 1) {
             autoPlayRef.current = setInterval(() => {
                 setCurrentIndex(prev => (prev + 1) % images.length);
             }, autoPlayInterval);

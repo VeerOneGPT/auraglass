@@ -341,7 +341,7 @@ export const GlassHoverCardTrigger: React.FC<GlassHoverCardTriggerProps> = ({
 }) => {
     if (asChild && React.isValidElement(children)) {
         return React.cloneElement(children, {
-            className: cn(children.props.className, className),
+            className: cn(children.props?.className, className),
         });
     }
 

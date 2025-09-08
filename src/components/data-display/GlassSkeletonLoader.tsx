@@ -11,7 +11,7 @@ export interface GlassSkeletonLoaderProps {
   /** Size of the loader */
   size?: 'sm' | 'md' | 'lg' | 'xl';
   /** Animation variant */
-  variant?: 'pulse' | 'wave' | 'shimmer';
+  variant?: 'pulse' | 'wave' | 'shimmer' | 'sheen';
   /** Custom className */
   className?: string;
   /** Children to show when not loading */
@@ -51,6 +51,17 @@ const shimmerKeyframes = `
     100% {
       background-position: calc(200px + 100%) 0;
     }
+  }
+`;
+
+const sheenKeyframes = `
+  @keyframes glass-sheen-move {
+    0% { transform: translateX(-150%) rotate(15deg); }
+    100% { transform: translateX(150%) rotate(15deg); }
+  }
+  @keyframes glass-depth-pulse {
+    0%, 100% { box-shadow: 0 6px 14px rgba(0,0,0,0.15); }
+    50% { box-shadow: 0 10px 24px rgba(0,0,0,0.22); }
   }
 `;
 
@@ -97,9 +108,16 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
           return {
             position: 'relative' as const,
             overflow: 'hidden',
-            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent)',
             backgroundSize: '200px 100%',
-            animation: `glass-shimmer ${animationDuration * 7}ms infinite`,
+            animation: `glass-shimmer ${animationDuration * 7}ms infinite, glass-depth-pulse ${animationDuration * 14}ms ease-in-out infinite`,
+          };
+        case 'sheen':
+          return {
+            position: 'relative' as const,
+            overflow: 'hidden',
+            background: 'radial-gradient(120% 80% at 20% 0%, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 40%)',
+            // sheen drawn by a before-like overlay via extra element below
           };
         case 'pulse':
         default:
@@ -111,13 +129,30 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
 
     return (
       <div className={`flex flex-col items-center justify-center space-y-4 ${className}`}>
-        <OptimizedGlass
-          className={`rounded-full ${sizeClasses[size]}`}
-          style={getAnimationStyle()}
-          blur="medium"
-          elevation={1}
-          interactive={false}
-        />
+        <div style={{ position: 'relative' }}>
+          <OptimizedGlass
+            className={`rounded-full ${sizeClasses[size]}`}
+            style={getAnimationStyle()}
+            blur="medium"
+            elevation={1}
+            interactive={false}
+          />
+          {shouldAnimate && variant === 'sheen' && (
+            <span
+              aria-hidden
+              style={{
+                position: 'absolute',
+                inset: 0,
+                borderRadius: '9999px',
+                background: 'conic-gradient(from 0deg, rgba(255,255,255,0.0), rgba(255,255,255,0.18), rgba(255,255,255,0.0))',
+                filter: 'blur(6px) saturate(120%)',
+                transform: 'translateX(-150%) rotate(15deg)',
+                animation: `glass-sheen-move ${animationDuration * 6}ms ease-in-out infinite`,
+                pointerEvents: 'none',
+              }}
+            />
+          )}
+        </div>
 
         {text && (
           <OptimizedGlass
@@ -141,6 +176,7 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
           {pulseKeyframes}
           {waveKeyframes}
           {shimmerKeyframes}
+          {sheenKeyframes}
         </style>
         {renderContent()}
       </>

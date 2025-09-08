@@ -92,7 +92,7 @@ export interface GlassLineChartProps {
  */
 export const GlassLineChart: React.FC<GlassLineChartProps> = ({
     title,
-    series,
+    series = [],
     width = 600,
     height = 300,
     showGrid = true,
@@ -127,7 +127,9 @@ export const GlassLineChart: React.FC<GlassLineChartProps> = ({
 
     // Process data for chart
     const processedData = useMemo(() => {
-        if (!series.length) return { scaledSeries: [], xLabels: [], yLabels: [] };
+        if (!series || !Array.isArray(series) || series.length === 0) {
+            return { scaledSeries: [], xLabels: [], yLabels: [] };
+        }
 
         // Find min/max values across all series
         const allPoints = series.flatMap(s => s.data);
@@ -152,8 +154,8 @@ export const GlassLineChart: React.FC<GlassLineChartProps> = ({
         // Process each series
         const scaledSeries = series.map((s, seriesIndex) => ({
             ...s,
-            color: s.color || colors[seriesIndex % colors.length],
-            points: s.data.map((point, pointIndex) => ({
+            color: s.color || colors[seriesIndex % (colors?.length || 0)],
+            points: s.data?.map((point, pointIndex) => ({
                 ...point,
                 scaledX: padding.left + scaleX(typeof point.x === 'number' ? point.x : pointIndex),
                 scaledY: padding.top + scaleY(point.y),
@@ -182,10 +184,10 @@ export const GlassLineChart: React.FC<GlassLineChartProps> = ({
 
     // Generate path for line
     const generatePath = (points: any[]) => {
-        if (points.length === 0) return '';
+        if ((points?.length || 0) === 0) return '';
 
         let path = `M ${points[0].scaledX} ${points[0].scaledY}`;
-        for (let i = 1; i < points.length; i++) {
+        for (let i = 1; i < (points?.length || 0); i++) {
             path += ` L ${points[i].scaledX} ${points[i].scaledY}`;
         }
         return path;
@@ -444,7 +446,7 @@ export const GlassLineChart: React.FC<GlassLineChartProps> = ({
                                         <div className="text-white/80">
                                             {(() => {
                                                 const series = processedData.scaledSeries.find(s => s.id === hoveredPoint.seriesId);
-                                                const dataPoint = series?.data[hoveredPoint.index];
+                                                const dataPoint = series?.data?.[hoveredPoint.index];
                                                 if (dataPoint) {
                                                     return `${formatXValue(dataPoint.x)}: ${formatYValue(dataPoint.y)}`;
                                                 }
@@ -458,7 +460,7 @@ export const GlassLineChart: React.FC<GlassLineChartProps> = ({
                     </div>
 
                     {/* Legend */}
-                    {showLegend && processedData.scaledSeries.length > 0 && (
+                    {showLegend && (processedData.scaledSeries?.length || 0) > 0 && (
                         <div className="flex flex-wrap justify-center gap-4 mt-6">
                             {processedData.scaledSeries.map((s) => (
                                 <div

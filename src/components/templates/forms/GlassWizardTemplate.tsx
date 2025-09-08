@@ -146,8 +146,8 @@ export const GlassWizardTemplate = forwardRef<HTMLDivElement, GlassWizardTemplat
     const [stepValidation, setStepValidation] = useState<Record<number, boolean>>({});
     const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
 
-    const totalSteps = steps.length;
-    const currentStepData = steps[currentStep];
+    const totalSteps = steps?.length || 0;
+    const currentStepData = steps?.[currentStep];
     const isFirstStep = currentStep === 0;
     const isLastStep = currentStep === totalSteps - 1;
 
@@ -159,7 +159,7 @@ export const GlassWizardTemplate = forwardRef<HTMLDivElement, GlassWizardTemplat
 
     // Handle step validation
     const handleStepValidation = useCallback(async (stepIndex: number, stepValues: Record<string, any>) => {
-      const step = steps[stepIndex];
+      const step = steps?.[stepIndex];
       let errors: Record<string, string> = {};
 
       // Step-specific validation

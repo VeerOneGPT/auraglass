@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassFacetSearch } from './GlassFacetSearch';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassFacetSearch> = {
   title: 'Components/Interactive/GlassFacetSearch',
@@ -83,9 +84,9 @@ const meta: Meta<typeof GlassFacetSearch> = {
     showResults: true,
     variant: 'default',
     size: 'md',
-    onQueryChange: () => {},
-    onFacetChange: () => {},
-    onResultSelect: () => {},
+    onQueryChange: fn(),
+    onFacetChange: fn(),
+    onResultSelect: fn(),
   },
 };
 
@@ -126,9 +127,9 @@ export const Default: Story = {
         score: 0.87,
       },
     ],
-    onQueryChange: () => {},
-    onFacetChange: () => {},
-    onResultSelect: () => {},
+    onQueryChange: fn(),
+    onFacetChange: fn(),
+    onResultSelect: fn(),
   },
 };
 
@@ -159,8 +160,8 @@ export const Variants: Story = {
       },
     ],
     variant: 'compact',
-    onQueryChange: () => {},
-    onFacetChange: () => {},
-    onResultSelect: () => {},
+    onQueryChange: fn(),
+    onFacetChange: fn(),
+    onResultSelect: fn(),
   },
 };

@@ -125,18 +125,18 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
       rainbow: ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B', '#EF4444', '#EC4899', '#06B6D4'],
     };
 
-    const config = sizeClasses[size];
-    const colors = colorSchemes[colorScheme];
+    const config = sizeClasses?.[size];
+    const colors = colorSchemes?.[colorScheme];
 
     // Simple bar chart renderer
     const renderBarChart = () => {
-      const maxValue = Math.max(...data.dataPoints.map(d => d.value));
+      const maxValue = Math.max(...data?.dataPoints.map(d => d.value));
       
       return (
         <div className="flex items-end justify-between gap-2 h-full">
-          {data.dataPoints.map((point, index) => {
+          {data?.dataPoints.map((point, index) => {
             const height = (point.value / maxValue) * 100;
-            const color = point.color || colors[index % colors.length];
+            const color = point.color || colors[index % (colors?.length || 0)];
             
             return (
               <Motion
@@ -166,9 +166,9 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
 
     // Simple line chart renderer
     const renderLineChart = () => {
-      const maxValue = Math.max(...data.dataPoints.map(d => d.value));
-      const points = data.dataPoints.map((point, index) => {
-        const x = (index / (data.dataPoints.length - 1)) * 100;
+      const maxValue = Math.max(...data?.dataPoints.map(d => d.value));
+      const points = data?.dataPoints.map((point, index) => {
+        const x = (index / ((data.dataPoints?.length || 0) - 1)) * 100;
         const y = 100 - (point.value / maxValue) * 100;
         return `${x},${y}`;
       }).join(' ');
@@ -203,8 +203,8 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
             />
             
             {/* Data points */}
-            {data.dataPoints.map((point, index) => {
-              const x = (index / (data.dataPoints.length - 1)) * 100;
+            {data?.dataPoints.map((point, index) => {
+              const x = (index / ((data.dataPoints?.length || 0) - 1)) * 100;
               const y = 100 - (point.value / maxValue) * 100;
               
               return (
@@ -222,7 +222,7 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
           
           {/* Labels */}
           <div className="absolute bottom-0 left-0 right-0 flex justify-between">
-            {data.dataPoints.map((point, index) => (
+            {data?.dataPoints.map((point, index) => (
               <div key={index} className="text-xs text-white/80">
                 {point.label}
               </div>
@@ -234,20 +234,20 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
 
     // Simple pie chart renderer
     const renderPieChart = () => {
-      const total = data.dataPoints.reduce((sum, d) => sum + d.value, 0);
+      const total = data?.dataPoints.reduce((sum, d) => sum + d.value, 0);
       let cumulative = 0;
       
       return (
         <div className="flex items-center justify-center h-full">
           <div className="relative">
             <svg width="120" height="120" viewBox="0 0 120 120">
-              {data.dataPoints.map((point, index) => {
+              {data?.dataPoints.map((point, index) => {
                 const percentage = point.value / total;
                 const angle = percentage * 360;
                 const startAngle = cumulative;
                 cumulative += angle;
                 
-                const color = point.color || colors[index % colors.length];
+                const color = point.color || colors[index % (colors?.length || 0)];
                 
                 // Calculate path for pie slice
                 const centerX = 60;
@@ -288,9 +288,9 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
 
     // Sparkline renderer
     const renderSparkline = () => {
-      const maxValue = Math.max(...data.dataPoints.map(d => d.value));
-      const points = data.dataPoints.map((point, index) => {
-        const x = (index / (data.dataPoints.length - 1)) * 100;
+      const maxValue = Math.max(...data?.dataPoints.map(d => d.value));
+      const points = data?.dataPoints.map((point, index) => {
+        const x = (index / ((data.dataPoints?.length || 0) - 1)) * 100;
         const y = 100 - (point.value / maxValue) * 100;
         return `${x},${y}`;
       }).join(' ');
@@ -318,20 +318,20 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
       }
 
       if (renderChart) {
-        return renderChart(data, { type, colorScheme, colors, showGrid, interactive });
+        return renderChart ? renderChart(data, { type, colorScheme, colors, showGrid, interactive }) : <div>Chart not available</div>;
       }
 
       switch (type) {
         case 'line':
         case 'area':
-          return renderLineChart();
+          return renderLineChart ? renderLineChart() : <div>Line chart not available</div>;
         case 'pie':
         case 'donut':
-          return renderPieChart();
+          return renderPieChart ? renderPieChart() : <div>Pie chart not available</div>;
         case 'sparkline':
           return renderSparkline();
         default:
-          return renderBarChart();
+          return renderBarChart ? renderBarChart() : <div>Bar chart not available</div>;
       }
     };
 
@@ -340,8 +340,8 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
 
       return (
         <div className="flex flex-wrap gap-2">
-          {data.dataPoints.map((point, index) => {
-            const color = point.color || colors[index % colors.length];
+          {data?.dataPoints.map((point, index) => {
+            const color = point.color || colors[index % (colors?.length || 0)];
             return (
               <div key={index} className="flex items-center gap-1">
                 <div
@@ -370,11 +370,11 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
           <HStack space="sm" align="center" justify="between">
             <VStack space="xs">
               <h3 className={cn('font-medium text-foreground', config.title)}>
-                {data.title}
+                {data?.title || 'Chart'}
               </h3>
-              {data.subtitle && (
+              {data?.subtitle && (
                 <p className={cn('text-muted-foreground', config.subtitle)}>
-                  {data.subtitle}
+                  {data?.subtitle}
                 </p>
               )}
             </VStack>
@@ -387,19 +387,19 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
           </HStack>
 
           {/* Summary */}
-          {data.summary && variant !== 'minimal' && (
+          {data?.summary && variant !== 'minimal' && (
             <HStack space="sm" align="center">
-              {data.summary.total && (
+              {data?.summary.total && (
                 <div className="text-lg font-bold text-foreground">
-                  {data.summary.total.toLocaleString()}
+                  {data?.summary.total.toLocaleString()}
                 </div>
               )}
-              {data.summary.change && (
+              {data?.summary.change && (
                 <GlassBadge
-                  variant={data.summary.trend === 'up' ? 'success' : data.summary.trend === 'down' ? 'error' : 'outline'}
+                  variant={data?.summary.trend === 'up' ? 'success' : data?.summary.trend === 'down' ? 'error' : 'outline'}
                   size="xs"
                 >
-                  {data.summary.change > 0 ? '+' : ''}{data.summary.change}%
+                  {data?.summary.change > 0 ? '+' : ''}{data?.summary.change}%
                 </GlassBadge>
               )}
             </HStack>

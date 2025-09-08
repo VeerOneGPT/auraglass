@@ -151,7 +151,7 @@ const StyledTabsContainer = styled.div<{
   border-radius: 8px;
 
   ${props =>
-    props.variant !== 'text' &&
+    props?.variant !== 'text' &&
     `
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
@@ -159,7 +159,7 @@ const StyledTabsContainer = styled.div<{
     `}
 
   ${props =>
-    props.variant === 'text' &&
+    props?.variant === 'text' &&
     `
     background: transparent;
   `}
@@ -176,7 +176,7 @@ const StyledTabsList = styled.div<{
   position: relative;
 
   & > * {
-    flex: ${props => (props.fullWidth ? 1 : 'none')};
+    flex: ${props => (props?.fullWidth ? 1 : 'none')};
   }
 `;
 
@@ -196,7 +196,7 @@ const getTabColors = (
     dark: { light: '#1F2937', dark: '#111827' },
   };
 
-  const selectedColor = baseColors[color || 'primary'][isDarkMode ? 'dark' : 'light'];
+  const selectedColor = baseColors?.[color || 'primary'][isDarkMode ? 'dark' : 'light'];
 
   return {
     activeColor: selectedColor,
@@ -231,7 +231,7 @@ const StyledTab = styled.button<{
   display: flex;
   align-items: center;
   justify-content: ${props => {
-    switch (props.textAlign) {
+    switch (props?.textAlign) {
       case 'left':
         return 'flex-start';
       case 'right':
@@ -243,9 +243,9 @@ const StyledTab = styled.button<{
   gap: 8px;
   white-space: nowrap;
   border: none;
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${props => (props?.disabled ? 'not-allowed' : 'pointer')};
   padding: ${props => {
-    switch (props.size) {
+    switch (props?.size) {
       case 'small':
         return '8px 16px';
       case 'large':
@@ -255,7 +255,7 @@ const StyledTab = styled.button<{
     }
   }};
   font-size: ${props => {
-    switch (props.size) {
+    switch (props?.size) {
       case 'small':
         return '14px';
       case 'large':
@@ -264,27 +264,27 @@ const StyledTab = styled.button<{
         return '15px';
     }
   }};
-  font-weight: ${props => (props.active ? 600 : 500)};
+  font-weight: ${props => (props?.active ? 600 : 500)};
   outline: none;
   background: transparent;
   transition: background-color 0.2s ease, color 0.2s ease;
 
   ${props => {
-    const colors = getTabColors(props.color, false, props.highContrast);
+    const colors = getTabColors(props?.color, false, props?.highContrast);
 
     return `
       color: ${
-        props.disabled
+        props?.disabled
           ? colors.disabledText
-          : props.active
+          : props?.active
           ? colors.activeText
           : colors.inactiveText
       };
 
-      backgroundColor: ${props.active ? colors.activeBg : 'transparent'};
+      backgroundColor: ${props?.active ? colors.activeBg : 'transparent'};
 
       &:hover:not(:disabled) {
-        backgroundColor: ${!props.active ? colors.hoverBg : colors.activeBg};
+        backgroundColor: ${!props?.active ? colors.hoverBg : colors.activeBg};
         color: ${colors.activeText};
       }
 
@@ -295,8 +295,8 @@ const StyledTab = styled.button<{
   }}
 
   ${props =>
-    !props.disabled &&
-    !props.active &&
+    !props?.disabled &&
+    !props?.active &&
     `
     &:hover {
       background: rgba(255, 255, 255, 0.1);
@@ -304,8 +304,8 @@ const StyledTab = styled.button<{
     `}
 
   ${props =>
-    props.active &&
-    props.variant !== 'text' &&
+    props?.active &&
+    props?.variant !== 'text' &&
     `
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
     `}
@@ -325,36 +325,36 @@ const StyledTabIndicator = styled.div<{
   theme: any;
 }>`
   position: absolute;
-  bottom: ${props => props.bottom}px;
-  height: ${props => props.height}px;
+  bottom: ${props => props?.bottom}px;
+  height: ${props => props?.height}px;
   background-color: ${props => {
-    const colors = getTabColors(props.color, props.theme.isDarkMode, props.highContrast);
+    const colors = getTabColors(props?.color, props?.theme.isDarkMode, props?.highContrast);
     return colors.activeColor;
   }};
-  border-radius: ${props => props.height / 2}px;
+  border-radius: ${props => props?.height / 2}px;
 
   ${props =>
-    props.animation === 'slide' &&
+    props?.animation === 'slide' &&
     `
     transition: left 0.3s ease, width 0.3s ease;
-    left: ${props.left}px;
-    width: ${props.width}px;
+    left: ${props?.left}px;
+    width: ${props?.width}px;
   `}
 
   ${props =>
-    props.animation === 'fade' &&
+    props?.animation === 'fade' &&
     `
     transition: opacity 0.2s ease;
-    left: ${props.left}px;
-    width: ${props.width}px;
+    left: ${props?.left}px;
+    width: ${props?.width}px;
     opacity: 1;
   `}
   
   ${props =>
-    props.animation === 'none' &&
+    props?.animation === 'none' &&
     `
-    left: ${props.left}px;
-    width: ${props.width}px;
+    left: ${props?.left}px;
+    width: ${props?.width}px;
   `}
   
   ${props =>
@@ -380,7 +380,7 @@ const StyledBadge = styled.span<{
   font-weight: 600;
   border-radius: 9px;
   background-color: ${props => {
-    const colors = getTabColors(props.color, props.theme.isDarkMode, true);
+    const colors = getTabColors(props?.color, props?.theme.isDarkMode, true);
     return colors.activeColor;
   }};
   color: white;
@@ -495,7 +495,7 @@ export const EnhancedGlassTabs = forwardRef<EnhancedGlassTabsRef, EnhancedGlassT
 
   // State for currently active tab
   const [currentTab, setCurrentTab] = useState(
-    activeTab || defaultTab || (tabs.length > 0 ? tabs[0].id : '')
+    activeTab || defaultTab || ((tabs?.length || 0) > 0 ? tabs[0].id : '')
   );
 
   // State for indicator position
@@ -530,7 +530,7 @@ export const EnhancedGlassTabs = forwardRef<EnhancedGlassTabsRef, EnhancedGlassT
       }
     },
     getActiveTab: () => currentTab,
-    getTabElement: (tabId) => tabRefs.current[tabId] || null,
+    getTabElement: (tabId) => tabRefs.current?.[tabId] || null,
   }), [
     containerRef, 
     currentTab, 
@@ -550,7 +550,7 @@ export const EnhancedGlassTabs = forwardRef<EnhancedGlassTabsRef, EnhancedGlassT
   useEffect(() => {
     // Function to update the indicator position based on current tab
     const updateIndicatorPosition = () => {
-      const activeTabElement = tabRefs.current[currentTab];
+      const activeTabElement = tabRefs.current?.[currentTab];
       if (activeTabElement && containerRef.current) {
         const { left, width } = activeTabElement.getBoundingClientRect();
         const containerLeft = containerRef.current.getBoundingClientRect().left || 0;
@@ -581,7 +581,7 @@ export const EnhancedGlassTabs = forwardRef<EnhancedGlassTabsRef, EnhancedGlassT
       resizeObserver.observe(containerRef.current);
     }
     
-    const activeTabElement = tabRefs.current[currentTab];
+    const activeTabElement = tabRefs.current?.[currentTab];
     if (activeTabElement) {
       resizeObserver.observe(activeTabElement);
     }
@@ -615,7 +615,7 @@ export const EnhancedGlassTabs = forwardRef<EnhancedGlassTabsRef, EnhancedGlassT
               key={tab.id}
               ref={(element) => {
                 // Store the ref without triggering updates
-                tabRefs.current[tab.id] = element;
+                  if (tabRefs.current) tabRefs.current[tab.id] = element;
               }}
               active={currentTab === tab.id}
               disabled={!!tab.disabled}

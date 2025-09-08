@@ -42,9 +42,26 @@ export const TabBarContainer = styled.div<{
 export const TabSelector = styled.div<{ $position: number; $width: number }>`
   position: absolute;
   height: calc(100% - 8px);
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 6px;
-  transition: all 0.3s ease;
   left: ${props => props.$position}px;
   width: ${props => props.$width}px;
+  border-radius: 8px;
+  transition: transform 220ms ease, width 220ms ease, left 220ms ease, opacity 180ms ease;
+  will-change: transform, left, width, opacity;
+
+  /* Glassy highlight with subtle glow and local blur */
+  background: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.16) 100%);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.5);
+  backdrop-filter: blur(6px) saturate(120%);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+
+  /* Specular sheen */
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(120% 60% at 20% 0%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 40%);
+    mix-blend-mode: overlay;
+    border-radius: inherit;
+  }
 `;

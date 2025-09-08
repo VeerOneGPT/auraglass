@@ -73,13 +73,13 @@ export function HeaderUserMenu({ user, items, className }: HeaderUserMenuProps) 
           {/* Menu items */}
           <div className="p-2">
             {items.map((item, idx) => (
-              <React.Fragment key={item.id}>
-                {item.separator && idx > 0 && (
+              <React.Fragment key={item?.id}>
+                {item?.separator && idx > 0 && (
                   <div className="my-2 border-t border-white/10" />
                 )}
-                {item.href ? (
+                {item?.href ? (
                   <a
-                    href={item.href}
+                    href={item?.href}
                     className={cn(
                       'group w-full flex items-center justify-between gap-3 rounded-[14px] px-3 py-2.5 transition-colors',
                       'text-white/90 hover:text-white hover:bg-white/10'
@@ -87,29 +87,29 @@ export function HeaderUserMenu({ user, items, className }: HeaderUserMenuProps) 
                     onClick={() => setOpen(false)}
                   >
                     <span className="inline-flex items-center gap-3 truncate">
-                      {item.icon && <span className="text-white/80">{item.icon}</span>}
-                      <span className="truncate">{item.label}</span>
+                      {item?.icon && <span className="text-white/80">{item?.icon}</span>}
+                      <span className="truncate">{item?.label}</span>
                     </span>
                     <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white/70" />
                   </a>
                 ) : (
                   <button
                     type="button"
-                    onClick={() => { item.onClick?.(); setOpen(false); }}
+                    onClick={() => { item?.onClick?.(); setOpen(false); }}
                     className={cn(
                       'w-full flex items-center justify-between gap-3 rounded-[14px] px-3 py-2.5 transition-colors',
-                      item.variant === 'danger'
+                      item?.variant === 'danger'
                         ? 'text-red-300 hover:bg-red-500/10'
                         : 'text-white/90 hover:text-white hover:bg-white/10'
                     )}
                   >
                     <span className="inline-flex items-center gap-3 truncate">
-                      {item.icon && (
-                        <span className={cn(item.variant === 'danger' ? 'text-red-400' : 'text-white/80')}>{item.icon}</span>
+                      {item?.icon && (
+                        <span className={cn(item?.variant === 'danger' ? 'text-red-400' : 'text-white/80')}>{item?.icon}</span>
                       )}
-                      <span className="truncate">{item.label}</span>
+                      <span className="truncate">{item?.label}</span>
                     </span>
-                    {item.variant !== 'danger' && (
+                    {item?.variant !== 'danger' && (
                       <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white/70" />
                     )}
                   </button>

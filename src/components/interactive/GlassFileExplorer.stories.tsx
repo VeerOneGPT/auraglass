@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassFileExplorer } from './GlassFileExplorer';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassFileExplorer> = {
   title: 'Components/Interactive/GlassFileExplorer',
@@ -84,9 +85,9 @@ const meta: Meta<typeof GlassFileExplorer> = {
     showBreadcrumb: true,
     showSearch: true,
     variant: 'default',
-    onNavigate: () => {},
-    onFileSelect: () => {},
-    onFileOpen: () => {},
+    onNavigate: fn(),
+    onFileSelect: fn(),
+    onFileOpen: fn(),
   },
 };
 
@@ -127,9 +128,9 @@ export const Default: Story = {
         path: '/home/user/readme.txt',
       },
     ],
-    onNavigate: () => {},
-    onFileSelect: () => {},
-    onFileOpen: () => {},
+    onNavigate: fn(),
+    onFileSelect: fn(),
+    onFileOpen: fn(),
   },
 };
 
@@ -171,8 +172,8 @@ export const Variants: Story = {
     ],
     viewMode: 'grid',
     variant: 'compact',
-    onNavigate: () => {},
-    onFileSelect: () => {},
-    onFileOpen: () => {},
+    onNavigate: fn(),
+    onFileSelect: fn(),
+    onFileOpen: fn(),
   },
 };

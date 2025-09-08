@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassFormTable } from './GlassFormTable';
+import { fn } from '@storybook/test';
 
 interface User {
   name: string;
@@ -41,7 +42,7 @@ export const Default: Story = {
       { name: 'John Doe', email: 'john@example.com', role: 'Admin' },
       { name: 'Jane Smith', email: 'jane@example.com', role: 'User' }
     ],
-    onChange: () => {},
+    onChange: fn(),
   },
 };
 
@@ -59,6 +60,6 @@ export const Variants: Story = {
     rows: [
       { name: 'Alice Johnson', email: 'alice@example.com', role: 'User' }
     ],
-    onChange: () => {},
+    onChange: fn(),
   },
 };

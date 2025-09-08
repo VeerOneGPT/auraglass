@@ -105,12 +105,27 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
     const [currentDate, setCurrentDate] = useState(selectedDate || new Date());
     const [selectedDateState, setSelectedDateState] = useState<Date | null>(selectedDate || null);
 
-    // Get events for a specific date
-    const getEventsForDate = (date: Date) => {
-        return events.filter(event => {
+    // Get events for a specific date - OPTIMIZED with memoization
+    const eventsByDate = useMemo(() => {
+        const eventMap = new Map<string, CalendarEvent[]>();
+        
+        if (!events || !Array.isArray(events)) return eventMap;
+        
+        events.forEach(event => {
             const eventDate = new Date(event.date);
-            return eventDate.toDateString() === date.toDateString();
+            const dateKey = eventDate.toDateString();
+            
+            if (!eventMap.has(dateKey)) {
+                eventMap.set(dateKey, []);
+            }
+            eventMap.get(dateKey)!.push(event);
         });
+        
+        return eventMap;
+    }, [events]);
+    
+    const getEventsForDate = (date: Date) => {
+        return eventsByDate.get(date.toDateString()) || [];
     };
 
     // Get month data
@@ -230,8 +245,8 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
     }
 
     return (
-        <Motion preset="fadeIn" className="w-full">
-            <GlassCard className={cn('overflow-hidden', className)} {...props}>
+        <div className="w-full">
+            <GlassCard className={cn('glass-base backdrop-blur-lg bg-glass-surface-primary border-glass-border-default shadow-glass-3 overflow-hidden', className)} {...props}>
                 {/* Calendar Header */}
                 <CardHeader className="border-b border-white/10">
                     <div className="flex items-center justify-between">
@@ -296,31 +311,31 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                     {/* Calendar days */}
                     <div className="grid grid-cols-7 gap-2">
                         {monthData.weeks.flat().map((date, index) => {
-                            const dayEvents = getEventsForDate(date);
+                            const dateKey = date.toDateString();
+                            const dayEvents = eventsByDate.get(dateKey) || [];
                             const hasEvents = dayEvents.length > 0;
                             const isWeekend = date.getDay() === 0 || date.getDay() === 6;
 
                             if (!showWeekends && isWeekend) return null;
 
                             return (
-                                <Motion
-                                    key={index}
-                                    preset="scaleIn"
+                                <div
+                                    key={`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`}
                                     className="aspect-square"
                                 >
                                     <button
                                         onClick={() => handleDateClick(date)}
                                         disabled={isDisabled(date)}
                                         className={cn(
-                                            'w-full h-full rounded-lg transition-all duration-200 glass-press',
+                                            'w-full h-full rounded-lg transition-all duration-200',
                                             'flex flex-col items-center justify-start p-1',
-                                            'hover:bg-white/10 focus:bg-white/15 focus:outline-none hover:-translate-y-0.5 hover:ring-1 hover:ring-white/10',
+                                            'hover:bg-white/10 focus:bg-white/15 focus:outline-none hover:scale-105',
                                             'disabled:opacity-50 disabled:cursor-not-allowed',
                                             {
-                                                'bg-primary/20 text-primary-foreground': isSelected(date),
-                                                'bg-white/5 text-white/90': isToday(date) && showToday,
+                                                'glass-base backdrop-blur-md bg-glass-surface-primary border-glass-border-primary': isSelected(date),
+                                                'glass-base backdrop-blur-sm bg-glass-surface-secondary border-glass-border-default': isToday(date) && showToday && !isSelected(date),
                                                 'text-white/60': !isCurrentMonth(date),
-                                                'text-white/80': isCurrentMonth(date),
+                                                'text-white/90': isCurrentMonth(date),
                                             }
                                         )}
                                     >
@@ -348,7 +363,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                                             </div>
                                         )}
                                     </button>
-                                </Motion>
+                                </div>
                             );
                         })}
                     </div>
@@ -361,11 +376,10 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                             </h3>
 
                             <div className="space-y-3">
-                                {getEventsForDate(selectedDateState).map((event) => (
-                                    <Motion key={event.id} preset="slideUp" className="w-full">
+                                {(eventsByDate.get(selectedDateState.toDateString()) || []).map((event) => (
+                                    <div key={event.id} className="w-full">
                                         <GlassCard
-                                            variant="outline"
-                                            className="p-4 hover:bg-white/5 transition-colors cursor-pointer"
+                                            className="glass-base backdrop-blur-md bg-glass-surface-secondary border-glass-border-default shadow-glass-1 p-4 hover:shadow-glass-2 hover:bg-glass-surface-primary transition-all cursor-pointer"
                                         >
                                             <div className="flex items-start gap-3">
                                                 <div className={cn('w-3 h-3 rounded-full mt-2 flex-shrink-0', getEventColor(event))} />
@@ -405,10 +419,10 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                                                 </div>
                                             </div>
                                         </GlassCard>
-                                    </Motion>
+                                    </div>
                                 ))}
 
-                                {getEventsForDate(selectedDateState).length === 0 && (
+                                {(eventsByDate.get(selectedDateState.toDateString()) || []).length === 0 && (
                                     <div className="text-center text-white/50 py-8">
                                         No events scheduled for this date
                                     </div>
@@ -418,7 +432,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                     )}
                 </CardContent>
             </GlassCard>
-        </Motion>
+        </div>
     );
 };
 

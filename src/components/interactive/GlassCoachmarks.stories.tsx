@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassCoachmarks } from './GlassCoachmarks';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassCoachmarks> = {
   title: 'Components/Interactive/GlassCoachmarks',
@@ -64,9 +65,9 @@ export const Default: Story = {
       },
     ],
     current: 0,
-    onNext: () => console.log('Next clicked'),
-    onPrev: () => console.log('Previous clicked'),
-    onClose: () => console.log('Close clicked'),
+    onNext: fn(),
+    onPrev: fn(),
+    onClose: fn(),
   },
 };
 
@@ -102,8 +103,8 @@ export const MultiStep: Story = {
       },
     ],
     current: 1,
-    onNext: () => console.log('Next clicked'),
-    onPrev: () => console.log('Previous clicked'),
-    onClose: () => console.log('Close clicked'),
+    onNext: fn(),
+    onPrev: fn(),
+    onClose: fn(),
   },
 };

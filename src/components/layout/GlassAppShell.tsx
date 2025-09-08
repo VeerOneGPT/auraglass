@@ -227,7 +227,7 @@ export const GlassAppShell = forwardRef<HTMLDivElement, GlassAppShellProps>(
         className={cn(
           'flex h-screen overflow-hidden',
           'bg-gradient-to-br from-background via-background/95 to-surface/50',
-          variantClasses[variant],
+          variantClasses?.[variant],
           className
         )}
         {...props}
@@ -316,7 +316,7 @@ export const PageHeader = forwardRef<HTMLDivElement, PageHeaderProps>(
         ref={ref}
         className={cn(
           'space-y-4 pb-8 border-b border-border/20',
-          variantClasses[variant],
+          variantClasses?.[variant],
           className
         )}
         {...props}
@@ -332,16 +332,16 @@ export const PageHeader = forwardRef<HTMLDivElement, PageHeaderProps>(
                     return (
                       <li key={index} className="flex items-center">
                         {index > 0 && <span className="mx-2">/</span>}
-                        {item.href && !isLast ? (
+                        {item?.href && !isLast ? (
                           <a
-                            href={item.href}
+                            href={item?.href}
                             className="hover:text-foreground transition-colors"
                           >
-                            {item.label}
+                            {item?.label}
                           </a>
                         ) : (
                           <span className={isLast ? 'text-foreground font-medium' : ''}>
-                            {item.label}
+                            {item?.label}
                           </span>
                         )}
                       </li>

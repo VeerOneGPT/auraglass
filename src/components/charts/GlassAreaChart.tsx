@@ -101,7 +101,7 @@ export interface GlassAreaChartProps {
  */
 export const GlassAreaChart: React.FC<GlassAreaChartProps> = ({
     title,
-    series,
+    series = [],
     width = 600,
     height = 300,
     showGrid = true,
@@ -140,7 +140,9 @@ export const GlassAreaChart: React.FC<GlassAreaChartProps> = ({
 
     // Process data for chart
     const processedData = useMemo(() => {
-        if (!series.length) return { scaledSeries: [], xLabels: [], yLabels: [] };
+        if (!series || !Array.isArray(series) || series.length === 0) {
+            return { scaledSeries: [], xLabels: [], yLabels: [] };
+        }
 
         // Find min/max values across all series
         const allPoints = series.flatMap(s => s.data);
@@ -162,7 +164,7 @@ export const GlassAreaChart: React.FC<GlassAreaChartProps> = ({
             stackedData = Array.from(xPoints).map(x => {
                 let cumulativeY = 0;
                 return series.map(s => {
-                    const point = s.data.find(p => p.x === x);
+                    const point = s.data?.find(p => p.x === x);
                     const y = point ? point.y : 0;
                     cumulativeY += y;
                     return {
@@ -184,7 +186,7 @@ export const GlassAreaChart: React.FC<GlassAreaChartProps> = ({
                 data: stackedData!.map(stackPoint => ({
                     x: stackPoint[index].x,
                     y: stackPoint[index].y,
-                    label: s.data.find(p => p.x === stackPoint[index].x)?.label
+                    label: s.data?.find(p => p.x === stackPoint[index].x)?.label
                 }))
             }));
         }
@@ -201,7 +203,7 @@ export const GlassAreaChart: React.FC<GlassAreaChartProps> = ({
 
         // Process each series
         const scaledSeries = stackedSeries.map((s, seriesIndex) => {
-            const points = s.data.map((point, pointIndex) => ({
+            const points = s.data?.map((point, pointIndex) => ({
                 ...point,
                 scaledX: padding.left + scaleX(typeof point.x === 'number' ? point.x : pointIndex),
                 scaledY: padding.top + scaleY(point.y),
@@ -210,7 +212,7 @@ export const GlassAreaChart: React.FC<GlassAreaChartProps> = ({
 
             // Generate area path
             let areaPath = '';
-            if (points.length > 0) {
+            if ((points?.length || 0) > 0) {
                 // Start from bottom-left
                 areaPath = `M ${points[0].scaledX} ${padding.top + chartHeight}`;
 
@@ -218,17 +220,17 @@ export const GlassAreaChart: React.FC<GlassAreaChartProps> = ({
                 areaPath += ` L ${points[0].scaledX} ${points[0].scaledY}`;
 
                 // Draw through all points
-                for (let i = 1; i < points.length; i++) {
+                for (let i = 1; i < (points?.length || 0); i++) {
                     areaPath += ` L ${points[i].scaledX} ${points[i].scaledY}`;
                 }
 
                 // Draw back to bottom-right and close
-                areaPath += ` L ${points[points.length - 1].scaledX} ${padding.top + chartHeight} Z`;
+                areaPath += ` L ${points[(points?.length || 0) - 1].scaledX} ${padding.top + chartHeight} Z`;
             }
 
             return {
                 ...s,
-                color: s.color || colors[seriesIndex % colors.length],
+                color: s.color || colors[seriesIndex % (colors?.length || 0)],
                 points,
                 areaPath
             };
@@ -255,10 +257,10 @@ export const GlassAreaChart: React.FC<GlassAreaChartProps> = ({
 
     // Generate path for line
     const generatePath = (points: any[]) => {
-        if (points.length === 0) return '';
+        if ((points?.length || 0) === 0) return '';
 
         let path = `M ${points[0].scaledX} ${points[0].scaledY}`;
-        for (let i = 1; i < points.length; i++) {
+        for (let i = 1; i < (points?.length || 0); i++) {
             path += ` L ${points[i].scaledX} ${points[i].scaledY}`;
         }
         return path;
@@ -527,7 +529,7 @@ export const GlassAreaChart: React.FC<GlassAreaChartProps> = ({
                                         {processedData.scaledSeries.map((s, index) => (
                                             <div key={s.id} className="flex items-center gap-2">
                                                 <div className="w-3 h-3 rounded" style={{ backgroundColor: s.color }} />
-                                                <span className="text-white/80">{s.name}: {formatYValue(hoveredPoint.values[index] || 0)}</span>
+                                                <span className="text-white/80">{s.name}: {formatYValue(hoveredPoint.values?.[index] || 0)}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -537,7 +539,7 @@ export const GlassAreaChart: React.FC<GlassAreaChartProps> = ({
                     </div>
 
                     {/* Legend */}
-                    {showLegend && processedData.scaledSeries.length > 0 && (
+                    {showLegend && (processedData.scaledSeries?.length || 0) > 0 && (
                         <div className="flex flex-wrap justify-center gap-4 mt-6">
                             {processedData.scaledSeries.map((s) => (
                                 <div

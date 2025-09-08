@@ -167,13 +167,13 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
 
     // Handle item click
     const handleItemClick = (item: MobileNavItem) => {
-      if (item.children && item.children.length > 0) {
-        toggleItem(item.id);
+      if (item?.children && item?.children.length > 0) {
+        toggleItem(item?.id);
       } else {
-        if (item.href && closeOnClick) {
+        if (item?.href && closeOnClick) {
           onOpenChange?.(false);
         }
-        item.onClick?.();
+        item?.onClick?.();
       }
     };
 
@@ -183,26 +183,26 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
         return renderItem(item, level);
       }
 
-      const active = item.href ? checkIsActive(item.href, activePath) : false;
-      const hasChildren = item.children && item.children.length > 0;
-      const isExpanded = expandedItems.has(item.id);
+      const active = item?.href ? checkIsActive(item?.href, activePath) : false;
+      const hasChildren = item?.children && item?.children.length > 0;
+      const isExpanded = expandedItems.has(item?.id);
 
       const itemContent = (
         <>
           <div className="flex items-center gap-3 flex-1 min-w-0">
             <div className="flex-shrink-0 text-lg">
-              {item.icon}
+              {item?.icon}
             </div>
             <span className="font-medium truncate">
-              {item.label}
+              {item?.label}
             </span>
-            {item.badge && (
+            {item?.badge && (
               <GlassBadge
-                variant={item.badgeVariant || 'outline'}
+                variant={item?.badgeVariant || 'outline'}
                 size="xs"
                 className="ml-auto"
               >
-                {item.badge}
+                {item?.badge}
               </GlassBadge>
             )}
           </div>
@@ -220,11 +220,11 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
       );
 
       return (
-        <div key={item.id}>
+        <div key={item?.id}>
           <GlassButton
             variant={active ? 'primary' : 'ghost'}
             size="md"
-            disabled={item.disabled}
+            disabled={item?.disabled}
             className={cn(
               'w-full justify-start h-12 px-4',
               level > 0 && 'ml-6 mr-2'
@@ -238,7 +238,7 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
           {hasChildren && isExpanded && (
             <Motion preset="slideDown" className="mt-1">
               <VStack space="xs">
-                {item.children!.map(child =>
+                {item?.children!.map(child =>
                   renderNavigationItem(child, level + 1)
                 )}
               </VStack>
@@ -311,8 +311,8 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
           ref={ref}
           className={cn(
             'flex flex-col z-[101] transition-transform duration-300 ease-out',
-            positionClasses[position][variant],
-            transformClasses[position],
+            positionClasses?.[position][variant],
+            transformClasses?.[position],
             className
           )}
           {...props}

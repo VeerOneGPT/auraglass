@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassMindMap } from './GlassMindMap';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassMindMap> = {
   title: 'Components/Interactive/GlassMindMap',
@@ -80,7 +81,7 @@ export const Default: Story = {
         },
       ],
     },
-    onNodeClick: (node) => console.log('Node clicked:', node.label),
+    onNodeClick: fn(),
   },
 };
 
@@ -133,6 +134,6 @@ export const ComplexMindMap: Story = {
       ],
     },
     direction: 'radial',
-    onNodeClick: (node) => console.log('Node clicked:', node.label),
+    onNodeClick: fn(),
   },
 };

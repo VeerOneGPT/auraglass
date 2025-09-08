@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassQueryBuilder } from './GlassQueryBuilder';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassQueryBuilder> = {
   title: 'Components/Interactive/GlassQueryBuilder',
@@ -49,7 +50,7 @@ export const Default: Story = {
         { field: 'status', op: '=', value: 'active' }
       ]
     },
-    onChange: (value) => console.log('Query changed:', value),
+    onChange: fn(),
   },
 };
 
@@ -89,6 +90,6 @@ export const ComplexQuery: Story = {
         }
       ]
     },
-    onChange: (value) => console.log('Complex query changed:', value),
+    onChange: fn(),
   },
 };

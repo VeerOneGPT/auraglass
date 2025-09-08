@@ -199,14 +199,16 @@ export const GlassMessageList: React.FC<GlassMessageListProps> = ({
                                     const isSelected = selectedMessage === message.id;
 
                                     return (
-                                        <Motion
+                                        <div
                                             key={message.id}
-                                            preset="slideUp"
-                                            delay={index * 20}
                                             className={cn(
-                                                'group relative cursor-pointer transition-all duration-200',
+                                                'group relative cursor-pointer transition-all duration-200 animate-slide-in-up',
                                                 isSelected && 'ring-2 ring-primary rounded-lg'
                                             )}
+                                            style={{ 
+                                                animationDelay: `${Math.min(index, 20) * 20}ms`,
+                                                animationFillMode: 'both'
+                                            }}
                                             onClick={() => handleMessageClick(message)}
                                         >
                                             <div className={cn(
@@ -378,7 +380,7 @@ export const GlassMessageList: React.FC<GlassMessageListProps> = ({
                                                     </div>
                                                 )}
                                             </div>
-                                        </Motion>
+                                        </div>
                                     );
                                 })}
                             </div>

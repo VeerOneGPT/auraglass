@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassLazyImage } from './GlassLazyImage';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassLazyImage> = {
   title: 'Components/Interactive/GlassLazyImage',
@@ -56,8 +57,8 @@ const meta: Meta<typeof GlassLazyImage> = {
     height: 300,
     objectFit: 'cover',
     blur: true,
-    onLoad: () => {},
-    onError: () => {},
+    onLoad: fn(),
+    onError: fn(),
   },
 };
 
@@ -69,8 +70,8 @@ export const Default: Story = {
     src: 'https://picsum.photos/300/200?random=2',
     alt: 'Default lazy image',
     title: 'Sample lazy loaded image',
-    onLoad: () => {},
-    onError: () => {},
+    onLoad: fn(),
+    onError: fn(),
   },
 };
 
@@ -83,7 +84,7 @@ export const Variants: Story = {
     height: 400,
     objectFit: 'contain',
     blur: false,
-    onLoad: () => {},
-    onError: () => {},
+    onLoad: fn(),
+    onError: fn(),
   },
 };

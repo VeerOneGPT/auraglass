@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassFormBuilder } from './GlassFormBuilder';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassFormBuilder> = {
   title: 'Components/Interactive/GlassFormBuilder',
@@ -74,8 +75,8 @@ const meta: Meta<typeof GlassFormBuilder> = {
     size: 'md',
     loading: false,
     disabled: false,
-    onChange: () => {},
-    onSubmit: () => {},
+    onChange: fn(),
+    onSubmit: fn(),
   },
 };
 
@@ -117,8 +118,8 @@ export const Default: Story = {
       },
     ],
     values: {},
-    onChange: () => {},
-    onSubmit: () => {},
+    onChange: fn(),
+    onSubmit: fn(),
   },
 };
 
@@ -146,7 +147,7 @@ export const Variants: Story = {
     ],
     values: {},
     variant: 'compact',
-    onChange: () => {},
-    onSubmit: () => {},
+    onChange: fn(),
+    onSubmit: fn(),
   },
 };

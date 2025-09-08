@@ -260,7 +260,7 @@ const MotionNative = forwardRef<HTMLDivElement, MotionProps>(
           iterations: loop ? Infinity : repeat,
         };
 
-        animationRef.current = element.animate(animationKeyframes, timing);
+            animationRef.current = element.animate ? element.animate(animationKeyframes, timing) : null;
       }
     };
 

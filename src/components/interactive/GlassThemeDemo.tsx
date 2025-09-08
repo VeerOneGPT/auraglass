@@ -21,6 +21,7 @@ import { GlassInput as TextField } from '../input/GlassInput';
 import { Typography } from '../data-display/Typography';
 
 import { GlassThemeSwitcher } from './GlassThemeSwitcher';
+import { CursorGlow } from './CursorGlow';
 import { GlassThemeDemoProps } from './types';
 
 // Styled components
@@ -431,6 +432,11 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
         $minimal={minimal}
         {...rest}
       >
+        {/* Local cursor glow overlay for theme showcase */}
+        <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }} aria-hidden>
+          <CursorGlow global={false} size={280} opacity={0.14} intensity={0.6} />
+        </div>
+
         {/* Custom header or default header */}
         <Header>
           {header || (

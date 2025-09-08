@@ -85,10 +85,10 @@ export const GlassVirtualList: React.FC<GlassVirtualListProps> = ({
     // Calculate total height
     const totalHeight = useMemo(() => {
         if (itemHeight) {
-            return items.length * itemHeight;
+            return (items?.length || 0) * itemHeight;
         }
 
-        return items.reduce((sum, item) => sum + (item.height || estimatedItemHeight), 0);
+        return items.reduce((sum, item) => sum + (item?.height || estimatedItemHeight), 0);
     }, [items, itemHeight, estimatedItemHeight]);
 
     // Get visible range
@@ -97,7 +97,7 @@ export const GlassVirtualList: React.FC<GlassVirtualListProps> = ({
 
         const start = Math.floor(scrollTop / itemSize);
         const end = Math.min(
-            items.length - 1,
+            (items?.length || 1) - 1,
             Math.ceil((scrollTop + containerHeight) / itemSize)
         );
 
@@ -178,17 +178,17 @@ export const GlassVirtualList: React.FC<GlassVirtualListProps> = ({
                         style={{ transform: `translateY(${offsetY}px)` }}
                     >
                         {visibleItems.map((item, index) => {
-                            const ItemComponent = item.component;
+                            const ItemComponent = item?.component;
                             const actualIndex = visibleRange.start + index;
 
                             return (
                                 <div
-                                    key={item.id}
+                                    key={item?.id}
                                     style={{
-                                        height: itemHeight || item.height || estimatedItemHeight
+                                        height: itemHeight || item?.height || estimatedItemHeight
                                     }}
                                 >
-                                    <ItemComponent {...(item.props || {})} />
+                                    <ItemComponent {...(item?.props || {})} />
                                 </div>
                             );
                         })}
@@ -255,7 +255,7 @@ export const GlassVirtualGrid: React.FC<GlassVirtualGridProps> = ({
     }, [itemWidth, aspectRatio]);
 
     // Calculate rows and visible range
-    const totalRows = Math.ceil(items.length / columns);
+        const totalRows = Math.ceil((items?.length || 0) / columns);
     const rowHeight = itemHeight + gap;
     const visibleRows = Math.ceil(containerHeight / rowHeight);
 
@@ -278,7 +278,7 @@ export const GlassVirtualGrid: React.FC<GlassVirtualGridProps> = ({
         for (let row = visibleRange.startRow; row <= visibleRange.endRow; row++) {
             for (let col = 0; col < columns; col++) {
                 const index = row * columns + col;
-                if (index < items.length) {
+                if (index < (items?.length || 0)) {
                     result.push({
                         ...items[index],
                         row,
@@ -341,17 +341,17 @@ export const GlassVirtualGrid: React.FC<GlassVirtualGridProps> = ({
                             }}
                         >
                             {visibleItems.map((item) => {
-                                const ItemComponent = item.component;
+                                const ItemComponent = item?.component;
 
                                 return (
                                     <div
-                                        key={item.id}
+                                        key={item?.id}
                                         style={{
                                             height: itemHeight,
                                             width: itemWidth
                                         }}
                                     >
-                                        <ItemComponent {...(item.props || {})} />
+                                        <ItemComponent {...(item?.props || {})} />
                                     </div>
                                 );
                             })}

@@ -97,7 +97,7 @@ export function GlassPrismComparison() {
   
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentComparison((prev) => (prev + 1) % COMPARISON_DATA.length);
+      setCurrentComparison((prev) => (prev + 1) % (COMPARISON_DATA?.length || 0));
     }, 5000);
     
     return () => clearInterval(interval);
@@ -392,7 +392,7 @@ export function GlassPrismComparison() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="font-medium">{data.category}</span>
+              <span className="font-medium">{data?.category}</span>
             </motion.button>
           ))}
         </motion.div>

@@ -97,7 +97,7 @@ export class GalileoPhysicsSystem {
   start(): void {
     if (this.animationFrame) return;
     this.lastTime = performance.now();
-    this.animate();
+        if (this.animate) this.animate();
   }
 
   stop(): void {

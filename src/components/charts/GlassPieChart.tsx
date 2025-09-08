@@ -80,7 +80,7 @@ export interface GlassPieChartProps {
  */
 export const GlassPieChart: React.FC<GlassPieChartProps> = ({
     title,
-    data,
+    data = [],
     size = 300,
     innerRadius = 0,
     showLegend = true,
@@ -116,14 +116,16 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
 
     // Process data for chart
     const processedData = useMemo(() => {
-        if (!data.length) return { segments: [], total: 0 };
+        if (!data || !Array.isArray(data) || data?.length === 0) {
+            return { segments: [], total: 0 };
+        }
 
-        const total = data.reduce((sum, item) => sum + item.value, 0);
+        const total = data?.reduce((sum, item) => sum + item?.value, 0);
         let currentAngle = -Math.PI / 2; // Start from top
 
-        const segments = data.map((item, index) => {
-            const percentage = (item.value / total) * 100;
-            const angle = (item.value / total) * 2 * Math.PI;
+        const segments = data?.map((item, index) => {
+            const percentage = (item?.value / total) * 100;
+            const angle = (item?.value / total) * 2 * Math.PI;
             const startAngle = currentAngle;
             const endAngle = currentAngle + angle;
 
@@ -164,7 +166,7 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
                 endAngle,
                 labelX,
                 labelY,
-                color: item.color || colors[index % colors.length]
+                color: item?.color || colors[index % (colors?.length || 0)]
             };
         });
 
@@ -172,7 +174,7 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
     }, [data, centerX, centerY, radius, innerRadius, labelRadius, colors]);
 
     // Handle segment hover
-    const handleSegmentHover = (segment: typeof processedData.segments[0], event: React.MouseEvent) => {
+      const handleSegmentHover = (segment: typeof processedData.segments[0], event: React.MouseEvent) => {
         if (showTooltips) {
             const rect = event.currentTarget.getBoundingClientRect();
             setHoveredSegment({
@@ -333,30 +335,30 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
                         </div>
 
                         {/* Legend */}
-                        {showLegend && legendItems.length > 0 && (
+                        {showLegend && (legendItems?.length || 0) > 0 && (
                             <div className={cn(
                                 'flex flex-wrap gap-3',
                                 legendPosition === 'right' ? 'flex-col' : 'justify-center'
                             )}>
                                 {legendItems.map((item) => (
                                     <Motion
-                                        key={item.label}
+                                        key={item?.label}
                                         preset="slideUp"
-                                        delay={item.index * 50}
+                                        delay={item?.index * 50}
                                         className={cn('flex items-center gap-2 px-2 py-1 rounded-md transition-all duration-200 hover:-translate-y-0.5',
-                                          hoveredLegendIndex !== null && hoveredLegendIndex !== item.index ? 'opacity-50' : 'opacity-100'
+                                          hoveredLegendIndex !== null && hoveredLegendIndex !== item?.index ? 'opacity-50' : 'opacity-100'
                                         )}
-                                        onMouseEnter={() => setHoveredLegendIndex(item.index)}
+                                        onMouseEnter={() => setHoveredLegendIndex(item?.index)}
                                         onMouseLeave={() => setHoveredLegendIndex(null)}
                                     >
                                         <div
                                             className="w-3 h-3 rounded"
-                                            style={{ backgroundColor: item.color }}
+                                            style={{ backgroundColor: item?.color }}
                                         />
                                         <div className="text-sm text-white/80">
-                                            <span className="font-medium">{item.label}</span>
+                                            <span className="font-medium">{item?.label}</span>
                                             <span className="ml-2 text-white/60">
-                                                {formatValue(item.value)} ({formatPercentage(item.percentage)})
+                                                {formatValue(item?.value)} ({formatPercentage(item?.percentage)})
                                             </span>
                                         </div>
                                     </Motion>

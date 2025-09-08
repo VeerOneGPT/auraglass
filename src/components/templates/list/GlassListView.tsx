@@ -215,7 +215,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
             const value = column.accessorFn
               ? column.accessorFn(item)
               : column.accessorKey
-              ? item[column.accessorKey]
+              ? item?.[column.accessorKey]
               : '';
             return String(value).toLowerCase().includes(searchQuery.toLowerCase());
           })
@@ -229,7 +229,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
             const filter = filters.find(f => f.id === filterId);
             if (!filter || !filterValue) return true;
 
-            const itemValue = item[filterId];
+            const itemValue = item?.[filterId];
 
             switch (filter.type) {
               case 'select':
@@ -240,7 +240,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
                 return String(itemValue).toLowerCase().includes(String(filterValue).toLowerCase());
               case 'range':
                 if (Array.isArray(filterValue) && filterValue.length === 2) {
-                  return itemValue >= filterValue[0] && itemValue <= filterValue[1];
+                  return itemValue >= filterValue?.[0] && itemValue <= filterValue?.[1];
                 }
                 return true;
               default:
@@ -254,7 +254,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
     }, [data, searchQuery, activeFilters, filters, columns, onSearchChange, onFiltersChange]);
 
     // Calculate pagination
-    const totalFilteredItems = totalItems || filteredData.length;
+    const totalFilteredItems = totalItems || (filteredData?.length || 0);
     const totalPages = Math.ceil(totalFilteredItems / pageSize);
     const startIndex = (currentPage - 1) * pageSize;
     const endIndex = startIndex + pageSize;
@@ -267,7 +267,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
 
     // Handle bulk actions
     const handleBulkAction = (action: ListAction) => {
-      const selectedData = data.filter(item => selectedItems.includes(item.id));
+      const selectedData = data?.filter(item => selectedItems.includes(item?.id));
       action.onClick(selectedData);
     };
 
@@ -299,7 +299,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
 
     // Render filters
     const renderFilters = () => {
-      if (!showFilters || filters.length === 0) return null;
+      if (!showFilters || (filters?.length || 0) === 0) return null;
 
       return (
         <Motion preset="slideDown">
@@ -326,7 +326,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
                     
                     {filter.type === 'select' && (
                       <select
-                        value={activeFilters[filter.id] || ''}
+                        value={activeFilters?.[filter.id] || ''}
                         onChange={(e) => onFiltersChange?.({
                           ...activeFilters,
                           [filter.id]: e.target.value
@@ -344,7 +344,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
                     
                     {filter.type === 'text' && (
                       <GlassInput type="text"
-                        value={activeFilters[filter.id] || ''}
+                        value={activeFilters?.[filter.id] || ''}
                         onChange={(e) => onFiltersChange?.({
                           ...activeFilters,
                           [filter.id]: e.target.value
@@ -364,19 +364,19 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
 
     // Render actions bar
     const renderActionsBar = () => {
-      const hasSelectedItems = selectedItems.length > 0;
+      const hasSelectedItems = (selectedItems?.length || 0) > 0;
       const availableActions = actions.filter(action => 
         !action.requiresSelection || hasSelectedItems
       );
 
-      if (availableActions.length === 0 && !primaryAction) return null;
+      if ((availableActions?.length || 0) === 0 && !primaryAction) return null;
 
       return (
         <HStack space="sm" align="center" justify="between">
           <HStack space="sm" align="center">
             {hasSelectedItems && (
               <span className="text-sm text-muted-foreground">
-                {selectedItems.length} item{selectedItems.length !== 1 ? 's' : ''} selected
+                {(selectedItems?.length || 0)} item{(selectedItems?.length || 0) !== 1 ? 's' : ''} selected
               </span>
             )}
             
@@ -387,7 +387,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
                 size="sm"
                 leftIcon={action.icon}
                 onClick={() => handleBulkAction(action)}
-                disabled={action.requiresSelection && selectedItems.length === 0}
+                disabled={action.requiresSelection && (selectedItems?.length || 0) === 0}
               >
                 {action.label}
               </GlassButton>
@@ -397,7 +397,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
           <HStack space="sm" align="center">
             {renderViewModeToggle()}
             
-            {filters.length > 0 && (
+            {(filters?.length || 0) > 0 && (
               <IconButton
                 icon="🔍"
                 variant={showFilters ? 'primary' : 'ghost'}
@@ -426,7 +426,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
     const renderGridView = () => (
       <GlassGrid cols={12} gap="md">
         {currentPageData.map((item, index) => (
-          <GlassGridItem key={item.id} colSpan={4}>
+          <GlassGridItem key={item?.id} colSpan={4}>
             {renderCard ? renderCard(item, index) : (
               <GlassCard
                 variant="default"
@@ -435,10 +435,10 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
               >
                 <VStack space="sm">
                   <div className="text-sm font-medium text-foreground">
-                    {item.name || item.title || item.id}
+                    {item?.name || item?.title || item?.id}
                   </div>
                   <div className="text-xs text-muted-foreground">
-                    {item.description || 'No description'}
+                    {item?.description || 'No description'}
                   </div>
                 </VStack>
               </GlassCard>
@@ -452,21 +452,28 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
     const renderListView = () => (
       <VStack space="sm">
         {currentPageData.map((item, index) => (
-          <Motion key={item.id} preset="slideDown" delay={index * 50}>
+          <div 
+            key={item?.id} 
+            className="animate-fade-in-up"
+            style={{ 
+              animationDelay: `${Math.min(index, 10) * 50}ms`,
+              animationFillMode: 'both'
+            }}
+          >
             {renderCard ? renderCard(item, index) : (
               <GlassCard
                 variant="outlined"
-                className="cursor-pointer hover:shadow-lg transition-shadow"
+                className="glass-base backdrop-blur-md bg-glass-surface-primary border-glass-border-default shadow-glass-1 cursor-pointer hover:shadow-glass-2 hover:scale-[1.01] transition-all"
                 onClick={() => onRowClick?.(item)}
               >
                 <HStack space="md" align="center">
                   {selectable && (
                     <GlassInput type="checkbox"
-                      checked={selectedItems.includes(item.id)}
+                      checked={selectedItems.includes(item?.id)}
                       onChange={(e) => {
                         const newSelection = e.target.checked
-                          ? [...selectedItems, item.id]
-                          : selectedItems.filter(id => id !== item.id);
+                          ? [...selectedItems, item?.id]
+                          : selectedItems.filter(id => id !== item?.id);
                         handleSelectionChange(newSelection);
                       }}
                       onClick={(e) => e.stopPropagation()}
@@ -475,23 +482,23 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
                   )}
                   
                   <VStack space="xs" className="flex-1">
-                    <div className="text-sm font-medium text-foreground">
-                      {item.name || item.title || item.id}
+                    <div className="text-sm font-medium text-white">
+                      {item?.name || item?.title || item?.id}
                     </div>
-                    <div className="text-xs text-muted-foreground">
-                      {item.description || 'No description'}
+                    <div className="text-xs text-white/70">
+                      {item?.description || 'No description'}
                     </div>
                   </VStack>
                   
-                  {item.status && (
+                  {item?.status && (
                     <GlassBadge variant="outline" size="xs">
-                      {item.status}
+                      {item?.status}
                     </GlassBadge>
                   )}
                 </HStack>
               </GlassCard>
             )}
-          </Motion>
+          </div>
         ))}
       </VStack>
     );
@@ -506,7 +513,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
         );
       }
 
-      if (currentPageData.length === 0) {
+      if ((currentPageData?.length || 0) === 0) {
         return emptyState || (
           <div className="flex flex-col items-center justify-center h-64 text-center">
             <div className="text-lg font-medium text-muted-foreground mb-2">

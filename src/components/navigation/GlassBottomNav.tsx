@@ -117,32 +117,32 @@ export const GlassBottomNav = forwardRef<HTMLDivElement, GlassBottomNavProps>(
       minimal: 'border-t border-border/10',
     };
 
-    const config = sizeClasses[size];
+    const config = sizeClasses?.[size];
 
     // Handle item click
     const handleItemClick = (item: BottomNavItem) => {
-      if (item.disabled) return;
+      if (item?.disabled) return;
 
-      onActiveChange?.(item.id);
-      item.onClick?.();
+      onActiveChange?.(item?.id);
+      item?.onClick?.();
     };
 
     // Render navigation item
     const renderNavigationItem = (item: BottomNavItem) => {
       if (renderItem) {
-        const active = activeId === item.id;
+        const active = activeId === item?.id;
         return renderItem(item, active);
       }
 
-      const active = activeId === item.id;
-      const iconToShow = active && item.activeIcon ? item.activeIcon : item.icon;
+      const active = activeId === item?.id;
+      const iconToShow = active && item?.activeIcon ? item?.activeIcon : item?.icon;
 
       return (
-        <div key={item.id} className="relative flex-1">
+        <div key={item?.id} className="relative flex-1">
           <GlassButton
             variant={active ? 'primary' : 'ghost'}
             size="sm"
-            disabled={item.disabled}
+            disabled={item?.disabled}
             onClick={() => handleItemClick(item)}
             className={cn(
               'w-full h-full flex flex-col items-center justify-center gap-1 relative',
@@ -166,7 +166,7 @@ export const GlassBottomNav = forwardRef<HTMLDivElement, GlassBottomNavProps>(
                 config.labelSize,
                 active ? 'text-primary-foreground' : 'text-muted-foreground'
               )}>
-                {item.label}
+                {item?.label}
               </span>
             )}
 
@@ -180,13 +180,13 @@ export const GlassBottomNav = forwardRef<HTMLDivElement, GlassBottomNavProps>(
           </GlassButton>
 
           {/* Badge */}
-          {item.badge && (
+          {item?.badge && (
             <GlassBadge
-              variant={item.badgeVariant || 'error'}
+              variant={item?.badgeVariant || 'error'}
               size="xs"
               className="absolute -top-1 -right-1 min-w-[1.25rem] h-5 flex items-center justify-center"
             >
-              {item.badge}
+              {item?.badge}
             </GlassBadge>
           )}
         </div>
@@ -210,7 +210,7 @@ export const GlassBottomNav = forwardRef<HTMLDivElement, GlassBottomNavProps>(
           'w-full flex items-center',
           config.height,
           config.padding,
-          variantClasses[variant],
+          variantClasses?.[variant],
           sticky && 'sticky bottom-0',
           safeArea && 'pb-safe',
           className
