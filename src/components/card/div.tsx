@@ -6,7 +6,7 @@
 
 
 import React from 'react';
-import { cn } from '../../../lib/utils';
+import { cn } from '../../lib/utilsComprehensive';
 import { GlassCard } from './GlassCard';
 
 // Re-export GlassCard as div for backward compatibility

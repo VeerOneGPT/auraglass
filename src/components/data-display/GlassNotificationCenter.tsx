@@ -1,5 +1,5 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { OptimizedGlass } from '../../primitives';
 
 export type NotificationType = 'success' | 'error' | 'warning' | 'info';
 

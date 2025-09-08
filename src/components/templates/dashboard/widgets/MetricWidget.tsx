@@ -1,11 +1,11 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { Glass } from '../../../primitives/glass/Glass';
-import { Motion } from '../../../primitives/motion/Motion';
-import { GlassBadge } from '../../../components/data-display/GlassBadge';
-import { VStack, HStack } from '../../../components/layout/GlassStack';
-import { cn } from '@/lib/utils';
+import GlassCore from '../../../../primitives/GlassCore';
+import { Motion } from '../../../../primitives';
+import { GlassBadge } from '../../../data-display/GlassBadge';
+import { VStack, HStack } from '../../../layout/GlassStack';
+import { cn } from '../../../../lib/utilsComprehensive';
 
 export interface MetricData {
   value: string | number;
@@ -240,7 +240,6 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
                     </div>
                     <div className="w-full bg-muted/30 rounded-full h-2">
                       <Motion
-                        preset="slideRight"
                         className={cn(
                           'h-full rounded-full transition-all duration-500',
                           getTargetProgress() >= 100 ? 'bg-success' : 'bg-primary'
@@ -332,10 +331,9 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
     };
 
     return (
-      <Glass
+      <GlassCore
         ref={ref}
-        elevation={1}
-        radius="lg"
+        rounded="lg"
         className={cn(
           'w-full h-full',
           config.padding,
@@ -345,7 +343,7 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
         {...props}
       >
         {renderContent()}
-      </Glass>
+      </GlassCore>
     );
   }
 );

@@ -3,26 +3,22 @@ import styled from 'styled-components';
 
 import { glassBorder } from '../../core/mixins/glassBorder';
 import { glassSurface } from '../../core/mixins/glassSurface';
-import { createThemeContext } from '../../core/themeContext';
-import ThemePerformanceMonitor from '../../theme/ThemePerformanceMonitor';
-import { Alert } from '../Alert';
-import { Avatar } from '../Avatar';
-import { Badge } from '../Badge';
+import { GlassAlert as Alert } from '../data-display/GlassAlert';
+import { GlassAvatar as Avatar } from '../data-display/GlassAvatar';
+import { GlassBadge as Badge } from '../data-display/GlassBadge';
 import { Box } from '../layout/Box';
 import { GlassButton as Button } from '../button';
 import { GlassCard as Card } from '../card';
-import { Checkbox } from '../Checkbox';
-import { Chip } from '../Chip';
-import { Divider } from '../Divider';
-import { Paper } from '../Paper';
-import { Progress } from '../Progress';
-import { Radio } from '../Radio';
-import { Select } from '../Select';
-import { Slider } from '../Slider';
-import { Switch } from '../Switch';
-import { Tabs, TabPanel } from '../Tabs';
-import { TextField } from '../TextField';
-import { Typography } from '../Typography';
+import { GlassCheckbox as Checkbox } from '../input/GlassCheckbox';
+import { GlassMetricChip as Chip } from '../data-display/GlassMetricChip';
+import { GlassProgress as Progress } from '../data-display/GlassProgress';
+import { GlassRadioGroup as Radio } from '../input/GlassRadioGroup';
+import { GlassSelect as Select } from '../input/GlassSelect';
+import { GlassSlider as Slider } from '../input/GlassSlider';
+import { GlassSwitch as Switch } from '../input/GlassSwitch';
+import { GlassTabs as Tabs, GlassTabsContent as TabsContent, GlassTabsList, GlassTabsTrigger } from '../navigation/GlassTabs';
+import { GlassInput as TextField } from '../input/GlassInput';
+import { Typography } from '../data-display/Typography';
 
 import { GlassThemeSwitcher } from './GlassThemeSwitcher';
 import { GlassThemeDemoProps } from './types';
@@ -39,24 +35,16 @@ const StyledDemo = styled.div<{
   border-radius: 12px;
   width: 100%;
 
-  ${({ theme, $glassIntensity }) => {
-    const themeContext = createThemeContext(theme);
-    return glassSurface({
-      elevation: $glassIntensity,
-      backgroundOpacity: 0.4,
-      blurStrength: '8px',
-      themeContext,
-    });
-  }}
+  ${({ theme }) => ({
+    ...glassSurface,
+    background: 'rgba(255, 255, 255, 0.4)',
+    backdropFilter: 'blur(8px)',
+  })}
 
-  ${({ theme }) => {
-    const themeContext = createThemeContext(theme);
-    return glassBorder({
-      width: '1px',
-      opacity: 0.3,
-      themeContext,
-    });
-  }}
+  ${({ theme }) => ({
+    ...glassBorder,
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+  })}
 `;
 
 const Header = styled.header`
@@ -138,11 +126,11 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
       inputs: (
         <ComponentGrid>
           <ComponentCard>
-            <ComponentTitle variant="subtitle1">Button</ComponentTitle>
-            <Box display="flex" flexDirection="column" style={{ gap: '8px' }}>
-              <Button variant="contained">Contained</Button>
-              <Button variant="outlined">Outlined</Button>
-              <Button variant="text">Text</Button>
+            <ComponentTitle variant="h6">Button</ComponentTitle>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <Button variant="primary">Primary</Button>
+              <Button variant="outline">Outline</Button>
+              <Button variant="ghost">Ghost</Button>
             </Box>
             {showCode && (
               <CodePreview>
@@ -154,11 +142,11 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
           </ComponentCard>
 
           <ComponentCard>
-            <ComponentTitle variant="subtitle1">Text Field</ComponentTitle>
-            <Box display="flex" flexDirection="column" style={{ gap: '8px' }}>
-              <TextField label="Standard" />
-              <TextField label="With placeholder" placeholder="Type here..." />
-              <TextField label="Disabled" disabled />
+            <ComponentTitle variant="h6">Text Field</ComponentTitle>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <TextField placeholder="Standard" />
+              <TextField placeholder="With placeholder" />
+              <TextField placeholder="Disabled" disabled />
             </Box>
             {showCode && (
               <CodePreview>
@@ -170,9 +158,9 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
           </ComponentCard>
 
           <ComponentCard>
-            <ComponentTitle variant="subtitle1">Select</ComponentTitle>
+            <ComponentTitle variant="h6">Select</ComponentTitle>
             <Select
-              label="Select Option"
+              placeholder="Select Option"
               options={[
                 { value: 'option1', label: 'Option 1' },
                 { value: 'option2', label: 'Option 2' },
@@ -194,10 +182,10 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
           </ComponentCard>
 
           <ComponentCard>
-            <ComponentTitle variant="subtitle1">Checkbox & Radio</ComponentTitle>
-            <Box display="flex" flexDirection="column" style={{ gap: '8px' }}>
+            <ComponentTitle variant="h6">Checkbox & Radio</ComponentTitle>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <Checkbox label="Checkbox Option" />
-              <Radio label="Radio Option" name="radio-group" />
+              <Radio options={[{ value: 'radio1', label: 'Radio Option' }]} />
               <Switch label="Switch Option" />
             </Box>
             {showCode && (
@@ -210,7 +198,7 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
           </ComponentCard>
 
           <ComponentCard>
-            <ComponentTitle variant="subtitle1">Slider</ComponentTitle>
+            <ComponentTitle variant="h6">Slider</ComponentTitle>
             <Slider defaultValue={50} aria-label="Slider" />
             {showCode && (
               <CodePreview>{`<Slider defaultValue={50} aria-label="Slider" />`}</CodePreview>
@@ -222,12 +210,12 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
       feedback: (
         <ComponentGrid>
           <ComponentCard>
-            <ComponentTitle variant="subtitle1">Alert</ComponentTitle>
-            <Box display="flex" flexDirection="column" style={{ gap: '8px' }}>
-              <Alert severity="info">Info message</Alert>
-              <Alert severity="success">Success message</Alert>
-              <Alert severity="warning">Warning message</Alert>
-              <Alert severity="error">Error message</Alert>
+            <ComponentTitle variant="h6">Alert</ComponentTitle>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <Alert variant="info">Info message</Alert>
+              <Alert variant="success">Success message</Alert>
+              <Alert variant="warning">Warning message</Alert>
+              <Alert variant="error">Error message</Alert>
             </Box>
             {showCode && (
               <CodePreview>
@@ -240,10 +228,10 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
           </ComponentCard>
 
           <ComponentCard>
-            <ComponentTitle variant="subtitle1">Progress</ComponentTitle>
-            <Box display="flex" flexDirection="column" style={{ gap: '16px' }}>
-              <Progress variant="determinate" value={75} />
-              <Progress variant="indeterminate" />
+            <ComponentTitle variant="h6">Progress</ComponentTitle>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              <Progress variant="primary" value={75} />
+              <Progress variant="gradient" indeterminate />
             </Box>
             {showCode && (
               <CodePreview>
@@ -254,12 +242,12 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
           </ComponentCard>
 
           <ComponentCard>
-            <ComponentTitle variant="subtitle1">Badge</ComponentTitle>
-            <Box display="flex" style={{ gap: '16px' }}>
-              <Badge content={4}>
+            <ComponentTitle variant="h6">Badge</ComponentTitle>
+            <Box style={{ display: 'flex', gap: '16px' }}>
+              <Badge content="4">
                 <Button>Messages</Button>
               </Badge>
-              <Badge content="New" color="error">
+              <Badge content="New" variant="destructive">
                 <Button>Updates</Button>
               </Badge>
             </Box>
@@ -280,13 +268,13 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
       layout: (
         <ComponentGrid>
           <ComponentCard>
-            <ComponentTitle variant="subtitle1">Card</ComponentTitle>
+            <ComponentTitle variant="h6">Card</ComponentTitle>
             <Card>
-              <Box p={2}>
-                <Typography variant="h6">Card Title</Typography>
-                <Typography variant="body2">Card content with text</Typography>
-                <Box mt={2}>
-                  <Button size="small">Action</Button>
+              <Box style={{ padding: '16px' }}>
+                <Typography variant="h4">Card Title</Typography>
+                <Typography variant="p">Card content with text</Typography>
+                <Box style={{ marginTop: '16px' }}>
+                  <Button size="sm">Action</Button>
                 </Box>
               </Box>
             </Card>
@@ -306,12 +294,12 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
           </ComponentCard>
 
           <ComponentCard>
-            <ComponentTitle variant="subtitle1">Paper</ComponentTitle>
-            <Paper elevation={2}>
-              <Box p={2}>
+            <ComponentTitle variant="h6">Paper Card</ComponentTitle>
+            <Card>
+              <Box style={{ padding: '16px' }}>
                 <Typography>Paper Component</Typography>
               </Box>
-            </Paper>
+            </Card>
             {showCode && (
               <CodePreview>
                 {`<Paper elevation={2}>
@@ -324,10 +312,10 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
           </ComponentCard>
 
           <ComponentCard>
-            <ComponentTitle variant="subtitle1">Divider</ComponentTitle>
+            <ComponentTitle variant="h6">Box Layout</ComponentTitle>
             <Box>
               <Typography>Above divider</Typography>
-              <Divider style={{ marginTop: '16px', marginBottom: '16px' }} />
+              <Box style={{ marginTop: '16px', marginBottom: '16px', borderTop: '1px solid rgba(0,0,0,0.1)' }} />
               <Typography>Below divider</Typography>
             </Box>
             {showCode && (
@@ -344,11 +332,16 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
       navigation: (
         <ComponentGrid>
           <ComponentCard>
-            <ComponentTitle variant="subtitle1">Tabs</ComponentTitle>
-            <Tabs value={0}>
-              <TabPanel value={0} index={0}>Tab 1 Content</TabPanel>
-              <TabPanel value={0} index={1}>Tab 2 Content</TabPanel>
-              <TabPanel value={0} index={2}>Tab 3 Content</TabPanel>
+            <ComponentTitle variant="h6">Tabs</ComponentTitle>
+            <Tabs defaultValue="tab1">
+              <GlassTabsList>
+                <GlassTabsTrigger value="tab1">Tab 1</GlassTabsTrigger>
+                <GlassTabsTrigger value="tab2">Tab 2</GlassTabsTrigger>
+                <GlassTabsTrigger value="tab3">Tab 3</GlassTabsTrigger>
+              </GlassTabsList>
+              <TabsContent value="tab1">Tab 1 Content</TabsContent>
+              <TabsContent value="tab2">Tab 2 Content</TabsContent>
+              <TabsContent value="tab3">Tab 3 Content</TabsContent>
             </Tabs>
             {showCode && (
               <CodePreview>
@@ -366,14 +359,14 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
       display: (
         <ComponentGrid>
           <ComponentCard>
-            <ComponentTitle variant="subtitle1">Typography</ComponentTitle>
-            <Box display="flex" flexDirection="column" style={{ gap: '8px' }}>
+            <ComponentTitle variant="h6">Typography</ComponentTitle>
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <Typography variant="h3">Heading 3</Typography>
               <Typography variant="h5">Heading 5</Typography>
-              <Typography variant="subtitle1">Subtitle 1</Typography>
-              <Typography variant="body1">Body 1 text</Typography>
-              <Typography variant="body2">Body 2 text</Typography>
-              <Typography variant="caption">Caption text</Typography>
+              <Typography variant="h6">Subtitle 1</Typography>
+              <Typography variant="p">Body 1 text</Typography>
+              <Typography variant="span">Body 2 text</Typography>
+              <Typography variant="p">Caption text</Typography>
             </Box>
             {showCode && (
               <CodePreview>
@@ -388,12 +381,12 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
           </ComponentCard>
 
           <ComponentCard>
-            <ComponentTitle variant="subtitle1">Chip</ComponentTitle>
-            <Box display="flex" style={{ gap: '8px', flexWrap: 'wrap' }}>
-              <Chip label="Basic" />
-              <Chip label="Clickable" onClick={() => {}} />
-              <Chip label="Deletable" onDelete={() => {}} />
-              <Chip label="With Avatar" />
+            <ComponentTitle variant="h6">Chip</ComponentTitle>
+            <Box style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+              <Chip label="Basic" value="10" />
+              <Chip label="Success" value="5" intent="success" />
+              <Chip label="Warning" value="3" intent="warning" />
+              <Chip label="Danger" value="1" intent="danger" />
             </Box>
             {showCode && (
               <CodePreview>
@@ -406,17 +399,17 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
           </ComponentCard>
 
           <ComponentCard>
-            <ComponentTitle variant="subtitle1">Avatar</ComponentTitle>
-            <Box display="flex" style={{ gap: '8px' }}>
+            <ComponentTitle variant="h6">Avatar</ComponentTitle>
+            <Box style={{ display: 'flex', gap: '8px' }}>
               <Avatar>A</Avatar>
-              <Avatar color="primary">B</Avatar>
-              <Avatar src="https://via.placeholder.com/40" alt="User" />
+              <Avatar>B</Avatar>
+              <Avatar alt="User" />
             </Box>
             {showCode && (
               <CodePreview>
                 {`<Avatar>A</Avatar>
 <Avatar color="primary">B</Avatar>
-<Avatar src="https://via.placeholder.com/40" alt="User" />`}
+<Avatar alt="User" />`}
               </CodePreview>
             )}
           </ComponentCard>
@@ -446,7 +439,7 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
                 {title}
               </Typography>
               {typeof description === 'string' ? (
-                <Typography variant="body1">{description}</Typography>
+                <Typography variant="p">{description}</Typography>
               ) : (
                 description
               )}
@@ -457,7 +450,7 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
         {/* Theme switcher */}
         {showThemeSwitcher && (
           <DemoSection>
-            <GlassThemeSwitcher glassIntensity={glassIntensity} compact={minimal} />
+            <GlassThemeSwitcher compact={minimal} themes={[]} />
           </DemoSection>
         )}
 
@@ -466,22 +459,26 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
           <DemoSection>
             {useTabs && filteredCategories.length > 1 ? (
               <>
-                <Tabs value={activeTab} onChange={(_, newValue) => setActiveTab(newValue)}>
-                  {filteredCategories.map(({ key, label }, index) => (
-                    <button key={key} onClick={() => setActiveTab(index)}>{label}</button>
+                <Tabs defaultValue={filteredCategories[0]?.key}>
+                  <GlassTabsList>
+                    {filteredCategories.map(({ key, label }) => (
+                      <GlassTabsTrigger key={key} value={key}>
+                        {label}
+                      </GlassTabsTrigger>
+                    ))}
+                  </GlassTabsList>
+                  {filteredCategories.map(({ key, label }) => (
+                    <TabsContent key={key} value={key}>
+                      {categoryExamples[key as keyof typeof categoryExamples]}
+                    </TabsContent>
                   ))}
                 </Tabs>
-                {filteredCategories.map(({ key, label }, index) => (
-                  <TabPanel key={key} value={activeTab} index={index}>
-                    {categoryExamples[key as keyof typeof categoryExamples]}
-                  </TabPanel>
-                ))}
               </>
             ) : (
               // Show all categories without tabs
               <>
                 {filteredCategories.map(({ key, label }) => (
-                  <Box key={key} mt={3} mb={2}>
+                  <Box key={key} style={{ marginTop: '12px', marginBottom: '8px' }}>
                     <Typography variant="h5" style={{ marginBottom: '16px' }}>
                       {label}
                     </Typography>
@@ -509,17 +506,17 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
             <Typography variant="h5" style={{ marginBottom: '16px' }}>
               Performance Metrics
             </Typography>
-            <Paper>
-              <Box p={2}>
-                <ThemePerformanceMonitor />
+            <Card>
+              <Box style={{ padding: '16px' }}>
+                <Typography>Theme performance metrics and optimization data</Typography>
               </Box>
-            </Paper>
+            </Card>
           </DemoSection>
         )}
 
         {/* Footer */}
         {footer && (
-          <Box mt="auto" pt={2}>
+          <Box style={{ marginTop: 'auto', paddingTop: '8px' }}>
             {footer}
           </Box>
         )}

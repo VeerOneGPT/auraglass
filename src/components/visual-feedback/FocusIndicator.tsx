@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useAnimationContext } from '../../contexts/AnimationContext';
 import { useAccessibilitySettings } from '../../hooks/useAccessibilitySettings';
-import { useMultiSpring } from '../../animations/physics/useMultiSpring';
+import { useMultiSpring } from '../../animations/hooks/useMultiSpringBasic';
 import { SpringPresets, type SpringConfig } from '../../animations/physics/springPhysics';
 
 import { FocusIndicatorProps } from './types';
@@ -73,24 +73,24 @@ function FocusIndicatorComponent(
     ...rest
   } = props;
 
-  // --- Get Context Defaults --- 
+  // --- Get Context Defaults ---
   const { defaultSpring } = useAnimationContext();
-  const { 
-      highContrast: contextHighContrast
+  const {
+      settings: accessibilitySettings
   } = useAccessibilitySettings();
 
   // --- Determine Final Values --- 
   const finalFocusStyle = propFocusStyle ?? 'solid';
   const finalColor = propColor ?? 'primary';
   const finalThickness = propThickness ?? 2;
-  const finalHighContrast = propHighContrast ?? contextHighContrast ?? false;
+  const finalHighContrast = propHighContrast ?? accessibilitySettings.highContrast ?? false;
   
   const prefersReducedMotion = useReducedMotion();
   const shouldAnimate = !(propDisableAnimation ?? prefersReducedMotion);
 
-  // --- Calculate Spring Config --- 
+  // --- Calculate Spring Config ---
   const finalSpringConfig = useMemo(() => {
-    const baseConfig: SpringConfig = SpringPresets.STIFF;
+    const baseConfig: SpringConfig = SpringPresets.default;
     let contextResolvedConfig: Partial<SpringConfig> = {};
     if (typeof defaultSpring === 'object' && defaultSpring !== null) {
         contextResolvedConfig = defaultSpring;
@@ -124,7 +124,6 @@ function FocusIndicatorComponent(
           shadowSpread1: finalThickness, shadowSpread2: finalThickness * 2, shadowOpacity: 0.4,
           outlineWidth: 0, outlineOpacity: 0,
         };
-      case 'outline':
       case 'dashed':
       case 'dotted':
         return {
@@ -140,19 +139,19 @@ function FocusIndicatorComponent(
     }
   };
 
-  // --- Initialize Spring Hook --- 
-  const { values: animatedValues, start: startFocusAnimation } = useMultiSpring({
-    from: {
+  // --- Initialize Spring Hook ---
+  const { values: animatedValues, start: startFocusAnimation } = useMultiSpring(
+    {
       shadowSpread1: 0,
       shadowSpread2: 0,
       shadowOpacity: 0,
       outlineWidth: 0,
       outlineOpacity: 0,
     },
-    to: getTargets(),
-    animationConfig: finalSpringConfig,
-    immediate: !shouldAnimate,
-  });
+    {
+      config: finalSpringConfig,
+    }
+  );
 
   // --- Construct Animated Style --- 
   const animatedStyle = useMemo(() => {

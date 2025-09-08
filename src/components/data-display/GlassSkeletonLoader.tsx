@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import React, { useEffect, useState, memo, useCallback } from 'react';
+import { OptimizedGlass } from '../../primitives';
+import { useAccessibleAnimation } from '../../hooks/useAccessibilitySettings';
+import { GlassComponentErrorBoundary } from '../../utils/errorBoundary';
 
 export interface GlassSkeletonLoaderProps {
   /** Whether the loader is active */
@@ -52,7 +54,7 @@ const shimmerKeyframes = `
   }
 `;
 
-export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = ({
+export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
   loading = true,
   text = "Loading...",
   size = 'md',
@@ -61,56 +63,53 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = ({
   children,
 }) => {
   const [mounted, setMounted] = useState(false);
+  const { shouldAnimate, animationDuration } = useAccessibleAnimation();
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!loading && mounted) {
-    return <>{children}</>;
-  }
-
-  const sizeClasses = {
-    sm: 'w-6 h-6',
-    md: 'w-8 h-8',
-    lg: 'w-12 h-12',
-    xl: 'w-16 h-16',
-  };
-
-  const getAnimationStyle = () => {
-    switch (variant) {
-      case 'wave':
-        return {
-          position: 'relative' as const,
-          overflow: 'hidden',
-          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
-          backgroundSize: '200px 100%',
-          animation: 'glass-wave 1.5s infinite',
-        };
-      case 'shimmer':
-        return {
-          position: 'relative' as const,
-          overflow: 'hidden',
-          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
-          backgroundSize: '200px 100%',
-          animation: 'glass-shimmer 2s infinite',
-        };
-      case 'pulse':
-      default:
-        return {
-          animation: 'glass-pulse 2s ease-in-out infinite',
-        };
+  const renderContent = useCallback(() => {
+    if (!loading && mounted) {
+      return <>{children}</>;
     }
-  };
 
-  return (
-    <>
-      <style>
-        {pulseKeyframes}
-        {waveKeyframes}
-        {shimmerKeyframes}
-      </style>
+    const sizeClasses = {
+      sm: 'w-6 h-6',
+      md: 'w-8 h-8',
+      lg: 'w-12 h-12',
+      xl: 'w-16 h-16',
+    };
 
+    const getAnimationStyle = (): React.CSSProperties => {
+      if (!shouldAnimate) return {};
+
+      switch (variant) {
+        case 'wave':
+          return {
+            position: 'relative' as const,
+            overflow: 'hidden',
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+            backgroundSize: '200px 100%',
+            animation: `glass-wave ${animationDuration * 5}ms infinite`,
+          };
+        case 'shimmer':
+          return {
+            position: 'relative' as const,
+            overflow: 'hidden',
+            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+            backgroundSize: '200px 100%',
+            animation: `glass-shimmer ${animationDuration * 7}ms infinite`,
+          };
+        case 'pulse':
+        default:
+          return {
+            animation: `glass-pulse ${animationDuration * 7}ms ease-in-out infinite`,
+          };
+      }
+    };
+
+    return (
       <div className={`flex flex-col items-center justify-center space-y-4 ${className}`}>
         <OptimizedGlass
           className={`rounded-full ${sizeClasses[size]}`}
@@ -132,17 +131,43 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = ({
           </OptimizedGlass>
         )}
       </div>
-    </>
+    );
+  }, [loading, mounted, children, size, variant, className, text, shouldAnimate, animationDuration]);
+
+  return (
+    <GlassComponentErrorBoundary componentName="GlassSkeletonLoader">
+      <>
+        <style>
+          {pulseKeyframes}
+          {waveKeyframes}
+          {shimmerKeyframes}
+        </style>
+        {renderContent()}
+      </>
+    </GlassComponentErrorBoundary>
   );
-};
+  });
 
 // Compound component for skeleton text
-export const GlassSkeletonText: React.FC<{
+interface GlassSkeletonTextProps {
   lines?: number;
   width?: string | string[];
   className?: string;
-}> = ({ lines = 1, width = '100%', className = '' }) => {
+}
+
+export const GlassSkeletonText: React.FC<GlassSkeletonTextProps> = ({
+  lines = 1,
+  width = '100%',
+  className = ''
+}) => {
+  const { shouldAnimate } = useAccessibleAnimation();
   const widths = Array.isArray(width) ? width : [width];
+
+  const getAnimationStyle = (): React.CSSProperties => {
+    return {
+      animation: 'glass-pulse 2s ease-in-out infinite',
+    };
+  };
 
   return (
     <div className={`space-y-2 ${className}`}>

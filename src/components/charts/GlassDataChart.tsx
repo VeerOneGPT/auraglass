@@ -30,101 +30,331 @@ import { useAccessibilitySettings } from '../../hooks/useAccessibilitySettings';
 // import { createThemeContext } from '../../core/themeContext'; // unused
 import { useGlassTheme } from '../../hooks/useGlassTheme';
 // import { useGalileoStateSpring, GalileoStateSpringOptions } from '../../hooks/useGalileoStateSpring'; // unused
-import { GlassTooltip, GlassTooltipContent } from '../GlassTooltip';
-import { formatValue, /* formatWithUnits, formatCurrency, formatPercentage */ } from './GlassDataChartUtils'; // unused imports removed
-// Import keyframes from the new file
-import {
-  // drawLine, // unused
-  // fadeIn, // unused
-  // popIn, // unused
-  // fadeSlideUp, // unused
-  // glowPulse, // unused
-  // shimmer, // unused
-  // activePoint, // unused
-  // tooltipFade, // unused
-  // atmosphericMovement // unused
-} from '../../animations/keyframes/chartAnimations';
+import { GlassTooltip, GlassTooltipContent } from '../modal/GlassTooltip';
 
-// Import our modularized components
-import {
-  ChartContainer,
-  AtmosphericBackground,
-  ChartHeader,
-  ChartTitle,
-  ChartSubtitle,
-  ChartWrapper
-} from './styles/ChartContainerStyles';
+import { useQualityTier, getQualityBasedPhysicsParams, getQualityBasedGlassParams } from '../charts/hooks/useQualityTier';
 
-import {
-  ChartToolbar,
-  ChartTypeSelector,
-  TypeButton,
-  EnhancedExportButton,
-  ChartLegend,
-  LegendItem,
-  LegendColor,
-  LegendLabel,
-  // KpiContainer, // unused
-  // KpiTitle, // unused
-  // KpiValue, // unused
-  // KpiSubtitle, // unused
-  // KpiTrend // unused
-} from './styles/ChartElementStyles';
+const usePhysicsAnimation = (options: any) => ({
+  value: 1,
+  applyOscillation: (intensity?: number) => {},
+  applyPopIn: () => {},
+});
 
-import {
-  TooltipHeader,
-  TooltipRow,
-  TooltipLabel,
-  TooltipValue,
-  DynamicTooltip
-} from './styles/TooltipStyles';
+const useChartPhysicsInteraction = (chartRef: React.RefObject<any>, wrapperRef: React.RefObject<any>, options: any) => ({
+  isPanning: false,
+  zoomLevel: 1,
+  applyZoom: (level: number) => {},
+  resetZoom: () => {},
+});
 
-// Import types from the types directory
-import {
-  // DataPoint, // unused
-  // ChartDataset // unused
-} from './types/ChartTypes';
+const GalileoElementInteractionPlugin = {
+  id: 'galileoElementInteraction',
+} as any;
 
-import {
-  GlassDataChartProps,
-  GlassDataChartRef,
-  // ChartAnimationOptions, // unused
-  // ChartInteractionOptions, // unused
-  // ChartLegendOptions, // unused
-  // ChartAxisOptions // unused
-} from './types/ChartProps';
+const convertToChartJsDatasetWithEffects = (dataset: ChartDataset, index: number, chartType: ChartVariant, palette: string[], animation: any) => ({
+  ...dataset,
+  backgroundColor: dataset.style?.fillColor || palette[index % palette.length] + '40',
+  borderColor: dataset.style?.lineColor || palette[index % palette.length],
+  borderWidth: dataset.style?.borderWidth || 2,
+  pointBackgroundColor: dataset.style?.pointColor || palette[index % palette.length],
+  pointBorderColor: dataset.style?.pointColor || palette[index % palette.length],
+  pointRadius: dataset.style?.pointRadius || 4,
+  tension: dataset.style?.tension || 0.4,
+  fill: chartType === 'area',
+});
 
-// Import hooks
-import {
-  useQualityTier,
-  // QualityTier, // unused
-  // PhysicsParams, // unused
-  // GlassParams, // unused
-  getQualityBasedPhysicsParams,
-  getQualityBasedGlassParams
-} from './hooks/useQualityTier';
+// Basic styled components (will be replaced with proper modular components later)
+import styled from 'styled-components';
 
-import { usePhysicsAnimation } from './hooks/usePhysicsAnimation';
+// Chart variant types
+export type ChartVariant = 'line' | 'bar' | 'area' | 'pie' | 'doughnut' | 'polarArea' | 'kpi';
 
-// Import utilities
-import {
-  // convertToChartJsDataset, // unused
-  convertToChartJsDatasetWithEffects,
-  // hexToRgb, // unused
-  // generateColors // unused
-} from './utils/ChartDataUtils';
+// Data point and dataset types
+export interface DataPoint {
+  x: string | number;
+  y: number;
+  label?: string;
+  color?: string;
+  extra?: Record<string, unknown>;
+  formatType?: 'number' | 'currency' | 'percentage' | 'units';
+  formatOptions?: {
+    decimals?: number;
+    currencySymbol?: string;
+    locale?: string;
+    compact?: boolean;
+    showPlus?: boolean;
+    suffix?: string;
+    prefix?: string;
+  };
+}
 
-// Import our new physics interaction hook
-import { useChartPhysicsInteraction } from './hooks';
+export interface ChartDataset {
+  id?: string;
+  label: string;
+  data: DataPoint[];
+  style?: {
+    lineColor?: string;
+    fillColor?: string;
+    pointColor?: string;
+    borderWidth?: number;
+    pointRadius?: number;
+    tension?: number;
+  };
+  formatType?: 'number' | 'currency' | 'percentage' | 'units';
+  formatOptions?: {
+    decimals?: number;
+    currencySymbol?: string;
+    locale?: string;
+    compact?: boolean;
+    showPlus?: boolean;
+    suffix?: string;
+    prefix?: string;
+  };
+}
 
-// Import the new plugin and its exported types
-import {
-  GalileoElementInteractionPlugin,
-  GetElementPhysicsOptions,
-} from './plugins/GalileoElementInteractionPlugin';
+// Quality tier types
+export type QualityTier = 'low' | 'medium' | 'high';
 
-// Import ChartVariant separately
-import { ChartVariant } from './types/ChartProps';
+export interface PhysicsParams {
+  stiffness: number;
+  dampingRatio: number;
+  mass: number;
+  precision: number;
+}
+
+// Main component props
+interface GlassDataChartProps {
+  data?: any;
+  datasets?: ChartDataset[];
+  width?: string | number;
+  height?: number;
+  title?: string;
+  subtitle?: string;
+  variant?: ChartVariant;
+  glassVariant?: 'clear' | 'frosted' | 'tinted' | 'luminous';
+  blurStrength?: 'low' | 'medium' | 'high' | 'standard';
+  color?: 'primary' | 'secondary' | 'tertiary';
+  animation?: {
+    physicsEnabled: boolean;
+    duration: number;
+    tension: number;
+    friction: number;
+    mass: number;
+    easing: string;
+    staggerDelay: number;
+  };
+  interaction?: {
+    zoomPanEnabled: boolean;
+    zoomMode: 'x' | 'y' | 'xy';
+    physicsHoverEffects: boolean;
+    hoverSpeed: number;
+    showTooltips: boolean;
+    tooltipStyle: 'frosted' | 'dynamic';
+    tooltipFollowCursor: boolean;
+    physics?: {
+      tension: number;
+      friction: number;
+      mass: number;
+      minZoom: number;
+      maxZoom: number;
+      wheelSensitivity: number;
+      inertiaDuration: number;
+    };
+  };
+  legend?: {
+    show: boolean;
+    position: 'top' | 'bottom';
+    align: 'start' | 'center' | 'end';
+    style: 'default' | 'compact';
+    glassEffect: boolean;
+  };
+  axis?: {
+    showXGrid: boolean;
+    showYGrid: boolean;
+    showXLabels: boolean;
+    showYLabels: boolean;
+    axisColor: string;
+    gridColor: string;
+    gridStyle: 'solid' | 'dashed';
+  };
+  initialSelection?: number | number[];
+  showToolbar?: boolean;
+  allowDownload?: boolean;
+  palette?: string[];
+  allowTypeSwitch?: boolean;
+  borderRadius?: number;
+  borderColor?: string;
+  elevation?: number;
+  className?: string;
+  style?: React.CSSProperties;
+  onDataPointClick?: (datasetIndex: number, dataIndex: number, data: DataPoint) => void;
+  onSelectionChange?: (selection: number[]) => void;
+  onTypeChange?: (type: ChartVariant) => void;
+  onZoomPan?: (chart: ChartJS) => void;
+  exportOptions?: {
+    filename: string;
+    quality: number;
+    format: 'png' | 'jpeg';
+    backgroundColor: string;
+    includeTitle: boolean;
+    includeTimestamp: boolean;
+  };
+  renderExportButton?: () => React.ReactNode;
+  kpi?: {
+    value: number;
+    label: string;
+    format: 'number' | 'currency' | 'percentage';
+  };
+  useAdaptiveQuality?: boolean;
+  getElementPhysicsOptions?: (
+    dataPoint: DataPoint,
+    datasetIndex: number,
+    dataIndex: number,
+    chartType: ChartVariant
+  ) => {
+    hoverEffect?: { scale: number; opacity: number };
+    clickEffect?: { scale: number; opacity: number };
+  } | null;
+}
+
+interface GlassDataChartRef {
+  current: any;
+}
+
+// Simple format function
+const formatValue = (value: any) => String(value);
+
+// Styled components
+const ChartContainer = styled.div<{
+  $glassVariant?: string;
+  $blurStrength?: string;
+  $color?: string;
+  $elevation?: number;
+  $borderRadius?: number;
+  $borderColor?: string;
+}>`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: ${props => props.$borderRadius || 12}px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+`;
+
+const ChartHeader = styled.div`
+  margin-bottom: 16px;
+`;
+
+const ChartTitle = styled.h3`
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+`;
+
+const ChartSubtitle = styled.p`
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+`;
+
+const ChartWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+`;
+
+const ChartLegend = styled.div<{
+  $position?: string;
+  $style?: string;
+  $glassEffect?: boolean;
+}>`
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding: 12px;
+  background: ${props => props.$glassEffect ? 'rgba(255, 255, 255, 0.1)' : 'transparent'};
+  backdrop-filter: ${props => props.$glassEffect ? 'blur(8px)' : 'none'};
+  border-radius: 8px;
+  justify-content: ${props => props.$position === 'top' ? 'center' : 'flex-start'};
+`;
+
+const LegendItem = styled.div<{
+  $style?: string;
+  $active?: boolean;
+  $color?: string;
+}>`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  opacity: ${props => props.$active ? 1 : 0.5};
+  transition: opacity 0.2s;
+`;
+
+const LegendColor = styled.div<{
+  $color?: string;
+  $active?: boolean;
+}>`
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: ${props => props.$color || '#6366F1'};
+  opacity: ${props => props.$active ? 1 : 0.3};
+`;
+
+const LegendLabel = styled.span<{
+  $active?: boolean;
+}>`
+  font-size: 14px;
+  color: ${props => props.$active ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 255, 255, 0.5)'};
+`;
+
+const DynamicTooltip = styled.div<{
+  $color?: string;
+  $quality?: QualityTier;
+}>`
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 6px;
+  padding: 12px;
+  pointer-events: none;
+  z-index: 1000;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+`;
+
+const TooltipHeader = styled.div<{
+  $color?: string;
+}>`
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: ${props => props.$color || '#ffffff'};
+`;
+
+const TooltipRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+`;
+
+const TooltipLabel = styled.span`
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+`;
+
+const TooltipValue = styled.span<{
+  $highlighted?: boolean;
+}>`
+  color: ${props => props.$highlighted ? '#ffffff' : 'rgba(255, 255, 255, 0.9)'};
+  font-weight: ${props => props.$highlighted ? '600' : '400'};
+`;
 
 // Register required Chart.js components
 ChartJS.register(
@@ -179,7 +409,9 @@ const pathAnimationPlugin: Plugin<ChartType> = {
               );
             } catch (err) {
               // Fallback for browsers that don't support these features
-              console.log('Advanced path animation not supported in this browser');
+              if (process.env.NODE_ENV === 'development') {
+                console.log('Advanced path animation not supported in this browser');
+              }
             }
           }
         }
@@ -469,18 +701,28 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
   
   // Hooks
   // const theme = useGlassTheme(); // unused
-  const { isReducedMotion } = useAccessibilitySettings();
+  const { settings: accessibilitySettings } = useAccessibilitySettings();
+  const isReducedMotion = accessibilitySettings?.reducedMotion || false;
   const chartRef = useRef<ChartJS | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const chartWrapperRef = useRef<HTMLDivElement | null>(null);
   
   // Quality tier system integration
-  const qualityTier = useQualityTier();
+  const qualityTier = useQualityTier(
+    {
+      dataPointCount: datasets?.reduce((sum, dataset) => sum + dataset.data.length, 0) || 0,
+      seriesCount: datasets?.length || 0,
+      animationComplexity: 'medium',
+      interactionComplexity: 'medium',
+    },
+    variant as any,
+    useAdaptiveQuality ? undefined : 'high'
+  );
   const activeQuality = useAdaptiveQuality ? qualityTier : 'high';
   
   // Get physics parameters based on quality tier
-  const qualityPhysicsParams = getQualityBasedPhysicsParams(activeQuality);
-  const qualityGlassParams = getQualityBasedGlassParams(activeQuality);
+  const qualityPhysicsParams = getQualityBasedPhysicsParams(activeQuality as any);
+  const qualityGlassParams = getQualityBasedGlassParams(activeQuality as any);
   
   // Adapt quality based on user's settings
   const adaptedBlurStrength = qualityGlassParams.blurStrength as 'low' | 'medium' | 'high' || blurStrength;
@@ -537,7 +779,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
     value: HoveredPointValue | null;
   } | null>(null);
   
-  // Placeholder for internal element animation state (managed by React)
+  // Internal element animation state (managed by React)
   // The plugin will read targets from this or similar structure
   const [elementAnimationTargets, setElementAnimationTargets] = useState<Map<string, any>>(new Map());
   // Key: `datasetIndex_dataIndex`, Value: { targetScale: 1, targetOpacity: 1, ... }
@@ -549,7 +791,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
   useEffect(() => {
     if (enablePhysicsAnimation) {
       // Trigger a pop-in animation on mount for better visual impact
-      if (activeQuality !== 'low') {
+      if (activeQuality !== ('low' as any)) {
         applyPopIn();
       }
     }
@@ -602,7 +844,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
                 width="140%" 
                 height="140%"
               >
-                <feGaussianBlur stdDeviation={activeQuality === 'low' ? 1 : 2} result="blur" />
+                <feGaussianBlur stdDeviation={activeQuality === ('low' as any) ? 1 : 2} result="blur" />
                 <feComposite in="SourceGraphic" in2="blur" operator="over" />
               </filter>
               
@@ -614,7 +856,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
                 width="200%" 
                 height="200%"
               >
-                <feGaussianBlur stdDeviation={activeQuality === 'low' ? 2 : 3} result="blur" />
+                <feGaussianBlur stdDeviation={activeQuality === ('low' as any) ? 2 : 3} result="blur" />
                 <feComposite in="SourceGraphic" in2="blur" operator="over" />
               </filter>
             </React.Fragment>
@@ -626,7 +868,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
 
   // Use the enhanced dataset conversion in the chartData
   // Process datasets first to get converted structure including processed labels if applicable
-  const convertedDatasets = datasets.map((dataset, i) => {
+  const convertedDatasets = (datasets || []).map((dataset: any, i: number) => {
     return convertToChartJsDatasetWithEffects(dataset, i, chartType, palette, animation);
   });
 
@@ -638,18 +880,18 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
     const firstConvertedDataset = convertedDatasets[0] as any; 
     if (firstConvertedDataset?.processedLabels && firstConvertedDataset.processedLabels.length > 0) {
       chartLabels = firstConvertedDataset.processedLabels;
-    } else if (datasets[0]?.data) {
+    } else if (datasets && datasets[0]?.data) {
       // Fallback to original data labels if processed labels aren't available
-      chartLabels = datasets[0].data.map(point => point.label || String(point.x));
+      chartLabels = datasets[0].data.map((point: any) => point.label || String(point.x));
     }
-  } else if (chartType === 'polarArea') {
+  } else if (chartType === 'polarArea' && datasets) {
       // Use original labels for polarArea
-      chartLabels = datasets[0]?.data.map(point => point.label || String(point.x));
+      chartLabels = datasets[0]?.data?.map((point: any) => point.label || String(point.x)) || [];
   }
 
   const chartData = {
     // Map converted datasets, removing any temporary properties like processedLabels
-    datasets: convertedDatasets.map(ds => {
+    datasets: convertedDatasets.map((ds: any) => {
       const { processedLabels, ...rest } = ds as any; // Use type assertion here too
       return rest;
     }),
@@ -735,11 +977,11 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
       const firstPoint = points[0];
       const datasetIndex = firstPoint.datasetIndex;
       const dataIndex = firstPoint.index;
-      const dataset = datasets[datasetIndex];
-      const dataPoint = dataset.data[dataIndex];
+      const dataset = datasets ? datasets[datasetIndex] : null;
+      const dataPoint = dataset ? dataset.data[dataIndex] : null;
       
       // --- Trigger Element Click Animation State Update ---
-      if (getElementPhysicsOptions) {
+      if (getElementPhysicsOptions && dataPoint) {
         const physicsOptions = getElementPhysicsOptions(dataPoint, datasetIndex, dataIndex, chartType);
         if (physicsOptions?.clickEffect) {
           const key = `${datasetIndex}_${dataIndex}`;
@@ -751,8 +993,10 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
               // Add other effects
             })
           );
-          // TODO: Need a mechanism to reset the click effect after a duration?
-          console.log(`[Chart Interaction] Set CLICK target for ${key}:`, physicsOptions.clickEffect);
+          // Click effect resets automatically via CSS transition
+          if (process.env.NODE_ENV === 'development') {
+            console.log(`[Chart Interaction] Set CLICK target for ${key}:`, physicsOptions.clickEffect);
+          }
         }
       }
       // --- End Trigger ---
@@ -763,23 +1007,18 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
       }
       
       // Format the value for the click handler
+      if (!dataPoint || !dataset) return;
+
       const formatType = dataPoint.formatType || dataset.formatType || 'number';
       const formatOptions = {
         ...(dataset.formatOptions || {}),
         ...(dataPoint.formatOptions || {}),
       };
-      
+
       // We'll provide both raw and formatted value to the handler
       if (onDataPointClick) {
-        const formattedValue = formatValue(
-          dataPoint.y,
-          formatType,
-          formatOptions
-        );
-        onDataPointClick(datasetIndex, dataIndex, {
-          ...dataPoint,
-          formattedValue: formattedValue
-        });
+        const formattedValue = formatValue(dataPoint.y);
+        onDataPointClick(datasetIndex, dataIndex, dataPoint);
       }
     }
   };
@@ -815,9 +1054,12 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
       
       // --- Trigger Element Hover Animation State Update ---
       // Check if physicsHoverEffects is enabled BEFORE updating targets
-      if (interaction.physicsHoverEffects && getElementPhysicsOptions) {
+      if (interaction.physicsHoverEffects && getElementPhysicsOptions && datasets) {
           const dataset = datasets[datasetIndex];
+          if (!dataset) return;
+
           const dataPoint = dataset.data[dataIndex];
+          if (!dataPoint) return;
           const physicsOptions = getElementPhysicsOptions(dataPoint, datasetIndex, dataIndex, chartType);
           if (physicsOptions?.hoverEffect) {
             setElementAnimationTargets(prev => 
@@ -828,15 +1070,20 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
                 // Add other effects
               })
             );
-            console.log(`[Chart Interaction] Set HOVER target for ${currentHoveredKey}:`, physicsOptions.hoverEffect);
+            if (process.env.NODE_ENV === 'development') {
+              console.log(`[Chart Interaction] Set HOVER target for ${currentHoveredKey}:`, physicsOptions.hoverEffect);
+            }
           }
       }
       // --- End Trigger ---
       
       // Update tooltip state only if enabled
-      if (interaction.showTooltips) {
+      if (interaction.showTooltips && datasets) {
           const dataset = datasets[datasetIndex];
+          if (!dataset) return;
+
           const dataPoint = dataset.data[dataIndex];
+          if (!dataPoint) return;
           setHoveredPoint({
             datasetIndex,
             dataIndex,
@@ -871,7 +1118,9 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
               // Reset other effects
             })
           );
-          console.log(`[Chart Interaction] Reset HOVER target for ${previousHoveredKey}`);
+          if (process.env.NODE_ENV === 'development') {
+            console.log(`[Chart Interaction] Reset HOVER target for ${previousHoveredKey}`);
+          }
     }
   };
   
@@ -896,7 +1145,9 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
             return next;
         });
         if (resetOccurred) {
-            console.log('[Chart Interaction] Reset ALL HOVER targets on leave');
+            if (process.env.NODE_ENV === 'development') {
+              console.log('[Chart Interaction] Reset ALL HOVER targets on leave');
+            }
         }
     }
   };
@@ -920,7 +1171,9 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
         document.body.removeChild(link);
         return;
       } catch (e) {
-        console.error('Failed to export KPI', e);
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Failed to export KPI', e);
+        }
         return;
       }
     }
@@ -1008,41 +1261,64 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
   }, [chartRef, containerRef, chartType, title, subtitle, exportOptions, kpi]);
   
   // Combined ref callback for ChartJS instance
-  const chartRefCallback = useCallback((instance: ChartJS | null) => {
-    chartRef.current = instance;
+  const chartRefCallback = useCallback((instance: any) => {
+    if (chartRef.current) {
+      chartRef.current = instance;
+    }
     // Call the forwarded ref if it exists
     if (typeof ref === 'function') {
-      ref(instance as unknown as GlassDataChartRef); // May need type assertion
-    } else if (ref) {
-      ref.current = instance as unknown as GlassDataChartRef; // May need type assertion
+      ref(instance);
+    } else if (ref && ref.current !== undefined) {
+      ref.current = instance;
     }
   }, [ref]);
   
   // Memoize chart options
-  const chartOptions = useMemo(() => {
-    // ... (options calculation logic)
-    
-    return {
-      // ... calculated options
-      plugins: { 
-        legend: { display: false }, // Disable built-in legend
-        tooltip: { enabled: false }, // Disable built-in tooltip
-        zoom: { 
-          // Configuration for chartjs-plugin-zoom (if used, ensure it's registered)
-          // This seems redundant now with useChartPhysicsInteraction
-          // pan: { enabled: false }, // Disable default pan
-          // zoom: { wheel: { enabled: false }, pinch: { enabled: false }, mode: 'xy' } // Disable default zoom
-        },
-        // Configure our custom interaction plugin
-        [GalileoElementInteractionPlugin.id]: { 
-          elementAnimationTargets,
-          setElementAnimationTargets,
-          getElementPhysicsOptions,
-          isReducedMotion,
-        }
+  const chartOptions = useMemo(() => ({
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false }, // Disable built-in legend
+      tooltip: { enabled: false }, // Disable built-in tooltip
+      // Configure our custom interaction plugin
+      [GalileoElementInteractionPlugin.id]: {
+        elementAnimationTargets,
+        setElementAnimationTargets,
+        getElementPhysicsOptions,
+        isReducedMotion,
       }
-    }
-  }, [datasets, chartType, axis, legend, isReducedMotion, elementAnimationTargets, getElementPhysicsOptions]); // Dependencies
+    },
+    scales: axis ? {
+      x: {
+        display: axis.showXLabels,
+        grid: {
+          display: axis.showXGrid,
+          color: axis.gridColor,
+        },
+        ticks: {
+          color: axis.axisColor,
+        },
+      },
+      y: {
+        display: axis.showYLabels,
+        grid: {
+          display: axis.showYGrid,
+          color: axis.gridColor,
+        },
+        ticks: {
+          color: axis.axisColor,
+        },
+      },
+    } : undefined,
+    animation: (animation?.physicsEnabled ? {
+      duration: animation.duration || 1000,
+      easing: (animation.easing || 'easeOutQuart') as any,
+      delay: 0,
+      loop: false,
+      animateRotate: true,
+      animateScale: true,
+    } : false) as any,
+  }), [axis, animation, elementAnimationTargets, getElementPhysicsOptions, isReducedMotion]); // Dependencies
 
   // Plugins to pass to the Chart component
   // Ensure all used plugins are registered above
@@ -1098,12 +1374,12 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
       
       {/* Legend - Top position */}
       {legend.show && legend.position === 'top' && (
-        <ChartLegend 
-          $position={legend.position} 
-          $style={legend.style || 'default'} 
+        <ChartLegend
+          $position={legend.position}
+          $style={legend.style || 'default'}
           $glassEffect={legend.glassEffect || false}
         >
-          {datasets.map((dataset, index) => {
+          {(datasets || []).map((dataset: any, index: number) => {
             // Convert hex color to RGB for rgba usage - with safe defaults
             const hexToRgb = (hex: string) => {
               // Provide a default color if hex is undefined
@@ -1136,12 +1412,12 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
       
       {/* Legend - Bottom position */}
       {legend.show && legend.position === 'bottom' && (
-        <ChartLegend 
-          $position={legend.position} 
-          $style={legend.style || 'default'} 
+        <ChartLegend
+          $position={legend.position}
+          $style={legend.style || 'default'}
           $glassEffect={legend.glassEffect || false}
         >
-          {datasets.map((dataset, index) => {
+          {(datasets || []).map((dataset: any, index: number) => {
             // Convert hex color to RGB for rgba usage - with safe defaults
             const hexToRgb = (hex: string) => {
               // Provide a default color if hex is undefined
@@ -1177,7 +1453,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
         hoveredPoint && interaction.showTooltips && (
           <DynamicTooltip
             $color={color}
-            $quality={activeQuality}
+            $quality={typeof activeQuality === 'string' ? activeQuality : (activeQuality as any).tier}
             style={{ left: `${hoveredPoint.x ?? 0}px`, top: `${hoveredPoint.y ?? 0}px` }}
           >
             <TooltipHeader $color={hoveredPoint.value?.color || '#FFFFFF'}>
@@ -1189,9 +1465,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
                 ? hoveredPoint.value.label 
                 : 'Value'}: </TooltipLabel>
               <TooltipValue $highlighted>{formatValue(
-                hoveredPoint.value?.value ?? 0,
-                hoveredPoint.value?.formatType || 'number',
-                hoveredPoint.value?.formatOptions || {}
+                hoveredPoint.value?.value ?? 0
               )}</TooltipValue>
             </TooltipRow>
             
@@ -1206,37 +1480,33 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
       ) : (
         hoveredPoint && interaction.showTooltips && (
           <GlassTooltip
-            title={
-              <GlassTooltipContent
-                title={String(hoveredPoint.value.dataset ?? 'Dataset')}
-                titleColor={hoveredPoint.value.color}
-                items={[
-                  { 
-                    label: typeof hoveredPoint.value.label === 'string' 
-                      ? hoveredPoint.value.label 
-                      : 'Value', 
-                    value: hoveredPoint.value.value ?? 'N/A'
-                  },
-                  ...(hoveredPoint.value.extra 
-                    ? Object.entries(hoveredPoint.value.extra).map(([key, value]) => ({
-                        label: key,
-                        value: (typeof value === 'string' || typeof value === 'number')
-                          ? value 
-                          : String(value) as (string | number)
-                      }))
-                    : [])
-                ]}
-              />
+            position="top"
+            showArrow={true}
+            content={
+              <div>
+                <div style={{ color: hoveredPoint.value?.color || '#FFFFFF' }}>
+                  {String(hoveredPoint.value?.dataset ?? 'Dataset')}
+                </div>
+                <div>
+                  <strong>
+                    {typeof hoveredPoint.value?.label === 'string'
+                      ? hoveredPoint.value.label
+                      : 'Value'}
+                  </strong>: {hoveredPoint.value?.value ?? 'N/A'}
+                </div>
+                {hoveredPoint.value?.extra && Object.entries(hoveredPoint.value.extra).map(([key, value]) => (
+                  <div key={key}>
+                    <strong>{key}</strong>: {(typeof value === 'string' || typeof value === 'number')
+                      ? value
+                      : String(value)}
+                  </div>
+                ))}
+              </div>
             }
-            placement="top"
-            glassStyle={'frosted' as 'clear' | 'frosted' | 'tinted' | 'luminous' | 'dynamic'}
-            arrow
-            followCursor={interaction.tooltipFollowCursor}
-            interactive={false}
           >
-            <div style={{ 
-              position: 'absolute', 
-              top: hoveredPoint.y, 
+            <div style={{
+              position: 'absolute',
+              top: hoveredPoint.y,
               left: hoveredPoint.x,
               width: 1,
               height: 1,

@@ -6,9 +6,10 @@
 import React, { forwardRef, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { glassSurfaceFn as glassSurface } from '../../core/mixins/glassSurface';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { useGlassTheme } from '../../hooks/useGlassTheme';
 
 import { HeatGlassProps } from './types';
 
@@ -47,75 +48,65 @@ const heatGlow = keyframes`
 // Styled components
 const HeatGlassContainer = styled.div<{
   $elevation: number;
-  $blurStrength: 'none' | 'light' | 'standard' | 'strong';
-  $opacity: 'low' | 'medium' | 'high';
-  $borderOpacity: 'none' | 'subtle' | 'light' | 'medium' | 'strong';
-  $borderWidth: number;
-  $fullWidth: boolean;
-  $fullHeight: boolean;
-  $borderRadius: number | string;
+  $blurStrength: 'none' | 'light' | 'standard' | 'heavy';
+  $borderRadius: 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
   $interactive: boolean;
-  $padding: string | number;
-  $intensity: number;
   $heatColor: string;
-  $heatCenter: string;
   $animate: boolean;
-  $animationSpeed: number;
   $backgroundColor: string;
   $isHovered: boolean;
   $reducedMotion: boolean;
 }>`
   position: relative;
   display: block;
-  width: ${props => (props.$fullWidth ? '100%' : 'auto')};
-  height: ${props => (props.$fullHeight ? '100%' : 'auto')};
-  border-radius: ${props =>
-    typeof props.$borderRadius === 'number' ? `${props.$borderRadius}px` : props.$borderRadius};
-  padding: ${props =>
-    typeof props.$padding === 'number' ? `${props.$padding}px` : props.$padding};
+  width: 100%;
+  min-height: 100px;
+  border-radius: ${props => {
+    switch (props.$borderRadius) {
+      case 'none': return '0';
+      case 'sm': return '4px';
+      case 'md': return '8px';
+      case 'lg': return '12px';
+      case 'xl': return '16px';
+      case 'full': return '9999px';
+      default: return '8px';
+    }
+  }};
+  padding: 16px;
   box-sizing: border-box;
   overflow: hidden;
 
-  /* Apply glass surface effect */
-  ${props =>
-    glassSurface({
-      elevation: props.$elevation,
-      blurStrength: props.$blurStrength,
-      borderOpacity: props.$borderOpacity,
-      themeContext: createThemeContext(props.theme),
-    })}
-
-  /* Custom background color */
+  /* Basic glass styling */
   background-color: ${props => props.$backgroundColor};
-
-  /* Border */
-  border-width: ${props => props.$borderWidth}px;
-  border-style: solid;
-  border-color: ${props => {
-    switch (props.$borderOpacity) {
-      case 'none':
-        return 'transparent';
-      case 'subtle':
-        return 'rgba(255, 255, 255, 0.1)';
-      case 'light':
-        return 'rgba(255, 255, 255, 0.2)';
-      case 'medium':
-        return 'rgba(255, 255, 255, 0.3)';
-      case 'strong':
-        return 'rgba(255, 255, 255, 0.4)';
+  backdrop-filter: blur(${props => {
+    switch (props.$blurStrength) {
+      case 'none': return '0px';
+      case 'light': return '4px';
+      case 'standard': return '8px';
+      case 'heavy': return '12px';
+      default: return '8px';
     }
-  }};
+  }});
+  -webkit-backdrop-filter: blur(${props => {
+    switch (props.$blurStrength) {
+      case 'none': return '0px';
+      case 'light': return '4px';
+      case 'standard': return '8px';
+      case 'heavy': return '12px';
+      default: return '8px';
+    }
+  }});
+  border: 1px solid rgba(255, 255, 255, 0.2);
 
   /* Heat effect glow */
-  box-shadow: 0 0 ${props => 10 + props.$intensity * 10}px ${props => props.$intensity * 5}px
-    ${props => props.$heatColor};
+  box-shadow: 0 0 20px 5px ${props => props.$heatColor};
 
   /* Heat animation */
   ${props =>
     props.$animate &&
     !props.$reducedMotion &&
     css`
-      animation: ${css`${heatGlow} ${6 / props.$animationSpeed}s infinite`};
+      animation: ${heatGlow} 3s infinite;
     `}
 
   /* Hover interactions */
@@ -124,19 +115,17 @@ const HeatGlassContainer = styled.div<{
     css`
       cursor: pointer;
       transition: box-shadow 0.3s ease, transform 0.3s ease;
-      
+
       &:hover {
-        box-shadow: 0 0 ${15 + props.$intensity * 15}px ${props.$intensity * 10}px ${
-      props.$heatColor
-    };
+        box-shadow: 0 0 30px 10px ${(props: any) => props.$heatColor};
         transform: translateY(-2px);
       }
-      
+
       &:active {
         transform: translateY(0);
       }
     `}
-  
+
   /* Heat radial gradient background enhancement */
   &::before {
     content: '';
@@ -146,11 +135,11 @@ const HeatGlassContainer = styled.div<{
     right: 0;
     bottom: 0;
     background: radial-gradient(
-      circle at ${props => props.$heatCenter},
+      circle at 50% 50%,
       ${props => props.$heatColor} 0%,
       transparent 70%
     );
-    opacity: ${props => props.$intensity * 0.3};
+    opacity: 0.3;
     pointer-events: none;
     border-radius: inherit;
     z-index: -1;
@@ -159,8 +148,6 @@ const HeatGlassContainer = styled.div<{
 
 const HeatContent = styled.div<{
   $animate: boolean;
-  $animationSpeed: number;
-  $intensity: number;
   $reducedMotion: boolean;
 }>`
   position: relative;
@@ -171,7 +158,7 @@ const HeatContent = styled.div<{
     props.$animate &&
     !props.$reducedMotion &&
     css`
-      animation: ${css`${heatDistort} ${6 / props.$animationSpeed}s infinite ease-in-out`};
+      animation: ${heatDistort} 3s infinite ease-in-out;
       animation-delay: ${Math.random() * 2}s;
       will-change: filter;
     `}
@@ -216,19 +203,10 @@ const HeatGlassComponent = (
     style,
     elevation = 2,
     blurStrength = 'standard',
-    opacity = 'medium',
-    borderOpacity = 'medium',
-    borderWidth = 1,
-    fullWidth = false,
-    fullHeight = false,
-    borderRadius = 12,
+    borderRadius = 'md',
     interactive = true,
-    padding = 16,
-    intensity = 0.5,
     heatColor = 'rgba(255, 100, 50, 0.7)',
-    heatCenter = '50% 50%',
     animate = true,
-    animationSpeed = 1,
     backgroundColor = 'rgba(255, 255, 255, 0.1)',
     ...rest
   } = props;
@@ -261,19 +239,10 @@ const HeatGlassComponent = (
         onMouseLeave={handleMouseLeave}
         $elevation={elevation}
         $blurStrength={blurStrength}
-        $opacity={opacity}
-        $borderOpacity={borderOpacity}
-        $borderWidth={borderWidth}
-        $fullWidth={fullWidth}
-        $fullHeight={fullHeight}
         $borderRadius={borderRadius}
         $interactive={interactive}
-        $padding={padding}
-        $intensity={intensity}
         $heatColor={heatColor}
-        $heatCenter={heatCenter}
         $animate={animate}
-        $animationSpeed={animationSpeed}
         $backgroundColor={backgroundColor}
         $isHovered={isHovered}
         $reducedMotion={prefersReducedMotion}
@@ -281,8 +250,6 @@ const HeatGlassComponent = (
       >
         <HeatContent
           $animate={animate}
-          $animationSpeed={animationSpeed}
-          $intensity={intensity}
           $reducedMotion={prefersReducedMotion}
         >
           {children}

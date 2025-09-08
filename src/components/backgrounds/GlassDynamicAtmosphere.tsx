@@ -521,11 +521,13 @@ export const DynamicAtmosphere = forwardRef<HTMLDivElement, DynamicAtmospherePro
     return (
       <AtmosphereContainer
         ref={node => {
-          containerRef.current = node;
+          if (containerRef.current !== node) {
+            (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+          }
           if (typeof ref === 'function') {
             ref(node);
           } else if (ref) {
-            (ref as React.MutableRefObject<HTMLDivElement>).current = node!;
+            (ref as React.MutableRefObject<HTMLDivElement | null>).current = node!;
           }
         }}
         className={className}

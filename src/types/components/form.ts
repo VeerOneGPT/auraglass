@@ -17,13 +17,13 @@ export interface FormFieldProps {
   variant?: 'default' | 'filled' | 'outlined' | 'underlined';
 }
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement>, FormFieldProps {
+export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, keyof FormFieldProps>, FormFieldProps {
   type?: 'text' | 'email' | 'password' | 'number' | 'tel' | 'url' | 'search';
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
 }
 
-export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement>, FormFieldProps {
+export interface TextareaProps extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, keyof FormFieldProps>, FormFieldProps {
   resize?: 'none' | 'vertical' | 'horizontal' | 'both';
   rows?: number;
 }
@@ -62,7 +62,7 @@ export interface RadioOption {
   disabled?: boolean;
 }
 
-export interface SwitchProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
+export interface SwitchProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
   label?: string;
   size?: 'sm' | 'md' | 'lg';
   checked?: boolean;

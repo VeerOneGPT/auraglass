@@ -29,7 +29,7 @@ const frostSparkle = keyframes`
 // Styled components
 const FrostContainer = styled.div<{
   $elevation: number;
-  $blurStrength: 'none' | 'light' | 'standard' | 'strong';
+  $blurStrength: 'none' | 'light' | 'standard' | 'heavy';
   $opacity: 'low' | 'medium' | 'high';
   $borderOpacity: 'none' | 'subtle' | 'light' | 'medium' | 'strong';
   $borderWidth: number;
@@ -58,13 +58,21 @@ const FrostContainer = styled.div<{
   overflow: hidden;
 
   /* Apply glass surface effect */
-  ${props =>
-    glassSurface({
-      elevation: props.$elevation,
-      blurStrength: props.$blurStrength,
-      borderOpacity: props.$borderOpacity,
-      themeContext: createThemeContext(props.theme),
-    })}
+  background: ${glassSurface.background};
+  backdrop-filter: ${glassSurface.backdropFilter};
+  border: ${glassSurface.border};
+
+  ${props => props.$blurStrength && `
+    backdrop-filter: blur(${props.$blurStrength === 'light' ? '4px' : props.$blurStrength === 'standard' ? '8px' : props.$blurStrength === 'heavy' ? '16px' : '2px'});
+  `}
+
+  ${props => props.$elevation && `
+    box-shadow: 0 ${props.$elevation * 2}px ${props.$elevation * 4}px rgba(0, 0, 0, 0.1);
+  `}
+
+  ${props => props.$borderOpacity && props.$borderOpacity !== 'none' && `
+    border: 1px solid rgba(255, 255, 255, ${props.$borderOpacity === 'subtle' ? 0.05 : props.$borderOpacity === 'light' ? 0.1 : props.$borderOpacity === 'medium' ? 0.2 : 0.3});
+  `}
 
   /* Custom background color */
   background-color: ${props => props.$backgroundColor};
@@ -217,7 +225,7 @@ const FrostedGlassComponent = (
     borderWidth = 1,
     fullWidth = false,
     fullHeight = false,
-    borderRadius = 12,
+    borderRadius = 'md',
     interactive = true,
     padding = 16,
     intensity = 0.5,
@@ -233,6 +241,16 @@ const FrostedGlassComponent = (
 
   // State for hover effects
   const [isHovered, setIsHovered] = useState(false);
+
+  // Normalize opacity value for styled component
+  const normalizedOpacity: 'low' | 'medium' | 'high' = typeof opacity === 'number'
+    ? (opacity < 0.3 ? 'low' : opacity < 0.7 ? 'medium' : 'high')
+    : (opacity as 'low' | 'medium' | 'high');
+
+  // Normalize pattern value for styled component
+  const normalizedPattern: 'noise' | 'lines' | 'crystals' = typeof pattern === 'string' && ['noise', 'lines', 'crystals'].includes(pattern)
+    ? (pattern as 'noise' | 'lines' | 'crystals')
+    : 'noise';
 
   // Handle mouse events
   const handleMouseEnter = () => {
@@ -252,7 +270,7 @@ const FrostedGlassComponent = (
       onMouseLeave={handleMouseLeave}
       $elevation={elevation}
       $blurStrength={blurStrength}
-      $opacity={opacity}
+      $opacity={normalizedOpacity}
       $borderOpacity={borderOpacity}
       $borderWidth={borderWidth}
       $fullWidth={fullWidth}
@@ -263,7 +281,7 @@ const FrostedGlassComponent = (
       $intensity={intensity}
       $frostColor={frostColor}
       $animate={animate}
-      $pattern={pattern}
+      $pattern={normalizedPattern}
       $backgroundColor={backgroundColor}
       $isHovered={isHovered}
       $reducedMotion={prefersReducedMotion}

@@ -1,9 +1,9 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
-import { Motion } from '../../primitives/motion/Motion';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
 import { GlassButton } from '../button/GlassButton';
 import { GlassBadge } from '../data-display/GlassBadge';
 import { HStack } from '../layout/GlassStack';

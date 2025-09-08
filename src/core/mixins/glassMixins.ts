@@ -1,8 +1,8 @@
 import { CSSProperties } from 'react';
 
-export type GlassVariant = 'frosted' | 'crystal' | 'tinted' | 'metallic' | 'neon';
+export type GlassVariant = 'frosted' | 'crystal' | 'tinted' | 'metallic' | 'neon' | 'primary' | 'secondary' | 'error' | 'success' | 'warning' | 'info' | 'default' | 'elevated' | 'outlined' | 'interactive' | 'feature' | 'minimal' | 'outline' | 'floating';
 export type BlurIntensity = 'none' | 'subtle' | 'medium' | 'strong' | 'intense';
-export type GlassElevation = 0 | 1 | 2 | 3 | 4 | 'float';
+export type GlassElevation = 0 | 1 | 2 | 3 | 4 | 'float' | number;
 
 export interface GlassMixinOptions {
   variant?: GlassVariant;
@@ -13,6 +13,15 @@ export interface GlassMixinOptions {
   borderRadius?: string;
   interactive?: boolean;
   performanceMode?: 'high' | 'balanced' | 'low';
+  glow?: boolean;
+  glowColor?: string;
+  glowIntensity?: number;
+}
+
+export interface PerformanceOptions {
+  mode?: 'high' | 'balanced' | 'low';
+  prefersReducedMotion?: boolean;
+  devicePixelRatio?: number;
 }
 
 // Performance-optimized blur values
@@ -57,6 +66,63 @@ const GLASS_VARIANTS = {
     border: '1px solid rgba(0, 255, 255, 0.3)',
     boxShadow: '0 0 20px rgba(0, 255, 255, 0.1)',
   },
+  primary: {
+    background: 'rgba(59, 130, 246, 0.1)',
+    border: '1px solid rgba(59, 130, 246, 0.3)',
+  },
+  secondary: {
+    background: 'rgba(107, 114, 128, 0.1)',
+    border: '1px solid rgba(107, 114, 128, 0.3)',
+  },
+  error: {
+    background: 'rgba(239, 68, 68, 0.1)',
+    border: '1px solid rgba(239, 68, 68, 0.3)',
+  },
+  success: {
+    background: 'rgba(34, 197, 94, 0.1)',
+    border: '1px solid rgba(34, 197, 94, 0.3)',
+  },
+  warning: {
+    background: 'rgba(245, 158, 11, 0.1)',
+    border: '1px solid rgba(245, 158, 11, 0.3)',
+  },
+  info: {
+    background: 'rgba(14, 165, 233, 0.1)',
+    border: '1px solid rgba(14, 165, 233, 0.3)',
+  },
+  default: {
+    background: 'rgba(255, 255, 255, 0.08)',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+  },
+  elevated: {
+    background: 'rgba(255, 255, 255, 0.12)',
+    border: '1px solid rgba(255, 255, 255, 0.25)',
+  },
+  outlined: {
+    background: 'transparent',
+    border: '2px solid rgba(255, 255, 255, 0.3)',
+  },
+  interactive: {
+    background: 'rgba(255, 255, 255, 0.08)',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+  },
+  feature: {
+    background: 'rgba(255, 255, 255, 0.15)',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+  },
+  minimal: {
+    background: 'rgba(255, 255, 255, 0.05)',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+  },
+  outline: {
+    background: 'transparent',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+  },
+  floating: {
+    background: 'rgba(255, 255, 255, 0.12)',
+    border: '1px solid rgba(255, 255, 255, 0.25)',
+    boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
+  },
 } as const;
 
 /**
@@ -72,17 +138,20 @@ export const createGlassMixin = (options: GlassMixinOptions = {}): CSSProperties
     borderRadius = '12px',
     interactive = false,
     performanceMode = 'balanced',
+    glow = false,
+    glowColor = 'rgba(255, 255, 255, 0.5)',
+    glowIntensity = 0.5,
   } = options;
 
   const baseStyles = GLASS_VARIANTS[variant];
   const blurValue = BLUR_VALUES[blur];
-  const shadowValue = ELEVATION_SHADOWS[elevation];
+  const shadowValue = ELEVATION_SHADOWS[elevation as keyof typeof ELEVATION_SHADOWS] || ELEVATION_SHADOWS[1];
 
   // Performance optimizations based on mode
   const willChange = performanceMode === 'high' ? 'transform, opacity' : 'auto';
   const backfaceVisibility = performanceMode === 'high' ? 'hidden' : 'visible';
 
-  let styles: CSSProperties = {
+  const styles: CSSProperties = {
     ...baseStyles,
     backdropFilter: blur !== 'none' ? `blur(${blurValue})` : 'none',
     WebkitBackdropFilter: blur !== 'none' ? `blur(${blurValue})` : 'none', // Safari support
@@ -98,6 +167,11 @@ export const createGlassMixin = (options: GlassMixinOptions = {}): CSSProperties
   if (tint) {
     const tintRgba = hexToRgba(tint, 0.1);
     styles.background = `${styles.background}, ${tintRgba}`;
+  }
+
+  // Apply glow effect if enabled
+  if (glow) {
+    styles.boxShadow = `${styles.boxShadow}, 0 0 ${glowIntensity * 20}px ${glowColor}`;
   }
 
   // Interactive states
@@ -126,7 +200,7 @@ export const createGlassHoverMixin = (options: GlassMixinOptions = {}): CSSPrope
     background: variant === 'frosted' 
       ? 'rgba(255, 255, 255, 0.15)'
       : baseStyles.background,
-    boxShadow: ELEVATION_SHADOWS[hoverElevation],
+    boxShadow: ELEVATION_SHADOWS[hoverElevation as keyof typeof ELEVATION_SHADOWS] || ELEVATION_SHADOWS[1],
     transform: performanceMode === 'high' 
       ? 'translateY(-2px) scale(1.02)' 
       : 'translateY(-1px)',
@@ -162,16 +236,8 @@ export const createGlassDisabledMixin = (): CSSProperties => ({
 export const createGlassLoadingMixin = (): CSSProperties => ({
   position: 'relative',
   overflow: 'hidden',
-  '&::after': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: '-100%',
-    width: '100%',
-    height: '100%',
-    background: 'linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent)',
-    animation: 'glass-shimmer 2s infinite',
-  },
+  // Note: Pseudo-elements should be handled separately in styled-components or CSS modules
+  // This mixin provides the base styles, pseudo-elements need to be added in the component
 });
 
 /**
@@ -264,11 +330,59 @@ export const injectGlassAnimations = (): void => {
 };
 
 /**
+ * Generate performance-optimized styles based on device capabilities
+ */
+export const createPerformanceMixin = (options: PerformanceOptions = {}): CSSProperties => {
+  const {
+    mode = 'balanced',
+    prefersReducedMotion = false,
+    devicePixelRatio = 1,
+  } = options;
+
+  const styles: CSSProperties = {};
+
+  // Performance optimizations based on mode
+  switch (mode) {
+    case 'low':
+      styles.willChange = 'auto';
+      styles.backfaceVisibility = 'visible';
+      styles.transform = 'none';
+      styles.backdropFilter = 'none';
+      styles.WebkitBackdropFilter = 'none';
+      break;
+
+    case 'high':
+      styles.willChange = 'transform, opacity';
+      styles.backfaceVisibility = 'hidden';
+      styles.transform = 'translateZ(0)'; // Force hardware acceleration
+      break;
+
+    case 'balanced':
+    default:
+      styles.willChange = 'auto';
+      styles.backfaceVisibility = 'visible';
+      if (devicePixelRatio >= 2) {
+        styles.transform = 'translateZ(0)';
+      }
+      break;
+  }
+
+  // Respect reduced motion preferences
+  if (prefersReducedMotion) {
+    styles.transition = 'none';
+    styles.animation = 'none';
+    styles.willChange = 'auto';
+  }
+
+  return styles;
+};
+
+/**
  * Create glass morphism CSS string for styled-components or emotion
  */
 export const glassCSS = (options: GlassMixinOptions = {}): string => {
   const styles = createGlassMixin(options);
-  
+
   return Object.entries(styles)
     .map(([key, value]) => {
       const cssKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
@@ -294,7 +408,7 @@ export const createAdvancedGlassMixin = (options: GlassMixinOptions & {
     ...baseOptions
   } = options;
 
-  let styles = createGlassMixin(baseOptions);
+  const styles = createGlassMixin(baseOptions);
 
   // Custom gradient overlay
   if (gradient && gradient.length > 1) {
@@ -310,17 +424,19 @@ export const createAdvancedGlassMixin = (options: GlassMixinOptions & {
   // Reflection effect
   if (reflection) {
     styles.position = 'relative';
-    styles['&::before'] = {
-      content: '""',
-      position: 'absolute',
-      top: '10%',
-      left: '10%',
-      right: '60%',
-      height: '20%',
-      background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent)',
-      borderRadius: '50%',
-      filter: 'blur(10px)',
-    };
+    // Note: Reflection pseudo-element should be handled separately
+    // This would typically be implemented as:
+    // &::before {
+    //   content: '';
+    //   position: absolute;
+    //   top: 10%;
+    //   left: 10%;
+    //   right: 60%;
+    //   height: 20%;
+    //   background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent);
+    //   border-radius: 50%;
+    //   filter: blur(10px);
+    // }
   }
 
   return styles;

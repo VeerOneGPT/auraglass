@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 import { GlassButton } from '../button/GlassButton';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { OptimizedGlass } from '../../primitives';
 
 export interface SegmentedItem {
   id: string;

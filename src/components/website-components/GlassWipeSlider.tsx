@@ -1,7 +1,7 @@
 "use client";
 
-import { useAnimationDuration, useMotionAwareAnimation } from '@/hooks/useMotionPreference';
-import { cn } from '@/lib/utils';
+import { useAnimationDuration, useMotionAwareAnimation } from '../../hooks/useMotionPreference';
+import { cn } from '../../lib/utilsComprehensive';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -767,8 +767,6 @@ export function GlassWipeSlider({
 }
 
 // Comparison content components for common use cases
-import { OptimizedImage } from "@/components/ui/OptimizedImage";
-
 export function ComparisonImage({
   src,
   alt,
@@ -781,15 +779,13 @@ export function ComparisonImage({
   loading?: 'lazy' | 'eager';
 }) {
   return (
-    <OptimizedImage
+    <img
       src={src}
       alt={alt}
       width={1200}
       height={800}
       className={cn("w-full h-full object-cover transition-all duration-300", className)}
-      priority={loading === 'eager'}
       loading={loading}
-      quality={85}
     />
   );
 }

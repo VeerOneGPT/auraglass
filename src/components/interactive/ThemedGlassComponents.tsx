@@ -3,17 +3,7 @@ import styled from 'styled-components';
 
 import { glassSurface } from '../../core/mixins/glassSurface';
 import { createThemeContext } from '../../core/themeContext';
-import { ColorMode, ThemeVariant } from '../../hooks/useGlassTheme';
-import {
-  ThemeProvider,
-  ThemeTransition,
-  useTheme,
-  useColorMode,
-  useThemeVariant,
-} from '../../theme';
-import { THEME_VARIANTS } from '../../theme/constants';
-
-import { ThemedGlassComponentsProps } from './types';
+import { useGlassTheme } from '../../hooks/useGlassTheme';
 
 // Create a context to pass down theme information to children
 interface ThemedGlassContextType {
@@ -35,20 +25,30 @@ const GlassContainer = styled.div<{
   $glassIntensity: number;
   $applyGlassEffect: boolean;
 }>`
-  ${({ theme, $glassIntensity }) => {
-    const themeContext = createThemeContext(theme);
-    return glassSurface({
-      elevation: $glassIntensity,
-      backgroundOpacity: 0.6,
-      blurStrength: '10px',
-      themeContext,
-    });
-  }}
+  ${({ $glassIntensity }) => `
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  `}
 `;
 
 /**
  * A component that applies themed glass styling to its children
  */
+interface ThemedGlassComponentsProps {
+  children: React.ReactNode;
+  variant?: string;
+  colorMode?: string;
+  glassIntensity?: number;
+  animated?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+  applyGlassEffect?: boolean;
+  preserveOriginalStyle?: boolean;
+  contextData?: Record<string, any>;
+  transitionDuration?: number;
+}
+
 export const ThemedGlassComponents = forwardRef<HTMLDivElement, ThemedGlassComponentsProps>(
   (
     {
@@ -64,25 +64,19 @@ export const ThemedGlassComponents = forwardRef<HTMLDivElement, ThemedGlassCompo
       contextData,
       transitionDuration = 300,
       ...rest
-    }: ThemedGlassComponentsProps,
+    },
     ref
   ) => {
-    // Use the current theme context
-    const theme = useTheme();
-    const colorModeContext = useColorMode();
-    const currentColorMode = colorModeContext[0];
-    const setCurrentColorMode = colorModeContext[1];
-
-    const themeVariantContext = useThemeVariant();
-    const currentThemeVariant = themeVariantContext[0];
-    const setCurrentThemeVariant = themeVariantContext[1];
+    // Simplified theme usage
+    const { theme } = useGlassTheme();
+    const isDarkMode = theme === 'dark';
 
     // Track transitions for animation
     const [isTransitioning, setIsTransitioning] = useState(false);
 
     // Use provided values or fallback to current context
-    const effectiveColorMode = colorMode || currentColorMode;
-    const effectiveVariant = variant || currentThemeVariant;
+    const effectiveColorMode = colorMode || (isDarkMode ? 'dark' : 'light');
+    const effectiveVariant = variant || 'default';
 
     // Create context value
     const contextValue: ThemedGlassContextType = {
@@ -121,37 +115,20 @@ export const ThemedGlassComponents = forwardRef<HTMLDivElement, ThemedGlassCompo
       );
     }
 
-    // For theme changes, use the ThemeProvider and ThemeTransition
+    // Simplified rendering
     return (
-      <ThemeProvider>
-        <ThemedGlassContext.Provider value={contextValue}>
-          {animated ? (
-            <ThemeTransition duration={transitionDuration}>
-              <GlassContainer
-                ref={ref}
-                className={className}
-                style={style}
-                $glassIntensity={glassIntensity}
-                $applyGlassEffect={applyGlassEffect}
-                {...rest}
-              >
-                {children}
-              </GlassContainer>
-            </ThemeTransition>
-          ) : (
-            <GlassContainer
-              ref={ref}
-              className={className}
-              style={style}
-              $glassIntensity={glassIntensity}
-              $applyGlassEffect={applyGlassEffect}
-              {...rest}
-            >
-              {children}
-            </GlassContainer>
-          )}
-        </ThemedGlassContext.Provider>
-      </ThemeProvider>
+      <ThemedGlassContext.Provider value={contextValue}>
+        <GlassContainer
+          ref={ref}
+          className={className}
+          style={style}
+          $glassIntensity={glassIntensity}
+          $applyGlassEffect={applyGlassEffect}
+          {...rest}
+        >
+          {children}
+        </GlassContainer>
+      </ThemedGlassContext.Provider>
     );
   }
 );

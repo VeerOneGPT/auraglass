@@ -25,10 +25,12 @@ import {
 } from './styles/ChartElementStyles';
 
 // Import all types
-import { 
-  ChartVariant, 
-  DataPoint, 
-  ChartDataset 
+import {
+  ChartVariant,
+  DataPoint,
+  ChartDataset,
+  ChartType,
+  ChartQualityTier
 } from './types/ChartTypes';
 
 import {
@@ -45,7 +47,7 @@ import {
   getQualityBasedGlassParams
 } from './hooks/useQualityTier';
 
-import { usePhysicsAnimation } from './hooks/usePhysicsAnimation';
+// import { usePhysicsAnimation } from './hooks/usePhysicsAnimation';
 import { useAccessibilitySettings } from '../../hooks/useAccessibilitySettings';
 import { useGlassTheme } from '../../hooks/useGlassTheme';
 import { createThemeContext } from '../../core/themeContext';
@@ -54,10 +56,8 @@ import { createThemeContext } from '../../core/themeContext';
 import {
   KpiChart,
   ChartTooltip,
-  ChartFilters,
-  ChartRenderer,
-  AtmosphericEffects,
-  TooltipData
+  TooltipData,
+  ChartRenderer
 } from './components';
 
 // Import utilities
@@ -105,9 +105,9 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
   // Theme & accessibility hooks
   const theme = useGlassTheme();
   const isDarkMode = theme ? theme.isDarkMode : false;
-  const { isReducedMotion } = useAccessibilitySettings();
+  const { settings: accessibilitySettings } = useAccessibilitySettings();
+  const isReducedMotion = accessibilitySettings?.reducedMotion || false;
   const themeContext = theme ? createThemeContext(theme.theme) : undefined;
-  const qualityTier = useQualityTier();
   
   // Extract all props with defaults
   const {
@@ -190,8 +190,20 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
     useAdaptiveQuality = true,
   } = props;
   
+  // Quality tier system integration
+  const qualityTier = useQualityTier(
+    {
+      dataPointCount: datasets?.reduce((sum, dataset) => sum + dataset.data.length, 0) || 0,
+      seriesCount: datasets?.length || 0,
+      animationComplexity: 'medium',
+      interactionComplexity: 'medium',
+    },
+    variant as any,
+    useAdaptiveQuality ? undefined : 'high'
+  );
+  
   // State
-  const [chartType, setChartType] = useState<ChartVariant>(variant);
+  const [chartType, setChartType] = useState<ChartVariant>(variant as ChartVariant);
   const [hoveredPoint, setHoveredPoint] = useState<TooltipData | null>(null);
   const [selectedIndices, setSelectedIndices] = useState<number[]>(
     initialSelection !== undefined 
@@ -209,38 +221,34 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
   const activeQuality = useAdaptiveQuality ? qualityTier : 'high';
   
   // Get physics and glass parameters based on quality tier
-  const qualityPhysicsParams = getQualityBasedPhysicsParams(activeQuality);
-  const qualityGlassParams = getQualityBasedGlassParams(activeQuality);
-  
+  const qualityPhysicsParams = getQualityBasedPhysicsParams(activeQuality as any);
+  const qualityGlassParams = getQualityBasedGlassParams(activeQuality as any);
+
   // Determine if we're using physics-based animations
   const enablePhysicsAnimation = animation.physicsEnabled && !isReducedMotion;
-  
-  // Use physics animation hook
-  const {
-    value: springValue,
-    applyPopIn
-  } = usePhysicsAnimation({
-    type: isReducedMotion ? 'none' : (animation.physicsEnabled ? 'spring' : 'none'),
-    stiffness: qualityPhysicsParams.stiffness,
-    damping: calculateDamping(qualityPhysicsParams.dampingRatio, qualityPhysicsParams.stiffness, qualityPhysicsParams.mass),
-    mass: qualityPhysicsParams.mass,
-    precision: qualityPhysicsParams.precision,
-    respectReducedMotion: true
-  });
+
+  // Simple animation state (placeholder for physics animation)
+  const [isAnimating, setIsAnimating] = useState(false);
+  const animate = (key: string, from: number, to: number, duration?: number) => {
+    setIsAnimating(true);
+    setTimeout(() => setIsAnimating(false), duration || 500);
+  };
+  const getValue = (key: string) => 1;
   
   // Apply initial animations based on quality tier
   useEffect(() => {
     if (enablePhysicsAnimation) {
       // Trigger a pop-in animation on mount for better visual impact
-      if (activeQuality !== 'low') {
-        applyPopIn();
+      if (activeQuality !== ('low' as any)) {
+        // Start a simple animation from 0 to 1
+        animate('chart-mount', 0, 1, 500);
       }
     }
-  }, [enablePhysicsAnimation, activeQuality, applyPopIn]);
+  }, [enablePhysicsAnimation, activeQuality, animate]);
   
   // Handle chart type change
-  const handleTypeChange = (type: ChartVariant) => {
-    setChartType(type);
+  const handleTypeChange = (type: ChartType) => {
+    setChartType(type as ChartVariant);
     if (onTypeChange) {
       onTypeChange(type);
     }
@@ -248,9 +256,11 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
   
   // Handle data point click
   const handleDataPointClick = (datasetIndex: number, dataIndex: number) => {
-    if (!onDataPointClick) return;
-    
+    if (!onDataPointClick || !datasets) return;
+
     const dataset = datasets[datasetIndex];
+    if (!dataset) return;
+
     const dataPoint = dataset.data[dataIndex];
     
     onDataPointClick(datasetIndex, dataIndex, dataPoint);
@@ -276,8 +286,8 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
   
   // Handle chart hover for tooltips
   const handleChartHover = (event: React.MouseEvent<HTMLCanvasElement>) => {
-    if (!chartRef.current || !interaction.showTooltips) return;
-    
+    if (!chartRef.current || !interaction.showTooltips || !datasets) return;
+
     const chart = chartRef.current;
     const points = chart.getElementsAtEventForMode(
       event.nativeEvent,
@@ -285,12 +295,14 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
       { intersect: false },
       false
     );
-    
+
     if (points.length > 0) {
       const firstPoint = points[0];
       const datasetIndex = firstPoint.datasetIndex;
       const dataIndex = firstPoint.index;
       const dataset = datasets[datasetIndex];
+
+      if (!dataset) return;
       const dataPoint = dataset.data[dataIndex];
       
       // Get position in canvas coordinates
@@ -394,10 +406,21 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
       }
     },
     getContainerElement: () => containerRef.current,
-    switchChartType: (type: ChartVariant) => {
+    switchChartType: (type: ChartType) => {
       handleTypeChange(type);
+    },
+    getChartState: () => ({
+      hoveredPoint,
+      selectedIndices,
+      chartType,
+      qualityTier: activeQuality
+    }),
+    forceUpdate: () => {
+      if (chartRef.current) {
+        chartRef.current.update('none');
+      }
     }
-  }), [chartRef, handleExport]);
+  }), [chartRef, handleExport, hoveredPoint, selectedIndices, chartType, activeQuality]);
   
   // Prepare axis options, adjusting color for clear variant
   const effectiveAxisOptions = {
@@ -409,7 +432,7 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
   };
   
   // Special case for KPI chart type
-  if (chartType === 'kpi' && kpi) {
+  if (chartType === ('kpi' as ChartVariant) && kpi) {
     return (
       <ChartContainer
         className={className}
@@ -443,17 +466,17 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
             dampingRatio: qualityPhysicsParams.dampingRatio,
             mass: qualityPhysicsParams.mass
           }}
-          qualityTier={activeQuality}
+          qualityTier={typeof activeQuality === 'object' ? activeQuality.tier : activeQuality}
           color={color}
           isReducedMotion={isReducedMotion}
         />
         
         {/* Atmospheric effects */}
-        <AtmosphericEffects
+        {/* <AtmosphericEffects
           qualityTier={activeQuality}
           color={color}
           isReducedMotion={isReducedMotion}
-        />
+        /> */}
       </ChartContainer>
     );
   }
@@ -476,19 +499,19 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
       ref={containerRef}
     >
       {/* SVG Filters */}
-      <ChartFilters
+      {/* <ChartFilters
         palette={palette}
         qualityTier={activeQuality}
-      />
-      
+      /> */}
+
       {/* Atmospheric effects - Conditionally render */}
-      {glassVariant !== 'clear' && (
+      {/* {glassVariant !== 'clear' && (
         <AtmosphericEffects
           qualityTier={activeQuality}
           color={color}
           isReducedMotion={isReducedMotion}
         />
-      )}
+      )} */}
       
       {/* Chart header */}
       {(title || subtitle) && (
@@ -506,28 +529,28 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
             <ChartTypeSelector>
               <TypeButton
                 type="button"
-                $active={chartType === 'line'}
+                $active={chartType === ('line' as ChartVariant)}
                 onClick={() => handleTypeChange('line')}
               >
                 Line
               </TypeButton>
               <TypeButton
                 type="button"
-                $active={chartType === 'bar'}
+                $active={chartType === ('bar' as ChartVariant)}
                 onClick={() => handleTypeChange('bar')}
               >
                 Bar
               </TypeButton>
               <TypeButton
                 type="button"
-                $active={chartType === 'area'}
+                $active={chartType === ('area' as ChartVariant)}
                 onClick={() => handleTypeChange('area')}
               >
                 Area
               </TypeButton>
               <TypeButton
                 type="button"
-                $active={chartType === 'pie'}
+                $active={chartType === ('pie' as ChartVariant)}
                 onClick={() => handleTypeChange('pie')}
               >
                 Pie
@@ -555,7 +578,7 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
           $style={legend.style || 'default'} 
           $glassEffect={legend.glassEffect || false}
         >
-          {datasets.map((dataset, index) => {
+          {datasets?.map((dataset, index) => {
             const color = dataset.style?.lineColor || palette[index % palette.length];
             const isActive = selectedIndices.includes(index);
             return (
@@ -580,15 +603,22 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
       
       {/* Main Chart */}
       <ChartRenderer
-        chartType={chartType}
-        datasets={datasets}
+        chartType={
+          chartType === 'default' ? 'line' :
+          chartType === 'minimal' ? 'line' :
+          chartType === 'detailed' ? 'area' :
+          chartType === 'heatmap' ? 'scatter' :
+          chartType === 'radar' ? 'line' :
+          (chartType as ChartType)
+        }
+        datasets={datasets || []}
         palette={palette}
-        qualityTier={activeQuality}
+        qualityTier={typeof activeQuality === 'object' ? activeQuality.tier : activeQuality}
         animation={animation}
         interaction={interaction}
         axis={effectiveAxisOptions}
         isReducedMotion={isReducedMotion}
-        springValue={springValue}
+        springValue={getValue('chart-mount')}
         enablePhysicsAnimation={enablePhysicsAnimation}
         onDataPointClick={handleDataPointClick}
         onChartHover={handleChartHover}
@@ -604,7 +634,7 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
           $style={legend.style || 'default'} 
           $glassEffect={legend.glassEffect || false}
         >
-          {datasets.map((dataset, index) => {
+          {datasets?.map((dataset, index) => {
             const color = dataset.style?.lineColor || palette[index % palette.length];
             const isActive = selectedIndices.includes(index);
             return (
@@ -632,8 +662,8 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
         tooltipData={hoveredPoint}
         datasets={datasets}
         color={color}
-        qualityTier={activeQuality}
-        tooltipStyle={interaction.tooltipStyle || 'frosted'}
+        qualityTier={typeof activeQuality === 'object' ? activeQuality.tier : activeQuality}
+        tooltipStyle={(interaction.tooltipStyle === 'dynamic' ? 'frosted' : interaction.tooltipStyle) || 'frosted'}
         followCursor={interaction.tooltipFollowCursor}
       />
     </ChartContainer>

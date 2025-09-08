@@ -1,19 +1,16 @@
-'use client';
-import { GlassInput } from '@/design-system';
-
-
 import React, { forwardRef, useState, useMemo } from 'react';
-import { Glass } from '../../primitives/glass/Glass';
-import { Motion } from '../../primitives/motion/Motion';
-import { GlassSearchInterface } from '../../components/interactive/GlassSearchInterface';
-import { GlassDataTable } from '../../components/data-display/GlassDataTable';
-import { GlassButton, IconButton } from '../../components/button/GlassButton';
-import { GlassBadge } from '../../components/data-display/GlassBadge';
-import { PageHeader } from '../../components/layout/GlassAppShell';
-import { VStack, HStack } from '../../components/layout/GlassStack';
-import { GlassGrid, GlassGridItem } from '../../components/layout/GlassGrid';
-import { GlassCard } from '../../components/card/GlassCard';
-import { cn } from '@/lib/utils';
+import { Glass } from '../../../primitives';
+import { Motion } from '../../../primitives';
+import { GlassSearchInterface } from '../../../components/interactive/GlassSearchInterface';
+import { GlassDataTable } from '../../../components/data-display/GlassDataTable';
+import { GlassButton, IconButton } from '../../../components/button/GlassButton';
+import { GlassBadge } from '../../../components/data-display/GlassBadge';
+import { PageHeader } from '../../../components/layout/GlassAppShell';
+import { VStack, HStack } from '../../../components/layout/GlassStack';
+import { GlassGrid, GlassGridItem } from '../../../components/layout/GlassGrid';
+import { GlassCard } from '../../../components/card/GlassCard';
+import { GlassInput } from '../../../components/input/GlassInput';
+import { cn } from '../../../lib/utilsComprehensive';
 
 export interface ListItem {
   id: string;
@@ -306,7 +303,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
 
       return (
         <Motion preset="slideDown">
-          <Glass elevation={1} radius="lg" className="p-4">
+          <Glass rounded="lg" className="p-4">
             <VStack space="md">
               <HStack space="sm" align="center" justify="between">
                 <h3 className="text-sm font-medium text-foreground">Filters</h3>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { OptimizedGlass } from '../../primitives';
 
 export interface ComponentExample {
   id: string;

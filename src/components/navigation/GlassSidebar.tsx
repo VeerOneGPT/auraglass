@@ -3,12 +3,12 @@
 import { GlassButton } from '../button/GlassButton';
 import { GlassTooltip } from '../modal/GlassPopover';
 
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import React, { createContext, forwardRef, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
-import { Motion } from '../../primitives/motion/Motion';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
 
 export interface NavigationItem {
   id: string;

@@ -1,15 +1,15 @@
 'use client';
 
 import React, { forwardRef, useState } from 'react';
-import { Glass } from '../../../primitives/glass/Glass';
-import { Motion } from '../../../primitives/motion/Motion';
+import { Glass } from '../../../primitives';
+import { Motion } from '../../../primitives';
 import { GlassFormBuilder } from '../../../components/interactive/GlassFormBuilder';
 import { GlassButton } from '../../../components/button/GlassButton';
 import { GlassProgress } from '../../../components/data-display/GlassProgress';
 import { PageHeader } from '../../../components/layout/GlassAppShell';
 import { VStack, HStack } from '../../../components/layout/GlassStack';
 import { GlassCard } from '../../../components/card/GlassCard';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface FormStep {
   id: string;

@@ -1,8 +1,8 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef } from 'react';
-import { OptimizedGlass, type OptimizedGlassProps } from '../../primitives/glass/OptimizedGlass';
+import { OptimizedGlassCore as OptimizedGlass, type OptimizedGlassProps } from '../../primitives';
 
 export interface GlassCardProps extends Omit<OptimizedGlassProps, 'variant'> {
   /**

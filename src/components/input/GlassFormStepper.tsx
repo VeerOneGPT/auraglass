@@ -1,13 +1,13 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import {
     AlertCircle,
     Check,
     Circle
 } from 'lucide-react';
 import React from 'react';
-import { Motion } from '../../primitives/motion/Motion';
+import { Motion } from '../../primitives';
 
 export interface FormStep {
     id: string;

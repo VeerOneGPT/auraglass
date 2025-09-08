@@ -32,12 +32,11 @@ const ImageListItemBarRoot = styled.div<{
   /* Glass styling */
   ${props =>
     props.$glass &&
-    glassSurface({
-      elevation: 1,
-      blurStrength: 'medium',
-      borderOpacity: 'light',
-      themeContext: createThemeContext(props.theme),
-    })}
+    `
+      ${glassSurface.background};
+      ${glassSurface.backdropFilter};
+      ${glassSurface.border};
+    `}
   
   /* Base styling */
   background-color: ${props => (props.$glass ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.5)')};

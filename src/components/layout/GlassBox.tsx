@@ -289,13 +289,11 @@ const StyledBox = styled.div<{
   /* Glass effect */
   ${props =>
     props.$glass &&
-    glassSurface({
-      elevation: props.$elevation || 1,
-      blurStrength: 'standard',
-      backgroundOpacity: 'light',
-      borderOpacity: 'subtle',
-      themeContext: createThemeContext((props as any).theme),
-    })}
+    `
+      ${glassSurface.background};
+      ${glassSurface.backdropFilter};
+      ${glassSurface.border};
+    `}
 `;
 
 /**

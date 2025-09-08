@@ -2,7 +2,7 @@
  * Motion primitive exports
  */
 
-export { Motion } from './Motion';
-export type { MotionProps, AnimationPreset, AnimationEasing } from './Motion';
+export { MotionFramer as Motion } from './MotionFramer';
+export type { MotionProps, AnimationPreset, AnimationEasing } from './MotionFramer';
 
 export * from './presets';

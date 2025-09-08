@@ -2,9 +2,9 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { OptimizedGlass } from '../../primitives';
 
 export interface AccordionItem {
   /**

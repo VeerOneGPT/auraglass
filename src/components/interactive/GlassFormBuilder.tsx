@@ -3,9 +3,9 @@
 import { GlassButton } from '../button/GlassButton';
 import { GlassInput } from '../input/GlassInput';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useCallback, useState } from 'react';
-import { Motion } from '../../primitives/motion/Motion';
+import { Motion } from '../../primitives';
 import { GlassCard } from '../card/GlassCard';
 import { GlassBadge } from '../data-display/GlassBadge';
 import { GlassTextArea } from '../input/GlassInput';

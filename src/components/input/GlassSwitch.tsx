@@ -2,9 +2,9 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useId } from 'react';
-import { Motion } from '../../primitives/motion/Motion';
+import { Motion } from '../../primitives';
 
 export interface GlassSwitchProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onChange'> {
   /** Whether the switch is checked */

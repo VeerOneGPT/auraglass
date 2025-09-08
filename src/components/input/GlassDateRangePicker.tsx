@@ -1,9 +1,9 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import { Calendar, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
-import { Motion } from '../../primitives/motion/Motion';
+import { Motion } from '../../primitives';
 import { GlassButton } from '../button';
 import { CardContent, GlassCard } from '../card';
 

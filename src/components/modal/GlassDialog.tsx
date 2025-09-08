@@ -1,10 +1,10 @@
 'use client';
 
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 import { X } from 'lucide-react';
 import React, { forwardRef, useEffect, useState } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
-import { Motion } from '../../primitives/motion/Motion';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
 import { GlassButton } from '../button/GlassButton';
 
 export interface GlassDialogProps {

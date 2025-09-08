@@ -1,9 +1,9 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useEffect, useState } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
-import { Motion } from '../../primitives/motion/Motion';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
 import { GlassContainer } from './GlassContainer';
 import { VStack } from './GlassStack';
 

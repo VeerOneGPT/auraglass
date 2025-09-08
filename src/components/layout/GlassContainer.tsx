@@ -1,8 +1,8 @@
 'use client';
 
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { OptimizedGlass } from '../../primitives';
 
 export interface GlassContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   /**

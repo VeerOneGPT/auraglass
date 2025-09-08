@@ -15,7 +15,7 @@ import {
     X
 } from 'lucide-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { cn } from '../../../lib/utils';
+import { cn } from '../../lib/utilsComprehensive';
 import { GlassButton } from '../button/GlassButton';
 import { GlassInput } from '../input/GlassInput';
 

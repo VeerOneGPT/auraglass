@@ -1,5 +1,5 @@
 import React from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { OptimizedGlass } from '../../primitives';
 
 export type SkeletonVariant = 'text' | 'rectangular' | 'circular' | 'rounded';
 

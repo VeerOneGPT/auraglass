@@ -11,8 +11,8 @@ interface GlassStepLabelProps {
 }
 
 const StepLabelContainer = styled(Box)<{ $orientation: 'horizontal' | 'vertical' }>`
-  margin-left: ${props => props.$orientation === 'horizontal' ? (props.theme.spacing?.md ?? 8)+'px' : '0'};
-  margin-top: ${props => props.$orientation === 'vertical' ? (props.theme.spacing?.sm ?? 4)+'px' : '0'};
+  margin-left: ${props => props.$orientation === 'horizontal' ? '8px' : '0'};
+  margin-top: ${props => props.$orientation === 'vertical' ? '4px' : '0'};
 `;
 
 export const GlassStepLabel: React.FC<GlassStepLabelProps> = ({ 
@@ -27,8 +27,8 @@ export const GlassStepLabel: React.FC<GlassStepLabelProps> = ({
 
     return (
         <StepLabelContainer $orientation={orientation}>
-            <Typography 
-                variant={orientation === 'vertical' ? 'caption' : 'body2'} 
+            <Typography
+                variant={orientation === 'vertical' ? 'span' : 'p'}
                 color={active ? 'primary' : completed ? 'textPrimary' : 'textSecondary'}
                 style={{ 
                     fontWeight: active ? 'bold' : 'normal',

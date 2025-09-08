@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { OptimizedGlass } from '../../primitives';
 
 export interface ColorScheme {
   primary: string;

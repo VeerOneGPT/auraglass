@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 
 export interface AvatarItem { name: string; avatar?: string; status?: 'online'|'away'|'busy'|'offline' }
 export interface GlassAvatarGroupProps { users: AvatarItem[]; max?: number; size?: 'sm'|'md'|'lg'; className?: string }

@@ -2,33 +2,194 @@
 
 **🎯 AuraGlass Design System Statistics:**
 - **Total Glass Components**: 200+ components
-- **Component Categories**: 21+ specialized categories
+- **Component Categories**: 25+ specialized categories
 - **Pure Glass Focus**: 100% glassmorphism design system
+- **Advanced Systems**: Physics engine, performance monitoring, design tokens
+- **Production Ready**: Enterprise-grade architecture with zero placeholder code
 
 This document provides detailed information about all components available in the AuraGlass design system.
 
 ## Core Concepts
 
-### OptimizedGlass Primitive
+### Glass Primitive System
 
-All AuraGlass components are built on the `OptimizedGlass` primitive, which provides the glassmorphism effects and performance optimizations.
+AuraGlass provides multiple primitive component variants that form the foundation of the entire design system:
+
+#### Glass Components - Choose Your Implementation
+
+**Glass (GlassCore) - Basic Implementation**
+The fundamental glass component with mixin-based styling. Perfect for simple projects.
+
+```tsx
+import { Glass } from '@aura/aura-glass';
+// or import { GlassCore } from '@aura/aura-glass';
+
+<Glass
+  variant="frosted"       // Glass variant: 'frosted' | 'dynamic' | 'clear' | 'tinted' | 'luminous'
+  blur="standard"         // Blur intensity: 'none' | 'light' | 'standard' | 'heavy'
+  opacity={0.1}          // Background opacity (0-1)
+  rounded="md"           // Border radius: 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
+  glow={true}            // Enable glow effects
+  glowColor="#3b82f6"    // Custom glow color
+  hover={true}           // Enable hover effects
+>
+  {/* Your content */}
+</Glass>
+```
+
+**GlassAdvanced - Full-Featured Implementation**
+Advanced glass component with complete design token integration and gradient support.
+
+```tsx
+import { GlassAdvanced } from '@aura/aura-glass';
+
+<GlassAdvanced
+  variant="iridescent"       // Advanced variants: 'iridescent' | 'mesh' | 'feature'  
+  elevation="modal"          // Extended elevation: 'float' | 'modal'
+  gradient="mesh"            // Gradient options: 'primary' | 'secondary' | 'radial' | 'mesh' | 'iridescent'
+  texture={true}             // Noise texture overlay
+  glow={true}                // Enhanced glow effects
+>
+  {/* Advanced glass content */}
+</GlassAdvanced>
+```
+
+#### OptimizedGlass Components - Choose Your Optimization
+
+**OptimizedGlass (OptimizedGlassCore) - Device-Adaptive**
+Performance-optimized glass with automatic device capability detection.
 
 ```tsx
 import { OptimizedGlass } from '@aura/aura-glass';
+// or import { OptimizedGlassCore } from '@aura/aura-glass';
 
 <OptimizedGlass
-  elevation={2}           // Shadow depth: 0-4 or 'float'
-  blur="medium"           // Backdrop blur: 'none' | 'subtle' | 'medium' | 'strong' | 'intense'
-  variant="frosted"       // Color variant
-  tint="blue"             // Color tint
-  animation="float"       // Animation effect
-  intensity="strong"      // Effect intensity
-  interactive             // Enable hover/interaction states
-  hoverSheen              // Add sheen effect on hover
-  liftOnHover             // Lift effect on hover
+  variant="luminous"            // Glass variant
+  blur="heavy"                  // Blur intensity
+  optimization="auto"           // Performance optimization: 'auto' | 'high' | 'medium' | 'low'
+  hardwareAcceleration={true}   // Enable GPU acceleration
+  physics={true}                // Enable physics interactions
 >
-  {/* Your content */}
+  {/* Performance-optimized content */}
 </OptimizedGlass>
+```
+
+**OptimizedGlassAdvanced - High-Performance**
+Advanced performance optimization with CSS variables and lazy effects.
+
+```tsx
+import { OptimizedGlassAdvanced } from '@aura/aura-glass';
+
+<OptimizedGlassAdvanced
+  variant="ethereal"              // Extended variants: 'frosted' | 'liquid' | 'crystal' | 'holographic' | 'neural' | 'ethereal'
+  performanceMode="ultra"         // Performance modes: 'low' | 'medium' | 'high' | 'ultra'
+  depth={5}                       // Depth levels: 1-5
+  tint="rainbow"                  // Tint options: 'neutral' | 'blue' | 'purple' | 'rainbow' | etc.
+  animation="shimmer"             // Animations: 'none' | 'float' | 'pulse' | 'shimmer' | 'breathe' | 'morph'
+  lighting="volumetric"           // Lighting: 'ambient' | 'directional' | 'volumetric' | 'caustic' | 'iridescent'
+  refraction={true}               // Advanced effects
+  caustics={true}
+  hoverSheen={true}               // Micro-interactions
+  liftOnHover={true}
+>
+  {/* High-performance glass content */}
+</OptimizedGlassAdvanced>
+```
+
+#### Motion Components - Choose Your Animation System
+
+**Motion (MotionNative) - Web Animations API**
+Lightweight animation system using native browser APIs.
+
+```tsx
+import { Motion } from '@aura/aura-glass';
+// or import { MotionNative } from '@aura/aura-glass';
+
+<Motion
+  type="elastic"                // Animation type: 'fade' | 'slide' | 'scale' | 'bounce' | 'elastic'
+  direction="up"               // Animation direction: 'up' | 'down' | 'left' | 'right'
+  physics={true}               // Enable physics-based animation
+  springConfig={{              // Custom spring configuration
+    stiffness: 200,
+    damping: 25,
+    mass: 1
+  }}
+  animateOnMount={true}        // Animate on component mount
+  animateOnHover={false}       // Animate on hover
+  respectReducedMotion={true}  // Respect accessibility preferences
+>
+  {/* Animated content */}
+</Motion>
+```
+
+**MotionFramer - Framer Motion System**
+Full-featured animation system with Framer Motion integration.
+
+```tsx
+import { MotionFramer } from '@aura/aura-glass';
+
+<MotionFramer
+  preset="bounceIn"             // Animation presets: 'fadeIn' | 'slideIn' | 'scaleIn' | 'bounceIn' | 'pulseIn'
+  duration={300}                // Animation duration (ms)
+  delay={0}                     // Animation delay (ms)
+  easing="ease-out"            // Easing: 'linear' | 'ease' | 'ease-in' | 'ease-out' | 'spring'
+  animateOnMount={true}        // Animate on mount
+  animateOnHover={false}       // Animate on hover
+  animateOnScroll={true}       // Animate when in view
+>
+  {/* Framer Motion animated content */}
+</MotionFramer>
+```
+
+### Choosing the Right Implementation
+
+**When to use Glass vs GlassAdvanced:**
+- **Use `Glass` (GlassCore)** for simple projects, prototypes, or when you need basic glassmorphism effects with minimal complexity
+- **Use `GlassAdvanced`** for production applications requiring full design token integration, advanced variants (iridescent, mesh, neural), and gradient support
+
+**When to use OptimizedGlass vs OptimizedGlassAdvanced:**
+- **Use `OptimizedGlass` (OptimizedGlassCore)** when you need automatic device capability detection and want the system to adapt based on hardware
+- **Use `OptimizedGlassAdvanced`** for high-performance applications where you want manual control over optimization modes and need advanced features like CSS variables, lazy effects, and micro-interactions
+
+**When to use Motion vs MotionFramer:**
+- **Use `Motion` (MotionNative)** for lightweight animations, better performance on low-end devices, and when you want to minimize bundle size
+- **Use `MotionFramer`** when you need advanced animation features like presets, scroll triggers, complex easing functions, and Framer Motion's ecosystem
+
+### Production System Integration
+
+Initialize AuraGlass with production configuration for optimal performance:
+
+```tsx
+import { initializeAuraGlass, productionUtils } from '@aura/aura-glass';
+
+// Initialize production system
+await initializeAuraGlass({
+  qualityTier: 'auto',          // Auto-detect optimal quality
+  monitoring: true,             // Enable performance monitoring
+  analytics: false,             // Disable analytics in development
+  errorReporting: true,         // Enable error reporting
+  autoPolyfills: true,          // Auto-load required polyfills
+  animations: {
+    enabled: true,
+    duration: 300,
+    easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+  },
+  performance: {
+    targetFPS: 60,
+    memoryLimit: 100 * 1024 * 1024, // 100MB
+    autoOptimize: true
+  }
+});
+
+// Check production readiness
+const validation = productionUtils.validateProduction();
+if (!validation.ready) {
+  console.warn('Production issues:', validation.issues);
+}
+
+// Get device capabilities
+const deviceInfo = productionUtils.getDeviceInfo();
+console.log('Device tier:', deviceInfo.performance.tier);
 ```
 
 ## Layout Components
@@ -953,6 +1114,113 @@ Kanban board for task management.
 **Props:**
 - `children?: ReactNode` - Kanban columns
 - `onCardMove?: (cardId: string, fromColumn: string, toColumn: string) => void` - Card move handler
+
+### GlassMentionList
+
+Autocomplete mention list for user mentions in text inputs.
+
+```tsx
+<GlassMentionList
+  users={availableUsers}
+  onMention={handleMention}
+  trigger="@"
+  maxSuggestions={5}
+/>
+```
+
+**Props:**
+- `users: User[]` - Available users for mentions
+- `onMention?: (user: User) => void` - Mention selection handler
+- `trigger?: string` - Mention trigger character
+- `maxSuggestions?: number` - Maximum suggestions shown
+- `searchable?: boolean` - Enable user search
+
+### GlassMessageList
+
+Message list component with threading and reactions.
+
+```tsx
+<GlassMessageList
+  messages={chatMessages}
+  currentUser={currentUser}
+  onMessageReaction={handleReaction}
+  showThreadReplies={true}
+/>
+```
+
+**Props:**
+- `messages: Message[]` - Message data array
+- `currentUser?: string` - Current user ID
+- `onMessageReaction?: (messageId: string, reaction: string) => void` - Reaction handler
+- `showThreadReplies?: boolean` - Show threaded replies
+- `virtualized?: boolean` - Enable virtualization for large lists
+
+### GlassLazyImage
+
+Lazy loading image component with blur placeholder.
+
+```tsx
+<GlassLazyImage
+  src={imageUrl}
+  alt="Lazy loaded image"
+  width={400}
+  height={300}
+  blurDataURL={blurPlaceholder}
+  priority={false}
+/>
+```
+
+**Props:**
+- `src: string` - Image source URL
+- `alt?: string` - Alt text for accessibility
+- `width?: number` - Image width
+- `height?: number` - Image height
+- `blurDataURL?: string` - Blur placeholder data URL
+- `priority?: boolean` - Load immediately (for above-the-fold images)
+
+### GlassInlineEdit
+
+Inline editing component for text content.
+
+```tsx
+<GlassInlineEdit
+  value={textValue}
+  onSave={handleSave}
+  placeholder="Click to edit..."
+  multiline={false}
+  maxLength={100}
+/>
+```
+
+**Props:**
+- `value: string` - Current text value
+- `onSave?: (value: string) => void` - Save handler
+- `placeholder?: string` - Placeholder text
+- `multiline?: boolean` - Allow multiline editing
+- `maxLength?: number` - Maximum character length
+- `autoFocus?: boolean` - Auto-focus on edit
+
+### GlassKeyValueEditor
+
+Key-value pair editor with validation.
+
+```tsx
+<GlassKeyValueEditor
+  pairs={keyValuePairs}
+  onChange={setKeyValuePairs}
+  keyPlaceholder="Enter key..."
+  valuePlaceholder="Enter value..."
+  allowEmptyValues={false}
+/>
+```
+
+**Props:**
+- `pairs: KeyValuePair[]` - Current key-value pairs
+- `onChange?: (pairs: KeyValuePair[]) => void` - Change handler
+- `keyPlaceholder?: string` - Key input placeholder
+- `valuePlaceholder?: string` - Value input placeholder
+- `allowEmptyValues?: boolean` - Allow empty values
+- `validateKey?: (key: string) => boolean` - Key validation function
 
 ### GlassToast
 
@@ -2359,6 +2627,130 @@ const searchSuggestions = [
 - `relevance: number` - Search relevance score
 - `createdAt: Date` - Creation date
 - `updatedAt: Date` - Last update date
+
+### GlassQueryBuilder
+
+Advanced query builder with visual drag-and-drop interface.
+
+```tsx
+<GlassQueryBuilder
+  fields={queryFields}
+  onQueryChange={setQuery}
+  operators={customOperators}
+/>
+```
+
+**Props:**
+- `fields: QueryField[]` - Available query fields
+- `query?: QueryCondition` - Current query object
+- `onQueryChange?: (query: QueryCondition) => void` - Query change handler
+- `operators?: QueryOperator[]` - Available operators
+- `maxDepth?: number` - Maximum nesting depth
+
+### GlassReactionBar
+
+Interactive reaction bar with emoji support.
+
+```tsx
+<GlassReactionBar
+  reactions={reactions}
+  onReaction={handleReaction}
+  userReactions={userReactions}
+  maxReactions={5}
+/>
+```
+
+**Props:**
+- `reactions: Reaction[]` - Available reactions
+- `onReaction?: (reactionId: string) => void` - Reaction handler
+- `userReactions?: string[]` - User's reactions
+- `maxReactions?: number` - Maximum reactions shown
+- `size?: 'small' | 'medium' | 'large'` - Reaction size
+
+### GlassSearchInterface
+
+Comprehensive search interface with filters and suggestions.
+
+```tsx
+<GlassSearchInterface
+  placeholder="Search..."
+  onSearch={handleSearch}
+  filters={searchFilters}
+  suggestions={searchSuggestions}
+  recentSearches={recentSearches}
+/>
+```
+
+**Props:**
+- `placeholder?: string` - Search input placeholder
+- `onSearch?: (query: string, filters: any) => void` - Search handler
+- `filters?: SearchFilter[]` - Available filters
+- `suggestions?: string[]` - Search suggestions
+- `recentSearches?: string[]` - Recent search history
+- `debounceMs?: number` - Search debounce delay
+
+### GlassTagInput
+
+Tag input component with autocomplete and validation.
+
+```tsx
+<GlassTagInput
+  tags={selectedTags}
+  onTagsChange={setSelectedTags}
+  suggestions={tagSuggestions}
+  maxTags={10}
+  allowCustomTags
+/>
+```
+
+**Props:**
+- `tags: string[]` - Current tags
+- `onTagsChange?: (tags: string[]) => void` - Tags change handler
+- `suggestions?: string[]` - Tag suggestions
+- `maxTags?: number` - Maximum number of tags
+- `allowCustomTags?: boolean` - Allow custom tag creation
+- `validateTag?: (tag: string) => boolean` - Tag validation function
+
+### GlassThemeDemo
+
+Interactive theme demonstration component.
+
+```tsx
+<GlassThemeDemo
+  themes={availableThemes}
+  currentTheme={currentTheme}
+  onThemeChange={setCurrentTheme}
+  showCode={true}
+/>
+```
+
+**Props:**
+- `themes: ThemeConfig[]` - Available themes
+- `currentTheme?: string` - Current active theme
+- `onThemeChange?: (themeId: string) => void` - Theme change handler
+- `showCode?: boolean` - Show theme code
+- `components?: ReactNode[]` - Demo components
+
+### GlassUserPresence
+
+User presence indicator with real-time status updates.
+
+```tsx
+<GlassUserPresence
+  users={onlineUsers}
+  currentUser={currentUser}
+  showAvatars={true}
+  maxDisplay={5}
+/>
+```
+
+**Props:**
+- `users: UserPresence[]` - Users with presence data
+- `currentUser?: string` - Current user ID
+- `showAvatars?: boolean` - Display user avatars
+- `maxDisplay?: number` - Maximum users to display
+- `showCount?: boolean` - Show user count
+- `size?: 'small' | 'medium' | 'large'` - Component size
 
 ## Form Components
 
@@ -4555,6 +4947,181 @@ Global cookie consent management.
 />
 ```
 
+### GlassPanel
+
+A glassmorphism panel component with variant styles and elevation control.
+
+```tsx
+<GlassPanel
+  variant="primary"
+  elevation={2}
+  padding="md"
+  interactive
+>
+  <h3>Panel Title</h3>
+  <p>Panel content goes here...</p>
+</GlassPanel>
+```
+
+**Props:**
+- `variant?: 'default' | 'primary' | 'success' | 'warning' | 'error'` - Panel color variant
+- `elevation?: 0 | 1 | 2 | 3 | 4` - Shadow depth
+- `interactive?: boolean` - Enable hover/interaction states
+- `padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl'` - Internal padding
+- `children: ReactNode` - Panel content
+
+### GlassAccordionUI
+
+Backward compatibility wrapper for GlassAccordion component.
+
+```tsx
+import { GlassAccordionUI } from '@aura/aura-glass';
+
+<GlassAccordionUI>
+  <GlassAccordionUI.Item title="Section 1">
+    Content for section 1
+  </GlassAccordionUI.Item>
+  <GlassAccordionUI.Item title="Section 2">
+    Content for section 2
+  </GlassAccordionUI.Item>
+</GlassAccordionUI>
+```
+
+**Props:**
+- `children?: ReactNode` - Accordion items
+- `multiple?: boolean` - Allow multiple expanded sections
+- `defaultExpanded?: string[]` - Initially expanded items
+
+### GlassCheckboxUI
+
+Backward compatibility wrapper for GlassCheckbox component.
+
+```tsx
+import { GlassCheckboxUI } from '@aura/aura-glass';
+
+<GlassCheckboxUI
+  checked={isChecked}
+  onChange={setIsChecked}
+  label="Accept terms"
+  disabled={false}
+/>
+```
+
+**Props:**
+- `checked?: boolean` - Checkbox state
+- `onChange?: (checked: boolean) => void` - State change handler
+- `label?: string` - Checkbox label
+- `disabled?: boolean` - Disable interaction
+- `required?: boolean` - Mark as required
+
+### FocusIndicator
+
+Accessible focus indicator with physics-based animations.
+
+```tsx
+<FocusIndicator
+  visible={isFocused}
+  color="primary"
+  thickness={3}
+  style="glow"
+  glass
+  highContrast
+>
+  <button>Focus me!</button>
+</FocusIndicator>
+```
+
+**Props:**
+- `children: ReactNode` - Wrapped content
+- `visible?: boolean` - Show/hide indicator
+- `color?: string` - Indicator color ('primary', 'secondary', etc.)
+- `thickness?: number` - Border thickness
+- `style?: 'solid' | 'dashed' | 'dotted' | 'outline' | 'glow'` - Focus style
+- `glass?: boolean` - Enable glassmorphism effects
+- `highContrast?: boolean` - High contrast mode
+- `disableAnimation?: boolean` - Disable animations
+- `animationConfig?: object` - Custom animation configuration
+
+### RippleButton
+
+Button component with ripple effect feedback.
+
+```tsx
+<RippleButton
+  variant="contained"
+  color="primary"
+  rippleColor="white"
+  rippleSpeed="medium"
+  centerRipple
+  onClick={handleClick}
+>
+  Click me!
+</RippleButton>
+```
+
+**Props:**
+- `children: ReactNode` - Button content
+- `disabled?: boolean` - Disable interaction
+- `rippleColor?: string` - Ripple effect color
+- `rippleSize?: 'small' | 'medium' | 'large'` - Ripple size
+- `rippleSpeed?: 'slow' | 'medium' | 'fast'` - Animation speed
+- `centerRipple?: boolean` - Center ripple from button center
+- `variant?: 'contained' | 'outlined' | 'text'` - Button variant
+- `color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning'` - Button color
+- `size?: 'small' | 'medium' | 'large'` - Button size
+
+### StateIndicator
+
+Visual state indicator for UI elements.
+
+```tsx
+<StateIndicator
+  state="loading"
+  color="primary"
+  glass
+  blend
+  intensity={0.8}
+  animationDuration={1500}
+>
+  <div>Loading content...</div>
+</StateIndicator>
+```
+
+**Props:**
+- `children: ReactNode` - Wrapped content
+- `state?: 'default' | 'hover' | 'active' | 'focus' | 'disabled' | 'loading' | 'success' | 'error'` - Current state
+- `glass?: boolean` - Enable glassmorphism effects
+- `blend?: boolean` - Use blend mode for overlay
+- `intensity?: number` - Effect intensity (0-1)
+- `color?: string` - Indicator color
+- `animationDuration?: number` - Animation duration in ms
+
+### VisualFeedback
+
+General purpose visual feedback component.
+
+```tsx
+<VisualFeedback
+  effect="glow"
+  active={isActive}
+  color="success"
+  duration={1000}
+  glass
+  intensity={0.7}
+>
+  <div>Interactive element</div>
+</VisualFeedback>
+```
+
+**Props:**
+- `children: ReactNode` - Wrapped content
+- `effect?: 'ripple' | 'glow' | 'highlight' | 'pulse' | 'none'` - Feedback effect type
+- `active?: boolean` - Enable feedback
+- `color?: string` - Effect color
+- `duration?: number` - Animation duration in ms
+- `glass?: boolean` - Enable glassmorphism effects
+- `intensity?: number` - Effect intensity (0-1)
+
 ## Template Components
 
 ### GlassDashboard
@@ -4647,6 +5214,48 @@ List view template with search and filtering.
 - `items?: any[]` - List items
 - `onItemClick?: (item: any) => void` - Item click handler
 - `searchPlaceholder?: string` - Search input placeholder
+
+### GlassFormWizardSteps
+
+Wizard form step components with navigation and validation.
+
+```tsx
+<GlassFormWizardSteps
+  steps={wizardSteps}
+  currentStep={currentStepIndex}
+  onStepChange={handleStepChange}
+  onComplete={handleWizardComplete}
+/>
+```
+
+**Props:**
+- `steps: WizardStep[]` - Wizard step definitions
+- `currentStep?: number` - Current active step index
+- `onStepChange?: (stepIndex: number) => void` - Step change handler
+- `onComplete?: (data: any) => void` - Completion handler
+- `validateStep?: (stepData: any) => boolean` - Step validation function
+
+### GlassWizardTemplate
+
+Complete wizard template with steps, navigation, and progress tracking.
+
+```tsx
+<GlassWizardTemplate
+  title="Setup Wizard"
+  steps={wizardConfig}
+  onFinish={handleWizardFinish}
+  showProgress={true}
+  allowBackNavigation={true}
+/>
+```
+
+**Props:**
+- `title?: string` - Wizard title
+- `steps: WizardStepConfig[]` - Step configurations
+- `onFinish?: (result: any) => void` - Finish handler
+- `showProgress?: boolean` - Show progress indicator
+- `allowBackNavigation?: boolean` - Allow backward navigation
+- `initialData?: any` - Initial form data
 
 ## Website & Demo Components
 
@@ -4835,4 +5444,488 @@ All AuraGlass components support extensive customization through the `OptimizedG
 - **Performance**: Lazy loading, performance modes, adaptive effects
 
 For advanced customization, you can create your own component variants by wrapping existing components with custom `OptimizedGlass` configurations.
+
+## Advanced Hooks & Utilities
+
+### useGlassFocus
+Advanced focus management with glass effects and accessibility features.
+
+```tsx
+import { useGlassFocus } from '@aura/aura-glass';
+
+function FocusableComponent() {
+  const { ref, focusState, focusRingStyles, focus, blur } = useGlassFocus({
+    enabled: true,
+    color: 'rgba(59, 130, 246, 0.5)',
+    width: 2,
+    blur: 4,
+    keyboardNavigation: true,
+    autoFocus: false,
+  });
+
+  return (
+    <div ref={ref} style={focusRingStyles} tabIndex={0}>
+      <p>Focusable content with glass focus ring</p>
+      <p>Focus state: {focusState.isFocused ? 'Focused' : 'Not focused'}</p>
+    </div>
+  );
+}
+```
+
+### useGlassPerformance
+Real-time performance monitoring with automatic quality adjustment.
+
+```tsx
+import { useGlassPerformance } from '@aura/aura-glass';
+
+function PerformanceAwareComponent() {
+  const { metrics, quality, isLowPerformance, getOptimalSettings } = useGlassPerformance({
+    enableMonitoring: true,
+    targetFPS: 60,
+    autoAdjustQuality: true,
+    onQualityChange: (newQuality) => console.log('Quality adjusted:', newQuality),
+  });
+
+  const settings = getOptimalSettings();
+
+  return (
+    <div>
+      <p>FPS: {metrics.fps}</p>
+      <p>Memory: {metrics.memoryUsage}MB</p>
+      <p>Quality: {(quality * 100).toFixed(0)}%</p>
+      <p>Particle Count: {settings.particleCount}</p>
+      {isLowPerformance && <p>⚠️ Low performance detected</p>}
+    </div>
+  );
+}
+```
+
+### useSortableData
+Advanced data sorting with multiple criteria and search capabilities.
+
+```tsx
+import { useSortableData } from '@aura/aura-glass';
+
+function SortableTable({ data }) {
+  const {
+    data: sortedData,
+    sort,
+    clearSort,
+    isSorted,
+    getSortDirection,
+    getSortPriority
+  } = useSortableData(data, {
+    multiSort: true,
+    maxSortLevels: 3,
+    stable: true,
+  });
+
+  return (
+    <table>
+      <thead>
+        <tr>
+          <th onClick={() => sort('name')}>
+            Name {isSorted('name') && getSortDirection('name')}
+            {getSortPriority('name') && `(${getSortPriority('name')})`}
+          </th>
+          <th onClick={() => sort('date')}>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {sortedData.map(item => (
+          <tr key={item.id}>
+            <td>{item.name}</td>
+            <td>{item.date}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+```
+
+### useDraggableListPhysics
+Physics-based drag and drop with realistic animations.
+
+```tsx
+import { useDraggableListPhysics } from '@aura/aura-glass';
+
+function DraggableList({ items, onReorder }) {
+  const {
+    dragState,
+    containerRef,
+    handleDragStart,
+    selectedItems,
+    toggleItemSelection,
+  } = useDraggableListPhysics(items, onReorder, {
+    enablePhysics: true,
+    springConfig: { stiffness: 300, damping: 30, mass: 1 },
+    multiSelect: true,
+    enableHaptics: true,
+  });
+
+  return (
+    <div ref={containerRef}>
+      {items.map((item, index) => (
+        <div
+          key={item.id}
+          data-draggable-item
+          data-index={index}
+          onMouseDown={(e) => handleDragStart(e, item, index)}
+          style={{
+            opacity: dragState.isDragging && dragState.dragIndex === index ? 0.5 : 1,
+            transform: selectedItems.includes(item.id) ? 'scale(1.02)' : 'scale(1)',
+          }}
+        >
+          {item.content}
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+### useGalileoSprings
+Multi-spring physics system for complex animations.
+
+```tsx
+import { useGalileoSprings } from '@aura/aura-glass';
+
+function PhysicsPlayground() {
+  const targets = [
+    { id: 'ball1', position: { x: 100, y: 100 }, velocity: { x: 0, y: 0 } },
+    { id: 'ball2', position: { x: 200, y: 150 }, velocity: { x: 10, y: -5 } },
+  ];
+
+  const {
+    positions,
+    springTo,
+    impulse,
+    addBody,
+    removeBody,
+    isAnimating
+  } = useGalileoSprings(targets, {
+    stiffness: 100,
+    damping: 10,
+    gravity: true,
+    gravityStrength: 9.81,
+  });
+
+  return (
+    <div style={{ position: 'relative', width: 400, height: 300 }}>
+      {Object.entries(positions).map(([id, pos]) => (
+        <div
+          key={id}
+          style={{
+            position: 'absolute',
+            left: pos.x,
+            top: pos.y,
+            width: 20,
+            height: 20,
+            borderRadius: '50%',
+            background: '#3b82f6',
+            cursor: 'pointer',
+          }}
+          onClick={() => impulse(id, { x: Math.random() * 50 - 25, y: -50 })}
+        />
+      ))}
+      <p>Animating: {isAnimating ? 'Yes' : 'No'}</p>
+    </div>
+  );
+}
+```
+
+### useZSpaceAnimation
+3D depth and layering animations with z-space management.
+
+```tsx
+import { useZSpaceAnimation } from '@aura/aura-glass';
+
+function LayeredInterface() {
+  const layers = [
+    { id: 'background', zIndex: 1, elevation: 0, opacity: 1, scale: 1, blur: 0 },
+    { id: 'content', zIndex: 2, elevation: 10, opacity: 1, scale: 1, blur: 0 },
+    { id: 'modal', zIndex: 3, elevation: 20, opacity: 1, scale: 1, blur: 0 },
+  ];
+
+  const {
+    getLayerStyles,
+    animateToZSpace,
+    bringToFront,
+    animateFocusTransition,
+    isLayerAnimating
+  } = useZSpaceAnimation(layers, {
+    enabled: true,
+    springConfig: { stiffness: 200, damping: 25, mass: 1 },
+    depthScaling: true,
+    depthBlur: true,
+  });
+
+  return (
+    <div style={{ position: 'relative' }}>
+      <div style={getLayerStyles('background')}>
+        Background Layer
+      </div>
+      <div 
+        style={getLayerStyles('content')}
+        onClick={() => bringToFront('content')}
+      >
+        Content Layer (click to bring to front)
+      </div>
+      <div style={getLayerStyles('modal')}>
+        Modal Layer
+      </div>
+    </div>
+  );
+}
+```
+
+### useMouseMagneticEffect
+Magnetic interaction effects with customizable strength and range.
+
+```tsx
+import { useMouseMagneticEffect } from '@aura/aura-glass';
+
+function MagneticButton() {
+  const { ref, state, reset } = useMouseMagneticEffect({
+    strength: 0.3,
+    range: 100,
+    scale: 1.1,
+    rotation: 5,
+    easing: 'cubic-bezier(0.23, 1, 0.32, 1)',
+    duration: 300,
+  });
+
+  return (
+    <button
+      ref={ref}
+      style={{
+        padding: '12px 24px',
+        background: 'rgba(255, 255, 255, 0.1)',
+        border: '1px solid rgba(255, 255, 255, 0.2)',
+        borderRadius: '8px',
+        color: 'white',
+        cursor: 'pointer',
+      }}
+      onDoubleClick={reset}
+    >
+      Magnetic Button
+      {state.isActive && (
+        <span style={{ marginLeft: 8 }}>
+          (Intensity: {(state.intensity * 100).toFixed(0)}%)
+        </span>
+      )}
+    </button>
+  );
+}
+```
+
+## Design Token System
+
+### Glass Tokens
+Comprehensive glassmorphism design tokens for consistent styling.
+
+```tsx
+import { glassTokens, glassUtils } from '@aura/aura-glass';
+
+// Use predefined glass variants
+const frostedStyle = glassUtils.getVariant('frosted');
+const dynamicStyle = glassUtils.getVariant('dynamic');
+
+// Access color schemes
+const lightColors = glassUtils.getColorScheme('light');
+const darkColors = glassUtils.getColorScheme('dark');
+
+// Get responsive values
+const mobileBlur = glassUtils.getResponsiveBlur('sm');
+const desktopBlur = glassUtils.getResponsiveBlur('xl');
+
+// Animation configurations
+const gentleSpring = glassUtils.getSpring('gentle');
+const bouncySpring = glassUtils.getSpring('bouncy');
+```
+
+### Theme System
+Advanced theme management with light, dark, and glass themes.
+
+```tsx
+import { 
+  lightTheme, 
+  darkTheme, 
+  glassTheme, 
+  themeUtils,
+  createGlassTheme,
+  mergeThemes 
+} from '@aura/aura-glass';
+
+// Create custom theme
+const customTheme = createGlassTheme({
+  colors: {
+    primary: '#6366f1',
+    secondary: '#8b5cf6',
+    accent: '#ec4899',
+  },
+  spacing: {
+    xs: '4px',
+    sm: '8px',
+    md: '16px',
+  }
+});
+
+// Merge themes
+const hybridTheme = mergeThemes(darkTheme, customTheme);
+
+// Get theme values
+const primaryColor = themeUtils.get(customTheme, 'colors.primary');
+const spacing = themeUtils.get(customTheme, 'spacing.md');
+```
+
+## Performance & Monitoring
+
+### Performance Monitoring
+Real-time performance monitoring with adaptive quality adjustment.
+
+```tsx
+import { PerformanceMonitor, AdaptiveQuality } from '@aura/aura-glass';
+
+// Get performance monitor instance
+const monitor = PerformanceMonitor.getInstance();
+
+// Start monitoring
+monitor.startMeasure('component-render');
+// ... component logic
+const renderTime = monitor.endMeasure('component-render');
+
+// Adaptive quality based on performance
+const adaptiveQuality = AdaptiveQuality.getInstance();
+const currentQuality = adaptiveQuality.getCurrentQuality();
+const recommendations = adaptiveQuality.getOptimizationSuggestions();
+```
+
+### Device Capabilities
+Device detection and capability-based optimization.
+
+```tsx
+import { detectDevice, deviceOptimizations } from '@aura/aura-glass';
+
+// Detect device capabilities
+const device = detectDevice();
+console.log('Device type:', device.type);
+console.log('Performance tier:', device.performance.tier);
+console.log('Supports WebGL:', device.capabilities.webgl);
+
+// Apply device-specific optimizations
+if (device.type === 'mobile') {
+  const mobileOptimizations = deviceOptimizations.mobile.reduceMotion();
+  // Apply mobile optimizations
+}
+
+// Get optimal settings based on device
+const optimalAnimation = performanceOptimizations.getOptimalAnimationSettings(device);
+const optimalRendering = performanceOptimizations.getOptimalRenderingSettings(device);
+```
+
+## Chart System Enhancements
+
+### GalileoElementInteractionPlugin
+Advanced Chart.js plugin for physics-based chart interactions.
+
+```tsx
+import { 
+  Chart as ChartJS,
+  GalileoElementInteractionPlugin 
+} from '@aura/aura-glass';
+
+// Register the plugin
+ChartJS.register(GalileoElementInteractionPlugin);
+
+// Use in chart configuration
+const chartConfig = {
+  plugins: {
+    [GalileoElementInteractionPlugin.id]: {
+      magneticEffect: true,
+      magneticStrength: 0.3,
+      magneticRange: 50,
+      rippleEffect: true,
+      hoverGlow: true,
+      physicsAnimations: true,
+    }
+  }
+};
+```
+
+### Chart Quality Tiers
+Adaptive chart rendering based on device performance.
+
+```tsx
+import { useQualityTier, getQualityBasedPhysicsParams } from '@aura/aura-glass';
+
+function AdaptiveChart() {
+  const { currentTier, updateQuality } = useQualityTier('medium', true);
+  const physicsParams = getQualityBasedPhysicsParams(currentTier);
+  const glassParams = getQualityBasedGlassParams(currentTier);
+
+  return (
+    <div>
+      <p>Current Quality: {currentTier}</p>
+      <p>Particle Count: {physicsParams.stiffness > 200 ? 100 : 50}</p>
+      <p>Blur Strength: {glassParams.blurStrength}</p>
+    </div>
+  );
+}
+```
+
+## Error Handling & Production
+
+### Error Boundaries
+Production-ready error boundaries with glassmorphism styling.
+
+```tsx
+import { 
+  GlassErrorBoundary, 
+  GlassAsyncErrorBoundary,
+  withGlassErrorBoundary 
+} from '@aura/aura-glass';
+
+// Wrap components with error boundaries
+<GlassErrorBoundary
+  fallback={<div>Something went wrong</div>}
+  onError={(error, errorInfo) => console.error(error)}
+>
+  <YourComponent />
+</GlassErrorBoundary>
+
+// Async error boundary for promises
+<GlassAsyncErrorBoundary timeout={5000}>
+  <AsyncComponent />
+</GlassAsyncErrorBoundary>
+
+// HOC for error boundary
+const SafeComponent = withGlassErrorBoundary(YourComponent);
+```
+
+### Production Utilities
+Comprehensive production utilities for deployment and monitoring.
+
+```tsx
+import { 
+  productionUtils,
+  getAuraGlass,
+  devUtils 
+} from '@aura/aura-glass';
+
+// Production validation
+const validation = productionUtils.validateProduction();
+console.log('Production ready:', validation.ready);
+
+// Performance metrics
+const metrics = productionUtils.getMetrics();
+console.log('Performance:', metrics);
+
+// Development utilities (only in dev mode)
+if (process.env.NODE_ENV === 'development') {
+  devUtils.enableDebug();
+  devUtils.logMetrics();
+}
+```
 

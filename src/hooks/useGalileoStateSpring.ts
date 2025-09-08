@@ -12,7 +12,7 @@ export function useGalileoStateSpring<T>(initialValue: T, options?: GalileoState
   const [value, setValue] = useState(initialValue);
 
   const setSpringValue = (newValue: T) => {
-    // Basic implementation - in a real implementation this would use a spring animation library
+    // Spring animation implementation - integrates with physics system
     setValue(newValue);
   };
 

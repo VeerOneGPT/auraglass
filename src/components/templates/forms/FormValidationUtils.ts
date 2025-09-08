@@ -298,7 +298,9 @@ export const asyncValidation = {
         const isValid = await debouncedCheck(value);
         return isValid ? null : message;
       } catch (error) {
-        console.error('Async validation error:', error);
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Async validation error:', error);
+        }
         return 'Validation failed. Please try again.';
       }
     };

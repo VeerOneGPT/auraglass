@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef, AnchorHTMLAttributes } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utilsComprehensive";
 
 interface GlassLinkButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   variant?: "primary" | "secondary" | "ghost";

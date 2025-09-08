@@ -1,9 +1,9 @@
 'use client';
 
 import React, { forwardRef, useEffect, useState } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
-import { Motion } from '../../primitives/motion/Motion';
-import { cn } from '@/lib/utils';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface GlassProgressProps extends React.HTMLAttributes<HTMLDivElement> {
   /**

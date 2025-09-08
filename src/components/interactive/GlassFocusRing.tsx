@@ -1,6 +1,6 @@
 import React, { useRef, useMemo } from 'react';
-import { useGlassFocus } from '../../hooks/useGlassFocus';
-import type { GlassFocusRingProps } from '../../types/components';
+import { useGlassFocus } from '../../hooks/extended/useGlassFocus';
+import type { GlassFocusRingProps } from '../interactive/types';
 // No longer need mergeRefs if attaching ref to wrapper div
 // import { mergeRefs } from '../../utils/refUtils'; 
 
@@ -11,7 +11,7 @@ import type { GlassFocusRingProps } from '../../types/components';
 export const GlassFocusRing: React.FC<GlassFocusRingProps> = ({
   children,
     color,
-    variant,
+    ringStyle,
     offset,
     thickness,
     borderRadius,
@@ -23,37 +23,35 @@ export const GlassFocusRing: React.FC<GlassFocusRingProps> = ({
 
     const child = React.Children.only(children);
 
-    const focusVariant = variant || color || 'primary';
+    const focusVariant = ringStyle || color || 'primary';
 
     // Use the core hook, targeting the wrapper div
-    const { isFocused, focusRingProps } = useGlassFocus({
-        elementRef: wrapperRef, // Target the wrapper div
-        variant: focusVariant,
+    const { ref, focusState, focusRingStyles, focus, blur } = useGlassFocus({
+        color: focusVariant,
+        width: thickness || 2,
         offset,
-        thickness,
-        borderRadius,
-        disabled,
+        keyboardNavigation: true,
+        enabled: !disabled,
     });
 
   return (
-        // Wrapper div to capture focus and position the ring
-        <div 
+    // Wrapper div to capture focus and position the ring
+    <div
       ref={wrapperRef}
-            style={{ 
-                position: 'relative', // Needed for absolute positioning of the ring
-                display: 'inline-block', // Or 'block' depending on desired layout
-                outline: 'none', // Hide potential default outline on the wrapper
-            }}
-            // Important: Make the wrapper div focusable
-            // Use onFocus/onBlur on the wrapper to trigger the hook's internal logic.
-            // The hook itself adds the necessary listeners if elementRef is provided.
-            tabIndex={disabled ? -1 : 0} // Make focusable only if not disabled
-        >
-            {/* Render the original child inside the wrapper */} 
-            {child}
-            {/* Render the focus ring element */} 
-            {!disabled && <div data-testid="glass-focus-ring-element" {...focusRingProps} />} 
-        </div>
+      style={{
+        position: 'relative' as const, // Needed for absolute positioning of the ring
+        display: 'inline-block', // Or 'block' depending on desired layout
+        outline: 'none', // Hide potential default outline on the wrapper
+        ...focusRingStyles,
+      } as React.CSSProperties}
+      // Important: Make the wrapper div focusable
+      // Use onFocus/onBlur on the wrapper to trigger the hook's internal logic.
+      // The hook itself adds the necessary listeners if elementRef is provided.
+      tabIndex={disabled ? -1 : 0} // Make focusable only if not disabled
+    >
+      {/* Render the original child inside the wrapper */}
+      {child}
+    </div>
   );
 };
 

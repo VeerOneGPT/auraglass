@@ -1,2 +1,2 @@
-export { GlassCheckbox as Checkbox } from '@/design-system/components/input/GlassCheckbox';
-export type { GlassCheckboxProps as CheckboxProps } from '@/design-system/components/input/GlassCheckbox';
+export { GlassCheckbox as Checkbox } from '../input/GlassCheckbox';
+export type { GlassCheckboxProps as CheckboxProps } from '../input/GlassCheckbox';

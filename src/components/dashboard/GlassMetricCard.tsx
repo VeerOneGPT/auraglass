@@ -1,9 +1,9 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import { Activity, DollarSign, Minus, Target, TrendingDown, TrendingUp, Users } from 'lucide-react';
 import React from 'react';
-import { Motion } from '../../primitives/motion/Motion';
+import { Motion } from '../../primitives';
 import { CardContent, CardHeader, CardTitle, GlassCard } from '../card';
 
 export interface GlassMetricCardProps {

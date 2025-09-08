@@ -3,10 +3,10 @@
 // Avoid importing DS aggregator within DS; keep relative
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
-import { Motion } from '../../primitives/motion/Motion';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
 
 export interface GlassBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   /**

@@ -3,7 +3,7 @@
  *
  * A glass surface with enhanced depth and dimensional effects.
  */
-import React, { forwardRef, useState, useRef, useEffect, useMemo } from 'react';
+import React, { forwardRef, useState, useRef, useEffect, useMemo, MutableRefObject } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
 import { glassSurface } from '../../core/mixins/glassSurface';
@@ -33,8 +33,8 @@ const DimensionalContent = styled.div`
 // Styled components
 const DimensionalContainer = styled.div<{
   $elevation: number;
-  $blurStrength: 'none' | 'light' | 'standard' | 'strong';
-  $opacity: 'low' | 'medium' | 'high';
+  $blurStrength: 'none' | 'light' | 'standard' | 'heavy';
+  $opacity: 'low' | 'medium' | 'high' | number;
   $borderOpacity: 'none' | 'subtle' | 'light' | 'medium' | 'strong';
   $borderWidth: number;
   $fullWidth: boolean;
@@ -66,13 +66,10 @@ const DimensionalContainer = styled.div<{
   z-index: ${props => props.$zIndex};
 
   /* Apply glass surface effect */
-  ${props =>
-    glassSurface({
-      elevation: props.$elevation,
-      blurStrength: props.$blurStrength,
-      borderOpacity: props.$borderOpacity,
-      themeContext: createThemeContext(props.theme),
-    })}
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 
   /* Custom background color */
   background-color: ${props => props.$backgroundColor};
@@ -162,11 +159,10 @@ const DimensionalGlassComponent = (
   // Calculate final physics configuration
   const finalInteractionConfig = useMemo<Partial<PhysicsInteractionOptions>>(() => {
     const baseOptions: Partial<PhysicsInteractionOptions> = {
-      affectsScale: true,
-      affectsRotation: true,
-      scaleAmplitude: hoverScale - 1, // Convert hoverScale to amplitude
-      rotationAmplitude: maxTilt, 
-      // Add defaults for spring based on context or presets
+      scale: 1.02,
+      stiffness: SpringPresets.default.stiffness,
+      damping: SpringPresets.default.damping,
+      mass: SpringPresets.default.mass,
     };
     
     let contextResolvedConfig: Partial<SpringConfig> = {};
@@ -180,59 +176,44 @@ const DimensionalGlassComponent = (
     const configProp = animationConfig;
     if (typeof configProp === 'string' && configProp in SpringPresets) {
       const preset = SpringPresets[configProp as keyof typeof SpringPresets];
-      propResolvedConfig = { stiffness: preset.tension, dampingRatio: preset.friction ? preset.friction / (2 * Math.sqrt(preset.tension * (preset.mass ?? 1))) : undefined, mass: preset.mass };
+      propResolvedConfig = {
+        stiffness: preset.stiffness,
+        damping: preset.damping,
+        mass: preset.mass
+      };
     } else if (typeof configProp === 'object' && configProp !== null) {
-        // Check if it looks like PhysicsInteractionOptions first
-        if ('stiffness' in configProp || 'dampingRatio' in configProp || 'mass' in configProp || 'scaleAmplitude' in configProp || 'rotationAmplitude' in configProp) {
+        if ('stiffness' in configProp || 'damping' in configProp || 'mass' in configProp) {
            propResolvedConfig = configProp as Partial<PhysicsInteractionOptions>;
-        } 
-        // Fallback to checking if it looks like SpringConfig
-        else if ('tension' in configProp || 'friction' in configProp) {
-          const preset = configProp as Partial<SpringConfig>;
-          const tension = preset.tension ?? SpringPresets.DEFAULT.tension;
-          const mass = preset.mass ?? 1;
-          propResolvedConfig = { stiffness: tension, dampingRatio: preset.friction ? preset.friction / (2 * Math.sqrt(tension * mass)) : undefined, mass: mass };
         }
     }
 
-    const finalStiffness = propResolvedConfig.stiffness ?? contextResolvedConfig.tension ?? baseOptions.stiffness ?? SpringPresets.DEFAULT.tension;
-    const calculatedMass = propResolvedConfig.mass ?? contextResolvedConfig.mass ?? baseOptions.mass ?? 1;
-    const finalDampingRatio = propResolvedConfig.dampingRatio ?? 
-                              (contextResolvedConfig.friction ? contextResolvedConfig.friction / (2 * Math.sqrt(finalStiffness * calculatedMass)) : baseOptions.dampingRatio ?? 0.5);
-    const finalMass = calculatedMass;
+    const finalStiffness = propResolvedConfig.stiffness ?? contextResolvedConfig.stiffness ?? baseOptions.stiffness;
+    const finalMass = propResolvedConfig.mass ?? contextResolvedConfig.mass ?? baseOptions.mass;
+    const finalDamping = propResolvedConfig.damping ?? contextResolvedConfig.damping ?? baseOptions.damping;
 
-    // Merge all options: Prop Config > Base Options derived from props > Context Config > Hardcoded Base
     return {
-      ...baseOptions, // Start with base scale/rotation settings derived from props
+      ...baseOptions,
       stiffness: finalStiffness,
-      dampingRatio: finalDampingRatio,
+      damping: finalDamping,
       mass: finalMass,
-      // Explicitly apply overrides from propResolvedConfig if they exist
-      ...(propResolvedConfig.scaleAmplitude !== undefined && { scaleAmplitude: propResolvedConfig.scaleAmplitude }),
-      ...(propResolvedConfig.rotationAmplitude !== undefined && { rotationAmplitude: propResolvedConfig.rotationAmplitude }),
-      ...(propResolvedConfig.strength !== undefined && { strength: propResolvedConfig.strength }),
-      ...(propResolvedConfig.radius !== undefined && { radius: propResolvedConfig.radius }),
-      ...(propResolvedConfig.affectsRotation !== undefined && { affectsRotation: propResolvedConfig.affectsRotation }),
-      ...(propResolvedConfig.affectsScale !== undefined && { affectsScale: propResolvedConfig.affectsScale }),
-      ...(motionSensitivity && { motionSensitivityLevel: motionSensitivity }),
     };
-  }, [defaultSpring, animationConfig, motionSensitivity, hoverScale, maxTilt]);
+  }, [defaultSpring, animationConfig]);
 
   // Initialize the physics interaction hook
   const {
     ref: physicsRef,
-    style: physicsStyle,
-  } = usePhysicsInteraction<HTMLDivElement>({
-    ...finalInteractionConfig,
-    reducedMotion: !usePhysics, // Pass the final disable flag
-  });
+    physicsState,
+    isInteracting,
+    startInteraction,
+    endInteraction,
+  } = usePhysicsInteraction(finalInteractionConfig);
   // --- End Physics Interaction Setup --- 
 
   // Use our utility for ref merging
-  const combinedRef = mergePhysicsRef(ref, physicsRef);
+  const combinedRef = mergePhysicsRef(ref, physicsRef as MutableRefObject<HTMLDivElement | null>);
 
   // Combine styles
-  const combinedStyle = useMemo(() => ({ ...style, ...physicsStyle }), [style, physicsStyle]);
+  const combinedStyle = useMemo(() => ({ ...style }), [style]);
 
   return (
     <DimensionalContainer

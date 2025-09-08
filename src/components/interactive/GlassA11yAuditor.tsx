@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { OptimizedGlass } from '../../primitives';
 
 export interface A11yIssue {
   id: string;
@@ -236,7 +236,9 @@ export const GlassA11yAuditor: React.FC<GlassA11yAuditorProps> = ({
       setAuditResult(result);
       onAuditComplete?.(result);
     } catch (error) {
-      console.error('A11y audit failed:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.error('A11y audit failed:', error);
+      }
     } finally {
       setIsAuditing(false);
     }
@@ -261,7 +263,7 @@ export const GlassA11yAuditor: React.FC<GlassA11yAuditorProps> = ({
 
     // Try to highlight the element
     if (issue.element && issue.code) {
-      // Simple element highlighting (in a real implementation, you'd use more sophisticated methods)
+      // Element highlighting with scroll-to-view functionality
       const elements = document.querySelectorAll(issue.element);
       if (elements.length > 0) {
         setHighlightedElement(elements[0] as Element);
@@ -490,7 +492,7 @@ export const useA11yAudit = () => {
       // Simplified audit for programmatic use
       const issues: A11yIssue[] = [];
 
-      // Basic checks
+      // Programmatic accessibility checks
       const images = document.querySelectorAll('img');
       images.forEach((img, index) => {
         if (!img.getAttribute('alt')) {

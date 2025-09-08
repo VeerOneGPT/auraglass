@@ -12,7 +12,20 @@ import { useGalileoStateSpring, GalileoStateSpringOptions } from '../../hooks/us
 import { useAnimationContext } from '../../contexts/AnimationContext';
 import { SpringConfig, SpringPresets } from '../../animations/physics/springPhysics';
 
-import { CompactCookieNoticeProps } from './types';
+interface CompactCookieNoticeProps extends React.HTMLAttributes<HTMLDivElement> {
+  position?: 'bottom' | 'top' | 'bottom-left' | 'bottom-right' | 'top-left' | 'top-right';
+  glassIntensity?: number;
+  message?: string;
+  acceptText?: string;
+  declineText?: string;
+  moreInfoText?: string;
+  privacyPolicyUrl?: string;
+  onAccept?: () => void;
+  onDecline?: () => void;
+  onMoreInfo?: () => void;
+  theme?: any;
+  animate?: boolean;
+}
 
 // Cookie management utility
 const setCookie = (name: string, value: string, days: number): void => {
@@ -93,24 +106,15 @@ const StyledCompactCookieNotice = styled.div<{
     }
   }}
 
-  ${({ theme, $glassIntensity }) => {
-    const themeContext = createThemeContext(theme);
-    return glassSurface({
-      elevation: 2,
-      backgroundOpacity: 'medium',
-      blurStrength: 'medium',
-      themeContext,
-    });
-  }}
+  ${({ theme, $glassIntensity }) => `
+    ${glassSurface.background}
+    ${glassSurface.backdropFilter}
+    ${glassSurface.border}
+  `}
   
-  ${({ theme }) => {
-    const themeContext = createThemeContext(theme);
-    return glassBorder({
-      width: '1px',
-      opacity: 0.25,
-      themeContext,
-    });
-  }}
+  ${({ theme }) => `
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  `}
   
   @media (max-width: 600px) {
     flex-direction: column;
@@ -248,16 +252,16 @@ export const CompactCookieNotice = forwardRef<HTMLDivElement, CompactCookieNotic
         aria-hidden={!visible}
         {...rest}
       >
-        <Typography variant="body2" component="span">
+        <Typography variant="p">
           {message}
         </Typography>
 
         <ButtonGroup>
-          <Button variant="text" onClick={handleMoreInfo} size="small">
+          <Button variant="link" onClick={handleMoreInfo} size="sm">
             {moreInfoText}
           </Button>
 
-          <Button variant="contained" onClick={handleAccept} size="small">
+          <Button variant="primary" onClick={handleAccept} size="sm">
             {acceptText}
           </Button>
         </ButtonGroup>

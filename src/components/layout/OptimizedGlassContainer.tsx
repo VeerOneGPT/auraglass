@@ -1,34 +1,51 @@
 import React, { forwardRef, useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 
-import { glassBorder } from '../../core/mixins/glassBorder';
 import { glassSurface } from '../../core/mixins/glassSurface';
-import { createThemeContext } from '../../core/themeUtils';
-import { useGlassPerformance } from '../../hooks/useGlassPerformance';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import { detectFeatures, GLASS_REQUIREMENTS } from '../../utils/browserCompatibility';
-import { getDeviceCapabilityTier, DeviceCapabilityTier } from '../../utils/deviceCapabilities';
-import { OptimizationLevel } from '../../utils/performanceOptimizations';
 import { Box } from './Box';
 
-import { OptimizedGlassContainerProps } from './types';
+// Types
+export enum OptimizationLevel {
+  NONE = 'none',
+  LIGHT = 'light',
+  MODERATE = 'moderate',
+  HEAVY = 'heavy',
+  MAXIMUM = 'heavy',
+  AGGRESSIVE = 'heavy'
+}
+
+export interface OptimizedGlassContainerProps {
+  children?: React.ReactNode;
+  initialOptimizationLevel?: 'none' | 'light' | 'moderate' | 'heavy';
+  autoOptimize?: boolean;
+  performanceThreshold?: number;
+  glassIntensity?: number;
+  className?: string;
+  style?: React.CSSProperties;
+  targetFps?: number;
+  checkInterval?: number;
+  showIndicator?: boolean;
+  preferReducedMotion?: boolean;
+  preserveBlur?: boolean;
+  onOptimizationChange?: (level: string) => void;
+  maxOptimizationLevel?: 'none' | 'light' | 'moderate' | 'heavy';
+}
 
 // Styled components
 const Container = styled.div<{
-  $optimizationLevel: OptimizationLevel;
+  $optimizationLevel: 'none' | 'light' | 'moderate' | 'heavy';
   $glassIntensity: number;
   $preserveBlur: boolean;
 }>`
   position: relative;
 
-  ${({ theme, $glassIntensity, $optimizationLevel, $preserveBlur }) => {
-    const themeContext = createThemeContext(theme);
-
+  ${({ $glassIntensity, $optimizationLevel, $preserveBlur }) => {
     // Apply different glass effects based on optimization level
     let glassOptions;
 
     switch ($optimizationLevel) {
-      case OptimizationLevel.NONE:
+      case 'none':
         glassOptions = {
           intensity: $glassIntensity,
           backgroundOpacity: 0.6,
@@ -36,7 +53,7 @@ const Container = styled.div<{
         };
         break;
 
-      case OptimizationLevel.LIGHT:
+      case 'light':
         glassOptions = {
           intensity: $glassIntensity * 0.8,
           backgroundOpacity: 0.65,
@@ -44,7 +61,7 @@ const Container = styled.div<{
         };
         break;
 
-      case OptimizationLevel.MODERATE:
+      case 'moderate':
         glassOptions = {
           intensity: $glassIntensity * 0.6,
           backgroundOpacity: 0.7,
@@ -52,20 +69,11 @@ const Container = styled.div<{
         };
         break;
 
-      case OptimizationLevel.AGGRESSIVE:
+      case 'heavy':
         glassOptions = {
           intensity: $glassIntensity * 0.4,
           backgroundOpacity: 0.8,
           blurStrength: $preserveBlur ? 4 : 2,
-        };
-        break;
-
-      case OptimizationLevel.MAXIMUM:
-        // In maximum optimization, we use barely any glass effects
-        glassOptions = {
-          intensity: $glassIntensity * 0.2,
-          backgroundOpacity: 0.9,
-          blurStrength: $preserveBlur ? 2 : 0,
         };
         break;
 
@@ -77,25 +85,22 @@ const Container = styled.div<{
         };
     }
 
-    return glassSurface({
-      ...glassOptions,
-      themeContext,
-    });
+    return `
+    background: rgba(255, 255, 255, ${glassOptions.backgroundOpacity});
+    backdrop-filter: blur(${glassOptions.blurStrength}px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    `;
   }}
 
-  ${({ theme, $optimizationLevel }) => {
-    const themeContext = createThemeContext(theme);
-
+  ${({ $optimizationLevel }) => {
     // Only apply border effects for lower optimization levels
-    if ($optimizationLevel === OptimizationLevel.MAXIMUM) {
+    if ($optimizationLevel === 'heavy') {
       return '';
     }
 
-    return glassBorder({
-      width: '1px',
-      opacity: $optimizationLevel === OptimizationLevel.AGGRESSIVE ? 0.2 : 0.3,
-      themeContext,
-    });
+    return `
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    `;
   }}
   
   /* Ensure smooth transitions between optimization levels */
@@ -128,7 +133,7 @@ export const OptimizedGlassContainer = forwardRef<HTMLDivElement, OptimizedGlass
   (
     {
       children,
-      initialOptimizationLevel = OptimizationLevel.NONE,
+      initialOptimizationLevel = 'none',
       autoOptimize = true,
       performanceThreshold = 45,
       glassIntensity = 0.7,
@@ -140,25 +145,20 @@ export const OptimizedGlassContainer = forwardRef<HTMLDivElement, OptimizedGlass
       preferReducedMotion = true,
       preserveBlur = false,
       onOptimizationChange,
-      maxOptimizationLevel = OptimizationLevel.MAXIMUM,
+      maxOptimizationLevel = 'heavy',
       ...rest
-    }: OptimizedGlassContainerProps,
+    }: any,
     ref
   ) => {
     // State
     const [optimizationLevel, setOptimizationLevel] =
-      useState<OptimizationLevel>(initialOptimizationLevel);
+      useState<'none' | 'light' | 'moderate' | 'heavy'>(initialOptimizationLevel || 'none');
     const [fps, setFps] = useState<number>(0);
 
     // Refs
     const frameCountRef = useRef(0);
     const lastTimeRef = useRef(performance.now());
     const checkIntervalRef = useRef<NodeJS.Timeout | null>(null);
-
-    // Get glass performance metrics
-    const glassPerformance = useGlassPerformance({
-      // Remove unsupported properties
-    });
 
     // Check if user prefers reduced motion
     const prefersReducedMotion = useReducedMotion();
@@ -167,8 +167,8 @@ export const OptimizedGlassContainer = forwardRef<HTMLDivElement, OptimizedGlass
     useEffect(() => {
       // If user prefers reduced motion, set higher optimization
       if (preferReducedMotion && prefersReducedMotion) {
-        // Set aggressive optimization for reduced motion users
-        const reducedMotionLevel = OptimizationLevel.AGGRESSIVE;
+        // Set higher optimization for reduced motion users
+        const reducedMotionLevel = 'heavy';
         setOptimizationLevel(reducedMotionLevel);
 
         if (onOptimizationChange) {
@@ -178,36 +178,17 @@ export const OptimizedGlassContainer = forwardRef<HTMLDivElement, OptimizedGlass
         return;
       }
 
-      // Check device capability and browser support with proper type safety
-      const deviceTier = getDeviceCapabilityTier();
-
-      // Use type assertions and optional chaining for safer access
-      const browserFeatures = detectFeatures();
-      const browserSupport = (browserFeatures as any)?.meetsRequirements?.(
-        (GLASS_REQUIREMENTS as any)?.FULL
-      );
-
-      // Set initial optimization level based on device capability
-      let initialLevel = initialOptimizationLevel;
+      // Simplified device capability check
+      let initialLevel = initialOptimizationLevel || 'none';
 
       if (autoOptimize) {
-        if (!browserSupport) {
-          // If browser doesn't fully support glass effects, use aggressive optimization
-          initialLevel = OptimizationLevel.AGGRESSIVE;
-        } else if (deviceTier === DeviceCapabilityTier.LOW) {
-          // For low-end devices, use aggressive optimization
-          initialLevel = OptimizationLevel.AGGRESSIVE;
-        } else if (deviceTier === DeviceCapabilityTier.MEDIUM) {
+        // Simplified auto-optimization logic
+        if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+          // For low-end devices, use higher optimization
+          initialLevel = 'heavy';
+        } else if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 8) {
           // For mid-range devices, use moderate optimization
-          initialLevel = OptimizationLevel.MODERATE;
-        }
-
-        // Ensure we don't exceed the maximum allowed level
-        if (
-          initialLevel === OptimizationLevel.MAXIMUM &&
-          maxOptimizationLevel !== OptimizationLevel.MAXIMUM
-        ) {
-          initialLevel = maxOptimizationLevel;
+          initialLevel = 'moderate';
         }
 
         setOptimizationLevel(initialLevel);
@@ -248,39 +229,28 @@ export const OptimizedGlassContainer = forwardRef<HTMLDivElement, OptimizedGlass
           // Adjust optimization based on FPS
           if (currentFps < performanceThreshold * 0.5) {
             // Severe performance issues - max optimization
-            newLevel = OptimizationLevel.MAXIMUM;
+            newLevel = 'heavy';
           } else if (currentFps < performanceThreshold * 0.7) {
-            // Significant performance issues - aggressive optimization
-            newLevel = OptimizationLevel.AGGRESSIVE;
+            // Significant performance issues - higher optimization
+            newLevel = 'heavy';
           } else if (currentFps < performanceThreshold) {
             // Moderate performance issues - moderate optimization
-            newLevel = OptimizationLevel.MODERATE;
-          } else if (currentFps > targetFps * 0.9 && optimizationLevel !== OptimizationLevel.NONE) {
+            newLevel = 'moderate';
+          } else if (currentFps > targetFps * 0.9 && optimizationLevel !== 'none') {
             // Good performance - gradually reduce optimization
             switch (optimizationLevel) {
-              case OptimizationLevel.MAXIMUM:
-                newLevel = OptimizationLevel.AGGRESSIVE;
+              case 'heavy':
+                newLevel = 'moderate';
                 break;
-              case OptimizationLevel.AGGRESSIVE:
-                newLevel = OptimizationLevel.MODERATE;
+              case 'moderate':
+                newLevel = 'light';
                 break;
-              case OptimizationLevel.MODERATE:
-                newLevel = OptimizationLevel.LIGHT;
-                break;
-              case OptimizationLevel.LIGHT:
-                newLevel = OptimizationLevel.NONE;
+              case 'light':
+                newLevel = 'none';
                 break;
               default:
-                newLevel = OptimizationLevel.NONE;
+                newLevel = 'none';
             }
-          }
-
-          // Ensure we don't exceed the maximum allowed level
-          if (
-            newLevel === OptimizationLevel.MAXIMUM &&
-            maxOptimizationLevel !== OptimizationLevel.MAXIMUM
-          ) {
-            newLevel = maxOptimizationLevel;
           }
 
           // Update optimization level if changed
@@ -328,8 +298,8 @@ export const OptimizedGlassContainer = forwardRef<HTMLDivElement, OptimizedGlass
 
     // Get status based on FPS and optimization level
     const getStatus = (): 'good' | 'warning' | 'critical' => {
-      if (optimizationLevel === OptimizationLevel.MAXIMUM) return 'critical';
-      if (optimizationLevel === OptimizationLevel.AGGRESSIVE) return 'warning';
+      if (optimizationLevel === 'heavy') return 'critical';
+      if (optimizationLevel === 'moderate') return 'warning';
       if (fps < performanceThreshold) return 'warning';
       return 'good';
     };

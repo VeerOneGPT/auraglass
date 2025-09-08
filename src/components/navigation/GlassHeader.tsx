@@ -1,12 +1,12 @@
 'use client';
 
-import { GlassButton } from '@/design-system';
+import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useRef, useState } from 'react';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
-import { Motion } from '../../primitives/motion/Motion';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
 import { IconButton } from '../button/GlassButton';
 import { GlassInput } from '../input/GlassInput';
 

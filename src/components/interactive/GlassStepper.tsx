@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 
 export interface Step { id: string; label: string; optional?: boolean }
 export interface GlassStepperProps { steps: Step[]; active: string; onChange?: (id:string)=>void; className?: string }

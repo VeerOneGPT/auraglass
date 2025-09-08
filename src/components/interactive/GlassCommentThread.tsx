@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { GlassButton } from '../button/GlassButton';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { OptimizedGlass } from '../../primitives';
 
 export interface Comment {
   id: string;

@@ -55,7 +55,7 @@ const WidgetGlassComponent = (
     borderWidth = 1,
     fullWidth = false,
     fullHeight = false,
-    borderRadius = 12,
+    borderRadius = 'md',
     interactive = true,
     padding = 16,
     widgetType = 'card',
@@ -86,7 +86,6 @@ const WidgetGlassComponent = (
       animate={animateOnMount}
       zIndex={priority === 'high' ? 10 : priority === 'low' ? 1 : 5}
       backgroundColor={backgroundColor}
-      {...rest}
     >
       {children}
     </DimensionalGlass>

@@ -1,9 +1,9 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import { GripVertical, Move } from 'lucide-react';
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { Motion } from '../../primitives/motion/Motion';
+import { Motion } from '../../primitives';
 
 export interface DragData {
     id: string;

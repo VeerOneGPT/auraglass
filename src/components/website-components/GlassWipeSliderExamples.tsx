@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import {
@@ -61,7 +61,12 @@ export function AuraOneVsScaleAIComparison({ className }: { className?: string }
         showMetrics={true}
         initialPosition={75}
         onPositionChange={setPosition}
-        onSnapToPreset={(preset) => console.log('Snapped to:', preset)}
+        onSnapToPreset={(preset) => {
+          // Handle preset snap - implement based on your needs
+          if (process.env.NODE_ENV === 'development') {
+            console.log('Snapped to:', preset);
+          }
+        }}
         className="h-[500px] shadow-2xl"
       />
 
@@ -258,14 +263,14 @@ export function ImageBeforeAfterComparison({ className }: { className?: string }
       <GlassWipeSlider
         beforeContent={
           <ComparisonImage
-            src="/api/placeholder/800/400"
+            src="data:image/svg+xml,%3Csvg width='800' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23666'%3EImage Content%3C/text%3E%3C/svg%3E"
             alt="Before optimization - noisy results"
             className="opacity-90"
           />
         }
         afterContent={
           <ComparisonImage
-            src="/api/placeholder/800/400"
+            src="data:image/svg+xml,%3Csvg width='800' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='%23f0f0f0'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23666'%3EImage Content%3C/text%3E%3C/svg%3E"
             alt="After optimization - clean results"
             loading="eager"
           />
@@ -372,7 +377,9 @@ export function PresetPositionDemo({ className }: { className?: string }) {
         initialPosition={currentPosition}
         onPositionChange={setCurrentPosition}
         onSnapToPreset={(preset) => {
-          console.log('Snapped to preset:', preset);
+          if (process.env.NODE_ENV === 'development') {
+            console.log('Snapped to preset:', preset);
+          }
           setActivePreset(preset);
           setTimeout(() => setActivePreset(null), 600);
         }}
@@ -432,6 +439,21 @@ export function GlassWipeSliderShowcase({ className }: { className?: string }) {
           Fully accessible with ARIA support and motion-aware animations.
         </div>
       </div>
+    </div>
+  );
+}
+
+// Main GlassWipeSliderExamples component
+export interface GlassWipeSliderExamplesProps {
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export function GlassWipeSliderExamples({ className, children }: GlassWipeSliderExamplesProps) {
+  return (
+    <div className={className}>
+      <GlassWipeSliderShowcase />
+      {children}
     </div>
   );
 }

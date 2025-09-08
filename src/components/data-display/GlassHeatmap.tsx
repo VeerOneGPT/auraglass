@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 
 export interface HeatmapCell { value: number; label?: string }
 export interface GlassHeatmapProps {

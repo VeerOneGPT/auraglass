@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 
 export interface CoachmarkStep { id: string; content: React.ReactNode }
 export interface GlassCoachmarksProps { steps: CoachmarkStep[]; current: number; onNext: ()=>void; onPrev: ()=>void; onClose: ()=>void }

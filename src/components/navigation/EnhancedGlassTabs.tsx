@@ -5,19 +5,11 @@
  * with glass morphism styling.
  */
 import React, { useState, useEffect, useRef, useCallback, forwardRef, useImperativeHandle } from 'react';
-import styled, { DefaultTheme } from 'styled-components';
-import { asCoreThemeContext } from '../../utils/themeHelpers';
-import { useTheme } from '../../theme';
-
-import { useMagneticButton } from '../../animations/hooks';
-import { cssWithKebabProps } from '../../core/cssUtils';
+import styled, { DefaultTheme, useTheme } from 'styled-components';
 import { glassSurface } from '../../core/mixins/glassSurface';
-import { 
-  glassGlow, 
-  GlowEffectProps 
+import {
+  glowEffects
 } from '../../core/mixins/glowEffects';
-import { interactiveGlass } from '../../core/mixins/interactions/interactiveGlass';
-import { createThemeContext } from '../../core/themeUtils';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 /**
@@ -160,12 +152,11 @@ const StyledTabsContainer = styled.div<{
 
   ${props =>
     props.variant !== 'text' &&
-    glassSurface({
-      elevation: props.variant === 'elevated' ? 2 : 1,
-      blurStrength: props.highContrast ? 'minimal' : 'light',
-      borderOpacity: props.variant === 'outlined' ? 'medium' : 'subtle',
-      themeContext: asCoreThemeContext(createThemeContext(props.theme)),
-    })}
+    `
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    `}
 
   ${props =>
     props.variant === 'text' &&
@@ -279,9 +270,9 @@ const StyledTab = styled.button<{
   transition: background-color 0.2s ease, color 0.2s ease;
 
   ${props => {
-    const colors = getTabColors(props.color, props.theme.isDarkMode, props.highContrast);
+    const colors = getTabColors(props.color, false, props.highContrast);
 
-    return cssWithKebabProps`
+    return `
       color: ${
         props.disabled
           ? colors.disabledText
@@ -289,14 +280,14 @@ const StyledTab = styled.button<{
           ? colors.activeText
           : colors.inactiveText
       };
-      
+
       backgroundColor: ${props.active ? colors.activeBg : 'transparent'};
-      
+
       &:hover:not(:disabled) {
         backgroundColor: ${!props.active ? colors.hoverBg : colors.activeBg};
         color: ${colors.activeText};
       }
-      
+
       &:focus-visible {
         boxShadow: 0 0 0 2px ${colors.activeColor}40;
       }
@@ -306,19 +297,18 @@ const StyledTab = styled.button<{
   ${props =>
     !props.disabled &&
     !props.active &&
-    interactiveGlass({
-      hoverEffect: 'brighten',
-      themeContext: asCoreThemeContext(createThemeContext(props.theme)),
-    })}
-  
+    `
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+    `}
+
   ${props =>
     props.active &&
     props.variant !== 'text' &&
-    glassGlow({
-      glowIntensity: 'subtle',
-      glowColor: props.color || 'primary',
-      themeContext: asCoreThemeContext(createThemeContext(props.theme)),
-    })}
+    `
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    `}
 `;
 
 /**
@@ -368,11 +358,9 @@ const StyledTabIndicator = styled.div<{
   `}
   
   ${props =>
-    glassGlow({
-      intensity: 'subtle',
-      color: props.color || 'primary',
-      themeContext: asCoreThemeContext(createThemeContext(props.theme)),
-    })}
+    `
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    `}
 `;
 
 /**

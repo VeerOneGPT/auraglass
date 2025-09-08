@@ -8,3 +8,14 @@ export const zSpaceLayers = {
 };
 
 export const getZSpaceLayer = (layer: keyof typeof zSpaceLayers) => zSpaceLayers[layer];
+
+// ZLayer enum for backwards compatibility
+export const ZLayer = {
+  Background: zSpaceLayers.background,
+  Content: zSpaceLayers.content,
+  Overlay: zSpaceLayers.overlay,
+  Modal: zSpaceLayers.modal,
+  Tooltip: zSpaceLayers.tooltip,
+} as const;
+
+export type ZLayerType = typeof ZLayer;

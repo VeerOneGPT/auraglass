@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/design-system/utils';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { cn } from '@/design-system/utilsCore';
+import { OptimizedGlass } from '../../primitives';
 
 export interface CommandItem {
   id: string;

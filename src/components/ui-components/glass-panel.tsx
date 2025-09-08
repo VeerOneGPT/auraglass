@@ -2,8 +2,8 @@
 
 import React from 'react';
 // PerformantGlass removed - using OptimizedGlass
-import { OptimizedGlass, OptimizedGlassProps } from '@/design-system/primitives/glass/OptimizedGlass';
-import { cn } from '@/lib/utils';
+import { OptimizedGlassCore as OptimizedGlass, OptimizedGlassProps } from '../../primitives/OptimizedGlassCore';
+import { cn } from '../../lib/utilsComprehensive';
 
 export interface GlassPanelProps extends Omit<OptimizedGlassProps, 'variant'> {
   /**
@@ -45,15 +45,15 @@ const GlassPanel = React.forwardRef<HTMLDivElement, GlassPanelProps>(
     const getGlassVariant = (): OptimizedGlassProps['variant'] => {
       switch (variant) {
         case 'primary':
-          return 'primary';
+          return 'metallic';
         case 'success':
-          return 'success';
+          return 'crystal';
         case 'warning':
-          return 'warning';
+          return 'tinted';
         case 'error':
-          return 'error';
+          return 'neon';
         default:
-          return 'default';
+          return 'frosted';
       }
     };
 

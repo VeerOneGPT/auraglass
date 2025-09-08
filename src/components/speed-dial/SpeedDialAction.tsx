@@ -4,7 +4,7 @@
  * An action button for the SpeedDial component.
  */
 import React, { forwardRef, useCallback, useState, useMemo } from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled, { css, useTheme } from 'styled-components';
 
 import { glassSurface } from '../../core/mixins/glassSurface';
 import { createThemeContext } from '../../core/themeContext';
@@ -85,12 +85,12 @@ const ActionRoot = styled.div<{
   /* Glass styling */
   ${props =>
     props.$glass &&
-    glassSurface({
-      elevation: 2,
-      blurStrength: 'light',
-      borderOpacity: 'medium',
-      themeContext: createThemeContext(props.theme),
-    })}
+    css`
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    `}
   
   /* Transitions */
   ${props =>
@@ -265,8 +265,10 @@ const SpeedDialActionComponent = (
   // Calculate final physics interaction config
   const finalInteractionConfig = useMemo<Partial<PhysicsInteractionOptions>>(() => {
     const baseOptions: Partial<PhysicsInteractionOptions> = {
-      affectsScale: true,
-      scaleAmplitude: 0.1, // Default scale amplitude for this component
+      scale: 1.02,
+      stiffness: SpringPresets.default.stiffness,
+      damping: SpringPresets.default.damping,
+      mass: SpringPresets.default.mass,
     };
     
     let contextResolvedConfig: Partial<SpringConfig> = {};
@@ -280,48 +282,36 @@ const SpeedDialActionComponent = (
     const configProp = animationConfig;
     if (typeof configProp === 'string' && configProp in SpringPresets) {
       const preset = SpringPresets[configProp as keyof typeof SpringPresets];
-      propResolvedConfig = { stiffness: preset.tension, dampingRatio: preset.friction ? preset.friction / (2 * Math.sqrt(preset.tension * (preset.mass ?? 1))) : undefined, mass: preset.mass };
+      propResolvedConfig = {
+        stiffness: preset.stiffness,
+        damping: preset.damping,
+        mass: preset.mass
+      };
     } else if (typeof configProp === 'object' && configProp !== null) {
-        // Check if it looks like PhysicsInteractionOptions first
-        if ('stiffness' in configProp || 'dampingRatio' in configProp || 'mass' in configProp || 'scaleAmplitude' in configProp || 'rotationAmplitude' in configProp) {
+        if ('stiffness' in configProp || 'damping' in configProp || 'mass' in configProp) {
            propResolvedConfig = configProp as Partial<PhysicsInteractionOptions>;
-        } 
-        // Fallback to checking if it looks like SpringConfig
-        else if ('tension' in configProp || 'friction' in configProp) {
-          const preset = configProp as Partial<SpringConfig>;
-          const tension = preset.tension ?? SpringPresets.DEFAULT.tension;
-          const mass = preset.mass ?? 1;
-          propResolvedConfig = { stiffness: tension, dampingRatio: preset.friction ? preset.friction / (2 * Math.sqrt(tension * mass)) : undefined, mass: mass };
         }
     }
 
-    const finalStiffness = propResolvedConfig.stiffness ?? contextResolvedConfig.tension ?? baseOptions.stiffness ?? SpringPresets.DEFAULT.tension;
-    const calculatedMass = propResolvedConfig.mass ?? contextResolvedConfig.mass ?? baseOptions.mass ?? 1;
-    const finalDampingRatio = propResolvedConfig.dampingRatio ?? 
-                              (contextResolvedConfig.friction ? contextResolvedConfig.friction / (2 * Math.sqrt(finalStiffness * calculatedMass)) : baseOptions.dampingRatio ?? 0.5);
-    const finalMass = calculatedMass;
+    const finalStiffness = propResolvedConfig.stiffness ?? contextResolvedConfig.stiffness ?? baseOptions.stiffness;
+    const finalMass = propResolvedConfig.mass ?? contextResolvedConfig.mass ?? baseOptions.mass;
+    const finalDamping = propResolvedConfig.damping ?? contextResolvedConfig.damping ?? baseOptions.damping;
 
-    // Merge all options: Prop Config > Base Options > Context Config > Hardcoded Base
     return {
-      ...baseOptions, // Start with base scale/rotation settings derived from props
+      ...baseOptions,
       stiffness: finalStiffness,
-      dampingRatio: finalDampingRatio,
+      damping: finalDamping,
       mass: finalMass,
-      // Explicitly apply overrides from propResolvedConfig if they exist
-      ...(propResolvedConfig.scaleAmplitude !== undefined && { scaleAmplitude: propResolvedConfig.scaleAmplitude }),
-      ...(propResolvedConfig.rotationAmplitude !== undefined && { rotationAmplitude: propResolvedConfig.rotationAmplitude }),
-      ...(propResolvedConfig.strength !== undefined && { strength: propResolvedConfig.strength }),
-      ...(propResolvedConfig.radius !== undefined && { radius: propResolvedConfig.radius }),
-      ...(propResolvedConfig.affectsRotation !== undefined && { affectsRotation: propResolvedConfig.affectsRotation }),
-      ...(propResolvedConfig.affectsScale !== undefined && { affectsScale: propResolvedConfig.affectsScale }),
-      ...(motionSensitivity && { motionSensitivityLevel: motionSensitivity }),
     };
   }, [defaultSpring, animationConfig, motionSensitivity]);
 
   const {
     ref: physicsRef,
-    style: physicsStyle,
-  } = usePhysicsInteraction<HTMLDivElement>(finalInteractionConfig);
+    physicsState,
+    isInteracting,
+    startInteraction,
+    endInteraction,
+  } = usePhysicsInteraction(finalInteractionConfig);
 
   const position = getPosition(direction, index, totalActions, size);
 
@@ -347,7 +337,7 @@ const SpeedDialActionComponent = (
     <ActionRoot
       ref={combinedRef}
       className={className}
-      style={{ ...style, ...physicsStyle }}
+      style={style}
       onClick={handleClick}
       $position={position}
       $visible={visible}

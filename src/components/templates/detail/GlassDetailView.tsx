@@ -1,14 +1,13 @@
 'use client';
 
-import { GlassButton } from '@/design-system';
-import { cn } from '@/lib/utils';
 import React, { forwardRef, useState } from 'react';
-import { IconButton } from '../../components/button/GlassButton';
-import { GlassCard } from '../../components/card/GlassCard';
-import { GlassBadge } from '../../components/data-display/GlassBadge';
-import { GlassGrid, GlassGridItem } from '../../components/layout/GlassGrid';
-import { HStack, VStack } from '../../components/layout/GlassStack';
-import { Motion } from '../../primitives/motion/Motion';
+import { GlassButton, IconButton } from '@/components/button';
+import { cn } from '@/lib/utilsComprehensive';
+import { GlassCard } from '@/components/card';
+import { GlassBadge } from '@/components/data-display';
+import { GlassGrid, GlassGridItem } from '@/components/layout';
+import { HStack, VStack } from '@/components/layout';
+import { Motion } from '@/primitives';
 
 export interface DetailField {
   id: string;
@@ -246,7 +245,7 @@ export const GlassDetailView = forwardRef<HTMLDivElement, GlassDetailViewProps>(
       const isExpanded = expandedSections.has(section.id);
 
       return (
-        <Motion key={section.id} preset="slideDown">
+        <Motion key={section.id} type="slide" direction="down">
           <GlassCard variant="default">
             {/* Section header */}
             <div
@@ -279,7 +278,7 @@ export const GlassDetailView = forwardRef<HTMLDivElement, GlassDetailViewProps>(
 
             {/* Section content */}
             {(!section.collapsible || isExpanded) && (
-              <Motion preset="slideDown" className="mt-6">
+              <Motion type="slide" direction="down" className="mt-6">
                 {section.component ? (
                   section.component
                 ) : section.fields ? (

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { OptimizedGlass } from '../../primitives';
 
 export interface GlassAnimatedNumberProps {
   /** The target number to animate to */

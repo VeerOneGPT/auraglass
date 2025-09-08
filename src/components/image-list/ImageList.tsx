@@ -6,16 +6,7 @@
 import React, { forwardRef, createContext, useMemo, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
-// Import animation sequence hook and types
-import { useAnimationSequence } from '../../animations/orchestration/useAnimationSequence';
-import { 
-  StaggerAnimationStage,
-  StyleAnimationStage,
-  AnimationStage,
-  AnimationSequenceConfig,
-  SequenceControls
-, AnimationProps } from '../../animations/types';
-import { Easings } from '../../animations/physics/interpolation'; // Import Easings
+// Animation sequence hook removed for simplicity
 
 // Hook for reduced motion
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -27,7 +18,7 @@ import { createThemeContext } from '../../core/themeContext';
 import { ImageListProps } from './types'; 
 
 // Create ImageList context
-export interface ImageListContextProps extends AnimationProps { // Extend with AnimationProps
+export interface ImageListContextProps {
   variant: 'standard' | 'quilted' | 'masonry' | 'woven';
   rowHeight: number | 'auto';
   gap: number;
@@ -45,10 +36,6 @@ export const ImageListContext = createContext<ImageListContextProps>({
   glass: false,
   variableSize: false,
   rounded: false,
-  // Default animation props
-  animationConfig: undefined,
-  disableAnimation: false,
-  motionSensitivity: undefined,
 });
 
 // Styled components
@@ -111,12 +98,11 @@ const ImageListRoot = styled.ul<{
   /* Glass styling */
   ${props =>
     props.$glass &&
-    glassSurface({
-      elevation: 1,
-      blurStrength: 'light',
-      borderOpacity: 'light',
-      themeContext: createThemeContext(props.theme),
-    })}
+    `
+    ${glassSurface.background}
+    ${glassSurface.backdropFilter}
+    ${glassSurface.border}
+  `}
   
   /* Glass styling */
   ${props =>
@@ -125,7 +111,7 @@ const ImageListRoot = styled.ul<{
     background-color: rgba(255, 255, 255, 0.03);
     padding: ${props.$gap}px;
   `}
-  
+
   /* Rounded corners */
   ${props =>
     props.$rounded &&
@@ -160,51 +146,8 @@ function ImageListComponent(props: ImageListProps, ref: React.ForwardedRef<HTMLU
   // Check for reduced motion preference
   const prefersReducedMotion = useReducedMotion();
 
-  // Determine if the entrance animation should run
-  const finalDisableAnimation = disableAnimation ?? prefersReducedMotion;
-  const shouldAnimateEntrance = enableEntranceAnimation && !finalDisableAnimation;
-
   // Ref for the root ul element
   const rootRef = useRef<HTMLUListElement>(null);
-
-  // --- Entrance Animation Setup --- 
-  // Define the sequence configuration MEMOIZED
-  const entranceSequenceConfig = useMemo((): AnimationSequenceConfig => {
-    const entranceStage: StaggerAnimationStage = {
-      id: 'list-item-entrance',
-      type: 'stagger',
-      targets: '.galileo-image-list-item', // Target the class name
-      from: { opacity: 0, transform: 'translateY(20px)' },
-      properties: { opacity: 1, transform: 'translateY(0px)' },
-      duration: 400, 
-      staggerDelay: 50,
-      easing: 'easeOutCubic',
-    };
-    return {
-      id: `imagelist-entrance-${Date.now()}`,
-      stages: [entranceStage],
-      autoplay: false, // We will trigger play manually in useEffect
-      // Pass animation config details if useAnimationSequence supports them
-      // e.g., could pass disableAnimation directly if supported
-      // For now, we control via shouldAnimateEntrance flag
-    };
-  }, []); // Empty dependency array - config doesn't change
-
-  // Instantiate the sequence hook at the TOP LEVEL
-  const { play: playEntranceAnimation }: SequenceControls = useAnimationSequence(entranceSequenceConfig);
-
-  // Trigger the entrance animation on mount if enabled
-  useEffect(() => {
-    if (shouldAnimateEntrance) {
-      // Small delay to ensure elements are rendered before targeting
-      const timer = setTimeout(() => {
-        playEntranceAnimation();
-      }, 50); // Adjust delay if needed
-      return () => clearTimeout(timer);
-    }
-    // Dependency: only run when shouldAnimateEntrance changes (or on mount)
-  }, [shouldAnimateEntrance, playEntranceAnimation]);
-  // --- End Entrance Animation Setup ---
 
   // Assign forwarded ref to internal ref if provided
   useEffect(() => {
@@ -216,7 +159,7 @@ function ImageListComponent(props: ImageListProps, ref: React.ForwardedRef<HTMLU
     }
   }, [ref]);
 
-  // Create context value including animation props
+  // Create context value
   const contextValue = useMemo<ImageListContextProps>(
     () => ({
       variant,
@@ -226,14 +169,9 @@ function ImageListComponent(props: ImageListProps, ref: React.ForwardedRef<HTMLU
       glass,
       variableSize,
       rounded,
-      // Pass down animation props
-      animationConfig,
-      disableAnimation: finalDisableAnimation, // Pass the resolved value
-      motionSensitivity,
     }),
     [
-      variant, rowHeight, gap, cols, glass, variableSize, rounded, 
-      animationConfig, finalDisableAnimation, motionSensitivity
+      variant, rowHeight, gap, cols, glass, variableSize, rounded
     ]
   );
 

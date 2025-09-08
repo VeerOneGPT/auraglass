@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback, useEffect, forwardRef, CSSProperties } from 'react';
-import { GlassButton, ButtonProps as GlassButtonProps } from './Button';
+import { GlassButton, GlassButtonProps } from './GlassButton';
 import { Slot } from '@radix-ui/react-slot';
 
 export interface MagneticButtonProps extends GlassButtonProps {
@@ -56,12 +56,14 @@ export const MagneticButton = forwardRef<HTMLElement, MagneticButtonProps>(funct
 
   const combinedRef = useCallback(
     (node: HTMLElement | null) => {
-      elementRef.current = node;
+      if (elementRef.current !== node) {
+        (elementRef as React.MutableRefObject<HTMLElement | null>).current = node;
+      }
       if (ref) {
         if (typeof ref === 'function') {
           ref(node);
         } else {
-          ref.current = node;
+          (ref as React.MutableRefObject<HTMLElement | null>).current = node;
         }
       }
     },

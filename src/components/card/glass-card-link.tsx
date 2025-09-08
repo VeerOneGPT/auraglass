@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { usePhysicsInteraction } from '../hooks/usePhysicsInteraction';
+import { usePhysicsInteraction } from '../../hooks/usePhysicsInteraction';
 
 const LinkContainer = styled.div`
   position: relative;
@@ -10,28 +10,38 @@ const LinkContainer = styled.div`
   transition: all 0.3s ease;
 `;
 
-export const GlassCardLink = ({
+interface GlassCardLinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
+  href: string;
+  children: React.ReactNode;
+}
+
+export const GlassCardLink: React.FC<GlassCardLinkProps> = ({
   href,
   children,
   ...props
 }) => {
   const linkRef = useRef(null);
-  const { style: physicsStyle } = usePhysicsInteraction({
-    elementRef: linkRef,
-    affectsScale: true,
-    scaleAmplitude: 0.02,
-    affectsRotation: true,
-    rotationAmplitude: 5,
-    strength: 0.5, // Adjust strength instead of stiffness/damping
-    smooth: true
+  const { ref: physicsRef, physicsState, isInteracting } = usePhysicsInteraction({
+    scale: 1.02,
+    duration: 200,
+    enableHover: true,
+    enableClick: true,
+    damping: 0.8,
+    stiffness: 100,
+    mass: 1
   });
 
+  // Extract only CSS-compatible properties from physics state
+  const cssPhysicsState = {
+    transform: `scale(${physicsState.scale}) rotate(${physicsState.rotation}deg)`,
+  };
+
   return (
-    <LinkContainer 
-      as="a" 
-      href={href} 
-      ref={linkRef} 
-      style={physicsStyle}
+    <LinkContainer
+      as="a"
+      href={href}
+      ref={linkRef}
+      style={{ ...cssPhysicsState, ...props.style }}
       {...props}
     >
       {children}

@@ -20,11 +20,11 @@ import {
     X
 } from 'lucide-react';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { cn } from '../../../lib/utils';
+import { cn } from '../../lib/utilsComprehensive';
 import { GlassButton } from '../button/GlassButton';
 import { GlassInput } from '../input/GlassInput';
 import { GlassBreadcrumb, GlassBreadcrumbItem } from '../navigation/GlassBreadcrumb';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { OptimizedGlass } from '../../primitives';
 
 export interface FileItem {
     id: string;

@@ -2,9 +2,9 @@
 
 // Removed circular imports - components import directly from source
 
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useState } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { OptimizedGlass } from '../../primitives';
 import { GlassButton } from '../button/GlassButton';
 
 export interface GlassInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {

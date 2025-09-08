@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { GlassButton as Button } from '../button'; // Import base Button
-import { ButtonProps } from '../Button/Button'; // Import ButtonProps from correct file
+import { GlassButtonProps as ButtonProps } from '../button/types'; // Import ButtonProps from correct file
 
 import { RippleButtonProps } from './types';
 
@@ -124,9 +124,8 @@ function RippleButtonComponent(
     onClick,
     onMouseDown, // Capture original onMouseDown
     // Extract Button props
-    variant = 'contained',
-    size = 'medium',
-    color = 'primary',
+    variant = 'primary',
+    size = 'md',
     fullWidth = false,
     className,
     style,
@@ -190,7 +189,6 @@ function RippleButtonComponent(
       <Button
         ref={ref} // Forward the ref to the underlying Button
         variant={variant}
-        color={color}
         size={size}
         disabled={disabled}
         fullWidth={fullWidth}

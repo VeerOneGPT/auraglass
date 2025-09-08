@@ -9,12 +9,7 @@ import styled from 'styled-components';
 import { glassSurface } from '../../core/mixins/glassSurface';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import { useMultiSpring } from '../../animations/physics/useMultiSpring';
-import { SpringConfig, SpringPresets } from '../../animations/physics/springPhysics';
-
-import { ImageListContext } from './ImageList';
 import { ImageListItemProps } from './types';
-import { AnimationProps } from '../../animations/types';
 
 // Styled components
 const ImageListItemRoot = styled.li<{
@@ -62,12 +57,11 @@ const ImageListItemRoot = styled.li<{
   /* Glass styling */
   ${props =>
     props.$glass &&
-    glassSurface({
-      elevation: props.$elevation,
-      blurStrength: props.$elevation > 2 ? 'standard' : 'light',
-      borderOpacity: 'light',
-      themeContext: createThemeContext(props.theme),
-    })}
+    `
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    `}
   
   /* Box shadow based on elevation */
   ${props =>
@@ -154,26 +148,18 @@ function ImageListItemComponent(props: ImageListItemProps, ref: React.ForwardedR
     alt,
     src,
     srcSet,
-    animationConfig: itemAnimationConfig,
-    disableAnimation: itemDisableAnimation,
-    motionSensitivity: itemMotionSensitivity,
     ...rest
   } = props;
 
   // Check if reduced motion is preferred
   const prefersReducedMotion = useReducedMotion();
 
-  // Get ImageList context, including animation props
-  const {
-    variant,
-    cols: contextCols,
-    glass: contextGlass,
-    variableSize,
-    rounded: contextRounded,
-    animationConfig: contextAnimationConfig,
-    disableAnimation: contextDisableAnimation,
-    motionSensitivity: contextMotionSensitivity,
-  } = useContext(ImageListContext);
+  // Simplified context (removed for now)
+  const variant = 'standard';
+  const contextCols = 2;
+  const contextGlass = false;
+  const variableSize = false;
+  const contextRounded = false;
 
   // Calculate cols and rows based on variableSize
   const cols =
@@ -190,37 +176,13 @@ function ImageListItemComponent(props: ImageListItemProps, ref: React.ForwardedR
   const glass = propGlass !== undefined ? propGlass : contextGlass;
   const rounded = propRounded !== undefined ? propRounded : contextRounded;
 
-  // Determine final animation settings: Item Prop > Context Prop > Reduced Motion
-  const finalDisableAnimation = itemDisableAnimation ?? contextDisableAnimation ?? prefersReducedMotion;
-  const finalMotionSensitivity = itemMotionSensitivity ?? contextMotionSensitivity;
-  // Combine item and context animationConfig (item takes precedence if structure matches)
-  const finalAnimationProp = itemAnimationConfig ?? contextAnimationConfig;
+  // Simplified animation settings
+  const finalDisableAnimation = prefersReducedMotion;
 
   // State for hover and focus
   const [isFocused, setIsFocused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-
-  // Calculate final spring config for hover/focus effect
-  const finalSpringConfig = useMemo(() => {
-    const baseConfig: SpringConfig = SpringPresets.DEFAULT; // Base defaults
-    let resolvedContextConfig: Partial<SpringConfig> = {};
-    // Use contextAnimationConfig or defaultSpring from a hypothetical AnimationContext if needed
-    if (typeof finalAnimationProp === 'string' && finalAnimationProp in SpringPresets) {
-      resolvedContextConfig = SpringPresets[finalAnimationProp as keyof typeof SpringPresets];
-    } else if (typeof finalAnimationProp === 'object') {
-      resolvedContextConfig = finalAnimationProp ?? {};
-    }
-    // Simple merge: context config overrides base
-    return { ...baseConfig, ...resolvedContextConfig };
-  }, [finalAnimationProp]);
-
-  // Add physics interaction for hover/focus scale effect
-  const { values: animatedValues } = useMultiSpring({
-    from: { scale: 1 },
-    to: { scale: (isHovered || isFocused) && !finalDisableAnimation ? 1.03 : 1 },
-    animationConfig: finalSpringConfig, // Use calculated config
-    immediate: finalDisableAnimation, // Respect disable flag
-  });
+  // Simplified animation (removed complex spring logic)
 
   // Prepare image element if src is provided
   const image = src ? (
@@ -231,7 +193,7 @@ function ImageListItemComponent(props: ImageListItemProps, ref: React.ForwardedR
     <ImageListItemRoot
       ref={ref}
       className={`${className || ''} galileo-image-list-item`.trim()}
-      style={{ ...style, transform: `scale(${animatedValues.scale})` }}
+      style={{ ...style, transform: (isHovered || isFocused) && !finalDisableAnimation ? 'scale(1.03)' : 'scale(1)' }}
       $cols={cols}
       $rows={rows}
       $variant={variant}

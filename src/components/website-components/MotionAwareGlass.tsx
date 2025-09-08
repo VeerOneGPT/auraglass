@@ -1,8 +1,8 @@
 'use client';
 
-import { useMotionPreferenceContext } from '@/contexts/MotionPreferenceContext';
-import { createMotionAwareInteractive, createMotionAwareVariants } from '@/lib/motionPrimitives';
-import { cn } from '@/lib/utils';
+import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
+import { createMotionAwareInteractive, createMotionAwareVariants } from '../../lib/motionPrimitives';
+import { cn } from '@/lib/utilsComprehensive';
 import { motion } from 'framer-motion';
 import React, { forwardRef } from 'react';
 
@@ -55,13 +55,6 @@ export const MotionAwareGlass = forwardRef<HTMLDivElement, MotionAwareGlassProps
 
     // Get motion variants based on animation type and motion preference
     const getAnimationVariants = () => {
-      if (prefersReducedMotion) {
-        return {
-          hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { duration: 0.001 } }
-        };
-      }
-
       switch (animationType) {
         case 'fadeInScale':
           return createMotionAwareVariants.fadeInScale(prefersReducedMotion);
@@ -131,9 +124,9 @@ export const MotionAwareGlass = forwardRef<HTMLDivElement, MotionAwareGlassProps
       variants: animationVariants,
       initial: 'hidden',
       animate: 'visible',
-      ...(interactive && {
-        whileHover: interactiveVariants.hover ? 'hover' : interactiveVariants.rest,
-        whileTap: interactiveVariants.tap ? 'tap' : interactiveVariants.rest,
+      ...(interactive && interactiveVariants && typeof interactiveVariants === 'object' && {
+        whileHover: 'hover' in interactiveVariants ? 'hover' : undefined,
+        whileTap: 'tap' in interactiveVariants ? 'tap' : undefined,
       }),
       ...props
     };
@@ -155,7 +148,12 @@ export const MotionAwareGlass = forwardRef<HTMLDivElement, MotionAwareGlassProps
       <motion.div
         ref={ref}
         className={combinedClassName}
-        {...motionProps}
+        variants={animationVariants}
+        initial="hidden"
+        animate="visible"
+        whileHover={interactive && 'hover' in interactiveVariants ? 'hover' : undefined}
+        whileTap={interactive && 'tap' in interactiveVariants ? 'tap' : undefined}
+        {...props}
         {...accessibilityProps}
       >
         {children}

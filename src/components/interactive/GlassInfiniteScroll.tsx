@@ -1,9 +1,9 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import { AlertCircle, Loader2, RefreshCw } from 'lucide-react';
 import React, { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
-import { Motion } from '../../primitives/motion/Motion';
+import { Motion } from '../../primitives';
 
 export interface GlassInfiniteScrollProps {
     /**

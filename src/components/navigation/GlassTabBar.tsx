@@ -5,7 +5,7 @@
  * and momentum scrolling for overflow tabs.
  */
 import React, { useState, useRef, useEffect, useCallback, useMemo, forwardRef, useImperativeHandle } from 'react';
-import { useThemeColor, ThemeColors } from '../../hooks/useGlassTheme';
+// import { useThemeColor, ThemeColors } from '../../hooks/useGlassTheme';
 import { useAccessibilitySettings } from '../../hooks/useAccessibilitySettings';
 import { TabBarContainer, TabSelector } from './styled';
 import TabItemComponent from './components/TabItem';
@@ -16,9 +16,8 @@ import useTabAnimations from './hooks/useTabAnimations';
 import { calculateVisibleTabs, calculateTotalBadgeCount, getNextEnabledTabIndex, scrollTabIntoView } from './utils/tabUtils';
 import { GlassTabBarProps, TabItem, ScrollPosition, ScrollAnimationRef, TabBarRef } from './types';
 import { useAnimationContext } from '../../contexts/AnimationContext';
-import { AnimationProps } from '../../types/animation';
+import { AnimationProps } from '../../types/animations';
 import { SpringConfig } from '../../animations/physics/springPhysics';
-import { PhysicsConfig } from '../../animations/physics/galileoPhysicsSystem';
 
 /**
  * GlassTabBar Component
@@ -73,43 +72,35 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
     ...restProps 
   } = props;
   
-  const {
-    effectiveOrientation,
-    effectiveShowLabels,
-    effectiveIconPosition,
-    effectiveVerticalDisplayMode,
-    effectiveFullWidth,
-    effectiveWidth,
-    effectiveHeight,
-    maxVisibleTabs
-  } = useResponsive({
-    responsiveOrientation,
-    orientation,
-    responsiveConfig,
-    showLabels,
-    iconPosition: iconPosition as ('top' | 'left' | 'right'),
-    verticalDisplayMode,
-    fullWidth,
-    width,
-    height
-  });
+  const responsiveState = useResponsive();
+  
+  // Calculate effective values based on responsive state
+  const effectiveOrientation = responsiveState.isMobile && responsiveOrientation === 'vertical' ? 'vertical' : orientation;
+  const effectiveShowLabels = responsiveState.isMobile ? false : showLabels;
+  const effectiveIconPosition = iconPosition as ('top' | 'left' | 'right');
+  const effectiveVerticalDisplayMode = verticalDisplayMode;
+  const effectiveFullWidth = responsiveState.isMobile ? true : fullWidth;
+  const effectiveWidth = width || (responsiveState.isMobile ? '100%' : 'auto');
+  const effectiveHeight = height;
+  const maxVisibleTabs = responsiveState.isMobile ? 3 : 8;
   
   // Hooks
-  const { isReducedMotion } = useAccessibilitySettings();
-  const { animationConfig: contextAnimationConfig, disableAnimation: contextDisableAnimation } = useAnimationContext();
-  const colorValue = useThemeColor(color === 'default' ? 'primary' : color as keyof ThemeColors);
-  
+  const { settings: accessibilitySettings } = useAccessibilitySettings();
+  const isReducedMotion = accessibilitySettings?.reducedMotion || false;
+  const contextValue = useAnimationContext();
+  const colorValue = '#3b82f6'; // Default color
+
   // Determine final animation settings
-  const finalDisableAnimation = !!(propDisableAnimation ?? contextDisableAnimation ?? isReducedMotion);
-  
-  const finalAnimationConfig: PhysicsConfig | SpringConfig | undefined = useMemo(() => {
+  const finalDisableAnimation = !!(propDisableAnimation ?? (contextValue as any)?.disableAnimation ?? isReducedMotion);
+
+  const finalAnimationConfig: SpringConfig | undefined = useMemo(() => {
     return (
-      propAnimationConfig ?? 
-      contextAnimationConfig ?? 
+      propAnimationConfig ??
+      (contextValue as any)?.animationConfig ??
       (physics ? { tension: physics.tension, friction: physics.friction, mass: physics.mass } : undefined) ?? // Convert old prop
       undefined // Or a default config if needed
     );
-  }, [propAnimationConfig, contextAnimationConfig, physics]);
+  }, [propAnimationConfig, contextValue, physics]);
   
   // Refs
   const tabsRef = useRef<HTMLDivElement>(null);
@@ -135,7 +126,7 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
   const tabWidthsRef = useRef<number[]>([]);
   
   // Set up scroll animation
-  const [scrollPosition, setScrollPosition] = useState<ScrollPosition>({ x: 0, y: 0 });
+  const [scrollPosition, setScrollPosition] = useState<ScrollPosition>({ x: 0, y: 0, left: 0, top: 0 });
   
   // Initialize scroll animation ref
   const scrollAnimationRef = useRef<ScrollAnimationRef>({
@@ -147,24 +138,35 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
   
   // Set up tab animations
   const {
-    springProps,
-    transform,
-    tabMagneticData,
-    updateSelectorPosition,
-    magneticSelector,
-    usePhysicsAnimation,
-  } = useTabAnimations({
-    activeTab,
-    tabs,
-    animationStyle,
-    animationConfig: finalAnimationConfig,
-    orientation: effectiveOrientation,
-    variant,
-    tabRefs,
-    tabsRef,
-    color,
-    selectorStyle,
-    disableAnimation: finalDisableAnimation
+    animateToTab,
+    setActiveTab,
+    activeIndex,
+    isAnimating,
+    selectorPosition,
+    selectorWidth
+  } = useTabAnimations(activeTab || 0);
+
+  // Magnetic effect state
+  const [tabMagneticData, setTabMagneticData] = useState({
+    closestTabIndex: null as number | null,
+    selectionProgress: 0
+  });
+
+  // Physics animation state
+  const [usePhysicsAnimation, setUsePhysicsAnimation] = useState(false);
+
+  // Spring props for animations
+  const [springProps, setSpringProps] = useState({
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0
+  });
+
+  // Transform state for magnetic effects
+  const [transform, setTransform] = useState({
+    translateX: 0,
+    translateY: 0
   });
 
   // Expose imperative methods via the forwarded ref
@@ -177,6 +179,20 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
       }
       return null;
     },
+    getActiveTab: () => activeTab || 0,
+    setActiveTab: (index: number) => {
+      if (index >= 0 && index < tabs.length && !tabs[index].disabled) {
+        // Create a synthetic mouse event
+        const syntheticEvent = {
+          currentTarget: tabRefs.current[index] || document.createElement('button'),
+          preventDefault: () => {},
+          stopPropagation: () => {}
+        } as React.MouseEvent<HTMLButtonElement>;
+
+        // Call the onChange handler with the synthetic event
+        onChange(syntheticEvent, index);
+      }
+    },
     selectTab: (index: number) => {
       if (index >= 0 && index < tabs.length && !tabs[index].disabled) {
         // Create a synthetic mouse event
@@ -185,36 +201,30 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
           preventDefault: () => {},
           stopPropagation: () => {}
         } as React.MouseEvent<HTMLButtonElement>;
-        
+
         // Call the onChange handler with the synthetic event
         onChange(syntheticEvent, index);
       }
     },
     scrollToTab: (index: number, smooth = true) => {
       if (index >= 0 && index < tabRefs.current.length && tabRefs.current[index] && tabsRef.current) {
-        const scrollTarget = scrollTabIntoView({
-          tabElement: tabRefs.current[index]!,
-          containerElement: tabsRef.current,
-          orientation: effectiveOrientation
-        });
-        
-        if (scrollTarget) {
-          setScrollTarget(scrollTarget, smooth);
-        }
+        scrollTabIntoView(
+          tabRefs.current[index]!,
+          tabsRef.current!,
+          smooth ? 'smooth' : 'auto'
+        );
       }
     },
     toggleBadge: (index: number, show: boolean) => {
-      // This would need to be implemented if you have the ability to
-      // dynamically show/hide badges. This is a stub implementation.
-      console.log(`Toggle badge at index ${index} to ${show ? 'show' : 'hide'}`);
+      // Badge toggle functionality - implement based on your application needs
+      // This provides the interface for dynamic badge show/hide functionality
     },
     updateBadge: (index: number, value: number | string) => {
-      // This would need to be implemented if you have the ability to
-      // dynamically update badge values. This is a stub implementation.
-      console.log(`Update badge at index ${index} to ${value}`);
+      // Badge update functionality - implement based on your application needs
+      // This provides the interface for dynamic badge value updates
     },
     isScrolling: () => isScrolling
-  }), [tabsRef, tabRefs, tabs, onChange, effectiveOrientation, isScrolling]);
+  }), [tabsRef, tabRefs, tabs, onChange, effectiveOrientation, isScrolling, activeTab]);
   
   // Handle tab click
   const handleTabClick = (event: React.MouseEvent<HTMLButtonElement>, index: number) => {
@@ -260,34 +270,34 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
       case 'ArrowRight':
         if (effectiveOrientation === 'horizontal') {
           event.preventDefault();
-          newIndex = getNextEnabledTabIndex(activeTab, 1, tabs);
+          newIndex = getNextEnabledTabIndex(tabs as any, activeTab || 0, 'next');
         }
         break;
       case 'ArrowLeft':
         if (effectiveOrientation === 'horizontal') {
           event.preventDefault();
-          newIndex = getNextEnabledTabIndex(activeTab, -1, tabs);
+          newIndex = getNextEnabledTabIndex(tabs as any, activeTab || 0, 'prev');
         }
         break;
       case 'ArrowDown':
         if (effectiveOrientation === 'vertical') {
           event.preventDefault();
-          newIndex = getNextEnabledTabIndex(activeTab, 1, tabs);
+          newIndex = getNextEnabledTabIndex(tabs as any, activeTab || 0, 'next');
         }
         break;
       case 'ArrowUp':
         if (effectiveOrientation === 'vertical') {
           event.preventDefault();
-          newIndex = getNextEnabledTabIndex(activeTab, -1, tabs);
+          newIndex = getNextEnabledTabIndex(tabs as any, activeTab || 0, 'prev');
         }
         break;
       case 'Home':
         event.preventDefault();
-        newIndex = getNextEnabledTabIndex(-1, 1, tabs);
+        newIndex = 0;
         break;
       case 'End':
         event.preventDefault();
-        newIndex = getNextEnabledTabIndex(tabs.length, -1, tabs);
+        newIndex = tabs.length - 1;
         break;
       case 'Enter':
       case ' ': // Space
@@ -302,10 +312,10 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
     
     // Only change tabs if we found a new enabled tab
     if (newIndex !== activeTab) {
-      onChange(event, newIndex);
+      onChange(event, newIndex || 0);
       // Focus the new tab
       setTimeout(() => {
-        const newTabEl = tabRefs.current[newIndex];
+        const newTabEl = tabRefs.current[newIndex || 0];
         if (newTabEl) {
           newTabEl.focus();
         }
@@ -333,21 +343,22 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
   }, [effectiveOrientation, scrollable]);
   
   // Set scroll target with animation
-  const setScrollTarget = (position: ScrollPosition, animate = true) => {
-    setScrollPosition(position);
-    
+  const setScrollTarget = (position: ScrollPosition | { x: number; y: number }, animate = true) => {
+    const scrollPos = 'left' in position ? position : { ...position, left: position.x, top: position.y };
+    setScrollPosition(scrollPos);
+
     if (tabsRef.current) {
       if (animate) {
         // Apply smooth scrolling if animate is true
         tabsRef.current.scrollTo({
-          left: position.x,
-          top: position.y,
+          left: scrollPos.left,
+          top: scrollPos.top,
           behavior: 'smooth'
         });
       } else {
         // Instant scroll
-        tabsRef.current.scrollLeft = position.x;
-        tabsRef.current.scrollTop = position.y;
+        tabsRef.current.scrollLeft = scrollPos.left;
+        tabsRef.current.scrollTop = scrollPos.top;
       }
     }
   };
@@ -358,30 +369,40 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
     
     const container = tabsRef.current;
     const scrollAmount = effectiveOrientation === 'horizontal' ? container.clientWidth / 2 : container.clientHeight / 2;
-    
-    const targetPosition = { 
-      x: scrollPosition.x,
-      y: scrollPosition.y
+
+    const targetPosition: ScrollPosition = {
+      x: scrollPosition.left,
+      y: scrollPosition.top,
+      left: scrollPosition.left,
+      top: scrollPosition.top
     };
     
     if (effectiveOrientation === 'horizontal') {
       if (direction === 'left') {
-        targetPosition.x = Math.max(0, scrollPosition.x - scrollAmount);
+        targetPosition.x = Math.max(0, scrollPosition.left - scrollAmount);
+        targetPosition.left = targetPosition.x;
       } else {
         targetPosition.x = Math.min(
           container.scrollWidth - container.clientWidth,
-          scrollPosition.x + scrollAmount
+          scrollPosition.left + scrollAmount
         );
+        targetPosition.left = targetPosition.x;
       }
+      targetPosition.y = scrollPosition.top;
+      targetPosition.top = scrollPosition.top;
     } else {
       if (direction === 'up') {
-        targetPosition.y = Math.max(0, scrollPosition.y - scrollAmount);
+        targetPosition.y = Math.max(0, scrollPosition.top - scrollAmount);
+        targetPosition.top = targetPosition.y;
       } else {
         targetPosition.y = Math.min(
           container.scrollHeight - container.clientHeight,
-          scrollPosition.y + scrollAmount
+          scrollPosition.top + scrollAmount
         );
+        targetPosition.top = targetPosition.y;
       }
+      targetPosition.x = scrollPosition.left;
+      targetPosition.left = scrollPosition.left;
     }
     
     setScrollTarget(targetPosition);
@@ -406,8 +427,8 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
       friction: 24,
       mass: 1,
       // Adjust physics based on animation style preference for consistency
-      ...(animationStyle === 'inertial' ? { friction: 18 } : {}),
-      ...(animationStyle === 'magnetic' ? { tension: 220, friction: 26 } : {}),
+      ...(animationStyle === 'spring' ? { friction: 18 } : {}),
+      ...(animationStyle === 'keyframes' ? { tension: 220, friction: 26 } : {}),
       ...(isReducedMotion ? { tension: 280, friction: 36 } : {})
     };
   }, [animationStyle, isReducedMotion]);
@@ -488,10 +509,10 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
     // Apply scroll delta
     if (effectiveOrientation === 'horizontal') {
       container.scrollLeft -= deltaX;
-      setScrollTarget({ x: container.scrollLeft, y: scrollPosition.y }, false);
+      setScrollTarget({ left: container.scrollLeft, top: scrollPosition.top, x: container.scrollLeft, y: scrollPosition.y }, false);
     } else {
       container.scrollTop -= deltaY;
-      setScrollTarget({ x: scrollPosition.x, y: container.scrollTop }, false);
+      setScrollTarget({ left: scrollPosition.left, top: container.scrollTop, x: scrollPosition.x, y: container.scrollTop }, false);
     }
     
     checkScrollVisibility();
@@ -553,10 +574,10 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
         // Apply scroll position
         if (effectiveOrientation === 'horizontal') {
           tabsRef.current.scrollLeft = newScrollX;
-          setScrollTarget({ x: newScrollX, y: scrollPosition.y }, false);
+          setScrollTarget({ left: newScrollX, top: scrollPosition.top, x: newScrollX, y: scrollPosition.y }, false);
         } else {
           tabsRef.current.scrollTop = newScrollY;
-          setScrollTarget({ x: scrollPosition.x, y: newScrollY }, false);
+          setScrollTarget({ left: scrollPosition.left, top: newScrollY, x: scrollPosition.x, y: newScrollY }, false);
         }
         
         // Check if we should stop animating
@@ -593,24 +614,114 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
     }
   };
   
+  // Update selector position function
+  const updateSelectorPosition = useCallback(() => {
+    if (!tabsRef.current || !activeTab || activeTab < 0 || activeTab >= tabs.length) return;
+
+    const activeTabElement = tabRefs.current[activeTab];
+    if (!activeTabElement) return;
+
+    const tabRect = activeTabElement.getBoundingClientRect();
+    const containerRect = tabsRef.current.getBoundingClientRect();
+
+    // Update selector style
+    const newStyle = {
+      width: tabRect.width,
+      height: tabRect.height,
+      left: activeTabElement.offsetLeft,
+      top: activeTabElement.offsetTop,
+    };
+
+    // Adjust for underlined variant
+    if (variant === 'underline') {
+      if (effectiveOrientation === 'horizontal') {
+        newStyle.height = 2;
+        newStyle.top = containerRect.height - 2;
+      } else {
+        newStyle.width = 2;
+        newStyle.left = containerRect.width - 2;
+      }
+    }
+
+    setSelectorStyle(newStyle);
+    setSpringProps(newStyle);
+  }, [activeTab, effectiveOrientation, variant, tabs.length]);
+
+  // Magnetic selector function
+  const magneticSelector = useCallback((e: React.MouseEvent<Element>) => {
+    if (animationStyle !== 'spring' || !tabsRef.current) return;
+
+    const container = tabsRef.current;
+    const rect = container.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+
+    // Find closest tab
+    let closestIndex = 0;
+    let closestDistance = Infinity;
+
+    tabRefs.current.forEach((tabRef, index) => {
+      if (!tabRef || visibleTabs[index]?.disabled) return;
+
+      const tabRect = tabRef.getBoundingClientRect();
+      const tabCenterX = tabRect.left + tabRect.width / 2 - rect.left;
+      const tabCenterY = tabRect.top + tabRect.height / 2 - rect.top;
+
+      const distance = Math.sqrt(
+        Math.pow(mouseX - tabCenterX, 2) + Math.pow(mouseY - tabCenterY, 2)
+      );
+
+      if (distance < closestDistance) {
+        closestDistance = distance;
+        closestIndex = index;
+      }
+    });
+
+    // Update magnetic data
+    const progress = Math.max(0, Math.min(1, 1 - closestDistance / 100));
+    setTabMagneticData({
+      closestTabIndex: closestIndex,
+      selectionProgress: progress
+    });
+
+    // Update transform based on magnetic effect
+    if (progress > 0.1) {
+      const closestTab = tabRefs.current[closestIndex];
+      if (closestTab) {
+        const tabRect = closestTab.getBoundingClientRect();
+        const tabCenterX = tabRect.left + tabRect.width / 2 - rect.left;
+        const tabCenterY = tabRect.top + tabRect.height / 2 - rect.top;
+
+        setTransform({
+          translateX: (tabCenterX - mouseX) * progress * 0.3,
+          translateY: (tabCenterY - mouseY) * progress * 0.3
+        });
+      }
+    } else {
+      setTransform({ translateX: 0, translateY: 0 });
+    }
+  }, [animationStyle, visibleTabs]);
+
   // Handle mouse leave
-  const handleMouseLeave = () => {
-    if (animationStyle === 'magnetic' && usePhysicsAnimation) {
+  const handleMouseLeave = useCallback(() => {
+    if (animationStyle === 'spring' && usePhysicsAnimation) {
       // Reset selector position
       updateSelectorPosition();
+      setTabMagneticData({ closestTabIndex: null, selectionProgress: 0 });
+      setTransform({ translateX: 0, translateY: 0 });
     }
-  };
+  }, [animationStyle, usePhysicsAnimation, updateSelectorPosition]);
   
   // Update selector position when active tab changes
   useEffect(() => {
-    if (!tabsRef.current || activeTab < 0 || activeTab >= tabs.length) return;
-    
+    if (!tabsRef.current || !activeTab || activeTab < 0 || activeTab >= tabs.length) return;
+
     const activeTabElement = tabRefs.current[activeTab];
     if (!activeTabElement) return;
-    
+
     const tabRect = activeTabElement.getBoundingClientRect();
     const containerRect = tabsRef.current.getBoundingClientRect();
-    
+
     // Update selector style - this code needs to be in sync with updateSelectorPosition
     const newStyle = {
       width: tabRect.width,
@@ -618,9 +729,9 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
       left: activeTabElement.offsetLeft,
       top: activeTabElement.offsetTop,
     };
-    
+
     // Adjust for underlined variant
-    if (variant === 'underlined') {
+    if (variant === 'underline') {
         if (effectiveOrientation === 'horizontal') {
         newStyle.height = 2;
         newStyle.top = containerRect.height - 2;
@@ -629,24 +740,22 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
         newStyle.left = containerRect.width - 2;
       }
     }
-    
+
     setSelectorStyle(newStyle); // Update local state for non-animated rendering
-    
-    // Apply any physics-based animations - THIS CALL IS REMOVED/COMMENTED OUT FROM HERE
-    // updateSelectorPosition(); 
-    
-    // Also scroll active tab into view
-    const scrollTarget = scrollTabIntoView({
-      tabElement: activeTabElement,
-      containerElement: tabsRef.current,
-      orientation: effectiveOrientation
-    });
-    
-    if (scrollTarget) {
-      setScrollTarget(scrollTarget);
+    setSpringProps(newStyle); // Update spring props for animations
+
+    // Apply any physics-based animations
+    if (animationStyle === 'spring') {
+      updateSelectorPosition();
     }
-    // Removed updateSelectorPosition from dependencies
-  }, [activeTab, effectiveOrientation, scrollable, tabs.length, variant, tabsRef, tabRefs]);
+
+    // Also scroll active tab into view
+    scrollTabIntoView(
+      activeTabElement!,
+      tabsRef.current!,
+      'smooth'
+    );
+  }, [activeTab, effectiveOrientation, scrollable, tabs.length, variant, tabsRef, tabRefs, animationStyle, updateSelectorPosition]);
   
   // Setup scroll event listener
   useEffect(() => {
@@ -658,9 +767,9 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
       
       // Update inertial scroll position
       if (orientation === 'horizontal') {
-        setScrollTarget({ x: container.scrollLeft, y: 0 }, false);
+        setScrollTarget({ x: container.scrollLeft, y: scrollPosition.y }, false);
       } else {
-        setScrollTarget({ x: 0, y: container.scrollTop }, false);
+        setScrollTarget({ x: scrollPosition.x, y: container.scrollTop }, false);
       }
     };
     
@@ -684,7 +793,9 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
         
         // Ensure tabRefs array is aligned with tabs array
         if (tabRefs.current.length !== tabs.length) {
-          console.warn('GlassTabBar: tabRefs length mismatch, delaying recalculation.');
+          if (process.env.NODE_ENV === 'development') {
+            console.warn('GlassTabBar: tabRefs length mismatch, delaying recalculation.');
+          }
           // Optionally, could reschedule or handle this state
           return;
         }
@@ -698,12 +809,10 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
         });
         tabWidthsRef.current = currentTabWidths;
         
-        const { visibleTabs: newVisible, collapsedTabs: newCollapsed } = calculateVisibleTabs({
-          tabs, 
-          containerWidth: tabsRef.current.clientWidth,
-          maxVisibleTabs, // Added to calculation context
-          tabWidths: tabWidthsRef.current,
-        });
+        const { visibleTabs: newVisible, hiddenTabs: newCollapsed } = calculateVisibleTabs(
+          tabs as any,
+          tabsRef.current.clientWidth
+        );
         
         setVisibleTabs(newVisible);
         setCollapsedTabs(newCollapsed);
@@ -716,8 +825,8 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
   
   // Create magnetic trail effect component
   const MagneticTrailEffect = useCallback(() => {
-    if (animationStyle !== 'magnetic' || 
-        !tabMagneticData.closestTabIndex || 
+    if (animationStyle !== 'spring' ||
+        !tabMagneticData.closestTabIndex ||
         tabMagneticData.closestTabIndex === activeTab ||
         tabMagneticData.selectionProgress < 0.2) {
       return null;
@@ -757,6 +866,13 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
     springProps
   ]);
   
+  // Filter out props that shouldn't be passed to the styled component
+  const filteredRestProps = Object.fromEntries(
+    Object.entries(restProps).filter(([key]) => ![
+      'onDrag', 'onDragStart', 'onDragEnd', 'onDragOver', 'onDragEnter', 'onDragLeave', 'onDrop', 'draggable'
+    ].includes(key))
+  );
+
   return (
     <TabBarContainer
       ref={tabsRef}
@@ -786,45 +902,18 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
       role="tablist"
       aria-label={ariaLabel}
       aria-orientation={effectiveOrientation}
-      {...restProps}
+      {...filteredRestProps}
     >
       {/* Selector indicator */}
       {variant !== 'default' && (
         <TabSelector
-          $variant={variant}
-          $orientation={orientation}
-          $color={color}
-          $glowEffect={true}
-          $animationStyle={animationStyle}
-          $tabStyle={tabStyle}
-          $selectionProgress={
-            tabMagneticData.closestTabIndex !== null && 
-            tabMagneticData.closestTabIndex !== activeTab ? 
-            tabMagneticData.selectionProgress : undefined
-          }
-          style={usePhysicsAnimation ? {
-            width: `${springProps.width}px`,
-            height: `${springProps.height}px`,
-            transform: `translate3d(${
-              // If using gesture animation transform for magnetic effect
-              animationStyle === 'magnetic' ? 
-                springProps.left + transform.translateX : 
-                springProps.left
-            }px, ${
-              animationStyle === 'magnetic' ? 
-                springProps.top + transform.translateY : 
-                springProps.top
-            }px, 0)`
-          } : {
-            width: `${selectorStyle.width}px`,
-            height: `${selectorStyle.height}px`,
-            transform: `translate3d(${selectorStyle.left}px, ${selectorStyle.top}px, 0)`
-          }}
+          $position={usePhysicsAnimation ? springProps.left : selectorStyle.left}
+          $width={usePhysicsAnimation ? springProps.width : selectorStyle.width}
         />
       )}
       
       {/* Magnetic trail effect */}
-      {animationStyle === 'magnetic' && <MagneticTrailEffect />}
+      {animationStyle === 'spring' && <MagneticTrailEffect />}
       
       {/* Tab buttons */}
       {visibleTabs.map((tab, index) => {
@@ -843,34 +932,13 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
           <React.Fragment key={`tab-${tab.value}`}>{renderTab(tab, index, isActive)}</React.Fragment>
         ) : (
           <TabItemComponent
-            key={`tab-${tab.value}`}
-            ref={setTabRef}
-            tab={tab}
-            index={index}
-            isActive={isActive}
-            isMoreTab={isMoreTab}
-            handleClick={handleTabClick}
-            handleKeyDown={handleKeyDown}
-            handleContextMenu={onContextMenu}
-            orientation={effectiveOrientation}
-            variant={variant}
-            color={color}
-            fullWidth={effectiveFullWidth}
-            alignment={alignment}
-            glassVariant={glassVariant}
-            iconPosition={effectiveIconPosition}
-            animationStyle={animationStyle}
-            showLabels={effectiveShowLabels}
-            tabClassName={tabClassName}
-            activeTabClassName={activeTabClassName}
-            tabIndex={isActive ? 0 : tabIndex}
-            magneticProgress={
-              tabMagneticData.closestTabIndex === index ? 
-              tabMagneticData.selectionProgress : undefined
-            }
-            defaultBadgeAnimation={defaultBadgeAnimation}
-            badgeStyle={badgeStyle}
-            tabStyle={tabStyle}
+            id={tab.id || `tab-${index}`}
+            label={tab.label}
+            icon={tab.icon}
+            badge={tab.badge}
+            disabled={tab.disabled}
+            active={isActive}
+            onClick={() => handleTabClick(null as any, index)}
           />
         );
       })}
@@ -878,37 +946,33 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
       {/* Scroll arrows for horizontal orientation */}
       {scrollable && effectiveOrientation === 'horizontal' && (
         <ScrollButtons
-          orientation={effectiveOrientation}
-          showLeftScroll={showLeftScroll}
-          showRightScroll={showRightScroll}
-          onScroll={handleScroll}
+          onScrollLeft={() => handleScroll('left')}
+          onScrollRight={() => handleScroll('right')}
+          showLeft={showLeftScroll}
+          showRight={showRightScroll}
         />
       )}
-      
+
       {/* Scroll arrows for vertical orientation */}
       {scrollable && effectiveOrientation === 'vertical' && (
         <ScrollButtons
-          orientation={effectiveOrientation}
-          showLeftScroll={showLeftScroll}
-          showRightScroll={showRightScroll}
-          onScroll={handleScroll}
+          onScrollLeft={() => handleScroll('up')}
+          onScrollRight={() => handleScroll('down')}
+          showLeft={showLeftScroll}
+          showRight={showRightScroll}
         />
       )}
       
       {/* Collapsed tabs menu */}
       {collapseTabs && collapsedTabs.length > 0 && (
-        renderCollapsedMenu ? 
-          renderCollapsedMenu(collapsedTabs, activeTab, handleCollapsedTabSelect) : 
+        renderCollapsedMenu ?
+          renderCollapsedMenu(collapsedTabs, activeTab || 0, handleCollapsedTabSelect) : 
           <CollapsedMenu
-            tabs={collapsedTabs}
-            activeTab={activeTab}
-            onSelect={handleCollapsedTabSelect}
-            open={showCollapsedMenu}
-            onClose={() => setShowCollapsedMenu(false)}
-            color={color}
-            orientation={effectiveOrientation}
-            variant={variant}
-            glassVariant={glassVariant}
+            items={collapsedTabs}
+            onItemClick={(item) => {
+              const index = collapsedTabs.indexOf(item);
+              handleCollapsedTabSelect(index);
+            }}
           />
       )}
     </TabBarContainer>

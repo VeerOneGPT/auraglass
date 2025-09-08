@@ -7,7 +7,7 @@ import React, { forwardRef, useState, useEffect, useRef } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import { AtmosphericBackgroundProps } from '../surfaces/types';
+import { AtmosphericBackgroundProps } from './types';
 
 // Animation keyframes
 const gradientShift = keyframes`
@@ -193,7 +193,9 @@ const AtmosphericBackgroundComponent = (
 
   // Handle forwarded ref
   const setRefs = (element: HTMLDivElement) => {
-    containerRef.current = element;
+    if (containerRef.current !== element) {
+      (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = element;
+    }
 
     // Handle the forwarded ref
     if (typeof ref === 'function') {

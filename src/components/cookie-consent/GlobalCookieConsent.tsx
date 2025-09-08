@@ -1,7 +1,6 @@
 import React, { forwardRef, useState, useEffect, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 
-import { glowEffects } from '../../core/mixins/effects/glowEffects';
 import { glassBorder } from '../../core/mixins/glassBorder';
 import { glassSurface } from '../../core/mixins/glassSurface';
 import { createThemeContext } from '../../core/themeContext';
@@ -9,9 +8,8 @@ import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { Box } from '../layout/Box';
 import { GlassButton as Button } from '../button';
 import { Typography } from '../data-display/Typography';
-// Dialog component may need to be implemented or imported from the correct path
-// import { Dialog } from '../Dialog';
-// Import correct path for glowEffects
+import { GlassModal as Modal } from '../modal/GlassModal';
+import { GlassCheckbox as Checkbox } from '../input/GlassCheckbox';
 
 import { GlobalCookieConsentProps, CookieCategory } from './types';
 
@@ -96,32 +94,18 @@ const StyledGlobalCookieConsent = styled.div<{
     }
   }}
 
-  ${({ theme, $glassIntensity }) => {
-    const themeContext = createThemeContext(theme);
-    return glassSurface({
-      elevation: 2,
-      backgroundOpacity: 'medium',
-      blurStrength: 'medium',
-      themeContext,
-    });
-  }}
+  background-color: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   
-  ${({ theme }) => {
-    const themeContext = createThemeContext(theme);
-    return glassBorder({
-      width: '1px',
-      opacity: 0.35,
-      themeContext,
-    });
-  }}
+  ${({ theme }) => `
+    border: 1px solid rgba(255, 255, 255, 0.35);
+  `}
   
-  ${({ theme, $glassIntensity }) => {
-    const themeContext = createThemeContext(theme);
-    return glowEffects.glassGlow({
-      intensity: $glassIntensity * 0.4,
-      themeContext,
-    });
-  }}
+  ${({ theme, $glassIntensity }) => `
+    box-shadow: 0 0 ${$glassIntensity * 12}px rgba(255, 255, 255, 0.1);
+  `}
   
   @media (max-width: 540px) {
     max-width: 100%;
@@ -387,7 +371,7 @@ export const GlobalCookieConsent = forwardRef<HTMLDivElement, GlobalCookieConsen
 
     // Calculate final spring config
     const finalSpringConfig = useMemo(() => {
-      const baseConfig: SpringConfig = SpringPresets.DEFAULT;
+      const baseConfig: SpringConfig = SpringPresets.default;
       let contextConfig: Partial<SpringConfig> = {};
       if (typeof defaultSpring === 'string' && defaultSpring in SpringPresets) {
         contextConfig = SpringPresets[defaultSpring as keyof typeof SpringPresets];
@@ -438,16 +422,16 @@ export const GlobalCookieConsent = forwardRef<HTMLDivElement, GlobalCookieConsen
             <CategoryHeader>
               <Checkbox
                 checked={selectedCategories.includes(category.id)}
-                onChange={() => handleToggleCategory(category.id, category.required)}
+                onCheckedChange={() => handleToggleCategory(category.id, category.required)}
                 disabled={category.required}
               />
-              <Typography variant="subtitle2" style={{ fontWeight: 600 }}>
+              <Typography variant="span" style={{ fontWeight: 600 }}>
                 {category.name} {category.required && <em>(Required)</em>}
               </Typography>
             </CategoryHeader>
 
             <CategoryDescription>
-              <Typography variant="body2">{category.description}</Typography>
+              <Typography variant="p">{category.description}</Typography>
             </CategoryDescription>
 
             {category.cookies && category.cookies.length > 0 && (
@@ -484,22 +468,22 @@ export const GlobalCookieConsent = forwardRef<HTMLDivElement, GlobalCookieConsen
               {title}
             </Typography>
 
-            <Typography variant="body2">
+            <Typography variant="p">
               {message}
               {privacyPolicyUrl && (
                 <>
                   {' '}
-                  <Link href={privacyPolicyUrl} target="_blank" rel="noopener noreferrer">
+                  <a href={privacyPolicyUrl} target="_blank" rel="noopener noreferrer">
                     {privacyPolicyText}
-                  </Link>
+                  </a>
                 </>
               )}
             </Typography>
 
-            {customContent && <Box mt={1.5}>{customContent}</Box>}
+            {customContent && <Box style={{ marginTop: '1.5rem' }}>{customContent}</Box>}
 
             {!expanded && cookieCategories.length > 0 && (
-              <Button variant="text" onClick={handleShowDetails} size="small">
+              <Button variant="ghost" onClick={handleShowDetails} size="sm">
                 Customize settings
               </Button>
             )}
@@ -508,18 +492,18 @@ export const GlobalCookieConsent = forwardRef<HTMLDivElement, GlobalCookieConsen
 
             <ButtonContainer>
               {dismissible && (
-                <Button variant="outlined" onClick={handleDeclineAll} size="small">
+                <Button variant="outline" onClick={handleDeclineAll} size="sm">
                   {declineButtonText}
                 </Button>
               )}
 
               {expanded && enableSettings && (
-                <Button variant="outlined" onClick={handleSavePreferences} size="small">
+                <Button variant="outline" onClick={handleSavePreferences} size="sm">
                   {settingsButtonText}
                 </Button>
               )}
 
-              <Button variant="contained" onClick={handleAcceptAll} size="small">
+              <Button variant="primary" onClick={handleAcceptAll} size="sm">
                 {acceptButtonText}
               </Button>
             </ButtonContainer>
@@ -531,17 +515,17 @@ export const GlobalCookieConsent = forwardRef<HTMLDivElement, GlobalCookieConsen
             <div className="dialog-container">
               <div className="dialog-header">
                 <Typography variant="h6">Cookie Settings</Typography>
-                <Button variant="text" onClick={() => setShowDetailsModal(false)}>
+                <Button variant="ghost" onClick={() => setShowDetailsModal(false)}>
                   ×
                 </Button>
               </div>
               <div className="dialog-content">{renderCategories()}</div>
               <div className="dialog-actions">
-                <Button variant="outlined" onClick={() => setShowDetailsModal(false)}>
+                <Button variant="outline" onClick={() => setShowDetailsModal(false)}>
                   Cancel
                 </Button>
                 <Button
-                  variant="contained"
+                  variant="primary"
                   onClick={() => {
                     handleSavePreferences();
                     setShowDetailsModal(false);

@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, ChevronRight, Filter, Search, SlidersHorizontal, Tag, X } from 'lucide-react';
 import React, { useCallback, useMemo, useState } from 'react';
-import { cn } from '../../../lib/utils';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { cn } from '../../lib/utilsComprehensive';
+import { OptimizedGlass } from '../../primitives';
 import { GlassButton } from '../button/GlassButton';
 import { GlassCheckbox } from '../input/GlassCheckbox';
 import { GlassDateRangePicker } from '../input/GlassDateRangePicker';

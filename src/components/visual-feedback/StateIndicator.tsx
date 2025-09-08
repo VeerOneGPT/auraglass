@@ -75,7 +75,7 @@ const IndicatorContainer = styled.div`
 `;
 
 const StateOverlay = styled.div<{
-  $state: 'default' | 'hover' | 'active' | 'focus' | 'disabled' | 'loading' | 'success' | 'error';
+  $state: 'default' | 'hover' | 'active' | 'focus' | 'disabled' | 'loading' | 'success' | 'error' | 'warning' | 'info';
   $glass: boolean;
   $blend: boolean;
   $intensity: number;

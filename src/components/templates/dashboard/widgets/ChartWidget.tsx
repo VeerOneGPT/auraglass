@@ -1,12 +1,11 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { Glass } from '../../../primitives/glass/Glass';
-import { Motion } from '../../../primitives/motion/Motion';
-import { GlassButton, IconButton } from '../../../components/button/GlassButton';
-import { GlassBadge } from '../../../components/data-display/GlassBadge';
-import { VStack, HStack } from '../../../components/layout/GlassStack';
-import { cn } from '@/lib/utils';
+import { Glass, Motion } from '../../../../primitives';
+import { GlassButton, IconButton } from '../../../button/GlassButton';
+import { GlassBadge } from '../../../data-display/GlassBadge';
+import { VStack, HStack } from '../../../layout/GlassStack';
+import { cn } from '../../../../lib/utilsComprehensive';
 
 export interface ChartDataPoint {
   label: string;
@@ -362,8 +361,7 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
     return (
       <Glass
         ref={ref}
-        elevation={1}
-        radius="lg"
+        rounded="lg"
         className={cn('w-full h-full', config.padding, className)}
         {...props}
       >

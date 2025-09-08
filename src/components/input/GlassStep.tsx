@@ -25,32 +25,39 @@ const StepWrapper = styled(Box)<{ $orientation: 'horizontal' | 'vertical', $clic
   position: relative; // Needed for vertical connector positioning maybe?
   cursor: ${props => props.$clickable ? 'pointer' : 'default'};
   flex: 1; // Allow steps to take space, especially horizontally
-  padding: ${props => props.theme.spacing?.sm ?? 4}px 0; // Add some padding
+  padding: 8px 0; // Add some padding
   text-align: ${props => props.$orientation === 'vertical' ? 'center' : 'left'};
 `;
 
 // Use the specific internal props type
 export const GlassStep = forwardRef<HTMLDivElement, GlassStepInternalProps>((
   {
-    step, 
+    step,
     index,
     active,
     completed,
     orientation,
     onClick
-  }, 
+  },
   ref // Receive the forwarded ref
 ) => {
   const isClickable = !!onClick;
   const isDisabled = step.disabled || false;
+  const finalOrientation = orientation || 'horizontal';
+
+  const handleClick = () => {
+    if (onClick && !isDisabled) {
+      onClick(step);
+    }
+  };
 
   return (
     // Attach the ref to the StepWrapper
-    <StepWrapper 
-      ref={ref} 
-      $orientation={orientation} 
-      $clickable={isClickable && !isDisabled} 
-      onClick={isDisabled ? undefined : onClick} 
+    <StepWrapper
+      ref={ref}
+      $orientation={finalOrientation}
+      $clickable={isClickable && !isDisabled}
+      onClick={handleClick}
       style={{ opacity: isDisabled ? 0.5 : 1 }} // Dim disabled steps
     >
       {/* Use GlassStepIcon component */}
@@ -61,11 +68,11 @@ export const GlassStep = forwardRef<HTMLDivElement, GlassStepInternalProps>((
           icon={step.icon} 
       />
       {/* Use GlassStepLabel component */}
-      <GlassStepLabel 
-          label={step.label} 
-          active={active} 
-          completed={completed} 
-          orientation={orientation} 
+      <GlassStepLabel
+          label={step.label || step.title}
+          active={active}
+          completed={completed}
+          orientation={finalOrientation}
       />
     </StepWrapper>
   );

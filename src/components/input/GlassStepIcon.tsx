@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { useTheme } from 'styled-components';
 import { Box } from '../layout/Box';
-import { Icon } from '../Icon';
+import { Check } from 'lucide-react';
 // Import animation hook (assuming useSpring or similar exists)
 // If not, we might need to implement a basic spring or use CSS transitions
 // For now, let's use CSS transitions as a placeholder for simplicity
@@ -21,14 +21,14 @@ const StepIconContainer = styled(Box)<{ $active: boolean, $completed: boolean }>
   height: 24px;
   min-width: 24px; // Ensure size doesn't shrink
   border-radius: 50%;
-  background-color: ${props => 
-    props.$active ? (props.theme.colors?.primary?.main || 'blue') : 
-    props.$completed ? (props.theme.colors?.primary?.main || 'blue') : 
-    (props.theme.colors?.action?.disabledBackground || '#e0e0e0')
+  background-color: ${props =>
+    props.$active ? '#3b82f6' :
+    props.$completed ? '#10b981' :
+    '#e5e7eb'
   };
-  color: ${props => 
-    props.$active || props.$completed ? (props.theme.colors?.primary?.contrastText || 'white') : 
-    (props.theme.colors?.text?.secondary || '#757575')
+  color: ${props =>
+    props.$active || props.$completed ? '#ffffff' :
+    '#6b7280'
   };
   display: flex;
   align-items: center;
@@ -38,16 +38,16 @@ const StepIconContainer = styled(Box)<{ $active: boolean, $completed: boolean }>
   font-size: 0.8rem; // Size for step number
   font-weight: bold;
   flex-shrink: 0;
-  border: 1px solid ${props => 
-    props.$active || props.$completed ? (props.theme.colors?.primary?.main + '50' || 'rgba(0,0,255,0.3)') : 
-    (props.theme.colors?.divider || 'rgba(0,0,0,0.1)')
+  border: 1px solid ${props =>
+    props.$active || props.$completed ? 'rgba(59, 130, 246, 0.3)' :
+    'rgba(0, 0, 0, 0.1)'
   };
   position: relative; // Needed for potential pseudo-element animations
 
   // Add shadow based on active state (placeholder for animated version)
-  box-shadow: ${props => 
-      props.$active 
-          ? `0 0 12px 3px ${props.theme.colors?.primary?.main}80` 
+  box-shadow: ${props =>
+      props.$active
+          ? '0 0 12px 3px rgba(59, 130, 246, 0.5)'
           : 'none'
   };
 `;
@@ -60,11 +60,11 @@ export const GlassStepIcon: React.FC<GlassStepIconProps> = ({
 }) => {
     const getIconContent = () => {
         if (icon) {
-          // If icon is a string, assume it's an Icon name
-          return typeof icon === 'string' ? <Icon fontSize="small">{icon}</Icon> : icon;
+          // If icon is a React element, render it directly
+          return typeof icon === 'string' ? icon : icon;
         }
         if (completed) {
-          return <Icon fontSize="small">check</Icon>;
+          return <Check size={16} />;
         }
         return index + 1; // Display step number
     };

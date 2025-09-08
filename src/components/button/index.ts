@@ -1,6 +1,6 @@
-export { GlassButton, type GlassButtonProps } from './GlassButton';
-export { GlassFab, type GlassFabProps } from './GlassFab';
-export { GlassMagneticButton, type MagneticButtonProps } from './GlassMagneticButton';
+export { GlassButton, IconButton, type GlassButtonProps, type IconButtonProps } from './GlassButton';
+export { GlassFab, type FabProps } from './GlassFab';
+export { MagneticButton as GlassMagneticButton, type MagneticButtonProps } from './GlassMagneticButton';
 
 // Alias for compatibility
 export { GlassButton as Button } from './GlassButton';

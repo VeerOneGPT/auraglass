@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 
 export interface GlassStatusDotProps {
   status?: 'ok' | 'warn' | 'error' | 'busy' | 'offline';

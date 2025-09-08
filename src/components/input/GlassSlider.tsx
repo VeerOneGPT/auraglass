@@ -1,9 +1,9 @@
 'use client';
 
 import React, { forwardRef, useId, useState, useCallback, useRef, useEffect } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
-import { Motion } from '../../primitives/motion/Motion';
-import { cn } from '@/lib/utils';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface GlassSliderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   /** Current value(s) of the slider */

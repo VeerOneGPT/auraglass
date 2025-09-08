@@ -2,7 +2,7 @@
 // This consolidates all type definitions from merged libraries
 
 export * from './components';
-export * from './theme';
+export * from './themeTypes';
 export * from './animations';
 export * from './accessibility';
 

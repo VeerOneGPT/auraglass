@@ -2,14 +2,14 @@
 
 import React from 'react';
 import { GlassButton } from '../button/GlassButton';
-import { cn } from '@/design-system/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import {
   Select as GlassSelect,
   SelectTrigger as GlassSelectTrigger,
   SelectValue as GlassSelectValue,
   SelectContent as GlassSelectContent,
   SelectItem as GlassSelectItem,
-} from '@/design-system/components/input/GlassSelectCompound'
+} from '../input/GlassSelectCompound'
 
 export interface FieldDef { id: string; label: string; type: 'text'|'number'|'select'; options?: {label:string;value:string}[] }
 export interface Rule { field: string; op: string; value: any }

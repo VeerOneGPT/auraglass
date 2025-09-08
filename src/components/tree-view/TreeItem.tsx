@@ -9,10 +9,24 @@ import styled from 'styled-components';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useAnimationContext } from '../../contexts/AnimationContext';
 import { SpringConfig, SpringPresets } from '../../animations/physics/springPhysics';
-import { useGalileoSprings, SpringsAnimationResult } from '../../hooks/useGalileoSprings';
-
 import { TreeViewContext } from './TreeView';
-import { TreeItemProps } from './types';
+
+// TreeItem props interface
+interface TreeItemProps extends React.HTMLAttributes<HTMLLIElement> {
+  nodeId: string;
+  label: string;
+  children?: React.ReactNode;
+  glass?: boolean;
+  color?: string;
+  icon?: React.ReactNode;
+  expandIcon?: React.ReactNode;
+  collapseIcon?: React.ReactNode;
+  endIcon?: React.ReactNode;
+  disabled?: boolean;
+  animationConfig?: any;
+  disableAnimation?: boolean;
+  motionSensitivity?: number;
+}
 
 // Default icons
 const DefaultExpandIcon = () => (
@@ -132,8 +146,8 @@ function TreeItemComponent(props: TreeItemProps, ref: React.ForwardedRef<HTMLLIE
   } = props;
 
   const prefersReducedMotion = useReducedMotion();
-  const { defaultSpring, disableAnimation: contextDisableAnimation } = useAnimationContext();
-  const finalDisableAnimation = disableAnimation ?? contextDisableAnimation ?? prefersReducedMotion;
+  const { defaultSpring } = useAnimationContext();
+  const finalDisableAnimation = disableAnimation ?? prefersReducedMotion;
 
   // Refs
   const contentRef = useRef<HTMLDivElement>(null);
@@ -167,17 +181,17 @@ function TreeItemComponent(props: TreeItemProps, ref: React.ForwardedRef<HTMLLIE
   const hasChildren = Boolean(React.Children.count(children) > 0);
 
   // Check if the node is expanded
-  const isExpanded = hasChildren && expanded.includes(nodeId);
+  const isExpanded = hasChildren && (expanded?.includes(nodeId) ?? false);
 
   // Check if the node is selected
-  const isSelected = selected.includes(nodeId);
+  const isSelected = selected?.includes(nodeId) ?? false;
 
   // Check if the node is focused
-  const isFocused = focused === nodeId;
+  const isFocused = focused?.includes(nodeId) ?? false;
 
   // Animation Context and Config Calculation
   const finalSpringConfig = useMemo(() => {
-    const baseConfig: SpringConfig = SpringPresets.DEFAULT;
+    const baseConfig: SpringConfig = SpringPresets.default;
     let contextConfig: Partial<SpringConfig> = {};
     if (typeof defaultSpring === 'string' && defaultSpring in SpringPresets) {
       contextConfig = SpringPresets[defaultSpring as keyof typeof SpringPresets];
@@ -232,20 +246,23 @@ function TreeItemComponent(props: TreeItemProps, ref: React.ForwardedRef<HTMLLIE
       opacity: isExpanded ? 1 : 0,
   }), [isExpanded, measuredHeight]);
 
-  // Use useGalileoSprings hook for height and opacity animation
-  const animatedStyle = useGalileoSprings(animationTargets, {
-      config: finalSpringConfig,
-      immediate: finalDisableAnimation, // Pass final disable state
-      // onRest could be added here if needed after animation completes
-  });
+  // Simple animation style calculation
+  const animatedStyle = finalDisableAnimation ? {
+    height: animationTargets.height,
+    opacity: animationTargets.opacity,
+  } : {
+    height: animationTargets.height,
+    opacity: animationTargets.opacity,
+    transition: 'height 0.3s ease, opacity 0.3s ease',
+  };
 
   // Handle click event
   const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
 
     // Select the node
-    if (!finalDisabled) {
-      selectNode(event, nodeId);
+    if (!finalDisabled && selectNode) {
+      selectNode(nodeId);
     }
   };
 
@@ -254,8 +271,8 @@ function TreeItemComponent(props: TreeItemProps, ref: React.ForwardedRef<HTMLLIE
     event.stopPropagation();
 
     // Toggle the node
-    if (!finalDisabled && hasChildren) {
-      toggleNode(event, nodeId);
+    if (!finalDisabled && hasChildren && toggleNode) {
+      toggleNode(nodeId);
     }
   };
 
@@ -267,18 +284,20 @@ function TreeItemComponent(props: TreeItemProps, ref: React.ForwardedRef<HTMLLIE
       case ' ':
       case 'Enter':
         event.preventDefault();
-        selectNode(event, nodeId);
+        if (selectNode) {
+          selectNode(nodeId);
+        }
         break;
       case 'ArrowRight':
         event.preventDefault();
-        if (hasChildren && !isExpanded) {
-          toggleNode(event, nodeId);
+        if (hasChildren && !isExpanded && toggleNode) {
+          toggleNode(nodeId);
         }
         break;
       case 'ArrowLeft':
         event.preventDefault();
-        if (hasChildren && isExpanded) {
-          toggleNode(event, nodeId);
+        if (hasChildren && isExpanded && toggleNode) {
+          toggleNode(nodeId);
         }
         break;
       default:
@@ -288,8 +307,8 @@ function TreeItemComponent(props: TreeItemProps, ref: React.ForwardedRef<HTMLLIE
 
   // Handle focus
   const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
-    if (!finalDisabled) {
-      focusNode(event, nodeId);
+    if (!finalDisabled && focusNode) {
+      focusNode(nodeId);
     }
   };
 
@@ -325,9 +344,9 @@ function TreeItemComponent(props: TreeItemProps, ref: React.ForwardedRef<HTMLLIE
         tabIndex={finalDisabled ? -1 : 0}
         $selected={isSelected}
         $focused={isFocused}
-        $disabled={finalDisabled}
-        $glass={finalGlass}
-        $size={size}
+        $disabled={Boolean(finalDisabled)}
+        $glass={Boolean(finalGlass)}
+        $size={size || 'medium'}
         aria-disabled={finalDisabled}
       >
         <IconContainer onClick={hasChildren ? handleToggle : undefined} style={{ cursor: hasChildren ? 'pointer' : 'default' }}>

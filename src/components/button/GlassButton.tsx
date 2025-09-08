@@ -1,25 +1,17 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import { Slot } from '@radix-ui/react-slot';
 import React, { forwardRef } from 'react';
-import { OptimizedGlass, type OptimizedGlassProps } from '../../primitives/glass/OptimizedGlass';
-import { Motion } from '../../primitives/motion/Motion';
+import { OptimizedGlass, type OptimizedGlassProps } from '../../primitives';
+import { Motion } from '../../primitives';
+import { GlassButtonVariantType } from './types';
 
 export interface GlassButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'size'> {
   /**
    * Button variant
    */
-  variant?:
-  | 'default'
-  | 'primary'
-  | 'secondary'
-  | 'destructive'
-  | 'error' // deprecated: use 'destructive'
-  | 'outline'
-  | 'ghost'
-  | 'link'
-  | 'gradient';
+  variant?: GlassButtonVariantType;
   /**
    * Button size
    */
@@ -31,7 +23,7 @@ export interface GlassButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLBu
   /**
    * Glass variant for advanced effects
    */
-  glassVariant?: OptimizedGlassProps['variant'];
+  glassVariant?: 'frosted' | 'dynamic' | 'clear' | 'tinted' | 'luminous';
   /**
    * Glass intensity
    */
@@ -172,6 +164,14 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         refraction: true,
         className: 'text-white hover:text-white/90 border-0',
       },
+      tertiary: {
+        glassVariant: 'frosted' as const,
+        tint: 'gray' as const,
+        intensity: 'medium' as const,
+        glassBorder: 'subtle' as const,
+        lighting: 'ambient' as const,
+        className: 'text-white hover:text-white/90 border-0',
+      },
       destructive: {
         glassVariant: 'frosted' as const,
         tint: 'red' as const,
@@ -188,6 +188,22 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         glassBorder: 'neon' as const,
         lighting: 'directional' as const,
         chromatic: true,
+        className: 'text-white hover:text-white/90 border-0',
+      },
+      success: {
+        glassVariant: 'frosted' as const,
+        tint: 'green' as const,
+        intensity: 'strong' as const,
+        glassBorder: 'glow' as const,
+        lighting: 'directional' as const,
+        className: 'text-white hover:text-white/90 border-0',
+      },
+      warning: {
+        glassVariant: 'frosted' as const,
+        tint: 'orange' as const,
+        intensity: 'strong' as const,
+        glassBorder: 'glow' as const,
+        lighting: 'directional' as const,
         className: 'text-white hover:text-white/90 border-0',
       },
       outline: {

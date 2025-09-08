@@ -1,13 +1,13 @@
 'use client';
 
-import { GlassButton } from '@/design-system';
-import { cn } from '@/lib/utils';
 import React, { forwardRef, useCallback, useEffect, useState } from 'react';
-import { GlassCard } from '../../components/card/GlassCard';
-import { GlassFormBuilder } from '../../components/interactive/GlassFormBuilder';
-import { HStack, VStack } from '../../components/layout/GlassStack';
-import { Glass } from '../../primitives/glass/Glass';
-import { Motion } from '../../primitives/motion/Motion';
+import { GlassButton } from '@/components/button';
+import { cn } from '@/lib/utilsComprehensive';
+import { GlassCard } from '@/components/card';
+import { GlassFormBuilder } from '@/components/interactive/GlassFormBuilder';
+import { HStack, VStack } from '@/components/layout';
+import { Glass } from '@/primitives';
+import { Motion } from '@/primitives';
 import { GlassFormWizardSteps } from './GlassFormWizardSteps';
 
 export interface WizardStep {
@@ -391,7 +391,7 @@ export const GlassWizardTemplate = forwardRef<HTMLDivElement, GlassWizardTemplat
           return (
             <div className="grid grid-cols-12 gap-8">
               <div className="col-span-4">
-                <Glass variant="secondary" className="p-6 sticky top-8">
+                <Glass className="p-6 sticky top-8">
                   <VStack space="md">
                     <h3 className="font-semibold text-foreground">Steps</h3>
                     <VStack space="sm">
@@ -442,7 +442,7 @@ export const GlassWizardTemplate = forwardRef<HTMLDivElement, GlassWizardTemplat
       <div ref={ref} className={cn('w-full space-y-8', className)} {...props}>
         {layout !== 'sidebar' && renderHeader()}
 
-        <Motion preset="fadeIn">
+        <Motion>
           {renderLayout()}
         </Motion>
       </div>

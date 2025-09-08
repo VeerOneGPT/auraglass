@@ -6,7 +6,7 @@
 import React, { forwardRef, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { glassSurfaceFn } from '../../core/mixins/glassSurface';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
@@ -142,11 +142,10 @@ const SpeedDialFab = styled.div<{
   /* Glass styling */
   ${props =>
     props.$glass &&
-    glassSurface({
+    glassSurfaceFn({
       elevation: 3,
-      blurStrength: 'standard',
-      borderOpacity: 'medium',
-      themeContext: createThemeContext(props.theme),
+      blurStrength: '10px',
+      borderOpacity: 0.2,
     })}
 
   /* Open state */
@@ -266,9 +265,9 @@ function SpeedDialComponent(props: SpeedDialProps, ref: React.ForwardedRef<HTMLD
       }
 
       if (newOpen && onOpen) {
-        onOpen(event);
+        onOpen();
       } else if (!newOpen && onClose) {
-        onClose(event);
+        onClose();
       }
     },
     [disabled, open, isControlled, onOpen, onClose]
@@ -276,9 +275,9 @@ function SpeedDialComponent(props: SpeedDialProps, ref: React.ForwardedRef<HTMLD
 
   // Handle action click
   const handleActionClick = useCallback(
-    (event: React.MouseEvent<HTMLDivElement>, actionName: string) => {
+    (event: React.MouseEvent<HTMLDivElement>, actionIndex: number) => {
       if (onActionClick) {
-        onActionClick(event, actionName);
+        onActionClick(event, actionIndex);
       }
 
       // Close the speed dial after an action is clicked
@@ -287,7 +286,7 @@ function SpeedDialComponent(props: SpeedDialProps, ref: React.ForwardedRef<HTMLD
       }
 
       if (onClose) {
-        onClose(event);
+        onClose();
       }
     },
     [isControlled, onClose, onActionClick]
@@ -301,7 +300,7 @@ function SpeedDialComponent(props: SpeedDialProps, ref: React.ForwardedRef<HTMLD
       }
 
       if (onClose) {
-        onClose(event);
+        onClose();
       }
     },
     [isControlled, onClose]
@@ -362,7 +361,7 @@ function SpeedDialComponent(props: SpeedDialProps, ref: React.ForwardedRef<HTMLD
         }
 
         if (onClose) {
-          onClose(event as unknown as React.KeyboardEvent<HTMLDivElement>);
+          onClose();
         }
       }
     };
@@ -397,7 +396,9 @@ function SpeedDialComponent(props: SpeedDialProps, ref: React.ForwardedRef<HTMLD
             {React.Children.toArray(children).map((child, index) => {
               // Check if the action is a valid React element before rendering
               if (!React.isValidElement(child)) {
-                console.warn('Invalid element passed as child to SpeedDial:', child);
+                if (process.env.NODE_ENV === 'development') {
+                  console.warn('Invalid element passed as child to SpeedDial:', child);
+                }
                 return null;
               }
 
@@ -408,7 +409,7 @@ function SpeedDialComponent(props: SpeedDialProps, ref: React.ForwardedRef<HTMLD
                 <SpeedDialAction
                   key={child.key || index}
                   {...actionProps}
-                  onClick={event => handleActionClick(event, actionProps.tooltipTitle || `action-${index}`)}
+                  onClick={event => handleActionClick(event, index)}
                   glass={glassActions}
                   index={index}
                   totalActions={React.Children.count(children)}

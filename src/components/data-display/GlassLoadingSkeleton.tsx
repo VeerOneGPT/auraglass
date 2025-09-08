@@ -1,9 +1,9 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
-import { Motion } from '../../primitives/motion/Motion';
-import { cn } from '@/design-system/utils';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
+import { cn } from '@/design-system/utilsCore';
 
 export interface GlassLoadingSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Number of skeleton rows to display */

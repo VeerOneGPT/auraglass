@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
-import { cn } from '@/design-system/utils';
+import { OptimizedGlass } from '../../primitives';
+import { cn } from '@/design-system/utilsCore';
 
 export interface GlassMetricChipProps {
   label: string;

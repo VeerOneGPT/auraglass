@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import {
     AlertCircle,
     Loader2,
@@ -15,7 +15,7 @@ import {
     VolumeX
 } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Motion } from '../../primitives/motion/Motion';
+import { Motion } from '../../primitives';
 import { GlassButton } from '../button';
 import { CardContent, GlassCard } from '../card';
 import { GlassBadge } from '../data-display';

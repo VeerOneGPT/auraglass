@@ -284,7 +284,7 @@ export const getAdaptivePerformanceConfig = (): PerformanceOptions => {
     capabilities.supportsGPU &&
     capabilities.supportsBackdropFilter &&
     (capabilities.connectionSpeed === '4g' || capabilities.connectionSpeed === '5g') &&
-    capabilities.devicePixelRatio >= 2
+    (capabilities.devicePixelRatio ?? 1) >= 2
   );
 
   if (isLowEnd) {

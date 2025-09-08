@@ -1,10 +1,10 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { Motion } from '../../../primitives/motion/Motion';
+import { Motion } from '../../../primitives';
 import { GlassProgress } from '../../../components/data-display/GlassProgress';
 import { VStack, HStack } from '../../../components/layout/GlassStack';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface StepIndicatorProps {
   step: {

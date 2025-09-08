@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, createContext, useContext } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { OptimizedGlass } from '../../primitives';
 
 export type AnimationType =
   | 'fadeIn'
@@ -129,7 +129,9 @@ export const GlassMotionController: React.FC<MotionControllerProps> = ({
             startTime = timestamp;
             if (yoyo) {
               // For yoyo effect, we need to reverse the animation
-              animateFrame = createReverseAnimationFrame(element, type, direction, actualDuration, easing, amplitude, frequency);
+              const reverseAnimateFrame = createReverseAnimationFrame(element, type, direction, actualDuration, easing, amplitude, frequency);
+              animationFrame = requestAnimationFrame(reverseAnimateFrame);
+              return;
             }
           } else {
             resolve();

@@ -1,20 +1,31 @@
 import React, { createContext, useContext, useState, useEffect, useMemo, ReactNode, useRef, useCallback } from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 // import { css, createGlobalStyle } from 'styled-components'; // Unused imports
-import { deepmerge } from '@mui/utils';
+// Simple deep merge utility
+const deepmerge = (target: any, source: any): any => {
+  const result = { ...target };
+  Object.keys(source).forEach(key => {
+    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+      result[key] = deepmerge(result[key] || {}, source[key]);
+    } else {
+      result[key] = source[key];
+    }
+  });
+  return result;
+};
 
 // import { GlassTheme } from '../core/theme'; // Removed, theme type is handled internally
-import { createThemeContext as ___createThemeContext } from '../core/themeUtils';
-import type { ThemeContext as _ThemeContextType} from '../core/themeUtils';
+import { createThemeContext as ___createThemeContext } from '../core/themeContext';
+// import type { ThemeContext as _ThemeContextType} from '../core/themeUtils'; // Not exported
 import type { ColorMode, ThemeVariant as _ThemeVariant, Theme as _Theme, GlassSurfaceProps } from '../core/types';
 
 import {
   THEME_NAMES as _THEME_NAMES,
-  THEME_VARIANTS,
+  THEME_VARIANTS as _THEME_VARIANTS,
   GLASS_QUALITY_TIERS as _GLASS_QUALITY_TIERS,
   BLUR_STRENGTHS,
   GLOW_INTENSITIES,
-} from './constants';
+} from './themeConstants';
 import { colors, typography, spacing, shadows, borderRadius, zIndex } from './tokens';
 
 // ------ ColorMode Context ------
@@ -29,11 +40,15 @@ interface ColorModeContextType {
 const ColorModeContext = createContext<ColorModeContextType>({
   colorMode: 'system',
   setColorMode: (mode: ColorMode) => {
-    console.warn('setColorMode was called before ThemeProvider was initialized');
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('setColorMode was called before ThemeProvider was initialized');
+    }
   },
   isDarkMode: false,
   toggleColorMode: () => {
-    console.warn('toggleColorMode was called before ThemeProvider was initialized');
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('toggleColorMode was called before ThemeProvider was initialized');
+    }
   },
   systemPrefersDark: false,
 });
@@ -46,11 +61,13 @@ interface ThemeVariantContextType {
 }
 
 const ThemeVariantContext = createContext<ThemeVariantContextType>({
-  themeVariant: THEME_VARIANTS.STANDARD,
+  themeVariant: _THEME_VARIANTS[0] || 'default',
   setThemeVariant: (variant: string) => {
-    console.warn('setThemeVariant was called before ThemeProvider was initialized');
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('setThemeVariant was called before ThemeProvider was initialized');
+    }
   },
-  availableThemes: Object.values(THEME_VARIANTS),
+  availableThemes: [..._THEME_VARIANTS],
 });
 
 // ------ StyleUtils Context ------
@@ -88,7 +105,9 @@ interface GlassEffectsContextType {
 const GlassEffectsContext = createContext<GlassEffectsContextType>({
   qualityTier: 'high',
   setQualityTier: (tier: 'ultra' | 'high' | 'medium' | 'low' | 'minimal') => {
-    console.warn('setQualityTier was called before ThemeProvider was initialized');
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('setQualityTier was called before ThemeProvider was initialized');
+    }
   },
   getBlurStrength: () => '',
   getBackgroundOpacity: () => 0,
@@ -112,7 +131,9 @@ const PreferencesContext = createContext<PreferencesContextType>({
   reducedTransparency: false,
   highContrastMode: false,
   setPreference: (key: string, value: boolean) => {
-    console.warn('setPreference was called before ThemeProvider was initialized');
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('setPreference was called before ThemeProvider was initialized');
+    }
   },
   getUserPreference: () => false,
 });
@@ -243,7 +264,7 @@ export interface ThemeProviderProps {
 const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   initialColorMode = 'system',
-  initialTheme = THEME_VARIANTS.STANDARD,
+  initialTheme = _THEME_VARIANTS[0] || 'default',
   enableAutoDetection = true,
   respectSystemPreference = true,
   forceColorMode,
@@ -350,7 +371,9 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
           const parsedPreferences = JSON.parse(savedPreferences);
           setPreferences(prev => ({ ...prev, ...parsedPreferences }));
         } catch (e) {
-          console.error('Failed to parse saved preferences', e);
+          if (process.env.NODE_ENV === 'development') {
+            console.error('Failed to parse saved preferences', e);
+          }
         }
       }
     }
@@ -569,7 +592,7 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
       return `${strength}px`;
     }
 
-    return BLUR_STRENGTHS[strength as keyof typeof BLUR_STRENGTHS] || BLUR_STRENGTHS.STANDARD;
+    return BLUR_STRENGTHS.includes(strength as any) ? strength : 'standard';
   }, []);
 
   const getBackgroundOpacity = useCallback((opacity: string | number) => {
@@ -627,13 +650,8 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
       const {
         /* eslint-disable react/prop-types */
         variant = 'standard',
-        blurStrength = 'medium',
-        backgroundOpacity = 'medium',
-        borderOpacity = 'medium',
-        glowIntensity = 'medium',
         elevation: rawElevation = 1,
         interactive = false,
-        darkMode = isDarkMode,
         /* eslint-enable react/prop-types */
       } = props;
 
@@ -652,21 +670,21 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
           : Number(rawElevation);
 
       // Get glass-specific color values
-      const backgroundColor = darkMode
-        ? colors.glass.dark.background
-        : colors.glass.light.background;
+      const backgroundColor = isDarkMode
+        ? 'rgba(0, 0, 0, 0.2)'
+        : 'rgba(255, 255, 255, 0.1)';
 
-      const borderColor = darkMode ? colors.glass.dark.border : colors.glass.light.border;
+      const borderColor = isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
 
-      const shadowColor = darkMode ? colors.glass.dark.shadow : colors.glass.light.shadow;
+      const shadowColor = isDarkMode ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.1)';
 
-      const glowColor = darkMode ? colors.glass.dark.glow : colors.glass.light.glow;
+      const glowColor = isDarkMode ? '#3b82f6' : '#6366f1';
 
       // Get opacity and blur values from qualityTier
-      const bgOpacity = getBackgroundOpacity(backgroundOpacity);
-      const borderOpacityValue = getBorderOpacity(borderOpacity);
-      const blurValue = getBlurStrength(blurStrength);
-      const glowValue = getGlowIntensity(glowIntensity);
+      const bgOpacity = getBackgroundOpacity('medium');
+      const borderOpacityValue = getBorderOpacity('medium');
+      const blurValue = getBlurStrength('medium');
+      const glowValue = getGlowIntensity('medium');
 
       // Build styles based on glass variant
       const baseStyles = `
@@ -706,7 +724,7 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
           border-width: 1px;
         `;
           break;
-        case 'dimensional':
+        case 'crystal':
           dimBgOpacity = bgOpacity * 0.6;
           const dimElev2 = elevation * 2;
           const dimElev6 = elevation * 6;
@@ -722,8 +740,8 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
           border-width: 0;
         `;
           break;
-        case 'heat':
-          const accentColor = darkMode ? colors.accent[400] : colors.accent[300];
+        case 'metallic':
+          const accentColor = isDarkMode ? '#3b82f6' : '#6366f1';
           const bgOpacityTop = bgOpacity * 0.6;
           const bgOpacityBottom = bgOpacity * 0.4;
           const elevationDouble = elevation * 2;
@@ -793,14 +811,9 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
    */
   function GlassSurfaceComponent(props: GlassSurfaceProps & { children?: React.ReactNode }) {
     const {
-      variant = 'standard',
-      blurStrength = 'medium',
-      backgroundOpacity = 'medium',
-      borderOpacity = 'medium',
-      glowIntensity = 'medium',
+      variant = 'frosted',
       elevation = 1,
       interactive = false,
-      darkMode = isDarkMode,
       children,
       ...rest
     } = props;
@@ -811,13 +824,8 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
     // Get the glass styles
     const cssString = createSurface({
       variant,
-      blurStrength,
-      backgroundOpacity,
-      borderOpacity,
-      glowIntensity,
       elevation,
       interactive,
-      darkMode,
     });
     
     return (
@@ -885,7 +893,7 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
     () => ({
       themeVariant,
       setThemeVariant,
-      availableThemes: Object.values(THEME_VARIANTS),
+      availableThemes: [..._THEME_VARIANTS],
     }),
     [themeVariant, setThemeVariant]
   );
@@ -1000,7 +1008,9 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
     if (debug && performanceMonitoring) {
       renderCount.current++;
       const renderTime = Date.now() - lastUpdateTime.current;
-      console.log(`[ThemeProvider] Render #${renderCount.current} took ${renderTime}ms`);
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`[ThemeProvider] Render #${renderCount.current} took ${renderTime}ms`);
+      }
       lastUpdateTime.current = Date.now();
     }
   });
@@ -1194,3 +1204,6 @@ export const useThemeObserver = (callback: (theme: any, isDark: boolean) => void
     callback(currentTheme, isDark);
   }, [callback, currentTheme, isDark]);
 };
+
+// Alias for backward compatibility
+export const GlassThemeProvider = ThemeProvider;

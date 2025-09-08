@@ -1,7 +1,7 @@
 'use client';
 
-import { OptimizedGlass } from '@/design-system/primitives/glass/OptimizedGlass';
-import { cn } from "@/lib/utils";
+import { OptimizedGlass } from '../../primitives';
+import { cn } from "@/lib/utilsComprehensive";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import { AlertCircle } from "lucide-react";

@@ -2,10 +2,10 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
-import { Motion } from '../../primitives/motion/Motion';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
 import { GlassBadge } from '../data-display/GlassBadge';
 import { GlassInput } from '../input/GlassInput';
 

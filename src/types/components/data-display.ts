@@ -74,7 +74,7 @@ export interface TooltipProps {
   onVisibleChange?: (visible: boolean) => void;
 }
 
-export interface PopoverProps extends TooltipProps {
+export interface PopoverProps extends Omit<TooltipProps, 'title'> {
   content: React.ReactNode;
   title?: React.ReactNode;
 }

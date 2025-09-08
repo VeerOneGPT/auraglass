@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import {
     ChevronLeft,
     ChevronRight,
@@ -10,7 +10,7 @@ import {
     Play
 } from 'lucide-react';
 import React, { Children, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
-import { Motion } from '../../primitives/motion/Motion';
+import { Motion } from '../../primitives';
 import { GlassButton } from '../button';
 import { CardContent, GlassCard } from '../card';
 

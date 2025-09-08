@@ -10,31 +10,54 @@ import { createPortal } from 'react-dom';
 import styled, { css, keyframes } from 'styled-components';
 
 // Physics-related imports
-import { useGalileoStateSpring, GalileoSpringResult } from '../../hooks/useGalileoStateSpring';
+import { useGalileoStateSpring } from '../../hooks/useGalileoStateSpring';
 import { SpringPresets, SpringConfig } from '../../animations/physics/springPhysics';
-import { useAnimationSequence } from '../../animations/orchestration/useAnimationSequence';
-import {
-  StaggerAnimationStage,
-  AnimationSequenceConfig,
-  SequenceControls
-} from '../../animations/types';
+
+// Add snappy preset if not available
+const extendedSpringPresets = {
+  ...SpringPresets,
+  snappy: { stiffness: 300, damping: 20, mass: 1 },
+};
 
 // Core styling imports
 import { glassSurface } from '../../core/mixins/glassSurface';
-import { createThemeContext } from '../../core/themeContext';
 import { useAnimationContext } from '../../contexts/AnimationContext';
+
+import { createThemeContext } from '../../core/themeUtils';
 import { useAccessibilitySettings } from '../../hooks/useAccessibilitySettings';
+
+// Add missing type definitions
+interface StaggerAnimationStage {
+  id: string;
+  type: 'stagger';
+  targets: string;
+  from: Record<string, any>;
+  properties: Record<string, any>;
+  duration: number;
+  staggerDelay: number;
+  easing: string;
+}
+
+interface AnimationSequenceConfig {
+  id: string;
+  stages: StaggerAnimationStage[];
+  autoplay: boolean;
+}
+
+interface SequenceControls {
+  play: () => void;
+}
 
 // Hooks and utilities
 import ClearIcon from '../icons/ClearIcon';
 
 // Types
-import { 
-  MultiSelectOption, 
+import {
+  MultiSelectOption,
   OptionGroup,
   MultiSelectProps,
 } from './types';
-import { AnimationProps } from '../../types/animation';
+import { AnimationProps } from '../../types/animations';
 
 // Animation keyframes
 const fadeIn = keyframes`
@@ -102,12 +125,10 @@ const InputContainer = styled.div<{
   }}
   
   /* Enhanced glass styling */
-  ${props => glassSurface({
-    elevation: 1,
-    blurStrength: 'light',
-    borderOpacity: 'medium',
-    themeContext: createThemeContext(props.theme),
-  })}
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   
   border-radius: 8px;
   border: 1px solid ${props => 
@@ -283,12 +304,10 @@ const DropdownContainer = styled.div<{
   margin-bottom: ${props => props.$openUp ? '4px' : '0'};
   
   /* Enhanced glass styling */
-  ${props => glassSurface({
-    elevation: 2,
-    blurStrength: 'medium',
-    borderOpacity: 'subtle',
-    themeContext: createThemeContext(props.theme),
-  })}
+  background-color: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -456,20 +475,20 @@ const Label = styled.label`
 `;
 
 // Interface for the wrapper props
-interface AnimatedTokenWrapperProps<T> {
+interface AnimatedTokenWrapperProps<T extends string | number> {
   option: MultiSelectOption<T>;
   onRemove: (id: string | number) => void; // Callback to actually remove from state
   removeConfig: Partial<SpringConfig>;
   isDisabled?: boolean;
   reducedMotion?: boolean;
   // Add renderToken prop if custom rendering needs animation applied
-  renderToken?: MultiSelectProps<T>['renderToken']; 
+  renderToken?: (option: MultiSelectOption<T>, onRemove: (value: T) => void) => React.ReactNode;
   // Need original remove handler for custom renderToken
   originalOnRemoveHandler: (e: React.MouseEvent, option: MultiSelectOption<T>) => void;
 }
 
 // Internal component to handle exit animation for each token
-function AnimatedTokenWrapper<T>({ 
+function AnimatedTokenWrapper<T extends string | number = string | number>({ 
   option, 
   onRemove, 
   removeConfig, 
@@ -481,27 +500,22 @@ function AnimatedTokenWrapper<T>({
   const [isExiting, setIsExiting] = useState(false);
 
   // Animation for opacity and scale
-  const { value: animProgress, start } = useGalileoStateSpring(isExiting ? 0 : 1, {
+  const { value: animProgress } = useGalileoStateSpring(isExiting ? 0 : 1, {
     ...removeConfig,
-    immediate: reducedMotion,
-    onRest: (result) => {
-      // Only trigger actual removal when exit animation completes
-      if (isExiting && result.finished) {
-        onRemove(option.id);
-      }
-    },
+    immediate: reducedMotion
   });
 
-  // Effect to trigger animation when isExiting becomes true
+  // Handle animation completion
   useEffect(() => {
     if (isExiting) {
-      start({ to: 0 }); // Start animation towards exit state (0)
-    } else {
-      // Optional: Handle entrance/reset if needed, though entrance is separate
-      start({ to: 1, from: 0 }); // Simple fade-in on initial render if needed
+      // Trigger actual removal after animation
+      const timeout = setTimeout(() => {
+        onRemove(option.value);
+      }, 300); // Match animation duration
+      return () => clearTimeout(timeout);
     }
-  }, [isExiting, start]); // Added start to dependency array
-  
+  }, [isExiting, onRemove, option.value]);
+
   // Trigger exit (called by the remove button click)
   const triggerExit = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -518,9 +532,10 @@ function AnimatedTokenWrapper<T>({
 
   // If using custom renderer, wrap it
   if (renderToken) {
+      const handleRemove = () => onRemove(option.value);
       return (
           <div style={animatedStyle} className="galileo-multiselect-token-wrapper">
-              {renderToken(option, triggerExit)} 
+              {renderToken(option, handleRemove)}
           </div>
       );
   }
@@ -569,7 +584,7 @@ const areOptionsEqual = <T,>(a: MultiSelectOption<T>[], b: MultiSelectOption<T>[
 };
 
 // Define the actual component function that accepts props and ref
-const GlassMultiSelectInternal = <T = string>(
+const GlassMultiSelectInternal = <T extends string | number = string>(
   props: MultiSelectProps<T> & AnimationProps,
   ref: React.ForwardedRef<HTMLDivElement>
 ) => {
@@ -627,7 +642,8 @@ const GlassMultiSelectInternal = <T = string>(
   const loadingMessage = asyncProps?.loadingIndicator ?? 'Loading...';
   const defaultNoOptionsMessage = 'No options';
 
-  const { isReducedMotion } = useAccessibilitySettings();
+  const { settings: accessibilitySettings } = useAccessibilitySettings();
+  const isReducedMotion = accessibilitySettings.reducedMotion;
 
   const rootRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -637,12 +653,14 @@ const GlassMultiSelectInternal = <T = string>(
   // Combine external ref with internal rootRef
   const combinedRef = useCallback(
     (node: HTMLDivElement | null) => {
-      rootRef.current = node;
+      if (rootRef.current !== node && rootRef) {
+        (rootRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+      }
       if (ref) {
         if (typeof ref === 'function') {
           ref(node);
         } else {
-          ref.current = node;
+          (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
         }
       }
     },
@@ -651,8 +669,13 @@ const GlassMultiSelectInternal = <T = string>(
 
   // State
   const [internalValue, setInternalValue] = useState<MultiSelectOption<T>[]>(() => {
-    const initial = controlledValue ?? [];
-    return Array.isArray(initial) ? initial : [];
+    if (controlledValue && Array.isArray(controlledValue)) {
+      // Convert T[] to MultiSelectOption<T>[] by finding matching options
+      return controlledValue.map(value =>
+        options.find(option => option.value === value) || { value, label: String(value) }
+      );
+    }
+    return [];
   });
   const [inputValue, setInputValue] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -663,7 +686,6 @@ const GlassMultiSelectInternal = <T = string>(
   // Animation Context & Settings
   const {
     defaultSpring: contextDefaultSpring,
-    modalSpringConfig: contextModalSpringConfig,
   } = useAnimationContext();
 
   // Calculate final disable state again using isReducedMotion
@@ -673,8 +695,9 @@ const GlassMultiSelectInternal = <T = string>(
   const dropdownImmediate = !animate || isReducedMotion;
 
   // Resolve final spring config for dropdown (using nested physics prop)
+  const contextModalSpringConfig = animationPreset; // Use animationPreset as context config
   const finalDropdownSpringConfig = useMemo<Partial<SpringConfig>>(() => {
-    const baseConfig = SpringPresets.DEFAULT;
+    const baseConfig = SpringPresets.default;
     let resolvedContextConfig = {};
     if (typeof contextModalSpringConfig === 'string' && contextModalSpringConfig in SpringPresets) {
       resolvedContextConfig = SpringPresets[contextModalSpringConfig as keyof typeof SpringPresets];
@@ -683,9 +706,9 @@ const GlassMultiSelectInternal = <T = string>(
     }
     // Merge config from the nested physics prop
     // Use physics.tension/friction directly if animationPreset isn't a standard string
-    const propPhysicsConfig = animationPreset === 'gentle' ? SpringPresets.GENTLE :
-                             animationPreset === 'snappy' ? SpringPresets.SNAPPY :
-                             animationPreset === 'bouncy' ? SpringPresets.BOUNCY :
+    const propPhysicsConfig = animationPreset === 'gentle' ? extendedSpringPresets.gentle :
+                             animationPreset === 'snappy' ? extendedSpringPresets.snappy :
+                             animationPreset === 'bouncy' ? extendedSpringPresets.bouncy :
                              (typeof physics?.tension === 'number' && typeof physics?.friction === 'number' ? { tension: physics.tension, friction: physics.friction } : {}); 
                              
     return { ...baseConfig, ...resolvedContextConfig, ...propPhysicsConfig };
@@ -693,7 +716,7 @@ const GlassMultiSelectInternal = <T = string>(
 
   // Resolve final spring config for item removal
   const finalItemRemoveSpringConfig = useMemo<Partial<SpringConfig>>(() => {
-    const baseConfig = SpringPresets.DEFAULT;
+    const baseConfig = SpringPresets.default;
     let resolvedContextConfig = {};
     if (typeof contextDefaultSpring === 'string' && contextDefaultSpring in SpringPresets) {
       resolvedContextConfig = SpringPresets[contextDefaultSpring as keyof typeof SpringPresets];
@@ -711,18 +734,20 @@ const GlassMultiSelectInternal = <T = string>(
   }, [contextDefaultSpring, itemRemoveAnimation]);
 
   // Use Galileo Spring for dropdown entrance/exit
-  const dropdownAnimation: GalileoSpringResult = useGalileoStateSpring(
+  const dropdownAnimation = useGalileoStateSpring(
       isDropdownOpen ? 1 : 0,
       {
           ...finalDropdownSpringConfig,
-          immediate: dropdownImmediate,
-          onRest: (result) => {
-              if (!isDropdownOpen && result.finished) {
-                  setIsRendered(false);
-              }
-          }
+          immediate: dropdownImmediate
       }
   );
+
+  // Handle dropdown animation completion
+  useEffect(() => {
+    if (!isDropdownOpen && dropdownAnimation.value === 0) {
+      setIsRendered(false);
+    }
+  }, [isDropdownOpen, dropdownAnimation.value]);
 
   const shouldRenderDropdown = isRendered;
 
@@ -730,11 +755,14 @@ const GlassMultiSelectInternal = <T = string>(
   useEffect(() => {
     if (controlledValue !== undefined) {
       const controlledArray = Array.isArray(controlledValue) ? controlledValue : [];
-      if (!areOptionsEqual(controlledArray, internalValue)) {
-        setInternalValue(controlledArray);
+      const controlledOptions = controlledArray.map(value =>
+        options.find(option => option.value === value) || { value, label: String(value) }
+      );
+      if (!areOptionsEqual(controlledOptions, internalValue)) {
+        setInternalValue(controlledOptions);
       }
     }
-  }, [controlledValue, internalValue]);
+  }, [controlledValue, internalValue, options]);
 
   useEffect(() => {
       if (isDropdownOpen) {
@@ -749,14 +777,13 @@ const GlassMultiSelectInternal = <T = string>(
   const filteredOptions = useMemo(() => {
     let result = options;
     if (searchable && inputValue) {
-        const filterFn = filterFunction || ((option, input) => 
-            option.label.toLowerCase().includes(input.toLowerCase())
-        );
-        try {
-            result = options.filter(option => filterFn(option, inputValue, internalValue));
-        } catch (e) {
-            // Silent error handling - filter function failed
-            result = options.filter(option => (filterFn as any)(option, inputValue));
+        if (filterFunction) {
+            result = filterFunction(options, inputValue);
+        } else {
+            // Default filtering logic
+            result = options.filter((option: MultiSelectOption<T>) =>
+                option.label.toLowerCase().includes(inputValue.toLowerCase())
+            );
         }
     }
     if (creatable && inputValue && !options.some(opt => opt.label === inputValue)) {
@@ -776,8 +803,10 @@ const GlassMultiSelectInternal = <T = string>(
     if (!withGroups) {
       return [{ group: null, options: filteredOptions }];
     }
-    const groupMap: { [key: string]: MultiSelectOption<T>[] } = {};
-    groups.forEach(g => groupMap[g.id] = []);
+    const groupMap: Record<string, MultiSelectOption<T>[]> = {};
+    groups.forEach(g => {
+      if (g.id) groupMap[g.id] = [];
+    });
     
     filteredOptions.forEach(option => {
       const groupId = option.group || '__no_group__';
@@ -785,14 +814,14 @@ const GlassMultiSelectInternal = <T = string>(
       groupMap[groupId].push(option);
     });
     
-    const orderedGroups: { group: OptionGroup | null; options: MultiSelectOption<T>[] }[] = [];
+    const orderedGroups: { group: OptionGroup<T> | null; options: MultiSelectOption<T>[] }[] = [];
     groups.forEach(g => {
-        if (groupMap[g.id]?.length > 0) orderedGroups.push({ group: g, options: groupMap[g.id] });
+        if (g.id && groupMap[g.id]?.length > 0) orderedGroups.push({ group: g, options: groupMap[g.id]! });
     });
-    if (groupMap['__no_group__']?.length > 0) orderedGroups.push({ group: null, options: groupMap['__no_group__'] });
+    if (groupMap['__no_group__']?.length > 0) orderedGroups.push({ group: null, options: groupMap['__no_group__']! });
     Object.keys(groupMap).forEach(groupId => {
-        if (groupId !== '__no_group__' && !groups.some(g => g.id === groupId) && groupMap[groupId].length > 0) {
-            orderedGroups.push({ group: { id: groupId, label: groupId }, options: groupMap[groupId] });
+        if (groupId !== '__no_group__' && !groups.some(g => g.id === groupId) && groupMap[groupId]!.length > 0) {
+            orderedGroups.push({ group: { id: groupId, label: groupId } as OptionGroup<T>, options: groupMap[groupId]! });
         }
     });
     return orderedGroups;
@@ -873,14 +902,14 @@ const GlassMultiSelectInternal = <T = string>(
 
     if (isSelected) {
       newValue = internalValue.filter(v => v.id !== option.id);
-      if (onRemove) onRemove(option);
+      if (onRemove) onRemove(option.value);
     } else {
       if (maxSelections && internalValue.length >= maxSelections) return;
       newValue = [...internalValue, option];
       if (onSelect) onSelect(option);
     }
     if (controlledValue === undefined) setInternalValue(newValue);
-    if (onChange) onChange(newValue);
+    if (onChange) onChange(newValue.map(opt => opt.value));
     if (clearInputOnSelect) setInputValue('');
     if (!closeOnSelect) inputRef.current?.focus();
     else setIsDropdownOpen(false);
@@ -890,10 +919,10 @@ const GlassMultiSelectInternal = <T = string>(
   const handleRemoveTokenActual = useCallback((idToRemove: string | number) => {
     const newValue = internalValue.filter(v => v.id !== idToRemove);
     if (controlledValue === undefined) setInternalValue(newValue);
-    if (onChange) onChange(newValue);
+    if (onChange) onChange(newValue.map(opt => opt.value));
     // Find the original option for the onRemove callback
     const removedOption = internalValue.find(v => v.id === idToRemove);
-    if (removedOption && onRemove) onRemove(removedOption);
+    if (removedOption && onRemove) onRemove(removedOption.value);
   }, [internalValue, controlledValue, onChange, onRemove]);
 
    // MODIFIED: Original remove handler (now just triggers animation via wrapper)
@@ -968,7 +997,9 @@ const GlassMultiSelectInternal = <T = string>(
           }
           
           // Fallback: direct removal if simulation fails
-          handleRemoveTokenActual(lastOption.id);
+          if (lastOption.id !== undefined) {
+            handleRemoveTokenActual(lastOption.id);
+          }
         }
         break;
       default: break;
@@ -997,30 +1028,24 @@ const GlassMultiSelectInternal = <T = string>(
 
   // --- Token Entrance Animation Implementation ---
 
-  // Define the sequence configuration MEMOIZED
-  const entranceSequenceConfig = useMemo((): AnimationSequenceConfig => {
-    // Default stage config
-    const entranceStage: StaggerAnimationStage = {
-      id: 'token-entrance-stagger',
-      type: 'stagger',
-      targets: '.galileo-multiselect-token', // Target the class name
-      from: { opacity: 0, transform: 'translateY(5px) scale(0.95)' },
-      properties: { opacity: 1, transform: 'translateY(0px) scale(1)' },
-      duration: 300,
-      staggerDelay: 30,
-      easing: 'easeOutCubic',
-      // Optional: Use animationConfig prop for physics override
-      // config: animationConfig ?? contextDefaultSpring ?? SpringPresets.SNAPPY 
-    };
-    return {
-      id: `multiselect-token-entrance-${id || 'default'}`,
-      stages: [entranceStage],
-      autoplay: false, // Trigger manually
-    };
-  }, [id]); // Depends on ID for uniqueness, config could be added if used
-
-  // Instantiate the sequence hook
-  const { play: playEntranceAnimation }: SequenceControls = useAnimationSequence(entranceSequenceConfig);
+  // Animation trigger function
+  const playEntranceAnimation = useCallback(() => {
+    // Animation logic would go here
+    // For now, we'll use a simple timeout-based animation
+    const tokens = document.querySelectorAll('.galileo-multiselect-token');
+    tokens.forEach((token, index) => {
+      const element = token as HTMLElement;
+      if (element) {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(5px) scale(0.95)';
+        setTimeout(() => {
+          element.style.transition = 'all 0.3s ease-out';
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0px) scale(1)';
+        }, index * 30);
+      }
+    });
+  }, []);
 
   // Ref to track if initial animation has run
   const initialAnimationPlayed = useRef(false);
@@ -1099,7 +1124,7 @@ const GlassMultiSelectInternal = <T = string>(
                     {groupedOptions.map((groupInfo, groupIndex) => (
                         <React.Fragment key={groupInfo.group?.id || `group-${groupIndex}`}>
                             {groupInfo.group && (
-                                renderGroup ? renderGroup(groupInfo.group) :
+                                renderGroup ? renderGroup(groupInfo.group as OptionGroup<T>) :
                                 <GroupHeader $size={size}>{groupInfo.group.label}</GroupHeader>
                             )}
                             {groupInfo.options.map(option => {
@@ -1107,7 +1132,7 @@ const GlassMultiSelectInternal = <T = string>(
                                 const isDisabled = option.disabled || disabled;
                                 const currentIndex = flatOptions.findIndex(opt => opt.id === option.id);
                                 const isFocused = currentIndex === focusedOptionIndex;
-                                const optionContent = renderOption ? renderOption(option, { isSelected: isSelected, isFocused: isFocused, disabled: !!isDisabled }) :
+                                const optionContent = renderOption ? renderOption(option, isSelected) :
                                     <>{option.label} {isSelected && <span>✓</span>}</>; 
                                 return (
                                     <OptionItem
@@ -1168,9 +1193,11 @@ const GlassMultiSelectInternal = <T = string>(
       $fullWidth={fullWidth}
       $width={width}
       $animate={animate}
-      $reducedMotion={finalDisableAnimation}
+      $reducedMotion={isReducedMotion}
       data-testid={dataTestId || 'glass-multi-select'}
-      {...rest}
+      style={rest.style}
+      id={id}
+      aria-label={ariaLabel}
     >
       {label && <Label htmlFor={id || 'gms-input'}>{label}</Label>}
       <InputContainer
@@ -1214,7 +1241,6 @@ const GlassMultiSelectInternal = <T = string>(
               aria-controls={isDropdownOpen ? `listbox-${id || 'gms'}` : undefined}
               aria-label={ariaLabel || label}
               autoComplete="off"
-              {...rest}
             />
           )}
         </TokensContainer>
@@ -1234,7 +1260,7 @@ const GlassMultiSelectInternal = <T = string>(
 }
 
 // Forward Ref and Export with proper typing
-export const GlassMultiSelect = forwardRef(GlassMultiSelectInternal) as <T = string>(
+export const GlassMultiSelect = forwardRef(GlassMultiSelectInternal) as <T extends string | number = string | number>(
   props: MultiSelectProps<T> & AnimationProps & { ref?: React.ForwardedRef<HTMLDivElement> }
 ) => React.ReactElement;
 

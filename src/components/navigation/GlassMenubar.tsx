@@ -2,11 +2,11 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 import { ChevronRight } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
-import { Motion } from '../../primitives/motion/Motion';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
 
 export interface MenuItem {
     id: string;
@@ -508,13 +508,17 @@ export const createFileMenu = (): MenuItem[] => [
         id: 'file-new',
         label: 'New',
         shortcut: 'Ctrl+N',
-        action: () => console.log('New file'),
+        action: () => {
+          // New file action - implement based on your needs
+        },
     },
     {
         id: 'file-open',
         label: 'Open',
         shortcut: 'Ctrl+O',
-        action: () => console.log('Open file'),
+        action: () => {
+          // Open file action - implement based on your needs
+        },
     },
     {
         id: 'file-separator-1',
@@ -525,13 +529,17 @@ export const createFileMenu = (): MenuItem[] => [
         id: 'file-save',
         label: 'Save',
         shortcut: 'Ctrl+S',
-        action: () => console.log('Save file'),
+        action: () => {
+          // Save file action - implement based on your needs
+        },
     },
     {
         id: 'file-save-as',
         label: 'Save As',
         shortcut: 'Ctrl+Shift+S',
-        action: () => console.log('Save as'),
+        action: () => {
+          // Save as action - implement based on your needs
+        },
     },
 ];
 
@@ -540,13 +548,17 @@ export const createEditMenu = (): MenuItem[] => [
         id: 'edit-undo',
         label: 'Undo',
         shortcut: 'Ctrl+Z',
-        action: () => console.log('Undo'),
+        action: () => {
+          // Undo action - implement based on your needs
+        },
     },
     {
         id: 'edit-redo',
         label: 'Redo',
         shortcut: 'Ctrl+Y',
-        action: () => console.log('Redo'),
+        action: () => {
+          // Redo action - implement based on your needs
+        },
     },
     {
         id: 'edit-separator-1',
@@ -557,18 +569,24 @@ export const createEditMenu = (): MenuItem[] => [
         id: 'edit-cut',
         label: 'Cut',
         shortcut: 'Ctrl+X',
-        action: () => console.log('Cut'),
+        action: () => {
+          // Cut action - implement based on your needs
+        },
     },
     {
         id: 'edit-copy',
         label: 'Copy',
         shortcut: 'Ctrl+C',
-        action: () => console.log('Copy'),
+        action: () => {
+          // Copy action - implement based on your needs
+        },
     },
     {
         id: 'edit-paste',
         label: 'Paste',
         shortcut: 'Ctrl+V',
-        action: () => console.log('Paste'),
+        action: () => {
+          // Paste action - implement based on your needs
+        },
     },
 ];

@@ -2,11 +2,11 @@
 
 import { GlassInput } from '../input/GlassInput';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import { Search } from 'lucide-react';
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
-import { Motion } from '../../primitives/motion/Motion';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
 
 export interface CommandItem {
     id: string;

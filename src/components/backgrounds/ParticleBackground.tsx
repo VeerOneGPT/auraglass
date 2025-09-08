@@ -7,7 +7,7 @@ import React, { forwardRef, useRef, useEffect, useState, useMemo, useCallback } 
 import styled from 'styled-components';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import { ParticleBackgroundProps } from '../surfaces/types';
+import { ParticleBackgroundProps } from './types';
 
 // Particle interface
 interface Particle {
@@ -92,6 +92,10 @@ const ParticleBackgroundComponent = (
     interactive = true,
     blur = false,
     blurAmount = 5,
+    count,
+    size,
+    speed,
+    color,
     ...rest
   } = props;
 
@@ -106,24 +110,47 @@ const ParticleBackgroundComponent = (
   // State for mouse position
   const [mousePosition, setMousePosition] = useState<{ x: number; y: number } | null>(null);
 
+  // Use correct property names with fallbacks
+  const actualCount = count ?? particleCount ?? 50;
+  const actualSize = size ?? particleSize ?? 2;
+  const actualSpeed = speed ?? particleSpeed ?? 1;
+  const actualColor = color ?? particleColor ?? 'rgba(255, 255, 255, 0.7)';
+
+  // Helper function to get color values
+  const getColorValues = (colorStr: string): { r: number; g: number; b: number; a?: number } => {
+    if (colorStr.startsWith('rgba(')) {
+      const match = colorStr.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/);
+      if (match) {
+        return {
+          r: parseInt(match[1]),
+          g: parseInt(match[2]),
+          b: parseInt(match[3]),
+          a: match[4] ? parseFloat(match[4]) : 1
+        };
+      }
+    }
+    // Default fallback
+    return { r: 255, g: 255, b: 255, a: 1 };
+  };
+
   // Create particles
   const particles = useMemo(() => {
     const newParticles: Particle[] = [];
 
-    for (let i = 0; i < particleCount; i++) {
+    for (let i = 0; i < actualCount; i++) {
       newParticles.push({
         x: Math.random() * 100, // Percentage
         y: Math.random() * 100, // Percentage
-        size: Math.random() * particleSize + 1,
-        speedX: (Math.random() - 0.5) * particleSpeed * 0.1,
-        speedY: (Math.random() - 0.5) * particleSpeed * 0.1,
+        size: Math.random() * actualSize + 1,
+        speedX: (Math.random() - 0.5) * actualSpeed * 0.1,
+        speedY: (Math.random() - 0.5) * actualSpeed * 0.1,
         opacity: Math.random() * 0.5 + 0.3,
-        color: particleColor,
+        color: actualColor,
       });
     }
 
     return newParticles;
-  }, [particleCount, particleSize, particleSpeed, particleColor]);
+  }, [actualCount, actualSize, actualSpeed, actualColor]);
 
   // Handle canvas animation
   useEffect(() => {
@@ -159,7 +186,8 @@ const ParticleBackgroundComponent = (
         // Draw particle
         ctx.beginPath();
         ctx.arc(x, y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${particle.color}, ${particle.opacity})`;
+        const colorValues = getColorValues(particle.color);
+        ctx.fillStyle = `rgba(${colorValues.r}, ${colorValues.g}, ${colorValues.b}, ${particle.opacity})`;
         ctx.fill();
 
         // Draw connections
@@ -173,9 +201,8 @@ const ParticleBackgroundComponent = (
 
             if (distance < canvas.width * 0.07) {
               ctx.beginPath();
-              ctx.strokeStyle = `rgba(${particle.color}, ${
-                0.3 - (distance / (canvas.width * 0.07)) * 0.3
-              })`;
+              const connectionOpacity = 0.3 - (distance / (canvas.width * 0.07)) * 0.3;
+              ctx.strokeStyle = `rgba(${colorValues.r}, ${colorValues.g}, ${colorValues.b}, ${connectionOpacity})`;
               ctx.lineWidth = 0.5;
               ctx.moveTo(x, y);
               ctx.lineTo(otherX, otherY);
@@ -193,9 +220,8 @@ const ParticleBackgroundComponent = (
 
           if (distance < canvas.width * 0.1) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(${particle.color}, ${
-              0.5 - (distance / (canvas.width * 0.1)) * 0.5
-            })`;
+            const mouseConnectionOpacity = 0.5 - (distance / (canvas.width * 0.1)) * 0.5;
+            ctx.strokeStyle = `rgba(${colorValues.r}, ${colorValues.g}, ${colorValues.b}, ${mouseConnectionOpacity})`;
             ctx.lineWidth = 1;
             ctx.moveTo(x, y);
             ctx.lineTo(mouseX, mouseY);
@@ -257,12 +283,14 @@ const ParticleBackgroundComponent = (
   // Combine external ref with internal containerRef
   const setRefs = useCallback(
     (node: HTMLDivElement | null) => {
-      containerRef.current = node;
+      if (containerRef.current !== node) {
+        (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+      }
       if (ref) {
         if (typeof ref === 'function') {
           ref(node);
         } else {
-          ref.current = node;
+          (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
         }
       }
     },

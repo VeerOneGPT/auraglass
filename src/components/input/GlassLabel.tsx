@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface GlassLabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
   /** Size of the label */

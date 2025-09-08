@@ -1,9 +1,9 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import { AlertCircle, Check, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { Motion } from '../../primitives/motion/Motion';
+import { Motion } from '../../primitives';
 import { GlassButton } from '../button';
 import { CardContent, CardHeader, CardTitle, GlassCard } from '../card';
 import { GlassProgress } from '../data-display';

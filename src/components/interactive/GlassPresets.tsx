@@ -2,7 +2,7 @@ import React, { forwardRef } from 'react';
 
 import { ZLayer } from '../../core/zspace';
 import { useGlassTheme } from '../../hooks/useGlassTheme';
-import { ContextAwareGlass, ContextAwareGlassProps } from '../ContextAwareGlass';
+import { ContextAwareGlass, ContextAwareGlassProps } from './ContextAwareGlass';
 
 /**
  * CleanGlassContainer Props
@@ -232,7 +232,7 @@ export const ImmersiveGlassContainer = forwardRef<HTMLDivElement, ContextAwareGl
         baseBorderOpacity={baseBorderOpacity}
         enableEdgeHighlight={enableEdgeHighlight}
         enableGlow={enableGlow}
-        glowColor={glowColor || theme.colors.primary}
+        glowColor={glowColor || '#3b82f6'}
         {...rest}
       />
     );
@@ -336,7 +336,7 @@ export const ModalGlassContainer = forwardRef<HTMLDivElement, ContextAwareGlassP
         baseBorderOpacity={baseBorderOpacity}
         enableEdgeHighlight={enableEdgeHighlight}
         enableGlow={enableGlow}
-        glowColor={glowColor || theme.colors.primary}
+        glowColor={glowColor || '#3b82f6'}
         {...rest}
       />
     );

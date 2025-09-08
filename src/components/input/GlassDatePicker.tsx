@@ -2,10 +2,10 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
-import { Glass } from '../../primitives/glass';
-import { Motion } from '../../primitives/motion/Motion';
+import { Glass } from '../../primitives';
+import { Motion } from '../../primitives';
 import { IconButton } from '../button/GlassButton';
 import { GlassInput } from './GlassInput';
 
@@ -426,10 +426,9 @@ export const GlassDatePicker = forwardRef<HTMLDivElement, GlassDatePickerProps>(
         {isOpen && (
           <Motion preset="slideDown" duration={200} className="absolute top-full left-0 z-50 mt-2">
             <Glass
-              elevation="modal"
-              radius="lg"
-              padding="md"
-              className="w-80 border border-border/20"
+              variant="frosted"
+              rounded="lg"
+              className="w-80 border border-border/20 p-4"
             >
               {/* Calendar Header */}
               <div className="flex items-center justify-between mb-4">

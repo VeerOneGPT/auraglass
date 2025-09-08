@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 import styled from "styled-components";
-import { Card } from "../Card/Card";
+import { GlassCard } from "../card/GlassCard";
 import { glassSurface } from "../../core/mixins/glassSurface";
 import { createThemeContext } from "../../core/themeContext";
 

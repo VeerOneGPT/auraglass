@@ -83,3 +83,18 @@ export const axisTokens = {
   yLabelDx: -10,
   tickFontSize: 13,
 };
+
+// GlassChartsDemo Component
+export interface GlassChartsDemoProps {
+  className?: string;
+  children?: React.ReactNode;
+}
+
+export function GlassChartsDemo({ className, children }: GlassChartsDemoProps) {
+  return (
+    <div className={className}>
+      <h3>Glass Charts Demo</h3>
+      {children}
+    </div>
+  );
+}

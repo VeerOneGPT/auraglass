@@ -57,7 +57,7 @@ const colorToRgb = (color: string): string => {
 
 // Styled components
 const FeedbackContainer = styled.div<{
-  $effect: 'ripple' | 'glow' | 'highlight' | 'pulse' | 'none';
+  $effect: 'ripple' | 'glow' | 'highlight' | 'pulse' | 'bounce' | 'shake' | 'none';
   $active: boolean;
   $color: string;
   $duration: number;
@@ -209,7 +209,7 @@ function VisualFeedbackComponent(
 
   // Handle forwarded ref
   const setRefs = (element: HTMLDivElement) => {
-    containerRef.current = element;
+    (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = element;
 
     // Handle the forwarded ref
     if (typeof ref === 'function') {

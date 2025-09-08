@@ -4,7 +4,7 @@
  * A button that can be toggled on/off, with glass morphism styling.
  */
 import React, { forwardRef, useCallback, useState, useMemo } from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled, { css, useTheme } from 'styled-components';
 
 import { glassSurface } from '../../core/mixins/glassSurface';
 import { createThemeContext } from '../../core/themeContext';
@@ -163,27 +163,12 @@ const ButtonRoot = styled.button<{
   /* Glass styling */
   ${props =>
     props.$glass &&
-    glassSurface({
-      elevation: props.$selected ? 2 : 1,
-      blurStrength: props.$variant === 'contained' ? 'standard' : 'light',
-      borderOpacity: props.$variant === 'outlined' ? 'medium' : 'subtle',
-      themeContext: createThemeContext(props.theme),
-    })}
-
-  /* Glass variant additional styling */
-  ${props =>
-    props.$glass &&
-    props.$variant === 'contained' &&
-    `
-    background-color: ${props.$selected ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)'};
-  `}
-  
-  ${props =>
-    props.$glass &&
-    props.$variant === 'outlined' &&
-    `
-    border: 1px solid rgba(255, 255, 255, 0.23);
-  `}
+    css`
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      background-color: ${props.$selected ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)'};
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    `}
   
   /* Selected state */
   ${props =>
@@ -299,90 +284,80 @@ function ToggleButtonComponent(
   const finalDisableAnimation = disableAnimation ?? prefersReducedMotion;
   const usePhysics = !finalDisableAnimation && !disabled;
 
+  // Map size values to match ButtonRoot expectations
+  const mappedSize = size === 'sm' ? 'small' : size === 'md' ? 'medium' : size === 'lg' ? 'large' : size;
+
+  // Map variant values to match ButtonRoot expectations
+  const mappedVariant = variant === 'default' ? 'text' : variant === 'primary' ? 'contained' : variant === 'secondary' ? 'outlined' : variant;
+
   // Get color values
   const colorValues = getColorValues(color, variant);
 
-  const { defaultSpring } = useAnimationContext();
+  const { reducedMotion } = useAnimationContext();
 
   // Calculate final interaction config (includes motionSensitivity logic)
   const finalInteractionConfig = useMemo<Partial<PhysicsInteractionOptions>>(() => {
     const baseOptions: Partial<PhysicsInteractionOptions> = {
-      affectsScale: true,
-      scaleAmplitude: 0.05, 
+      scale: 1.02,
+      damping: 0.8,
+      stiffness: SpringPresets.default.stiffness,
+      mass: SpringPresets.default.mass,
     };
-    let contextResolvedConfig: Partial<SpringConfig> = {};
-    if (typeof defaultSpring === 'string' && defaultSpring in SpringPresets) {
-      contextResolvedConfig = SpringPresets[defaultSpring as keyof typeof SpringPresets];
-    } else if (typeof defaultSpring === 'object' && defaultSpring !== null) {
-      contextResolvedConfig = defaultSpring;
-    }
     let propResolvedConfig: Partial<PhysicsInteractionOptions> = {};
     const configProp = animationConfig;
     if (typeof configProp === 'string' && configProp in SpringPresets) {
       const preset = SpringPresets[configProp as keyof typeof SpringPresets];
-      propResolvedConfig = { 
-        stiffness: preset.tension, 
-        dampingRatio: preset.friction ? preset.friction / (2 * Math.sqrt(preset.tension * (preset.mass ?? 1))) : undefined, 
-        mass: preset.mass 
+      propResolvedConfig = {
+        stiffness: preset.stiffness,
+        damping: preset.damping,
+        mass: preset.mass
       };
     } else if (typeof configProp === 'object' && configProp !== null) {
-      if ('stiffness' in configProp || 'dampingRatio' in configProp || 'mass' in configProp) {
+      if ('stiffness' in configProp || 'damping' in configProp || 'mass' in configProp) {
         propResolvedConfig = { ...configProp } as Partial<PhysicsInteractionOptions>;
       } else if ('tension' in configProp || 'friction' in configProp) {
         const preset = configProp as Partial<SpringConfig>;
-        const tension = preset.tension ?? SpringPresets.DEFAULT.tension;
+        const stiffness = preset.stiffness ?? SpringPresets.default.stiffness;
         const mass = preset.mass ?? 1;
-        propResolvedConfig = { 
-          stiffness: tension, 
-          dampingRatio: preset.friction ? preset.friction / (2 * Math.sqrt(tension * mass)) : undefined, 
-          mass: mass 
+        propResolvedConfig = {
+          stiffness: stiffness,
+          damping: preset.damping ?? SpringPresets.default.damping,
+          mass: mass
         };
       }
-      if ('strength' in configProp && typeof configProp.strength === 'number') propResolvedConfig.strength = configProp.strength;
-      if ('radius' in configProp && typeof configProp.radius === 'number') propResolvedConfig.radius = configProp.radius;
-      if ('affectsRotation' in configProp && typeof configProp.affectsRotation === 'boolean') propResolvedConfig.affectsRotation = configProp.affectsRotation;
-      if ('affectsScale' in configProp && typeof configProp.affectsScale === 'boolean') propResolvedConfig.affectsScale = configProp.affectsScale;
-      if ('rotationAmplitude' in configProp && typeof configProp.rotationAmplitude === 'number') propResolvedConfig.rotationAmplitude = configProp.rotationAmplitude;
-      if ('scaleAmplitude' in configProp && typeof configProp.scaleAmplitude === 'number') propResolvedConfig.scaleAmplitude = configProp.scaleAmplitude;
     }
 
-    const finalStiffness = propResolvedConfig.stiffness ?? contextResolvedConfig.tension ?? baseOptions.stiffness ?? SpringPresets.DEFAULT.tension;
-    const calculatedMass = propResolvedConfig.mass ?? contextResolvedConfig.mass ?? baseOptions.mass ?? 1;
-    const finalDampingRatio = propResolvedConfig.dampingRatio ?? 
-                              (contextResolvedConfig.friction ? contextResolvedConfig.friction / (2 * Math.sqrt(finalStiffness * calculatedMass)) : baseOptions.dampingRatio ?? 0.5);
-    const finalMass = calculatedMass;
+    const finalStiffness = propResolvedConfig.stiffness ?? baseOptions.stiffness;
+    const finalMass = propResolvedConfig.mass ?? baseOptions.mass;
+    const finalDamping = propResolvedConfig.damping ?? baseOptions.damping;
 
     return {
       ...baseOptions,
       stiffness: finalStiffness,
-      dampingRatio: finalDampingRatio,
+      damping: finalDamping,
       mass: finalMass,
-      ...(propResolvedConfig.strength !== undefined && { strength: propResolvedConfig.strength }),
-      ...(propResolvedConfig.radius !== undefined && { radius: propResolvedConfig.radius }),
-      ...(propResolvedConfig.affectsRotation !== undefined && { affectsRotation: propResolvedConfig.affectsRotation }),
-      ...(propResolvedConfig.affectsScale !== undefined && { affectsScale: propResolvedConfig.affectsScale }),
-      ...(propResolvedConfig.rotationAmplitude !== undefined && { rotationAmplitude: propResolvedConfig.rotationAmplitude }),
-      ...(propResolvedConfig.scaleAmplitude !== undefined && { scaleAmplitude: propResolvedConfig.scaleAmplitude }),
-      ...(motionSensitivity && { motionSensitivityLevel: motionSensitivity }),
     };
-  }, [defaultSpring, animationConfig, motionSensitivity]);
+  }, [animationConfig, motionSensitivity]);
 
   const {
     ref: physicsRef,
-    style: physicsStyle,
-  } = usePhysicsInteraction<HTMLButtonElement>(finalInteractionConfig);
+    physicsState,
+    isInteracting,
+    startInteraction,
+    endInteraction,
+  } = usePhysicsInteraction(finalInteractionConfig);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (!disabled && onChange) {
+    if (!disabled && onChange && value !== undefined) {
       onChange(event, value);
     }
   };
 
   // Combine styles
-  const combinedStyle = { ...style, ...physicsStyle };
+  const combinedStyle = { ...style };
 
   // Merge the forwarded ref with the physics ref
-  const combinedRef = mergePhysicsRef(ref, physicsRef);
+  const combinedRef = mergePhysicsRef(ref, physicsRef as React.MutableRefObject<HTMLButtonElement | null>);
 
   return (
     <ButtonRoot
@@ -397,9 +372,9 @@ function ToggleButtonComponent(
       $disabled={disabled}
       $glass={glass}
       $color={color}
-      $size={size}
+      $size={mappedSize as 'small' | 'medium' | 'large'}
       $fullWidth={fullWidth}
-      $variant={variant}
+      $variant={mappedVariant as 'text' | 'outlined' | 'contained'}
       $colorValues={colorValues}
       $grouped={grouped}
       $groupOrientation={groupOrientation}

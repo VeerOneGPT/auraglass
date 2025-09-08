@@ -2,11 +2,11 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 import { AlertCircle, AlertTriangle, CheckCircle, Info, X } from 'lucide-react';
 import * as React from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
-import { Motion } from '../../primitives/motion/Motion';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
 
 // Glass Alert text color variants
 const alertTextVariants = {

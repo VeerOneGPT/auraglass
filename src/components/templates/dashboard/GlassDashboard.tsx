@@ -1,14 +1,14 @@
 'use client';
 
 import React, { forwardRef, useState, useCallback } from 'react';
-import { Glass } from '../../primitives/glass/Glass';
-import { Motion } from '../../primitives/motion/Motion';
-import { GlassGrid, GlassGridItem } from '../../components/layout/GlassGrid';
-import { GlassCard } from '../../components/card/GlassCard';
-import { GlassButton, IconButton } from '../../components/button/GlassButton';
-import { PageHeader } from '../../components/layout/GlassAppShell';
-import { VStack, HStack } from '../../components/layout/GlassStack';
-import { cn } from '@/lib/utils';
+import { Glass } from '../../../primitives';
+import { Motion } from '../../../primitives';
+import { GlassGrid, GlassGridItem } from '../../layout/GlassGrid';
+import { GlassCard } from '../../card/GlassCard';
+import { GlassButton, IconButton } from '../../button/GlassButton';
+import { PageHeader } from '../../layout/GlassAppShell';
+import { VStack, HStack } from '../../layout/GlassStack';
+import { cn } from '../../../lib/utilsComprehensive';
 
 export interface DashboardWidget {
   id: string;
@@ -215,7 +215,9 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
             {widget.data?.title || 'Chart'}
           </div>
           <div className="h-32 bg-muted/30 rounded flex items-center justify-center">
-            <span className="text-muted-foreground">Chart Placeholder</span>
+            <span className="text-muted-foreground">
+              {widget.data?.chartType ? `${widget.data.chartType} Chart` : 'Chart Widget'}
+            </span>
           </div>
         </VStack>
       ),
@@ -236,7 +238,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
       ),
       text: ({ widget }: { widget: DashboardWidget }) => (
         <div className="text-sm text-foreground">
-          {widget.data?.content || 'Text content'}
+          {widget.data?.content || widget.data?.title || 'Text Widget'}
         </div>
       ),
     };
@@ -318,7 +320,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
         {/* Add widget section */}
         {editMode && availableWidgets.length > 0 && (
           <Motion preset="slideDown">
-            <Glass elevation={1} radius="lg" className="p-4">
+            <Glass rounded="lg" className="p-4">
               <VStack space="sm">
                 <h3 className="text-sm font-medium text-foreground">Add Widget</h3>
                 {renderAddWidgetMenu()}

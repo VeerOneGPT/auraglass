@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
+import { OptimizedGlass } from '../../primitives';
 
 export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right' | 'auto';
 

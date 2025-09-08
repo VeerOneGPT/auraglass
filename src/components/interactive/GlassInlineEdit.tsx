@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { GlassButton } from '../button/GlassButton';
-import { cn } from '@/design-system/utils';
+import { cn } from '@/design-system/utilsCore';
 
 export interface GlassInlineEditProps {
   value: string;

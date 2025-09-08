@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import {
     ChevronLeft,
     ChevronRight,
@@ -17,7 +17,7 @@ import {
     ZoomOut
 } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Motion } from '../../primitives/motion/Motion';
+import { Motion } from '../../primitives';
 import { GlassButton } from '../button';
 import { CardContent, GlassCard } from '../card';
 
@@ -200,7 +200,8 @@ export const GlassImageViewer: React.FC<GlassImageViewerProps> = ({
     }, [zoom, zoomLevels, handleZoom]);
 
     const handleZoomOut = useCallback(() => {
-        const currentLevelIndex = zoomLevels.findLastIndex(level => level <= zoom);
+        const reversedLevels = [...zoomLevels].reverse();
+        const currentLevelIndex = zoomLevels.length - 1 - reversedLevels.findIndex((level: number) => level <= zoom);
         const prevLevel = zoomLevels[Math.max(currentLevelIndex - 1, 0)];
         handleZoom(prevLevel);
     }, [zoom, zoomLevels, handleZoom]);

@@ -11,13 +11,13 @@
 export {
   GlassAccordion as Accordion,
   GlassAccordion,
-} from '@/design-system/components/data-display/GlassAccordion';
+} from '../data-display/GlassAccordion';
 
 // Re-export types
 export type {
   GlassAccordionProps as AccordionProps,
   AccordionItem,
-} from '@/design-system/components/data-display/GlassAccordion';
+} from '../data-display/GlassAccordion';
 
 // Default export for backward compatibility
-export { GlassAccordion as default } from '@/design-system/components/data-display/GlassAccordion';
+export { GlassAccordion as default } from '../data-display/GlassAccordion';

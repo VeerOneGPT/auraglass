@@ -1,7 +1,6 @@
 import React, { forwardRef, useEffect, useState, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 
-import { glowEffects } from '../../core/mixins/effects/glowEffects';
 import { glassBorder } from '../../core/mixins/glassBorder';
 import { glassSurface } from '../../core/mixins/glassSurface';
 import { createThemeContext } from '../../core/themeContext';
@@ -11,7 +10,7 @@ import { GlassButton as Button } from '../button';
 import { Typography } from '../data-display/Typography';
 // Import correct path for glowEffects
 
-import { CookieConsentProps } from './types';
+import { GlobalCookieConsentProps as CookieConsentProps } from './types';
 
 // Physics/Animation Imports
 import { useGalileoStateSpring, GalileoStateSpringOptions } from '../../hooks/useGalileoStateSpring';
@@ -92,32 +91,20 @@ const StyledCookieConsent = styled.div<{
     }
   }}
 
-  ${({ theme, $glassIntensity }) => {
-    const themeContext = createThemeContext(theme);
-    return glassSurface({
-      elevation: 2,
-      backgroundOpacity: 'medium',
-      blurStrength: 'medium',
-      themeContext,
-    });
-  }}
+  ${({ theme, $glassIntensity }) => `
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  `}
   
-  ${({ theme }) => {
-    const themeContext = createThemeContext(theme);
-    return glassBorder({
-      width: '1px',
-      opacity: 0.3,
-      themeContext,
-    });
-  }}
+  ${({ theme }) => `
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  `}
   
-  ${({ theme, $glassIntensity }) => {
-    const themeContext = createThemeContext(theme);
-    return glowEffects.glassGlow({
-      intensity: $glassIntensity * 0.3,
-      themeContext,
-    });
-  }}
+  ${({ theme, $glassIntensity }) => `
+    box-shadow: 0 0 ${$glassIntensity * 10}px rgba(255, 255, 255, 0.1);
+  `}
   
   @media (max-width: 480px) {
     max-width: 100%;
@@ -286,32 +273,32 @@ export const CookieConsent = forwardRef<HTMLDivElement, CookieConsentProps>(
             </Typography>
           )}
 
-          <Typography variant="body2">
+          <Typography variant="p">
             {message}
             {privacyPolicyUrl && (
               <>
                 {' '}
-                <Link href={privacyPolicyUrl} target="_blank" rel="noopener noreferrer">
+                <a href={privacyPolicyUrl} target="_blank" rel="noopener noreferrer">
                   {privacyPolicyText}
-                </Link>
+                </a>
               </>
             )}
           </Typography>
 
           <ButtonContainer>
             {dismissible && (
-              <Button variant="outlined" onClick={onDecline} size="small">
+              <Button variant="outline" onClick={onDecline} size="sm">
                 {declineButtonText}
               </Button>
             )}
 
             {enableSettings && (
-              <Button variant="outlined" onClick={onSettings} size="small">
+              <Button variant="outline" onClick={onSettings} size="sm">
                 {settingsButtonText}
               </Button>
             )}
 
-            <Button variant="contained" onClick={onAccept} size="small">
+            <Button variant="primary" onClick={onAccept} size="sm">
               {acceptButtonText}
             </Button>
           </ButtonContainer>

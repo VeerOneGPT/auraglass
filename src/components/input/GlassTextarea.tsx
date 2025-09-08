@@ -1,8 +1,8 @@
 'use client';
 
 import React, { forwardRef, useRef, useEffect } from 'react';
-import { OptimizedGlass } from '../../primitives/glass/OptimizedGlass';
-import { cn } from '@/lib/utils';
+import { OptimizedGlass } from '../../primitives';
+import { cn } from '@/lib/utilsComprehensive';
 import { AlertCircle } from 'lucide-react';
 
 export interface GlassTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {

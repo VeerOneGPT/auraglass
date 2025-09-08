@@ -1,9 +1,9 @@
 import React, { forwardRef, useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import styled, { css } from 'styled-components';
 
-import { edgeHighlight } from '../../core/mixins/edgeEffects';
+import { edgeEffects } from '../../core/mixins/edgeEffects';
 import { glassSurface } from '../../core/mixins/glassSurface';
-import { glassGlow } from '../../core/mixins/glowEffects';
+import { glowEffects } from '../../core/mixins/glowEffects';
 import { createThemeContext } from '../../core/themeContext';
 import { useGlassTheme } from '../../hooks/useGlassTheme';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -194,31 +194,26 @@ const GlassContainer = styled.div<{
 
   /* Apply glass surface effect */
   ${props =>
-    glassSurface({
-      blurStrength: `${props.$blurStrength}px`,
-      backgroundOpacity: props.$opacity,
-      borderOpacity: props.$borderOpacity,
-      themeContext: createThemeContext(undefined),
-    })}
+    `
+    background: rgba(255, 255, 255, ${props.$opacity});
+    backdrop-filter: blur(${props.$blurStrength}px);
+    border: 1px solid rgba(255, 255, 255, ${props.$borderOpacity});
+    `}
 
   /* Apply edge highlight if enabled */
   ${props =>
     props.$enableEdgeHighlight &&
-    edgeHighlight({
-      thickness: 1,
-      opacity: 0.5,
-      position: 'all',
-      themeContext: createThemeContext(undefined),
-    })}
-  
+    `
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    `}
+
   /* Apply glow effect if enabled */
   ${props =>
     props.$enableGlow &&
-    glassGlow({
-      intensity: 'medium',
-      color: props.$glowColor,
-      themeContext: createThemeContext(undefined),
-    })}
+    `
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    `}
 `;
 
 const DebugInfo = styled.div<{
@@ -274,7 +269,8 @@ export const ContextAwareGlass = forwardRef<HTMLDivElement, ContextAwareGlassPro
     } = props;
 
     // Get theme information
-    const { isDarkMode: themeIsDarkMode } = useGlassTheme();
+    const { theme } = useGlassTheme();
+    const themeIsDarkMode = theme === 'dark';
     const isDarkMode = forceDarkMode || (themeIsDarkMode && !forceLightMode);
     const prefersReducedMotion = useReducedMotion();
 
@@ -657,7 +653,7 @@ export const ContextAwareGlass = forwardRef<HTMLDivElement, ContextAwareGlassPro
     return (
       <GlassContainer
         ref={node => {
-          containerRef.current = node;
+          (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
           if (typeof ref === 'function') {
             ref(node);
           } else if (ref) {

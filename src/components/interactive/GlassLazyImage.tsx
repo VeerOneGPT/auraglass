@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/utilsComprehensive';
 import {
     AlertCircle,
     Download,
@@ -12,7 +12,7 @@ import {
     ZoomIn
 } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Motion } from '../../primitives/motion/Motion';
+import { Motion } from '../../primitives';
 
 export interface GlassLazyImageProps {
     /**
