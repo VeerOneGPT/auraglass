@@ -4,7 +4,7 @@ A comprehensive glassmorphism design system for React applications. AuraGlass pr
 
 ## ✨ Features
 
-- **142+ Glass Components** - Complete component library with glassmorphism styling
+- **200+ Glass Components** - Complete component library with glassmorphism styling
 - **Optimized Performance** - Built-in performance optimizations with lazy loading and efficient rendering
 - **TypeScript Support** - Full TypeScript definitions for all components
 - **Highly Customizable** - Extensive theming and customization options
