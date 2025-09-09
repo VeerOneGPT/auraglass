@@ -2,7 +2,7 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -419,7 +419,7 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
         <div
           className={cn(
             'absolute inset-0 bg-black/20',
-            backdropBlur && 'backdrop-blur-sm'
+            backdropBlur && 'backdrop-blur-md'
           )}
         />
 

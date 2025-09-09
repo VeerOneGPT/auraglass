@@ -166,9 +166,9 @@ export const GlassNavigationMenu: React.FC<GlassNavigationMenuProps> = ({
     };
 
     const variantClasses = {
-        default: 'backdrop-blur-sm ring-1 ring-white/10 bg-white/5',
-        sidebar: 'backdrop-blur-sm ring-0 border-r border-white/10 bg-white/5',
-        header: 'backdrop-blur-sm ring-0 border-b border-white/10 bg-white/5',
+        default: 'backdrop-blur-md ring-1 ring-white/10 bg-white/5',
+        sidebar: 'backdrop-blur-md ring-0 border-r border-white/10 bg-white/5',
+        header: 'backdrop-blur-md ring-0 border-b border-white/10 bg-white/5',
     };
 
     return (

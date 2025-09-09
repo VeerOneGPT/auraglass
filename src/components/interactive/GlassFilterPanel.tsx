@@ -152,9 +152,9 @@ const GlassFilterPanel = React.forwardRef<HTMLDivElement, GlassFilterPanelProps>
         };
 
         const elevationClasses = {
-            low: 'backdrop-blur-sm bg-white/10 border border-white/20',
+            low: 'backdrop-blur-md bg-white/10 border border-white/20',
             medium: 'backdrop-blur-md bg-white/20 border border-white/30 shadow-lg',
-            high: 'backdrop-blur-xl bg-white/30 border border-white/40 shadow-2xl'
+            high: 'backdrop-blur-md bg-white/30 border border-white/40 shadow-2xl'
         };
 
         return (
@@ -309,7 +309,7 @@ const GlassFilterPanel = React.forwardRef<HTMLDivElement, GlassFilterPanelProps>
 
                 {/* Save Preset Dialog */}
                 {showPresetDialog && (
-                    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
+                    <div className="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center">
                         <div className="rounded-lg p-6 max-w-md w-full mx-4 bg-white/5 ring-1 ring-white/10">
                             <h3 className="text-lg font-semibold text-white mb-4">Save Filter Preset</h3>
                             <GlassInput

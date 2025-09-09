@@ -333,9 +333,9 @@ const GlassFileExplorer = React.forwardRef<HTMLDivElement, GlassFileExplorerProp
         };
 
         const elevationClasses = {
-            low: 'backdrop-blur-sm bg-white/10 border border-white/20',
+            low: 'backdrop-blur-md bg-white/10 border border-white/20',
             medium: 'backdrop-blur-md bg-white/20 border border-white/30 shadow-lg',
-            high: 'backdrop-blur-xl bg-white/30 border border-white/40 shadow-2xl'
+            high: 'backdrop-blur-md bg-white/30 border border-white/40 shadow-2xl'
         };
 
         return (
@@ -623,7 +623,7 @@ const GlassFileExplorer = React.forwardRef<HTMLDivElement, GlassFileExplorerProp
 
                 {/* Create Folder Dialog */}
                 {creatingFolder && (
-                    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center">
+                    <div className="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center">
                         <OptimizedGlass elevation={2} className="rounded-lg p-6 max-w-md w-full mx-4">
                             <h3 className="text-lg font-semibold text-white mb-4">Create New Folder</h3>
                             <GlassInput

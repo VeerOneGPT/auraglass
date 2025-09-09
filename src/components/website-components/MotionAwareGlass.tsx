@@ -2,7 +2,7 @@
 
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 import { createMotionAwareInteractive, createMotionAwareVariants } from '../../lib/motionPrimitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import { motion } from 'framer-motion';
 import React, { forwardRef } from 'react';
 
@@ -43,13 +43,13 @@ export const MotionAwareGlass = forwardRef<HTMLDivElement, MotionAwareGlassProps
         case 'strong':
           return cn(baseClasses, 'glass-strong bg-white/10 border-white/20');
         case 'card':
-          return cn(baseClasses, 'glass-base bg-white/8 border-white/15 p-6 shadow-lg');
+          return cn(baseClasses, 'glass-foundation-complete bg-white/8 border-white/15 p-6 shadow-lg');
         case 'button':
           return cn(baseClasses, 'glass-button-secondary bg-white/8 border-white/15 px-6 py-3 cursor-pointer');
         case 'input':
           return cn(baseClasses, 'glass-input bg-white/5 border-white/10 px-4 py-2');
         default:
-          return cn(baseClasses, 'glass-base bg-white/8 border-white/15');
+          return cn(baseClasses, 'glass-foundation-complete bg-white/8 border-white/15');
       }
     };
 

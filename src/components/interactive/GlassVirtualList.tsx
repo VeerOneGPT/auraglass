@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import { Loader2 } from 'lucide-react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Motion } from '../../primitives';
@@ -198,7 +198,7 @@ export const GlassVirtualList: React.FC<GlassVirtualListProps> = ({
                 {/* Loading indicator */}
                 {loading && (
                     <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-                        <div className="flex items-center gap-2 px-4 py-2 bg-black/80 backdrop-blur-xl rounded-full">
+                        <div className="flex items-center gap-2 px-4 py-2 bg-black/80 backdrop-blur-md rounded-full">
                             <Loader2 className="w-4 h-4 animate-spin" />
                             <span className="text-white text-sm">Loading...</span>
                         </div>

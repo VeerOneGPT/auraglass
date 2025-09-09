@@ -124,7 +124,7 @@ export const GlassBreadcrumb: React.FC<GlassBreadcrumbProps> = ({
           liftOnHover
           
             className={cn(
-                'inline-flex items-center px-3 py-1.5 backdrop-blur-sm ring-1 ring-white/10 bg-white/5',
+                'inline-flex items-center px-3 py-1.5 backdrop-blur-md ring-1 ring-white/10 bg-white/5',
                 sizeClasses?.[size],
                 className
             )}

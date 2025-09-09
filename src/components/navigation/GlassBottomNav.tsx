@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';

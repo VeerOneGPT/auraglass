@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import {
     AlertCircle,
     Download,
@@ -239,7 +239,7 @@ export const GlassLazyImage: React.FC<GlassLazyImageProps> = ({
     // Default loading component
     const defaultLoadingComponent = (
         <Motion preset="fadeIn" className="absolute inset-0 flex items-center justify-center">
-            <div className="flex items-center gap-2 px-3 py-2 bg-black/50 backdrop-blur-xl rounded-full">
+            <div className="flex items-center gap-2 px-3 py-2 bg-black/50 backdrop-blur-md rounded-full">
                 <Loader2 className="w-4 h-4 animate-spin text-white/80" />
                 <span className="text-white/80 text-sm">Loading...</span>
             </div>
@@ -378,7 +378,7 @@ export const GlassLazyImage: React.FC<GlassLazyImageProps> = ({
                                 e.stopPropagation();
                                 setShowActionsMenu(!showActionsMenu);
                             }}
-                            className="p-2 bg-black/50 backdrop-blur-xl rounded-full hover:bg-black/70 transition-colors"
+                            className="p-2 bg-black/50 backdrop-blur-md rounded-full hover:bg-black/70 transition-colors"
                         >
                             <span className="text-white text-lg">⋯</span>
                         </button>
@@ -386,7 +386,7 @@ export const GlassLazyImage: React.FC<GlassLazyImageProps> = ({
                         {/* Actions Dropdown */}
                         {showActionsMenu && (
                             <Motion preset="slideDown" className="absolute top-full right-0 mt-2">
-                                <div className="bg-black/80 backdrop-blur-xl rounded-lg shadow-xl border border-white/20 min-w-32">
+                                <div className="bg-black/80 backdrop-blur-md rounded-lg shadow-xl border border-white/20 min-w-32">
                                     {enableZoom && (
                                         <button
                                             onClick={(e) => {
@@ -433,7 +433,7 @@ export const GlassLazyImage: React.FC<GlassLazyImageProps> = ({
 
             {/* Image Dimensions Info (dev mode) */}
             {process.env.NODE_ENV === 'development' && imageDimensions.width > 0 && (
-                <div className="absolute top-2 left-2 px-2 py-1 bg-black/50 backdrop-blur-xl rounded text-white/60 text-xs">
+                <div className="absolute top-2 left-2 px-2 py-1 bg-black/50 backdrop-blur-md rounded text-white/60 text-xs">
                     {imageDimensions.width} × {imageDimensions.height}
                 </div>
             )}

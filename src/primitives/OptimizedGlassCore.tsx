@@ -82,14 +82,14 @@ const OptimizedGlassCore = forwardRef<HTMLDivElement, OptimizedGlassProps>(
     {
       variant = 'frosted',
       blur = 'standard',
-      opacity = 0.1,
+      opacity = 0.25,
       elevation = 1,
       rounded = 'md',
       glow = false,
       glowColor = 'rgba(255, 255, 255, 0.5)',
       glowIntensity = 0.5,
       hover = false,
-      optimization = 'auto',
+      optimization = 'high',
       hardwareAcceleration = true,
       intensity = 'medium',
       depth = 'medium',
@@ -129,12 +129,12 @@ const OptimizedGlassCore = forwardRef<HTMLDivElement, OptimizedGlassProps>(
     const optimizedStyles = useMemo(() => {
       const baseStyles = createGlassMixin({
         variant,
-        blur: computedOptimization === 'low' ? 'none' : (intensity === 'subtle' ? 'subtle' : intensity === 'medium' ? 'medium' : intensity === 'strong' ? 'strong' : 'intense'),
-        opacity: computedOptimization === 'low' ? 0.05 : opacity,
+        blur: computedOptimization === 'low' ? 'subtle' : (intensity === 'subtle' ? 'subtle' : intensity === 'medium' ? 'medium' : intensity === 'strong' ? 'strong' : 'intense'),
+        opacity: computedOptimization === 'low' ? 0.2 : opacity,
         elevation,
         tint,
         interactive,
-        glow: computedOptimization !== 'low' && glow,
+        glow: glow, // Always allow glow regardless of performance
         glowColor,
         glowIntensity,
         borderRadius: rounded === 'none' ? '0px' : rounded === 'sm' ? '4px' : rounded === 'md' ? '8px' : rounded === 'lg' ? '12px' : rounded === 'xl' ? '16px' : rounded === 'full' ? '9999px' : '8px',
@@ -146,10 +146,12 @@ const OptimizedGlassCore = forwardRef<HTMLDivElement, OptimizedGlassProps>(
         baseStyles.willChange = 'transform, opacity';
       }
 
-      // Performance optimizations
+      // KEEP GLASS EFFECTS ALWAYS - Never disable glassmorphism
+      // Performance optimizations that DON'T kill the glass effects
       if (computedOptimization === 'low') {
-        baseStyles.backdropFilter = 'none';
-        baseStyles.WebkitBackdropFilter = 'none';
+        // Reduce blur but keep the effect
+        baseStyles.backdropFilter = 'blur(8px) saturate(1.5) brightness(1.1)';
+        baseStyles.WebkitBackdropFilter = 'blur(8px) saturate(1.5) brightness(1.1)';
       }
 
       return baseStyles;

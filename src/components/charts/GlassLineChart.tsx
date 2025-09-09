@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import React, { useMemo, useState } from 'react';
 import { Motion } from '../../primitives';
 import { CardContent, CardHeader, CardTitle, GlassCard } from '../card';
@@ -431,7 +431,7 @@ export const GlassLineChart: React.FC<GlassLineChartProps> = ({
                                 <div
                                     className={cn(
                                         'absolute rounded-xl p-3 shadow-xl',
-                                        'bg-black/70 backdrop-blur-xl ring-1 ring-white/10 glass-radial-reveal glass-lift'
+                                        'bg-black/70 backdrop-blur-md ring-1 ring-white/10 glass-radial-reveal glass-lift'
                                     )}
                                     style={{
                                         left: hoveredPoint.x + 10,

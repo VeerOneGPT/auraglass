@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import React, { useMemo, useState } from 'react';
 import { Motion } from '../../primitives';
 import { CardContent, CardHeader, CardTitle, GlassCard } from '../card';
@@ -316,7 +316,7 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
                             {hoveredSegment && (
                                 <Motion preset="fadeIn" className="absolute z-10">
                                     <div
-                                        className={cn('absolute rounded-xl p-3 shadow-xl', 'bg-black/70 backdrop-blur-xl ring-1 ring-white/10 glass-radial-reveal glass-lift')}
+                                        className={cn('absolute rounded-xl p-3 shadow-xl', 'bg-black/70 backdrop-blur-md ring-1 ring-white/10 glass-radial-reveal glass-lift')}
                                         style={{
                                             left: hoveredSegment.x + 10,
                                             top: hoveredSegment.y - 10,

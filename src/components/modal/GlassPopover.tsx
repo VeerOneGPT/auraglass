@@ -438,7 +438,7 @@ export const GlassPopover = forwardRef<HTMLDivElement, GlassPopoverProps>(
                   className={cn(
                     'relative max-w-xs glass-lift glass-sheen',
                     radialReveal && 'glass-radial-reveal',
-                    'bg-background/95 backdrop-blur-xl',
+                    'bg-background/95 backdrop-blur-md',
                     'border border-border/20 shadow-lg',
                     contentClassName
                   )}

@@ -9,7 +9,7 @@ import { GlassProgress } from '../../../components/data-display/GlassProgress';
 import { PageHeader } from '../../../components/layout/GlassAppShell';
 import { VStack, HStack } from '../../../components/layout/GlassStack';
 import { GlassCard } from '../../../components/card/GlassCard';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 
 export interface FormStep {
   id: string;

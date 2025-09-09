@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef } from 'react';
 import { OptimizedGlass } from '../../primitives';
 
@@ -162,7 +162,7 @@ export const GlassAvatar = forwardRef<HTMLImageElement, GlassAvatarProps>(
                         'relative overflow-hidden',
                         sizeClasses[size],
                         variantClasses[variant],
-                        'backdrop-blur-sm bg-white/10 border border-white/20',
+                        'backdrop-blur-md bg-white/10 border border-white/20',
                         className
                     )}
                 >

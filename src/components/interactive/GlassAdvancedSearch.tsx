@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import {
     Clock,
     FileText,
@@ -334,7 +334,7 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
                             <Motion preset="slideDown" className="absolute top-full left-0 right-0 mt-2 z-10">
                                 <div
                                     ref={suggestionsRef}
-                                    className="bg-black/80 backdrop-blur-xl border border-white/20 rounded-lg shadow-xl max-h-64 overflow-y-auto"
+                                    className="bg-black/80 backdrop-blur-md border border-white/20 rounded-lg shadow-xl max-h-64 overflow-y-auto"
                                 >
                                     {suggestions.map((suggestion) => (
                                         <button

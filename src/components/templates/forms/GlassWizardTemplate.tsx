@@ -2,7 +2,7 @@
 
 import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 import { GlassButton } from '@/components/button';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import { GlassCard } from '@/components/card';
 import { GlassFormBuilder } from '@/components/interactive/GlassFormBuilder';
 import { HStack, VStack } from '@/components/layout';

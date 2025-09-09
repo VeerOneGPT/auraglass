@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import { Slot } from '@radix-ui/react-slot';
 import React, { forwardRef } from 'react';
 import { OptimizedGlass, type OptimizedGlassProps } from '../../primitives';
@@ -144,7 +144,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         tint: 'neutral' as const,
         intensity: 'medium' as const,
         glassBorder: 'subtle' as const,
-        className: 'text-white hover:text-white/90 border-0',
+        className: 'text-white hover:text-white/90',
       },
       primary: {
         glassVariant: 'liquid' as const,
@@ -153,7 +153,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         glassBorder: 'glow' as const,
         lighting: 'volumetric' as const,
         caustics: true,
-        className: 'text-white hover:text-white/90 border-0',
+        className: 'text-white hover:text-white/90',
       },
       secondary: {
         glassVariant: 'crystal' as const,
@@ -162,7 +162,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         glassBorder: 'glow' as const,
         lighting: 'directional' as const,
         refraction: true,
-        className: 'text-white hover:text-white/90 border-0',
+        className: 'text-white hover:text-white/90',
       },
       tertiary: {
         glassVariant: 'frosted' as const,
@@ -170,7 +170,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         intensity: 'medium' as const,
         glassBorder: 'subtle' as const,
         lighting: 'ambient' as const,
-        className: 'text-white hover:text-white/90 border-0',
+        className: 'text-white hover:text-white/90',
       },
       destructive: {
         glassVariant: 'frosted' as const,
@@ -179,7 +179,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         glassBorder: 'neon' as const,
         lighting: 'directional' as const,
         chromatic: true,
-        className: 'text-white hover:text-white/90 border-0',
+        className: 'text-white hover:text-white/90',
       },
       error: {
         glassVariant: 'frosted' as const,
@@ -188,7 +188,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         glassBorder: 'neon' as const,
         lighting: 'directional' as const,
         chromatic: true,
-        className: 'text-white hover:text-white/90 border-0',
+        className: 'text-white hover:text-white/90',
       },
       success: {
         glassVariant: 'frosted' as const,
@@ -196,7 +196,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         intensity: 'strong' as const,
         glassBorder: 'glow' as const,
         lighting: 'directional' as const,
-        className: 'text-white hover:text-white/90 border-0',
+        className: 'text-white hover:text-white/90',
       },
       warning: {
         glassVariant: 'frosted' as const,
@@ -204,7 +204,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         intensity: 'strong' as const,
         glassBorder: 'glow' as const,
         lighting: 'directional' as const,
-        className: 'text-white hover:text-white/90 border-0',
+        className: 'text-white hover:text-white/90',
       },
       outline: {
         glassVariant: 'ethereal' as const,
@@ -239,7 +239,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         lighting: 'iridescent' as const,
         chromatic: true,
         parallax: true,
-        className: 'text-white hover:text-white/90 border-0',
+        className: 'text-white hover:text-white/90',
       },
     };
 

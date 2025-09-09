@@ -155,12 +155,12 @@ export const Default: Story = {
         </div>
 
         <div className="flex flex-wrap gap-4 justify-center">
-          <LensCard className="p-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-sm border border-white/20 rounded-lg cursor-pointer" label="Data Point 1" dotColor="#3B82F6" />
-          <LensCard className="p-4 bg-gradient-to-br from-green-500/20 to-blue-500/20 backdrop-blur-sm border border-white/20 rounded-lg cursor-pointer" label="Data Point 2" dotColor="#10B981" />
-          <LensCard className="p-4 bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-sm border border-white/20 rounded-lg cursor-pointer" label="Data Point 3" dotColor="#A855F7" />
+          <LensCard className="p-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-md border border-white/20 rounded-lg cursor-pointer" label="Data Point 1" dotColor="#3B82F6" />
+          <LensCard className="p-4 bg-gradient-to-br from-green-500/20 to-blue-500/20 backdrop-blur-md border border-white/20 rounded-lg cursor-pointer" label="Data Point 2" dotColor="#10B981" />
+          <LensCard className="p-4 bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-md border border-white/20 rounded-lg cursor-pointer" label="Data Point 3" dotColor="#A855F7" />
         </div>
 
-        <div className="bg-gray-900/50 backdrop-blur-sm border border-white/10 rounded-lg p-4">
+        <div className="bg-gray-900/50 backdrop-blur-md border border-white/10 rounded-lg p-4">
           <h4 className="text-sm font-semibold mb-2">Plugin Status:</h4>
           <p className="text-xs opacity-75">
             Plugin created successfully with effects: Magnetic, Ripple, Glow
@@ -208,7 +208,7 @@ export const DisabledEffects: Story = {
         </div>
 
         <div className="flex flex-wrap gap-4 justify-center">
-          <div className="chart-element p-4 bg-gradient-to-br from-red-500/20 to-orange-500/20 backdrop-blur-sm border border-white/20 rounded-lg cursor-pointer">
+          <div className="chart-element p-4 bg-gradient-to-br from-red-500/20 to-orange-500/20 backdrop-blur-md border border-white/20 rounded-lg cursor-pointer">
             <div className="text-center">
               <div className="w-8 h-8 bg-red-500 rounded-full mx-auto mb-2"></div>
               <p className="text-sm font-medium">No Effects</p>
@@ -216,7 +216,7 @@ export const DisabledEffects: Story = {
           </div>
         </div>
 
-        <div className="bg-gray-900/50 backdrop-blur-sm border border-white/10 rounded-lg p-4">
+        <div className="bg-gray-900/50 backdrop-blur-md border border-white/10 rounded-lg p-4">
           <h4 className="text-sm font-semibold mb-2">Plugin Status:</h4>
           <p className="text-xs opacity-75">
             Plugin created with all effects disabled

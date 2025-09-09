@@ -1,0 +1,552 @@
+/* AuraGlass Generated CSS - DO NOT EDIT MANUALLY */
+/* Generated from AURA_GLASS tokens in src/tokens/glass.ts */
+/* To regenerate: npm run glass:generate */
+
+:root {
+  /* === FOUNDATION PROPERTIES === */
+  --glass-motion-default: 200ms;
+  --glass-motion-enter: 150ms;
+  --glass-motion-exit: 100ms;
+
+  --glass-radius-sm: 8px;
+  --glass-radius-md: 12px;
+  --glass-radius-lg: 16px;
+  --glass-radius-xl: 20px;
+  --glass-radius-pill: 9999px;
+
+  /* === NEUTRAL SURFACES === */
+  --glass-neutral-level1-surface: linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.15) 100%);
+  --glass-neutral-level1-border-color: rgba(255,255,255,0.4);
+  --glass-neutral-level1-border-width: 1px;
+  --glass-neutral-level1-border-style: solid;
+  --glass-neutral-level1-blur: 8px;
+  --glass-neutral-level1-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  --glass-neutral-level1-text-primary: rgba(255,255,255,0.95);
+  --glass-neutral-level1-text-secondary: rgba(255,255,255,0.85);
+  --glass-neutral-level2-surface: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(59,130,246,0.15) 50%, rgba(147,51,234,0.08) 100%);
+  --glass-neutral-level2-border-color: rgba(255,255,255,0.5);
+  --glass-neutral-level2-border-width: 1px;
+  --glass-neutral-level2-border-style: solid;
+  --glass-neutral-level2-blur: 12px;
+  --glass-neutral-level2-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  --glass-neutral-level2-text-primary: rgba(255,255,255,0.95);
+  --glass-neutral-level2-text-secondary: rgba(255,255,255,0.85);
+  --glass-neutral-level3-surface: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(59,130,246,0.2) 50%, rgba(147,51,234,0.12) 100%);
+  --glass-neutral-level3-border-color: rgba(255,255,255,0.6);
+  --glass-neutral-level3-border-width: 2px;
+  --glass-neutral-level3-border-style: solid;
+  --glass-neutral-level3-blur: 16px;
+  --glass-neutral-level3-shadow: 0 12px 32px rgba(0,0,0,0.25);
+  --glass-neutral-level3-text-primary: rgba(255,255,255,0.95);
+  --glass-neutral-level3-text-secondary: rgba(255,255,255,0.85);
+  --glass-neutral-level4-surface: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(59,130,246,0.25) 50%, rgba(147,51,234,0.15) 100%);
+  --glass-neutral-level4-border-color: rgba(255,255,255,0.7);
+  --glass-neutral-level4-border-width: 2px;
+  --glass-neutral-level4-border-style: solid;
+  --glass-neutral-level4-blur: 20px;
+  --glass-neutral-level4-shadow: 0 16px 40px rgba(0,0,0,0.3);
+  --glass-neutral-level4-text-primary: rgba(255,255,255,0.95);
+  --glass-neutral-level4-text-secondary: rgba(255,255,255,0.85);
+
+  /* === PRIMARY SURFACES === */
+  --glass-primary-level1-surface: linear-gradient(135deg, rgba(59,130,246,0.3) 0%, rgba(29,78,216,0.2) 100%);
+  --glass-primary-level1-border-color: rgba(59,130,246,0.5);
+  --glass-primary-level1-border-width: 1px;
+  --glass-primary-level1-border-style: solid;
+  --glass-primary-level1-blur: 8px;
+  --glass-primary-level1-shadow: 0 4px 16px rgba(59,130,246,0.15);
+  --glass-primary-level1-text-primary: rgba(255,255,255,0.95);
+  --glass-primary-level1-text-secondary: rgba(255,255,255,0.85);
+  --glass-primary-level2-surface: linear-gradient(135deg, rgba(59,130,246,0.4) 0%, rgba(29,78,216,0.25) 100%);
+  --glass-primary-level2-border-color: rgba(59,130,246,0.6);
+  --glass-primary-level2-border-width: 1px;
+  --glass-primary-level2-border-style: solid;
+  --glass-primary-level2-blur: 12px;
+  --glass-primary-level2-shadow: 0 8px 24px rgba(59,130,246,0.2);
+  --glass-primary-level2-text-primary: rgba(255,255,255,0.95);
+  --glass-primary-level2-text-secondary: rgba(255,255,255,0.85);
+  --glass-primary-level3-surface: linear-gradient(135deg, rgba(59,130,246,0.5) 0%, rgba(29,78,216,0.35) 100%);
+  --glass-primary-level3-border-color: rgba(59,130,246,0.7);
+  --glass-primary-level3-border-width: 2px;
+  --glass-primary-level3-border-style: solid;
+  --glass-primary-level3-blur: 16px;
+  --glass-primary-level3-shadow: 0 12px 32px rgba(59,130,246,0.25);
+  --glass-primary-level3-text-primary: rgba(255,255,255,0.95);
+  --glass-primary-level3-text-secondary: rgba(255,255,255,0.85);
+  --glass-primary-level4-surface: linear-gradient(135deg, rgba(59,130,246,0.6) 0%, rgba(29,78,216,0.45) 100%);
+  --glass-primary-level4-border-color: rgba(59,130,246,0.8);
+  --glass-primary-level4-border-width: 2px;
+  --glass-primary-level4-border-style: solid;
+  --glass-primary-level4-blur: 20px;
+  --glass-primary-level4-shadow: 0 16px 40px rgba(59,130,246,0.3);
+  --glass-primary-level4-text-primary: rgba(255,255,255,0.95);
+  --glass-primary-level4-text-secondary: rgba(255,255,255,0.85);
+
+  /* === SUCCESS SURFACES === */
+  --glass-success-level1-surface: linear-gradient(135deg, rgba(34,197,94,0.25) 0%, rgba(22,163,74,0.18) 100%);
+  --glass-success-level1-border-color: rgba(34,197,94,0.4);
+  --glass-success-level1-border-width: 1px;
+  --glass-success-level1-border-style: solid;
+  --glass-success-level1-blur: 8px;
+  --glass-success-level1-shadow: 0 4px 16px rgba(34,197,94,0.12);
+  --glass-success-level1-text-primary: rgba(255,255,255,0.95);
+  --glass-success-level1-text-secondary: rgba(255,255,255,0.85);
+  --glass-success-level2-surface: linear-gradient(135deg, rgba(34,197,94,0.3) 0%, rgba(22,163,74,0.22) 100%);
+  --glass-success-level2-border-color: rgba(34,197,94,0.5);
+  --glass-success-level2-border-width: 1px;
+  --glass-success-level2-border-style: solid;
+  --glass-success-level2-blur: 12px;
+  --glass-success-level2-shadow: 0 8px 24px rgba(34,197,94,0.15);
+  --glass-success-level2-text-primary: rgba(255,255,255,0.95);
+  --glass-success-level2-text-secondary: rgba(255,255,255,0.85);
+  --glass-success-level3-surface: linear-gradient(135deg, rgba(34,197,94,0.4) 0%, rgba(22,163,74,0.28) 100%);
+  --glass-success-level3-border-color: rgba(34,197,94,0.6);
+  --glass-success-level3-border-width: 2px;
+  --glass-success-level3-border-style: solid;
+  --glass-success-level3-blur: 16px;
+  --glass-success-level3-shadow: 0 12px 32px rgba(34,197,94,0.18);
+  --glass-success-level3-text-primary: rgba(255,255,255,0.95);
+  --glass-success-level3-text-secondary: rgba(255,255,255,0.85);
+  --glass-success-level4-surface: linear-gradient(135deg, rgba(34,197,94,0.5) 0%, rgba(22,163,74,0.35) 100%);
+  --glass-success-level4-border-color: rgba(34,197,94,0.7);
+  --glass-success-level4-border-width: 2px;
+  --glass-success-level4-border-style: solid;
+  --glass-success-level4-blur: 20px;
+  --glass-success-level4-shadow: 0 16px 40px rgba(34,197,94,0.22);
+  --glass-success-level4-text-primary: rgba(255,255,255,0.95);
+  --glass-success-level4-text-secondary: rgba(255,255,255,0.85);
+
+  /* === WARNING SURFACES === */
+  --glass-warning-level1-surface: linear-gradient(135deg, rgba(245,158,11,0.25) 0%, rgba(217,119,6,0.18) 100%);
+  --glass-warning-level1-border-color: rgba(245,158,11,0.4);
+  --glass-warning-level1-border-width: 1px;
+  --glass-warning-level1-border-style: solid;
+  --glass-warning-level1-blur: 8px;
+  --glass-warning-level1-shadow: 0 4px 16px rgba(245,158,11,0.12);
+  --glass-warning-level1-text-primary: rgba(255,255,255,0.95);
+  --glass-warning-level1-text-secondary: rgba(255,255,255,0.85);
+  --glass-warning-level2-surface: linear-gradient(135deg, rgba(245,158,11,0.3) 0%, rgba(217,119,6,0.22) 100%);
+  --glass-warning-level2-border-color: rgba(245,158,11,0.5);
+  --glass-warning-level2-border-width: 1px;
+  --glass-warning-level2-border-style: solid;
+  --glass-warning-level2-blur: 12px;
+  --glass-warning-level2-shadow: 0 8px 24px rgba(245,158,11,0.15);
+  --glass-warning-level2-text-primary: rgba(255,255,255,0.95);
+  --glass-warning-level2-text-secondary: rgba(255,255,255,0.85);
+  --glass-warning-level3-surface: linear-gradient(135deg, rgba(245,158,11,0.4) 0%, rgba(217,119,6,0.28) 100%);
+  --glass-warning-level3-border-color: rgba(245,158,11,0.6);
+  --glass-warning-level3-border-width: 2px;
+  --glass-warning-level3-border-style: solid;
+  --glass-warning-level3-blur: 16px;
+  --glass-warning-level3-shadow: 0 12px 32px rgba(245,158,11,0.18);
+  --glass-warning-level3-text-primary: rgba(255,255,255,0.95);
+  --glass-warning-level3-text-secondary: rgba(255,255,255,0.85);
+  --glass-warning-level4-surface: linear-gradient(135deg, rgba(245,158,11,0.5) 0%, rgba(217,119,6,0.35) 100%);
+  --glass-warning-level4-border-color: rgba(245,158,11,0.7);
+  --glass-warning-level4-border-width: 2px;
+  --glass-warning-level4-border-style: solid;
+  --glass-warning-level4-blur: 20px;
+  --glass-warning-level4-shadow: 0 16px 40px rgba(245,158,11,0.22);
+  --glass-warning-level4-text-primary: rgba(255,255,255,0.95);
+  --glass-warning-level4-text-secondary: rgba(255,255,255,0.85);
+
+  /* === DANGER SURFACES === */
+  --glass-danger-level1-surface: linear-gradient(135deg, rgba(239,68,68,0.25) 0%, rgba(220,38,38,0.18) 100%);
+  --glass-danger-level1-border-color: rgba(239,68,68,0.4);
+  --glass-danger-level1-border-width: 1px;
+  --glass-danger-level1-border-style: solid;
+  --glass-danger-level1-blur: 8px;
+  --glass-danger-level1-shadow: 0 4px 16px rgba(239,68,68,0.12);
+  --glass-danger-level1-text-primary: rgba(255,255,255,0.95);
+  --glass-danger-level1-text-secondary: rgba(255,255,255,0.85);
+  --glass-danger-level2-surface: linear-gradient(135deg, rgba(239,68,68,0.3) 0%, rgba(220,38,38,0.22) 100%);
+  --glass-danger-level2-border-color: rgba(239,68,68,0.5);
+  --glass-danger-level2-border-width: 1px;
+  --glass-danger-level2-border-style: solid;
+  --glass-danger-level2-blur: 12px;
+  --glass-danger-level2-shadow: 0 8px 24px rgba(239,68,68,0.15);
+  --glass-danger-level2-text-primary: rgba(255,255,255,0.95);
+  --glass-danger-level2-text-secondary: rgba(255,255,255,0.85);
+  --glass-danger-level3-surface: linear-gradient(135deg, rgba(239,68,68,0.4) 0%, rgba(220,38,38,0.28) 100%);
+  --glass-danger-level3-border-color: rgba(239,68,68,0.6);
+  --glass-danger-level3-border-width: 2px;
+  --glass-danger-level3-border-style: solid;
+  --glass-danger-level3-blur: 16px;
+  --glass-danger-level3-shadow: 0 12px 32px rgba(239,68,68,0.18);
+  --glass-danger-level3-text-primary: rgba(255,255,255,0.95);
+  --glass-danger-level3-text-secondary: rgba(255,255,255,0.85);
+  --glass-danger-level4-surface: linear-gradient(135deg, rgba(239,68,68,0.5) 0%, rgba(220,38,38,0.35) 100%);
+  --glass-danger-level4-border-color: rgba(239,68,68,0.7);
+  --glass-danger-level4-border-width: 2px;
+  --glass-danger-level4-border-style: solid;
+  --glass-danger-level4-blur: 20px;
+  --glass-danger-level4-shadow: 0 16px 40px rgba(239,68,68,0.22);
+  --glass-danger-level4-text-primary: rgba(255,255,255,0.95);
+  --glass-danger-level4-text-secondary: rgba(255,255,255,0.85);
+
+  /* === INFO SURFACES === */
+  --glass-info-level1-surface: linear-gradient(135deg, rgba(14,165,233,0.25) 0%, rgba(2,132,199,0.18) 100%);
+  --glass-info-level1-border-color: rgba(14,165,233,0.4);
+  --glass-info-level1-border-width: 1px;
+  --glass-info-level1-border-style: solid;
+  --glass-info-level1-blur: 8px;
+  --glass-info-level1-shadow: 0 4px 16px rgba(14,165,233,0.12);
+  --glass-info-level1-text-primary: rgba(255,255,255,0.95);
+  --glass-info-level1-text-secondary: rgba(255,255,255,0.85);
+  --glass-info-level2-surface: linear-gradient(135deg, rgba(14,165,233,0.3) 0%, rgba(2,132,199,0.22) 100%);
+  --glass-info-level2-border-color: rgba(14,165,233,0.5);
+  --glass-info-level2-border-width: 1px;
+  --glass-info-level2-border-style: solid;
+  --glass-info-level2-blur: 12px;
+  --glass-info-level2-shadow: 0 8px 24px rgba(14,165,233,0.15);
+  --glass-info-level2-text-primary: rgba(255,255,255,0.95);
+  --glass-info-level2-text-secondary: rgba(255,255,255,0.85);
+  --glass-info-level3-surface: linear-gradient(135deg, rgba(14,165,233,0.4) 0%, rgba(2,132,199,0.28) 100%);
+  --glass-info-level3-border-color: rgba(14,165,233,0.6);
+  --glass-info-level3-border-width: 2px;
+  --glass-info-level3-border-style: solid;
+  --glass-info-level3-blur: 16px;
+  --glass-info-level3-shadow: 0 12px 32px rgba(14,165,233,0.18);
+  --glass-info-level3-text-primary: rgba(255,255,255,0.95);
+  --glass-info-level3-text-secondary: rgba(255,255,255,0.85);
+  --glass-info-level4-surface: linear-gradient(135deg, rgba(14,165,233,0.5) 0%, rgba(2,132,199,0.35) 100%);
+  --glass-info-level4-border-color: rgba(14,165,233,0.7);
+  --glass-info-level4-border-width: 2px;
+  --glass-info-level4-border-style: solid;
+  --glass-info-level4-blur: 20px;
+  --glass-info-level4-shadow: 0 16px 40px rgba(14,165,233,0.22);
+  --glass-info-level4-text-primary: rgba(255,255,255,0.95);
+  --glass-info-level4-text-secondary: rgba(255,255,255,0.85);
+
+}
+
+/* === GENERATED UTILITY CLASSES === */
+
+.glass-neutral-level1 {
+  background: var(--glass-neutral-level1-surface);
+  border: var(--glass-neutral-level1-border-width) var(--glass-neutral-level1-border-style) var(--glass-neutral-level1-border-color);
+  backdrop-filter: blur(var(--glass-neutral-level1-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-neutral-level1-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-neutral-level1-shadow);
+  color: var(--glass-neutral-level1-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-neutral-level2 {
+  background: var(--glass-neutral-level2-surface);
+  border: var(--glass-neutral-level2-border-width) var(--glass-neutral-level2-border-style) var(--glass-neutral-level2-border-color);
+  backdrop-filter: blur(var(--glass-neutral-level2-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-neutral-level2-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-neutral-level2-shadow);
+  color: var(--glass-neutral-level2-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-neutral-level3 {
+  background: var(--glass-neutral-level3-surface);
+  border: var(--glass-neutral-level3-border-width) var(--glass-neutral-level3-border-style) var(--glass-neutral-level3-border-color);
+  backdrop-filter: blur(var(--glass-neutral-level3-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-neutral-level3-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-neutral-level3-shadow);
+  color: var(--glass-neutral-level3-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-neutral-level4 {
+  background: var(--glass-neutral-level4-surface);
+  border: var(--glass-neutral-level4-border-width) var(--glass-neutral-level4-border-style) var(--glass-neutral-level4-border-color);
+  backdrop-filter: blur(var(--glass-neutral-level4-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-neutral-level4-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-neutral-level4-shadow);
+  color: var(--glass-neutral-level4-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-primary-level1 {
+  background: var(--glass-primary-level1-surface);
+  border: var(--glass-primary-level1-border-width) var(--glass-primary-level1-border-style) var(--glass-primary-level1-border-color);
+  backdrop-filter: blur(var(--glass-primary-level1-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-primary-level1-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-primary-level1-shadow);
+  color: var(--glass-primary-level1-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-primary-level2 {
+  background: var(--glass-primary-level2-surface);
+  border: var(--glass-primary-level2-border-width) var(--glass-primary-level2-border-style) var(--glass-primary-level2-border-color);
+  backdrop-filter: blur(var(--glass-primary-level2-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-primary-level2-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-primary-level2-shadow);
+  color: var(--glass-primary-level2-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-primary-level3 {
+  background: var(--glass-primary-level3-surface);
+  border: var(--glass-primary-level3-border-width) var(--glass-primary-level3-border-style) var(--glass-primary-level3-border-color);
+  backdrop-filter: blur(var(--glass-primary-level3-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-primary-level3-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-primary-level3-shadow);
+  color: var(--glass-primary-level3-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-primary-level4 {
+  background: var(--glass-primary-level4-surface);
+  border: var(--glass-primary-level4-border-width) var(--glass-primary-level4-border-style) var(--glass-primary-level4-border-color);
+  backdrop-filter: blur(var(--glass-primary-level4-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-primary-level4-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-primary-level4-shadow);
+  color: var(--glass-primary-level4-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-success-level1 {
+  background: var(--glass-success-level1-surface);
+  border: var(--glass-success-level1-border-width) var(--glass-success-level1-border-style) var(--glass-success-level1-border-color);
+  backdrop-filter: blur(var(--glass-success-level1-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-success-level1-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-success-level1-shadow);
+  color: var(--glass-success-level1-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-success-level2 {
+  background: var(--glass-success-level2-surface);
+  border: var(--glass-success-level2-border-width) var(--glass-success-level2-border-style) var(--glass-success-level2-border-color);
+  backdrop-filter: blur(var(--glass-success-level2-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-success-level2-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-success-level2-shadow);
+  color: var(--glass-success-level2-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-success-level3 {
+  background: var(--glass-success-level3-surface);
+  border: var(--glass-success-level3-border-width) var(--glass-success-level3-border-style) var(--glass-success-level3-border-color);
+  backdrop-filter: blur(var(--glass-success-level3-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-success-level3-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-success-level3-shadow);
+  color: var(--glass-success-level3-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-success-level4 {
+  background: var(--glass-success-level4-surface);
+  border: var(--glass-success-level4-border-width) var(--glass-success-level4-border-style) var(--glass-success-level4-border-color);
+  backdrop-filter: blur(var(--glass-success-level4-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-success-level4-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-success-level4-shadow);
+  color: var(--glass-success-level4-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-warning-level1 {
+  background: var(--glass-warning-level1-surface);
+  border: var(--glass-warning-level1-border-width) var(--glass-warning-level1-border-style) var(--glass-warning-level1-border-color);
+  backdrop-filter: blur(var(--glass-warning-level1-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-warning-level1-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-warning-level1-shadow);
+  color: var(--glass-warning-level1-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-warning-level2 {
+  background: var(--glass-warning-level2-surface);
+  border: var(--glass-warning-level2-border-width) var(--glass-warning-level2-border-style) var(--glass-warning-level2-border-color);
+  backdrop-filter: blur(var(--glass-warning-level2-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-warning-level2-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-warning-level2-shadow);
+  color: var(--glass-warning-level2-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-warning-level3 {
+  background: var(--glass-warning-level3-surface);
+  border: var(--glass-warning-level3-border-width) var(--glass-warning-level3-border-style) var(--glass-warning-level3-border-color);
+  backdrop-filter: blur(var(--glass-warning-level3-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-warning-level3-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-warning-level3-shadow);
+  color: var(--glass-warning-level3-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-warning-level4 {
+  background: var(--glass-warning-level4-surface);
+  border: var(--glass-warning-level4-border-width) var(--glass-warning-level4-border-style) var(--glass-warning-level4-border-color);
+  backdrop-filter: blur(var(--glass-warning-level4-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-warning-level4-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-warning-level4-shadow);
+  color: var(--glass-warning-level4-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-danger-level1 {
+  background: var(--glass-danger-level1-surface);
+  border: var(--glass-danger-level1-border-width) var(--glass-danger-level1-border-style) var(--glass-danger-level1-border-color);
+  backdrop-filter: blur(var(--glass-danger-level1-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-danger-level1-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-danger-level1-shadow);
+  color: var(--glass-danger-level1-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-danger-level2 {
+  background: var(--glass-danger-level2-surface);
+  border: var(--glass-danger-level2-border-width) var(--glass-danger-level2-border-style) var(--glass-danger-level2-border-color);
+  backdrop-filter: blur(var(--glass-danger-level2-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-danger-level2-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-danger-level2-shadow);
+  color: var(--glass-danger-level2-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-danger-level3 {
+  background: var(--glass-danger-level3-surface);
+  border: var(--glass-danger-level3-border-width) var(--glass-danger-level3-border-style) var(--glass-danger-level3-border-color);
+  backdrop-filter: blur(var(--glass-danger-level3-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-danger-level3-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-danger-level3-shadow);
+  color: var(--glass-danger-level3-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-danger-level4 {
+  background: var(--glass-danger-level4-surface);
+  border: var(--glass-danger-level4-border-width) var(--glass-danger-level4-border-style) var(--glass-danger-level4-border-color);
+  backdrop-filter: blur(var(--glass-danger-level4-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-danger-level4-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-danger-level4-shadow);
+  color: var(--glass-danger-level4-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-info-level1 {
+  background: var(--glass-info-level1-surface);
+  border: var(--glass-info-level1-border-width) var(--glass-info-level1-border-style) var(--glass-info-level1-border-color);
+  backdrop-filter: blur(var(--glass-info-level1-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-info-level1-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-info-level1-shadow);
+  color: var(--glass-info-level1-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-info-level2 {
+  background: var(--glass-info-level2-surface);
+  border: var(--glass-info-level2-border-width) var(--glass-info-level2-border-style) var(--glass-info-level2-border-color);
+  backdrop-filter: blur(var(--glass-info-level2-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-info-level2-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-info-level2-shadow);
+  color: var(--glass-info-level2-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-info-level3 {
+  background: var(--glass-info-level3-surface);
+  border: var(--glass-info-level3-border-width) var(--glass-info-level3-border-style) var(--glass-info-level3-border-color);
+  backdrop-filter: blur(var(--glass-info-level3-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-info-level3-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-info-level3-shadow);
+  color: var(--glass-info-level3-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+.glass-info-level4 {
+  background: var(--glass-info-level4-surface);
+  border: var(--glass-info-level4-border-width) var(--glass-info-level4-border-style) var(--glass-info-level4-border-color);
+  backdrop-filter: blur(var(--glass-info-level4-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  -webkit-backdrop-filter: blur(var(--glass-info-level4-blur)) saturate(1.8) brightness(1.15) contrast(1.08);
+  box-shadow: var(--glass-info-level4-shadow);
+  color: var(--glass-info-level4-text-primary);
+  border-radius: var(--glass-radius-md);
+  transition: all var(--glass-motion-default) ease-out;
+  position: relative;
+  transform: translateZ(0);
+}
+
+/* === ACCESSIBILITY & FALLBACKS === */
+
+@media (prefers-reduced-motion: reduce) {
+  [class*="glass-"] {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@supports not (backdrop-filter: blur(0)) {
+  [class*="glass-"] {
+    background: rgba(0, 0, 0, 0.85) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}

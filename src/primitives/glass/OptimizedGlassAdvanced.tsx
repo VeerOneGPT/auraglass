@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, HTMLAttributes, useEffect, useMemo, useState } from 'react';
 
 export interface OptimizedGlassProps extends HTMLAttributes<HTMLDivElement> {
@@ -58,34 +58,34 @@ const GLASS_BASE_CLASSES = {
 
 const ELEVATION_CLASSES = {
   0: '',
-  1: 'shadow-glass-1',
-  2: 'shadow-glass-2',
-  3: 'shadow-glass-3',
-  4: 'shadow-glass-4',
+  1: 'shadow-2xl',
+  2: 'shadow-2xl',
+  3: 'shadow-2xl',
+  4: 'shadow-2xl',
   float: 'shadow-glass-float'
 }
 
 const BLUR_CLASSES = {
   none: '',
-  subtle: 'backdrop-blur-sm',    // 4px
+  subtle: 'backdrop-blur-md',    // 4px
   medium: 'backdrop-blur-md',    // 8px  
-  strong: 'backdrop-blur-lg',    // 16px
-  intense: 'backdrop-blur-xl',   // 24px
+  strong: 'backdrop-blur-md',    // 16px
+  intense: 'backdrop-blur-md',   // 24px
 }
 
 const VARIANT_CLASSES = {
-  default: 'bg-glass-surface-primary border-0',
-  primary: 'bg-glass-surface-primary border-0',
-  secondary: 'bg-glass-surface-primary border-0',
-  success: 'bg-glass-surface-success border-0',
-  warning: 'bg-glass-surface-warning border-0',
-  error: 'bg-glass-surface-error border-0',
-  frosted: 'bg-glass-surface-primary border-0',
-  liquid: 'bg-glass-surface-primary border-0 rounded-3xl',
-  crystal: 'bg-glass-surface-primary border-0 rounded-sm',
-  holographic: 'bg-glass-surface-primary border-0',
-  neural: 'bg-glass-surface-primary border-0',
-  ethereal: 'bg-glass-surface-primary border-0',
+  default: 'bg-transparent border-0',
+  primary: 'bg-transparent border-0',
+  secondary: 'bg-transparent border-0',
+  success: 'bg-transparent border-0',
+  warning: 'bg-transparent border-0',
+  error: 'bg-transparent border-0',
+  frosted: 'bg-transparent border-0',
+  liquid: 'bg-transparent border-0 rounded-3xl',
+  crystal: 'bg-transparent border-0 rounded-sm',
+  holographic: 'bg-transparent border-0',
+  neural: 'bg-transparent border-0',
+  ethereal: 'bg-transparent border-0',
 }
 
 const TINT_CLASSES = {

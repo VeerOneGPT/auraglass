@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useEffect, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -293,7 +293,7 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
         {showBackdrop && open && (
           <Motion
             preset="fadeIn"
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100]"
+            className="fixed inset-0 bg-black/50 backdrop-blur-md z-[100]"
             onClick={handleBackdropClick}
           />
         )}

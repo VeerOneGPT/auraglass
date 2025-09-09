@@ -167,7 +167,7 @@ export const GlassMenubar: React.FC<GlassMenubarProps> = ({
           performanceMode="medium"
           
             className={cn(
-                'relative backdrop-blur-sm ring-1 ring-white/10 bg-white/5',
+                'relative backdrop-blur-md ring-1 ring-white/10 bg-white/5',
                 orientation === 'horizontal' ? 'flex flex-row' : 'flex flex-col',
                 disabled && 'opacity-50 pointer-events-none',
                 className
@@ -282,7 +282,7 @@ export const GlassMenubarContent: React.FC<GlassMenubarContentProps> = ({
           ref={contentRef}
                 
                 className={cn(
-                    'backdrop-blur-xl bg-black/20 border border-white/20 shadow-2xl',
+                    'backdrop-blur-md bg-black/20 border border-white/20 shadow-2xl',
                     'min-w-48 py-1',
                     className
                 )}

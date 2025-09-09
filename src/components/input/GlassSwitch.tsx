@@ -208,7 +208,7 @@ export const GlassSwitch = forwardRef<HTMLButtonElement, GlassSwitchProps>(
           preset="scaleIn"
           className={cn(
             'pointer-events-none relative flex items-center justify-center',
-            'rounded-full border backdrop-blur-sm transition-all duration-200',
+            'rounded-full border backdrop-blur-md transition-all duration-200',
 
             // Size
             config.thumb,

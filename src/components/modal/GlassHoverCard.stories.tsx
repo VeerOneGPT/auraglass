@@ -65,7 +65,7 @@ type Story = StoryObj<typeof GlassHoverCard>;
 export const Default: Story = {
   args: {
     children: (
-      <button className="px-4 py-2 bg-blue-500/20 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-blue-500/30 transition-colors">
+      <button className="px-4 py-2 bg-blue-500/20 backdrop-blur-md border border-white/20 rounded-lg hover:bg-blue-500/30 transition-colors">
         Hover me
       </button>
     ),
@@ -88,7 +88,7 @@ export const Placements: Story = {
         placement="top"
         content={<div className="p-3"><Info className="w-4 h-4 inline mr-2" />Top placement</div>}
       >
-        <button className="px-3 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded hover:bg-white/20 transition-colors">
+        <button className="px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded hover:bg-white/20 transition-colors">
           Top
         </button>
       </GlassHoverCard>
@@ -98,7 +98,7 @@ export const Placements: Story = {
         placement="right"
         content={<div className="p-3"><Info className="w-4 h-4 inline mr-2" />Right placement</div>}
       >
-        <button className="px-3 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded hover:bg-white/20 transition-colors">
+        <button className="px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded hover:bg-white/20 transition-colors">
           Right
         </button>
       </GlassHoverCard>
@@ -108,7 +108,7 @@ export const Placements: Story = {
         placement="bottom"
         content={<div className="p-3"><Info className="w-4 h-4 inline mr-2" />Bottom placement</div>}
       >
-        <button className="px-3 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded hover:bg-white/20 transition-colors">
+        <button className="px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded hover:bg-white/20 transition-colors">
           Bottom
         </button>
       </GlassHoverCard>
@@ -118,7 +118,7 @@ export const Placements: Story = {
         placement="left"
         content={<div className="p-3"><Info className="w-4 h-4 inline mr-2" />Left placement</div>}
       >
-        <button className="px-3 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded hover:bg-white/20 transition-colors">
+        <button className="px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded hover:bg-white/20 transition-colors">
           Left
         </button>
       </GlassHoverCard>
@@ -128,7 +128,7 @@ export const Placements: Story = {
         placement="top-start"
         content={<div className="p-3"><Info className="w-4 h-4 inline mr-2" />Top start</div>}
       >
-        <button className="px-3 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded hover:bg-white/20 transition-colors">
+        <button className="px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded hover:bg-white/20 transition-colors">
           Top-Start
         </button>
       </GlassHoverCard>
@@ -138,7 +138,7 @@ export const Placements: Story = {
         placement="bottom-end"
         content={<div className="p-3"><Info className="w-4 h-4 inline mr-2" />Bottom end</div>}
       >
-        <button className="px-3 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded hover:bg-white/20 transition-colors">
+        <button className="px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded hover:bg-white/20 transition-colors">
           Bottom-End
         </button>
       </GlassHoverCard>
@@ -149,7 +149,7 @@ export const Placements: Story = {
 export const WithRichContent: Story = {
   args: {
     children: (
-      <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-sm border border-white/20 rounded-lg cursor-pointer hover:from-purple-500/30 hover:to-blue-500/30 transition-all">
+      <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-md border border-white/20 rounded-lg cursor-pointer hover:from-purple-500/30 hover:to-blue-500/30 transition-all">
         <User className="w-5 h-5" />
         <div>
           <div className="font-medium">John Doe</div>
@@ -193,7 +193,7 @@ export const WithRichContent: Story = {
 export const WithDelay: Story = {
   args: {
     children: (
-      <button className="px-4 py-2 bg-green-500/20 backdrop-blur-sm border border-white/20 rounded-lg hover:bg-green-500/30 transition-colors">
+      <button className="px-4 py-2 bg-green-500/20 backdrop-blur-md border border-white/20 rounded-lg hover:bg-green-500/30 transition-colors">
         Hover with delay
       </button>
     ),

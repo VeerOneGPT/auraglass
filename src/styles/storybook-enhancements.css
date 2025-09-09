@@ -1,14 +1,20 @@
 /* STORYBOOK SPECIFIC ENHANCEMENTS */
 /* Make Storybook examples look absolutely incredible */
 
-/* Enhance Storybook canvas */
+/* Enhance Storybook canvas - ADD BACKDROP */
 .sb-story {
-  background: none !important;
+  background: linear-gradient(135deg, 
+    #0f0f0f 0%, 
+    #1a1a2e 20%, 
+    #16213e 40%, 
+    #0f0f23 60%, 
+    #0a0a0a 100%) !important;
   padding: 40px !important;
   min-height: 80vh !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  position: relative;
 }
 
 /* Add subtle grid pattern to showcase glass effects */
@@ -24,56 +30,12 @@
   z-index: -1;
 }
 
-/* Enhanced component presentation */
+/* Enhanced component presentation - DON'T OVERRIDE COMPONENT STYLES */
 .sb-story .glass-base,
 .sb-story [class*="glass-"] {
-  /* Force ultra-premium effects in Storybook */
-  backdrop-filter: blur(50px) saturate(320%) brightness(1.4) contrast(1.3) !important;
-  -webkit-backdrop-filter: blur(50px) saturate(320%) brightness(1.4) contrast(1.3) !important;
-  
-  /* Premium typography */
+  /* Only enhance typography, DON'T override glass styles */
   font-family: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
   font-feature-settings: 'rlig' 1, 'calt' 1, 'kern' 1 !important;
-  
-  /* Enhanced visual effects */
-  box-shadow: 
-    /* Outer dramatic glow */
-    0 0 80px rgba(59,130,246,0.3),
-    0 0 160px rgba(147,51,234,0.15),
-    /* Main depth shadow */
-    0 25px 80px rgba(0,0,0,0.5),
-    /* Inner light effects */
-    0 1px 0 rgba(255,255,255,0.6) inset,
-    0 0 0 1px rgba(255,255,255,0.3) inset,
-    0 0 0 3px rgba(59,130,246,0.2) inset,
-    /* Inner glow */
-    0 8px 32px rgba(255,255,255,0.3) inset !important;
-  
-  /* Micro-animations */
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
-}
-
-/* Extreme hover effects for demonstrations */
-.sb-story .glass-base:hover,
-.sb-story [class*="glass-"]:hover {
-  backdrop-filter: blur(80px) saturate(400%) brightness(1.6) contrast(1.5) !important;
-  -webkit-backdrop-filter: blur(80px) saturate(400%) brightness(1.6) contrast(1.5) !important;
-  
-  transform: translateY(-12px) scale(1.12) rotateX(5deg) rotateY(-2deg) !important;
-  
-  background: 
-    linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.4) 100%),
-    radial-gradient(circle at 30% 30%, rgba(59,130,246,0.4) 0%, transparent 70%),
-    radial-gradient(circle at 70% 70%, rgba(147,51,234,0.3) 0%, transparent 70%),
-    rgba(255,255,255,0.2) !important;
-  
-  box-shadow: 
-    0 0 150px rgba(59,130,246,0.6),
-    0 0 300px rgba(147,51,234,0.3),
-    0 40px 120px rgba(0,0,0,0.6),
-    0 0 0 3px rgba(255,255,255,0.8) inset,
-    0 0 0 6px rgba(59,130,246,0.5) inset,
-    0 12px 40px rgba(255,255,255,0.5) inset !important;
 }
 
 /* Typography enhancements for Storybook */

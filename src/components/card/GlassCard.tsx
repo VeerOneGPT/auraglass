@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef } from 'react';
 import { OptimizedGlassCore as OptimizedGlass, type OptimizedGlassProps } from '../../primitives';
 
@@ -65,7 +65,7 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
       elevated: '',
       interactive: 'transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]',
       feature: 'relative overflow-hidden',
-      minimal: 'backdrop-blur-none bg-transparent border-0',
+      minimal: 'backdrop-blur-md bg-transparent border-0',
       primary: '',
       outline: 'ring-1 ring-border/20',
     };
@@ -82,10 +82,10 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
     return (
       <OptimizedGlass
         ref={ref}
-        variant={variant === 'feature' ? 'primary' : 'primary'}
+        variant={variant === 'feature' ? 'feature' : variant === 'elevated' ? 'elevated' : variant === 'outlined' ? 'outlined' : 'default'}
         elevation={getElevation()}
-        blur={hoverable ? 'subtle' : 'subtle'}
-        intensity={hoverable ? 'medium' : 'subtle'}
+        blur="medium"
+        intensity="medium"
         depth={variant === 'elevated' ? 3 : 1}
         tint="neutral"
         border={variant === 'outlined' ? 'glow' : 'subtle'}
@@ -93,14 +93,11 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
         interactive={isInteractive}
         performanceMode="medium"
         className={cn(
-          'relative rounded-lg overflow-hidden',
+          'glass-foundation-complete relative rounded-xl overflow-hidden',
           'transition-all duration-300 ease-out',
           // Advanced hover effects with glass enhancement
           hoverable && [
-            'hover:shadow-glass-4',
-            'hover:backdrop-blur-lg hover:backdrop-saturate-150 hover:backdrop-brightness-110',
-            'hover:border-white/30',
-            'group glass-lift glass-tilt glass-sheen'
+            'group'
           ],
           sizeClasses[size],
           variantClasses[variant],
@@ -111,7 +108,7 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
             // Enhanced click feedback
             'cursor-pointer': clickable && !disabled,
             'active:scale-[0.995] active:translate-y-0': clickable && !disabled,
-            'active:shadow-glass-2': clickable && !disabled,
+            '': clickable && !disabled, // Remove broken CSS class
             // Disabled state
             'opacity-50 pointer-events-none': disabled,
             // Loading state

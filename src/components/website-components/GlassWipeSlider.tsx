@@ -500,7 +500,7 @@ export function GlassWipeSlider({
       {/* Glass divider line */}
       <div
         className={cn(
-          "absolute backdrop-blur-sm shadow-lg transition-all duration-200 ease-out",
+          "absolute backdrop-blur-md shadow-lg transition-all duration-200 ease-out",
           {
             // Horizontal orientation
             'top-0 bottom-0 bg-gradient-to-b from-white/40 via-white/60 to-white/40': !isVertical,
@@ -586,7 +586,7 @@ export function GlassWipeSlider({
         transition={getTransition(duration / 1000)}
       >
         {/* Glass handle */}
-        <div className="w-full h-full rounded-full glass-base bg-glass-gradient-strong backdrop-blur-glass-medium border border-white/30 flex items-center justify-center group relative overflow-hidden">
+        <div className="w-full h-full rounded-full glass-foundation-complete bg-glass-gradient-strong backdrop-blur-md-medium border border-white/30 flex items-center justify-center group relative overflow-hidden">
           {/* Arrow indicators */}
           <div className={cn(
             "flex items-center gap-1 text-white/70 group-hover:text-white/90 transition-colors duration-200 relative z-10",
@@ -703,7 +703,7 @@ export function GlassWipeSlider({
             <div
               key={key}
               className={cn(
-                "absolute w-2 h-2 rounded-full bg-white/30 backdrop-blur-sm border border-white/20 transition-all duration-200",
+                "absolute w-2 h-2 rounded-full bg-white/30 backdrop-blur-md border border-white/20 transition-all duration-200",
                 Math.abs(position - value) <= snapThreshold ? 'bg-blue-400/60 scale-125' : ''
               )}
               style={{
@@ -727,7 +727,7 @@ export function GlassWipeSlider({
         <div
           id="slider-metrics"
           className={cn(
-            "absolute glass-base bg-glass-gradient-strong backdrop-blur-glass-medium border border-white/20 rounded-lg p-4 z-10 max-w-sm",
+            "absolute glass-foundation-complete bg-glass-gradient-strong backdrop-blur-md-medium border border-white/20 rounded-lg p-4 z-10 max-w-sm",
             isVertical
               ? "top-1/2 right-4 transform -translate-y-1/2"
               : "top-4 left-1/2 transform -translate-x-1/2"
@@ -802,7 +802,7 @@ export function ComparisonContent({
   const backgroundClasses = {
     gradient: 'bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900',
     solid: 'bg-slate-900',
-    glass: 'glass-base bg-glass-gradient-subtle backdrop-blur-glass-medium',
+    glass: 'glass-foundation-complete bg-glass-gradient-subtle backdrop-blur-md-medium',
     transparent: 'bg-transparent'
   };
 

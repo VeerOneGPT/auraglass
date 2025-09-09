@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import React, { createContext, useContext, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -190,7 +190,7 @@ export const GlassToggle = React.forwardRef<HTMLButtonElement, GlassToggleProps>
         };
 
         const getVariantClasses = () => {
-            const baseClasses = 'backdrop-blur-sm border border-white/20 transition-all duration-300';
+            const baseClasses = 'backdrop-blur-md border border-white/20 transition-all duration-300';
 
             switch (variant) {
                 case 'outline':
@@ -339,7 +339,7 @@ export const GlassToggleGroup: React.FC<GlassToggleGroupProps> = ({
         <ToggleGroupContext.Provider value={contextValue}>
             <div
                 className={cn(
-                    'flex gap-2 p-1 backdrop-blur-sm bg-white/5 border border-white/10 rounded-lg',
+                    'flex gap-2 p-1 backdrop-blur-md bg-white/5 border border-white/10 rounded-lg',
                     {
                         'flex-row': orientation === 'horizontal',
                         'flex-col': orientation === 'vertical',

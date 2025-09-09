@@ -2,7 +2,7 @@
 
 import { GlassInput } from '../input/GlassInput';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import { Search } from 'lucide-react';
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
@@ -352,7 +352,7 @@ export const GlassCommandDialog: React.FC<GlassCommandDialogProps> = ({
     if (!open) return null;
 
     return (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/50 backdrop-blur-md">
             <Motion
                 preset="scaleIn"
                 className="w-full max-w-lg"
@@ -384,7 +384,7 @@ export const GlassCommandInput: React.FC<GlassCommandInputProps> = ({
             <OptimizedGlass
                 variant="default"
                 elevation={1}
-                className="backdrop-blur-sm rounded-lg"
+                className="backdrop-blur-md rounded-lg"
             >
                 <GlassInput className={cn(
                     'w-full pl-10 pr-4 py-3 bg-transparent border-0 outline-none',

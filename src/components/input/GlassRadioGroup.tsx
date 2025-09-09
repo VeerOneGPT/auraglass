@@ -253,7 +253,7 @@ export const GlassRadioGroupItem: React.FC<GlassRadioGroupItemProps & {
 
                         className={cn(
                             'relative cursor-pointer transition-all duration-200 p-4 glass-sheen',
-                            'backdrop-blur-sm border border-white/20',
+                            'backdrop-blur-md border border-white/20',
                             'hover:bg-white/10 hover:border-white/30',
                             {
                                 'bg-white/20 border-white/40 shadow-lg': isSelected,

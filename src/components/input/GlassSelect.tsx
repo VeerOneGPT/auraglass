@@ -460,7 +460,7 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
 
               className={cn(
                 'max-h-60 overflow-hidden',
-                'backdrop-blur-xl bg-black/20 border border-white/20',
+                'backdrop-blur-md bg-black/20 border border-white/20',
                 'shadow-2xl shadow-black/50',
                 'ring-1 ring-white/10'
               )}
@@ -478,7 +478,7 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
                       }}
                       className={cn(
                         'w-full px-3 py-2 rounded-md outline-none',
-                        'backdrop-blur-sm bg-glass-fill ring-1 ring-white/10',
+                        'backdrop-blur-md bg-glass-fill ring-1 ring-white/10',
                         'text-white/90 placeholder-white/50',
                         'focus:ring-2 focus:ring-white/30 focus:bg-white/15',
                         'transition-all duration-200'
@@ -512,7 +512,7 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
                             key={option.value}
                             className={cn(
                               'px-3 py-2 cursor-pointer transition-all duration-200',
-                              'hover:bg-white/10 hover:backdrop-blur-sm',
+                              'hover:bg-white/10 hover:backdrop-blur-md',
                               'text-white/90',
                               {
                                 'bg-white/20 text-white shadow-md': isSelected,

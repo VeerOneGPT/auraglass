@@ -265,7 +265,7 @@ export const GlassDrawer = forwardRef<HTMLDivElement, GlassDrawerProps>(
             duration={animationDuration}
             className={cn(
               'absolute inset-0 bg-black/20 cursor-pointer',
-              backdropBlur && 'backdrop-blur-sm'
+              backdropBlur && 'backdrop-blur-md'
             )}
             onClick={handleBackdropClick}
           />

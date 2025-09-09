@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import {
     BarChart3,
     Download,
@@ -334,7 +334,7 @@ export const GlassChartWidget: React.FC<GlassChartWidgetProps> = ({
 
                                         {showActionMenu && (
                                             <Motion preset="fadeIn" className="absolute right-0 top-full mt-2 z-10">
-                                                <div className="bg-black/80 backdrop-blur-xl border border-white/20 rounded-lg shadow-xl min-w-48">
+                                                <div className="bg-black/80 backdrop-blur-md border border-white/20 rounded-lg shadow-xl min-w-48">
                                                     {actions.map((action, index) => (
                                                         <button
                                                             key={index}

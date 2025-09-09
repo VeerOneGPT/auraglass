@@ -187,7 +187,7 @@ export const GlassScrollArea: React.FC<GlassScrollAreaProps> = ({
           performanceMode="medium"
           
             className={cn(
-                'relative backdrop-blur-sm ring-1 ring-white/10 bg-white/5',
+                'relative backdrop-blur-md ring-1 ring-white/10 bg-white/5',
                 scrollbarPosition === 'outside' && 'p-2',
                 smoothScrolling && 'scroll-smooth',
                 className
@@ -402,7 +402,7 @@ export const GlassScrollBar: React.FC<GlassScrollBarProps> = ({
                     ref={thumbRef}
                     className={cn(
                         thumbClasses,
-                        'backdrop-blur-sm bg-white/30 border border-white/20',
+                        'backdrop-blur-md bg-white/30 border border-white/20',
                         'hover:bg-white/40 transition-all duration-200',
                         isDragging && 'bg-white/50 scale-110',
                         size === 'sm' && 'w-1 h-4',

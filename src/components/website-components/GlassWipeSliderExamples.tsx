@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import {
@@ -28,7 +28,7 @@ export function AuraOneVsScaleAIComparison({ className }: { className?: string }
       <GlassWipeSlider
         beforeContent={
           <div className="relative w-full h-full bg-gradient-to-br from-red-900/80 to-orange-900/60 flex flex-col items-center justify-center text-center p-8">
-            <div className="glass-base bg-glass-gradient-subtle backdrop-blur-glass-medium rounded-xl p-6 max-w-md">
+            <div className="glass-foundation-complete bg-glass-gradient-subtle backdrop-blur-md-medium rounded-xl p-6 max-w-md">
               <div className="text-red-300 text-4xl font-bold mb-2">Scale AI</div>
               <div className="text-white/80 text-sm space-y-2">
                 <div>• Complex setup process</div>
@@ -43,7 +43,7 @@ export function AuraOneVsScaleAIComparison({ className }: { className?: string }
         }
         afterContent={
           <div className="relative w-full h-full bg-gradient-to-br from-cyan-900/80 to-blue-900/60 flex flex-col items-center justify-center text-center p-8">
-            <div className="glass-base bg-glass-gradient-strong backdrop-blur-glass-medium rounded-xl p-6 max-w-md border border-cyan-400/20">
+            <div className="glass-foundation-complete bg-glass-gradient-strong backdrop-blur-md-medium rounded-xl p-6 max-w-md border border-cyan-400/20">
               <div className="text-cyan-300 text-4xl font-bold mb-2">AuraOne</div>
               <div className="text-white/90 text-sm space-y-2">
                 <div>• One-click deployment</div>
@@ -180,7 +180,7 @@ export function PerformanceMetricsComparison({ className }: { className?: string
         beforeContent={
           <div className="relative w-full h-full bg-gradient-to-br from-slate-900 via-red-900/50 to-slate-900 p-8">
             <div className="h-full flex items-center justify-center">
-              <div className="glass-base bg-glass-gradient-subtle backdrop-blur-glass-medium rounded-xl p-8 max-w-md text-center">
+              <div className="glass-foundation-complete bg-glass-gradient-subtle backdrop-blur-md-medium rounded-xl p-8 max-w-md text-center">
                 <h4 className="text-xl font-bold text-red-300 mb-6">Legacy Platform</h4>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div className="space-y-1">
@@ -208,7 +208,7 @@ export function PerformanceMetricsComparison({ className }: { className?: string
         afterContent={
           <div className="relative w-full h-full bg-gradient-to-br from-slate-900 via-green-900/50 to-slate-900 p-8">
             <div className="h-full flex items-center justify-center">
-              <div className="glass-base bg-glass-gradient-strong backdrop-blur-glass-medium rounded-xl p-8 max-w-md text-center border border-green-400/20">
+              <div className="glass-foundation-complete bg-glass-gradient-strong backdrop-blur-md-medium rounded-xl p-8 max-w-md text-center border border-green-400/20">
                 <h4 className="text-xl font-bold text-green-300 mb-6">AuraOne Platform</h4>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div className="space-y-1">
@@ -318,7 +318,7 @@ export function PresetPositionDemo({ className }: { className?: string }) {
               setTimeout(() => setActivePreset(null), 600);
             }}
             className={cn(
-              "px-4 py-2 rounded-lg glass-base bg-glass-gradient-subtle backdrop-blur-glass-medium border border-white/20",
+              "px-4 py-2 rounded-lg glass-foundation-complete bg-glass-gradient-subtle backdrop-blur-md-medium border border-white/20",
               "text-white/80 text-sm font-medium transition-all duration-200",
               "hover:bg-white/10 hover:border-white/30 hover:scale-105",
               currentPosition === value && "bg-blue-500/20 border-blue-400/50 text-blue-300"
@@ -336,16 +336,16 @@ export function PresetPositionDemo({ className }: { className?: string }) {
               <div className="text-4xl font-bold text-white">Before</div>
               <div className="text-white/70">Traditional approach with limitations</div>
               <div className="grid grid-cols-2 gap-4 text-sm max-w-xs">
-                <div className="glass-base bg-red-500/10 rounded-lg p-3">
+                <div className="glass-foundation-complete bg-red-500/10 rounded-lg p-3">
                   <div className="text-red-300 font-semibold">Slow</div>
                 </div>
-                <div className="glass-base bg-red-500/10 rounded-lg p-3">
+                <div className="glass-foundation-complete bg-red-500/10 rounded-lg p-3">
                   <div className="text-red-300 font-semibold">Expensive</div>
                 </div>
-                <div className="glass-base bg-red-500/10 rounded-lg p-3">
+                <div className="glass-foundation-complete bg-red-500/10 rounded-lg p-3">
                   <div className="text-red-300 font-semibold">Complex</div>
                 </div>
-                <div className="glass-base bg-red-500/10 rounded-lg p-3">
+                <div className="glass-foundation-complete bg-red-500/10 rounded-lg p-3">
                   <div className="text-red-300 font-semibold">Limited</div>
                 </div>
               </div>
@@ -358,16 +358,16 @@ export function PresetPositionDemo({ className }: { className?: string }) {
               <div className="text-4xl font-bold text-white">After</div>
               <div className="text-white/70">AuraOne platform advantages</div>
               <div className="grid grid-cols-2 gap-4 text-sm max-w-xs">
-                <div className="glass-base bg-green-500/10 rounded-lg p-3">
+                <div className="glass-foundation-complete bg-green-500/10 rounded-lg p-3">
                   <div className="text-green-300 font-semibold">Fast</div>
                 </div>
-                <div className="glass-base bg-green-500/10 rounded-lg p-3">
+                <div className="glass-foundation-complete bg-green-500/10 rounded-lg p-3">
                   <div className="text-green-300 font-semibold">Affordable</div>
                 </div>
-                <div className="glass-base bg-green-500/10 rounded-lg p-3">
+                <div className="glass-foundation-complete bg-green-500/10 rounded-lg p-3">
                   <div className="text-green-300 font-semibold">Simple</div>
                 </div>
-                <div className="glass-base bg-green-500/10 rounded-lg p-3">
+                <div className="glass-foundation-complete bg-green-500/10 rounded-lg p-3">
                   <div className="text-green-300 font-semibold">Scalable</div>
                 </div>
               </div>

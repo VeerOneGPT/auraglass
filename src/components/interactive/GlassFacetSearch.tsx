@@ -160,9 +160,9 @@ const GlassFacetSearch = React.forwardRef<HTMLDivElement, GlassFacetSearchProps>
         };
 
         const elevationClasses = {
-            low: 'backdrop-blur-sm bg-white/10 border border-white/20',
+            low: 'backdrop-blur-md bg-white/10 border border-white/20',
             medium: 'backdrop-blur-md bg-white/20 border border-white/30 shadow-lg',
-            high: 'backdrop-blur-xl bg-white/30 border border-white/40 shadow-2xl'
+            high: 'backdrop-blur-md bg-white/30 border border-white/40 shadow-2xl'
         };
 
         return (

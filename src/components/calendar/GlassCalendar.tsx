@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import {
     Calendar as CalendarIcon,
     ChevronLeft,
@@ -142,7 +142,11 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
         let currentWeek: Date[] = [];
         const currentDateIter = new Date(startDate);
 
-        while (currentDateIter <= lastDay || currentWeek.length < 7) {
+        // SAFE calendar generation - prevent infinite loops
+        let dayCount = 0;
+        const maxDays = 42; // 6 weeks max = prevent infinite loops
+        
+        while (dayCount < maxDays && (currentDateIter <= lastDay || currentWeek.length < 7)) {
             currentWeek.push(new Date(currentDateIter));
 
             if (currentWeek.length === 7) {
@@ -151,6 +155,10 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
             }
 
             currentDateIter.setDate(currentDateIter.getDate() + 1);
+            dayCount++;
+            
+            // Safety break for full weeks
+            if (weeks.length >= 6) break;
         }
 
         if (currentWeek.length > 0) {
@@ -246,7 +254,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
 
     return (
         <div className="w-full">
-            <GlassCard className={cn('glass-base backdrop-blur-lg bg-glass-surface-primary border-glass-border-default shadow-glass-3 overflow-hidden', className)} {...props}>
+            <GlassCard variant="elevated" className={cn('overflow-hidden', className)} {...props}>
                 {/* Calendar Header */}
                 <CardHeader className="border-b border-white/10">
                     <div className="flex items-center justify-between">
@@ -332,8 +340,8 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                                             'hover:bg-white/10 focus:bg-white/15 focus:outline-none hover:scale-105',
                                             'disabled:opacity-50 disabled:cursor-not-allowed',
                                             {
-                                                'glass-base backdrop-blur-md bg-glass-surface-primary border-glass-border-primary': isSelected(date),
-                                                'glass-base backdrop-blur-sm bg-glass-surface-secondary border-glass-border-default': isToday(date) && showToday && !isSelected(date),
+                                                'glass-foundation-complete backdrop-blur-md bg-transparent border-white/40': isSelected(date),
+                                                'glass-foundation-complete backdrop-blur-md bg-transparent border-white/40': isToday(date) && showToday && !isSelected(date),
                                                 'text-white/60': !isCurrentMonth(date),
                                                 'text-white/90': isCurrentMonth(date),
                                             }
@@ -379,7 +387,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                                 {(eventsByDate.get(selectedDateState.toDateString()) || []).map((event) => (
                                     <div key={event.id} className="w-full">
                                         <GlassCard
-                                            className="glass-base backdrop-blur-md bg-glass-surface-secondary border-glass-border-default shadow-glass-1 p-4 hover:shadow-glass-2 hover:bg-glass-surface-primary transition-all cursor-pointer"
+                                            className="glass-foundation-complete backdrop-blur-md bg-transparent border-white/40 shadow-2xl p-4 hover:shadow-2xl hover:bg-transparent transition-all cursor-pointer"
                                         >
                                             <div className="flex items-start gap-3">
                                                 <div className={cn('w-3 h-3 rounded-full mt-2 flex-shrink-0', getEventColor(event))} />

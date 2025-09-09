@@ -3,7 +3,7 @@
 import { GlassButton } from '../button/GlassButton';
 import { GlassInput } from '../input/GlassInput';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useCallback, useState } from 'react';
 import { Motion } from '../../primitives';
 import { GlassCard } from '../card/GlassCard';

@@ -3,7 +3,7 @@
 import React, { forwardRef, useEffect, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 
 export interface GlassProgressProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -132,7 +132,7 @@ export const GlassProgress = forwardRef<HTMLDivElement, GlassProgressProps>(
 
     const trackClasses = cn(
       'relative w-full overflow-hidden',
-      'bg-muted/30 backdrop-blur-sm',
+      'bg-muted/30 backdrop-blur-md',
       sizeClasses[size],
       shapeClasses[shape]
     );

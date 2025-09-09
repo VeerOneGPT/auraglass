@@ -13,6 +13,7 @@
         "strict": true,
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
+        "downlevelIteration": true,
         "module": "ESNext",
         "moduleResolution": "bundler",
         "resolveJsonModule": true,
@@ -22,7 +23,6 @@
         "declaration": true,
         "declarationMap": true,
         "outDir": "dist",
-        "rootDir": "src",
         "baseUrl": ".",
         "paths": {
             "@/*": ["src/*"],
@@ -38,7 +38,10 @@
         }
     },
     "include": [
-        "src/**/*"
+        "src/**/*",
+        "docs/**/*",
+        "*.ts",
+        "*.tsx"
     ],
     "exclude": [
         "node_modules",

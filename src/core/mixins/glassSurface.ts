@@ -1,21 +1,44 @@
-// Basic glass surface mixin
-export const glassSurface = {
-  background: 'rgba(255, 255, 255, 0.1)',
-  backdropFilter: 'blur(10px)',
-  border: '1px solid rgba(255, 255, 255, 0.2)',
-};
+/**
+ * @deprecated Use createGlassStyle() from glassMixins instead
+ * This file contains hardcoded glass values that bypass our token system.
+ * Migrate to: createGlassStyle({ intent, elevation, tier })
+ */
 
-export const glassSurfaceHover = {
-  ...glassSurface,
-  background: 'rgba(255, 255, 255, 0.15)',
-};
+import { createGlassStyle, GlassOptions } from './glassMixins';
 
-export const glassSurfaceActive = {
-  ...glassSurface,
-  background: 'rgba(255, 255, 255, 0.05)',
-};
+console.warn('[AuraGlass] glassSurface.ts is deprecated. Use createGlassStyle() from glassMixins instead.');
 
-// Function version for dynamic glass surface generation
+/**
+ * @deprecated Use createGlassStyle() instead
+ * @example createGlassStyle({ intent: 'neutral', elevation: 'level2' })
+ */
+export const glassSurface = (() => {
+  console.warn('[AuraGlass] glassSurface export is deprecated. Use createGlassStyle().');
+  return createGlassStyle({ intent: 'neutral', elevation: 'level2' });
+})();
+
+/**
+ * @deprecated Use createGlassStyle({ interactive: true }) instead
+ * @example createGlassStyle({ intent: 'neutral', elevation: 'level3', interactive: true })
+ */
+export const glassSurfaceHover = (() => {
+  console.warn('[AuraGlass] glassSurfaceHover export is deprecated. Use createGlassStyle({ interactive: true }).');
+  return createGlassStyle({ intent: 'neutral', elevation: 'level3', interactive: true });
+})();
+
+/**
+ * @deprecated Use createGlassStyle() instead
+ * @example createGlassStyle({ intent: 'neutral', elevation: 'level1' })
+ */
+export const glassSurfaceActive = (() => {
+  console.warn('[AuraGlass] glassSurfaceActive export is deprecated. Use createGlassStyle().');
+  return createGlassStyle({ intent: 'neutral', elevation: 'level1' });
+})();
+
+/**
+ * @deprecated Use createGlassStyle() instead
+ * @example createGlassStyle({ intent: 'neutral', elevation: 'level2', tier: 'high' })
+ */
 export const glassSurfaceFn = (options: {
   elevation?: string | number;
   backgroundOpacity?: number;
@@ -23,23 +46,28 @@ export const glassSurfaceFn = (options: {
   borderOpacity?: number;
   themeContext?: any;
 } = {}) => {
-  const {
-    elevation = 'medium',
-    backgroundOpacity = 0.1,
-    blurStrength = '10px',
-    borderOpacity = 0.2,
-    themeContext,
-  } = options;
-
-  return {
-    background: `rgba(255, 255, 255, ${backgroundOpacity})`,
-    backdropFilter: `blur(${blurStrength})`,
-    border: `1px solid rgba(255, 255, 255, ${borderOpacity})`,
-    ...(elevation && typeof elevation === 'number' && {
-      boxShadow: `0 ${elevation * 2}px ${elevation * 4}px rgba(0, 0, 0, 0.1)`,
-    }),
+  console.warn('[AuraGlass] glassSurfaceFn is deprecated. Use createGlassStyle() with proper intent/elevation/tier options.');
+  
+  // Map old options to new GlassOptions
+  const glassOptions: GlassOptions = {
+    intent: 'neutral',
+    elevation: 'level2',
+    tier: 'high',
   };
+  
+  // Basic elevation mapping
+  if (typeof options.elevation === 'number') {
+    if (options.elevation <= 1) glassOptions.elevation = 'level1';
+    else if (options.elevation <= 2) glassOptions.elevation = 'level2';
+    else if (options.elevation <= 3) glassOptions.elevation = 'level3';
+    else glassOptions.elevation = 'level4';
+  }
+  
+  return createGlassStyle(glassOptions);
 };
 
-// Alias for backward compatibility
+/**
+ * @deprecated Use createGlassStyle() instead
+ * @example createGlassStyle({ intent: 'neutral', elevation: 'level2', tier: 'high' })
+ */
 export const glassSurfaceFunction = glassSurfaceFn;

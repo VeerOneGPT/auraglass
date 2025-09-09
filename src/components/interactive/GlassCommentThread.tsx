@@ -32,15 +32,15 @@ export function GlassCommentThread({ comments, onReply }: GlassCommentThreadProp
         <div className="flex gap-2 items-center">
           <input 
             value={drafts[c.id] ?? ''} 
-            onChange={(e)=>setDraft(c.id, e.target.value)} 
+            onChange={(e) => setDraft(c.id, e.target.value)} 
             placeholder="Reply…" 
             className="flex-1 bg-transparent border border-white/20 rounded-lg px-2 py-1 text-sm outline-none" 
           />
-          <GlassButton size="sm" variant="secondary" onClick={()=>{ if (onReply && drafts[c.id]) { onReply(c.id, drafts[c.id]); setDraft(c.id,''); } }}>Reply</GlassButton>
+          <GlassButton size="sm" variant="secondary" onClick={() => { if (onReply && drafts[c.id]) { onReply(c.id, drafts[c.id]); setDraft(c.id, ''); } }}>Reply</GlassButton>
         </div>
         {c.replies?.length ? (
           <div className="mt-2 space-y-2">
-            {(c.replies || []).map(r => render(r, depth+1))}
+            {(c.replies || []).map(r => render(r, depth + 1))}
           </div>
         ) : null}
       </div>

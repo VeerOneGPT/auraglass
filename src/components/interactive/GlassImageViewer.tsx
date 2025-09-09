@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import {
     ChevronLeft,
     ChevronRight,
@@ -422,7 +422,7 @@ export const GlassImageViewer: React.FC<GlassImageViewerProps> = ({
 
                         {/* Image Info Overlay */}
                         {showImageInfo && currentImage.title && (
-                            <div className="absolute bottom-0 left-0 right-0 bg-black/50 backdrop-blur-sm p-4">
+                            <div className="absolute bottom-0 left-0 right-0 bg-black/50 backdrop-blur-md p-4">
                                 <h3 className="text-white font-medium">{currentImage.title}</h3>
                                 {currentImage.description && (
                                     <p className="text-white/80 text-sm mt-1">{currentImage.description}</p>
@@ -547,7 +547,7 @@ export const GlassImageViewer: React.FC<GlassImageViewerProps> = ({
                     {/* Auto-play Controls */}
                     {enableNavigation && images.length > 1 && (
                         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-                            <div className="flex items-center gap-2 bg-black/50 backdrop-blur-sm rounded-full px-4 py-2">
+                            <div className="flex items-center gap-2 bg-black/50 backdrop-blur-md rounded-full px-4 py-2">
                                 <GlassButton
                                     variant="ghost"
                                     size="sm"

@@ -209,7 +209,7 @@ export const GlassDialog = forwardRef<HTMLDivElement, GlassDialogProps>(
           duration={200}
           className={cn(
             'absolute inset-0 bg-black/20',
-            backdropBlur && 'backdrop-blur-sm'
+            backdropBlur && 'backdrop-blur-md'
           )}
         />
 

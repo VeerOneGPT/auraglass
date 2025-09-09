@@ -310,7 +310,7 @@ export const GlassSidebar = forwardRef<HTMLDivElement, GlassSidebarProps>(
                   'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full',
                   'flex items-center justify-center',
                   // Frosted surface
-                  'backdrop-blur-2xl bg-white/55 border border-white/80',
+                  'backdrop-blur-md2xl bg-white/55 border border-white/80',
                   'shadow-[0_6px_18px_rgba(0,0,0,0.35),inset_0_1px_2px_rgba(255,255,255,0.35)] ring-1 ring-white/40',
                   'hover:bg-white/65 active:bg-white/70',
                 )}
@@ -425,7 +425,7 @@ function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
             <span
               className={cn(
                 'flex-shrink-0 px-2 py-1 text-xs rounded-full font-medium transition-all duration-200',
-                'bg-black/15 border border-black/20 shadow-md backdrop-blur-sm',
+                'bg-black/15 border border-black/20 shadow-md backdrop-blur-md',
                 'group-hover:bg-black/20 group-hover:border-black/25 group-hover:shadow-lg',
                 'relative z-10' // Ensure badge stays above any background effects
               )}

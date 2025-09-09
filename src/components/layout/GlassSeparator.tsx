@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 
 export interface GlassSeparatorProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'content'> {
   /** Orientation of the separator */
@@ -66,7 +66,7 @@ export const GlassSeparator = forwardRef<HTMLDivElement, GlassSeparatorProps>(
       dotted: 'border-dotted border-t border-border/20 bg-transparent',
       glow: cn(
         'bg-gradient-to-r from-transparent via-primary/30 to-transparent',
-        'shadow-lg shadow-primary/20 backdrop-blur-sm'
+        'shadow-lg shadow-primary/20 backdrop-blur-md'
       ),
     };
 

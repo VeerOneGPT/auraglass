@@ -106,7 +106,7 @@ const GlassSelectContent = React.forwardRef<
           // Base styles
           'glass-select-content relative z-50 max-h-96 min-w-[8rem] overflow-hidden',
           // Darker, more legible surface for options
-          'backdrop-blur-xl bg-black/70 ring-1 ring-white/12',
+          'backdrop-blur-md bg-black/70 ring-1 ring-white/12',
           'rounded-xl shadow-2xl shadow-black/40',
           'text-foreground',
           

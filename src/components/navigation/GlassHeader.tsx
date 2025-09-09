@@ -2,7 +2,7 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useRef, useState } from 'react';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';
 import { OptimizedGlass } from '../../primitives';

@@ -2,7 +2,7 @@
 
 import React, { forwardRef, useState } from 'react';
 import { GlassButton, IconButton } from '@/components/button';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import { GlassCard } from '@/components/card';
 import { GlassBadge } from '@/components/data-display';
 import { GlassGrid, GlassGridItem } from '@/components/layout';

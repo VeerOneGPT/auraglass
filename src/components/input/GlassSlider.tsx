@@ -3,7 +3,7 @@
 import React, { forwardRef, useId, useState, useCallback, useRef, useEffect } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 
 export interface GlassSliderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   /** Current value(s) of the slider */
@@ -317,7 +317,7 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
             preset="scaleIn"
             className={cn(
               'glass-slider-thumb absolute flex items-center justify-center',
-              'border backdrop-blur-sm rounded-full cursor-grab transition-all duration-200 glass-magnet glass-press',
+              'border backdrop-blur-md rounded-full cursor-grab transition-all duration-200 glass-magnet glass-press',
               'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
               'transform -translate-x-1/2 -translate-y-1/2',
               
@@ -354,7 +354,7 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
               <div className={cn(
                 'absolute whitespace-nowrap px-2 py-1 rounded-md',
                 'bg-background/80 border border-border/20',
-                'text-foreground font-medium backdrop-blur-sm',
+                'text-foreground font-medium backdrop-blur-md',
                 config.label,
                 orientation === 'horizontal' ? '-top-10' : '-left-16'
               )}>
@@ -396,7 +396,7 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
           <div
             ref={trackRef}
             className={cn(
-              'glass-slider-track relative backdrop-blur-sm rounded-full border border-border/20',
+              'glass-slider-track relative backdrop-blur-md rounded-full border border-border/20',
               orientation === 'horizontal' ? 'w-full' : 'h-full',
               config.track,
               colors.track,

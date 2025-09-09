@@ -73,7 +73,9 @@ export function AuraGlassExample() {
                                 <GlassBadge variant="error">Error</GlassBadge>
                             </div>
                             <GlassProgress value={75} className="w-full" />
-                            <GlassAlert title="Success!" description="Your action was completed successfully." />
+                            <GlassAlert variant="success">
+                                <strong>Success!</strong> Your action was completed successfully.
+                            </GlassAlert>
                         </div>
                     </GlassCard>
 
@@ -88,11 +90,11 @@ export function AuraGlassExample() {
                         <h2 className="text-xl font-semibold mb-4 text-white">Data Table</h2>
                         <GlassDataTable
                             columns={[
-                                { key: 'name', header: 'Name' },
-                                { key: 'email', header: 'Email' },
-                                { key: 'status', header: 'Status' }
+                                { id: 'name', accessorKey: 'name', header: 'Name' },
+                                { id: 'email', accessorKey: 'email', header: 'Email' },
+                                { id: 'status', accessorKey: 'status', header: 'Status' }
                             ]}
-                            rows={tableData}
+                            data={tableData}
                         />
                     </GlassCard>
 
@@ -129,7 +131,7 @@ export function AuraGlassExample() {
             </GlassDialog>
 
             {/* Modal */}
-            <GlassModal open={modalOpen} onOpenChange={setModalOpen}>
+            <GlassModal open={modalOpen} onClose={() => setModalOpen(false)}>
                 <GlassCard className="p-8 max-w-lg">
                     <h3 className="text-xl font-semibold mb-4 text-white">Welcome to AuraGlass</h3>
                     <p className="text-gray-300 mb-6">

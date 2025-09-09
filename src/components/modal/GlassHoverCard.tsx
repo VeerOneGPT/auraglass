@@ -275,7 +275,7 @@ export const GlassHoverCard: React.FC<GlassHoverCardProps> = ({
           performanceMode="medium"
                           liftOnHover
                           hoverSheen
-                          className="backdrop-blur-xl bg-black/20 border border-white/20 shadow-2xl glass-radial-reveal"
+                          className="backdrop-blur-md bg-black/20 border border-white/20 shadow-2xl glass-radial-reveal"
                         >
                             <div className="p-4">
                                 {content}
@@ -285,7 +285,7 @@ export const GlassHoverCard: React.FC<GlassHoverCardProps> = ({
                         {/* Arrow */}
                         <div
                             className={cn(
-                                'absolute w-3 h-3 bg-black/20 border border-white/20 backdrop-blur-xl',
+                                'absolute w-3 h-3 bg-black/20 border border-white/20 backdrop-blur-md',
                                 'rotate-45',
                                 {
                                     '-bottom-2 left-1/2 -translate-x-1/2': placement.startsWith('top'),
@@ -321,7 +321,7 @@ export const GlassHoverCardContent: React.FC<GlassHoverCardContentProps> = ({
             {showArrow && (
                 <div
                     className={cn(
-                        'absolute w-3 h-3 bg-black/20 border border-white/20 backdrop-blur-xl rotate-45',
+                        'absolute w-3 h-3 bg-black/20 border border-white/20 backdrop-blur-md rotate-45',
                         arrowClassName
                     )}
                 />

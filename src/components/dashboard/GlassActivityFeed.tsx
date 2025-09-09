@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import {
     Activity,
     AlertCircle,
@@ -354,7 +354,7 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
                                                             key={activity.id}
                                                             className={cn(
                                                                 'flex gap-3 p-3 rounded-lg border transition-all duration-200 animate-slide-in-up',
-                                                                'hover:bg-white/5 cursor-pointer glass-base backdrop-blur-md bg-glass-surface-primary border-glass-border-default shadow-glass-1',
+                                                                'hover:bg-white/5 cursor-pointer glass-foundation-complete backdrop-blur-md bg-transparent border-white/40 shadow-2xl',
                                                                 config.bgColor,
                                                                 config.borderColor,
                                                                 compact && 'p-2'

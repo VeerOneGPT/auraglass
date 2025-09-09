@@ -215,7 +215,7 @@ export const GlassPagination: React.FC<GlassPaginationProps> = ({
             performanceMode="medium"
 
             className={cn(
-                'inline-flex items-center gap-1 p-1 backdrop-blur-sm ring-1 ring-white/10 bg-white/5',
+                'inline-flex items-center gap-1 p-1 backdrop-blur-md ring-1 ring-white/10 bg-white/5',
                 disabled && 'opacity-50 pointer-events-none',
                 className
             )}
@@ -359,7 +359,7 @@ export const GlassPaginationItem: React.FC<GlassPaginationItemProps> = ({
 
                 className={cn(
                     'relative flex items-center justify-center font-medium rounded-md',
-                    'backdrop-blur-sm border border-white/20',
+                    'backdrop-blur-md border border-white/20',
                     'transition-all duration-200 glass-sheen',
                     'focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-transparent',
                     'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none',

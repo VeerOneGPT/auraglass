@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import { AlertCircle, Loader2, RefreshCw } from 'lucide-react';
 import React, { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { Motion } from '../../primitives';
@@ -168,7 +168,7 @@ export const GlassInfiniteScroll: React.FC<GlassInfiniteScrollProps> = ({
     // Default loading indicator
     const defaultLoadingIndicator = (
         <Motion preset="fadeIn" className="flex items-center justify-center py-8">
-            <div className="flex items-center gap-3 px-4 py-2 bg-white/10 backdrop-blur-xl rounded-full">
+            <div className="flex items-center gap-3 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full">
                 <Loader2 className="w-5 h-5 animate-spin text-primary" />
                 <span className="text-white/80 text-sm">Loading more...</span>
             </div>

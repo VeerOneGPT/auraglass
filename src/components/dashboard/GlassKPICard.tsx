@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import { ArrowDownIcon, ArrowUpIcon, Minus } from 'lucide-react';
 import React from 'react';
 import { Motion } from '../../primitives';

@@ -1,0 +1,323 @@
+/* AuraGlass Unified Glass System - Single Source of Truth */
+
+/* ========================================
+   UNIFIED GLASS TOKENS - AUTHORITATIVE VALUES
+   ======================================== */
+
+:root {
+  /* === GLASS FOUNDATION VALUES (NON-NEGOTIABLE) === */
+  --glass-blur: 16px;
+  --glass-saturate: 1.8;
+  --glass-brightness: 1.15;
+  --glass-contrast: 1.08;
+  
+  /* === GLASS BACKGROUNDS (HIGH CONTRAST) === */
+  --glass-bg: linear-gradient(135deg, 
+    rgba(255,255,255,0.35) 0%, 
+    rgba(59,130,246,0.25) 50%, 
+    rgba(147,51,234,0.15) 100%);
+  --glass-bg-strong: linear-gradient(135deg, 
+    rgba(255,255,255,0.5) 0%, 
+    rgba(59,130,246,0.35) 50%, 
+    rgba(147,51,234,0.25) 100%);
+  --glass-bg-subtle: linear-gradient(135deg, 
+    rgba(255,255,255,0.25) 0%, 
+    rgba(59,130,246,0.15) 50%, 
+    rgba(147,51,234,0.08) 100%);
+  
+  /* === GLASS BORDERS (HIGH CONTRAST) === */
+  --glass-border: rgba(255,255,255,0.6);
+  --glass-border-subtle: rgba(255,255,255,0.4);
+  --glass-border-strong: rgba(255,255,255,0.8);
+  
+  /* === GLASS FOCUS RINGS === */
+  --glass-ring: rgba(59,130,246,0.50);           /* blue-500/50 */
+  --glass-ring-offset: 2px;
+  
+  /* === GLASS SHADOWS === */
+  --glass-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  --glass-shadow-subtle: 0 4px 20px rgba(0,0,0,0.15);
+  --glass-shadow-strong: 0 12px 40px rgba(0,0,0,0.35);
+  
+  /* === GLASS RADIUS (Squircle Effect) === */
+  --glass-radius: 16px;    /* Standard squircle */
+  --glass-radius-sm: 12px; /* Small squircle */
+  --glass-radius-lg: 20px; /* Large squircle */
+  
+  /* === GLASS TRANSITIONS === */
+  --glass-transition: 200ms;
+  
+  /* === TYPOGRAPHY CONTRAST === */
+  --glass-text-primary: rgba(255,255,255,0.95);   /* Headings */
+  --glass-text-secondary: rgba(255,255,255,0.85); /* Body text */
+  --glass-text-tertiary: rgba(255,255,255,0.70); /* Placeholders */
+  --glass-text-disabled: rgba(255,255,255,0.50);  /* Disabled */
+}
+
+/* ========================================
+   UNIFIED GLASS UTILITY CLASSES
+   ======================================== */
+
+/* Base glass foundation - ACTUALLY VISIBLE */
+.glass-foundation-complete {
+  position: relative;
+  backdrop-filter: 
+    blur(var(--glass-blur)) 
+    saturate(var(--glass-saturate)) 
+    brightness(var(--glass-brightness)) 
+    contrast(var(--glass-contrast));
+  -webkit-backdrop-filter: 
+    blur(var(--glass-blur)) 
+    saturate(var(--glass-saturate)) 
+    brightness(var(--glass-brightness)) 
+    contrast(var(--glass-contrast));
+  background: var(--glass-bg);
+  border: 2px solid var(--glass-border);
+  box-shadow: 
+    0 8px 25px rgba(0,0,0,0.3),
+    0 0 0 1px rgba(255,255,255,0.3) inset,
+    0 0 20px rgba(59,130,246,0.2);
+  border-radius: 16px; /* squircle effect */
+  transition: all var(--glass-transition) ease-out;
+}
+
+/* Glass variants */
+.glass-subtle {
+  background: var(--glass-bg-subtle);
+  backdrop-filter: blur(8px) saturate(1.5) brightness(1.1);
+  border-color: var(--glass-border-subtle);
+  box-shadow: var(--glass-shadow-subtle);
+}
+
+.glass-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(24px) saturate(2.0) brightness(1.2);
+  border-color: var(--glass-border-strong);
+  box-shadow: var(--glass-shadow-strong);
+}
+
+/* Interactive states - ENHANCE glass, never disable */
+.glass-interactive {
+  transition: all var(--glass-transition) ease-out;
+}
+
+.glass-interactive:hover {
+  background: rgba(255,255,255,0.28); /* Slightly stronger */
+  backdrop-filter: 
+    blur(20px) 
+    saturate(1.9) 
+    brightness(1.18) 
+    contrast(1.1);
+  border-color: var(--glass-border-strong);
+  box-shadow: var(--glass-shadow-strong);
+  transform: translateY(-1px);
+}
+
+.glass-interactive:focus-visible {
+  outline: none;
+  ring: 2px solid var(--glass-ring);
+  ring-offset: var(--glass-ring-offset);
+}
+
+.glass-interactive:active {
+  transform: translateY(0);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Disabled state - maintain glass visibility */
+.glass-disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  background: rgba(255,255,255,0.15); /* Still visible */
+}
+
+/* ========================================
+   TYPOGRAPHY UTILITIES
+   ======================================== */
+
+.glass-text-primary {
+  color: var(--glass-text-primary);
+  font-weight: 600;
+}
+
+.glass-text-secondary {
+  color: var(--glass-text-secondary);
+  font-weight: 500;
+}
+
+.glass-text-tertiary {
+  color: var(--glass-text-tertiary);
+}
+
+.glass-text-disabled {
+  color: var(--glass-text-disabled);
+}
+
+/* ========================================
+   SPACING GRID (4px increments)
+   ======================================== */
+
+.glass-spacing-xs { padding: 4px; }
+.glass-spacing-sm { padding: 8px; }
+.glass-spacing-md { padding: 12px; }
+.glass-spacing-lg { padding: 16px; }
+.glass-spacing-xl { padding: 20px; }
+.glass-spacing-2xl { padding: 24px; }
+
+/* ========================================
+   TOUCH TARGETS (Minimum 44px)
+   ======================================== */
+
+.glass-touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* ========================================
+   ACCESSIBILITY & PERFORMANCE
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-foundation-complete,
+  .glass-interactive {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (prefers-contrast: high) {
+  :root {
+    --glass-bg: rgba(255,255,255,0.8);
+    --glass-bg-strong: rgba(255,255,255,0.9);
+    --glass-border: rgba(255,255,255,0.8);
+    --glass-text-primary: rgba(255,255,255,1);
+    --glass-text-secondary: rgba(255,255,255,0.95);
+  }
+}
+
+@supports not (backdrop-filter: blur(0)) {
+  .glass-foundation-complete,
+  .glass-subtle,
+  .glass-strong {
+    background: rgba(0,0,0,0.85) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+/* ========================================
+   STORYBOOK MODE ENHANCEMENTS
+   ======================================== */
+
+/* Studio mode: Clean foundation */
+html[data-sb-mode="studio"] {
+  --glass-bg: rgba(255,255,255,0.25);
+  --glass-bg-strong: rgba(255,255,255,0.4);
+  --glass-border: rgba(255,255,255,0.35);
+}
+
+/* Showcase mode: Enhanced foundation */
+html[data-sb-mode="showcase"] {
+  --glass-bg: rgba(255,255,255,0.35);
+  --glass-bg-strong: rgba(255,255,255,0.5);
+  --glass-blur: 24px;
+  --glass-saturate: 2.5;
+  --glass-brightness: 1.3;
+  --glass-border: rgba(255,255,255,0.4);
+}
+
+/* ========================================
+   SAFETY OVERRIDES - Prevent weak glass
+   ======================================== */
+
+/* Override dangerously low opacity values */
+[class*="bg-white/1"],
+[class*="bg-white/2"], 
+[class*="bg-white/3"],
+[class*="bg-white/4"],
+[class*="bg-white/5"],
+[class*="bg-white/6"],
+[class*="bg-white/7"],
+[class*="bg-white/8"],
+[class*="bg-white/9"],
+[class*="bg-white/10"] {
+  background-color: var(--glass-bg) !important;
+}
+
+/* Override dangerous border opacities */
+[class*="border-white/1"],
+[class*="border-white/2"],
+[class*="border-white/3"],
+[class*="border-white/4"],
+[class*="border-white/5"] {
+  border-color: var(--glass-border) !important;
+}
+
+/* ========================================
+   COMPONENT-SPECIFIC UTILITIES
+   ======================================== */
+
+/* Modal/Overlay specific */
+.glass-modal {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(24px) saturate(2.0) brightness(1.2);
+  z-index: 50;
+}
+
+/* Input specific */
+.glass-input {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--glass-text-primary);
+}
+
+.glass-input::placeholder {
+  color: var(--glass-text-tertiary);
+}
+
+.glass-input:focus {
+  background: rgba(255,255,255,0.28);
+  border-color: var(--glass-border-strong);
+  outline: none;
+  ring: 2px solid var(--glass-ring);
+  ring-offset: var(--glass-ring-offset);
+}
+
+/* Button specific - ACTUALLY VISIBLE */
+.glass-button {
+  background: linear-gradient(135deg, 
+    rgba(255,255,255,0.3) 0%, 
+    rgba(59,130,246,0.2) 50%, 
+    rgba(147,51,234,0.15) 100%);
+  border: 2px solid rgba(255,255,255,0.5);
+  color: rgba(255,255,255,0.95);
+  min-height: 44px;
+  backdrop-filter: blur(16px) saturate(1.8) brightness(1.15);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3), 
+              0 0 0 1px rgba(255,255,255,0.3) inset;
+  transition: all var(--glass-transition) ease-out;
+}
+
+.glass-button:hover {
+  background: linear-gradient(135deg, 
+    rgba(255,255,255,0.5) 0%, 
+    rgba(59,130,246,0.35) 50%, 
+    rgba(147,51,234,0.25) 100%);
+  border-color: rgba(255,255,255,0.7);
+  backdrop-filter: blur(20px) saturate(2.2) brightness(1.25);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.4), 
+              0 0 0 2px rgba(255,255,255,0.4) inset,
+              0 0 30px rgba(59,130,246,0.3);
+}
+
+.glass-button:focus-visible {
+  outline: none;
+  ring: 2px solid var(--glass-ring);
+  ring-offset: var(--glass-ring-offset);
+}
+
+.glass-button:disabled {
+  opacity: 0.6;
+  background: rgba(255,255,255,0.15);
+}

@@ -13,12 +13,12 @@
   --shadow-strong: 0 20px 56px rgba(0,0,0,0.28);
   --shadow-glow: 0 0 24px rgba(59,130,246,0.35);
 
-  /* Blur levels */
-  --blur-xs: blur(6px);
-  --blur-sm: blur(10px);
-  --blur-md: blur(16px);
-  --blur-lg: blur(24px);
-  --blur-xl: blur(36px);
+  /* Design blur levels (non-glass elements) */
+  --design-blur-xs: blur(6px);
+  --design-blur-sm: blur(10px);
+  --design-blur-md: blur(16px);
+  --design-blur-lg: blur(24px);
+  --design-blur-xl: blur(36px);
 
   /* Gradient stops (semantic) */
   --grad-primary-from: #22d3ee; /* cyan-400 */
@@ -54,16 +54,13 @@
 .shadow-strong { box-shadow: var(--shadow-strong); }
 .shadow-glow { box-shadow: var(--shadow-glow); }
 
-.blur-xs { backdrop-filter: var(--blur-xs); }
-.blur-sm { backdrop-filter: var(--blur-sm); }
-.blur-md { backdrop-filter: var(--blur-md); }
-.blur-lg { backdrop-filter: var(--blur-lg); }
-.blur-xl { backdrop-filter: var(--blur-xl); }
+.design-blur-xs { backdrop-filter: var(--design-blur-xs); }
+.design-blur-sm { backdrop-filter: var(--design-blur-sm); }
+.design-blur-md { backdrop-filter: var(--design-blur-md); }
+.design-blur-lg { backdrop-filter: var(--design-blur-lg); }
+.design-blur-xl { backdrop-filter: var(--design-blur-xl); }
 
-/* Glass size variants layered on top of existing glass */
-.glass-xs { border-radius: var(--radius-sm); backdrop-filter: var(--blur-sm); }
-.glass-sm { border-radius: var(--radius-md); backdrop-filter: var(--blur-md); }
-.glass-lg { border-radius: var(--radius-xl); backdrop-filter: var(--blur-lg); }
+/* REMOVED - No conflicts with unified glass system */
 
 /* Noise overlay for better glass realism */
 .noise-overlay::after {

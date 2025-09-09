@@ -3,7 +3,7 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import { GlassMobileNav, MobileNavItem, MobileNavSection } from './GlassMobileNav';
 import { GlassBottomNav, BottomNavItem } from './GlassBottomNav';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 
 export interface ResponsiveNavConfig {
   /**

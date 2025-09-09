@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import { Check, Palette, RotateCcw } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Motion } from '../../primitives';
@@ -339,7 +339,7 @@ export const GlassColorPicker: React.FC<GlassColorPickerProps> = ({
                     <div
                         ref={popoverRef}
                         className={cn(
-                            'rounded-xl border border-white/20 shadow-2xl backdrop-blur-xl bg-black/20',
+                            'rounded-xl border border-white/20 shadow-2xl backdrop-blur-md bg-black/20',
                             config.popover
                         )}
                         style={{

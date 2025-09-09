@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 import React, { useEffect, useRef, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -249,7 +249,7 @@ export const GlassContextMenuContent: React.FC<GlassContextMenuContentProps> = (
                 liftOnHover
                 hoverSheen
                 className={cn(
-                    'backdrop-blur-xl bg-black/20 border border-white/20 shadow-2xl',
+                    'backdrop-blur-md bg-black/20 border border-white/20 shadow-2xl',
                     'min-w-48 max-w-xs overflow-hidden glass-radial-reveal glass-lift',
                     className
                 )}

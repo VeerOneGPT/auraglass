@@ -4,7 +4,7 @@ import React, { forwardRef } from 'react';
 import { Motion } from '../../../primitives';
 import { GlassProgress } from '../../../components/data-display/GlassProgress';
 import { VStack, HStack } from '../../../components/layout/GlassStack';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '@/design-system/utilsCore';
 
 export interface StepIndicatorProps {
   step: {

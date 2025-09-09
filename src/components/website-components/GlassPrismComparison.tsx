@@ -175,7 +175,7 @@ export function GlassPrismComparison() {
         {/* Interactive Prism Comparison */}
         <motion.div
           ref={containerRef}
-          className="relative max-w-7xl mx-auto h-96 glass-base backdrop-blur-2xl rounded-3xl border border-white/20 overflow-hidden cursor-none"
+          className="relative max-w-7xl mx-auto h-96 glass-foundation-complete backdrop-blur-md2xl rounded-3xl border border-white/20 overflow-hidden cursor-none"
           onMouseMove={handleMouseMove}
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
@@ -297,7 +297,7 @@ export function GlassPrismComparison() {
             {/* Prism body */}
             <div className="relative w-full h-full">
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent backdrop-blur-sm border-l border-r border-white/60"
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent backdrop-blur-md border-l border-r border-white/60"
                 animate={{
                   background: [
                     "linear-gradient(90deg, transparent, rgba(0,245,255,0.4), transparent)",
@@ -366,7 +366,7 @@ export function GlassPrismComparison() {
               repeatType: "loop", ease: "linear" },
             }}
           >
-            <div className="w-8 h-8 rounded-full bg-white/30 backdrop-blur-sm border border-white/50 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-white/30 backdrop-blur-md border border-white/50 flex items-center justify-center">
               <ArrowRight className="w-4 h-4 text-white" />
             </div>
           </motion.div>
