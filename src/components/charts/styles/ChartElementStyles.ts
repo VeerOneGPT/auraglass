@@ -1,4 +1,5 @@
 import React from 'react';
+import { createGlassStyle } from '../../../core/mixins/glassMixins';
 import { CSSProperties } from 'react';
 import styled, { css } from 'styled-components';
 
@@ -159,7 +160,7 @@ export const TypeButton = styled.button<{ $active?: boolean }>`
   transition: all 0.2s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    /* Migrated from background: rgba(255, 255, 255, 0.1) */ ...createGlassStyle({ elevation: 'level1' });
     color: #ffffff;
   }
 `;

@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { createGlassStyle } from '../../../core/mixins/glassMixins';
 
 export interface ChartAxisProps {
   orientation?: 'horizontal' | 'vertical';
@@ -38,9 +39,10 @@ export const ChartAxis: React.FC<ChartAxisProps> = ({
 
   if (!show) return null;
 
+  const glassStyles = createGlassStyle({ intent: 'neutral', elevation: 'level1' });
   const axisLineStyle: React.CSSProperties = {
     position: 'absolute',
-    background: 'rgba(255, 255, 255, 0.2)',
+    background: glassStyles.borderColor || 'rgba(255, 255, 255, 0.2)',
     ...(orientation === 'horizontal' 
       ? { height: '1px', left: 0, right: 0, bottom: '15px' }
       : { width: '1px', top: 0, bottom: '15px', right: '15px' }
@@ -71,14 +73,14 @@ export const ChartAxis: React.FC<ChartAxisProps> = ({
                   left: `${tick.position}%`,
                   bottom: '10px',
                   transform: 'translateX(-50%)',
-                  borderLeft: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderLeft: `1px solid ${glassStyles.borderColor || 'rgba(255, 255, 255, 0.2)'}`,
                   height: '10px',
                 }
               : {
                   top: `${100 - tick.position}%`,
                   right: '10px',
                   transform: 'translateY(50%)',
-                  borderTop: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderTop: `1px solid ${glassStyles.borderColor || 'rgba(255, 255, 255, 0.2)'}`,
                   width: '10px',
                 }
             ),

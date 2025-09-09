@@ -59,7 +59,7 @@ export const GlassContainer = forwardRef<HTMLDivElement, GlassContainerProps>(
       responsivePadding,
       variant = 'default',
       glass = false,
-      elevation = 'level1',
+      elevation = 1,
       radius = 'none',
       className,
       children,
@@ -112,13 +112,21 @@ export const GlassContainer = forwardRef<HTMLDivElement, GlassContainerProps>(
     };
 
     // Map elevation to OptimizedGlass elevation values
-    const getGlassElevation = (elevation: GlassContainerProps['elevation']) => {
-      if (elevation === 'float') return 'level3';
-      if (elevation === 'modal') return 'level4';
+    const getGlassElevation = (elevation: GlassContainerProps['elevation']): 'level1' | 'level2' | 'level3' | 'level4' | 'level5' => {
+      if (elevation === 'float') return 'level3' as const;
+      if (elevation === 'modal') return 'level4' as const;
       if (typeof elevation === 'number') {
-        return `level${Math.min(4, Math.max(1, elevation + 1))}` as 'level1' | 'level2' | 'level3' | 'level4';
+        const level = Math.min(5, Math.max(1, elevation + 1));
+        switch (level) {
+          case 1: return 'level1' as const;
+          case 2: return 'level2' as const;
+          case 3: return 'level3' as const;
+          case 4: return 'level4' as const;
+          case 5: return 'level5' as const;
+          default: return 'level1' as const;
+        }
       }
-      return 'level1';
+      return 'level1' as const;
     };
 
     const responsivePaddingClasses = responsivePadding ? [

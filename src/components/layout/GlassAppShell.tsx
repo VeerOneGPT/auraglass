@@ -180,6 +180,16 @@ export const GlassAppShell = forwardRef<HTMLDivElement, GlassAppShellProps>(
       return () => window.removeEventListener('resize', checkScreenSize);
     }, [mobileBreakpoint, mobileOverlay]);
 
+    // Convert numeric elevation to level string
+    const getElevationLevel = (elev?: 0 | 1 | 2 | 3 | 4): 'level1' | 'level2' | 'level3' | 'level4' | 'level5' => {
+      if (elev === 0) return 'level1';
+      if (elev === 1) return 'level1';
+      if (elev === 2) return 'level2';
+      if (elev === 3) return 'level3';
+      if (elev === 4) return 'level4';
+      return 'level5'; // max level
+    };
+
     const paddingClasses = {
       none: 'p-0',
       sm: 'p-4',
@@ -444,7 +454,7 @@ export const ContentSection = forwardRef<HTMLDivElement, ContentSectionProps>(
       return (
         <OptimizedGlass
           variant="frosted"
-          elevation={elevation}
+          elevation={typeof elevation === 'number' ? `level${Math.min(5, Math.max(1, elevation + 1))}` as 'level1' | 'level2' | 'level3' | 'level4' | 'level5' : 'level1'}
           intensity="medium"
           depth={2}
           tint="neutral"

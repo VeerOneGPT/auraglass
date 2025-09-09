@@ -199,6 +199,8 @@ const StyledBox = styled.div<{
   $bgcolor?: string;
   $glass?: boolean;
   $elevation?: number;
+  $intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  $tier?: 'low' | 'medium' | 'high';
 }>`
   /* Base styles */
   box-sizing: border-box;

@@ -77,7 +77,7 @@ export const GlassAvatar = forwardRef<HTMLImageElement, GlassAvatarProps>(
             size = 'md',
             status,
             showStatus = false,
-            elevation = 'level1',
+            elevation = 1,
             fallback,
             fallbackText,
             className,
@@ -146,7 +146,7 @@ export const GlassAvatar = forwardRef<HTMLImageElement, GlassAvatarProps>(
         );
 
         // Convert numeric elevation to level string
-        const getElevationLevel = (elev?: 1 | 2 | 3): 'level1' | 'level2' | 'level3' | undefined => {
+        const getElevationLevel = (elev?: 1 | 2 | 3): 'level1' | 'level2' | 'level3' => {
           if (elev === 1) return 'level1';
           if (elev === 2) return 'level2';
           if (elev === 3) return 'level3';

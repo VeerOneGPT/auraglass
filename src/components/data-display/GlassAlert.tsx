@@ -55,7 +55,7 @@ const GlassAlert = React.forwardRef<HTMLDivElement, GlassAlertProps>(
     className,
     variant = 'default',
     size = 'md',
-    elevation = 'level1',
+    elevation = 1,
     showIcon = true,
     icon,
     dismissible = false,
@@ -122,8 +122,8 @@ const GlassAlert = React.forwardRef<HTMLDivElement, GlassAlertProps>(
     const displayVariant = (variant === 'destructive' ? 'error' : variant) as keyof typeof alertTextVariants;
 
     // Convert numeric elevation to level string
-    const getElevationLevel = (elev?: 0 | 1 | 2 | 3 | 4): 'level1' | 'level2' | 'level3' | 'level4' | undefined => {
-      if (elev === 0) return undefined;
+    const getElevationLevel = (elev?: 0 | 1 | 2 | 3 | 4): 'level1' | 'level2' | 'level3' | 'level4' => {
+      if (elev === 0) return 'level1';
       if (elev === 1) return 'level1';
       if (elev === 2) return 'level2';
       if (elev === 3) return 'level3';

@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { createGlassStyle } from '../../../core/mixins/glassMixins';
 
 export interface ChartGridProps {
   show?: boolean;
@@ -12,11 +13,13 @@ export interface ChartGridProps {
 export const ChartGrid: React.FC<ChartGridProps> = ({
   show = true,
   style = 'solid',
-  color = 'rgba(255, 255, 255, 0.1)',
+  color,
   opacity = 0.3,
   horizontal = true,
   vertical = true,
 }) => {
+  const glassStyles = createGlassStyle({ intent: 'neutral', elevation: 'level1' });
+  const gridColor = color || glassStyles.borderColor || 'rgba(255, 255, 255, 0.1)';
   const gridRef = useRef<SVGSVGElement>(null);
 
   if (!show) return null;
@@ -61,7 +64,7 @@ export const ChartGrid: React.FC<ChartGridProps> = ({
                   y1={i * 20}
                   x2="100"
                   y2={i * 20}
-                  stroke={color}
+                  stroke={gridColor}
                   strokeWidth="0.5"
                   strokeDasharray={strokeDashArray}
                 />
@@ -77,7 +80,7 @@ export const ChartGrid: React.FC<ChartGridProps> = ({
                   y1="0"
                   x2={i * 20}
                   y2="100"
-                  stroke={color}
+                  stroke={gridColor}
                   strokeWidth="0.5"
                   strokeDasharray={strokeDashArray}
                 />

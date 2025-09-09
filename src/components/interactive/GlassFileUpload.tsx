@@ -505,7 +505,7 @@ export const GlassFileUpload = forwardRef<HTMLDivElement, GlassFileUploadProps>(
         {/* Drop zone */}
         <OptimizedGlass
           variant="frosted"
-          elevation={isDragOver ? 2 : 1}
+          elevation={isDragOver ? 'level2' : 'level1'}
           intensity="medium"
           depth={2}
           tint="neutral"

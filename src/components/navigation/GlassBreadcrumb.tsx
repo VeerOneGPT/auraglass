@@ -88,7 +88,7 @@ export const GlassBreadcrumb: React.FC<GlassBreadcrumbProps> = ({
     maxItems,
     showEllipsis = true,
     ellipsisComponent = '...',
-    elevation = 'level1',
+    elevation = 1,
     size = 'md',
     className,
 }) => {
@@ -115,7 +115,17 @@ export const GlassBreadcrumb: React.FC<GlassBreadcrumbProps> = ({
     return (
         <OptimizedGlass
           intent="neutral"
-          elevation={typeof elevation === 'number' ? `level${Math.min(4, Math.max(1, elevation + 1))}` as 'level1' | 'level2' | 'level3' | 'level4' : elevation}
+          elevation={typeof elevation === 'number' ? (() => {
+            const level = Math.min(5, Math.max(1, elevation + 1));
+            switch (level) {
+              case 1: return 'level1' as const;
+              case 2: return 'level2' as const;
+              case 3: return 'level3' as const;
+              case 4: return 'level4' as const;
+              case 5: return 'level5' as const;
+              default: return 'level1' as const;
+            }
+          })() : elevation}
           intensity="medium"
           depth={2}
           tint="neutral"

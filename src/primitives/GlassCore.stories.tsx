@@ -158,7 +158,7 @@ export const DifferentBorderRadii: Story = {
 
 export const ContentShowcase: Story = {
   args: {
-    variant: 'crystal',
+    variant: 'luminous',
     blur: 'intense',
     glow: true,
     glowColor: 'rgba(147, 51, 234, 0.3)',

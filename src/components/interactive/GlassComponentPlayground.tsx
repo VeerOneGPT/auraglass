@@ -322,7 +322,7 @@ export const GlassComponentPlayground: React.FC<GlassComponentPlaygroundProps> =
                       <OptimizedGlass
                         className="p-6 min-h-64 flex items-center justify-center"
                         blur="subtle"
-                        elevation={0}
+                        elevation="level1"
                       >
                         <currentExample.component {...componentProps} />
                       </OptimizedGlass>

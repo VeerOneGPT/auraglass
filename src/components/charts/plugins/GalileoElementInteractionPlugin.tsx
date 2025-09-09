@@ -1,4 +1,5 @@
 import React from 'react';
+import { createGlassStyle } from '../../../core/mixins/glassMixins';
 import { ChartPlugin, ChartEvent, ChartDataPoint, ChartSeries, ChartEventType } from '../types';
 
 export interface GalileoInteractionConfig {
@@ -95,6 +96,9 @@ export class GalileoElementInteractionPlugin implements ChartPlugin {
   }
 
   render(context: any): React.ReactNode {
+    const glassStyles = createGlassStyle({ intent: 'primary', elevation: 'level2' });
+    const glassColor = glassStyles.borderColor || 'rgba(59, 130, 246, 0.3)';
+    
     // Return overlay elements for interactions
     return (
       <div
@@ -116,7 +120,7 @@ export class GalileoElementInteractionPlugin implements ChartPlugin {
             style={{
               position: 'absolute',
               borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%)',
+              background: `radial-gradient(circle, ${glassColor} 0%, transparent 70%)`,
               transform: 'scale(0)',
               transition: 'transform 0.3s ease-out',
               pointerEvents: 'none',
