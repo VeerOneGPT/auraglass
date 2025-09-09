@@ -1,3 +1,4 @@
+import React from 'react';
 // Browser compatibility detection and fallbacks
 
 export interface BrowserInfo {

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { forwardRef } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { cn } from '@/design-system/utilsCore';
@@ -95,8 +96,7 @@ export const GlassLoadingSkeleton = forwardRef<HTMLDivElement, GlassLoadingSkele
 
     const renderCardSkeleton = () => (
       <OptimizedGlass
-          variant="frosted"
-          elevation={1}
+          elevation={'level1'}
           intensity="medium"
           depth={2}
           tint="neutral"
@@ -191,8 +191,7 @@ export const GlassLoadingSkeleton = forwardRef<HTMLDivElement, GlassLoadingSkele
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {Array.from({ length: rows }, (_, index) => (
           <OptimizedGlass
-          variant="frosted"
-          elevation={1}
+          elevation={'level1'}
           intensity="medium"
           depth={2}
           tint="neutral"

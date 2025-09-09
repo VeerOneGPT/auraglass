@@ -1,3 +1,4 @@
+import React from 'react';
 // Animation type definitions
 export type AnimationType = 'spring' | 'tween' | 'keyframes' | 'inertia';
 

@@ -1,11 +1,13 @@
 'use client';
 
+import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
+
 import { OptimizedGlass } from '../../primitives';
 import { cn } from "@/lib/utilsComprehensive";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import { AlertCircle } from "lucide-react";
-import * as React from "react";
 import {
   Controller,
   ControllerProps,
@@ -76,8 +78,7 @@ const GlassFormItem = React.forwardRef<HTMLDivElement, GlassFormItemProps>(
       <FormItemContext.Provider value={{ id }}>
         {glass ? (
           <OptimizedGlass
-            variant="frosted"
-            elevation={1}
+            elevation={'level1'}
             intensity="medium"
             depth={2}
             tint="neutral"

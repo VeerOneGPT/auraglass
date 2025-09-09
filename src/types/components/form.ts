@@ -1,3 +1,4 @@
+import React from 'react';
 // Form component types
 export interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   onSubmit?: (data: Record<string, any>) => void | Promise<void>;

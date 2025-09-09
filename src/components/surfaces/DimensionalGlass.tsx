@@ -6,7 +6,7 @@
 import React, { forwardRef, useState, useRef, useEffect, useMemo, MutableRefObject } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { usePhysicsInteraction, PhysicsInteractionOptions } from '../../hooks/usePhysicsInteraction';
@@ -124,7 +124,7 @@ const DimensionalGlassComponent = (
     children,
     className,
     style,
-    elevation = 2,
+    elevation = 'level2',
     blurStrength = 'standard',
     opacity = 'medium',
     borderOpacity = 'medium',
@@ -219,7 +219,7 @@ const DimensionalGlassComponent = (
     <DimensionalContainer
       ref={combinedRef}
       className={className}
-      $elevation={elevation}
+      $elevation={typeof elevation === 'string' ? (elevation === 'level1' ? 0 : elevation === 'level2' ? 1 : elevation === 'level3' ? 2 : elevation === 'level4' ? 3 : 4) : elevation}
       $blurStrength={blurStrength}
       $opacity={opacity}
       $borderOpacity={borderOpacity}

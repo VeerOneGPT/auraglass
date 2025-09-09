@@ -4,9 +4,9 @@
  * A floating action button that expands to show multiple actions.
  */
 import React, { forwardRef, useState, useEffect, useCallback, useMemo, useRef } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { glassSurfaceFn } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
@@ -141,12 +141,15 @@ const SpeedDialFab = styled.div<{
 
   /* Glass styling */
   ${props =>
-    props.$glass &&
-    glassSurfaceFn({
-      elevation: 3,
-      blurStrength: '10px',
-      borderOpacity: 0.2,
-    })}
+    props.$glass && (() => {
+      const glassStyles = createGlassStyle({
+        elevation: 'level3',
+        intent: 'neutral',
+      });
+      return Object.entries(glassStyles)
+        .map(([key, value]) => `${key.replace(/([A-Z])/g, '-$1').toLowerCase()}:${value};`)
+        .join('');
+    })()}
 
   /* Open state */
   ${props =>

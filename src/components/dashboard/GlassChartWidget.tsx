@@ -14,6 +14,7 @@ import {
     TrendingUp
 } from 'lucide-react';
 import React, { useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 import { GlassButton } from '../button';
 import { CardContent, CardHeader, CardTitle, GlassCard } from '../card';
@@ -232,7 +233,7 @@ export const GlassChartWidget: React.FC<GlassChartWidgetProps> = ({
         <Motion preset="fadeIn" className="w-full">
             <GlassCard
                 variant="elevated"
-                elevation={3}
+                elevation={'level3'}
                 className={cn(
                     config.cardClass,
                     isFullscreen && 'fixed inset-4 z-50',

@@ -7,6 +7,7 @@ import { GlassBadge } from '../../../data-display/GlassBadge';
 import { VStack, HStack } from '../../../layout/GlassStack';
 import { cn } from '../../../../lib/utilsComprehensive';
 
+import { createGlassStyle } from '../../../../core/mixins/glassMixins';
 export interface TableColumn {
   id: string;
   header: string;
@@ -87,6 +88,15 @@ export interface TableWidgetProps extends React.HTMLAttributes<HTMLDivElement> {
    * Sort handler
    */
   onSort?: (column: string, direction: 'asc' | 'desc') => void;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 /**

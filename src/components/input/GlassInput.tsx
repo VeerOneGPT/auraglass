@@ -4,6 +4,7 @@
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { GlassButton } from '../button/GlassButton';
 
@@ -123,8 +124,7 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
     return (
       <div className={cn('relative', { 'w-full': fullWidth })}>
         <OptimizedGlass
-          variant="frosted"
-          elevation={isFocused ? 2 : 1}
+          elevation={isFocused ? 'level2' : 'level1'}
           intensity="medium"
           depth={2}
           tint="neutral"

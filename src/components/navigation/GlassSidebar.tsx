@@ -6,6 +6,7 @@ import { GlassTooltip } from '../modal/GlassPopover';
 import { cn } from '@/design-system/utilsCore';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import React, { createContext, forwardRef, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createPortal } from 'react-dom';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -222,8 +223,8 @@ export const GlassSidebar = forwardRef<HTMLDivElement, GlassSidebarProps>(
               if (typeof ref === 'function') ref(node as any);
               else if (ref && typeof (ref as any) === 'object') (ref as any).current = node;
             }}
-            variant="primary"
-            elevation={variant === 'floating' ? 2 : 1}
+            intent="primary"
+            elevation={variant === 'floating' ? "level2" : "level1"}
             intensity="medium"
             depth={variant === 'floating' ? 3 : 2}
             tint="lavender"

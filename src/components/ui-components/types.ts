@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface GlassPanelProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   collapsible?: boolean;
@@ -7,6 +8,15 @@ export interface GlassPanelProps extends React.HTMLAttributes<HTMLDivElement> {
   onCollapse?: (collapsed: boolean) => void;
   glassVariant?: 'frosted' | 'dynamic' | 'clear' | 'tinted' | 'luminous';
   blurStrength?: 'none' | 'light' | 'standard' | 'heavy';
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 export interface GlassAccordionUIProps extends React.HTMLAttributes<HTMLDivElement> {

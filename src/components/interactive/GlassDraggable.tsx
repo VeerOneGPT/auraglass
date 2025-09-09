@@ -3,6 +3,7 @@
 import { cn } from '@/design-system/utilsCore';
 import { GripVertical, Move } from 'lucide-react';
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 
 export interface DragData {

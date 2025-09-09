@@ -1,3 +1,4 @@
+import React from 'react';
 import { useRef, useState, useCallback, useEffect } from 'react';
 import { useMultiSpring, SpringConfig } from '../../animations/hooks/useMultiSpringBasic';
 

@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Production utilities for AuraGlass components
  * These utilities are optimized for production environments

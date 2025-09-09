@@ -2,6 +2,7 @@
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export interface GlassContainerProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -58,7 +59,7 @@ export const GlassContainer = forwardRef<HTMLDivElement, GlassContainerProps>(
       responsivePadding,
       variant = 'default',
       glass = false,
-      elevation = 1,
+      elevation = 'level1',
       radius = 'none',
       className,
       children,
@@ -112,9 +113,12 @@ export const GlassContainer = forwardRef<HTMLDivElement, GlassContainerProps>(
 
     // Map elevation to OptimizedGlass elevation values
     const getGlassElevation = (elevation: GlassContainerProps['elevation']) => {
-      if (elevation === 'float') return 3;
-      if (elevation === 'modal') return 4;
-      return elevation as number;
+      if (elevation === 'float') return 'level3';
+      if (elevation === 'modal') return 'level4';
+      if (typeof elevation === 'number') {
+        return `level${Math.min(4, Math.max(1, elevation + 1))}` as 'level1' | 'level2' | 'level3' | 'level4';
+      }
+      return 'level1';
     };
 
     const responsivePaddingClasses = responsivePadding ? [
@@ -129,8 +133,8 @@ export const GlassContainer = forwardRef<HTMLDivElement, GlassContainerProps>(
       return (
         <OptimizedGlass
           ref={ref}
-          variant="frosted"
-          elevation={Math.min(4, Math.max(0, getGlassElevation(elevation))) as 0 | 1 | 2 | 3 | 4}
+          intent="neutral"
+          elevation={getGlassElevation(elevation)}
           intensity="medium"
           depth={2}
           tint="neutral"

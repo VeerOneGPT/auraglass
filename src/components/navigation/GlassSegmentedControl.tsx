@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '@/design-system/utilsCore';
 import { GlassButton } from '../button/GlassButton';
 import { OptimizedGlass } from '../../primitives';
@@ -30,7 +31,7 @@ export function GlassSegmentedControl({ items, value, onChange, size = 'md', con
 
   return (
     <OptimizedGlass
-      elevation={1}
+      elevation={'level1'}
       className={cn(
         // Avoid clipping child button content (icons/text) against rounded corners
         'inline-flex items-center rounded-xl p-1 gap-1 overflow-visible',

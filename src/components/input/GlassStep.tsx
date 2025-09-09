@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled from 'styled-components';
 import { GlassStepInternalProps, Step } from './types';
 import { Box } from '../layout/Box';

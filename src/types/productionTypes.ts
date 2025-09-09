@@ -1,3 +1,4 @@
+import React from 'react';
 // Production-ready TypeScript definitions for AuraGlass
 
 import { CSSProperties, ReactNode, RefObject } from 'react';

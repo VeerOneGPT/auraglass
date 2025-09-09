@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '@/design-system/utilsCore';
 import { OptimizedGlass } from '../../primitives';
 
@@ -22,7 +23,7 @@ export function GlassCommandBar({ items, position = 'bottom', className, ...rest
   return (
     <div className={cn('w-full', position === 'top' ? 'mt-2' : 'mb-2')}>
       <OptimizedGlass
-        elevation={2}
+        elevation={'level2'}
         className={cn(
           // Let child buttons render without being clipped by the glass container rounding
           'rounded-xl px-2 py-1 flex flex-wrap gap-1 overflow-visible',

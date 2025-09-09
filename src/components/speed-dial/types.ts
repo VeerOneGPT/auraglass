@@ -1,3 +1,5 @@
+import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface SpeedDialProps {
   /**
    * Additional CSS class
@@ -67,7 +69,16 @@ export interface SpeedDialProps {
     bottom?: number | string;
     left?: number | string;
     right?: number | string;
-  };
+  
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
+};
 
   /**
    * The size of the speed dial

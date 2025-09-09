@@ -1,3 +1,4 @@
+import React from 'react';
 import { useRef, useEffect, useCallback, useState } from 'react';
 
 export interface GlassFocusOptions {

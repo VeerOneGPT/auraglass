@@ -4,6 +4,7 @@ import { GlassInput } from '../input/GlassInput';
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { GlassButton, IconButton } from '../button/GlassButton';
@@ -389,8 +390,8 @@ export const GlassFileUpload = forwardRef<HTMLDivElement, GlassFileUploadProps>(
       return (
         <Motion key={file.id} preset="slideDown">
           <OptimizedGlass
-            variant="frosted"
-            elevation={1}
+            intent="neutral"
+            elevation="level1"
             intensity="medium"
             depth={2}
             tint="neutral"

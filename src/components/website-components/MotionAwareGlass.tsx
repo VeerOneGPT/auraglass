@@ -5,6 +5,7 @@ import { createMotionAwareInteractive, createMotionAwareVariants } from '../../l
 import { cn } from '@/design-system/utilsCore';
 import { motion } from 'framer-motion';
 import React, { forwardRef } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 interface MotionAwareGlassProps extends Omit<React.ComponentProps<typeof motion.div>, 'variants' | 'initial' | 'animate' | 'whileHover' | 'whileTap'> {
   variant?: 'base' | 'subtle' | 'strong' | 'card' | 'button' | 'input';

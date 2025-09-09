@@ -5,7 +5,7 @@ import { createThemeContext } from '../../core/themeContext';
 import { createAccessibleAnimation } from '../../animations/accessibleAnimation';
 import { fadeIn } from '../../animations/keyframes/basic';
 import { edgeEffects } from '../../core/mixins/edgeEffects';
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { glowEffects } from '../../core/mixins/glowEffects';
 import { usePhysicsInteraction, PhysicsInteractionOptions } from '../../hooks/usePhysicsInteraction';
 import { SpringConfig, SpringPresets } from '../../animations/physics/springPhysics';

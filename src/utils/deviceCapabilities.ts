@@ -1,3 +1,4 @@
+import React from 'react';
 // Device capability detection and optimization
 
 export interface DeviceInfo {

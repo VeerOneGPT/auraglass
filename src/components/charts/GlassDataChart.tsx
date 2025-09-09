@@ -25,7 +25,7 @@ import {
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 import { useAccessibilitySettings } from '../../hooks/useAccessibilitySettings';
-// import { glassSurface } from '../../core/mixins/glassSurface'; // unused
+// import { createGlassStyle } from '../../core/mixins/glassMixins'; // unused
 // import { glassGlow } from '../../core/mixins/glowEffects'; // unused
 // import { createThemeContext } from '../../core/themeContext'; // unused
 import { useGlassTheme } from '../../hooks/useGlassTheme';
@@ -678,7 +678,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
     allowTypeSwitch = true,
     borderRadius = 12,
     borderColor,
-    elevation = 3,
+    elevation = 2,
     className,
     style,
     onDataPointClick,
@@ -1340,7 +1340,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
       $glassVariant={glassVariant}
       $blurStrength={adaptedBlurStrength}
       $color={color}
-      $elevation={elevation}
+      $elevation={typeof elevation === 'string' ? (elevation === 'level1' ? 1 : elevation === 'level2' ? 2 : elevation === 'level3' ? 3 : elevation === 'level4' ? 4 : elevation === 'level5' ? 5 : 2) : elevation}
       $borderRadius={borderRadius}
       $borderColor={borderColor}
     >

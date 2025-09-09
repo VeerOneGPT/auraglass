@@ -1,7 +1,7 @@
 import React, { forwardRef, createContext, useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { useGlassTheme } from '../../hooks/useGlassTheme';
 

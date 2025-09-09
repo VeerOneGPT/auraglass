@@ -7,6 +7,7 @@ import { GlassBadge } from '../../../data-display/GlassBadge';
 import { VStack, HStack } from '../../../layout/GlassStack';
 import { cn } from '../../../../lib/utilsComprehensive';
 
+import { createGlassStyle } from '../../../../core/mixins/glassMixins';
 export interface MetricData {
   value: string | number;
   label: string;
@@ -51,7 +52,16 @@ export interface MetricWidgetProps extends React.HTMLAttributes<HTMLDivElement> 
     up: React.ReactNode;
     down: React.ReactNode;
     neutral: React.ReactNode;
-  };
+  
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
+};
 }
 
 /**

@@ -4,6 +4,7 @@
  * A dynamic background component with atmospheric effects.
  */
 import React, { forwardRef, useState, useEffect, useRef } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled, { keyframes, css } from 'styled-components';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';

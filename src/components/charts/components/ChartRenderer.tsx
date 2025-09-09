@@ -1,6 +1,7 @@
 import React, { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 import { Line, Bar, Pie, Scatter } from 'react-chartjs-2';
 
+import { createGlassStyle } from '../../../core/mixins/glassMixins';
 export interface ChartRendererProps {
   chartType: 'line' | 'bar' | 'area' | 'pie' | 'scatter' | 'heatmap' | 'radar';
   datasets: any[];
@@ -17,6 +18,15 @@ export interface ChartRendererProps {
   onChartLeave?: () => void;
   chartRefCallback?: (chart: any) => void;
   glassVariant?: 'frosted' | 'dynamic' | 'clear' | 'tinted' | 'luminous';
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 export const ChartRenderer: React.FC<ChartRendererProps> = ({

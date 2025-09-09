@@ -3,6 +3,7 @@
 import { cn } from '@/design-system/utilsCore';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, MoreHorizontal } from 'lucide-react';
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -205,8 +206,8 @@ export const GlassPagination: React.FC<GlassPaginationProps> = ({
 
     return (
         <OptimizedGlass
-            variant="frosted"
-            elevation={2}
+            intent="neutral"
+            elevation="level2"
             intensity="medium"
             depth={2}
             tint="neutral"
@@ -344,8 +345,8 @@ export const GlassPaginationItem: React.FC<GlassPaginationItemProps> = ({
             preset="none"
         >
             <OptimizedGlass
-                variant="frosted"
-                elevation={isActive ? 3 : 1}
+                intent="neutral"
+                elevation={isActive ? "level3" : "level1"}
                 intensity="medium"
                 depth={2}
                 tint="neutral"

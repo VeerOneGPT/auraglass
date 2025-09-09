@@ -1,6 +1,7 @@
 'use client';
 
 import React, { forwardRef, useEffect, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { cn } from '@/design-system/utilsCore';
@@ -184,8 +185,7 @@ export const GlassProgress = forwardRef<HTMLDivElement, GlassProgressProps>(
 
         {/* Progress track */}
         <OptimizedGlass
-          variant="frosted"
-          elevation={0}
+          elevation={undefined}
           intensity="medium"
           depth={2}
           tint="neutral"

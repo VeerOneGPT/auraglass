@@ -1,3 +1,4 @@
+import React from 'react';
 // Enhanced animation types for the AuraGlass system
 
 export interface AnimationConfig {

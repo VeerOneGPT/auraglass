@@ -1,6 +1,8 @@
+import React from 'react';
 import { useMemo, useCallback, useState } from 'react';
 import { ChartQualityTier, ChartType, ChartPhysicsConfig } from '../types';
 
+import { createGlassStyle } from '../../../core/mixins/glassMixins';
 // Re-export types for convenience
 export type QualityTier = ChartQualityTier;
 export type PhysicsParams = {
@@ -281,25 +283,25 @@ export function getQualityBasedGlassParams(qualityTier: ChartQualityTier['tier']
       blurStrength: 'heavy' as const,
       opacity: 0.9,
       borderRadius: 16,
-      elevation: 4,
+      elevation: 'level4',
     },
     high: {
       blurStrength: 'standard' as const,
       opacity: 0.85,
       borderRadius: 12,
-      elevation: 3,
+      elevation: 'level3',
     },
     medium: {
       blurStrength: 'light' as const,
       opacity: 0.8,
       borderRadius: 8,
-      elevation: 2,
+      elevation: 'level2',
     },
     low: {
       blurStrength: 'none' as const,
       opacity: 0.7,
       borderRadius: 4,
-      elevation: 1,
+      elevation: 'level1',
     },
   };
 

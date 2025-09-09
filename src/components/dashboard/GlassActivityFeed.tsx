@@ -14,6 +14,7 @@ import {
     XCircle
 } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 import { GlassButton } from '../button';
 import { CardContent, CardHeader, CardTitle, GlassCard } from '../card';

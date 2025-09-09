@@ -1,10 +1,24 @@
 /**
  * ModularGlassDataChart Component
- * 
+ *
  * A modular implementation of the GlassDataChart component that uses separate
  * components for chart rendering, tooltips, filters, and KPI display.
  */
 import React, { useState, useRef, useEffect, useCallback, useImperativeHandle } from 'react';
+
+// Helper function to convert elevation strings to numbers
+const getNumericElevation = (elevation: string | number): number => {
+  if (typeof elevation === 'number') return elevation;
+  switch (elevation) {
+    case 'level1': return 1;
+    case 'level2': return 2;
+    case 'level3': return 3;
+    case 'level4': return 4;
+    case 'level5': return 5;
+    default: return 3; // default to level3
+  }
+};
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import {
   ChartContainer,
   ChartHeader,
@@ -170,7 +184,7 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
     backgroundColor,
     borderRadius = 12,
     borderColor,
-    elevation = 3,
+    elevation = 'level3',
     className,
     style,
     onDataPointClick,
@@ -446,7 +460,7 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
         $color={color}
         $borderRadius={typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius}
         $borderColor={borderColor}
-        $elevation={elevation}
+        $elevation={getNumericElevation(elevation)}
         ref={containerRef}
       >
         {/* Chart title */}
@@ -495,7 +509,7 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
       $color={color}
       $borderRadius={typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius}
       $borderColor={borderColor}
-      $elevation={elevation}
+      $elevation={getNumericElevation(elevation)}
       ref={containerRef}
     >
       {/* SVG Filters */}

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { GlassButton } from '../button/GlassButton';
 
 export interface Reaction { key: string; label: string; count: number }

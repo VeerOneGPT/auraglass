@@ -13,6 +13,7 @@ import {
   ChartType,
 } from './ChartTypes';
 
+import { createGlassStyle } from '../../../core/mixins/glassMixins';
 export interface BaseChartProps {
   /** Chart configuration */
   config: ChartConfig;
@@ -53,6 +54,15 @@ export interface BaseChartProps {
 
   /** Test ID for testing */
   'data-testid'?: string;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 export interface InteractiveChartProps extends BaseChartProps {
@@ -369,7 +379,7 @@ export interface GlassDataChartProps extends AdvancedChartProps {
   borderColor?: string;
 
   /** Elevation/shadow depth */
-  elevation?: number;
+  // elevation?: 'level1' | 'level2' | 'level3' | 'level4' | 'level5';
 
   /** Animation configuration */
   animation?: {
@@ -472,10 +482,10 @@ export interface GlassDataChartProps extends AdvancedChartProps {
   useAdaptiveQuality?: boolean;
 
   /** Custom glass surface function */
-  glassSurface?: (styles: any) => any;
+  createGlassSurfaceStyle?: (styles: any) => any;
 
   /** Custom glass border function */
-  glassBorder?: (styles: any) => any;
+  createGlassBorderStyle?: (styles: any) => any;
 
   /** Enable entrance animations */
   enableEntranceAnimation?: boolean;

@@ -1,3 +1,4 @@
+import React from 'react';
 import { useRef, useCallback, useEffect, useState } from 'react';
 
 export interface SpringConfig {

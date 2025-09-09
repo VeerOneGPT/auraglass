@@ -4,6 +4,7 @@
  * A component that provides visual feedback effects.
  */
 import React, { forwardRef, useState, useRef, useEffect } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled, { keyframes, css } from 'styled-components';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -108,7 +109,7 @@ const FeedbackContainer = styled.div<{
       left: 0;
       right: 0;
       bottom: 0;
-      backdrop-filter: blur(4px);
+      ${createGlassStyle({ intent: 'neutral', elevation: 'level2' })};
       pointer-events: none;
       z-index: 1;
       opacity: ${props.$intensity * 0.5};

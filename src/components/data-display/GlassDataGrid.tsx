@@ -1,4 +1,5 @@
 import React, { forwardRef, useRef, useEffect, useState, useMemo, createRef, useCallback, CSSProperties } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { GlassDataGridProps, ColumnDefinition, SortState } from './types';
 import styled, { css } from 'styled-components';
 
@@ -219,7 +220,7 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
             perspective: '1000px',
         }}
         variant="default" // Pass relevant props to DimensionalGlass
-        elevation={1}
+        elevation={'level1'}
       >
         <StyledTable /* Removed className and ref */ >
           <thead>

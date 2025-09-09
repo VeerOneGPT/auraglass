@@ -2,6 +2,7 @@
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -426,8 +427,8 @@ export const GlassPopover = forwardRef<HTMLDivElement, GlassPopoverProps>(
             >
               {appearance === 'glass' ? (
                 <OptimizedGlass
-                  variant="frosted"
-                  elevation={4}
+                  intent="neutral"
+                  elevation="level4"
                   intensity="strong"
                   depth={2}
                   tint="neutral"

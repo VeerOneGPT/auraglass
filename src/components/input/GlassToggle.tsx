@@ -2,6 +2,7 @@
 
 import { cn } from '@/design-system/utilsCore';
 import React, { createContext, useContext, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -243,8 +244,8 @@ export const GlassToggle = React.forwardRef<HTMLButtonElement, GlassToggleProps>
                 className="inline-block"
             >
                 <OptimizedGlass
-                    variant="frosted"
-                    elevation={pressed ? 3 : 1}
+                    intent="neutral"
+                    elevation={pressed ? "level3" : "level1"}
                     intensity="medium"
                     depth={2}
                     tint="neutral"

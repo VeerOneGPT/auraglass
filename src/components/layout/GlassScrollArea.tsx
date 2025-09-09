@@ -2,6 +2,7 @@
 
 import { cn } from '@/design-system/utilsCore';
 import React, { useEffect, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export interface GlassScrollAreaProps {
@@ -177,8 +178,8 @@ export const GlassScrollArea: React.FC<GlassScrollAreaProps> = ({
 
     return (
         <OptimizedGlass
-          variant="frosted"
-          elevation={1}
+            intent="neutral"
+          elevation="level1"
           intensity="medium"
           depth={2}
           tint="neutral"

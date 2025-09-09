@@ -4,6 +4,7 @@
  * A component that provides accessible focus indicators.
  */
 import React, { forwardRef, useMemo } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled from 'styled-components';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';

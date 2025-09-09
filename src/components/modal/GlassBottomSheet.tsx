@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '@/design-system/utilsCore';
 import { OptimizedGlass } from '../../primitives';
 
@@ -29,7 +30,7 @@ export function GlassBottomSheet({ open, onOpenChange, children, height = '70%',
         role="dialog"
         aria-modal="true"
       >
-        <OptimizedGlass elevation={3} className={cn('h-full rounded-t-2xl p-4', className)}>
+        <OptimizedGlass elevation={'level3'} className={cn('h-full rounded-t-2xl p-4', className)}>
           <div className="mx-auto w-10 h-1.5 rounded-full bg-white/30 mb-3" />
           {children}
         </OptimizedGlass>

@@ -5,6 +5,7 @@ import { GlassButton } from '../button/GlassButton';
 import { cn } from '@/design-system/utilsCore';
 import { ChevronRight } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -157,8 +158,8 @@ export const GlassMenubar: React.FC<GlassMenubarProps> = ({
 
     return (
         <OptimizedGlass
-          variant="frosted"
-          elevation={2}
+          intent="neutral"
+          elevation="level2"
           intensity="medium"
           depth={2}
           tint="neutral"
@@ -271,8 +272,8 @@ export const GlassMenubarContent: React.FC<GlassMenubarContentProps> = ({
             style={position ? { left: position.x, top: position.y } : undefined}
         >
             <OptimizedGlass
-          variant="frosted"
-          elevation={4}
+            intent="neutral"
+          elevation={'level4'}
           intensity="strong"
           depth={2}
           tint="neutral"

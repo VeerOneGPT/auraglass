@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface ToggleButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'size' | 'onChange'> {
   selected?: boolean;
   value?: string | number;
@@ -18,6 +19,15 @@ export interface ToggleButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLB
   disableAnimation?: boolean;
   motionSensitivity?: 'low' | 'medium' | 'high';
   onChange?: (event: React.MouseEvent<HTMLButtonElement>, value: string | number) => void;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 export interface ToggleButtonGroupProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {

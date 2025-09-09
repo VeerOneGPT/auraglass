@@ -5,6 +5,7 @@
  * and momentum scrolling for overflow tabs.
  */
 import React, { useState, useRef, useEffect, useCallback, useMemo, forwardRef, useImperativeHandle } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 // import { useThemeColor, ThemeColors } from '../../hooks/useGlassTheme';
 import { useAccessibilitySettings } from '../../hooks/useAccessibilitySettings';
 import { TabBarContainer, TabSelector } from './styled';

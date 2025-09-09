@@ -6,7 +6,7 @@
  */
 import React, { useState, useEffect, useRef, useCallback, forwardRef, useImperativeHandle } from 'react';
 import styled, { DefaultTheme, useTheme } from 'styled-components';
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import {
   glowEffects
 } from '../../core/mixins/glowEffects';

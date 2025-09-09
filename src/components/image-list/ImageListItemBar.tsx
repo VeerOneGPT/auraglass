@@ -6,7 +6,7 @@
 import React, { forwardRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
@@ -30,13 +30,28 @@ const ImageListItemBarRoot = styled.div<{
   ${props => (props.$position === 'bottom' ? 'bottom: 0;' : '')}
   
   /* Glass styling */
-  ${props =>
-    props.$glass &&
-    `
-      ${glassSurface.background};
-      ${glassSurface.backdropFilter};
-      ${glassSurface.border};
-    `}
+  ${props => {
+    if (!props.$glass) return '';
+
+    const glassStyles = createGlassStyle({
+      intent: 'neutral',
+      elevation: 'level2',
+      tier: 'high'
+    });
+
+    return `
+      background: ${glassStyles.background};
+      backdrop-filter: ${glassStyles.backdropFilter};
+      -webkit-backdrop-filter: ${glassStyles.WebkitBackdropFilter};
+      border: ${glassStyles.border};
+      border-radius: ${glassStyles.borderRadius};
+      box-shadow: ${glassStyles.boxShadow};
+      color: ${glassStyles.color};
+      transition: ${glassStyles.transition};
+      position: ${glassStyles.position};
+      transform: ${glassStyles.transform};
+    `;
+  }}
   
   /* Base styling */
   background-color: ${props => (props.$glass ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.5)')};

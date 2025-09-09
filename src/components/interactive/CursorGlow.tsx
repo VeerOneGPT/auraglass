@@ -1,12 +1,22 @@
 import React, { useEffect, useRef } from 'react';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface CursorGlowProps {
   size?: number; // diameter in px
   intensity?: number; // 0..1
   color?: string; // CSS color for glow
   opacity?: number; // 0..1
   global?: boolean; // fixed overlay
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 /**

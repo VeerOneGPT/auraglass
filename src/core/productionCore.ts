@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * AuraGlass Production Configuration and Utilities
  * 

@@ -2,12 +2,11 @@ import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { useAccessibilitySettings } from './useAccessibilitySettings';
 import { useEnhancedPerformance } from './useEnhancedPerformance';
 import {
-  createGlassMixin,
-  createPerformanceMixin,
-  type GlassMixinOptions,
-  type PerformanceOptions,
-  type GlassElevation
+  createGlassStyle,
+  type GlassElevation,
+  type GlassOptions
 } from '../core/mixins/glassMixins';
+import { type QualityTier } from '../tokens/glass';
 
 export interface GlassOptimizationConfig {
   enableAdaptiveBlur?: boolean;
@@ -30,7 +29,7 @@ export interface OptimizedGlassStyles {
  * Comprehensive glass optimization hook that adapts to device capabilities and user preferences
  */
 export function useGlassOptimization(
-  baseOptions: GlassMixinOptions = {},
+  baseOptions: GlassOptions = {},
   config: GlassOptimizationConfig = {}
 ) {
   const {
@@ -45,14 +44,14 @@ export function useGlassOptimization(
   const { settings: a11ySettings } = useAccessibilitySettings();
   const { performanceMode, metrics } = useEnhancedPerformance();
   
-  const [optimizedOptions, setOptimizedOptions] = useState<GlassMixinOptions>(baseOptions);
+  const [optimizedOptions, setOptimizedOptions] = useState(baseOptions);
   const [activeAnimations, setActiveAnimations] = useState(0);
   const animationQueueRef = useRef<(() => void)[]>([]);
   const batchTimeoutRef = useRef<NodeJS.Timeout>();
 
   // Adaptive blur based on performance
   const adaptiveBlur = useMemo(() => {
-    if (!enableAdaptiveBlur) return baseOptions.blur || 'medium';
+    if (!enableAdaptiveBlur) return baseOptions.tier === 'low' ? 'subtle' : 'medium';
 
     const frameRate = metrics?.frameRate || 60;
     const memoryUsage = metrics?.memoryUsage || 0;
@@ -64,10 +63,22 @@ export function useGlassOptimization(
     }
 
     return 'medium';
-  }, [enableAdaptiveBlur, baseOptions.blur, metrics, performanceMode]);
+  }, [enableAdaptiveBlur, baseOptions.tier, metrics, performanceMode]);
+
+  // Get tier based on adaptive blur (for backwards compatibility)
+  const getTierFromBlur = (blur: string): QualityTier => {
+    switch (blur) {
+      case 'subtle':
+        return 'low';
+      case 'intense':
+        return 'high';
+      default:
+        return 'medium';
+    }
+  };
 
   // Performance-aware options
-  const performanceAwareOptions = useMemo((): GlassMixinOptions => {
+  const performanceAwareOptions = useMemo(() => {
     let options = { ...baseOptions };
 
     if (enablePerformanceMode) {
@@ -75,32 +86,29 @@ export function useGlassOptimization(
         case 'low':
           options = {
             ...options,
-            blur: 'subtle',
-            elevation: Math.min(options.elevation as number || 1, 1) as GlassElevation,
-            performanceMode: 'low',
+            elevation: 'level1',
+            tier: 'low',
           };
           break;
         case 'high':
           options = {
             ...options,
-            blur: adaptiveBlur,
-            performanceMode: 'high',
+            tier: 'high',
           };
           break;
         default:
           options = {
             ...options,
-            blur: adaptiveBlur,
-            performanceMode: 'balanced',
+            tier: 'medium',
           };
       }
     }
 
     return options;
-  }, [baseOptions, enablePerformanceMode, performanceMode, adaptiveBlur]);
+  }, [baseOptions, enablePerformanceMode, performanceMode]);
 
   // Accessibility-aware options
-  const accessibilityAwareOptions = useMemo((): GlassMixinOptions => {
+  const accessibilityAwareOptions = useMemo(() => {
     if (!enableAccessibilityMode) return performanceAwareOptions;
 
     let options = { ...performanceAwareOptions };
@@ -110,8 +118,7 @@ export function useGlassOptimization(
       options = {
         ...options,
         interactive: false,
-        blur: 'subtle',
-        elevation: 0,
+        elevation: 'level1',
       };
     }
 
@@ -119,8 +126,8 @@ export function useGlassOptimization(
     if (a11ySettings.highContrast) {
       options = {
         ...options,
-        variant: 'crystal',
-        opacity: 0.9,
+        intent: 'neutral',
+        tier: 'high',
       };
     }
 
@@ -128,9 +135,8 @@ export function useGlassOptimization(
     if (a11ySettings.forcedColors) {
       options = {
         ...options,
-        blur: 'none',
-        variant: 'crystal',
-        tint: undefined,
+        intent: 'neutral',
+        tier: 'high',
       };
     }
 
@@ -144,14 +150,14 @@ export function useGlassOptimization(
 
   // Generate optimized styles
   const optimizedStyles = useMemo((): OptimizedGlassStyles => {
-    const performanceOptions: PerformanceOptions = {
+    const performanceOptions = {
       mode: performanceMode,
       prefersReducedMotion: a11ySettings.reducedMotion,
     };
 
     const baseStyles = {
-      ...createGlassMixin(optimizedOptions),
-      ...createPerformanceMixin(performanceOptions),
+      ...createGlassStyle(optimizedOptions),
+      // Performance options applied directly
     };
 
     return {
@@ -271,7 +277,7 @@ export function useGlassOptimization(
  */
 export function useOptimizedGlassComponent<P extends object>(
   Component: React.ComponentType<P>,
-  glassOptions: GlassMixinOptions = {},
+  glassOptions: GlassOptions = {},
   optimizationConfig: GlassOptimizationConfig = {}
 ) {
   const {

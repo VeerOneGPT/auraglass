@@ -1,0 +1,174 @@
+name: AuraGlass Pipeline Validation
+
+on:
+  push:
+    branches: [main, develop, feat/glass-*]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  glass-quality-gates:
+    name: Glass Quality Gates
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: TypeScript type checking
+      run: npm run typecheck
+      
+    - name: ESLint with glass rules
+      run: npm run lint:check
+      
+    - name: Glass token validation
+      run: node scripts/verify-glass-pipeline.js
+      
+    - name: WCAG AA contrast tests
+      run: npm test -- glass-contrast.spec.ts
+      
+    - name: Build verification
+      run: npm run build
+      
+    - name: Glass surface count verification
+      run: |
+        if [ ! -f "src/styles/glass.generated.css" ]; then
+          echo "❌ Generated CSS file missing"
+          exit 1
+        fi
+        
+        surface_count=$(grep -c "glass-.*-level" src/styles/glass.generated.css || true)
+        expected_count=24  # 6 intents × 4 elevations
+        
+        if [ "$surface_count" -lt "$expected_count" ]; then
+          echo "❌ Insufficient glass surfaces: $surface_count < $expected_count"
+          exit 1
+        fi
+        
+        echo "✅ Glass surface validation passed: $surface_count surfaces"
+        
+    - name: Deprecated API detection
+      run: |
+        deprecated_usage=$(grep -r "glassSurface\|glassBorder\|interactiveGlass\|createGlassFoundation" src --include="*.ts" --include="*.tsx" | grep -v "deprecated" || true)
+        
+        if [ -n "$deprecated_usage" ]; then
+          echo "❌ Deprecated glass API usage detected:"
+          echo "$deprecated_usage"
+          exit 1
+        fi
+        
+        echo "✅ No deprecated glass API usage found"
+        
+    - name: Glass token consistency check
+      run: |
+        if [ ! -f "src/tokens/glass.ts" ]; then
+          echo "❌ Canonical glass tokens missing"
+          exit 1
+        fi
+        
+        # Verify token structure contains all required intents and elevations
+        node -e "
+          const { AURA_GLASS } = require('./dist/tokens/glass.js');
+          const intents = Object.keys(AURA_GLASS.surfaces);
+          const elevations = Object.keys(AURA_GLASS.surfaces.neutral);
+          
+          const expectedIntents = ['neutral', 'primary', 'success', 'warning', 'danger', 'info'];
+          const expectedElevations = ['level1', 'level2', 'level3', 'level4'];
+          
+          const missingIntents = expectedIntents.filter(i => !intents.includes(i));
+          const missingElevations = expectedElevations.filter(e => !elevations.includes(e));
+          
+          if (missingIntents.length > 0) {
+            console.error('❌ Missing intents:', missingIntents);
+            process.exit(1);
+          }
+          
+          if (missingElevations.length > 0) {
+            console.error('❌ Missing elevations:', missingElevations);
+            process.exit(1);
+          }
+          
+          console.log('✅ Glass token structure validated');
+        "
+        
+    - name: Performance budget check
+      run: |
+        css_size=$(wc -c < src/styles/glass.generated.css)
+        max_size=30720  # 30KB limit
+        
+        if [ "$css_size" -gt "$max_size" ]; then
+          echo "❌ Generated CSS too large: ${css_size} bytes > ${max_size} bytes"
+          exit 1
+        fi
+        
+        echo "✅ CSS size within budget: ${css_size} bytes"
+        
+    - name: Accessibility compliance verification
+      run: |
+        echo "Running comprehensive accessibility tests..."
+        npm test -- --testPathPattern=a11y --verbose
+        
+    - name: API surface lock verification
+      run: |
+        if [ ! -f "src/types/glass-api-stable.ts" ]; then
+          echo "❌ Stable API types missing"
+          exit 1
+        fi
+        
+        if [ ! -f "src/docs/GLASS_API_REFERENCE.md" ]; then
+          echo "❌ API documentation missing"
+          exit 1
+        fi
+        
+        echo "✅ API surface properly locked and documented"
+
+  glass-visual-regression:
+    name: Glass Visual Regression
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Generate visual test pages
+      run: node scripts/glass-visual-test-generator.js
+      
+    - name: Archive visual test artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: glass-visual-tests
+        path: reports/glass/visual-tests/
+        
+    - name: Comment on PR with test links
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          
+          if (fs.existsSync('reports/glass/visual-tests/comprehensive-test.html')) {
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🎨 **Glass Visual Test Pages Generated**\n\nDownload the `glass-visual-tests` artifact from this workflow run to view comprehensive visual validation pages for all glass surfaces.'
+            });
+          }

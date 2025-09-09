@@ -4,6 +4,7 @@ import { GlassButton } from '../button/GlassButton';
 
 import { cn } from '@/design-system/utilsCore';
 import React, { createContext, forwardRef, useContext, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -199,7 +200,7 @@ export const GlassTabsList = forwardRef<HTMLDivElement, GlassTabsListProps>(
           else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node as any;
         }}
         variant="ethereal"
-        elevation={1}
+        elevation={'level1'}
         intensity="subtle"
         depth={1}
         tint="neutral"

@@ -7,6 +7,7 @@ import { OptimizedGlass, type OptimizedGlassProps } from '../../primitives';
 import { Motion } from '../../primitives';
 import { GlassButtonVariantType } from './types';
 
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface GlassButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'size'> {
   /**
    * Button variant
@@ -39,7 +40,7 @@ export interface GlassButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLBu
   /**
    * Glass border style
    */
-  glassBorder?: OptimizedGlassProps['border'];
+  border?: 'subtle' | 'glow' | 'neon' | 'none';
   /**
    * Loading state
    */
@@ -80,6 +81,12 @@ export interface GlassButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLBu
    * Flat style override for ghost/link — removes bg/border/shadow/rings
    */
   flat?: boolean;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Performance tier */  
+  tier?: 'low' | 'medium' | 'high';
 }
 
 /**
@@ -91,12 +98,12 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
     {
       variant = 'default',
       size = 'md',
-      elevation = 2,
+      elevation = 'level2',
       glassVariant = 'frosted',
       intensity = 'medium',
       depth = 2,
       tint = 'neutral',
-      glassBorder = 'subtle',
+      border = "subtle",
       loading = false,
       iconOnly = false,
       fullWidth = false,
@@ -143,14 +150,14 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         glassVariant: 'frosted' as const,
         tint: 'neutral' as const,
         intensity: 'medium' as const,
-        glassBorder: 'subtle' as const,
+        border: 'subtle' as const,
         className: 'text-white hover:text-white/90',
       },
       primary: {
         glassVariant: 'liquid' as const,
         tint: 'blue' as const,
         intensity: 'strong' as const,
-        glassBorder: 'glow' as const,
+        border: 'glow' as const,
         lighting: 'volumetric' as const,
         caustics: true,
         className: 'text-white hover:text-white/90',
@@ -159,7 +166,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         glassVariant: 'crystal' as const,
         tint: 'purple' as const,
         intensity: 'strong' as const,
-        glassBorder: 'glow' as const,
+        border: 'glow' as const,
         lighting: 'directional' as const,
         refraction: true,
         className: 'text-white hover:text-white/90',
@@ -168,7 +175,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         glassVariant: 'frosted' as const,
         tint: 'gray' as const,
         intensity: 'medium' as const,
-        glassBorder: 'subtle' as const,
+        border: 'subtle' as const,
         lighting: 'ambient' as const,
         className: 'text-white hover:text-white/90',
       },
@@ -176,7 +183,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         glassVariant: 'frosted' as const,
         tint: 'red' as const,
         intensity: 'extreme' as const,
-        glassBorder: 'neon' as const,
+        border: 'neon' as const,
         lighting: 'directional' as const,
         chromatic: true,
         className: 'text-white hover:text-white/90',
@@ -185,7 +192,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         glassVariant: 'frosted' as const,
         tint: 'red' as const,
         intensity: 'extreme' as const,
-        glassBorder: 'neon' as const,
+        border: 'neon' as const,
         lighting: 'directional' as const,
         chromatic: true,
         className: 'text-white hover:text-white/90',
@@ -194,7 +201,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         glassVariant: 'frosted' as const,
         tint: 'green' as const,
         intensity: 'strong' as const,
-        glassBorder: 'glow' as const,
+        border: 'glow' as const,
         lighting: 'directional' as const,
         className: 'text-white hover:text-white/90',
       },
@@ -202,7 +209,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         glassVariant: 'frosted' as const,
         tint: 'orange' as const,
         intensity: 'strong' as const,
-        glassBorder: 'glow' as const,
+        border: 'glow' as const,
         lighting: 'directional' as const,
         className: 'text-white hover:text-white/90',
       },
@@ -210,7 +217,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         glassVariant: 'ethereal' as const,
         tint: 'neutral' as const,
         intensity: 'medium' as const,
-        glassBorder: 'glow' as const,
+        border: 'glow' as const,
         lighting: 'ambient' as const,
         adaptive: true,
         className: 'text-white hover:text-white/90',
@@ -219,7 +226,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         glassVariant: 'ethereal' as const,
         tint: 'neutral' as const,
         intensity: 'subtle' as const,
-        glassBorder: 'none' as const,
+        border: 'none' as const,
         lighting: 'ambient' as const,
         adaptive: true,
         className: 'text-white/90 hover:text-white shadow-none',
@@ -228,14 +235,14 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         glassVariant: 'ethereal' as const,
         tint: 'blue' as const,
         intensity: 'subtle' as const,
-        glassBorder: 'none' as const,
+        border: 'none' as const,
         className: 'text-blue-300 hover:text-blue-200 underline-offset-4 hover:underline',
       },
       gradient: {
         glassVariant: 'holographic' as const,
         tint: 'rainbow' as const,
         intensity: 'ultra' as const,
-        glassBorder: 'dynamic' as const,
+        border: 'dynamic' as const,
         lighting: 'iridescent' as const,
         chromatic: true,
         parallax: true,
@@ -335,7 +342,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
           intensity={intensity || variantConfig.intensity}
           depth={depth}
           tint={tint || variantConfig.tint}
-          border={glassBorder || variantConfig.glassBorder || 'subtle'}
+          border={border || variantConfig.border || 'subtle'}
           animation={animation === 'none' ? 'none' : animation === 'scale' ? 'float' : animation === 'bounce' ? 'pulse' : 'shimmer'}
           lighting={(variantConfig as any).lighting || 'ambient'}
           caustics={(variantConfig as any).caustics || false}
@@ -615,7 +622,7 @@ export const FloatingActionButton = forwardRef<HTMLButtonElement, FloatingAction
       <GlassButton
         ref={ref}
         variant="default"
-        elevation={3}
+        elevation={'level3'}
         animation="bounce"
         iconOnly={!extended}
         leftIcon={extended ? icon : undefined}

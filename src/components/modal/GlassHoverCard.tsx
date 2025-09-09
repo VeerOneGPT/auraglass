@@ -2,6 +2,7 @@
 
 import { cn } from '@/design-system/utilsCore';
 import React, { useEffect, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -265,8 +266,8 @@ export const GlassHoverCard: React.FC<GlassHoverCardProps> = ({
                         onMouseLeave={handleMouseLeave}
                     >
                         <OptimizedGlass
-          variant="frosted"
-          elevation={3}
+            intent="neutral"
+          elevation="level3"
           intensity="strong"
           depth={2}
           tint="neutral"

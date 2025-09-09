@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export interface A11yIssue {
@@ -304,8 +305,8 @@ export const GlassA11yAuditor: React.FC<GlassA11yAuditorProps> = ({
       {/* Audit Controls */}
       <OptimizedGlass
         className="p-4 mb-4"
-        blur="medium"
-        elevation={1}
+        intensity="medium"
+        elevation="level1"
       >
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-white">Accessibility Audit</h3>
@@ -354,7 +355,7 @@ export const GlassA11yAuditor: React.FC<GlassA11yAuditorProps> = ({
         <OptimizedGlass
           className="flex-1 p-4"
           blur="medium"
-          elevation={1}
+          elevation={'level1'}
         >
           <div className="flex items-center justify-between mb-4">
             <h4 className="text-md font-semibold text-white">Issues</h4>
@@ -414,7 +415,7 @@ export const GlassA11yAuditor: React.FC<GlassA11yAuditorProps> = ({
           <OptimizedGlass
             className="w-80 p-4"
             blur="medium"
-            elevation={1}
+            elevation={'level1'}
           >
             <h4 className="text-md font-semibold text-white mb-4">Issue Details</h4>
 

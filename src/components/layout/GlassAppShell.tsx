@@ -2,6 +2,7 @@
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useEffect, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { GlassContainer } from './GlassContainer';
@@ -400,7 +401,7 @@ export const ContentSection = forwardRef<HTMLDivElement, ContentSectionProps>(
       actions,
       children,
       variant = 'default',
-      elevation = 1,
+      elevation = 'level1',
       className,
       ...props
     },

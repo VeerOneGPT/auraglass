@@ -1,3 +1,4 @@
+import React from 'react';
 // Type definitions for AuraGlass components
 // This file provides TypeScript support for all exported components
 

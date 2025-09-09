@@ -1,3 +1,4 @@
+import React from 'react';
 import { CSSProperties } from 'react';
 
 export type PerformanceMode = 'high' | 'balanced' | 'low';

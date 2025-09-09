@@ -2,7 +2,7 @@ import React, { forwardRef, useState, useRef, useEffect, useCallback, useMemo } 
 import styled, { css } from 'styled-components';
 
 import { edgeEffects } from '../../core/mixins/edgeEffects';
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { glowEffects } from '../../core/mixins/glowEffects';
 import { createThemeContext } from '../../core/themeContext';
 import { useGlassTheme } from '../../hooks/useGlassTheme';

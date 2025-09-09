@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { OptimizedGlassCore } from './OptimizedGlassCore';
-import { GlassVariant, BlurIntensity } from '../core/mixins/glassMixins';
+import type { GlassVariant, BlurIntensity } from '../core/mixins/glassMixins';
 
 const meta: Meta<typeof OptimizedGlassCore> = {
   title: 'Primitives/OptimizedGlassCore',
@@ -14,60 +14,58 @@ const meta: Meta<typeof OptimizedGlassCore> = {
     },
   },
   argTypes: {
-    variant: {
+    intent: {
       control: { type: 'select' },
-      options: ['frosted', 'crystal', 'tinted', 'metallic', 'neon'] as GlassVariant[],
-      description: 'Glass morphism variant',
+      options: ['neutral', 'primary', 'success', 'warning', 'danger', 'info'],
+      description: 'Glass intent that determines color scheme',
     },
-    blur: {
+    elevation: {
       control: { type: 'select' },
-      options: ['none', 'light', 'medium', 'heavy', 'ultra'] as BlurIntensity[],
-      description: 'Blur intensity',
+      options: ['level1', 'level2', 'level3', 'level4', 'level5'],
+      description: 'Glass elevation level',
+    },
+    tier: {
+      control: { type: 'select' },
+      options: ['high', 'medium', 'low'],
+      description: 'Performance tier',
     },
     intensity: {
       control: { type: 'select' },
       options: ['subtle', 'medium', 'strong', 'intense', 'ultra', 'extreme'],
       description: 'Glass intensity level',
     },
-    depth: {
+    rounded: {
       control: { type: 'select' },
-      options: ['shallow', 'medium', 'deep', 'extreme'],
-      description: 'Glass depth effect',
-    },
-    elevation: {
-      control: { type: 'select' },
-      options: [0, 1, 2, 3, 4, 'float'],
-      description: 'Elevation level',
-    },
-    border: {
-      control: { type: 'select' },
-      options: ['none', 'subtle', 'medium', 'strong', 'glow', 'gradient', 'neon', 'dynamic', 'particle'],
-      description: 'Border style',
-    },
-    optimization: {
-      control: { type: 'select' },
-      options: ['auto', 'high', 'medium', 'low'],
-      description: 'Performance optimization level',
+      options: ['none', 'sm', 'md', 'lg', 'xl', 'full'],
+      description: 'Border radius',
     },
     glow: {
       control: 'boolean',
       description: 'Enable glow effect',
     },
-    hover: {
+    interactive: {
       control: 'boolean',
-      description: 'Enable hover effects',
+      description: 'Enable interactive effects',
+    },
+    press: {
+      control: 'boolean',
+      description: 'Enable press effect',
+    },
+    liftOnHover: {
+      control: 'boolean',
+      description: 'Enable lift on hover effect',
     },
   },
   args: {
-    variant: 'crystal',
-    blur: 'medium',
+    intent: 'neutral',
+    elevation: 'level2',
+    tier: 'high',
     intensity: 'medium',
-    depth: 'medium',
-    elevation: 2,
-    border: 'subtle',
-    optimization: 'auto',
+    rounded: 'md',
     glow: false,
-    hover: true,
+    interactive: true,
+    press: false,
+    liftOnHover: false,
   },
 };
 
@@ -85,64 +83,10 @@ export const Default: Story = {
   },
 };
 
-export const IntensityLevels: Story = {
-  render: (args) => (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl">
-      {(['subtle', 'medium', 'strong', 'intense', 'ultra', 'extreme'] as const).map((intensity) => (
-        <OptimizedGlassCore key={intensity} {...args} intensity={intensity}>
-          <div className="p-4 text-center">
-            <h4 className="text-sm font-medium capitalize mb-1">{intensity}</h4>
-            <p className="text-xs opacity-70">Intensity</p>
-          </div>
-        </OptimizedGlassCore>
-      ))}
-    </div>
-  ),
-  args: {
-    children: null,
-  },
-};
-
-export const DepthEffects: Story = {
-  render: (args) => (
-    <div className="grid grid-cols-2 gap-4 max-w-2xl">
-      {(['shallow', 'medium', 'deep', 'extreme'] as const).map((depth) => (
-        <OptimizedGlassCore key={depth} {...args} depth={depth}>
-          <div className="p-4 text-center">
-            <h4 className="text-sm font-medium capitalize mb-1">{depth}</h4>
-            <p className="text-xs opacity-70">Depth</p>
-          </div>
-        </OptimizedGlassCore>
-      ))}
-    </div>
-  ),
-  args: {
-    children: null,
-  },
-};
-
-export const BorderStyles: Story = {
-  render: (args) => (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl">
-      {(['subtle', 'medium', 'strong', 'glow', 'gradient', 'neon'] as const).map((border) => (
-        <OptimizedGlassCore key={border} {...args} border={border}>
-          <div className="p-4 text-center">
-            <h4 className="text-sm font-medium capitalize mb-1">{border}</h4>
-            <p className="text-xs opacity-70">Border</p>
-          </div>
-        </OptimizedGlassCore>
-      ))}
-    </div>
-  ),
-  args: {
-    children: null,
-  },
-};
-
 export const ElevationLevels: Story = {
   render: (args) => (
     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl">
-      {([0, 1, 2, 3, 4, 'float'] as const).map((elevation) => (
+      {(['level1', 'level2', 'level3', 'level4', 'level5'] as const).map((elevation) => (
         <OptimizedGlassCore key={elevation} {...args} elevation={elevation}>
           <div className="p-4 text-center">
             <h4 className="text-sm font-medium capitalize mb-1">{elevation}</h4>
@@ -157,9 +101,45 @@ export const ElevationLevels: Story = {
   },
 };
 
-export const PerformanceOptimized: Story = {
+export const IntentVariants: Story = {
+  render: (args) => (
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl">
+      {(['neutral', 'primary', 'success', 'warning', 'danger', 'info'] as const).map((intent) => (
+        <OptimizedGlassCore key={intent} {...args} intent={intent}>
+          <div className="p-4 text-center">
+            <h4 className="text-sm font-medium capitalize mb-1">{intent}</h4>
+            <p className="text-xs opacity-70">Intent</p>
+          </div>
+        </OptimizedGlassCore>
+      ))}
+    </div>
+  ),
   args: {
-    optimization: 'high',
+    children: null,
+  },
+};
+
+export const PerformanceTiers: Story = {
+  render: (args) => (
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl">
+      {(['high', 'medium', 'low'] as const).map((tier) => (
+        <OptimizedGlassCore key={tier} {...args} tier={tier}>
+          <div className="p-4 text-center">
+            <h4 className="text-sm font-medium capitalize mb-1">{tier}</h4>
+            <p className="text-xs opacity-70">Performance Tier</p>
+          </div>
+        </OptimizedGlassCore>
+      ))}
+    </div>
+  ),
+  args: {
+    children: null,
+  },
+};
+
+export const HighPerformance: Story = {
+  args: {
+    tier: 'high',
     hardwareAcceleration: true,
     children: (
       <div className="p-6 text-center">
@@ -170,7 +150,7 @@ export const PerformanceOptimized: Story = {
         </div>
         <h3 className="text-lg font-semibold mb-2">High Performance</h3>
         <p className="text-sm opacity-80">
-          Optimized for maximum performance with hardware acceleration enabled.
+          Optimized for maximum performance with high tier enabled.
         </p>
       </div>
     ),
@@ -179,16 +159,15 @@ export const PerformanceOptimized: Story = {
 
 export const Showcase: Story = {
   args: {
-    variant: 'metallic',
-    intensity: 'ultra',
-    depth: 'extreme',
-    elevation: 4,
-    border: 'neon',
+    intent: 'primary',
+    elevation: 'level4',
+    tier: 'high',
+    intensity: 'strong',
+    rounded: 'lg',
     glow: true,
-    glowColor: 'rgba(139, 92, 246, 0.6)',
-    glowIntensity: 0.8,
-    tint: 'rgba(139, 92, 246, 0.1)',
-    hover: true,
+    interactive: true,
+    liftOnHover: true,
+    press: true,
     children: (
       <div className="p-8 text-center">
         <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 flex items-center justify-center shadow-2xl">
@@ -197,16 +176,16 @@ export const Showcase: Story = {
           </svg>
         </div>
         <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-          Ultra Glass Effect
+          Premium Glass Effect
         </h3>
         <p className="text-sm opacity-80 mb-6 leading-relaxed">
-          Experience the pinnacle of glass morphism technology with extreme depth,
-          metallic variant, neon borders, and dynamic glow effects.
+          Experience the pinnacle of glass morphism technology with high elevation,
+          primary intent, and interactive effects.
         </p>
         <div className="flex flex-wrap justify-center gap-2">
-          <span className="px-3 py-1 bg-purple-500/20 rounded-full text-xs font-medium">Ultra Performance</span>
-          <span className="px-3 py-1 bg-pink-500/20 rounded-full text-xs font-medium">Extreme Depth</span>
-          <span className="px-3 py-1 bg-blue-500/20 rounded-full text-xs font-medium">Neon Glow</span>
+          <span className="px-3 py-1 bg-purple-500/20 rounded-full text-xs font-medium">High Performance</span>
+          <span className="px-3 py-1 bg-pink-500/20 rounded-full text-xs font-medium">Interactive</span>
+          <span className="px-3 py-1 bg-blue-500/20 rounded-full text-xs font-medium">Premium Quality</span>
         </div>
       </div>
     ),

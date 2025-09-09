@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * AuraGlass Canonical Token Schema - SINGLE SOURCE OF TRUTH
  * 
@@ -11,7 +12,7 @@
  * - No undefined/empty values allowed
  */
 
-export type GlassElevation = 'level1' | 'level2' | 'level3' | 'level4';
+export type GlassElevation = 'level1' | 'level2' | 'level3' | 'level4' | 'level5';
 export type GlassIntent = 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
 export type QualityTier = 'auto' | 'low' | 'medium' | 'high';
 
@@ -24,6 +25,13 @@ export interface GlassSurfaceSpec {
   noiseOpacity?: number; // 0..0.15
   highlightOpacity?: number; // 0..0.25
   text: { primary: string; secondary: string }; // must meet AA over surface
+}
+
+export interface GlassPerformanceSpec {
+  blurMultiplier: number;
+  opacityMultiplier: number;
+  animationSpeedMultiplier: number;
+  renderQuality: 'low' | 'medium' | 'high';
 }
 
 export interface AuraGlassTokens {
@@ -96,6 +104,21 @@ export const AURA_GLASS: AuraGlassTokens = {
           primary: 'rgba(255,255,255,0.95)',
           secondary: 'rgba(255,255,255,0.85)'
         }
+      },
+      level5: {
+        backdropBlur: { px: 24 },
+        surface: {
+          base: 'linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(59,130,246,0.3) 50%, rgba(147,51,234,0.2) 100%)',
+        },
+        border: { color: 'rgba(255,255,255,0.8)', width: 3, style: 'solid' },
+        outerShadow: { color: 'rgba(0,0,0,0.35)', x: 0, y: 20, blur: 48, spread: 0 },
+        innerGlow: { color: 'rgba(255,255,255,0.35)', spread: 2, blur: 20 },
+        noiseOpacity: 0.12,
+        highlightOpacity: 0.3,
+        text: {
+          primary: 'rgba(255,255,255,0.95)',
+          secondary: 'rgba(255,255,255,0.85)'
+        }
       }
     },
     primary: {
@@ -153,6 +176,21 @@ export const AURA_GLASS: AuraGlassTokens = {
         innerGlow: { color: 'rgba(59,130,246,0.3)', spread: 1, blur: 16 },
         noiseOpacity: 0.1,
         highlightOpacity: 0.25,
+        text: {
+          primary: 'rgba(255,255,255,0.95)',
+          secondary: 'rgba(255,255,255,0.85)'
+        }
+      },
+      level5: {
+        backdropBlur: { px: 24 },
+        surface: {
+          base: 'linear-gradient(135deg, rgba(59,130,246,0.7) 0%, rgba(29,78,216,0.5) 100%)',
+        },
+        border: { color: 'rgba(59,130,246,0.9)', width: 3, style: 'solid' },
+        outerShadow: { color: 'rgba(59,130,246,0.35)', x: 0, y: 20, blur: 48, spread: 0 },
+        innerGlow: { color: 'rgba(59,130,246,0.35)', spread: 2, blur: 20 },
+        noiseOpacity: 0.12,
+        highlightOpacity: 0.3,
         text: {
           primary: 'rgba(255,255,255,0.95)',
           secondary: 'rgba(255,255,255,0.85)'
@@ -218,6 +256,21 @@ export const AURA_GLASS: AuraGlassTokens = {
           primary: 'rgba(255,255,255,0.95)',
           secondary: 'rgba(255,255,255,0.85)'
         }
+      },
+      level5: {
+        backdropBlur: { px: 24 },
+        surface: {
+          base: 'linear-gradient(135deg, rgba(34,197,94,0.6) 0%, rgba(22,163,74,0.4) 100%)',
+        },
+        border: { color: 'rgba(34,197,94,0.8)', width: 3, style: 'solid' },
+        outerShadow: { color: 'rgba(34,197,94,0.25)', x: 0, y: 20, blur: 48, spread: 0 },
+        innerGlow: { color: 'rgba(34,197,94,0.25)', spread: 2, blur: 20 },
+        noiseOpacity: 0.12,
+        highlightOpacity: 0.3,
+        text: {
+          primary: 'rgba(255,255,255,0.95)',
+          secondary: 'rgba(255,255,255,0.85)'
+        }
       }
     },
     warning: {
@@ -275,6 +328,21 @@ export const AURA_GLASS: AuraGlassTokens = {
         innerGlow: { color: 'rgba(245,158,11,0.22)', spread: 1, blur: 16 },
         noiseOpacity: 0.1,
         highlightOpacity: 0.25,
+        text: {
+          primary: 'rgba(255,255,255,0.95)',
+          secondary: 'rgba(255,255,255,0.85)'
+        }
+      },
+      level5: {
+        backdropBlur: { px: 24 },
+        surface: {
+          base: 'linear-gradient(135deg, rgba(245,158,11,0.6) 0%, rgba(217,119,6,0.4) 100%)',
+        },
+        border: { color: 'rgba(245,158,11,0.8)', width: 3, style: 'solid' },
+        outerShadow: { color: 'rgba(245,158,11,0.25)', x: 0, y: 20, blur: 48, spread: 0 },
+        innerGlow: { color: 'rgba(245,158,11,0.25)', spread: 2, blur: 20 },
+        noiseOpacity: 0.12,
+        highlightOpacity: 0.3,
         text: {
           primary: 'rgba(255,255,255,0.95)',
           secondary: 'rgba(255,255,255,0.85)'
@@ -340,6 +408,21 @@ export const AURA_GLASS: AuraGlassTokens = {
           primary: 'rgba(255,255,255,0.95)',
           secondary: 'rgba(255,255,255,0.85)'
         }
+      },
+      level5: {
+        backdropBlur: { px: 24 },
+        surface: {
+          base: 'linear-gradient(135deg, rgba(239,68,68,0.6) 0%, rgba(220,38,38,0.4) 100%)',
+        },
+        border: { color: 'rgba(239,68,68,0.8)', width: 3, style: 'solid' },
+        outerShadow: { color: 'rgba(239,68,68,0.25)', x: 0, y: 20, blur: 48, spread: 0 },
+        innerGlow: { color: 'rgba(239,68,68,0.25)', spread: 2, blur: 20 },
+        noiseOpacity: 0.12,
+        highlightOpacity: 0.3,
+        text: {
+          primary: 'rgba(255,255,255,0.95)',
+          secondary: 'rgba(255,255,255,0.85)'
+        }
       }
     },
     info: {
@@ -397,6 +480,21 @@ export const AURA_GLASS: AuraGlassTokens = {
         innerGlow: { color: 'rgba(14,165,233,0.22)', spread: 1, blur: 16 },
         noiseOpacity: 0.1,
         highlightOpacity: 0.25,
+        text: {
+          primary: 'rgba(255,255,255,0.95)',
+          secondary: 'rgba(255,255,255,0.85)'
+        }
+      },
+      level5: {
+        backdropBlur: { px: 24 },
+        surface: {
+          base: 'linear-gradient(135deg, rgba(14,165,233,0.6) 0%, rgba(2,132,199,0.4) 100%)',
+        },
+        border: { color: 'rgba(14,165,233,0.8)', width: 3, style: 'solid' },
+        outerShadow: { color: 'rgba(14,165,233,0.25)', x: 0, y: 20, blur: 48, spread: 0 },
+        innerGlow: { color: 'rgba(14,165,233,0.25)', spread: 2, blur: 20 },
+        noiseOpacity: 0.12,
+        highlightOpacity: 0.3,
         text: {
           primary: 'rgba(255,255,255,0.95)',
           secondary: 'rgba(255,255,255,0.85)'
@@ -536,3 +634,83 @@ export const glassTokenUtils = {
 
 // Export the canonical tokens as default
 export default AURA_GLASS;
+
+// Legacy glassTokens structure for backward compatibility
+export const glassTokens = {
+  // Elevation levels
+  elevation: {
+    level1: {
+      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.15)',
+      zIndex: 1
+    },
+    level2: {
+      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)',
+      zIndex: 10
+    },
+    level3: {
+      boxShadow: '0 12px 32px rgba(0, 0, 0, 0.25)',
+      zIndex: 100
+    },
+    level4: {
+      boxShadow: '0 16px 40px rgba(0, 0, 0, 0.3)',
+      zIndex: 1000
+    }
+  },
+
+  // Backdrop blur values
+  backdrop: {
+    none: 'none',
+    subtle: 'blur(4px)',
+    medium: 'blur(8px)',
+    strong: 'blur(16px)',
+    intense: 'blur(24px)'
+  },
+
+  // Gradient patterns
+  gradients: {
+    primary: 'linear-gradient(135deg, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0.15) 100%)',
+    secondary: 'linear-gradient(135deg, rgba(59,130,246,0.2) 0%, rgba(147,51,234,0.1) 100%)',
+    primaryRadial: 'radial-gradient(circle at center, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 100%)',
+    mesh: 'linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%), linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%)',
+    iridescent: 'linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7)',
+    rainbow: 'linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3)'
+  },
+
+  // Border styles
+  border: {
+    primary: 'rgba(255,255,255,0.4)',
+    secondary: 'rgba(255,255,255,0.3)',
+    subtle: 'rgba(255,255,255,0.2)',
+    gradient: {
+      rainbow: 'linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4)'
+    }
+  },
+
+  // Surface colors
+  surface: {
+    primary: 'rgba(255,255,255,0.25)',
+    secondary: 'rgba(255,255,255,0.15)',
+    success: 'rgba(34,197,94,0.25)',
+    warning: 'rgba(245,158,11,0.25)',
+    error: 'rgba(239,68,68,0.25)',
+    dark: 'rgba(0,0,0,0.25)',
+    darkSubtle: 'rgba(0,0,0,0.15)'
+  },
+
+  // Noise patterns
+  noise: {
+    subtle: 'url("data:image/svg+xml,%3Csvg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E")'
+  },
+
+  // Glow effects
+  glow: {
+    primary: 'rgba(59,130,246,0.6)',
+    secondary: 'rgba(147,51,234,0.6)',
+    success: 'rgba(34,197,94,0.6)',
+    warning: 'rgba(245,158,11,0.6)',
+    error: 'rgba(239,68,68,0.6)'
+  }
+};
+
+// Alias for backward compatibility
+export const glassUtils = glassTokenUtils;

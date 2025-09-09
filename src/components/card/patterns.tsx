@@ -1,5 +1,6 @@
 import { GlassButton } from '../button/GlassButton';
 
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 /**
  * Card Composition Patterns
  * Common card layouts and patterns
@@ -26,6 +27,15 @@ export interface BasicCardProps {
   children: React.ReactNode;
   actions?: React.ReactNode;
   className?: string;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 export function BasicCard({ title, description, children, actions, className }: BasicCardProps) {

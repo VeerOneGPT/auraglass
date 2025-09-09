@@ -1,20 +1,17 @@
 import React, { forwardRef, useMemo } from 'react';
 import { cn } from '../lib/utilsComprehensive';
-import { createGlassMixin, GlassVariant, BlurIntensity, GlassElevation } from '../core/mixins/glassMixins';
+import { createGlassStyle, GlassOptions } from '../core/mixins/glassMixins';
 import { detectDevice } from '../utils/deviceCapabilities';
 
 export interface OptimizedGlassProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Glass morphism variant */
-  variant?: GlassVariant;
+  /** Glass intent (replaces variant) */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
 
-  /** Blur strength */
-  blur?: BlurIntensity;
+  /** Glass elevation level */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4' | 'level5';
 
-  /** Background opacity */
-  opacity?: number;
-
-  /** Elevation level */
-  elevation?: GlassElevation;
+  /** Performance tier */
+  tier?: 'high' | 'medium' | 'low';
 
   /** Border radius */
   rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
@@ -49,6 +46,12 @@ export interface OptimizedGlassProps extends React.HTMLAttributes<HTMLDivElement
   /** Border configuration */
   border?: 'none' | 'subtle' | 'medium' | 'strong' | 'glow' | 'gradient' | 'neon' | 'dynamic' | 'particle';
 
+  /** Blur intensity for backdrop-filter */
+  blur?: 'none' | 'subtle' | 'medium' | 'strong' | 'intense';
+
+  /** Glass variant */
+  variant?: 'clear' | 'frosted' | 'tinted' | 'luminous' | 'dynamic' | 'crystal';
+
   /** Enable interactive effects */
   interactive?: boolean;
 
@@ -80,28 +83,19 @@ export interface OptimizedGlassProps extends React.HTMLAttributes<HTMLDivElement
 const OptimizedGlassCore = forwardRef<HTMLDivElement, OptimizedGlassProps>(
   (
     {
-      variant = 'frosted',
-      blur = 'standard',
-      opacity = 0.25,
-      elevation = 1,
+      intent = 'neutral',
+      elevation = 'level2', 
+      tier = 'high',
       rounded = 'md',
       glow = false,
       glowColor = 'rgba(255, 255, 255, 0.5)',
       glowIntensity = 0.5,
       hover = false,
-      optimization = 'high',
-      hardwareAcceleration = true,
-      intensity = 'medium',
-      depth = 'medium',
-      tint,
-      border = 'subtle',
       interactive = false,
       press = false,
       animation = 'none',
-      performanceMode = 'balanced',
       liftOnHover = false,
       hoverSheen = false,
-      lighting = 'none',
       className,
       children,
       style,
@@ -109,13 +103,14 @@ const OptimizedGlassCore = forwardRef<HTMLDivElement, OptimizedGlassProps>(
     },
     ref
   ) => {
-    // Detect device capabilities for optimization
+    // Detect device capabilities for auto tier selection
     const device = useMemo(() => detectDevice(), []);
 
-    // Determine optimization level based on device capabilities
-    const computedOptimization = useMemo(() => {
-      if (optimization !== 'auto') return optimization;
+    // Automatically determine performance tier based on device capabilities
+    const computedTier = useMemo(() => {
+      if (tier !== 'high') return tier; // Respect explicitly set tier
 
+      // Auto-detect performance tier
       if (device.capabilities.gpu && device.capabilities.hardwareAcceleration) {
         return 'high';
       } else if (device.capabilities.webgl) {
@@ -123,65 +118,39 @@ const OptimizedGlassCore = forwardRef<HTMLDivElement, OptimizedGlassProps>(
       } else {
         return 'low';
       }
-    }, [optimization, device.capabilities]);
+    }, [tier, device.capabilities]);
 
-    // Optimize glass styles based on performance level
-    const optimizedStyles = useMemo(() => {
-      const baseStyles = createGlassMixin({
-        variant,
-        blur: computedOptimization === 'low' ? 'subtle' : (intensity === 'subtle' ? 'subtle' : intensity === 'medium' ? 'medium' : intensity === 'strong' ? 'strong' : 'intense'),
-        opacity: computedOptimization === 'low' ? 0.2 : opacity,
+    // Use unified glass system with performance tier
+    const glassStyles = useMemo(() => {
+      const glassOptions: GlassOptions = {
+        intent,
         elevation,
-        tint,
+        tier: computedTier,
         interactive,
-        glow: glow, // Always allow glow regardless of performance
-        glowColor,
-        glowIntensity,
-        borderRadius: rounded === 'none' ? '0px' : rounded === 'sm' ? '4px' : rounded === 'md' ? '8px' : rounded === 'lg' ? '12px' : rounded === 'xl' ? '16px' : rounded === 'full' ? '9999px' : '8px',
-      });
+        hoverLift: liftOnHover,
+        focusRing: interactive,
+        press,
+      };
 
-      // Add hardware acceleration
-      if (hardwareAcceleration && computedOptimization !== 'low') {
-        baseStyles.transform = baseStyles.transform || 'translateZ(0)';
-        baseStyles.willChange = 'transform, opacity';
-      }
-
-      // KEEP GLASS EFFECTS ALWAYS - Never disable glassmorphism
-      // Performance optimizations that DON'T kill the glass effects
-      if (computedOptimization === 'low') {
-        // Reduce blur but keep the effect
-        baseStyles.backdropFilter = 'blur(8px) saturate(1.5) brightness(1.1)';
-        baseStyles.WebkitBackdropFilter = 'blur(8px) saturate(1.5) brightness(1.1)';
-      }
-
-      return baseStyles;
+      return createGlassStyle(glassOptions);
     }, [
-      variant,
-      blur,
-      opacity,
-      elevation,
-      glow,
-      glowColor,
-      glowIntensity,
-      rounded,
-      computedOptimization,
-      hardwareAcceleration,
-      intensity,
-      depth,
-      tint,
-      border,
+      intent,
+      elevation, 
+      computedTier,
       interactive,
-      press,
-      animation,
-      performanceMode,
       liftOnHover,
-      hoverSheen,
-      lighting,
+      press,
     ]);
 
-    // Combine custom styles with optimized glass styles
+    // Add border radius and any custom styles 
     const combinedStyles = {
-      ...optimizedStyles,
+      ...glassStyles,
+      borderRadius: rounded === 'none' ? '0px' : 
+                   rounded === 'sm' ? '4px' : 
+                   rounded === 'md' ? '8px' : 
+                   rounded === 'lg' ? '12px' : 
+                   rounded === 'xl' ? '16px' : 
+                   rounded === 'full' ? '9999px' : '8px',
       ...style,
     };
 
@@ -190,23 +159,16 @@ const OptimizedGlassCore = forwardRef<HTMLDivElement, OptimizedGlassProps>(
         ref={ref}
         className={cn(
           'optimized-glass-surface',
+          `glass-${intent}-${elevation}`,
           {
-            'glass-frosted': variant === 'frosted',
-            'glass-crystal': variant === 'crystal',
-            'glass-tinted': variant === 'tinted',
-            'glass-metallic': variant === 'metallic',
-            'glass-neon': variant === 'neon',
-            'glass-hover': hover,
             'glass-interactive': interactive,
             'glass-lift-on-hover': liftOnHover,
             'glass-hover-sheen': hoverSheen,
-            'glass-glow': glow && computedOptimization !== 'low',
-            'glass-optimized-high': computedOptimization === 'high',
-            'glass-optimized-medium': computedOptimization === 'medium',
-            'glass-optimized-low': computedOptimization === 'low',
-            [`glass-intensity-${intensity}`]: intensity,
-            [`glass-depth-${depth}`]: depth,
-            [`glass-border-${border}`]: border && border !== 'none',
+            'glass-glow': glow,
+            'glass-press': press,
+            'glass-tier-high': computedTier === 'high',
+            'glass-tier-medium': computedTier === 'medium',  
+            'glass-tier-low': computedTier === 'low',
           },
           className
         )}

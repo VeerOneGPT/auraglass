@@ -4,10 +4,12 @@
  * A button component with ripple effect feedback.
  */
 import React, { forwardRef, useState, useRef, useCallback } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import { GlassButton as Button } from '../button'; // Import base Button
+import { GlassButton as Button } from '../button';
+import { glassStyleCSS } from '../../core/mixins/glassMixins';
+// Import base Button
 import { GlassButtonProps as ButtonProps } from '../button/types'; // Import ButtonProps from correct file
 
 import { RippleButtonProps } from './types';
@@ -73,6 +75,12 @@ const RippleWrapper = styled.div`
   display: inline-block; // Or block if fullWidth
   overflow: hidden;
   // Match Button's border radius - Get it from theme or pass as prop if variable
+  
+  ${glassStyleCSS({
+    intent: 'neutral',
+    elevation: 'level2',
+    tier: 'high'
+  })}
   border-radius: 8px; 
   // Ensure wrapper matches button dimensions
   // This might require passing size/variant props to style correctly

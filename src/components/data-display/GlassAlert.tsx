@@ -1,10 +1,11 @@
+import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 'use client';
 
 import { GlassButton } from '../button/GlassButton';
 
 import { cn } from '@/design-system/utilsCore';
 import { AlertCircle, AlertTriangle, CheckCircle, Info, X } from 'lucide-react';
-import * as React from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -54,7 +55,7 @@ const GlassAlert = React.forwardRef<HTMLDivElement, GlassAlertProps>(
     className,
     variant = 'default',
     size = 'md',
-    elevation = 1,
+    elevation = 'level1',
     showIcon = true,
     icon,
     dismissible = false,
@@ -77,8 +78,8 @@ const GlassAlert = React.forwardRef<HTMLDivElement, GlassAlertProps>(
       lg: 'p-6 text-lg',
     };
 
-    // Get OptimizedGlass variant  
-    const getGlassVariant = () => {
+    // Get OptimizedGlass intent
+    const getGlassIntent = (): 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info' => {
       switch (variant) {
         case 'success':
           return 'success';
@@ -86,9 +87,9 @@ const GlassAlert = React.forwardRef<HTMLDivElement, GlassAlertProps>(
           return 'warning';
         case 'error':
         case 'destructive':
-          return 'error';
+          return 'danger';
         default:
-          return 'default';
+          return 'neutral';
       }
     };
 
@@ -119,18 +120,24 @@ const GlassAlert = React.forwardRef<HTMLDivElement, GlassAlertProps>(
     }
 
     const displayVariant = (variant === 'destructive' ? 'error' : variant) as keyof typeof alertTextVariants;
+
+    // Convert numeric elevation to level string
+    const getElevationLevel = (elev?: 0 | 1 | 2 | 3 | 4): 'level1' | 'level2' | 'level3' | 'level4' | undefined => {
+      if (elev === 0) return undefined;
+      if (elev === 1) return 'level1';
+      if (elev === 2) return 'level2';
+      if (elev === 3) return 'level3';
+      if (elev === 4) return 'level4';
+      return 'level1'; // default
+    };
     const alertContent = (
       <OptimizedGlass
-        variant={getGlassVariant()}
-        elevation={elevation}
-        blur={blur}
-        animation={animation}
-        border={border}
-        lighting={lighting}
-        intensity={intensity}
-        performanceMode={performanceMode}
-        depth={2}
-        tint="neutral"
+        intent={getGlassIntent()}
+        elevation={getElevationLevel(elevation)}
+        tier="medium"
+        rounded="md"
+        glow={false}
+        hover={false}
         ref={ref}
         className={cn(
           'relative w-full transition-all duration-200',

@@ -1,3 +1,4 @@
+import React from 'react';
 // Performance optimization utilities
 
 export interface PerformanceMetrics {

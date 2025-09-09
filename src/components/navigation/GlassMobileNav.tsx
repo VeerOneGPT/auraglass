@@ -2,6 +2,7 @@
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useEffect, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { GlassButton, IconButton } from '../button/GlassButton';
@@ -300,8 +301,8 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
 
         {/* Navigation */}
         <OptimizedGlass
-          variant="frosted"
-          elevation={2}
+            intent="neutral"
+          elevation="level2"
           intensity="medium"
           depth={2}
           tint="neutral"

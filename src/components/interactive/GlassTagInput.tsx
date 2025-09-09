@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '@/design-system/utilsCore';
 import { GlassButton } from '../button/GlassButton';
 import { OptimizedGlass } from '../../primitives';
@@ -24,7 +25,7 @@ export function GlassTagInput({ value, onChange, placeholder = 'Add tag…', sug
   const remove = (tag: string) => onChange(value.filter(v => v !== tag));
 
   return (
-    <OptimizedGlass elevation={1} className={cn('rounded-xl p-2 flex flex-wrap gap-2', className)}>
+    <OptimizedGlass elevation={'level1'} className={cn('rounded-xl p-2 flex flex-wrap gap-2', className)}>
       {value.map((t) => (
         <span key={t} className="inline-flex items-center gap-1 px-2 py-1 text-sm rounded-lg bg-white/10 border border-white/20">
           {t}

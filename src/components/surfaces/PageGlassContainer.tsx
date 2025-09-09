@@ -6,7 +6,7 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { glassSurfaceFn as glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useGlassTheme } from '../../hooks/useGlassTheme';
@@ -107,7 +107,7 @@ const PageGlassContainerComponent = (
     children,
     className,
     style,
-    elevation = 2,
+    elevation = 'level2',
     blurStrength = 'standard',
     borderRadius = 'none',
     fullWidth = true,

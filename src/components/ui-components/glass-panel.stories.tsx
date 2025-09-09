@@ -20,7 +20,7 @@ const meta: Meta<typeof GlassPanel> = {
     },
     elevation: {
       control: { type: 'select' },
-      options: [0, 1, 2, 3, 4],
+      options: ['level1', 'level2', 'level3', 'level4'],
       description: 'Panel elevation level',
     },
     padding: {
@@ -35,7 +35,7 @@ const meta: Meta<typeof GlassPanel> = {
   },
   args: {
     variant: 'default',
-    elevation: 1,
+    elevation: 'level1',
     padding: 'md',
     interactive: false,
   },
@@ -75,12 +75,12 @@ export const Variants: Story = {
 
 export const Elevations: Story = {
   render: (args) => (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl">
-      {([0, 1, 2, 3, 4] as const).map((elevation) => (
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 max-w-5xl">
+      {( ['level1', 'level2', 'level3', 'level4'] as const).map((elevation) => (
         <GlassPanel key={elevation} {...args} elevation={elevation}>
           <div className="text-center">
-            <h4 className="text-sm font-medium mb-2">Elevation {elevation}</h4>
-            <p className="text-xs opacity-70">Panel with elevation level {elevation}.</p>
+            <h4 className="text-sm font-medium mb-2 capitalize">{elevation} Elevation</h4>
+            <p className="text-xs opacity-70">Panel with {elevation} elevation.</p>
           </div>
         </GlassPanel>
       ))}
@@ -126,7 +126,7 @@ export const Interactive: Story = {
 export const ContentShowcase: Story = {
   args: {
     variant: 'primary',
-    elevation: 3,
+    elevation: 'level3',
     padding: 'lg',
     children: (
       <div className="space-y-4">
@@ -162,7 +162,7 @@ export const ContentShowcase: Story = {
 export const DashboardLayout: Story = {
   render: (args) => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl">
-      <GlassPanel {...args} variant="primary" elevation={2}>
+      <GlassPanel {...args} variant="primary" elevation="level2">
         <div className="text-center">
           <div className="text-3xl mb-2">📊</div>
           <h4 className="text-lg font-semibold mb-1">Analytics</h4>
@@ -170,7 +170,7 @@ export const DashboardLayout: Story = {
         </div>
       </GlassPanel>
 
-      <GlassPanel {...args} variant="success" elevation={2}>
+      <GlassPanel {...args} variant="success" elevation="level2">
         <div className="text-center">
           <div className="text-3xl mb-2">💰</div>
           <h4 className="text-lg font-semibold mb-1">Revenue</h4>
@@ -178,7 +178,7 @@ export const DashboardLayout: Story = {
         </div>
       </GlassPanel>
 
-      <GlassPanel {...args} variant="warning" elevation={2}>
+      <GlassPanel {...args} variant="warning" elevation="level2">
         <div className="text-center">
           <div className="text-3xl mb-2">👥</div>
           <h4 className="text-lg font-semibold mb-1">Users</h4>
@@ -186,7 +186,7 @@ export const DashboardLayout: Story = {
         </div>
       </GlassPanel>
 
-      <GlassPanel {...args} variant="error" elevation={1}>
+      <GlassPanel {...args} variant="error" elevation="level1">
         <div className="text-center">
           <div className="text-3xl mb-2">⚠️</div>
           <h4 className="text-lg font-semibold mb-1">Alerts</h4>
@@ -194,7 +194,7 @@ export const DashboardLayout: Story = {
         </div>
       </GlassPanel>
 
-      <GlassPanel {...args} variant="default" elevation={1}>
+      <GlassPanel {...args} variant="default" elevation="level1">
         <div className="text-center">
           <div className="text-3xl mb-2">🔧</div>
           <h4 className="text-lg font-semibold mb-1">Settings</h4>
@@ -202,7 +202,7 @@ export const DashboardLayout: Story = {
         </div>
       </GlassPanel>
 
-      <GlassPanel {...args} variant="primary" elevation={1}>
+      <GlassPanel {...args} variant="primary" elevation="level1">
         <div className="text-center">
           <div className="text-3xl mb-2">📈</div>
           <h4 className="text-lg font-semibold mb-1">Reports</h4>

@@ -26,7 +26,7 @@ import {
   BLUR_STRENGTHS,
   GLOW_INTENSITIES,
 } from './themeConstants';
-import { colors, typography, spacing, shadows, borderRadius, zIndex } from './tokens';
+import { AURA_GLASS } from '../tokens/glass';
 
 // ------ ColorMode Context ------
 interface ColorModeContextType {
@@ -506,7 +506,7 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
   // Create style utility functions
   const getColor = useCallback((path: string, fallback = '') => {
     const parts = path.split('.');
-    let value: any = colors;
+    let value: any = AURA_GLASS.surfaces;
 
     for (const part of parts) {
       if (value && typeof value === 'object' && part in value) {
@@ -519,72 +519,6 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
     return typeof value === 'string' ? value : fallback;
   }, []);
 
-  const getSpacing = useCallback((size: string | number) => {
-    if (typeof size === 'number') {
-      return `${size * 8}px`;
-    }
-
-    if (spacing[size as keyof typeof spacing]) {
-      return spacing[size as keyof typeof spacing];
-    }
-
-    return '0';
-  }, []);
-
-  const getShadow = useCallback((level: number, color?: string): string => {
-    const shadowKey = `${
-      level < 1
-        ? 'none'
-        : level > 5
-        ? '5xl'
-        : level === 1
-        ? 'sm'
-        : level === 2
-        ? 'md'
-        : level === 3
-        ? 'lg'
-        : level === 4
-        ? 'xl'
-        : '2xl'
-    }`;
-
-    let shadow = shadows[shadowKey as keyof typeof shadows] || shadows.none;
-
-    // Handle case where shadow might be an object (from nested properties)
-    if (typeof shadow !== 'string') {
-      // Default to a standard shadow if the retrieved value is an object
-      shadow = shadows.md;
-    }
-
-    // Apply custom color if provided
-    if (color && shadow !== 'none') {
-      // Replace rgba colors in shadow string
-      shadow = shadow.replace(/rgba\([^)]+\)/g, color);
-    }
-
-    return shadow;
-  }, []);
-
-  const getBorderRadius = useCallback((size: string) => {
-    return borderRadius[size as keyof typeof borderRadius] || '0';
-  }, []);
-
-  const getZIndex = useCallback((layer: string): number => {
-    const index = zIndex[layer as keyof typeof zIndex];
-    // Handle special cases like 'auto'
-    if (typeof index === 'string') {
-      return 0; // Default to 0 for non-numeric values
-    }
-    return index || 0;
-  }, []);
-
-  const getTypography = useCallback((variant: string) => {
-    if (variant in typography) {
-      return typography[variant as keyof typeof typography];
-    }
-
-    return {};
-  }, []);
 
   // Create glass effect utilities
   const getBlurStrength = useCallback((strength: string | number) => {
@@ -658,14 +592,14 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
       // Ensure elevation is a number
       const elevation: number =
         typeof rawElevation === 'string'
-          ? rawElevation === 'none'
-            ? 0
-            : rawElevation === 'low'
+          ? rawElevation === 'level1'
             ? 1
-            : rawElevation === 'medium'
+            : rawElevation === 'level2'
             ? 2
-            : rawElevation === 'high'
+            : rawElevation === 'level3'
             ? 3
+            : rawElevation === 'level4'
+            ? 4
             : 1
           : Number(rawElevation);
 
@@ -812,7 +746,7 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
   function GlassSurfaceComponent(props: GlassSurfaceProps & { children?: React.ReactNode }) {
     const {
       variant = 'frosted',
-      elevation = 1,
+      elevation = 'level1',
       interactive = false,
       children,
       ...rest
@@ -898,6 +832,41 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
     [themeVariant, setThemeVariant]
   );
 
+  // Theme utility functions
+  const getSpacing = useCallback((size: string | number) => {
+    const spacingMap = {
+      xs: '0.25rem', sm: '0.5rem', md: '1rem', lg: '1.5rem', xl: '2rem'
+    };
+    if (typeof size === 'number') return `${size * 8}px`;
+    return spacingMap[size as keyof typeof spacingMap] || '0';
+  }, []);
+
+  const getShadow = useCallback((level: number, color?: string): string => {
+    const shadowMap = { none: 'none', sm: '0 1px 2px rgba(0,0,0,0.05)', md: '0 4px 6px rgba(0,0,0,0.07)', lg: '0 10px 15px rgba(0,0,0,0.1)' };
+    const key = level < 1 ? 'none' : level === 1 ? 'sm' : level === 2 ? 'md' : 'lg';
+    return shadowMap[key as keyof typeof shadowMap] || shadowMap.md;
+  }, []);
+
+  const getBorderRadius = useCallback((size: string) => {
+    const borderRadiusMap = { none: '0', sm: '0.25rem', md: '0.5rem', lg: '1rem' };
+    return borderRadiusMap[size as keyof typeof borderRadiusMap] || '0';
+  }, []);
+
+  const getZIndex = useCallback((layer: string): number => {
+    const zIndexMap = { base: 0, modal: 1000, tooltip: 1100 };
+    return zIndexMap[layer as keyof typeof zIndexMap] || 0;
+  }, []);
+
+  const getTypography = useCallback((variant: string) => {
+    const typographyMap = {
+      h1: { fontSize: '2.5rem', fontWeight: 600 },
+      h2: { fontSize: '2rem', fontWeight: 600 },
+      h3: { fontSize: '1.5rem', fontWeight: 600 },
+      body: { fontSize: '1rem', fontWeight: 400 },
+    };
+    return typographyMap[variant as keyof typeof typographyMap] || {};
+  }, []);
+
   // StyleUtils context
   const styleUtilsContextValue = useMemo(
     () => ({
@@ -962,13 +931,45 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
 
   // Create unified theme object for styled-components
   const theme = useMemo(() => {
+    // Extract theme tokens with defaults
+    const typography = {
+      h1: { fontSize: '2.5rem', fontWeight: 600 },
+      h2: { fontSize: '2rem', fontWeight: 600 },
+      h3: { fontSize: '1.5rem', fontWeight: 600 },
+      body: { fontSize: '1rem', fontWeight: 400 },
+    };
+    const spacing = {
+      xs: '0.25rem',
+      sm: '0.5rem',
+      md: '1rem',
+      lg: '1.5rem',
+      xl: '2rem',
+    };
+    const shadows = {
+      none: 'none',
+      sm: '0 1px 2px rgba(0,0,0,0.05)',
+      md: '0 4px 6px rgba(0,0,0,0.07)',
+      lg: '0 10px 15px rgba(0,0,0,0.1)',
+    };
+    const borderRadius = {
+      none: '0',
+      sm: '0.25rem',
+      md: '0.5rem',
+      lg: '1rem',
+    };
+    const zIndex = {
+      base: 0,
+      modal: 1000,
+      tooltip: 1100,
+    };
+
     return {
       isDarkMode,
       colorMode: forceColorMode || colorMode,
       themeVariant,
-      colors: {
-        ...colors,
-        // Add variant-specific colors here
+      surfaces: {
+        ...AURA_GLASS.surfaces,
+        // Add variant-specific surfaces here
       },
       typography,
       spacing,

@@ -15,6 +15,7 @@ import {
     Video
 } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 import { GlassButton } from '../button';
 import { CardContent, GlassCard } from '../card';

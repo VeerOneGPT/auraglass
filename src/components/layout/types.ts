@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface GlassContainerVariant {
   default: 'default';
   fluid: 'fluid';
@@ -46,6 +47,15 @@ export interface GlassContainerProps extends React.HTMLAttributes<HTMLDivElement
 
   /** Children */
   children?: React.ReactNode;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 export interface GlassFlexProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'direction'> {

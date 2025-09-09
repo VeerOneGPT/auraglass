@@ -2,6 +2,7 @@
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlassCore as OptimizedGlass, type OptimizedGlassProps } from '../../primitives';
 
 export interface GlassCardProps extends Omit<OptimizedGlassProps, 'variant'> {
@@ -40,7 +41,7 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
     {
       variant = 'default',
       size = 'md',
-      elevation = 1,
+      elevation = 'level1',
       hoverable = false,
       clickable = false,
       loading = false,
@@ -70,11 +71,11 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
       outline: 'ring-1 ring-border/20',
     };
 
-    const getElevation = () => {
-      if (variant === 'elevated') return 2;
-      if (variant === 'feature') return 3;
-      if (variant === 'minimal') return 0;
-      return elevation;
+    const getElevation = (): 'level1' | 'level2' | 'level3' | 'level4' | 'level5' => {
+      if (variant === 'elevated') return 'level2';
+      if (variant === 'feature') return 'level3';
+      if (variant === 'minimal') return 'level1';
+      return elevation || 'level1';
     };
 
     const isInteractive = interactive || hoverable || clickable;
@@ -82,16 +83,12 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
     return (
       <OptimizedGlass
         ref={ref}
-        variant={variant === 'feature' ? 'feature' : variant === 'elevated' ? 'elevated' : variant === 'outlined' ? 'outlined' : 'default'}
         elevation={getElevation()}
-        blur="medium"
         intensity="medium"
-        depth={variant === 'elevated' ? 3 : 1}
-        tint="neutral"
+        depth={variant === 'elevated' ? 'deep' : 'medium'}
         border={variant === 'outlined' ? 'glow' : 'subtle'}
-        animation="none"
         interactive={isInteractive}
-        performanceMode="medium"
+        tier="high"
         className={cn(
           'glass-foundation-complete relative rounded-xl overflow-hidden',
           'transition-all duration-300 ease-out',

@@ -1,8 +1,7 @@
 import React, { forwardRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { glassBorder } from '../../core/mixins/glassBorder';
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { GlassAlert as Alert } from '../data-display/GlassAlert';
 import { GlassAvatar as Avatar } from '../data-display/GlassAvatar';
 import { GlassBadge as Badge } from '../data-display/GlassBadge';
@@ -37,13 +36,21 @@ const StyledDemo = styled.div<{
   width: 100%;
 
   ${({ theme }) => ({
-    ...glassSurface,
+    ...createGlassStyle({
+      intent: 'neutral',
+      elevation: 'level2',
+      tier: 'high'
+    }),
     background: 'rgba(255, 255, 255, 0.4)',
     backdropFilter: 'blur(8px)',
   })}
 
   ${({ theme }) => ({
-    ...glassBorder,
+    ...createGlassStyle({
+      intent: 'neutral',
+      elevation: 'level1',
+      tier: 'high'
+    }),
     border: '1px solid rgba(255, 255, 255, 0.3)',
   })}
 `;
@@ -303,7 +310,7 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
             </Card>
             {showCode && (
               <CodePreview>
-                {`<Paper elevation={2}>
+                {`<Paper elevation={'level2'}>
   <Box p={2}>
     <Typography>Paper Component</Typography>
   </Box>

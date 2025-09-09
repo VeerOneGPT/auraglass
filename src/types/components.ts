@@ -1,3 +1,4 @@
+import React from 'react';
 // Component-specific type definitions
 export * from './components/button';
 export * from './components/layout';

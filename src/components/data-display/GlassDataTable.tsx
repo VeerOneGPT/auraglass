@@ -2,6 +2,7 @@
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useMemo, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { IconButton } from '../button/GlassButton';
 import { GlassInput } from '../input/GlassInput';
@@ -337,8 +338,7 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
 
         {/* Table container */}
         <OptimizedGlass
-          variant="frosted"
-          elevation={2}
+          elevation={'level2'}
           intensity="medium"
           depth={2}
           tint="neutral"

@@ -1,7 +1,7 @@
 import React, { forwardRef, useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { Box } from './Box';
 

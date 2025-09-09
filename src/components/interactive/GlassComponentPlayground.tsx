@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export interface ComponentExample {
@@ -193,8 +194,8 @@ export const GlassComponentPlayground: React.FC<GlassComponentPlaygroundProps> =
   return (
     <OptimizedGlass
       className={`flex flex-col h-full ${className}`}
-      blur="medium"
-      elevation={1}
+      intent="neutral"
+      elevation="level1"
     >
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b border-white/10">

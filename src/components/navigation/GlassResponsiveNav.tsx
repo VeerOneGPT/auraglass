@@ -1,6 +1,7 @@
 'use client';
 
 import React, { forwardRef, useState, useEffect } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { GlassMobileNav, MobileNavItem, MobileNavSection } from './GlassMobileNav';
 import { GlassBottomNav, BottomNavItem } from './GlassBottomNav';
 import { cn } from '@/design-system/utilsCore';
@@ -106,7 +107,7 @@ export const GlassResponsiveNav = forwardRef<HTMLDivElement, GlassResponsiveNavP
       logo,
       title,
       footer,
-      elevation = 2,
+      elevation = 'level2',
       className,
       children,
     },
@@ -173,7 +174,7 @@ export const GlassResponsiveNav = forwardRef<HTMLDivElement, GlassResponsiveNavP
             logo={logo}
             title={title}
             footer={footer}
-            elevation={elevation}
+            elevation={elevation as 0 | 1 | 2 | 3 | 4 | 'float' | 'modal'}
           />
         )}
 
@@ -183,7 +184,7 @@ export const GlassResponsiveNav = forwardRef<HTMLDivElement, GlassResponsiveNavP
             items={bottomNavItems}
             activeId={activeBottomNavId}
             onActiveChange={onBottomNavActiveChange}
-            elevation={elevation}
+            elevation={elevation as 0 | 1 | 2 | 3 | 4 | 'float' | 'modal'}
             variant="default"
             className="z-40"
           />

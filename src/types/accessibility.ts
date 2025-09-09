@@ -1,3 +1,4 @@
+import React from 'react';
 // Accessibility type definitions
 export interface AccessibilitySettings {
   reducedMotion: boolean;

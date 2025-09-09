@@ -1,4 +1,5 @@
 import React from 'react';
+import { createGlassStyle } from '../../../core/mixins/glassMixins';
 
 export interface ChartContainerProps {
   children?: React.ReactNode;
@@ -9,7 +10,7 @@ export interface ChartContainerProps {
   color?: string;
   borderRadius?: number | string;
   borderColor?: string;
-  elevation?: number;
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4' | 'level4';
 }
 
 export const ChartContainer: React.FC<ChartContainerProps> = ({
@@ -21,7 +22,7 @@ export const ChartContainer: React.FC<ChartContainerProps> = ({
   color = 'primary',
   borderRadius = 12,
   borderColor,
-  elevation = 3,
+  elevation = 'level3',
 }) => {
   const containerStyle: React.CSSProperties = {
     position: 'relative',
@@ -32,7 +33,16 @@ export const ChartContainer: React.FC<ChartContainerProps> = ({
     background: glassVariant === 'clear' ? 'transparent' : 'rgba(255, 255, 255, 0.1)',
     backdropFilter: blurStrength !== 'none' ? `blur(${blurStrength === 'light' ? 4 : blurStrength === 'standard' ? 8 : 16}px)` : 'none',
     border: `1px solid ${borderColor || 'rgba(255, 255, 255, 0.2)'}`,
-    boxShadow: elevation > 0 ? `0 ${elevation * 2}px ${elevation * 6}px rgba(0, 0, 0, 0.${elevation * 3})` : 'none',
+    boxShadow: (() => {
+      const elevationMap: Record<string, number> = {
+        'level1': 1,
+        'level2': 2,
+        'level3': 3,
+        'level4': 4
+      };
+      const elevationValue = elevationMap[elevation || 'level1'] || 1;
+      return elevationValue > 0 ? `0 ${elevationValue * 2}px ${elevationValue * 6}px rgba(0, 0, 0, 0.${elevationValue * 3})` : 'none';
+    })(),
     overflow: 'hidden',
     transition: 'all 0.3s ease',
     ...style,

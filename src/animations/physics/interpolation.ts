@@ -1,3 +1,4 @@
+import React from 'react';
 export interface InterpolationPoint {
   x: number;
   y: number;

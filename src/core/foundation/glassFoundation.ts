@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * @deprecated Use createGlassStyle() from glassMixins instead
  * This file contains hardcoded glass foundation values that bypass our unified token system.

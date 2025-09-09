@@ -1,3 +1,4 @@
+import React from 'react';
 // Element type detection and utilities
 
 export type ElementCategory =

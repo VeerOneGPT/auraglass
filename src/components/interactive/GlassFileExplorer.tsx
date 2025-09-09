@@ -20,6 +20,7 @@ import {
     X
 } from 'lucide-react';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '../../lib/utilsComprehensive';
 import { GlassButton } from '../button/GlassButton';
 import { GlassInput } from '../input/GlassInput';
@@ -506,7 +507,7 @@ const GlassFileExplorer = React.forwardRef<HTMLDivElement, GlassFileExplorerProp
                                     >
                                         <div className="relative">
                                                 <OptimizedGlass
-                                                    elevation={1}
+                                                    elevation={'level1'}
                                                     interactive
                                                     className={cn(
                                                         'cursor-pointer rounded-lg transition-all duration-200',
@@ -624,7 +625,7 @@ const GlassFileExplorer = React.forwardRef<HTMLDivElement, GlassFileExplorerProp
                 {/* Create Folder Dialog */}
                 {creatingFolder && (
                     <div className="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center">
-                        <OptimizedGlass elevation={2} className="rounded-lg p-6 max-w-md w-full mx-4">
+                        <OptimizedGlass elevation={'level2'} className="rounded-lg p-6 max-w-md w-full mx-4">
                             <h3 className="text-lg font-semibold text-white mb-4">Create New Folder</h3>
                             <GlassInput
                                 placeholder="Folder name..."

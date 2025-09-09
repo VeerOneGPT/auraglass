@@ -20,7 +20,7 @@ const extendedSpringPresets = {
 };
 
 // Core styling imports
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { useAnimationContext } from '../../contexts/AnimationContext';
 
 import { createThemeContext } from '../../core/themeUtils';

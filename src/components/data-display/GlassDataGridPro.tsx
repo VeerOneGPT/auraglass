@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { GlassDataTable } from './GlassDataTable';
 
 export interface GlassDataGridProProps<T=any> {

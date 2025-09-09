@@ -1,7 +1,7 @@
 import React, { forwardRef } from "react";
 import styled from "styled-components";
 import { GlassCard } from "../card/GlassCard";
-import { glassSurface } from "../../core/mixins/glassSurface";
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from "../../core/themeContext";
 
 // Enhanced glass card with 3D effects and dynamic lighting

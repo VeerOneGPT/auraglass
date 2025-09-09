@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, ChevronRight, Filter, Search, SlidersHorizontal, Tag, X } from 'lucide-react';
 import React, { useCallback, useMemo, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '../../lib/utilsComprehensive';
 import { OptimizedGlass } from '../../primitives';
 import { GlassButton } from '../button/GlassButton';
@@ -223,7 +224,7 @@ const GlassFacetSearch = React.forwardRef<HTMLDivElement, GlassFacetSearchProps>
                                 exit={{ opacity: 0, y: -10 }}
                                 className="absolute top-full left-0 right-0 mt-1 z-10 max-h-60 overflow-y-auto"
                             >
-                                <OptimizedGlass elevation={2} className="rounded-lg overflow-hidden shadow-lg">
+                                <OptimizedGlass elevation={'level2'} className="rounded-lg overflow-hidden shadow-lg">
                                 {suggestions.length > 0 && (
                                     <div className="p-2">
                                         <div className="text-xs text-white/70 px-2 py-1">Suggestions</div>

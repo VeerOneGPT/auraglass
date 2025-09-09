@@ -4,6 +4,7 @@ import { GlassButton } from '../button/GlassButton';
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -132,8 +133,8 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
     return (
       <OptimizedGlass
         ref={ref}
-        variant="primary"
-        elevation={variant === 'transparent' ? 0 : variant === 'floating' ? 2 : 1}
+        intent="primary"
+        elevation={variant === 'transparent' ? 'level1' : variant === 'floating' ? 'level3' : 'level2'}
         intensity="medium"
         depth={2}
         tint="lavender"
@@ -174,7 +175,7 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
                   )} />
                 </div>
               }
-              variant="ghost"
+              intent="neutral"
               size="sm"
               onClick={onMobileMenuToggle}
               aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
@@ -221,8 +222,8 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
               {isSearchFocused && search.suggestions && (search.suggestions?.length || 0) > 0 && (
                 <Motion preset="slideDown" className="absolute top-full left-0 right-0 mt-1 z-[1000]">
                   <OptimizedGlass
-                    variant="frosted"
-                    elevation={4}
+                    intent="neutral"
+                    elevation={'level4'}
                     intensity="strong"
                     depth={2}
                     tint="neutral"
@@ -341,8 +342,8 @@ function NotificationButton({ action }: NotificationButtonProps) {
       {isOpen && action.id === 'notifications' && (
         <Motion preset="slideDown" className="absolute top-full right-0 mt-2 z-[1000]">
           <OptimizedGlass
-          variant="frosted"
-          elevation={4}
+          intent="neutral"
+          elevation={'level4'}
           intensity="strong"
           depth={2}
           tint="neutral"
@@ -517,8 +518,8 @@ function UserMenu({ user, items }: UserMenuProps) {
       {isOpen && (
         <Motion preset="slideDown" className="absolute top-full right-0 mt-2 z-[1000]">
           <OptimizedGlass
-          variant="frosted"
-          elevation={4}
+          intent="neutral"
+          elevation={'level4'}
           intensity="strong"
           depth={2}
           tint="neutral"

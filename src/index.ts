@@ -263,17 +263,13 @@ export * from './hooks/extended';
 
 // Enhanced Core Mixins
 export {
-  createGlassMixin,
+  createGlassStyle,
   createGlassHoverMixin,
   createGlassFocusMixin,
   createGlassDisabledMixin,
-  createAdvancedGlassMixin,
-  hexToRgba,
   generateGlassThemeVariables,
-  createResponsiveGlassMixin,
-  glassCSS,
-  injectGlassAnimations,
-  GLASS_ANIMATIONS
+  createResponsiveGlassStyle,
+  glassCSS
 } from './core/mixins/glassMixins';
 
 export {
@@ -293,7 +289,7 @@ export {
 // Additional Mixins
 export { zSpaceLayer, createZSpaceLayers } from './core/mixins/zSpaceLayer';
 export { glowEffects } from './core/mixins/glowEffects';
-export { interactiveGlass, createRippleEffect, createMagneticEffect } from './core/mixins/interactiveGlass';
+export { createRippleEffect, createMagneticEffect } from './core/mixins/interactiveGlass';
 export { edgeHighlight } from './core/mixins/edgeEffects';
 
 // Animation System
@@ -333,7 +329,7 @@ export * from './utils/deviceCapabilities';
 export * from './utils/performanceOptimizations';
 
 // Design Tokens
-export * from './tokens';
+export * from './tokens/glass';
 
 // Primitives
 export * from './primitives';

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 export type GlassModalVariantType = 'default' | 'fullscreen' | 'centered' | 'side' | 'bottom';
 
 export type GlassModalSizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -80,6 +81,15 @@ export interface GlassModalProps {
   /** ARIA attributes */
   'aria-labelledby'?: string;
   'aria-describedby'?: string;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 export interface GlassDialogProps extends Omit<GlassModalProps, 'variant'> {

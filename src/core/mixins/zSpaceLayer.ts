@@ -1,8 +1,9 @@
+import React from 'react';
 import { CSSProperties } from 'react';
 
 export interface ZSpaceLayerConfig {
   zIndex?: number;
-  elevation?: number;
+  elevation?: number | 'level1' | 'level2' | 'level3' | 'level4';
   backdrop?: boolean;
   blur?: number;
   opacity?: number;
@@ -17,7 +18,19 @@ export const zSpaceLayer = (config: ZSpaceLayerConfig = {}): CSSProperties => {
     opacity = 1,
   } = config;
 
-  const baseElevation = elevation * 100;
+  // Convert string elevations to numbers
+  const elevationMap: Record<string, number> = {
+    'level1': 1,
+    'level2': 2,
+    'level3': 3,
+    'level4': 4,
+  };
+
+  const numericElevation = typeof elevation === 'string'
+    ? elevationMap[elevation] || 0
+    : elevation;
+
+  const baseElevation = numericElevation * 100;
   const backdropFilter = blur > 0 ? `blur(${blur}px)` : 'none';
 
   return {
@@ -50,30 +63,30 @@ export const zSpacePresets = {
   },
   content: {
     zIndex: 1,
-    elevation: 1,
+    elevation: 'level1',
     backdrop: false,
   },
   overlay: {
     zIndex: 10,
-    elevation: 2,
+    elevation: 'level2',
     backdrop: true,
     blur: 5,
   },
   modal: {
     zIndex: 100,
-    elevation: 3,
+    elevation: 'level3',
     backdrop: true,
     blur: 8,
   },
   tooltip: {
     zIndex: 1000,
-    elevation: 4,
+    elevation: 'level4',
     backdrop: true,
     blur: 4,
   },
   dropdown: {
     zIndex: 100,
-    elevation: 2,
+    elevation: 'level2',
     backdrop: true,
     blur: 3,
   },

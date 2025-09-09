@@ -6,7 +6,7 @@
 import React, { forwardRef, useContext, useState, useMemo } from 'react';
 import styled from 'styled-components';
 
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { ImageListItemProps } from './types';
@@ -184,6 +184,16 @@ function ImageListItemComponent(props: ImageListItemProps, ref: React.ForwardedR
   const [isHovered, setIsHovered] = useState(false);
   // Simplified animation (removed complex spring logic)
 
+  // Convert string elevation to number
+  const getElevationNumber = (elev?: 0 | 'level1' | 'level2' | 'level3' | 'level4'): number => {
+    if (elev === 0) return 0;
+    if (elev === 'level1') return 1;
+    if (elev === 'level2') return 2;
+    if (elev === 'level3') return 3;
+    if (elev === 'level4') return 4;
+    return 0; // default
+  };
+
   // Prepare image element if src is provided
   const image = src ? (
     <img src={src} srcSet={srcSet} alt={alt || ''} loading="lazy" {...rest} />
@@ -199,7 +209,7 @@ function ImageListItemComponent(props: ImageListItemProps, ref: React.ForwardedR
       $variant={variant}
       $glass={glass}
       $hoverOverlay={hoverOverlay}
-      $elevation={elevation}
+      $elevation={getElevationNumber(elevation)}
       $rounded={rounded}
       $reducedMotion={prefersReducedMotion}
       tabIndex={0}

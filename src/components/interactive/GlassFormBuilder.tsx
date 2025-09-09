@@ -5,6 +5,7 @@ import { GlassInput } from '../input/GlassInput';
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useCallback, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 import { GlassCard } from '../card/GlassCard';
 import { GlassBadge } from '../data-display/GlassBadge';

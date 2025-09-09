@@ -1,6 +1,7 @@
 'use client';
 
 import React, { forwardRef, useRef, useEffect } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { cn } from '@/design-system/utilsCore';
 import { AlertCircle } from 'lucide-react';

@@ -1,6 +1,7 @@
+import React from 'react';
 // Theme tokens for the AuraGlass design system
 
-import { glassTokens } from './glass';
+import AURA_GLASS, { glassTokenUtils } from './glass';
 import {
   COLORS,
   TYPOGRAPHY,
@@ -117,7 +118,7 @@ export interface ThemeTokens {
   };
 
   // Glass morphism tokens
-  glass: typeof glassTokens;
+  glass: typeof AURA_GLASS;
 
   // Component-specific tokens
   components: {
@@ -186,7 +187,15 @@ export interface ThemeTokens {
 // Light theme tokens
 export const lightTheme: ThemeTokens = {
   colors: {
-    glass: glassTokens.colors.light,
+    glass: {
+      surface: AURA_GLASS.surfaces.neutral.level1.surface.base,
+      border: AURA_GLASS.surfaces.neutral.level1.border.color,
+      text: AURA_GLASS.surfaces.neutral.level1.text.primary,
+      textSecondary: AURA_GLASS.surfaces.neutral.level1.text.secondary,
+      shadow: AURA_GLASS.surfaces.neutral.level1.outerShadow
+        ? `${AURA_GLASS.surfaces.neutral.level1.outerShadow.x}px ${AURA_GLASS.surfaces.neutral.level1.outerShadow.y}px ${AURA_GLASS.surfaces.neutral.level1.outerShadow.blur}px ${AURA_GLASS.surfaces.neutral.level1.outerShadow.spread}px ${AURA_GLASS.surfaces.neutral.level1.outerShadow.color}`
+        : 'none',
+    },
     semantic: COLORS.semantic,
     neutral: COLORS.neutral,
     components: {
@@ -270,7 +279,7 @@ export const lightTheme: ThemeTokens = {
     },
   },
 
-  glass: glassTokens,
+  glass: AURA_GLASS,
 
   components: {
     button: {
@@ -399,7 +408,15 @@ export const darkTheme: ThemeTokens = {
   ...lightTheme,
   colors: {
     ...lightTheme.colors,
-    glass: glassTokens.colors.dark,
+    glass: {
+      surface: AURA_GLASS.surfaces.neutral.level2.surface.base,
+      border: AURA_GLASS.surfaces.neutral.level2.border.color,
+      text: AURA_GLASS.surfaces.neutral.level2.text.primary,
+      textSecondary: AURA_GLASS.surfaces.neutral.level2.text.secondary,
+      shadow: AURA_GLASS.surfaces.neutral.level2.outerShadow
+        ? `${AURA_GLASS.surfaces.neutral.level2.outerShadow.x}px ${AURA_GLASS.surfaces.neutral.level2.outerShadow.y}px ${AURA_GLASS.surfaces.neutral.level2.outerShadow.blur}px ${AURA_GLASS.surfaces.neutral.level2.outerShadow.spread}px ${AURA_GLASS.surfaces.neutral.level2.outerShadow.color}`
+        : 'none',
+    },
     components: {
       ...lightTheme.colors.components,
       button: {
@@ -448,7 +465,15 @@ export const glassTheme: ThemeTokens = {
   ...lightTheme,
   colors: {
     ...lightTheme.colors,
-    glass: glassTokens.colors.glass,
+    glass: {
+      surface: AURA_GLASS.surfaces.neutral.level3.surface.base,
+      border: AURA_GLASS.surfaces.neutral.level3.border.color,
+      text: AURA_GLASS.surfaces.neutral.level3.text.primary,
+      textSecondary: AURA_GLASS.surfaces.neutral.level3.text.secondary,
+      shadow: AURA_GLASS.surfaces.neutral.level3.outerShadow
+        ? `${AURA_GLASS.surfaces.neutral.level3.outerShadow.x}px ${AURA_GLASS.surfaces.neutral.level3.outerShadow.y}px ${AURA_GLASS.surfaces.neutral.level3.outerShadow.blur}px ${AURA_GLASS.surfaces.neutral.level3.outerShadow.spread}px ${AURA_GLASS.surfaces.neutral.level3.outerShadow.color}`
+        : 'none',
+    },
   },
 };
 

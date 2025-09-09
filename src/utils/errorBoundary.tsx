@@ -210,8 +210,8 @@ export class GlassErrorBoundary extends Component<ErrorBoundaryProps, ErrorBound
       return (
         <OptimizedGlass
           className="p-8 m-4 max-w-md mx-auto text-center"
-          blur="medium"
-          elevation={2}
+          intensity="medium"
+          elevation="level2"
         >
           <div className="space-y-4">
             {/* Error Icon */}
@@ -380,8 +380,8 @@ export class GlassAsyncErrorBoundary extends Component<
       return (
         <OptimizedGlass
           className="p-6 m-4 text-center"
-          blur="medium"
-          elevation={1}
+          intensity="medium"
+          elevation="level1"
         >
           <div className="space-y-4">
             <div className="w-12 h-12 mx-auto bg-yellow-500/20 rounded-full flex items-center justify-center">
@@ -481,8 +481,8 @@ export const GlassComponentErrorBoundary: React.FC<{
       fallback={({ error, retry, errorId }) => (
         <OptimizedGlass
           className="p-4 text-center border border-red-500/20"
-          blur="subtle"
-          elevation={0}
+          intensity="subtle"
+          elevation="level1"
         >
           <div className="space-y-3">
             <div className="w-10 h-10 mx-auto bg-red-500/20 rounded-full flex items-center justify-center">

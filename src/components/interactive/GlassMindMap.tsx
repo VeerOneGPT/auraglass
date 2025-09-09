@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export interface MindMapNode {
@@ -399,21 +400,21 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
   return (
     <OptimizedGlass
       className={`relative overflow-hidden ${className}`}
-      blur="medium"
-      elevation={1}
+      intensity="medium"
+      elevation="level1"
     >
       {/* Toolbar */}
       <div className="absolute top-4 left-4 z-10 flex space-x-2">
         <OptimizedGlass
           className="px-3 py-1 rounded text-sm cursor-pointer hover:bg-white/10"
-          blur="subtle"
+          intensity="subtle"
           onClick={() => setZoom(1)}
         >
           Reset Zoom
         </OptimizedGlass>
         <OptimizedGlass
           className="px-3 py-1 rounded text-sm"
-          blur="subtle"
+          intensity="subtle"
         >
           Zoom: {(zoom * 100).toFixed(0)}%
         </OptimizedGlass>

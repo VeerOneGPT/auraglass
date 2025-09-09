@@ -1,3 +1,4 @@
+import React from 'react';
 // Core type definitions
 export type ColorMode = 'light' | 'dark' | 'system';
 
@@ -43,7 +44,7 @@ export interface Theme {
 export interface GlassSurfaceProps {
   variant?: 'frosted' | 'crystal' | 'tinted' | 'metallic' | 'neon';
   blur?: 'none' | 'subtle' | 'medium' | 'strong' | 'intense';
-  elevation?: number;
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4' | 'level4';
   interactive?: boolean;
   className?: string;
 }

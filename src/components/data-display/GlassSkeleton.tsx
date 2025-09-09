@@ -1,4 +1,5 @@
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export type SkeletonVariant = 'text' | 'rectangular' | 'circular' | 'rounded';
@@ -129,7 +130,7 @@ export const GlassSkeleton: React.FC<GlassSkeletonProps> = ({
                   animationDelay: `${index * 0.1}s`,
                 }}
                 blur="subtle"
-                elevation={0}
+                elevation="level1"
                 interactive={false}
               />
             );
@@ -149,7 +150,7 @@ export const GlassSkeleton: React.FC<GlassSkeletonProps> = ({
           ...getAnimationStyles(),
         }}
         blur="subtle"
-        elevation={0}
+        elevation="level1"
         interactive={false}
       />
     </>
@@ -200,7 +201,7 @@ export const GlassSkeletonCard: React.FC<{
     <OptimizedGlass
       className={`p-6 space-y-4 ${className}`}
       blur="medium"
-      elevation={1}
+      elevation={'level1'}
     >
       {/* Header skeleton */}
       <div className="flex items-center space-x-4">
@@ -236,7 +237,7 @@ export const GlassSkeletonTable: React.FC<{
     <OptimizedGlass
       className={`overflow-hidden ${className}`}
       blur="medium"
-      elevation={1}
+      elevation={'level1'}
     >
       {/* Table header */}
       <div className="p-4 border-b border-white/10">

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface GlassSurfaceVariant {
   default: 'default';
   elevated: 'elevated';
@@ -14,8 +15,8 @@ export interface GlassSurfaceProps extends React.HTMLAttributes<HTMLDivElement> 
   /** Surface variant */
   variant?: GlassSurfaceVariantType;
 
-  /** Surface elevation */
-  elevation?: number;
+  /** Surface elevation (deprecated - use string values) */
+  // elevation?: number;
 
   /** Surface depth */
   depth?: number;
@@ -61,6 +62,15 @@ export interface GlassSurfaceProps extends React.HTMLAttributes<HTMLDivElement> 
 
   /** Children */
   children?: React.ReactNode;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 export interface DimensionalGlassProps extends GlassSurfaceProps {

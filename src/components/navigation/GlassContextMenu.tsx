@@ -2,6 +2,7 @@
 
 import { cn } from '@/design-system/utilsCore';
 import React, { useEffect, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -237,8 +238,8 @@ export const GlassContextMenuContent: React.FC<GlassContextMenuContentProps> = (
     return (
         <Motion preset="scaleIn" className="fixed z-[9999]">
             <OptimizedGlass
-          variant="frosted"
-          elevation={4}
+            intent="neutral"
+          elevation="level4"
           intensity="strong"
           depth={2}
           tint="neutral"

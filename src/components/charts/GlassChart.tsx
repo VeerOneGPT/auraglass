@@ -9,7 +9,7 @@ import styled, { DefaultTheme } from 'styled-components';
 
 import { usePhysicsInteraction } from '../../hooks/usePhysicsInteraction';
 import { zSpaceLayers } from '../../core/zspace';
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { useGlassTheme } from '../../hooks/useGlassTheme';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -162,12 +162,15 @@ const ChartContainer = styled.div<{
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-  ${props => `
-    ${glassSurface.background}
-    ${glassSurface.backdropFilter}
-    ${glassSurface.border}
-    z-index: ${zSpaceLayers.content};
-  `}
+  ${props => {
+    const glassStyles = createGlassStyle({ elevation: 'level2', intent: 'neutral' });
+    return `
+      background: ${glassStyles.background || 'rgba(255, 255, 255, 0.1)'};
+      backdrop-filter: ${glassStyles.backdropFilter || 'blur(12px)'};
+      border: ${glassStyles.border || '1px solid rgba(255, 255, 255, 0.2)'};
+      z-index: ${zSpaceLayers.content};
+    `;
+  }}
   
   ${props =>
     props?.focused &&

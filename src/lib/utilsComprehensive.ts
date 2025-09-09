@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * AuraGlass Utility Functions
  * Production-ready utility functions for the AuraGlass design system

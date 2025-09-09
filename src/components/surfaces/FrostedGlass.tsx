@@ -5,8 +5,9 @@
  */
 import React, { forwardRef, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
+import { glassCSS } from '../../core/mixins/glassMixins';
 
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
@@ -58,9 +59,7 @@ const FrostContainer = styled.div<{
   overflow: hidden;
 
   /* Apply glass surface effect */
-  background: ${glassSurface.background};
-  backdrop-filter: ${glassSurface.backdropFilter};
-  border: ${glassSurface.border};
+  ${glassCSS({ intent: 'neutral', elevation: 'level2' })}
 
   ${props => props.$blurStrength && `
     backdrop-filter: blur(${props.$blurStrength === 'light' ? '4px' : props.$blurStrength === 'standard' ? '8px' : props.$blurStrength === 'heavy' ? '16px' : '2px'});
@@ -218,7 +217,7 @@ const FrostedGlassComponent = (
     children,
     className,
     style,
-    elevation = 2,
+    elevation = 'level2',
     blurStrength = 'standard',
     opacity = 'medium',
     borderOpacity = 'medium',
@@ -235,6 +234,11 @@ const FrostedGlassComponent = (
     backgroundColor = 'rgba(255, 255, 255, 0.1)',
     ...rest
   } = props;
+
+  // Convert elevation string to number for styled component
+  const elevationNumber = typeof elevation === 'string'
+    ? elevation === 'level1' ? 1 : elevation === 'level2' ? 2 : elevation === 'level3' ? 3 : elevation === 'level4' ? 4 : 2
+    : elevation;
 
   // Check if reduced motion is preferred
   const prefersReducedMotion = useReducedMotion();
@@ -268,7 +272,7 @@ const FrostedGlassComponent = (
       style={style}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      $elevation={elevation}
+      $elevation={elevationNumber}
       $blurStrength={blurStrength}
       $opacity={normalizedOpacity}
       $borderOpacity={borderOpacity}

@@ -14,6 +14,7 @@ import React, {
 import styled from 'styled-components';
 import { ToggleButtonGroupProps, ToggleButtonProps } from './types';
 
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 // Styled components
 const GroupRoot = styled.div<{
   $orientation: 'horizontal' | 'vertical';

@@ -1,3 +1,5 @@
+import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 // Navigation component types
 export interface NavigationItem {
   id?: string;
@@ -42,6 +44,15 @@ export interface GlassNavigationProps {
   actions?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 // Tab bar specific types

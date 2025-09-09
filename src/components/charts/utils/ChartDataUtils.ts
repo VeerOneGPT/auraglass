@@ -1,3 +1,4 @@
+import React from 'react';
 import { ChartDataPoint, ChartSeries, ChartType } from '../types';
 
 export interface DataProcessingOptions {

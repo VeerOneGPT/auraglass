@@ -2,6 +2,7 @@
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { GlassButton } from '../button/GlassButton';
@@ -78,7 +79,7 @@ export const GlassBottomNav = forwardRef<HTMLDivElement, GlassBottomNavProps>(
       activeId,
       onActiveChange,
       variant = 'default',
-      elevation = 2,
+      elevation = 'level2',
       showLabels = true,
       labelPosition = 'below',
       size = 'md',
@@ -195,8 +196,8 @@ export const GlassBottomNav = forwardRef<HTMLDivElement, GlassBottomNavProps>(
 
     return (
       <OptimizedGlass
-        variant="frosted"
-        elevation={2}
+        intent="neutral"
+        elevation="level2"
         intensity="medium"
         depth={2}
         tint="neutral"

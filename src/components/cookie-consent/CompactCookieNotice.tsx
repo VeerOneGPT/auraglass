@@ -1,8 +1,7 @@
 import React, { forwardRef, useEffect, useState, useMemo, useCallback } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-import { glassBorder } from '../../core/mixins/glassBorder';
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { GlassButton as Button } from '../button';
@@ -106,11 +105,12 @@ const StyledCompactCookieNotice = styled.div<{
     }
   }}
 
-  ${({ theme, $glassIntensity }) => `
-    ${glassSurface.background}
-    ${glassSurface.backdropFilter}
-    ${glassSurface.border}
-  `}
+  ${(props: any) => {
+    const glassStyles = createGlassStyle({ elevation: 'level2', intent: 'neutral' });
+    return Object.entries(glassStyles)
+      .map(([key, value]) => `${key.replace(/([A-Z])/g, '-$1').toLowerCase()}:${value};`)
+      .join('');
+  }}
   
   ${({ theme }) => `
     border: 1px solid rgba(255, 255, 255, 0.25);

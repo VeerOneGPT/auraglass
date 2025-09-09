@@ -55,7 +55,7 @@ const meta: Meta<typeof GlassCard> = {
     variant: 'default',
     size: 'md',
     intensity: 'medium',
-    elevation: 2,
+    elevation: 'level2',
     hoverable: false,
     clickable: false,
     loading: false,
@@ -163,7 +163,7 @@ export const ContentShowcase: Story = {
     variant: 'feature',
     size: 'lg',
     intensity: 'ultra',
-    elevation: 4,
+    elevation: 'level4',
     hoverable: true,
     children: (
       <div className="p-8">
@@ -231,7 +231,7 @@ export const ProductCard: Story = {
     variant: 'elevated',
     size: 'lg',
     intensity: 'strong',
-    elevation: 3,
+    elevation: 'level3',
     hoverable: true,
     children: (
       <div className="p-6">

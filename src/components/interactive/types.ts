@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 // Base interactive component types
 export interface GlassInteractiveProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Glass morphism variant */
@@ -34,6 +35,15 @@ export interface GlassInteractiveProps extends React.HTMLAttributes<HTMLDivEleme
 
   /** Custom styles */
   glassStyles?: React.CSSProperties;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 export interface InteractiveAnimationConfig {

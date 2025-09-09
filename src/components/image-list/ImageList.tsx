@@ -11,7 +11,7 @@ import styled from 'styled-components';
 // Hook for reduced motion
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 
 // Import types (assuming types.ts is updated)
@@ -96,13 +96,28 @@ const ImageListRoot = styled.ul<{
   `}
   
   /* Glass styling */
-  ${props =>
-    props.$glass &&
-    `
-    ${glassSurface.background}
-    ${glassSurface.backdropFilter}
-    ${glassSurface.border}
-  `}
+  ${props => {
+    if (!props.$glass) return '';
+
+    const glassStyles = createGlassStyle({
+      intent: 'neutral',
+      elevation: 'level1',
+      tier: 'high'
+    });
+
+    return `
+      background: ${glassStyles.background};
+      backdrop-filter: ${glassStyles.backdropFilter};
+      -webkit-backdrop-filter: ${glassStyles.WebkitBackdropFilter};
+      border: ${glassStyles.border};
+      border-radius: ${glassStyles.borderRadius};
+      box-shadow: ${glassStyles.boxShadow};
+      color: ${glassStyles.color};
+      transition: ${glassStyles.transition};
+      position: ${glassStyles.position};
+      transform: ${glassStyles.transform};
+    `;
+  }}
   
   /* Glass styling */
   ${props =>

@@ -10,6 +10,7 @@ import {
     Users
 } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 import { GlassButton } from '../button';
 import { CardContent, CardHeader, CardTitle, GlassCard } from '../card';
@@ -340,8 +341,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                                             'hover:bg-white/10 focus:bg-white/15 focus:outline-none hover:scale-105',
                                             'disabled:opacity-50 disabled:cursor-not-allowed',
                                             {
-                                                'glass-foundation-complete backdrop-blur-md bg-transparent border-white/40': isSelected(date),
-                                                'glass-foundation-complete backdrop-blur-md bg-transparent border-white/40': isToday(date) && showToday && !isSelected(date),
+                                                'glass-foundation-complete backdrop-blur-md bg-transparent border-white/40': isSelected(date) || (isToday(date) && showToday && !isSelected(date)),
                                                 'text-white/60': !isCurrentMonth(date),
                                                 'text-white/90': isCurrentMonth(date),
                                             }

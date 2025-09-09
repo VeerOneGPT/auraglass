@@ -1,16 +1,14 @@
 import React, { forwardRef, useState, useEffect, useCallback, useRef, useMemo, ForwardedRef, ReactNode } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import { glowEffects } from '../../core/mixins/glowEffects';
-import { glassBorder as glassBorderObj } from '../../core/mixins/glassBorder';
-import { glassSurface as glassSurfaceObj } from '../../core/mixins/glassSurface';
+import { createGlassStyle, glassCSS } from '../../core/mixins/glassMixins';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useAnimationContext } from '../../contexts/AnimationContext';
 import { SpringConfig, SpringPresets } from '../../animations/physics/springPhysics';
 
-// Wrapper functions for mixins
-const glassSurface = (options?: any) => glassSurfaceObj;
-const glassBorder = (options?: any) => glassBorderObj;
+// Glass styles for navigation  
+
 
 // Extend glowEffects with glassGlow
 const extendedGlowEffects = {
@@ -113,24 +111,21 @@ const StyledGlassNavigation = styled.nav<{
     top: 0;
   `}
 
-  ${({ theme, $glassIntensity, $variant }) => {
-    const themeContext = createThemeContext(theme);
-    return glassSurface({
-      elevation: 'medium',
-      backgroundOpacity: $variant === 'minimal' ? 0.5 : 0.75,
-      blurStrength: $variant === 'minimal' ? '5px' : '10px',
-      themeContext,
-    });
-  }}
+  ${({ theme, $glassIntensity, $variant }) => css`
+    ${glassCSS({
+      intent: 'neutral',
+      elevation: $variant === 'minimal' ? 'level1' : 'level2',
+      tier: $variant === 'minimal' ? 'low' : 'medium',
+    })}
+  `}
   
-  ${({ theme }) => {
-    const themeContext = createThemeContext(theme);
-    return glassBorder({
-      width: '1px',
-      opacity: 0.3,
-      themeContext,
-    });
-  }}
+  ${({ theme }) => css`
+    ${glassCSS({
+      intent: 'neutral',
+      elevation: 'level1',
+      tier: 'medium',
+    })}
+  `}
   
   ${({ theme, $glassIntensity, $variant }) => {
     if ($variant === 'prominent') {

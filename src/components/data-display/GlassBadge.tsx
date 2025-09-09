@@ -5,6 +5,7 @@ import { GlassButton } from '../button/GlassButton';
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -164,8 +165,7 @@ export const GlassBadge = forwardRef<HTMLSpanElement, GlassBadgeProps>(
 
     const content = (
       <OptimizedGlass
-        variant="frosted"
-        elevation={variant === 'ghost' ? 0 : 1}
+        elevation={variant === 'ghost' ? undefined : 'level1'}
         intensity="medium"
         depth={2}
         tint="neutral"

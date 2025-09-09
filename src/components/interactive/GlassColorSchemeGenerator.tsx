@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export interface ColorScheme {
@@ -246,8 +247,8 @@ export const GlassColorSchemeGenerator: React.FC<GlassColorSchemeGeneratorProps>
       {/* Color Picker Section */}
       <OptimizedGlass
         className="p-6"
-        blur="medium"
-        elevation={1}
+        intensity="medium"
+        elevation="level1"
       >
         <h3 className="text-lg font-semibold text-white mb-4">Base Color</h3>
 
@@ -326,8 +327,8 @@ export const GlassColorSchemeGenerator: React.FC<GlassColorSchemeGeneratorProps>
       {/* Color Preview */}
       <OptimizedGlass
         className="p-6"
-        blur="medium"
-        elevation={1}
+        intensity="medium"
+        elevation="level1"
       >
         <h3 className="text-lg font-semibold text-white mb-4">Color Scheme Preview</h3>
 
@@ -350,8 +351,8 @@ export const GlassColorSchemeGenerator: React.FC<GlassColorSchemeGeneratorProps>
       {/* Export Options */}
       <OptimizedGlass
         className="p-6"
-        blur="medium"
-        elevation={1}
+        intensity="medium"
+        elevation="level1"
       >
         <h3 className="text-lg font-semibold text-white mb-4">Export Options</h3>
 

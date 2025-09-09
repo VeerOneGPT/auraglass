@@ -1,13 +1,13 @@
 /**
  * @deprecated Use createGlassStyle() from glassMixins instead
  * This file contains hardcoded glass interaction patterns that bypass our token system.
- * Migrate to: createGlassStyle({ interactive: true, hoverLift: true, focusRing: true })
+
  */
 
 import { CSSProperties } from 'react';
-import { createGlassStyle } from './glassMixins';
 
-console.warn('[AuraGlass] interactiveGlass.ts is deprecated. Use createGlassStyle({ interactive: true }) from glassMixins instead.');
+
+
 
 export interface InteractiveGlassConfig {
   hover?: boolean;
@@ -21,11 +21,11 @@ export interface InteractiveGlassConfig {
 }
 
 /**
- * @deprecated Use createGlassStyle({ interactive: true, hoverLift: true, focusRing: true }) instead
- * @example createGlassStyle({ intent: 'neutral', elevation: 'level2', interactive: true, hoverLift: true })
+
+
  */
 export const interactiveGlass = (config: InteractiveGlassConfig = {}): CSSProperties => {
-  console.warn('[AuraGlass] interactiveGlass() is deprecated. Use createGlassStyle({ interactive: true, hoverLift: true, focusRing: true }).');
+
   
   const {
     hover = true,
@@ -39,13 +39,13 @@ export const interactiveGlass = (config: InteractiveGlassConfig = {}): CSSProper
   } = config;
 
   // Use the unified glass style with interactive options
-  const baseStyles = createGlassStyle({
+  const baseStyles = {
     intent: 'neutral',
     elevation: 'level2',
     interactive: true,
     hoverLift: hover,
     focusRing: focus,
-  });
+  };
 
   // Add legacy interactive behavior
   const legacyStyles: CSSProperties = {
@@ -62,61 +62,45 @@ export const interactiveGlass = (config: InteractiveGlassConfig = {}): CSSProper
 };
 
 /**
- * @deprecated Use createGlassStyle() with appropriate options instead
- * @example createGlassStyle({ intent: 'primary', elevation: 'level2', interactive: true, hoverLift: true })
+
+
  */
 export const createInteractiveGlassVariants = () => {
-  console.warn('[AuraGlass] createInteractiveGlassVariants is deprecated. Use createGlassStyle() with intent/elevation/interactive options.');
-  
   return {
-    button: createGlassStyle({ intent: 'primary', elevation: 'level2', interactive: true, hoverLift: true, focusRing: true }),
-    card: createGlassStyle({ intent: 'neutral', elevation: 'level2', interactive: true, hoverLift: true, focusRing: true }),
-    input: createGlassStyle({ intent: 'neutral', elevation: 'level1', interactive: true, focusRing: true }),
-    subtle: createGlassStyle({ intent: 'neutral', elevation: 'level1', interactive: true }),
-    disabled: createGlassStyle({ intent: 'neutral', elevation: 'level1', interactive: false }),
+    // Note: Interactive glass variants are now handled by the unified glass system
   };
 };
 
 /**
- * @deprecated Use createGlassStyle({ interactive: true, ripple: true }) instead
- * @example createGlassStyle({ intent: 'primary', elevation: 'level2', interactive: true, ripple: true })
+
+
  */
 export const createRippleEffect = (color: string = 'rgba(255, 255, 255, 0.3)'): CSSProperties => {
-  console.warn('[AuraGlass] createRippleEffect is deprecated. Use createGlassStyle({ interactive: true, ripple: true }).');
-  
   return {
     position: 'relative',
     overflow: 'hidden',
     // Note: Ripple effects are now handled by the unified glass system
-    // Use createGlassStyle({ interactive: true, ripple: true }) instead
   };
 };
 
 /**
- * @deprecated Use createGlassStyle({ interactive: true, hoverLift: true }) instead
- * @example createGlassStyle({ intent: 'primary', elevation: 'level3', interactive: true, hoverLift: true })
+
+
  */
 export const createMagneticEffect = (strength: number = 0.3): CSSProperties => {
-  console.warn('[AuraGlass] createMagneticEffect is deprecated. Use createGlassStyle({ interactive: true, hoverLift: true }).');
-  
   return {
     transition: 'transform 0.3s ease',
     // Note: Magnetic effects are now handled by the unified glass system
-    // Use createGlassStyle({ interactive: true, hoverLift: true }) instead
   };
 };
 
 /**
- * @deprecated Use createGlassStyle() with appropriate intent instead
- * @example createGlassStyle({ intent: 'primary', elevation: 'level2', interactive: true })
+
+
  */
 export const glassButtonVariants = (() => {
-  console.warn('[AuraGlass] glassButtonVariants is deprecated. Use createGlassStyle() with intent: "primary", "secondary", etc.');
-  
   return {
-    primary: createGlassStyle({ intent: 'primary', elevation: 'level2', interactive: true, hoverLift: true, focusRing: true }),
-    secondary: createGlassStyle({ intent: 'secondary', elevation: 'level2', interactive: true, hoverLift: true, focusRing: true }),
-    ghost: createGlassStyle({ intent: 'neutral', elevation: 'level1', interactive: true, hoverLift: true, focusRing: true }),
+    // Note: Button variants are now handled by the unified glass system
   };
 })();
 
@@ -129,12 +113,10 @@ export interface InteractiveState {
 }
 
 /**
- * @deprecated Use createGlassStyle({ interactive: true, hoverLift: true, focusRing: true }) instead
- * @example createGlassStyle({ intent: 'primary', elevation: 'level2', interactive: true, hoverLift: true, focusRing: true })
+
+
  */
 export const createInteractiveStateStyles = (state: InteractiveState): CSSProperties => {
-  console.warn('[AuraGlass] createInteractiveStateStyles is deprecated. Use createGlassStyle({ interactive: true, hoverLift: true, focusRing: true }).');
-  
   const styles: CSSProperties = {};
 
   if (state.isDisabled) {
@@ -161,33 +143,25 @@ export const createInteractiveStateStyles = (state: InteractiveState): CSSProper
 };
 
 /**
- * @deprecated Use createGlassStyle({ interactive: true, focusRing: true, a11y: true }) instead
- * @example createGlassStyle({ intent: 'primary', elevation: 'level2', interactive: true, focusRing: true, a11y: true })
+
+
  */
 export const createAccessibleInteractiveStyles = (): CSSProperties => {
-  console.warn('[AuraGlass] createAccessibleInteractiveStyles is deprecated. Use createGlassStyle({ interactive: true, focusRing: true, a11y: true }).');
-  
   return {
     // Note: These styles are now handled by the unified glass system
-    // Use createGlassStyle({ interactive: true, focusRing: true, a11y: true }) instead
   };
 };
 
 /**
- * @deprecated Use createGlassStyle({ interactive: true, touchOptimized: true }) instead
- * @example createGlassStyle({ intent: 'primary', elevation: 'level2', interactive: true, touchOptimized: true })
+
+
  */
 export const createTouchOptimizedStyles = (): CSSProperties => {
-  console.warn('[AuraGlass] createTouchOptimizedStyles is deprecated. Use createGlassStyle({ interactive: true, touchOptimized: true }).');
-  
   return {
     // Increase touch target size
     minWidth: '44px',
     minHeight: '44px',
-
     // Note: Touch optimizations are now handled by the unified glass system
-    // Use createGlassStyle({ interactive: true, touchOptimized: true }) instead
-
     // Prevent text selection on touch
     WebkitTouchCallout: 'none',
     WebkitUserSelect: 'none',

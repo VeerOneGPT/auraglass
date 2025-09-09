@@ -1,3 +1,4 @@
+import React from 'react';
 // Unified Type Definitions for AuraGlass Design System
 // This consolidates all type definitions from merged libraries
 

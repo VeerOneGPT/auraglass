@@ -6,7 +6,7 @@
 import React, { forwardRef, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
-import { glassSurfaceFn as glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useGlassTheme } from '../../hooks/useGlassTheme';
@@ -201,7 +201,7 @@ const HeatGlassComponent = (
     children,
     className,
     style,
-    elevation = 2,
+    elevation = 'level2',
     blurStrength = 'standard',
     borderRadius = 'md',
     interactive = true,
@@ -237,7 +237,7 @@ const HeatGlassComponent = (
         style={style}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        $elevation={elevation}
+        $elevation={typeof elevation === 'string' ? (elevation === 'level1' ? 0 : elevation === 'level2' ? 1 : elevation === 'level3' ? 2 : elevation === 'level4' ? 3 : 4) : elevation}
         $blurStrength={blurStrength}
         $borderRadius={borderRadius}
         $interactive={interactive}

@@ -1,3 +1,4 @@
+import React from 'react';
 import { ChartDataPoint, ChartSeries, ChartAnimation } from '../types';
 
 export interface AnimationKeyframe {

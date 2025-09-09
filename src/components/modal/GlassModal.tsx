@@ -2,6 +2,7 @@
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -225,8 +226,8 @@ export const GlassModal = forwardRef<HTMLDivElement, GlassModalProps>(
             lockScroll={false}
           >
             <OptimizedGlass
-              variant="frosted"
-              elevation={4}
+              intent="neutral"
+              elevation="level4"
               intensity="strong"
               depth={2}
               tint="neutral"

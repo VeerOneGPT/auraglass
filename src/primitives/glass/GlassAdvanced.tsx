@@ -2,7 +2,7 @@
 
 import React, { forwardRef, HTMLAttributes } from 'react';
 import { cn } from '@/design-system/utilsCore';
-import { glassTokens } from '../../tokens/glass';
+import AURA_GLASS, { glassTokens } from '../../tokens/glass';
 
 export interface GlassProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -68,7 +68,7 @@ export const GlassAdvanced = forwardRef<HTMLDivElement, GlassProps>(
   (
     {
       as: Component = 'div' as any,
-      elevation = 1,
+      elevation = 'level1',
       variant = 'default',
       blur = 'medium',
       interactive = false,

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export interface GlassAnimatedNumberProps {
@@ -163,8 +164,7 @@ export const GlassAnimatedNumber: React.FC<GlassAnimatedNumberProps> = ({
     <OptimizedGlass
       className={`inline-flex items-center justify-center font-mono font-bold text-white ${sizeClasses[size]} ${className}`}
       style={getVariantStyles()}
-      blur="subtle"
-      elevation={0}
+      elevation="level1"
       interactive={false}
     >
       <span className="tabular-nums">
@@ -203,8 +203,7 @@ export const GlassAnimatedCounter: React.FC<{
       {label && (
         <OptimizedGlass
           className="text-sm text-white/70 font-medium"
-          blur="subtle"
-          elevation={0}
+          elevation="level1"
         >
           {label}
         </OptimizedGlass>
@@ -255,8 +254,7 @@ export const GlassAnimatedStat: React.FC<{
       {label && (
         <OptimizedGlass
           className="text-sm text-white/70"
-          blur="subtle"
-          elevation={0}
+          elevation="level1"
         >
           {label}
         </OptimizedGlass>
@@ -266,8 +264,7 @@ export const GlassAnimatedStat: React.FC<{
       {total && (
         <OptimizedGlass
           className="h-2 w-full rounded-full overflow-hidden"
-          blur="subtle"
-          elevation={0}
+          elevation="level1"
         >
           <div
             className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-1000 ease-out"

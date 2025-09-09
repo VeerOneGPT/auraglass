@@ -1,3 +1,4 @@
+import React from 'react';
 // Layout component types
 export interface BoxProps extends React.HTMLAttributes<HTMLDivElement> {
   as?: keyof JSX.IntrinsicElements;

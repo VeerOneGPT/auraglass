@@ -4,6 +4,7 @@ import { GlassButton } from '../button/GlassButton';
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export interface AccordionItem {
@@ -269,8 +270,7 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
 
           return (
             <OptimizedGlass
-              variant="frosted"
-              elevation={variant === 'flush' ? 0 : 1}
+              elevation={variant === 'flush' ? undefined : 'level1'}
               intensity="medium"
               depth={2}
               tint="neutral"

@@ -3,6 +3,7 @@
 import { cn } from '@/design-system/utilsCore';
 import { Activity, DollarSign, Minus, Target, TrendingDown, TrendingUp, Users } from 'lucide-react';
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 import { CardContent, CardHeader, CardTitle, GlassCard } from '../card';
 
@@ -245,7 +246,7 @@ export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
         <Motion preset="fadeIn" className="w-full glass-metric-card">
             <GlassCard
                 variant="elevated"
-                elevation={2}
+                elevation={'level2'}
                 hoverable={!!onClick}
                 clickable={!!onClick}
                 onClick={onClick}

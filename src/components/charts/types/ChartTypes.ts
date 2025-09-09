@@ -1,5 +1,7 @@
+import React from 'react';
 import { CSSProperties } from 'react';
 
+import { createGlassStyle } from '../../../core/mixins/glassMixins';
 export type ChartTheme = 'light' | 'dark' | 'glass';
 export type ChartVariant = 'default' | 'minimal' | 'detailed';
 export type ChartType = 'line' | 'area' | 'bar' | 'pie' | 'scatter' | 'heatmap' | 'radar';

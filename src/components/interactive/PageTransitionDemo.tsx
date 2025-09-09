@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const PageTransitionDemo: React.FC = () => {

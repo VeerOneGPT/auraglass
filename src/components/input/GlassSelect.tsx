@@ -5,6 +5,7 @@ import { GlassInput } from './GlassInput';
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createPortal } from 'react-dom';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';
 import { OptimizedGlass } from '../../primitives';
@@ -381,9 +382,8 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
           </div>
         ) : (
           <OptimizedGlass
-            variant="frosted"
-            elevation={isOpen ? 3 : 2}
-            blur={'medium'}
+            intent="neutral"
+            elevation={isOpen ? 'level3' : 'level2'}
             intensity={'medium'}
             depth={2}
             tint={'neutral'}
@@ -449,8 +449,8 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
               style={{ position: 'fixed', top: dropdownPos.top, left: dropdownPos.left, width: dropdownPos.width, zIndex: 10000 }}
             >
             <OptimizedGlass
-              variant="frosted"
-              elevation={4}
+              intent="neutral"
+              elevation={'level4'}
               intensity="strong"
               depth={2}
               tint="neutral"

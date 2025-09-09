@@ -3,6 +3,7 @@
 
 import { cn } from '@/design-system/utilsCore';
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export interface GlassBreadcrumbProps {
@@ -87,7 +88,7 @@ export const GlassBreadcrumb: React.FC<GlassBreadcrumbProps> = ({
     maxItems,
     showEllipsis = true,
     ellipsisComponent = '...',
-    elevation = 1,
+    elevation = 'level1',
     size = 'md',
     className,
 }) => {
@@ -113,8 +114,8 @@ export const GlassBreadcrumb: React.FC<GlassBreadcrumbProps> = ({
 
     return (
         <OptimizedGlass
-          variant="frosted"
-          elevation={elevation}
+          intent="neutral"
+          elevation={typeof elevation === 'number' ? `level${Math.min(4, Math.max(1, elevation + 1))}` as 'level1' | 'level2' | 'level3' | 'level4' : elevation}
           intensity="medium"
           depth={2}
           tint="neutral"

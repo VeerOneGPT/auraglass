@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export type DrawingTool = 'pen' | 'eraser' | 'rectangle' | 'circle' | 'line' | 'text' | 'select';
@@ -496,8 +497,8 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
   return (
     <OptimizedGlass
       className={`relative ${className}`}
-      blur="medium"
-      elevation={1}
+      intent="neutral"
+      elevation="level1"
     >
       {/* Toolbar */}
       {showToolbar && (
@@ -596,7 +597,7 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
           <OptimizedGlass
             className="p-6 max-w-sm w-full mx-4"
             blur="medium"
-            elevation={2}
+            elevation={'level2'}
           >
             <input
               autoFocus

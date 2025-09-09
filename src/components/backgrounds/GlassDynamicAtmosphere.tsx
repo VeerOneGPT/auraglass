@@ -1,4 +1,5 @@
 import React, { forwardRef, useState, useRef, useEffect, useCallback } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled, { css, keyframes } from 'styled-components';
 
 import { createThemeContext } from '../../core/themeContext';
@@ -194,8 +195,8 @@ const AtmosphereContainer = styled.div<{
   ${props =>
     props.$blur &&
     `
-    backdrop-filter: blur(${props.$blurStrength}px);
-    -webkit-backdrop-filter: blur(${props.$blurStrength}px);
+    ${createGlassStyle({ intent: 'neutral', elevation: 'level2' })};
+    -webkit-${createGlassStyle({ intent: 'neutral', elevation: 'level2' })};
   `}
 `;
 

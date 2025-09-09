@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '@/design-system/utilsCore';
 import { OptimizedGlass } from '../../primitives';
 
@@ -15,7 +16,7 @@ export interface GlassToolbarProps extends React.HTMLAttributes<HTMLDivElement> 
 export function GlassToolbar({ left, center, right, sticky = false, floating = false, className, ...rest }: GlassToolbarProps) {
   return (
     <OptimizedGlass
-      elevation={floating ? 2 : 1}
+      elevation={floating ? "level2" : "level1"}
       className={cn(
         'w-full flex items-center justify-between gap-3 px-3 py-2 rounded-xl',
         sticky && 'sticky top-0 z-30',

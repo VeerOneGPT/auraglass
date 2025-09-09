@@ -7,6 +7,7 @@ import {
     Circle
 } from 'lucide-react';
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 
 export interface FormStep {

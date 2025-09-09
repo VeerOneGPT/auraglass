@@ -4,6 +4,7 @@ import { cn } from '@/design-system/utilsCore';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { Check, ChevronRight } from 'lucide-react';
 import React, { forwardRef } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -114,8 +115,8 @@ export const GlassDropdownMenuContent = forwardRef<
                         {...props}
                     >
                         <OptimizedGlass
-          variant="frosted"
-          elevation={2}
+          intent="neutral"
+          elevation="level2"
           intensity="medium"
           depth={2}
           tint="neutral"
@@ -455,8 +456,8 @@ export const GlassDropdownMenuSubContent = forwardRef<
                 {...props}
             >
                 <OptimizedGlass
-          variant="frosted"
-          elevation={2}
+            intent="neutral"
+          elevation={'level2'}
           intensity="medium"
           depth={2}
           tint="neutral"

@@ -4,6 +4,7 @@
  * A dynamic background with animated particles.
  */
 import React, { forwardRef, useRef, useEffect, useState, useMemo, useCallback } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled from 'styled-components';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';

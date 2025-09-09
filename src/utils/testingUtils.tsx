@@ -197,7 +197,7 @@ export const mockDataGenerators = {
 export const glassMatchers = {
   toHaveGlassEffect: (element: HTMLElement) => {
     const styles = window.getComputedStyle(element);
-    const hasBackdropFilter = styles.backdropFilter !== 'none' || (styles as any).webkitBackdropFilter !== 'none';
+    const hasBackdropFilter = styles.backdropFilter !== 'none' || (styles as any).backdropFilter !== 'none';
     const hasGlassBackground = styles.background.includes('rgba');
 
     return {
@@ -447,7 +447,7 @@ export const glassTestUtils = {
   ): T => ({
     'data-testid': 'glass-component',
     blur: 'medium',
-    elevation: 1,
+    elevation: 'level1',
     variant: 'frosted',
     interactive: false,
     ...overrides,
@@ -463,7 +463,7 @@ export const glassTestUtils = {
     const styles = window.getComputedStyle(element);
     return (
       styles.backdropFilter !== 'none' ||
-      (styles as any).webkitBackdropFilter !== 'none' ||
+      (styles as any).backdropFilter !== 'none' ||
       styles.background.includes('rgba')
     );
   },

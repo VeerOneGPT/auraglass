@@ -6,7 +6,7 @@
 import React, { forwardRef, useCallback, useState, useMemo } from 'react';
 import styled, { css, useTheme } from 'styled-components';
 
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { usePhysicsInteraction, PhysicsInteractionOptions } from '../../hooks/usePhysicsInteraction';
 import { useReducedMotion } from '../../hooks/useReducedMotion';

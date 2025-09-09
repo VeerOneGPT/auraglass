@@ -1,3 +1,5 @@
+import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface MultiSelectOption<T = string | number> {
   id?: string;
   value: T;
@@ -35,6 +37,15 @@ export interface GlassStepInternalProps {
   onClick?: (step: Step) => void;
   className?: string;
   style?: React.CSSProperties;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 export interface MultiSelectProps<T extends string | number = string> {

@@ -4,7 +4,8 @@
  * A hierarchical list with collapsible items.
  */
 import React, { forwardRef, useState, useCallback, useMemo, createContext } from 'react';
-import styled from 'styled-components';
+import { glassStyleCSS } from '../../core/mixins/glassMixins';
+import styled, { css } from 'styled-components';
 
 import { TreeViewProps, TreeViewContextProps } from './types';
 
@@ -25,8 +26,7 @@ const TreeViewRoot = styled.ul<{
 
   /* Basic styling */
   background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  ${glassStyleCSS({ intent: 'neutral', elevation: 'level2' })}
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 8px;

@@ -1,6 +1,8 @@
+import React from 'react';
 import { CSSProperties } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
+import { glassStyleCSS } from '../../../core/mixins/glassMixins';
 export interface ChartElementStyles {
   line: CSSProperties;
   area: CSSProperties;
@@ -123,13 +125,24 @@ export const ChartToolbar = styled.div`
   align-items: center;
   margin-bottom: 16px;
   padding: 8px 0;
+
+  ${glassStyleCSS({
+    intent: 'neutral',
+    elevation: 'level2',
+    tier: 'high'
+  })}
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 `;
 
 export const ChartTypeSelector = styled.div`
   display: flex;
   gap: 4px;
-  background: rgba(255, 255, 255, 0.05);
+
+  ${glassStyleCSS({
+    intent: 'neutral',
+    elevation: 'level2',
+    tier: 'high'
+  })}
   border-radius: 8px;
   padding: 2px;
 `;
@@ -146,24 +159,32 @@ export const TypeButton = styled.button<{ $active?: boolean }>`
   transition: all 0.2s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.1);
     color: #ffffff;
   }
 `;
 
 export const ToolbarButton = styled.button`
   padding: 8px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.05);
   color: rgba(255, 255, 255, 0.8);
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
 
+  ${glassStyleCSS({
+    intent: 'neutral',
+    elevation: 'level1',
+    tier: 'high'
+  })}
+
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
+    ${glassStyleCSS({
+      intent: 'neutral',
+      elevation: 'level2',
+      tier: 'high'
+    })}
     border-color: rgba(255, 255, 255, 0.3);
   }
 `;
@@ -201,11 +222,13 @@ export const ChartLegend = styled.div<{ $position?: 'top' | 'bottom' | 'left' | 
     }
   }}
 
-  ${props => props.$glassEffect ? `
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(4px);
+  ${props => props.$glassEffect ? css`
+    ${glassStyleCSS({
+      intent: 'neutral',
+      elevation: 'level1',
+      tier: 'high'
+    })}
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
   ` : ''}
 `;
 
@@ -228,7 +251,7 @@ export const LegendColor = styled.div<{ $color?: string; $active?: boolean }>`
   border-radius: 2px;
   background: ${props => props.$color || '#6366f1'};
   opacity: ${props => props.$active === false ? 0.5 : 1};
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 `;
 
 export const LegendLabel = styled.span<{ $active?: boolean }>`

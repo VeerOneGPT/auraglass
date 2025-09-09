@@ -1,4 +1,5 @@
 import React, { useEffect, useState, memo, useCallback } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { useAccessibleAnimation } from '../../hooks/useAccessibilitySettings';
 import { GlassComponentErrorBoundary } from '../../utils/errorBoundary';
@@ -133,8 +134,8 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
           <OptimizedGlass
             className={`rounded-full ${sizeClasses[size]}`}
             style={getAnimationStyle()}
-            blur="medium"
-            elevation={1}
+            intensity="medium"
+            elevation="level1"
             interactive={false}
           />
           {shouldAnimate && variant === 'sheen' && (
@@ -157,8 +158,8 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
         {text && (
           <OptimizedGlass
             className="px-4 py-2 rounded-lg"
-            blur="subtle"
-            elevation={0}
+            intensity="subtle"
+            elevation="level1"
           >
             <span className="text-sm text-white/70 font-medium">
               {text}
@@ -216,8 +217,8 @@ export const GlassSkeletonText: React.FC<GlassSkeletonTextProps> = ({
             animation: 'glass-pulse 2s ease-in-out infinite',
             animationDelay: `${i * 0.1}s`,
           }}
-          blur="subtle"
-          elevation={0}
+          intensity="subtle"
+          elevation="level1"
           interactive={false}
         />
       ))}
@@ -232,8 +233,8 @@ export const GlassSkeletonCard: React.FC<{
   return (
     <OptimizedGlass
       className={`p-6 space-y-4 ${className}`}
-      blur="medium"
-      elevation={1}
+      intensity="medium"
+      elevation="level1"
     >
       <GlassSkeletonText lines={1} width="60%" />
       <GlassSkeletonText lines={2} width={['100%', '80%']} />
@@ -241,8 +242,8 @@ export const GlassSkeletonCard: React.FC<{
         <OptimizedGlass
           className="h-8 w-16 rounded"
           style={{ animation: 'glass-pulse 2s ease-in-out infinite' }}
-          blur="subtle"
-          elevation={0}
+          intensity="subtle"
+          elevation="level1"
         />
         <OptimizedGlass
           className="h-8 w-16 rounded"
@@ -250,8 +251,8 @@ export const GlassSkeletonCard: React.FC<{
             animation: 'glass-pulse 2s ease-in-out infinite',
             animationDelay: '0.2s'
           }}
-          blur="subtle"
-          elevation={0}
+          intensity="subtle"
+          elevation="level1"
         />
       </div>
     </OptimizedGlass>

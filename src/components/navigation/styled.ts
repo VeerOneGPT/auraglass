@@ -1,5 +1,7 @@
-import styled from 'styled-components';
+import React from 'react';
+import styled, { css } from 'styled-components';
 
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 export const TabBarContainer = styled.div<{
   $orientation?: 'horizontal' | 'vertical';
   $variant?: 'default' | 'pills' | 'underline';
@@ -29,14 +31,19 @@ export const TabBarContainer = styled.div<{
       default: return 'blur(8px)';
     }
   }};
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  ...createGlassStyle({ elevation: 'level1' });
   border-radius: ${props => typeof props.$borderRadius === 'number' ? `${props.$borderRadius}px` : props.$borderRadius || '8px'};
   padding: 4px;
   overflow: hidden;
   flex-direction: ${props => props.$orientation === 'vertical' ? 'column' : 'row'};
   ${props => props.$width && `width: ${typeof props.$width === 'number' ? `${props.$width}px` : props.$width};`}
   ${props => props.$height && `height: ${typeof props.$height === 'number' ? `${props.$height}px` : props.$height};`}
-  ${props => props.$elevated && 'box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);'}
+  ${props => props.$elevated && (() => {
+    const glassStyles = createGlassStyle({ elevation: 'level2' });
+    return Object.entries(glassStyles)
+      .map(([key, value]) => `${key.replace(/([A-Z])/g, '-$1').toLowerCase()}:${value};`)
+      .join('');
+  })()}
 `;
 
 export const TabSelector = styled.div<{ $position: number; $width: number }>`
@@ -50,9 +57,15 @@ export const TabSelector = styled.div<{ $position: number; $width: number }>`
 
   /* Glassy highlight with subtle glow and local blur */
   background: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.16) 100%);
-  box-shadow: 0 6px 20px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.5);
-  backdrop-filter: blur(6px) saturate(120%);
-  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  ${(() => {
+    const glassStyles = createGlassStyle({ elevation: 'level2' });
+    return Object.entries(glassStyles)
+      .map(([key, value]) => `${key.replace(/([A-Z])/g, '-$1').toLowerCase()}:${value};`)
+      .join('');
+  })()}
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
 
   /* Specular sheen */
   &::after {

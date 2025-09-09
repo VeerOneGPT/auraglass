@@ -1,3 +1,5 @@
+import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";

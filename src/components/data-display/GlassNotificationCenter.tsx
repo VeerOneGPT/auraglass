@@ -1,4 +1,5 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export type NotificationType = 'success' | 'error' | 'warning' | 'info';
@@ -144,8 +145,7 @@ export const GlassNotificationCenter: React.FC<GlassNotificationCenterProps> = (
       {notifications.length > 1 && (
         <OptimizedGlass
           className="px-3 py-1 rounded-full text-xs cursor-pointer hover:bg-white/10 transition-colors"
-          blur="subtle"
-          elevation={1}
+          elevation={'level1'}
           onClick={clearAll}
         >
           Clear All ({notifications.length})
@@ -164,8 +164,7 @@ export const GlassNotificationCenter: React.FC<GlassNotificationCenterProps> = (
             style={{
               animationDelay: `${index * 100}ms`,
             }}
-            blur="medium"
-            elevation={2}
+            elevation={'level2'}
           >
             <div className="flex items-start space-x-3">
               {/* Icon */}
@@ -232,8 +231,7 @@ export const GlassNotificationItem: React.FC<{
   return (
     <OptimizedGlass
       className={`p-4 rounded-lg border ${typeStyles.bgClass}`}
-      blur="medium"
-      elevation={1}
+      elevation={'level1'}
     >
       <div className="flex items-start space-x-3">
         <div className={`w-6 h-6 rounded-full flex items-center justify-center text-sm ${typeStyles.iconClass}`}>

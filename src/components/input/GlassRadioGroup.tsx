@@ -4,6 +4,7 @@ import { GlassInput } from './GlassInput';
 
 import { cn } from '@/design-system/utilsCore';
 import React, { createContext, useContext, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -240,8 +241,7 @@ export const GlassRadioGroupItem: React.FC<GlassRadioGroupItemProps & {
                     duration={200}
                 >
                     <OptimizedGlass
-                        variant="frosted"
-                        elevation={isSelected ? 3 : 1}
+                        elevation={isSelected ? 'level3' : 'level1'}
                         intensity="medium"
                         depth={2}
                         tint="neutral"

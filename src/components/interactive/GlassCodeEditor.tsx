@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export type Language =
@@ -261,7 +262,7 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
       className={`relative overflow-hidden ${className}`}
       style={{ maxHeight, minHeight }}
       blur="medium"
-      elevation={1}
+      elevation={'level1'}
     >
       {/* Toolbar */}
       <div className="flex items-center justify-between p-3 border-b border-white/10">
@@ -379,7 +380,7 @@ export const GlassCodeEditorWithFiles: React.FC<{
       <OptimizedGlass
         className="col-span-1 p-4"
         blur="medium"
-        elevation={1}
+        elevation={'level1'}
       >
         <h3 className="text-sm font-semibold text-white mb-4">Files</h3>
         <div className="space-y-2">

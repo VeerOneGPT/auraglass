@@ -53,7 +53,7 @@ const meta: Meta<typeof GlassButton> = {
     size: 'md',
     glassVariant: 'frosted',
     intensity: 'medium',
-    elevation: 2,
+    elevation: 'level2',
     loading: false,
     disabled: false,
   },
@@ -211,7 +211,7 @@ export const Showcase: Story = {
     size: 'lg',
     glassVariant: 'luminous',
     intensity: 'ultra',
-    elevation: 4,
+    elevation: 'level4',
     children: (
       <div className="flex items-center">
         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -229,7 +229,7 @@ export const CallToAction: Story = {
     size: 'xl',
     glassVariant: 'dynamic',
     intensity: 'extreme',
-    elevation: 4,
+    elevation: 'level4',
     className: 'px-8 py-4 text-lg font-semibold',
     children: 'Get Started Today',
   },

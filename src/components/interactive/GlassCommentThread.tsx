@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { GlassButton } from '../button/GlassButton';
 import { OptimizedGlass } from '../../primitives';
 
@@ -23,7 +24,7 @@ export function GlassCommentThread({ comments, onReply }: GlassCommentThreadProp
 
   const render = (c: Comment, depth = 0) => (
     <div key={c.id} className="space-y-2">
-      <OptimizedGlass elevation={1} className="rounded-lg p-3 border border-white/15">
+      <OptimizedGlass elevation={'level1'} className="rounded-lg p-3 border border-white/15">
         <div className="text-sm text-white/90 font-medium">{c.author}</div>
         <div className="text-sm text-white/80 whitespace-pre-wrap">{c.text}</div>
         {c.createdAt && <div className="text-xs text-white/60 mt-1">{c.createdAt}</div>}

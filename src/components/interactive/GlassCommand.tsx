@@ -5,6 +5,7 @@ import { GlassInput } from '../input/GlassInput';
 import { cn } from '@/design-system/utilsCore';
 import { Search } from 'lucide-react';
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -219,8 +220,8 @@ export const GlassCommand: React.FC<GlassCommandProps> = ({
     return (
         <CommandContext.Provider value={{ selectedIndex, setSelectedIndex, query, setQuery }}>
             <OptimizedGlass
-                variant="frosted"
-                elevation={3}
+                intent="neutral"
+                elevation="level3"
                 intensity="strong"
                 depth={2}
                 tint="neutral"
@@ -383,7 +384,7 @@ export const GlassCommandInput: React.FC<GlassCommandInputProps> = ({
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-white/50" />
             <OptimizedGlass
                 variant="default"
-                elevation={1}
+                elevation={'level1'}
                 className="backdrop-blur-md rounded-lg"
             >
                 <GlassInput className={cn(

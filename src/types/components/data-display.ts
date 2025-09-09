@@ -1,3 +1,4 @@
+import React from 'react';
 // Data display component types
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'outline';

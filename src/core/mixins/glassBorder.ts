@@ -1,12 +1,12 @@
 /**
  * @deprecated Use createGlassStyle() from glassMixins instead
  * This file contains hardcoded glass values that bypass our token system.
- * Migrate to: createGlassStyle({ intent: 'neutral', elevation: 'level2' })
+ * Migrate to: createGlassStyle()
  */
 
 import { createGlassStyle } from './glassMixins';
 
-console.warn('[AuraGlass] glassBorder.ts is deprecated. Use createGlassStyle() from glassMixins instead.');
+console.warn('[AuraGlass] glassBorder.ts is deprecated. Use createGlassStyle() instead.');
 
 /**
  * @deprecated Use createGlassStyle() instead
@@ -14,7 +14,7 @@ console.warn('[AuraGlass] glassBorder.ts is deprecated. Use createGlassStyle() f
  */
 export const glassBorder = (() => {
   console.warn('[AuraGlass] glassBorder export is deprecated. Use createGlassStyle().');
-  const styles = createGlassStyle({ intent: 'neutral', elevation: 'level2' });
+  const styles = createGlassStyle();
   return {
     border: styles.border || '1px solid rgba(255, 255, 255, 0.2)',
     borderRadius: styles.borderRadius || '8px',

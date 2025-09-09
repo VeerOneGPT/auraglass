@@ -8,7 +8,7 @@ module.exports = {
     "plugin:storybook/recommended"
   ],
   parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint", "react", "react-hooks", "jsx-a11y"],
+  plugins: ["@typescript-eslint", "react", "react-hooks", "jsx-a11y", "./eslint-plugin-auraglass"],
   parserOptions: {
     ecmaVersion: 2022,
     sourceType: "module",
@@ -17,6 +17,7 @@ module.exports = {
     }
   },
   rules: {
+    // Standard rules
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
@@ -27,7 +28,11 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "warn",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
-    "jsx-a11y/no-autofocus": "warn"
+    "jsx-a11y/no-autofocus": "warn",
+    
+    // AuraGlass Design System Rules
+    "auraglass/no-inline-glass": "error",
+    "auraglass/require-glass-tokens": "warn"
   },
   settings: {
     react: {

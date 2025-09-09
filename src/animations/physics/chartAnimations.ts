@@ -1,3 +1,4 @@
+import React from 'react';
 import { ChartDataPoint, ChartSeries, ChartAnimation } from '../../components/charts/types';
 import { InterpolationUtils, interpolate } from './interpolation';
 

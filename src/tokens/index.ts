@@ -4,7 +4,7 @@ export * from './designConstants';
 export * from './themeTokens';
 
 // Re-export main tokens for convenience
-export { glassTokens, glassUtils } from './glass';
+export { AURA_GLASS, glassTokens, glassUtils } from './glass';
 export { 
   COLORS,
   TYPOGRAPHY,
@@ -27,4 +27,4 @@ export {
 } from './themeTokens';
 
 // Default export
-export { glassTokens as default } from './glass';
+export { AURA_GLASS as default } from './glass';

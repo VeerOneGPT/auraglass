@@ -4,6 +4,7 @@ import { GlassButton } from '../button/GlassButton';
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { GlassBadge } from '../data-display/GlassBadge';
@@ -426,8 +427,8 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
         {/* Command Palette */}
         <Motion preset="scaleIn" duration={200} className="relative w-full max-w-2xl mx-4">
           <OptimizedGlass ref={ref}
-            variant="crystal"
-            elevation={4}
+            intent="neutral"
+            elevation="level4"
             intensity="strong"
             depth={3}
             tint="neutral"

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '@/design-system/utilsCore';
 import { OptimizedGlass } from '../../primitives';
 
@@ -25,7 +26,7 @@ export function GlassTimeline({ items, className }: GlassTimelineProps) {
         {items.map(it => (
           <li key={it.id} className="relative">
             <span className="absolute left-0 top-2 -ml-1 w-3 h-3 rounded-full bg-blue-400 shadow-[0_0_0_3px_rgba(59,130,246,0.25)]" />
-            <OptimizedGlass elevation={1} className="rounded-lg p-3 border border-white/10">
+            <OptimizedGlass elevation={'level1'} className="rounded-lg p-3 border border-white/10">
               <div className="flex items-start justify-between">
                 <div className="flex items-start gap-2 min-w-0">
                   {it.icon && <div className="mt-0.5 opacity-80">{it.icon}</div>}

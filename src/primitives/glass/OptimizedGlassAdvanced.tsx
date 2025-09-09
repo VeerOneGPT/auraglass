@@ -184,7 +184,7 @@ const PERFORMANCE_STYLES = {
 export const OptimizedGlassAdvanced = forwardRef<HTMLDivElement, OptimizedGlassProps>(
   (
     {
-      elevation = 1,
+      elevation = 'level1',
       blur = 'medium',
       variant = 'default',
       interactive = false,
@@ -242,7 +242,7 @@ export const OptimizedGlassAdvanced = forwardRef<HTMLDivElement, OptimizedGlassP
       const classes = [
         GLASS_BASE_CLASSES.base,
         GLASS_BASE_CLASSES.transforms,
-        ELEVATION_CLASSES[elevation],
+        ELEVATION_CLASSES[elevation as keyof typeof ELEVATION_CLASSES],
         BLUR_CLASSES[blur],
         VARIANT_CLASSES[variant],
         TINT_CLASSES[tint],

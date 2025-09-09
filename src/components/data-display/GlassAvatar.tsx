@@ -2,6 +2,7 @@
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export interface GlassAvatarProps extends React.ImgHTMLAttributes<HTMLImageElement> {
@@ -76,7 +77,7 @@ export const GlassAvatar = forwardRef<HTMLImageElement, GlassAvatarProps>(
             size = 'md',
             status,
             showStatus = false,
-            elevation = 1,
+            elevation = 'level1',
             fallback,
             fallbackText,
             className,
@@ -144,11 +145,18 @@ export const GlassAvatar = forwardRef<HTMLImageElement, GlassAvatarProps>(
             )
         );
 
+        // Convert numeric elevation to level string
+        const getElevationLevel = (elev?: 1 | 2 | 3): 'level1' | 'level2' | 'level3' | undefined => {
+          if (elev === 1) return 'level1';
+          if (elev === 2) return 'level2';
+          if (elev === 3) return 'level3';
+          return 'level1'; // default
+        };
+
         return (
             <div className="relative inline-block">
                 <OptimizedGlass
-          variant="frosted"
-          elevation={elevation}
+          elevation={getElevationLevel(elevation)}
           intensity="medium"
           depth={2}
           tint="neutral"
@@ -230,7 +238,7 @@ export const GlassAvatarGroup: React.FC<GlassAvatarGroupProps> = ({
                 <div key={index} className="relative">
                     {React.cloneElement(child as React.ReactElement, {
                         size,
-                        elevation: 2,
+                        elevation: 'level2',
                     })}
                 </div>
             ))}

@@ -1,6 +1,10 @@
 import React, { forwardRef } from 'react';
 import { cn } from '../lib/utilsComprehensive';
-import { createGlassMixin, GlassVariant, BlurIntensity } from '../core/mixins/glassMixins';
+import { createGlassStyle } from '../core/mixins/glassMixins';
+
+// Define local types that were missing from glassMixins
+type GlassVariant = 'clear' | 'frosted' | 'tinted' | 'luminous' | 'dynamic';
+type BlurIntensity = 'none' | 'subtle' | 'medium' | 'strong' | 'intense';
 
 export interface GlassProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Glass morphism variant */
@@ -53,19 +57,17 @@ const GlassCore = forwardRef<HTMLDivElement, GlassProps>(
     ref
   ) => {
     // Generate glass styles using the mixin
-    const glassStyles = createGlassMixin({
-      variant,
-      blur,
-      opacity,
-      glow,
-      glowColor,
-      glowIntensity,
-      borderRadius: rounded === 'none' ? '0px' : rounded === 'sm' ? '4px' : rounded === 'md' ? '8px' : rounded === 'lg' ? '12px' : rounded === 'xl' ? '16px' : rounded === 'full' ? '9999px' : '8px',
+    const glassStyles = createGlassStyle({
+      intent: 'neutral',
+      elevation: 'level2',
+      tier: 'high',
+      interactive: hover,
     });
 
     // Combine custom styles with glass styles
     const combinedStyles = {
       ...glassStyles,
+      borderRadius: rounded === 'none' ? '0px' : rounded === 'sm' ? '4px' : rounded === 'md' ? '8px' : rounded === 'lg' ? '12px' : rounded === 'xl' ? '16px' : rounded === 'full' ? '9999px' : '8px',
       ...style,
     };
 
@@ -75,11 +77,6 @@ const GlassCore = forwardRef<HTMLDivElement, GlassProps>(
         className={cn(
           'glass-surface',
           {
-            'glass-frosted': variant === 'frosted',
-            'glass-crystal': variant === 'crystal',
-            'glass-tinted': variant === 'tinted',
-            'glass-metallic': variant === 'metallic',
-            'glass-neon': variant === 'neon',
             'glass-hover': hover,
             'glass-glow': glow,
           },

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { GlassJSONViewer } from './GlassJSONViewer';
 
 export interface GlassSchemaViewerProps { schema: any; className?: string }

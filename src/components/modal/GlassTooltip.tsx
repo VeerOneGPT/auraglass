@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right' | 'auto';
@@ -254,8 +255,8 @@ export const GlassTooltip: React.FC<GlassTooltipProps> = ({
       >
         <OptimizedGlass
           className="px-3 py-2 rounded-lg text-sm text-white shadow-lg"
-          blur="medium"
-          elevation={2}
+          intent="neutral"
+          elevation="level2"
         >
           {content}
 

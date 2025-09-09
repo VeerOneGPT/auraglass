@@ -1,11 +1,12 @@
 'use client';
 
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 // PerformantGlass removed - using OptimizedGlass
 import { OptimizedGlassCore as OptimizedGlass, OptimizedGlassProps } from '../../primitives/OptimizedGlassCore';
 import { cn } from '../../lib/utilsComprehensive';
 
-export interface GlassPanelProps extends Omit<OptimizedGlassProps, 'variant'> {
+export interface GlassPanelProps extends Omit<OptimizedGlassProps, 'variant' | 'elevation'> {
   /**
    * Panel variant style
    */
@@ -13,7 +14,7 @@ export interface GlassPanelProps extends Omit<OptimizedGlassProps, 'variant'> {
   /**
    * Panel elevation
    */
-  elevation?: 0 | 1 | 2 | 3 | 4;
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
   /**
    * Whether the panel is interactive
    */
@@ -35,25 +36,25 @@ export interface GlassPanelProps extends Omit<OptimizedGlassProps, 'variant'> {
 const GlassPanel = React.forwardRef<HTMLDivElement, GlassPanelProps>(
   ({
     className,
-    elevation = 1,
+    elevation = 'level1',
     variant = 'default',
     interactive = false,
     padding = 'md',
     children,
     ...props
   }, ref) => {
-    const getGlassVariant = (): OptimizedGlassProps['variant'] => {
+    const getGlassIntent = (): 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info' => {
       switch (variant) {
         case 'primary':
-          return 'metallic';
+          return 'primary';
         case 'success':
-          return 'crystal';
+          return 'success';
         case 'warning':
-          return 'tinted';
+          return 'warning';
         case 'error':
-          return 'neon';
+          return 'danger';
         default:
-          return 'frosted';
+          return 'neutral';
       }
     };
 
@@ -61,7 +62,7 @@ const GlassPanel = React.forwardRef<HTMLDivElement, GlassPanelProps>(
       <OptimizedGlass
         ref={ref}
         elevation={elevation}
-        variant={getGlassVariant()}
+        intent={getGlassIntent()}
         interactive={interactive}
         className={cn(
           'relative overflow-hidden transition-all duration-200',

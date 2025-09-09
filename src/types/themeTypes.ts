@@ -1,3 +1,4 @@
+import React from 'react';
 // Theme and styling type definitions
 export interface ThemeColors {
   primary: string;

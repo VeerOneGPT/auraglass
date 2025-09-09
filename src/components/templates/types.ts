@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 // Dashboard template types
 export interface GlassDashboardProps extends React.HTMLAttributes<HTMLDivElement> {
   layout?: 'grid' | 'masonry' | 'flex';
@@ -8,6 +9,15 @@ export interface GlassDashboardProps extends React.HTMLAttributes<HTMLDivElement
   widgets?: React.ReactNode[];
   glassVariant?: 'frosted' | 'dynamic' | 'clear' | 'tinted' | 'luminous';
   blurStrength?: 'none' | 'light' | 'standard' | 'heavy';
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 // Detail view template types

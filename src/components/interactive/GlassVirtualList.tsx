@@ -3,6 +3,7 @@
 import { cn } from '@/design-system/utilsCore';
 import { Loader2 } from 'lucide-react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 
 export interface VirtualListItem {

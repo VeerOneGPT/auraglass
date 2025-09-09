@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface TreeItem {
   id: string;
   label: string;
@@ -22,6 +23,15 @@ export interface TreeViewProps extends React.HTMLAttributes<HTMLUListElement> {
   showLines?: boolean;
   glassVariant?: 'frosted' | 'dynamic' | 'clear' | 'tinted' | 'luminous';
   blurStrength?: 'none' | 'light' | 'standard' | 'heavy';
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 export interface TreeViewContextProps {

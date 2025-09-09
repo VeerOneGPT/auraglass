@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
 
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 
 // Box props interface
@@ -287,13 +287,42 @@ const StyledBox = styled.div<{
   ${props => props.$bgcolor && `background-color: ${props.$bgcolor};`}
   
   /* Glass effect */
-  ${props =>
-    props.$glass &&
-    `
-      ${glassSurface.background};
-      ${glassSurface.backdropFilter};
-      ${glassSurface.border};
-    `}
+  ${props => {
+    if (!props.$glass) return '';
+
+    // Map numeric elevation to string elevation
+    const elevationMap: Record<number, string> = {
+      0: 'level1',
+      1: 'level1',
+      2: 'level2',
+      3: 'level3',
+      4: 'level4',
+      5: 'level5'
+    };
+
+    const elevation = typeof props.$elevation === 'number'
+      ? elevationMap[props.$elevation] || 'level1'
+      : 'level1';
+
+    const glassStyles = createGlassStyle({
+      intent: props.$intent || 'neutral',
+      elevation: elevation as any,
+      tier: props.$tier || 'high'
+    });
+
+    return `
+      background: ${glassStyles.background};
+      backdrop-filter: ${glassStyles.backdropFilter};
+      -webkit-backdrop-filter: ${glassStyles.WebkitBackdropFilter};
+      border: ${glassStyles.border};
+      border-radius: ${glassStyles.borderRadius};
+      box-shadow: ${glassStyles.boxShadow};
+      color: ${glassStyles.color};
+      transition: ${glassStyles.transition};
+      position: ${glassStyles.position};
+      transform: ${glassStyles.transform};
+    `;
+  }}
 `;
 
 /**
@@ -335,7 +364,7 @@ export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
     borderRadius,
     bgcolor,
     glass = false,
-    elevation = 1,
+    elevation = 'level1',
     className,
     style,
     onClick,

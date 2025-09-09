@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * AuraGlass Unified Mixin System - Token Consumer
  * 
@@ -18,6 +19,7 @@ export interface GlassOptions {
   interactive?: boolean;
   hoverLift?: boolean;
   focusRing?: boolean;
+  press?: boolean;
 }
 
 /**
@@ -34,6 +36,7 @@ export function createGlassStyle(opts: GlassOptions = {}): CSSProperties {
     interactive = false,
     hoverLift = false,
     focusRing = false,
+    press = false,
   } = opts;
 
   // Get the base styles from canonical tokens
@@ -41,8 +44,8 @@ export function createGlassStyle(opts: GlassOptions = {}): CSSProperties {
   
   // Add interactive enhancements if requested
   if (interactive) {
-    styles.cursor = 'pointer';
-    styles.userSelect = 'none';
+    (styles as any).cursor = 'pointer';
+    (styles as any).userSelect = 'none';
     
     // Interactive surfaces get slightly enhanced shadows by default
     if (styles.boxShadow && styles.boxShadow !== 'none') {
@@ -60,7 +63,13 @@ export function createGlassStyle(opts: GlassOptions = {}): CSSProperties {
     // The actual focus ring is applied via CSS, but we ensure transitions are smooth
     styles.transition = `${styles.transition || 'all 200ms ease-out'}, box-shadow ${AURA_GLASS.motion.defaultMs}ms ease-out`;
   }
-  
+
+  // Add press effect capability (applied via CSS :active)
+  if (press) {
+    // The actual press effect is applied via CSS, but we ensure transitions are smooth
+    styles.transition = `${styles.transition || 'all 200ms ease-out'}, transform ${AURA_GLASS.motion.defaultMs}ms ease-out`;
+  }
+
   return styles;
 }
 
@@ -149,6 +158,15 @@ export function createGlassLoadingMixin(): CSSProperties {
 }
 
 /**
+ * Styled-components compatible wrapper for createGlassStyle
+ * Returns a function that can be used directly in styled-components templates
+ */
+export function glassStyleCSS(options: GlassOptions = {}): any {
+  const styles = createGlassStyle(options);
+  return styles;
+}
+
+/**
  * Utility: Generate CSS custom properties for dynamic theming
  * This creates CSS variables that can be overridden at runtime
  */
@@ -157,9 +175,9 @@ export function generateGlassThemeVariables(options: {
   elevation?: GlassElevation;
 } = {}): Record<string, string> {
   const { intent = 'neutral', elevation = 'level2' } = options;
-  
+
   const surface = glassTokenUtils.getSurface(intent, elevation);
-  
+
   return {
     '--glass-surface': surface.surface.base,
     '--glass-border-color': surface.border.color,
@@ -167,7 +185,7 @@ export function generateGlassThemeVariables(options: {
     '--glass-blur': `${surface.backdropBlur.px}px`,
     '--glass-text-primary': surface.text.primary,
     '--glass-text-secondary': surface.text.secondary,
-    '--glass-shadow': surface.outerShadow 
+    '--glass-shadow': surface.outerShadow
       ? `${surface.outerShadow.x}px ${surface.outerShadow.y}px ${surface.outerShadow.blur}px ${surface.outerShadow.spread}px ${surface.outerShadow.color}`
       : 'none',
     '--glass-radius': `${AURA_GLASS.radii.md}px`,
@@ -257,4 +275,8 @@ export function getRecommendedTier(): QualityTier {
 }
 
 // Export types for external usage
-export type { GlassOptions, GlassIntent, GlassElevation, QualityTier };
+export type { GlassIntent, GlassElevation, QualityTier };
+
+// Legacy types for backward compatibility
+export type GlassVariant = 'clear' | 'frosted' | 'tinted' | 'luminous' | 'dynamic';
+export type BlurIntensity = 'none' | 'subtle' | 'medium' | 'strong' | 'intense';

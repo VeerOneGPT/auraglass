@@ -1,6 +1,8 @@
+import React from 'react';
 import { Plugin } from 'chart.js';
 import { ChartDataPoint } from '../types';
 
+import { createGlassStyle } from '../../../core/mixins/glassMixins';
 export interface GalileoInteractionConfig {
   /** Enable magnetic effect on data points */
   magneticEffect?: boolean;

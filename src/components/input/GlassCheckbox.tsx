@@ -5,6 +5,7 @@ import { GlassInput } from './GlassInput';
 import { cn } from '@/design-system/utilsCore';
 import { Check, Minus } from 'lucide-react';
 import React, { forwardRef, useId } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 
 export interface GlassCheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {

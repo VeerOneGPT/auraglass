@@ -1,3 +1,4 @@
+import React from 'react';
 /**
  * Form validation utilities for form templates
  */

@@ -6,6 +6,7 @@ import { GlassPopover } from '../modal/GlassPopover';
 import { GlassAvatar } from '../data-display/GlassAvatar';
 import { ChevronRight } from 'lucide-react';
 
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface HeaderUserMenuItem {
   id: string;
   label: string;
@@ -28,6 +29,15 @@ export interface HeaderUserMenuProps {
   user: HeaderUserInfo;
   items: HeaderUserMenuItem[];
   className?: string;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 export function HeaderUserMenu({ user, items, className }: HeaderUserMenuProps) {

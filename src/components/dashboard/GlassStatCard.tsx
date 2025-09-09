@@ -14,6 +14,7 @@ import {
     Zap
 } from 'lucide-react';
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 import { CardContent, CardHeader, CardTitle, GlassCard } from '../card';
 
@@ -277,7 +278,7 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
         <Motion preset="fadeIn" className="w-full glass-stat-card">
             <GlassCard
                 variant={variant === 'default' ? 'default' : 'elevated'}
-                elevation={2}
+                elevation={'level2'}
                 hoverable={!!onClick}
                 clickable={!!onClick}
                 onClick={onClick}

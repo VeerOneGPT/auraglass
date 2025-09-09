@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 export interface GlassSpotlightProps { targetRect: DOMRect | null; onClose: ()=>void }
 

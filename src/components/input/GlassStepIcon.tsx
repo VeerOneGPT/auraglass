@@ -1,4 +1,5 @@
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled, { useTheme } from 'styled-components';
 import { Box } from '../layout/Box';
 import { Check } from 'lucide-react';

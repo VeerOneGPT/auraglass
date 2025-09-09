@@ -5,6 +5,7 @@ import { GlassInput } from '../input/GlassInput';
 
 import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, useCallback, useRef, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -382,8 +383,8 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
         {isOpen && (
           <Motion preset="slideDown" className="absolute top-full left-0 right-0 mt-2 z-50">
             <OptimizedGlass
-          variant="frosted"
-          elevation={2}
+          intent="neutral"
+          elevation="level2"
           intensity="medium"
           depth={2}
           tint="neutral"
@@ -524,8 +525,8 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
         {/* Filters Sidebar */}
         {showFilters && Object.keys(filters).length > 0 && variant !== 'compact' && (
           <OptimizedGlass
-          variant="frosted"
-          elevation={1}
+          intent="neutral"
+          elevation={'level1'}
           intensity="medium"
           depth={2}
           tint="neutral"

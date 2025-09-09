@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled from 'styled-components';
 import { usePhysicsInteraction } from '../../hooks/usePhysicsInteraction';
 

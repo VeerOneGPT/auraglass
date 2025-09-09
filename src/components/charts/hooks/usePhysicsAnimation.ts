@@ -1,3 +1,4 @@
+import React from 'react';
 import { useRef, useEffect, useCallback, useMemo } from 'react';
 import { ChartDataPoint, ChartSeries, ChartPhysicsConfig } from '../types';
 

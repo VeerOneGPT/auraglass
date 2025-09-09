@@ -5,6 +5,7 @@ import { GlassButton } from '../button/GlassButton';
 import { cn } from '@/design-system/utilsCore';
 import { AlertCircle, AlertTriangle, CheckCircle, Info, X } from 'lucide-react';
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -173,8 +174,7 @@ export const GlassToast: React.FC<GlassToastProps> = ({
             duration={300}
         >
             <OptimizedGlass
-          variant="frosted"
-          elevation={3}
+          elevation={'level3'}
           intensity="strong"
           depth={2}
           tint="neutral"

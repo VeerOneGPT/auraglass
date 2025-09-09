@@ -5,6 +5,7 @@ import { GlassButton } from '../button/GlassButton';
 import { cn } from '@/design-system/utilsCore';
 import { X } from 'lucide-react';
 import React, { forwardRef, useEffect, useState } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -282,8 +283,8 @@ export const GlassDrawer = forwardRef<HTMLDivElement, GlassDrawerProps>(
           )}
         >
           <OptimizedGlass
-            variant="frosted"
-            elevation={2}
+            intent="neutral"
+            elevation="level2"
             intensity="medium"
             depth={2}
             tint="neutral"

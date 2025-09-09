@@ -6,7 +6,7 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import { glassSurface } from '../../core/mixins/glassSurface';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import DimensionalGlass from './DimensionalGlass';
@@ -48,7 +48,7 @@ const WidgetGlassComponent = (
     children,
     className,
     style,
-    elevation = 2,
+    elevation = 'level2',
     blurStrength = 'standard',
     opacity = 'medium',
     borderOpacity = 'medium',
