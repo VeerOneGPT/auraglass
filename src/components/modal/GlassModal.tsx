@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';
@@ -238,7 +238,7 @@ export const GlassModal = forwardRef<HTMLDivElement, GlassModalProps>(
 
 
               className={cn(
-                'w-full flex flex-col',
+                'w-full flex flex-col glass-overlay-noise glass-edge glass-overlay-specular glass-typography-reset',
                 variant === 'fullscreen' ? 'h-full' : 'max-h-full overflow-hidden',
                 className
               )}

@@ -44,6 +44,9 @@ const WidgetGlassComponent = (
   props: WidgetGlassProps,
   ref: React.ForwardedRef<HTMLDivElement>
 ) => {
+  // Unified glass styles
+  const glassStyles = createGlassStyle({ intent: 'neutral', elevation: 'level2', tier: 'high' });
+
   const {
     children,
     className,
@@ -62,7 +65,7 @@ const WidgetGlassComponent = (
     highlightOnHover = true,
     animateOnMount = true,
     priority = 'medium',
-    backgroundColor = 'rgba(255, 255, 255, 0.1)',
+    backgroundColor = '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
     ...rest
   } = props;
 

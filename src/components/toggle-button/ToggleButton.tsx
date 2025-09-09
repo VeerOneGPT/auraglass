@@ -3,10 +3,12 @@
  *
  * A button that can be toggled on/off, with glass morphism styling.
  */
+// Typography tokens available via typography.css (imported in index.css)
 import React, { forwardRef, useCallback, useState, useMemo } from 'react';
 import styled, { css, useTheme } from 'styled-components';
 
 import { createGlassStyle } from '../../core/mixins/glassMixins';
+import { AURA_GLASS } from '../../tokens/glass';
 import { createThemeContext } from '../../core/themeContext';
 import { usePhysicsInteraction, PhysicsInteractionOptions } from '../../hooks/usePhysicsInteraction';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -35,7 +37,7 @@ const getColorValues = (
     case 'primary':
       bg = variant === 'contained' ? 'rgba(99, 102, 241, 0.9)' : 'transparent';
       border = 'rgba(99, 102, 241, 0.7)';
-      text = variant === 'contained' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(99, 102, 241, 0.9)';
+      text = variant === 'contained' ? '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}' : 'rgba(99, 102, 241, 0.9)';
       hoverBg = variant === 'contained' ? 'rgba(79, 82, 221, 0.9)' : 'rgba(99, 102, 241, 0.1)';
       activeBg = variant === 'contained' ? 'rgba(69, 72, 211, 0.9)' : 'rgba(99, 102, 241, 0.15)';
       selectedBg = variant === 'contained' ? 'rgba(69, 72, 211, 0.9)' : 'rgba(99, 102, 241, 0.2)';
@@ -43,7 +45,7 @@ const getColorValues = (
     case 'secondary':
       bg = variant === 'contained' ? 'rgba(156, 39, 176, 0.9)' : 'transparent';
       border = 'rgba(156, 39, 176, 0.7)';
-      text = variant === 'contained' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(156, 39, 176, 0.9)';
+      text = variant === 'contained' ? '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}' : 'rgba(156, 39, 176, 0.9)';
       hoverBg = variant === 'contained' ? 'rgba(136, 19, 156, 0.9)' : 'rgba(156, 39, 176, 0.1)';
       activeBg = variant === 'contained' ? 'rgba(116, 9, 136, 0.9)' : 'rgba(156, 39, 176, 0.15)';
       selectedBg = variant === 'contained' ? 'rgba(116, 9, 136, 0.9)' : 'rgba(156, 39, 176, 0.2)';
@@ -51,7 +53,7 @@ const getColorValues = (
     case 'error':
       bg = variant === 'contained' ? 'rgba(240, 82, 82, 0.9)' : 'transparent';
       border = 'rgba(240, 82, 82, 0.7)';
-      text = variant === 'contained' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(240, 82, 82, 0.9)';
+      text = variant === 'contained' ? '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}' : 'rgba(240, 82, 82, 0.9)';
       hoverBg = variant === 'contained' ? 'rgba(220, 62, 62, 0.9)' : 'rgba(240, 82, 82, 0.1)';
       activeBg = variant === 'contained' ? 'rgba(200, 42, 42, 0.9)' : 'rgba(240, 82, 82, 0.15)';
       selectedBg = variant === 'contained' ? 'rgba(200, 42, 42, 0.9)' : 'rgba(240, 82, 82, 0.2)';
@@ -59,7 +61,7 @@ const getColorValues = (
     case 'info':
       bg = variant === 'contained' ? 'rgba(3, 169, 244, 0.9)' : 'transparent';
       border = 'rgba(3, 169, 244, 0.7)';
-      text = variant === 'contained' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(3, 169, 244, 0.9)';
+      text = variant === 'contained' ? '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}' : 'rgba(3, 169, 244, 0.9)';
       hoverBg = variant === 'contained' ? 'rgba(0, 149, 224, 0.9)' : 'rgba(3, 169, 244, 0.1)';
       activeBg = variant === 'contained' ? 'rgba(0, 129, 204, 0.9)' : 'rgba(3, 169, 244, 0.15)';
       selectedBg = variant === 'contained' ? 'rgba(0, 129, 204, 0.9)' : 'rgba(3, 169, 244, 0.2)';
@@ -67,7 +69,7 @@ const getColorValues = (
     case 'success':
       bg = variant === 'contained' ? 'rgba(76, 175, 80, 0.9)' : 'transparent';
       border = 'rgba(76, 175, 80, 0.7)';
-      text = variant === 'contained' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(76, 175, 80, 0.9)';
+      text = variant === 'contained' ? '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}' : 'rgba(76, 175, 80, 0.9)';
       hoverBg = variant === 'contained' ? 'rgba(56, 155, 60, 0.9)' : 'rgba(76, 175, 80, 0.1)';
       activeBg = variant === 'contained' ? 'rgba(36, 135, 40, 0.9)' : 'rgba(76, 175, 80, 0.15)';
       selectedBg = variant === 'contained' ? 'rgba(36, 135, 40, 0.9)' : 'rgba(76, 175, 80, 0.2)';
@@ -75,7 +77,7 @@ const getColorValues = (
     case 'warning':
       bg = variant === 'contained' ? 'rgba(255, 152, 0, 0.9)' : 'transparent';
       border = 'rgba(255, 152, 0, 0.7)';
-      text = variant === 'contained' ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 152, 0, 0.9)';
+      text = variant === 'contained' ? '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}' : 'rgba(255, 152, 0, 0.9)';
       hoverBg = variant === 'contained' ? 'rgba(235, 132, 0, 0.9)' : 'rgba(255, 152, 0, 0.1)';
       activeBg = variant === 'contained' ? 'rgba(215, 112, 0, 0.9)' : 'rgba(255, 152, 0, 0.15)';
       selectedBg = variant === 'contained' ? 'rgba(215, 112, 0, 0.9)' : 'rgba(255, 152, 0, 0.2)';
@@ -84,7 +86,7 @@ const getColorValues = (
     default:
       bg = variant === 'contained' ? 'rgba(66, 66, 66, 0.9)' : 'transparent';
       border = 'rgba(255, 255, 255, 0.23)';
-      text = 'rgba(255, 255, 255, 0.9)';
+      text = '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}';
       hoverBg = variant === 'contained' ? 'rgba(80, 80, 80, 0.9)' : 'rgba(255, 255, 255, 0.08)';
       activeBg = variant === 'contained' ? 'rgba(90, 90, 90, 0.9)' : 'rgba(255, 255, 255, 0.12)';
       selectedBg = variant === 'contained' ? 'rgba(90, 90, 90, 0.9)' : 'rgba(255, 255, 255, 0.16)';
@@ -128,7 +130,7 @@ const ButtonRoot = styled.button<{
   vertical-align: middle;
   appearance: none;
   text-decoration: none;
-  font-weight: 500;
+  font-weight: var(--typography-subheading-weight);
   font-size: ${props =>
     props.$size === 'small' ? '0.8125rem' : props.$size === 'large' ? '0.9375rem' : '0.875rem'};
   line-height: 1.75;
@@ -166,8 +168,8 @@ const ButtonRoot = styled.button<{
     css`
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      background-color: ${props.$selected ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)'};
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background-color: ${props.$selected ? AURA_GLASS.surfaces.neutral.level2.border.color : AURA_GLASS.surfaces.neutral.level2.surface.base};
+      border: 1px solid ${AURA_GLASS.surfaces.neutral.level2.border.color};
     `}
   
   /* Selected state */
@@ -253,6 +255,9 @@ function ToggleButtonComponent(
   props: ToggleButtonProps,
   ref: React.ForwardedRef<HTMLButtonElement>
 ) {
+  // Unified glass styles
+  const glassStyles = createGlassStyle({ intent: 'neutral', elevation: 'level2', tier: 'high' });
+
   const {
     value,
     selected = false,

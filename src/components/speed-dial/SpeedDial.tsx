@@ -7,6 +7,7 @@ import React, { forwardRef, useState, useEffect, useCallback, useMemo, useRef } 
 import styled, { css } from 'styled-components';
 
 import { createGlassStyle } from '../../core/mixins/glassMixins';
+import { AURA_GLASS } from '../../tokens/glass';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
@@ -133,7 +134,7 @@ const SpeedDialFab = styled.div<{
     props.$size === 'small' ? '40px' : props.$size === 'large' ? '64px' : '56px'};
   border-radius: 50%;
   background-color: ${props => (props.$glass ? 'rgba(36, 36, 36, 0.5)' : props.$colorValues.bg)};
-  color: rgba(255, 255, 255, 0.9);
+  color: ${AURA_GLASS.surfaces.neutral.level2.text.primary};
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   cursor: ${props => (props.$disabled ? 'default' : 'pointer')};
   transition: ${props =>

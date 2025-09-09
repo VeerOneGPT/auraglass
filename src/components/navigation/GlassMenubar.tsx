@@ -2,7 +2,7 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import { ChevronRight } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';

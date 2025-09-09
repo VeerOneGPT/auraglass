@@ -526,8 +526,8 @@ export function GlassWipeSlider({
             transform: 'translateX(-50%)',
           }),
           boxShadow: isDragging || isHovered
-            ? '0 0 20px rgba(59, 130, 246, 0.6)'
-            : '0 0 10px rgba(255, 255, 255, 0.3)'
+            ? '0 0 20px ${glassStyles.borderColor || "rgba(59, 130, 246, 0.6)"}'
+            : '0 0 10px ${glassStyles.borderColor || "rgba(255, 255, 255, 0.3)"}'
         }}
       >
         {/* Glass effect overlay */}
@@ -579,10 +579,10 @@ export function GlassWipeSlider({
           whileTap: { scale: 0.95 },
           animate: {
             boxShadow: isDragging || isFocused
-              ? '0 0 30px rgba(59, 130, 246, 0.6)'
+              ? '0 0 30px ${glassStyles.borderColor || "rgba(59, 130, 246, 0.6)"}'
               : isHovered
                 ? '0 0 25px rgba(255, 255, 255, 0.4)'
-                : '0 0 20px rgba(255, 255, 255, 0.3)'
+                : '0 0 20px ${glassStyles.borderColor || "rgba(255, 255, 255, 0.3)"}'
           },
         })}
         transition={getTransition(duration / 1000)}

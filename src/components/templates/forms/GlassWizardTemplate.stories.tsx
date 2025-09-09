@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassWizardTemplate } from './GlassWizardTemplate';
 
@@ -26,21 +27,117 @@ const meta: Meta<typeof GlassWizardTemplate> = {
 export default meta;
 type Story = StoryObj<typeof GlassWizardTemplate>;
 
+// Sample wizard steps for stories
+const sampleSteps = [
+  {
+    id: 'personal-info',
+    title: 'Personal Information',
+    description: 'Please provide your basic personal information.',
+    schema: [
+      {
+        type: 'text',
+        name: 'firstName',
+        label: 'First Name',
+        required: true,
+        placeholder: 'Enter your first name',
+      },
+      {
+        type: 'text',
+        name: 'lastName',
+        label: 'Last Name',
+        required: true,
+        placeholder: 'Enter your last name',
+      },
+      {
+        type: 'email',
+        name: 'email',
+        label: 'Email Address',
+        required: true,
+        placeholder: 'Enter your email address',
+      },
+    ],
+  },
+  {
+    id: 'preferences',
+    title: 'Preferences',
+    description: 'Tell us about your preferences.',
+    schema: [
+      {
+        type: 'select',
+        name: 'theme',
+        label: 'Preferred Theme',
+        options: [
+          { value: 'light', label: 'Light' },
+          { value: 'dark', label: 'Dark' },
+          { value: 'auto', label: 'Auto' },
+        ],
+        required: true,
+      },
+      {
+        type: 'checkbox',
+        name: 'notifications',
+        label: 'Enable Notifications',
+        required: false,
+      },
+    ],
+    optional: true,
+    canSkip: true,
+  },
+  {
+    id: 'confirmation',
+    title: 'Confirmation',
+    description: 'Please review and confirm your information.',
+    schema: [],
+    component: (
+      <div className="text-center py-8">
+        <h3 className="text-lg font-semibold mb-4">Ready to Complete Setup</h3>
+        <p className="text-muted-foreground">
+          Please review your information and click Finish to complete the setup.
+        </p>
+      </div>
+    ),
+  },
+];
+
 export const Default: Story = {
   args: {
-    
+    title: 'Setup Wizard',
+    description: 'Complete your account setup with this guided wizard.',
+    steps: sampleSteps,
+    currentStep: 0,
+    values: {},
+    showStepIndicator: true,
+    allowSkipping: true,
+    layout: 'default',
   },
 };
 
-export const Variants: Story = {
-  render: (args: any) => (
-    <div className="flex flex-wrap gap-4">
-      <GlassWizardTemplate {...args}>
-        Default
-      </GlassWizardTemplate>
-    </div>
-  ),
+export const Compact: Story = {
   args: {
-    
+    title: 'Compact Wizard',
+    description: 'A more compact wizard layout.',
+    steps: sampleSteps,
+    currentStep: 0,
+    values: {},
+    showStepIndicator: true,
+    allowSkipping: true,
+    layout: 'compact',
+  },
+};
+
+export const Sidebar: Story = {
+  args: {
+    title: 'Wizard with Sidebar',
+    description: 'Wizard with sidebar navigation.',
+    steps: sampleSteps,
+    currentStep: 1,
+    values: {
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'john.doe@example.com',
+    },
+    showStepIndicator: true,
+    allowSkipping: true,
+    layout: 'sidebar',
   },
 };

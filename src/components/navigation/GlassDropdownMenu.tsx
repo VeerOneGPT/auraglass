@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { Check, ChevronRight } from 'lucide-react';
 import React, { forwardRef } from 'react';

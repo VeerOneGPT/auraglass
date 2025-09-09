@@ -101,7 +101,7 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
           return {
             position: 'relative' as const,
             overflow: 'hidden',
-            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+            background: 'linear-gradient(90deg, transparent, ${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}, transparent)',
             backgroundSize: '200px 100%',
             animation: `glass-wave ${animationDuration * 5}ms infinite`,
           };
@@ -117,7 +117,7 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
           return {
             position: 'relative' as const,
             overflow: 'hidden',
-            background: 'radial-gradient(120% 80% at 20% 0%, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 40%)',
+            background: 'radial-gradient(120% 80% at 20% 0%, ${glassStyles.surface?.base || "rgba(255, 255, 255, 0.05)"} 0%, rgba(255,255,255,0) 40%)',
             // sheen drawn by a before-like overlay via extra element below
           };
         case 'pulse':

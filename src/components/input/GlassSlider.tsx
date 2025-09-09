@@ -4,7 +4,7 @@ import React, { forwardRef, useId, useState, useCallback, useRef, useEffect } fr
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface GlassSliderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   /** Current value(s) of the slider */

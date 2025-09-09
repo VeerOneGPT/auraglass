@@ -2,7 +2,7 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import React, { createContext, forwardRef, useContext, useState } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';

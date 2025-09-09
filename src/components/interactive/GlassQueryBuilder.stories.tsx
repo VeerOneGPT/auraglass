@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassQueryBuilder } from './GlassQueryBuilder';
 import { fn } from '@storybook/test';

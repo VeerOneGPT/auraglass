@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import { OptimizedGlass } from '../../primitives';
 
 export interface CommandItem {
@@ -20,6 +20,11 @@ export interface GlassCommandBarProps extends React.HTMLAttributes<HTMLDivElemen
 }
 
 export function GlassCommandBar({ items, position = 'bottom', className, ...rest }: GlassCommandBarProps) {
+  // Handle undefined or null items gracefully
+  if (!items || !Array.isArray(items)) {
+    return null;
+  }
+
   return (
     <div className={cn('w-full', position === 'top' ? 'mt-2' : 'mb-2')}>
       <OptimizedGlass

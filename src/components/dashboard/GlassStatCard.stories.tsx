@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassStatCard } from './GlassStatCard';
 import { TrendingUp, Users, DollarSign } from 'lucide-react';

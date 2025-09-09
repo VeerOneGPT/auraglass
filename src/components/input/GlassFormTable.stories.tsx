@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassFormTable } from './GlassFormTable';
 import { fn } from '@storybook/test';

@@ -6,7 +6,7 @@
 import React, { forwardRef, useState, useRef, useEffect, useMemo, MutableRefObject } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+import { createGlassStyle, glassCSS } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { usePhysicsInteraction, PhysicsInteractionOptions } from '../../hooks/usePhysicsInteraction';
@@ -66,10 +66,7 @@ const DimensionalContainer = styled.div<{
   z-index: ${props => props.$zIndex};
 
   /* Apply glass surface effect */
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  ${glassCSS({ intent: 'neutral', elevation: 'level2', tier: 'high' })}
 
   /* Custom background color */
   background-color: ${props => props.$backgroundColor};
@@ -82,13 +79,13 @@ const DimensionalContainer = styled.div<{
       case 'none':
         return 'transparent';
       case 'subtle':
-        return 'rgba(255, 255, 255, 0.1)';
+        return 'rgba(255, 255, 255, 0.05)';
       case 'light':
         return 'rgba(255, 255, 255, 0.2)';
       case 'medium':
-        return 'rgba(255, 255, 255, 0.3)';
+        return 'rgba(255, 255, 255, 0.35)';
       case 'strong':
-        return 'rgba(255, 255, 255, 0.4)';
+        return 'rgba(255, 255, 255, 0.45)';
     }
   }};
 

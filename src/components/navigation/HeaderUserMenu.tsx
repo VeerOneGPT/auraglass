@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import { GlassPopover } from '../modal/GlassPopover';
 import { GlassAvatar } from '../data-display/GlassAvatar';
 import { ChevronRight } from 'lucide-react';

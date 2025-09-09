@@ -108,10 +108,10 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <ThemeProvider>
-        <div 
-          style={{ 
-            padding: '20px', 
+      <ThemeProvider forceColorMode="dark">
+        <div
+          style={{
+            padding: '20px',
             minHeight: '100vh',
             position: 'relative'
           }}

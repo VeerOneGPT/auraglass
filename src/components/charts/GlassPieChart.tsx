@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import React, { useMemo, useState } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
@@ -269,7 +269,7 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
                                                 y={segment.labelY}
                                                 textAnchor={segment.labelX > centerX ? 'start' : 'end'}
                                                 className="text-xs fill-white/80 font-medium"
-                                                style={{ fontSize: '11px' }}
+                                                style={{ fontSize: 'var(--typography-caption-size)' }}
                                             >
                                                 {segment.label}
                                                 {showPercentages && (

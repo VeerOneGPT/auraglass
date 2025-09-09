@@ -1,3 +1,4 @@
+// Typography tokens available via typography.css (imported in index.css)
 import React, { forwardRef } from "react";
 import styled from "styled-components";
 import { GlassCard } from "../card/GlassCard";
@@ -100,7 +101,7 @@ const CardContent = styled.div`
 
 const CardTitle = styled.h3`
   font-size: 1.25rem;
-  font-weight: 600;
+  font-weight: var(--typography-heading-weight);
   margin-bottom: 0.5rem;
 `;
 

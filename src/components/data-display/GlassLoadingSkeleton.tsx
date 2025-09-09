@@ -2,9 +2,10 @@
 
 import React, { forwardRef } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
+import { glassTokenUtils } from '../../tokens/glass';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface GlassLoadingSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Number of skeleton rows to display */
@@ -60,7 +61,7 @@ export const GlassLoadingSkeleton = forwardRef<HTMLDivElement, GlassLoadingSkele
     const getSkeletonStyle = () => ({
       background: `
         linear-gradient(135deg, rgba(255,255,255,0.015) 0%, rgba(255,255,255,0.005) 50%, rgba(255,255,255,0.015) 100%),
-        linear-gradient(135deg, rgba(59,130,246,0.2) 0%, rgba(147,51,234,0.1) 100%)
+        linear-gradient(135deg, ${glassTokenUtils.getSurface('neutral', 'level1').border.color} 0%, rgba(147,51,234,0.1) 100%)
       `,
       border: '1px solid rgba(255,255,255,0.04)',
       boxShadow: '0 4px 16px rgba(0,0,0,0.1), 0 1px 0 rgba(255,255,255,0.03) inset'

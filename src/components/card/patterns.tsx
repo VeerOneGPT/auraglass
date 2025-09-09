@@ -16,7 +16,7 @@ import {
   CardFooter,
   CardActions,
 } from './GlassCard';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 
 /**
  * Basic Card Pattern

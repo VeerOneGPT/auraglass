@@ -10,7 +10,7 @@ import { GlassProgress } from '../../../components/data-display/GlassProgress';
 import { PageHeader } from '../../../components/layout/GlassAppShell';
 import { VStack, HStack } from '../../../components/layout/GlassStack';
 import { GlassCard } from '../../../components/card/GlassCard';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface FormStep {
   id: string;
@@ -359,7 +359,7 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
         {/* Form */}
         <div className="flex-1">
           <GlassFormBuilder
-            schema={currentSchema}
+            schema={currentSchema || []}
             values={internalValues}
             errors={internalErrors}
             onChange={handleValueChange}

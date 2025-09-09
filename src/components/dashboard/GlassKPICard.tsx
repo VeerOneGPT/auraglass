@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import { ArrowDownIcon, ArrowUpIcon, Minus } from 'lucide-react';
 import React from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import React, { useMemo, useState } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
@@ -467,7 +467,7 @@ export const GlassAreaChart: React.FC<GlassAreaChartProps> = ({
                                     y={label.y}
                                     textAnchor="middle"
                                     className="text-xs fill-white/70"
-                                    style={{ fontSize: '10px' }}
+                                    style={{ fontSize: '0.625rem' }}
                                 >
                                     {label.label}
                                 </text>
@@ -480,7 +480,7 @@ export const GlassAreaChart: React.FC<GlassAreaChartProps> = ({
                                     y={label.y}
                                     textAnchor="end"
                                     className="text-xs fill-white/70"
-                                    style={{ fontSize: '10px' }}
+                                    style={{ fontSize: '0.625rem' }}
                                 >
                                     {label.label}
                                 </text>

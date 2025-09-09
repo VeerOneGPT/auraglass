@@ -1,3 +1,4 @@
+// Typography tokens available via typography.css (imported in index.css)
 import React from 'react';
 import { createGlassStyle } from '../../../core/mixins/glassMixins';
 
@@ -51,26 +52,26 @@ export const KpiChart: React.FC<KpiChartProps> = ({
     alignItems: 'center',
     justifyContent: 'center',
     padding: '20px',
-    background: 'rgba(255, 255, 255, 0.05)',
+    background: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.05)"}',
     borderRadius: '12px',
     backdropFilter: 'blur(8px)',
-    border: '1px solid rgba(255, 255, 255, 0.1)',
+    border: '1px solid ${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
     color: 'white',
-    fontSize: '24px',
-    fontWeight: 'bold',
+    fontSize: 'var(--typography-heading-size)',
+    fontWeight: 'var(--typography-heading-weight)',
   };
 
   return (
     <div style={style}>
-      <div style={{ fontSize: '36px', marginBottom: '8px' }}>
+      <div style={{ fontSize: '2.25rem', marginBottom: '8px' }}>
         {formatValue(kpi.value, kpi.format)}
       </div>
-      <div style={{ fontSize: '14px', opacity: 0.8 }}>
+      <div style={{ fontSize: 'var(--typography-body-size)', opacity: 0.8 }}>
         {kpi.label}
       </div>
       {kpi.change !== undefined && (
         <div style={{
-          fontSize: '12px',
+          fontSize: 'var(--typography-caption-size)',
           color: kpi.change >= 0 ? '#10b981' : '#ef4444',
           marginTop: '4px'
         }}>

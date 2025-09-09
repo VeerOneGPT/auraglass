@@ -4,7 +4,7 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { GlassMobileNav, MobileNavItem, MobileNavSection } from './GlassMobileNav';
 import { GlassBottomNav, BottomNavItem } from './GlassBottomNav';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface ResponsiveNavConfig {
   /**

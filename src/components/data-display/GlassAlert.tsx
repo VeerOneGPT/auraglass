@@ -4,7 +4,7 @@ import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import { AlertCircle, AlertTriangle, CheckCircle, Info, X } from 'lucide-react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import { Slot } from '@radix-ui/react-slot';
 import React, { forwardRef } from 'react';
 import { OptimizedGlass, type OptimizedGlassProps } from '../../primitives';
@@ -134,9 +134,12 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
       'inline-flex items-center justify-center',
       'font-medium',
       'transition-all duration-300 ease-out',
-      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+      // Unified focus ring utility
+      'glass-focus',
       'disabled:pointer-events-none disabled:opacity-50',
       'relative overflow-hidden',
+      // Specular overlay + parallax support
+      'glass-overlay-specular glass-parallax',
       // Size
       sizeClasses?.[size],
       // Full width
@@ -252,6 +255,18 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
 
     const variantConfig = variantStyles?.[variant];
 
+    // Map variant to accent focus ring utility
+    const variantAccent =
+      variant === 'destructive' || variant === 'error'
+        ? 'glass-accent-danger'
+        : variant === 'success'
+        ? 'glass-accent-success'
+        : variant === 'warning'
+        ? 'glass-accent-warning'
+        : variant === 'secondary'
+        ? 'glass-accent-info'
+        : 'glass-accent-primary';
+
     const getAnimationPreset = () => {
       switch (animation) {
         case 'scale':
@@ -302,6 +317,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
             ref={ref}
             className={cn(
               baseClasses,
+              variantAccent,
               variantConfig.className,
               'rounded-md overflow-visible glass-magnet glass-ripple glass-press',
               flat && 'bg-transparent border-0 shadow-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0',
@@ -359,6 +375,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
           performanceMode="ultra"
           className={cn(
             baseClasses,
+            variantAccent,
             variantConfig.className,
             'rounded-md glass-ripple glass-magnet',
             className

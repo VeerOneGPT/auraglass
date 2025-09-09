@@ -5,6 +5,7 @@
  * token-based selected items, advanced filtering, and virtualization.
  */
 
+// Typography tokens available via typography.css (imported in index.css)
 import React, { useState, useRef, useEffect, useCallback, useMemo, forwardRef } from 'react';
 import { createPortal } from 'react-dom';
 import styled, { css, keyframes } from 'styled-components';
@@ -347,7 +348,7 @@ const OptionItem = styled.li<{
   /* Selected state */
   ${props => props.$isSelected && css`
     background-color: rgba(99, 102, 241, 0.15);
-    font-weight: 500;
+    font-weight: var(--typography-subheading-weight);
     
     &::after {
       content: '';
@@ -387,7 +388,7 @@ const GroupHeader = styled.div<{ $size: 'small' | 'medium' | 'large' }>`
         : '8px 12px'
   };
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: var(--typography-heading-weight);
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.6);
   background-color: rgba(0, 0, 0, 0.2);
@@ -470,7 +471,7 @@ const Label = styled.label`
   display: block;
   margin-bottom: 6px;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: var(--typography-subheading-weight);
   color: rgba(255, 255, 255, 0.8);
 `;
 
@@ -925,8 +926,7 @@ const GlassMultiSelectInternal = <T extends string | number = string>(
     if (removedOption && onRemove) onRemove(removedOption.value);
   }, [internalValue, controlledValue, onChange, onRemove]);
 
-   // MODIFIED: Original remove handler (now just triggers animation via wrapper)
-   // This function is passed down to the wrapper IF a custom renderToken is used,
+   // MODIFIED: Original remove handler (now just triggers animation via wrapper), // This function is passed down to the wrapper IF a custom renderToken is used
    // otherwise the wrapper's internal triggerExit is used directly.
    const handleTokenRemoveTrigger = useCallback((e: React.MouseEvent, option: MultiSelectOption<T>) => {
      // This is now just a placeholder for compatibility with renderToken

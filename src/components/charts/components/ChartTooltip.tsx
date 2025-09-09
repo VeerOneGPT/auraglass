@@ -1,3 +1,4 @@
+// Typography tokens available via typography.css (imported in index.css)
 import React from 'react';
 import { createGlassStyle } from '../../../core/mixins/glassMixins';
 
@@ -43,14 +44,14 @@ export const ChartTooltip: React.FC<ChartTooltipProps> = ({
       ? 'rgba(0, 0, 0, 0.8)'
       : tooltipStyle === 'minimal'
         ? 'rgba(255, 255, 255, 0.95)'
-        : 'rgba(255, 255, 255, 0.9)',
+        : '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}',
     backdropFilter: tooltipStyle === 'frosted' ? 'blur(8px)' : 'none',
     border: tooltipStyle === 'frosted'
-      ? '1px solid rgba(255, 255, 255, 0.2)'
+      ? '1px solid ${glassStyles.borderColor || "rgba(255, 255, 255, 0.2)"}'
       : '1px solid rgba(0, 0, 0, 0.1)',
     borderRadius: '8px',
     padding: '8px 12px',
-    fontSize: '12px',
+    fontSize: '0.75rem', // caption
     color: tooltipStyle === 'frosted' ? 'white' : 'black',
     pointerEvents: 'none',
     zIndex: 1000,
@@ -61,7 +62,7 @@ export const ChartTooltip: React.FC<ChartTooltipProps> = ({
 
   return (
     <div style={style}>
-      <div style={{ fontWeight: 'bold', marginBottom: '4px' }}>
+      <div style={{ fontWeight: 'var(--typography-heading-weight)', marginBottom: '4px' }}> {/* semi-bold */}
         {tooltipData.value.dataset || 'Dataset'}
       </div>
       <div>

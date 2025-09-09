@@ -192,6 +192,21 @@ export interface FrostedGlassProps extends GlassSurfaceProps {
 
   /** Background color */
   backgroundColor?: string;
+
+  /** Enables specular sheen overlay */
+  specular?: boolean;
+
+  /** Enables additive glow; string uses semantic accent */
+  glow?: boolean | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+
+  /** Light angle for specular sheen in degrees */
+  lightAngle?: number;
+
+  /** Pointer parallax for sheen */
+  parallax?: boolean;
+
+  /** Parallax strength (px at extremes) */
+  parallaxStrength?: number;
 }
 
 export interface HeatGlassProps extends GlassSurfaceProps {

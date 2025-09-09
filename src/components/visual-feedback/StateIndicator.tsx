@@ -56,7 +56,7 @@ const getStateColor = (state: string, color: string): string => {
     case 'focus':
       return `rgba(${userColor}, 0.2)`;
     case 'disabled':
-      return 'rgba(255, 255, 255, 0.1)';
+      return '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}';
     case 'loading':
       return `rgba(${userColor}, 0.2)`;
     case 'success':
@@ -127,6 +127,9 @@ function StateIndicatorComponent(
   props: StateIndicatorProps,
   ref: React.ForwardedRef<HTMLDivElement>
 ) {
+  // Unified glass styles
+  const glassStyles = createGlassStyle({ intent: 'neutral', elevation: 'level2', tier: 'high' });
+
   const {
     children,
     state = 'default',

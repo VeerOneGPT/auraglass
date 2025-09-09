@@ -3,7 +3,7 @@
 import React from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface MentionItem { id: string; label: string; meta?: string }
 export interface GlassMentionListProps { items: MentionItem[]; onSelect: (id:string)=>void; className?: string }

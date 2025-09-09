@@ -1,3 +1,4 @@
+// Typography tokens available via typography.css (imported in index.css)
 import React, { forwardRef, useState } from 'react';
 import styled from 'styled-components';
 
@@ -51,7 +52,7 @@ const StyledDemo = styled.div<{
       elevation: 'level1',
       tier: 'high'
     }),
-    border: '1px solid rgba(255, 255, 255, 0.3)',
+    border: '1px solid ${glassStyles.borderColor || "rgba(255, 255, 255, 0.3)"}',
   })}
 `;
 
@@ -79,7 +80,7 @@ const ComponentCard = styled(Card)`
 
 const ComponentTitle = styled(Typography)`
   margin-bottom: 1rem;
-  font-weight: 500;
+  font-weight: var(--typography-subheading-weight);
 `;
 
 const CodePreview = styled.pre`

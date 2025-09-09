@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import DynamicAtmosphere from './GlassDynamicAtmosphere';
+import { GlassDynamicAtmosphere } from './GlassDynamicAtmosphere';
 
 const meta: Meta<typeof DynamicAtmosphere> = {
   title: 'Components/Backgrounds/DynamicAtmosphere',

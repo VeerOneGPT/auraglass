@@ -2,7 +2,7 @@
 
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 import { createMotionAwareInteractive, createMotionAwareVariants } from '../../lib/motionPrimitives';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import { motion } from 'framer-motion';
 import React, { forwardRef } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
@@ -203,15 +203,15 @@ export const useMotionAwareGlassStyles = () => {
       const baseStyle = {
         backdropFilter: 'blur(16px)',
         borderRadius: '12px',
-        border: '1px solid rgba(255, 255, 255, 0.15)',
+        border: '1px solid ${glassStyles.borderColor || "rgba(255, 255, 255, 0.15)"}',
         transition: prefersReducedMotion ? 'none' : 'all 0.2s ease-out'
       };
 
       switch (variant) {
         case 'subtle':
-          return { ...baseStyle, background: 'rgba(255, 255, 255, 0.05)' };
+          return { ...baseStyle, background: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.05)"}' };
         case 'strong':
-          return { ...baseStyle, background: 'rgba(255, 255, 255, 0.1)' };
+          return { ...baseStyle, background: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}' };
         case 'card':
           return {
             ...baseStyle,

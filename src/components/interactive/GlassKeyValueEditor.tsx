@@ -3,7 +3,7 @@
 import React from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { GlassButton } from '../button/GlassButton';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface Pair { key: string; value: string }
 export interface GlassKeyValueEditorProps {

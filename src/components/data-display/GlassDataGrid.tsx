@@ -187,7 +187,7 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
     // Map sorting state to target value for animation hook
     const sortTargetValue = useMemo(() => {
         if (!sortConfig) return 0; // Target 0 when not sorted
-        return sortConfig.direction === 'asc' ? 1 : -1; // Target 1 for asc, -1 for desc
+        return sortConfig.direction === 'asc' ? 1 : -1; // Target 1 for asc -1 for desc
     }, [sortConfig]);
     // Trigger animation when target changes
     useEffect(() => {

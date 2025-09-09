@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useMemo, useState } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
@@ -35,7 +35,7 @@ export interface GlassDataTableProps<T = any> {
   /**
    * Table data
    */
-  data: T[];
+  data?: T[];
   /**
    * Column definitions
    */
@@ -194,7 +194,7 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
 
     // Filter and search data
     const filteredData = useMemo(() => {
-      let result = [...data];
+      let result = [...(data || [])];
 
       // Apply search
       if (searchQuery) {
@@ -232,7 +232,7 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
 
     // Sort data
     const sortedData = useMemo(() => {
-      if (!sortState) return filteredData;
+      if (!sortState || !filteredData) return filteredData || [];
 
       const column = columns.find(col => (col.id || `col-${columns.indexOf(col)}`) === sortState.id);
       if (!column) return filteredData;
@@ -257,13 +257,13 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
 
     // Paginate data
     const paginatedData = useMemo(() => {
-      if (!pagination) return sortedData;
+      if (!pagination || !sortedData) return sortedData || [];
 
       const startIndex = (currentPage - 1) * pageSize;
       return sortedData.slice(startIndex, startIndex + pageSize);
     }, [sortedData, currentPage, pageSize, pagination]);
 
-        const totalPages = Math.ceil((sortedData?.length || 0) / pageSize);
+        const totalPages = Math.ceil(((sortedData || [])?.length || 0) / pageSize);
 
     // Handle sorting
     const handleSort = (columnId: string) => {
@@ -296,15 +296,15 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
       if (!onSelectionChange) return;
 
       if (selected) {
-        const allIds = (paginatedData || []).map((row, index) => getRowId(row, index));
+        const allIds = ((paginatedData || [])).map((row, index) => getRowId(row, index));
         onSelectionChange(allIds);
       } else {
         onSelectionChange([]);
       }
     };
 
-    const isAllSelected = paginatedData.length > 0 &&
-      paginatedData.every((row, index) => selectedRows.includes(getRowId(row, index)));
+    const isAllSelected = (paginatedData || []).length > 0 &&
+      (paginatedData || []).every((row, index) => selectedRows.includes(getRowId(row, index)));
 
     return (
       <div ref={ref} className={cn('w-full', className)}>
@@ -462,7 +462,7 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
                     </td>
                   </tr>
                 ) : (
-                  (paginatedData || []).map((row, index) => {
+                  ((paginatedData || [])).map((row, index) => {
                     const rowId = getRowId(row, index);
                     const isSelected = selectedRows.includes(rowId);
                     const rowProps = getRowProps?.(row) || {};
@@ -530,13 +530,13 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
           </div>
 
           {/* Pagination */}
-          {pagination && !loading && paginatedData.length > 0 && (
+          {pagination && !loading && (paginatedData || []).length > 0 && (
             <div className="flex items-center justify-between px-4 py-3 border-t border-border/10 bg-muted/5">
               <div className="flex items-center gap-2">
                 <span className="text-sm text-muted-foreground">
                   Showing {(currentPage - 1) * pageSize + 1} to{' '}
-                  {Math.min(currentPage * pageSize, sortedData.length)} of{' '}
-                  {sortedData.length} results
+                  {Math.min(currentPage * pageSize, (sortedData || []).length)} of{' '}
+                  {(sortedData || []).length} results
                 </span>
               </div>
 

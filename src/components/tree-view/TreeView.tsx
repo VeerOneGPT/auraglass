@@ -4,7 +4,9 @@
  * A hierarchical list with collapsible items.
  */
 import React, { forwardRef, useState, useCallback, useMemo, createContext } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { glassStyleCSS } from '../../core/mixins/glassMixins';
+import { AURA_GLASS } from '../../tokens/glass';
 import styled, { css } from 'styled-components';
 
 import { TreeViewProps, TreeViewContextProps } from './types';
@@ -25,9 +27,9 @@ const TreeViewRoot = styled.ul<{
   width: 100%;
 
   /* Basic styling */
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: ${AURA_GLASS.surfaces.neutral.level2.surface.base};
   ${glassStyleCSS({ intent: 'neutral', elevation: 'level2' })}
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid ${AURA_GLASS.surfaces.neutral.level2.surface.base};
   border-radius: 8px;
   padding: 8px;
 
@@ -48,7 +50,7 @@ const TreeViewRoot = styled.ul<{
         return `--tree-view-color: rgba(255, 152, 0, 0.9);`;
       case 'default':
       default:
-        return `--tree-view-color: rgba(255, 255, 255, 0.9);`;
+        return `--tree-view-color: ${AURA_GLASS.surfaces.neutral.level2.text.primary};`;
     }
   }}
 
@@ -78,6 +80,9 @@ const TreeViewRoot = styled.ul<{
  * TreeView Component Implementation
  */
 function TreeViewComponent(props: TreeViewProps, ref: React.ForwardedRef<HTMLUListElement>) {
+  // Unified glass styles
+  const glassStyles = createGlassStyle({ intent: 'neutral', elevation: 'level2', tier: 'high' });
+
   const {
     items,
     selectedIds,

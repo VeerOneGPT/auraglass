@@ -7,6 +7,7 @@ import React, { forwardRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { createGlassStyle } from '../../core/mixins/glassMixins';
+import { AURA_GLASS } from '../../tokens/glass';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useGlassTheme } from '../../hooks/useGlassTheme';
@@ -73,7 +74,7 @@ const Container = styled.div<{
       default: return '8px';
     }
   }});
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid ${AURA_GLASS.surfaces.neutral.level2.border.color};
 `;
 
 const ContentWrapper = styled.div<{
@@ -103,6 +104,9 @@ const PageGlassContainerComponent = (
   props: PageGlassContainerProps,
   ref: React.ForwardedRef<HTMLDivElement>
 ) => {
+  // Unified glass styles
+  const glassStyles = createGlassStyle({ intent: 'neutral', elevation: 'level2', tier: 'high' });
+
   const {
     children,
     className,
@@ -114,7 +118,7 @@ const PageGlassContainerComponent = (
     fullHeight = false,
     fullPage = false,
     maxWidth,
-    backgroundColor = 'rgba(255, 255, 255, 0.05)',
+    backgroundColor = '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.05)"}',
     scrollFade = false,
     dimensionalChildren = false,
     ...rest

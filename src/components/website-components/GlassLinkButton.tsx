@@ -55,7 +55,7 @@ const GlassLinkButton = forwardRef<HTMLAnchorElement, GlassLinkButtonProps>(
             style={{
               borderRadius: 'inherit',
               padding: '1px',
-              background: 'linear-gradient(135deg, rgba(59,130,246,0.35) 0%, rgba(147,51,234,0.25) 50%, rgba(255,255,255,0.16) 100%)',
+              background: 'linear-gradient(135deg, ${glassStyles.borderColor || "rgba(59, 130, 246, 0.35)"} 0%, rgba(147,51,234,0.25) 50%, rgba(255,255,255,0.16) 100%)',
               mask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)',
               WebkitMask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)',
               WebkitMaskComposite: 'xor',

@@ -97,7 +97,7 @@ export class GalileoElementInteractionPlugin implements ChartPlugin {
 
   render(context: any): React.ReactNode {
     const glassStyles = createGlassStyle({ intent: 'primary', elevation: 'level2' });
-    const glassColor = glassStyles.borderColor || 'rgba(59, 130, 246, 0.3)';
+    const glassColor = glassStyles.borderColor || '${glassStyles.borderColor || "rgba(59, 130, 246, 0.3)"}';
     
     // Return overlay elements for interactions
     return (
@@ -263,12 +263,15 @@ export class GalileoElementInteractionPlugin implements ChartPlugin {
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
 
+    const glassStyles = createGlassStyle({ intent: 'primary', elevation: 'level2' });
+    const rippleColor = glassStyles.borderColor || '${glassStyles.borderColor || "rgba(59, 130, 246, 0.4)"}';
+
     const ripple = document.createElement('div');
     ripple.className = 'galileo-ripple';
     ripple.style.cssText = `
       position: absolute;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, transparent 70%);
+      background: radial-gradient(circle, ${rippleColor} 0%, transparent 70%);
       transform: scale(0);
       opacity: 1;
       pointer-events: none;
@@ -342,8 +345,7 @@ export class GalileoElementInteractionPlugin implements ChartPlugin {
     setTimeout(() => this.scanForElements(), 100);
   }
 
-  private findElementForDataPoint(data: ChartDataPoint, series?: ChartSeries): HTMLElement | null {
-    // This is a simplified implementation - in a real chart library,
+  private findElementForDataPoint(data: ChartDataPoint, series?: ChartSeries): HTMLElement | null {, // This is a simplified implementation - in a real chart library
     // you'd need to map data points to their corresponding DOM elements
     const elements = document.querySelectorAll('.chart-element?.[data-point-id]');
     for (const element of elements) {

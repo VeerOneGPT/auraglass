@@ -300,7 +300,7 @@ export {
   useAnimationSequence as orchestrationUseAnimationSequence,
   orchestrationPresets,
   createOrchestration,
-} from './animations/orchestration';
+} from './animations/orchestration/index';
 
 // Error Boundaries and Utils
 export { GlassErrorBoundary, GlassAsyncErrorBoundary, GlassLightErrorBoundary, GlassComponentErrorBoundary, withGlassErrorBoundary } from './utils/errorBoundary';

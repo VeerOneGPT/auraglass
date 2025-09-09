@@ -3,7 +3,7 @@
 import React, { forwardRef, useCallback, useEffect, useState } from 'react';
 import { createGlassStyle } from '../../../core/mixins/glassMixins';
 import { GlassButton } from '@/components/button';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import { GlassCard } from '@/components/card';
 import { GlassFormBuilder } from '@/components/interactive/GlassFormBuilder';
 import { HStack, VStack } from '@/components/layout';
@@ -296,7 +296,7 @@ export const GlassWizardTemplate = forwardRef<HTMLDivElement, GlassWizardTemplat
             currentStepData.component
           ) : (
             <GlassFormBuilder
-              schema={currentStepData.schema}
+              schema={currentStepData.schema || []}
               values={internalValues}
               errors={internalErrors}
               onChange={handleValueChange}

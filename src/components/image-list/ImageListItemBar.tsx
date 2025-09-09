@@ -3,11 +3,13 @@
  *
  * A title bar for an ImageListItem with glass morphism styling.
  */
+// Typography tokens available via typography.css (imported in index.css)
 import React, { forwardRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
+import { glassTokenUtils } from '../../tokens/glass';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 import { ImageListItemBarProps } from './types';
@@ -55,7 +57,7 @@ const ImageListItemBarRoot = styled.div<{
   
   /* Base styling */
   background-color: ${props => (props.$glass ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.5)')};
-  color: rgba(255, 255, 255, 0.9);
+  color: ${glassTokenUtils.getSurface('neutral', 'level2').text.primary};
   padding: 8px 12px;
   display: flex;
   align-items: center;
@@ -76,7 +78,7 @@ const TitleWrapper = styled.div`
 
 const Title = styled.div`
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: var(--typography-subheading-weight);
   line-height: 1.2;
   text-overflow: ellipsis;
   white-space: nowrap;

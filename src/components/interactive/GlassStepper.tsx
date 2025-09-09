@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface Step { id: string; label: string; optional?: boolean }
 export interface GlassStepperProps { steps: Step[]; active: string; onChange?: (id:string)=>void; className?: string }

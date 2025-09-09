@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import { OptimizedGlass } from '../../primitives';
 
 export interface KanbanCard { id: string; title: string; description?: string }

@@ -4,6 +4,7 @@
  * A unified chart container with glass styling, physics-based interactions,
  * and Z-Space layering. Acts as a wrapper for all chart types.
  */
+// Typography tokens available via typography.css (imported in index.css)
 import React, { useMemo, useState, useRef, useCallback, useEffect, forwardRef, useImperativeHandle } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 
@@ -165,9 +166,9 @@ const ChartContainer = styled.div<{
   ${props => {
     const glassStyles = createGlassStyle({ elevation: 'level2', intent: 'neutral' });
     return `
-      background: ${glassStyles.background || 'rgba(255, 255, 255, 0.1)'};
+      background: ${glassStyles.background || '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}'};
       backdrop-filter: ${glassStyles.backdropFilter || 'blur(12px)'};
-      border: ${glassStyles.border || '1px solid rgba(255, 255, 255, 0.2)'};
+      border: ${glassStyles.border || '1px solid ${glassStyles.borderColor || "rgba(255, 255, 255, 0.2)"}'};
       z-index: ${zSpaceLayers.content};
     `;
   }}
@@ -193,16 +194,16 @@ const ChartHeader = styled.div`
  * Styled title and description
  */
 const ChartTitle = styled.h3`
-  font-size: 18px;
-  font-weight: 600;
+  font-size: var(--typography-subheading-size);
+  font-weight: var(--typography-heading-weight);
   margin: 0 0 8px 0;
-  color: ${props => ((props?.theme as any).isDarkMode ? 'rgba(255, 255, 255, 0.9)' : 'rgba(0, 0, 0, 0.9)')};
+  color: ${props => ((props?.theme as any).isDarkMode ? '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}' : 'rgba(0, 0, 0, 0.9)')};
 `;
 
 const ChartDescription = styled.p`
-  font-size: 14px;
+  font-size: var(--typography-body-size);
   margin: 0 0 16px 0;
-  color: ${props => ((props?.theme as any).isDarkMode ? 'rgba(255, 255, 255, 0.7)' : 'rgba(0, 0, 0, 0.7)')};
+  color: ${props => ((props?.theme as any).isDarkMode ? '${glassStyles.text?.secondary || "rgba(255, 255, 255, 0.7)"}' : 'rgba(0, 0, 0, 0.7)')};
 `;
 
 /**
@@ -234,7 +235,7 @@ const ChartTypeButton = styled.button<{ active: boolean; theme?: any }>`
   background: ${props =>
     props?.active
       ? props?.theme?.isDarkMode ?? false
-        ? 'rgba(255, 255, 255, 0.1)'
+        ? '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}'
         : 'rgba(0, 0, 0, 0.05)'
       : 'transparent'};
   border: none;
@@ -247,7 +248,7 @@ const ChartTypeButton = styled.button<{ active: boolean; theme?: any }>`
 
   &:hover {
     background: ${props =>
-      props?.theme?.isDarkMode ?? false ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.08)'};
+      props?.theme?.isDarkMode ?? false ? '${glassStyles.borderColor || "rgba(255, 255, 255, 0.15)"}' : 'rgba(0, 0, 0, 0.08)'};
   }
 `;
 
@@ -266,8 +267,8 @@ const ChartContent = styled.div<{ focused: boolean }>`
  */
 const FooterContent = styled.div`
   padding: 8px 16px;
-  font-size: 12px;
-  color: ${props => ((props?.theme as any).isDarkMode ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.6)')};
+  font-size: var(--typography-caption-size);
+  color: ${props => ((props?.theme as any).isDarkMode ? '${glassStyles.text?.secondary || "rgba(255, 255, 255, 0.6)"}' : 'rgba(0, 0, 0, 0.6)')};
   text-align: center;
 `;
 
@@ -337,8 +338,7 @@ const ChartTypeIcons = {
 };
 
 // Add this helper function to ensure we have a properly typed theme
-const ensureValidTheme = (themeInput: any): DefaultTheme => {
-  // If the theme is already a valid DefaultTheme, return it
+const ensureValidTheme = (themeInput: any): DefaultTheme => { // If the theme is already a valid DefaultTheme return it
   if (
     themeInput && 
     typeof themeInput === 'object' && 
@@ -372,18 +372,18 @@ const ensureValidTheme = (themeInput: any): DefaultTheme => {
       },
       glass: {
         light: {
-          background: 'rgba(255, 255, 255, 0.1)',
-          border: 'rgba(255, 255, 255, 0.2)',
-          highlight: 'rgba(255, 255, 255, 0.3)',
+          background: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
+          border: '${glassStyles.borderColor || "rgba(255, 255, 255, 0.2)"}',
+          highlight: '${glassStyles.borderColor || "rgba(255, 255, 255, 0.3)"}',
           shadow: 'rgba(0, 0, 0, 0.1)',
-          glow: 'rgba(255, 255, 255, 0.2)'
+          glow: '${glassStyles.borderColor || "rgba(255, 255, 255, 0.2)"}'
         },
         dark: {
           background: 'rgba(0, 0, 0, 0.2)',
-          border: 'rgba(255, 255, 255, 0.1)',
-          highlight: 'rgba(255, 255, 255, 0.1)',
+          border: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
+          highlight: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
           shadow: 'rgba(0, 0, 0, 0.3)',
-          glow: 'rgba(255, 255, 255, 0.1)'
+          glow: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}'
         },
         tints: {
           primary: 'rgba(99, 102, 241, 0.1)',

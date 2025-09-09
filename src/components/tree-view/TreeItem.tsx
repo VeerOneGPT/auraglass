@@ -5,6 +5,7 @@
  */
 import React, { forwardRef, useContext, useRef, useMemo, useState, useEffect, useLayoutEffect } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
+import { AURA_GLASS } from '../../tokens/glass';
 import styled from 'styled-components';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -79,7 +80,7 @@ const TreeItemContent = styled.div<{
     props.$disabled
       ? 'rgba(255, 255, 255, 0.5)'
       : props.$selected
-      ? 'var(--tree-view-color, rgba(255, 255, 255, 0.9))'
+      ? 'var(--tree-view-color, ${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"})'
       : 'rgba(255, 255, 255, 0.8)'};
 
   /* Selected state */
@@ -90,13 +91,13 @@ const TreeItemContent = styled.div<{
     props.$focused &&
     !props.$disabled &&
     `
-    outline: 1px dashed var(--tree-view-color, rgba(255, 255, 255, 0.9));
+    outline: 1px dashed var(--tree-view-color, ${AURA_GLASS.surfaces.neutral.level2.text.primary});
   `}
 
   /* Accessible focus ring */
   &:focus-visible {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.6), 0 0 0 6px rgba(59, 130, 246, 0.15);
+    box-shadow: 0 0 0 2px ${AURA_GLASS.surfaces.neutral.level2.border.color}, 0 0 0 6px rgba(59, 130, 246, 0.15);
   }
 
   /* Glass hover effect */
@@ -104,7 +105,7 @@ const TreeItemContent = styled.div<{
     !props.$disabled &&
     `
     &:hover {
-      background-color: ${props.$glass ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.04)'};
+      background-color: ${props.$glass ? '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.05)"}' : 'rgba(255, 255, 255, 0.04)'};
     }
   `}
 `;
@@ -133,6 +134,9 @@ const TreeItemChildren = styled.ul`
  * TreeItem Component Implementation
  */
 function TreeItemComponent(props: TreeItemProps, ref: React.ForwardedRef<HTMLLIElement>) {
+  // Unified glass styles
+  const glassStyles = createGlassStyle({ intent: 'neutral', elevation: 'level2', tier: 'high' });
+
   const {
     nodeId,
     label,

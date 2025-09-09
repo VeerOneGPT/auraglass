@@ -3,7 +3,7 @@
 import { GlassButton } from '../button/GlassButton';
 import { GlassInput } from '../input/GlassInput';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useCallback, useRef, useState } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';

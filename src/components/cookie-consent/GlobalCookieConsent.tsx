@@ -1,8 +1,10 @@
+// Typography tokens available via typography.css (imported in index.css)
 import React, { forwardRef, useState, useEffect, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
+import { glassTokenUtils } from '../../tokens/glass';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { Box } from '../layout/Box';
 import { GlassButton as Button } from '../button';
@@ -96,14 +98,14 @@ const StyledGlobalCookieConsent = styled.div<{
   background-color: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid ${glassTokenUtils.getSurface('neutral', 'level1').border.color};
   
   ${({ theme }) => `
     border: 1px solid rgba(255, 255, 255, 0.35);
   `}
   
   ${({ theme, $glassIntensity }) => `
-    box-shadow: 0 0 ${$glassIntensity * 12}px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 ${$glassIntensity * 12}px ${glassTokenUtils.getSurface('neutral', 'level1').surface.base};
   `}
   
   @media (max-width: 540px) {
@@ -151,12 +153,12 @@ const CategoryContainer = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
+    background: ${glassTokenUtils.getSurface('neutral', 'level1').surface.base};
     border-radius: 10px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
+    background: ${glassTokenUtils.getSurface('neutral', 'level1').border.color};
     border-radius: 10px;
   }
 
@@ -193,7 +195,7 @@ const CookieDetailContainer = styled.div`
   margin-left: 2rem;
   padding: 0.5rem;
   font-size: 0.8rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: ${glassTokenUtils.getSurface('neutral', 'level1').surface.base};
   border-radius: 4px;
 `;
 
@@ -424,7 +426,7 @@ export const GlobalCookieConsent = forwardRef<HTMLDivElement, GlobalCookieConsen
                 onCheckedChange={() => handleToggleCategory(category.id, category.required)}
                 disabled={category.required}
               />
-              <Typography variant="span" style={{ fontWeight: 600 }}>
+              <Typography variant="span" style={{ fontWeight: 'var(--typography-heading-weight)' }}>
                 {category.name} {category.required && <em>(Required)</em>}
               </Typography>
             </CategoryHeader>
@@ -463,7 +465,7 @@ export const GlobalCookieConsent = forwardRef<HTMLDivElement, GlobalCookieConsen
           {...rest}
         >
           <Box>
-            <Typography variant="h6" style={{ marginBottom: '8px', fontWeight: 600 }}>
+            <Typography variant="h6" style={{ marginBottom: '8px', fontWeight: 'var(--typography-heading-weight)' }}>
               {title}
             </Typography>
 

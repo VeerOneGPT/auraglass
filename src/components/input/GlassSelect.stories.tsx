@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassSelect } from './GlassSelect';
 
@@ -17,10 +18,6 @@ const meta: Meta<typeof GlassSelect> = {
       control: 'text',
       description: 'className prop',
     },
-    children: {
-      control: 'text',
-      description: 'children prop',
-    },
     disabled: {
       control: 'boolean',
       description: 'disabled prop',
@@ -29,23 +26,35 @@ const meta: Meta<typeof GlassSelect> = {
       control: 'text',
       description: 'placeholder prop',
     },
-    value: {
-      control: 'text',
-      description: 'value prop',
-    },
     size: {
       control: { type: 'select' },
       options: ["sm","md","lg"],
       description: 'size prop',
     },
+    variant: {
+      control: { type: 'select' },
+      options: ["default","filled","outlined","minimal"],
+      description: 'variant prop',
+    },
+    state: {
+      control: { type: 'select' },
+      options: ["default","error","warning","success"],
+      description: 'state prop',
+    },
   },
   args: {
     className: '',
-    children: '',
     disabled: false,
-    placeholder: 'Enter text...',
-    value: '',
-    size: 'sm',
+    placeholder: 'Select an option...',
+    size: 'md',
+    variant: 'default',
+    state: 'default',
+    options: [
+      { value: 'apple', label: 'Apple' },
+      { value: 'banana', label: 'Banana' },
+      { value: 'cherry', label: 'Cherry' },
+      { value: 'date', label: 'Date' },
+    ],
   },
 };
 
@@ -54,24 +63,44 @@ type Story = StoryObj<typeof GlassSelect>;
 
 export const Default: Story = {
   args: {
-    children: (
-      <div className="p-4 text-center">
-        <h3 className="text-lg font-semibold mb-2">GlassSelect</h3>
-        <p className="text-sm opacity-80">This is the default glassselect component.</p>
-      </div>
-    ),
+    placeholder: 'Select a fruit...',
+    options: [
+      { value: 'apple', label: '🍎 Apple' },
+      { value: 'banana', label: '🍌 Banana' },
+      { value: 'cherry', label: '🍒 Cherry' },
+      { value: 'grape', label: '🍇 Grape' },
+    ],
   },
 };
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-wrap gap-4">
-      <GlassSelect {...args}>
-        Default
-      </GlassSelect>
+    <div className="flex flex-col gap-4 max-w-md">
+      <GlassSelect {...args} variant="default" placeholder="Default variant" />
+      <GlassSelect {...args} variant="filled" placeholder="Filled variant" />
+      <GlassSelect {...args} variant="outlined" placeholder="Outlined variant" />
+      <GlassSelect {...args} variant="minimal" placeholder="Minimal variant" />
     </div>
   ),
-  args: {
-    children: null,
-  },
+};
+
+export const States: Story = {
+  render: (args) => (
+    <div className="flex flex-col gap-4 max-w-md">
+      <GlassSelect {...args} state="default" placeholder="Default state" />
+      <GlassSelect {...args} state="success" placeholder="Success state" />
+      <GlassSelect {...args} state="warning" placeholder="Warning state" />
+      <GlassSelect {...args} state="error" placeholder="Error state" />
+    </div>
+  ),
+};
+
+export const Sizes: Story = {
+  render: (args) => (
+    <div className="flex flex-col gap-4 max-w-md">
+      <GlassSelect {...args} size="sm" placeholder="Small size" />
+      <GlassSelect {...args} size="md" placeholder="Medium size" />
+      <GlassSelect {...args} size="lg" placeholder="Large size" />
+    </div>
+  ),
 };

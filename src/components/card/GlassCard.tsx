@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlassCore as OptimizedGlass, type OptimizedGlassProps } from '../../primitives';
@@ -90,7 +90,7 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
         interactive={isInteractive}
         tier="high"
         className={cn(
-          'glass-foundation-complete relative rounded-xl overflow-hidden',
+          'glass-foundation-complete relative rounded-xl overflow-hidden glass-overlay-noise glass-edge glass-overlay-specular glass-typography-reset',
           'transition-all duration-300 ease-out',
           // Advanced hover effects with glass enhancement
           hoverable && [

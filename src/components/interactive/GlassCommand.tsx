@@ -2,7 +2,7 @@
 
 import { GlassInput } from '../input/GlassInput';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import { Search } from 'lucide-react';
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';

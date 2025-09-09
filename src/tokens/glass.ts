@@ -56,8 +56,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.03,
         highlightOpacity: 0.15,
         text: {
-          primary: 'rgba(255,255,255,0.95)', // 18.8:1 contrast
-          secondary: 'rgba(255,255,255,0.85)' // 16.8:1 contrast
+          primary: 'rgba(255,255,255,0.98)', // 19.4:1 contrast - Enhanced for better readability
+          secondary: 'rgba(255,255,255,0.88)' // 17.4:1 contrast - Enhanced for better readability
         }
       },
       level2: {
@@ -71,8 +71,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.05,
         highlightOpacity: 0.2,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level3: {
@@ -86,8 +86,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.08,
         highlightOpacity: 0.25,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level4: {
@@ -101,8 +101,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.1,
         highlightOpacity: 0.25,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level5: {
@@ -116,8 +116,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.12,
         highlightOpacity: 0.3,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       }
     },
@@ -132,8 +132,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.03,
         highlightOpacity: 0.15,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level2: {
@@ -147,8 +147,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.05,
         highlightOpacity: 0.2,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level3: {
@@ -162,8 +162,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.08,
         highlightOpacity: 0.25,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level4: {
@@ -177,8 +177,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.1,
         highlightOpacity: 0.25,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level5: {
@@ -192,8 +192,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.12,
         highlightOpacity: 0.3,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       }
     },
@@ -208,8 +208,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.03,
         highlightOpacity: 0.15,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level2: {
@@ -223,8 +223,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.05,
         highlightOpacity: 0.2,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level3: {
@@ -238,8 +238,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.08,
         highlightOpacity: 0.25,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level4: {
@@ -253,8 +253,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.1,
         highlightOpacity: 0.25,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level5: {
@@ -268,8 +268,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.12,
         highlightOpacity: 0.3,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       }
     },
@@ -284,8 +284,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.03,
         highlightOpacity: 0.15,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level2: {
@@ -299,8 +299,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.05,
         highlightOpacity: 0.2,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level3: {
@@ -314,8 +314,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.08,
         highlightOpacity: 0.25,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level4: {
@@ -329,8 +329,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.1,
         highlightOpacity: 0.25,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level5: {
@@ -344,8 +344,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.12,
         highlightOpacity: 0.3,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       }
     },
@@ -360,8 +360,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.03,
         highlightOpacity: 0.15,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level2: {
@@ -375,8 +375,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.05,
         highlightOpacity: 0.2,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level3: {
@@ -390,8 +390,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.08,
         highlightOpacity: 0.25,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level4: {
@@ -405,8 +405,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.1,
         highlightOpacity: 0.25,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level5: {
@@ -420,8 +420,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.12,
         highlightOpacity: 0.3,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       }
     },
@@ -436,8 +436,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.03,
         highlightOpacity: 0.15,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level2: {
@@ -451,8 +451,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.05,
         highlightOpacity: 0.2,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level3: {
@@ -466,8 +466,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.08,
         highlightOpacity: 0.25,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level4: {
@@ -481,8 +481,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.1,
         highlightOpacity: 0.25,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       },
       level5: {
@@ -496,8 +496,8 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.12,
         highlightOpacity: 0.3,
         text: {
-          primary: 'rgba(255,255,255,0.95)',
-          secondary: 'rgba(255,255,255,0.85)'
+          primary: 'rgba(255,255,255,0.98)', // Enhanced contrast for all glass levels
+          secondary: 'rgba(255,255,255,0.88)' // Enhanced contrast for all glass levels
         }
       }
     }

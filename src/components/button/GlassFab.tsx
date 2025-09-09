@@ -1,3 +1,4 @@
+// Typography tokens available via typography.css (imported in index.css)
 import React, { forwardRef, useState, useEffect, useMemo, useCallback } from 'react';
 import styled, { css, useTheme } from 'styled-components';
 import { createThemeContext } from '../../core/themeContext';
@@ -228,7 +229,7 @@ const FabContainer = styled.button<{
   user-select: none;
   z-index: ${props => props.$zIndex};
   font-family: 'Inter', sans-serif;
-  font-weight: 500;
+  font-weight: var(--typography-subheading-weight);
   box-sizing: border-box;
   transition: transform 140ms ease, box-shadow 160ms ease, background-color 160ms ease;
   will-change: transform, box-shadow;

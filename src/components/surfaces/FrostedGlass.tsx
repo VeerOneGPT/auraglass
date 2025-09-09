@@ -3,15 +3,17 @@
  *
  * A glass surface with frosted ice effects.
  */
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useRef, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { glassCSS } from '../../core/mixins/glassMixins';
 
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { AURA_GLASS, glassTokenUtils } from '../../tokens/glass';
 
 import { FrostedGlassProps } from './types';
+import { useGlassParallax } from '../../hooks/useGlassParallax';
 
 // Frost animation keyframes
 const frostGrow = keyframes`
@@ -46,6 +48,9 @@ const FrostContainer = styled.div<{
   $backgroundColor: string;
   $isHovered: boolean;
   $reducedMotion: boolean;
+  $specular: boolean;
+  $glow: false | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  $lightAngle: number;
 }>`
   position: relative;
   display: block;
@@ -57,6 +62,7 @@ const FrostContainer = styled.div<{
     typeof props.$padding === 'number' ? `${props.$padding}px` : props.$padding};
   box-sizing: border-box;
   overflow: hidden;
+  isolation: isolate;
 
   /* Apply glass surface effect */
   ${glassCSS({ intent: 'neutral', elevation: 'level2' })}
@@ -84,7 +90,7 @@ const FrostContainer = styled.div<{
       case 'none':
         return 'transparent';
       case 'subtle':
-        return 'rgba(255, 255, 255, 0.15)';
+        return glassTokenUtils.getSurface('neutral', 'level2').border.color;
       case 'light':
         return 'rgba(255, 255, 255, 0.25)';
       case 'medium':
@@ -140,7 +146,7 @@ const FrostContainer = styled.div<{
       `}
   }
 
-  /* Ice frost edge effect */
+  /* Specular + edge overlay */
   &::after {
     content: '';
     position: absolute;
@@ -150,8 +156,18 @@ const FrostContainer = styled.div<{
     bottom: 0;
     pointer-events: none;
     border-radius: inherit;
+    /* Edge frost */
     box-shadow: inset 0 0 ${props => 5 + props.$intensity * 15}px ${props => props.$frostColor};
     opacity: ${props => 0.2 + props.$intensity * 0.3};
+
+    ${props => props.$specular && css`
+      mix-blend-mode: screen;
+      background:
+        radial-gradient(${props.$intensity * 80 + 40}% ${props.$intensity * 40 + 40}% at 50% -10%, rgba(255,255,255, ${Math.min(0.35, 0.12 + props.$intensity * 0.35)}) 0%, rgba(255,255,255,0.0) 60%),
+        linear-gradient(${props.$lightAngle}deg, rgba(255,255,255,0.18), rgba(255,255,255,0.00) 35%);
+      transform: translate(var(--glass-parallax-x, 0), var(--glass-parallax-y, 0));
+      transition: transform 150ms ease-out;
+    `}
   }
 
   /* Interactive effects */
@@ -163,8 +179,8 @@ const FrostContainer = styled.div<{
       
       &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 16px rgba(255, 255, 255, 0.1);
-        
+        box-shadow: 0 8px 16px ${glassTokenUtils.getSurface('neutral', 'level2').surface.base};
+
         &::after {
           opacity: ${0.3 + props.$intensity * 0.4};
         }
@@ -174,6 +190,16 @@ const FrostContainer = styled.div<{
         transform: translateY(0);
       }
     `}
+
+  /* Optional additive glow via drop-shadow */
+  ${props => props.$glow && css`
+    filter: ${props.$glow === 'primary' ? 'drop-shadow(0 0 18px rgba(59,130,246,0.28))' :
+      props.$glow === 'success' ? 'drop-shadow(0 0 18px rgba(16,185,129,0.28))' :
+      props.$glow === 'warning' ? 'drop-shadow(0 0 18px rgba(245,158,11,0.28))' :
+      props.$glow === 'danger' ? 'drop-shadow(0 0 18px rgba(239,68,68,0.28))' :
+      props.$glow === 'info' ? 'drop-shadow(0 0 18px rgba(14,165,233,0.28))' :
+      'drop-shadow(0 0 18px rgba(59,130,246,0.24))'};
+  `}
 `;
 
 const FrostContent = styled.div`
@@ -213,6 +239,9 @@ const FrostedGlassComponent = (
   props: FrostedGlassProps,
   ref: React.ForwardedRef<HTMLDivElement>
 ) => {
+  // Unified glass styles
+  const glassStyles = createGlassStyle({ intent: 'neutral', elevation: 'level2', tier: 'high' });
+
   const {
     children,
     className,
@@ -231,7 +260,12 @@ const FrostedGlassComponent = (
     frostColor = 'rgba(255, 255, 255, 0.8)',
     animate = true,
     pattern = 'noise',
-    backgroundColor = 'rgba(255, 255, 255, 0.1)',
+    backgroundColor = glassTokenUtils.getSurface('neutral', 'level2').surface.base,
+    specular = true,
+    glow = false,
+    lightAngle = 135,
+    parallax = false,
+    parallaxStrength = 10,
     ...rest
   } = props;
 
@@ -265,9 +299,20 @@ const FrostedGlassComponent = (
     setIsHovered(false);
   };
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  // Drive pointer parallax when enabled
+  useGlassParallax(containerRef, { strength: parallaxStrength, enabled: parallax && !prefersReducedMotion });
+
+  // Support forwarding refs by merging with internal ref
+  const setRefs = (node: HTMLDivElement | null) => {
+    (containerRef as any).current = node;
+    if (typeof ref === 'function') ref(node);
+    else if (ref) (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
+  };
+
   return (
     <FrostContainer
-      ref={ref}
+      ref={setRefs}
       className={className}
       style={style}
       onMouseEnter={handleMouseEnter}
@@ -289,6 +334,9 @@ const FrostedGlassComponent = (
       $backgroundColor={backgroundColor}
       $isHovered={isHovered}
       $reducedMotion={prefersReducedMotion}
+      $specular={specular}
+      $glow={glow === true ? 'primary' : (glow || false)}
+      $lightAngle={lightAngle}
       {...rest}
     >
       <FrostSparkles

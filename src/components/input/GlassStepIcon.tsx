@@ -1,3 +1,4 @@
+// Typography tokens available via typography.css (imported in index.css)
 import React from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled, { useTheme } from 'styled-components';
@@ -37,7 +38,7 @@ const StepIconContainer = styled(Box)<{ $active: boolean, $completed: boolean }>
   z-index: 1; // Ensure icon is above connector
   transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; // Add box-shadow transition
   font-size: 0.8rem; // Size for step number
-  font-weight: bold;
+  font-weight: var(--typography-heading-weight);
   flex-shrink: 0;
   border: 1px solid ${props =>
     props.$active || props.$completed ? 'rgba(59, 130, 246, 0.3)' :

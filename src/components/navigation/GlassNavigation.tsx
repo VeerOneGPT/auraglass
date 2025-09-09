@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 
 import { glowEffects } from '../../core/mixins/glowEffects';
 import { createGlassStyle, glassCSS } from '../../core/mixins/glassMixins';
+import { AURA_GLASS, glassTokenUtils } from '../../tokens/glass';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useAnimationContext } from '../../contexts/AnimationContext';
 import { SpringConfig, SpringPresets } from '../../animations/physics/springPhysics';
@@ -55,8 +56,7 @@ const useMultiSpring = (config: any) => {
   };
 };
 
-const useGalileoSprings = (targets: Record<string, number>, config?: any) => {
-  // Create an object with the same keys as targets, but with values as objects
+const useGalileoSprings = (targets: Record<string, number>, config?: any) => { // Create an object with the same keys as targets but with values as objects
   const springs: Record<string, { x: number; y: number; scale: number }> = {};
   Object.keys(targets).forEach(key => {
     springs[key] = { x: 0, y: 0, scale: 1 };
@@ -248,7 +248,7 @@ const NavItem = styled.li<{
     pointer-events: ${({ $disabled }) => ($disabled ? 'none' : 'auto')};
 
     &:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: ${AURA_GLASS.surfaces.neutral.level2.surface.base};
     }
 
     &:active {
@@ -300,7 +300,7 @@ const NavDivider = styled.div<{
         height: 1.5rem;
         margin: 0 0.75rem;
       `}
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: ${AURA_GLASS.surfaces.neutral.level2.border.color};
 `;
 
 const CollapsibleButton = styled.button<{
@@ -316,13 +316,13 @@ const CollapsibleButton = styled.button<{
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: ${AURA_GLASS.surfaces.neutral.level2.surface.base};
+  border: 1px solid ${AURA_GLASS.surfaces.neutral.level2.border.color};
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: ${AURA_GLASS.surfaces.neutral.level2.border.color};
   }
 
   svg {

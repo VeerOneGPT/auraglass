@@ -25,7 +25,7 @@ const StepWrapper = styled(Box)<{ $orientation: 'horizontal' | 'vertical', $clic
   align-items: center;
   position: relative; // Needed for vertical connector positioning maybe?
   cursor: ${props => props.$clickable ? 'pointer' : 'default'};
-  flex: 1; // Allow steps to take space, especially horizontally
+  flex: 1;, // Allow steps to take space especially horizontally
   padding: 8px 0; // Add some padding
   text-align: ${props => props.$orientation === 'vertical' ? 'center' : 'left'};
 `;

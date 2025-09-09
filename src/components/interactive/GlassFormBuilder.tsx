@@ -3,7 +3,7 @@
 import { GlassButton } from '../button/GlassButton';
 import { GlassInput } from '../input/GlassInput';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useCallback, useState } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
@@ -182,7 +182,7 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
     const [internalValues, setInternalValues] = useState<FormValue>(values);
     const [internalErrors, setInternalErrors] = useState<FormError>(errors);
     const [expandedSections, setExpandedSections] = useState<Set<string>>(
-      new Set(schema.filter(section => section.defaultExpanded !== false).map(s => s.id))
+      new Set(schema?.filter(section => section && section.defaultExpanded !== false).map(s => s?.id).filter(Boolean) || [])
     );
     const [autoSaveTimer, setAutoSaveTimer] = useState<NodeJS.Timeout>();
 
@@ -200,8 +200,9 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
     };
 
     // Get all fields for progress calculation
-    const allFields = schema.flatMap(section => section.fields);
+    const allFields = schema?.flatMap(section => section?.fields || []).filter(Boolean) || [];
     const filledFields = allFields.filter(field => {
+      if (!field || !field.id) return false;
       const value = internalValues[field.id];
       return value !== undefined && value !== '' && value !== null;
     });
@@ -292,6 +293,8 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
 
     // Render field based on type
     const renderFieldComponent = (field: FormField) => {
+      if (!field || !field.id) return null;
+
       const value = internalValues[field.id] ?? field.defaultValue ?? '';
       const error = internalErrors[field.id];
       const isDisabled = disabled || field.disabled;
@@ -398,6 +401,8 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
 
     // Get field width class
     const getFieldWidthClass = (field: FormField) => {
+      if (!field) return 'md:col-span-12';
+
       switch (field.layout?.width) {
         case 'half':
           return 'md:col-span-6';
@@ -417,7 +422,7 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
       // Validate all fields
       const newErrors: FormError = {};
       allFields.forEach(field => {
-        if (shouldShowField(field)) {
+        if (field && field.id && shouldShowField(field)) {
           const value = internalValues[field.id];
           const error = validateField(field, value);
           if (error) {
@@ -489,7 +494,7 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
 
         {/* Form sections */}
         <div className={variantClasses[variant]}>
-          {schema.map((section) => (
+          {schema && schema.length > 0 ? schema.filter(section => section && section.id && section.fields && section.fields.length > 0).map((section) => (
             <Motion key={section.id} preset="slideDown">
               <GlassCard variant="default" className="p-6">
                 {/* Section header */}
@@ -529,9 +534,9 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
                 {(!section.collapsible || expandedSections.has(section.id)) && (
                   <div className="grid grid-cols-12 gap-4">
                     {section.fields
-                      .filter(shouldShowField)
-                      .sort((a, b) => (a.layout?.order || 0) - (b.layout?.order || 0))
-                      .map((field) => (
+                      ?.filter(field => field && field.id && shouldShowField(field))
+                      ?.sort((a, b) => (a?.layout?.order || 0) - (b?.layout?.order || 0))
+                      ?.map((field) => (
                         <div
                           key={field.id}
                           className={cn('col-span-12', getFieldWidthClass(field))}
@@ -548,7 +553,11 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
                 )}
               </GlassCard>
             </Motion>
-          ))}
+          )) : (
+            <div className="text-center py-8 text-muted-foreground">
+              <p>No form sections configured</p>
+            </div>
+          )}
         </div>
 
         {/* Form actions */}

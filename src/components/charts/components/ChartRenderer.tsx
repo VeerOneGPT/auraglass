@@ -76,20 +76,20 @@ export const ChartRenderer: React.FC<ChartRendererProps> = ({
           display: axis?.x?.show !== false,
           grid: {
             display: axis?.x?.grid !== false,
-            color: 'rgba(255, 255, 255, 0.1)',
+            color: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
           },
           ticks: {
-            color: 'rgba(255, 255, 255, 0.7)',
+            color: '${glassStyles.text?.secondary || "rgba(255, 255, 255, 0.7)"}',
           },
         },
         y: {
           display: axis?.y?.show !== false,
           grid: {
             display: axis?.y?.grid !== false,
-            color: 'rgba(255, 255, 255, 0.1)',
+            color: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
           },
           ticks: {
-            color: 'rgba(255, 255, 255, 0.7)',
+            color: '${glassStyles.text?.secondary || "rgba(255, 255, 255, 0.7)"}',
           },
         },
       },

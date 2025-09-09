@@ -4,6 +4,7 @@
  * An advanced glass-styled chart component with physics-based interactions,
  * smooth animations, and rich customization options.
  */
+// Typography tokens available via typography.css (imported in index.css)
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 // import styled from 'styled-components'; // unused
 import { 
@@ -33,6 +34,7 @@ import { useGlassTheme } from '../../hooks/useGlassTheme';
 import { GlassTooltip, GlassTooltipContent } from '../modal/GlassTooltip';
 
 import { useQualityTier, getQualityBasedPhysicsParams, getQualityBasedGlassParams } from '../charts/hooks/useQualityTier';
+import { glassTokenUtils } from '../../tokens/glass';
 
 const usePhysicsAnimation = (options: any) => ({
   value: 1,
@@ -236,10 +238,10 @@ const ChartContainer = styled.div<{
   position: relative;
   width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.1);
+  background: ${glassTokenUtils.getSurface('neutral', 'level1').surface.base};
   backdrop-filter: blur(10px);
   border-radius: ${props => props.$borderRadius || 12}px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid ${glassTokenUtils.getSurface('neutral', 'level1').border.color};
   padding: 20px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 `;
@@ -250,15 +252,15 @@ const ChartHeader = styled.div`
 
 const ChartTitle = styled.h3`
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
+  font-size: var(--typography-subheading-size);
+  font-weight: var(--typography-heading-weight);
+  color: ${glassTokenUtils.getSurface('neutral', 'level1').text.primary};
 `;
 
 const ChartSubtitle = styled.p`
   margin: 4px 0 0 0;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--typography-body-size);
+  color: ${glassTokenUtils.getSurface('neutral', 'level1').text.secondary};
 `;
 
 const ChartWrapper = styled.div`
@@ -277,7 +279,7 @@ const ChartLegend = styled.div<{
   flex-wrap: wrap;
   margin-top: 16px;
   padding: 12px;
-  background: ${props => props.$glassEffect ? 'rgba(255, 255, 255, 0.1)' : 'transparent'};
+  background: ${props => props.$glassEffect ? '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}' : 'transparent'};
   backdrop-filter: ${props => props.$glassEffect ? 'blur(8px)' : 'none'};
   border-radius: 8px;
   justify-content: ${props => props.$position === 'top' ? 'center' : 'flex-start'};
@@ -310,8 +312,8 @@ const LegendColor = styled.div<{
 const LegendLabel = styled.span<{
   $active?: boolean;
 }>`
-  font-size: 14px;
-  color: ${props => props.$active ? 'rgba(255, 255, 255, 0.9)' : 'rgba(255, 255, 255, 0.5)'};
+  font-size: var(--typography-body-size);
+  color: ${props => props.$active ? '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}' : 'rgba(255, 255, 255, 0.5)'};
 `;
 
 const DynamicTooltip = styled.div<{
@@ -325,14 +327,14 @@ const DynamicTooltip = styled.div<{
   padding: 12px;
   pointer-events: none;
   z-index: 1000;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid ${glassTokenUtils.getSurface('neutral', 'level1').border.color};
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 `;
 
 const TooltipHeader = styled.div<{
   $color?: string;
 }>`
-  font-weight: 600;
+  font-weight: var(--typography-heading-weight);
   margin-bottom: 8px;
   color: ${props => props.$color || '#ffffff'};
 `;
@@ -345,14 +347,14 @@ const TooltipRow = styled.div`
 `;
 
 const TooltipLabel = styled.span`
-  color: rgba(255, 255, 255, 0.7);
-  font-size: 14px;
+  color: ${glassTokenUtils.getSurface('neutral', 'level1').text.secondary};
+  font-size: var(--typography-body-size);
 `;
 
 const TooltipValue = styled.span<{
   $highlighted?: boolean;
 }>`
-  color: ${props => props.$highlighted ? '#ffffff' : 'rgba(255, 255, 255, 0.9)'};
+  color: ${props => props.$highlighted ? '#ffffff' : glassTokenUtils.getSurface('neutral', 'level1').text.primary};
   font-weight: ${props => props.$highlighted ? '600' : '400'};
 `;
 
@@ -433,8 +435,8 @@ if (defaults?.font) {
   defaults.font.family = "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
 }
 // Set colors safely
-defaults.color = 'rgba(255, 255, 255, 0.7)';
-defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+defaults.color = '${glassStyles.text?.secondary || "rgba(255, 255, 255, 0.7)"}';
+defaults.borderColor = '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}';
 
 /**
  * Register required Chart.js components
@@ -511,7 +513,7 @@ const GlassButton = ({
       onClick={onClick}
       aria-label={ariaLabel}
       style={{
-        background: 'rgba(255, 255, 255, 0.1)',
+        background: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
         border: 'none',
         borderRadius: '4px',
         padding: size === 'sm' ? '4px' : '8px',
@@ -572,8 +574,8 @@ const ZoomControls: React.FC<ZoomControlsProps> = ({
       </GlassButton>
       
       <span style={{ 
-        color: 'rgba(255, 255, 255, 0.9)',
-        fontSize: '12px',
+        color: '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}',
+        fontSize: 'var(--typography-caption-size)',
         padding: '0 8px',
         minWidth: '40px',
         textAlign: 'center'
@@ -658,8 +660,8 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
       showYGrid: true,
       showXLabels: true,
       showYLabels: true,
-      axisColor: 'rgba(255, 255, 255, 0.3)',
-      gridColor: 'rgba(255, 255, 255, 0.1)',
+      axisColor: '${glassStyles.borderColor || "rgba(255, 255, 255, 0.3)"}',
+      gridColor: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
       gridStyle: 'solid',
     },
     initialSelection,
@@ -1218,7 +1220,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
       
       if (subtitle) {
         exportContext.font = `${14 * devicePixelRatio}px Inter, sans-serif`;
-        exportContext.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        exportContext.fillStyle = '${glassStyles.text?.secondary || "rgba(255, 255, 255, 0.7)"}';
         exportContext.fillText(subtitle, exportCanvas.width / 2, title ? 45 * devicePixelRatio : 25 * devicePixelRatio);
       }
     }

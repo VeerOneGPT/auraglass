@@ -1,8 +1,10 @@
+// Typography tokens available via typography.css (imported in index.css)
 import React, { forwardRef, useEffect, useState, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
+import { glassTokenUtils } from '../../tokens/glass';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { Box } from '../layout/Box';
 import { GlassButton as Button } from '../button';
@@ -91,18 +93,18 @@ const StyledCookieConsent = styled.div<{
   }}
 
   ${({ theme, $glassIntensity }) => `
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: ${glassTokenUtils.getSurface('neutral', 'level1').surface.base};
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid ${glassTokenUtils.getSurface('neutral', 'level1').border.color};
   `}
   
   ${({ theme }) => `
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid ${glassTokenUtils.getSurface('neutral', 'level1').border.color};
   `}
   
   ${({ theme, $glassIntensity }) => `
-    box-shadow: 0 0 ${$glassIntensity * 10}px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 ${$glassIntensity * 10}px ${glassTokenUtils.getSurface('neutral', 'level1').surface.base};
   `}
   
   @media (max-width: 480px) {
@@ -267,7 +269,7 @@ export const CookieConsent = forwardRef<HTMLDivElement, CookieConsentProps>(
       >
         <Box>
           {title && (
-            <Typography variant="h6" style={{ marginBottom: '8px', fontWeight: 600 }}>
+            <Typography variant="h6" style={{ marginBottom: '8px', fontWeight: 'var(--typography-heading-weight)' }}>
               {title}
             </Typography>
           )}

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';

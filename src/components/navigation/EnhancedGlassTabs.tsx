@@ -4,6 +4,7 @@
  * High-contrast, accessibility-focused tab component for chart navigation
  * with glass morphism styling.
  */
+// Typography tokens available via typography.css (imported in index.css)
 import React, { useState, useEffect, useRef, useCallback, forwardRef, useImperativeHandle } from 'react';
 import styled, { DefaultTheme, useTheme } from 'styled-components';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
@@ -376,8 +377,8 @@ const StyledBadge = styled.span<{
   min-width: 18px;
   height: 18px;
   padding: 0 6px;
-  font-size: 11px;
-  font-weight: 600;
+  font-size: var(--typography-caption-size);
+  font-weight: var(--typography-heading-weight);
   border-radius: 9px;
   background-color: ${props => {
     const colors = getTabColors(props?.color, props?.theme.isDarkMode, true);
@@ -387,8 +388,7 @@ const StyledBadge = styled.span<{
 `;
 
 // Add this helper function to ensure we have a properly typed theme
-const ensureValidTheme = (themeInput: any): DefaultTheme => {
-  // If the theme is already a valid DefaultTheme, return it
+const ensureValidTheme = (themeInput: any): DefaultTheme => { // If the theme is already a valid DefaultTheme return it
   if (
     themeInput && 
     typeof themeInput === 'object' && 

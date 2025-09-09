@@ -34,7 +34,7 @@ export const Default: Story = {
 export const WithCustomHref: Story = {
   args: {
     ...Default.args,
-    href: 'https://example.com',
+    href: 'https://example.com'
   },
 };
 

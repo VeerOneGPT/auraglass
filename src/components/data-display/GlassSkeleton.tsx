@@ -95,7 +95,7 @@ export const GlassSkeleton: React.FC<GlassSkeletonProps> = ({
         return {
           position: 'relative',
           overflow: 'hidden',
-          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)',
+          background: 'linear-gradient(90deg, transparent, ${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}, transparent)',
           backgroundSize: '200% 100%',
           animation: 'skeleton-wave 2s infinite',
         };

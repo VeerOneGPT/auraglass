@@ -3,7 +3,7 @@
 import { GlassButton } from '../button/GlassButton';
 import { GlassTooltip } from '../modal/GlassPopover';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import React, { createContext, forwardRef, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
@@ -400,7 +400,7 @@ function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
         'hover:bg-white/10 focus:outline-none',
         collapsed ? 'px-2 py-2.5 justify-center' : 'px-3 py-2',
         'text-sm font-medium',
-        isActive ? 'bg-primary/15 text-primary shadow-[0_0_0_2px_rgba(59,130,246,0.2)]' : '',
+        isActive ? 'bg-primary/15 text-primary shadow-[0_0_0_2px_${glassStyles.borderColor || "rgba(59, 130, 246, 0.2)"}]' : '',
         !isActive && 'text-muted-foreground hover:text-foreground',
         item?.disabled && 'opacity-50 cursor-not-allowed'
       )}

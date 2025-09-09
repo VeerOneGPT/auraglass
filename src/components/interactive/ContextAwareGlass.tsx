@@ -225,7 +225,7 @@ const DebugInfo = styled.div<{
   background-color: ${props =>
     props.$isDarkMode ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.7)'};
   color: ${props => (props.$isDarkMode ? 'white' : 'black')};
-  font-size: 10px;
+  font-size: 0.625rem;
   padding: 4px;
   border-bottom-left-radius: 4px;
   z-index: 1;
@@ -434,29 +434,29 @@ export const ContextAwareGlass = forwardRef<HTMLDivElement, ContextAwareGlassPro
           // Adjust based on content type
           switch (currentContentType) {
             case 'text':
-              // For text, increase opacity and decrease blur for better readability
+              // For text increase opacity and decrease blur for better readability
               adjustedBlurStrength = baseBlurStrength * 0.8;
               adjustedOpacity = baseOpacity * 1.2;
               break;
             case 'image':
-              // For images, decrease opacity and increase blur for better visibility
+              // For images decrease opacity and increase blur for better visibility
               adjustedBlurStrength = baseBlurStrength * 1.2;
               adjustedOpacity = baseOpacity * 0.8;
               break;
             case 'interactive':
-              // For interactive elements, make more visible
+              // For interactive elements make more visible
               adjustedBlurStrength = baseBlurStrength;
               adjustedOpacity = baseOpacity * 1.1;
               adjustedBorderOpacity = baseBorderOpacity * 1.2;
               break;
             case 'form':
-              // For forms, maximize readability and contrast
+              // For forms maximize readability and contrast
               adjustedBlurStrength = baseBlurStrength * 0.9;
               adjustedOpacity = baseOpacity * 1.3;
               adjustedBorderOpacity = baseBorderOpacity * 1.3;
               break;
             case 'multimedia':
-              // For multimedia, maximize transparency
+              // For multimedia maximize transparency
               adjustedBlurStrength = baseBlurStrength * 1.3;
               adjustedOpacity = baseOpacity * 0.7;
               break;
@@ -470,27 +470,26 @@ export const ContextAwareGlass = forwardRef<HTMLDivElement, ContextAwareGlassPro
           // Adjust based on background type
           switch (currentBackgroundType) {
             case 'light':
-              // For light backgrounds, decrease opacity in light mode, increase in dark mode
+              // For light backgrounds decrease opacity in light mode, increase in dark mode
               adjustedOpacity = isDarkMode ? baseOpacity * 1.2 : baseOpacity * 0.9;
               break;
             case 'dark':
-              // For dark backgrounds, increase opacity in light mode, decrease in dark mode
+              // For dark backgrounds increase opacity in light mode, decrease in dark mode
               adjustedOpacity = isDarkMode ? baseOpacity * 0.9 : baseOpacity * 1.2;
               break;
             case 'image':
             case 'complex':
-            case 'pattern':
-              // For busy backgrounds, increase blur and opacity for better isolation
+            case 'pattern': // For busy backgrounds increase blur and opacity for better isolation
               adjustedBlurStrength = baseBlurStrength * 1.4;
               adjustedOpacity = baseOpacity * 1.3;
               break;
             case 'video':
-              // For video backgrounds, maximize blur for better isolation
+              // For video backgrounds maximize blur for better isolation
               adjustedBlurStrength = baseBlurStrength * 1.6;
               adjustedOpacity = baseOpacity * 1.2;
               break;
             case 'gradient':
-              // For gradients, moderate adjustments
+              // For gradients moderate adjustments
               adjustedBlurStrength = baseBlurStrength * 1.2;
               adjustedOpacity = baseOpacity * 1.1;
               break;
@@ -554,8 +553,7 @@ export const ContextAwareGlass = forwardRef<HTMLDivElement, ContextAwareGlassPro
 
         case 'dynamic':
         case 'auto':
-        default:
-          // For auto/dynamic, use a combination of approaches based on content and background
+        default: // For auto/dynamic use a combination of approaches based on content and background
           if (currentContentType === 'text' || currentContentType === 'form') {
             // Prioritize readability for text/forms
             adjustedBlurStrength = baseBlurStrength * 0.8;

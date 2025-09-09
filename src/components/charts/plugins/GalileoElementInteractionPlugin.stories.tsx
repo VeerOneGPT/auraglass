@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useRef, useState, useCallback } from 'react';
+import { GalileoElementInteractionPlugin } from './GalileoElementInteractionPlugin';
 // Mock implementation for Storybook - the actual plugin may not be fully implemented
 interface GalileoInteractionConfig {
   enabled: boolean;

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import {
     Calendar as CalendarIcon,
     ChevronLeft,
@@ -259,7 +259,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                 {/* Calendar Header */}
                 <CardHeader className="border-b border-white/10">
                     <div className="flex items-center justify-between">
-                        <CardTitle className="text-xl font-semibold text-white flex items-center gap-2">
+                        <CardTitle className="glass-subheading font-semibold text-white flex items-center gap-2">
                             <CalendarIcon className="w-6 h-6" />
                             {monthData.monthName} {monthData.year}
                         </CardTitle>
@@ -298,7 +298,10 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                 {/* Calendar Grid */}
                 <CardContent className="p-4">
                     {/* Week day headers */}
-                    <div className="grid grid-cols-7 gap-2 mb-4">
+                    <div
+                      className="grid gap-2 mb-4"
+                      style={{ gridTemplateColumns: `repeat(${showWeekends ? 7 : 5}, minmax(0, 1fr))` }}
+                    >
                         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => {
                             const isWeekend = (index === 0 || index === 6);
                             if (!showWeekends && isWeekend) return null;
@@ -307,7 +310,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                                 <div
                                     key={day}
                                     className={cn(
-                                        'text-center text-sm font-medium py-2 rounded-lg',
+                                        'text-center glass-body font-medium py-2 rounded-lg',
                                         isWeekend ? 'text-white/60' : 'text-white/80'
                                     )}
                                 >
@@ -318,7 +321,10 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                     </div>
 
                     {/* Calendar days */}
-                    <div className="grid grid-cols-7 gap-2">
+                    <div
+                      className="grid gap-2"
+                      style={{ gridTemplateColumns: `repeat(${showWeekends ? 7 : 5}, minmax(0, 1fr))` }}
+                    >
                         {monthData.weeks.flat().map((date, index) => {
                             const dateKey = date.toDateString();
                             const dayEvents = eventsByDate.get(dateKey) || [];
@@ -336,7 +342,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                                         onClick={() => handleDateClick(date)}
                                         disabled={isDisabled(date)}
                                         className={cn(
-                                            'w-full h-full rounded-lg transition-all duration-200',
+                                            'w-full h-full rounded-lg transition-all duration-200 glass-focus glass-accent-primary',
                                             'flex flex-col items-center justify-start p-1',
                                             'hover:bg-white/10 focus:bg-white/15 focus:outline-none hover:scale-105',
                                             'disabled:opacity-50 disabled:cursor-not-allowed',
@@ -347,7 +353,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                                             }
                                         )}
                                     >
-                                        <span className="text-sm font-medium leading-none">
+                                        <span className="glass-body font-medium leading-none">
                                             {date.getDate()}
                                         </span>
 

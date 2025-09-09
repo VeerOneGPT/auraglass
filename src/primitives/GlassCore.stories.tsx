@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassCore } from './GlassCore';
 import { GlassVariant, BlurIntensity } from '../core/mixins/glassMixins';

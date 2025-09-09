@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassButton } from './GlassButton';
 import { GlassButtonVariantType } from './types';

@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassKeyValueEditor } from './GlassKeyValueEditor';
 import { fn } from '@storybook/test';

@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
+import { glassTokenUtils } from '../../tokens/glass';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { ImageListItemProps } from './types';
 
@@ -58,9 +59,9 @@ const ImageListItemRoot = styled.li<{
   ${props =>
     props.$glass &&
     `
-    background: rgba(255, 255, 255, 0.1);
+    background: ${glassTokenUtils.getSurface('neutral', 'level1').surface.base};
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid ${glassTokenUtils.getSurface('neutral', 'level1').border.color};
     `}
   
   /* Box shadow based on elevation */
@@ -135,6 +136,9 @@ const HoverOverlay = styled.div<{
  * ImageListItem Component Implementation
  */
 function ImageListItemComponent(props: ImageListItemProps, ref: React.ForwardedRef<HTMLLIElement>) {
+  // Unified glass styles
+  const glassStyles = createGlassStyle({ intent: 'neutral', elevation: 'level2', tier: 'high' });
+
   const {
     children,
     className,

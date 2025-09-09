@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { BarChart3, LineChart } from 'lucide-react';
 import { GlassChartWidget } from './GlassChartWidget';

@@ -1,3 +1,4 @@
+// Typography tokens available via typography.css (imported in index.css)
 import React from 'react';
 import { createGlassStyle } from '../../../core/mixins/glassMixins';
 
@@ -18,7 +19,7 @@ const CollapsedMenu: React.FC<CollapsedMenuProps> = ({
         right: 0,
         background: 'rgba(0, 0, 0, 0.9)',
         backdropFilter: 'blur(8px)',
-        border: '1px solid rgba(255, 255, 255, 0.2)',
+        border: '1px solid ${glassStyles.borderColor || "rgba(255, 255, 255, 0.2)"}',
         borderRadius: '8px',
         padding: '8px 0',
         minWidth: '200px',
@@ -37,7 +38,7 @@ const CollapsedMenu: React.FC<CollapsedMenuProps> = ({
             color: 'rgba(255, 255, 255, 0.8)',
             textAlign: 'left',
             cursor: 'pointer',
-            fontSize: '14px',
+            fontSize: 'var(--typography-body-size)',
           }}
           onClick={() => onItemClick?.(item)}
         >

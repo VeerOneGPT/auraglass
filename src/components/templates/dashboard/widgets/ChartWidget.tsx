@@ -126,12 +126,16 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
       rainbow: ['#3B82F6', '#8B5CF6', '#10B981', '#F59E0B', '#EF4444', '#EC4899', '#06B6D4'],
     };
 
-    const config = sizeClasses?.[size];
-    const colors = colorSchemes?.[colorScheme];
+    const config = sizeClasses?.[size] || sizeClasses.md;
+    const colors = colorSchemes?.[colorScheme] || colorSchemes.default;
 
     // Simple bar chart renderer
     const renderBarChart = () => {
-      const maxValue = Math.max(...data?.dataPoints.map(d => d.value));
+      if (!data?.dataPoints || data.dataPoints.length === 0) {
+        return <div className="flex items-center justify-center h-full text-muted-foreground">No data available</div>;
+      }
+
+      const maxValue = Math.max(...data.dataPoints.map(d => d.value));
       
       return (
         <div className="flex items-end justify-between gap-2 h-full">
@@ -167,7 +171,11 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
 
     // Simple line chart renderer
     const renderLineChart = () => {
-      const maxValue = Math.max(...data?.dataPoints.map(d => d.value));
+      if (!data?.dataPoints || data.dataPoints.length === 0) {
+        return <div className="flex items-center justify-center h-full text-muted-foreground">No data available</div>;
+      }
+
+      const maxValue = Math.max(...data.dataPoints.map(d => d.value));
       const points = data?.dataPoints.map((point, index) => {
         const x = (index / ((data.dataPoints?.length || 0) - 1)) * 100;
         const y = 100 - (point.value / maxValue) * 100;
@@ -198,7 +206,7 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
             <polyline
               points={points}
               fill="none"
-              stroke={colors[0]}
+              stroke={colors?.[0] || '#3B82F6'}
               strokeWidth="2"
               className="drop-shadow-sm"
             />
@@ -214,7 +222,7 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
                   cx={x}
                   cy={y}
                   r="2"
-                  fill={colors[0]}
+                  fill={colors?.[0] || '#3B82F6'}
                   className="hover:r-3 transition-all cursor-pointer"
                 />
               );
@@ -235,7 +243,11 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
 
     // Simple pie chart renderer
     const renderPieChart = () => {
-      const total = data?.dataPoints.reduce((sum, d) => sum + d.value, 0);
+      if (!data?.dataPoints || data.dataPoints.length === 0) {
+        return <div className="flex items-center justify-center h-full text-muted-foreground">No data available</div>;
+      }
+
+      const total = data.dataPoints.reduce((sum, d) => sum + d.value, 0);
       let cumulative = 0;
       
       return (
@@ -289,7 +301,11 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
 
     // Sparkline renderer
     const renderSparkline = () => {
-      const maxValue = Math.max(...data?.dataPoints.map(d => d.value));
+      if (!data?.dataPoints || data.dataPoints.length === 0) {
+        return <div className="flex items-center justify-center h-full text-muted-foreground text-xs">No data</div>;
+      }
+
+      const maxValue = Math.max(...data.dataPoints.map(d => d.value));
       const points = data?.dataPoints.map((point, index) => {
         const x = (index / ((data.dataPoints?.length || 0) - 1)) * 100;
         const y = 100 - (point.value / maxValue) * 100;
@@ -301,7 +317,7 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
           <polyline
             points={points}
             fill="none"
-            stroke={colors[0]}
+            stroke={colors?.[0] || '#3B82F6'}
             strokeWidth="3"
             className="drop-shadow-sm"
           />
@@ -316,6 +332,10 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
             <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
           </div>
         );
+      }
+
+      if (!data) {
+        return <div className="flex items-center justify-center h-full text-muted-foreground">No chart data provided</div>;
       }
 
       if (renderChart) {
@@ -337,11 +357,11 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
     };
 
     const renderLegend = () => {
-      if (!showLegend || type === 'sparkline') return null;
+      if (!showLegend || type === 'sparkline' || !data?.dataPoints || data.dataPoints.length === 0) return null;
 
       return (
         <div className="flex flex-wrap gap-2">
-          {data?.dataPoints.map((point, index) => {
+          {data.dataPoints.map((point, index) => {
             const color = point.color || colors[index % (colors?.length || 0)];
             return (
               <div key={index} className="flex items-center gap-1">

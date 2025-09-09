@@ -7,6 +7,7 @@ import React, { forwardRef, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
 import { createGlassStyle } from '../../core/mixins/glassMixins';
+import { AURA_GLASS } from '../../tokens/glass';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useGlassTheme } from '../../hooks/useGlassTheme';
@@ -32,16 +33,16 @@ const heatDistort = keyframes`
   }
 `;
 
-// Heat glow pulse animation
+// Heat glow pulse animation - using CSS custom properties for unified color management
 const heatGlow = keyframes`
   0% {
-    box-shadow: 0 0 10px 0 rgba(255, 100, 50, 0.5);
+    box-shadow: 0 0 10px 0 var(--heat-glow-base, rgba(255, 100, 50, 0.5));
   }
   50% {
-    box-shadow: 0 0 20px 5px rgba(255, 100, 50, 0.7);
+    box-shadow: 0 0 20px 5px var(--heat-glow-intense, rgba(255, 100, 50, 0.7));
   }
   100% {
-    box-shadow: 0 0 10px 0 rgba(255, 100, 50, 0.5);
+    box-shadow: 0 0 10px 0 var(--heat-glow-base, rgba(255, 100, 50, 0.5));
   }
 `;
 
@@ -56,6 +57,7 @@ const HeatGlassContainer = styled.div<{
   $backgroundColor: string;
   $isHovered: boolean;
   $reducedMotion: boolean;
+  $glassStyles?: any;
 }>`
   position: relative;
   display: block;
@@ -76,27 +78,33 @@ const HeatGlassContainer = styled.div<{
   box-sizing: border-box;
   overflow: hidden;
 
-  /* Basic glass styling */
+  /* Basic glass styling - using unified glass system */
   background-color: ${props => props.$backgroundColor};
-  backdrop-filter: blur(${props => {
-    switch (props.$blurStrength) {
-      case 'none': return '0px';
-      case 'light': return '4px';
-      case 'standard': return '8px';
-      case 'heavy': return '12px';
-      default: return '8px';
-    }
-  }});
-  -webkit-backdrop-filter: blur(${props => {
-    switch (props.$blurStrength) {
-      case 'none': return '0px';
-      case 'light': return '4px';
-      case 'standard': return '8px';
-      case 'heavy': return '12px';
-      default: return '8px';
-    }
-  }});
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: ${props => {
+    const blurValue = (() => {
+      switch (props.$blurStrength) {
+        case 'none': return '0px';
+        case 'light': return '4px';
+        case 'standard': return '8px';
+        case 'heavy': return '12px';
+        default: return '8px';
+      }
+    })();
+    return props.$glassStyles?.backdropFilter || `blur(${blurValue})`;
+  }};
+  -webkit-backdrop-filter: ${props => {
+    const blurValue = (() => {
+      switch (props.$blurStrength) {
+        case 'none': return '0px';
+        case 'light': return '4px';
+        case 'standard': return '8px';
+        case 'heavy': return '12px';
+        default: return '8px';
+      }
+    })();
+    return props.$glassStyles?.backdropFilter || `blur(${blurValue})`;
+  }};
+  border: ${props => props.$glassStyles?.border || `1px solid ${AURA_GLASS.surfaces.neutral.level2.border.color}` };
 
   /* Heat effect glow */
   box-shadow: 0 0 20px 5px ${props => props.$heatColor};
@@ -205,11 +213,22 @@ const HeatGlassComponent = (
     blurStrength = 'standard',
     borderRadius = 'md',
     interactive = true,
-    heatColor = 'rgba(255, 100, 50, 0.7)',
+    heatColor,
     animate = true,
-    backgroundColor = 'rgba(255, 255, 255, 0.1)',
+    backgroundColor,
     ...rest
   } = props;
+
+  // Get unified glass styles
+  const glassStyles = createGlassStyle({ 
+    intent: 'danger', // heat effect uses danger colors
+    elevation: elevation as any,
+    tier: 'high' 
+  });
+  
+  // Use unified colors with heat-specific fallbacks
+  const finalHeatColor = heatColor || glassStyles.borderColor || 'rgba(255, 100, 50, 0.7)';
+  const finalBackgroundColor = backgroundColor || AURA_GLASS.surfaces.danger.level2.surface.base;
 
   // Check if reduced motion is preferred
   const prefersReducedMotion = useReducedMotion();
@@ -241,9 +260,10 @@ const HeatGlassComponent = (
         $blurStrength={blurStrength}
         $borderRadius={borderRadius}
         $interactive={interactive}
-        $heatColor={heatColor}
+        $heatColor={finalHeatColor}
         $animate={animate}
-        $backgroundColor={backgroundColor}
+        $backgroundColor={finalBackgroundColor}
+        $glassStyles={glassStyles}
         $isHovered={isHovered}
         $reducedMotion={prefersReducedMotion}
         {...rest}

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface AvatarItem { name: string; avatar?: string; status?: 'online'|'away'|'busy'|'offline' }
 export interface GlassAvatarGroupProps { users: AvatarItem[]; max?: number; size?: 'sm'|'md'|'lg'; className?: string }

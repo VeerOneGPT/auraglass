@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { createGlassStyle } from '../../../core/mixins/glassMixins';
+import { glassTokenUtils } from '../../../tokens/glass';
 export interface ChartFiltersProps {
   palette?: string[];
   qualityTier?: 'low' | 'medium' | 'high' | 'ultra';
@@ -75,11 +76,11 @@ export const ChartFilters: React.FC<ChartFiltersProps> = ({
 
         {/* Pattern definitions */}
         <pattern id="chart-dots" patternUnits="userSpaceOnUse" width="4" height="4">
-          <circle cx="2" cy="2" r="1" fill="rgba(255, 255, 255, 0.1)"/>
+          <circle cx="2" cy="2" r="1" fill={glassTokenUtils.getSurface('neutral', 'level1').surface.base}/>
         </pattern>
 
         <pattern id="chart-lines" patternUnits="userSpaceOnUse" width="8" height="8">
-          <path d="M0,8 L8,0" stroke="rgba(255, 255, 255, 0.1)" strokeWidth="1"/>
+          <path d="M0,8 L8,0" stroke={glassTokenUtils.getSurface('neutral', 'level1').surface.base} strokeWidth="1"/>
         </pattern>
 
         {/* Noise filter for texture */}
@@ -95,7 +96,7 @@ export const ChartFilters: React.FC<ChartFiltersProps> = ({
         <filter id="chart-frosted" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="10" result="blur"/>
           <feOffset in="blur" dx="0" dy="0" result="offset"/>
-          <feFlood floodColor="rgba(255, 255, 255, 0.1)" result="color"/>
+          <feFlood floodColor={glassTokenUtils.getSurface('neutral', 'level1').surface.base} result="color"/>
           <feComposite in="color" in2="offset" operator="in" result="shadow"/>
           <feMerge>
             <feMergeNode in="shadow"/>

@@ -61,7 +61,7 @@ export const chartGlass = {
     cursor: { stroke: 'rgba(255,255,255,0.12)' },
     contentStyle: {
       background: 'rgba(14,17,24,0.95)',
-      border: '1px solid rgba(255,255,255,0.15)',
+      border: '1px solid ${glassStyles.borderColor || "rgba(255, 255, 255, 0.15)"}',
       borderRadius: 10,
       color: '#fff',
     } as React.CSSProperties,

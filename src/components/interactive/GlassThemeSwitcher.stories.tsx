@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassThemeSwitcher } from './GlassThemeSwitcher';
 import { fn } from '@storybook/test';

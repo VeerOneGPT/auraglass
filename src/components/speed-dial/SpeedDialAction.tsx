@@ -7,6 +7,7 @@ import React, { forwardRef, useCallback, useState, useMemo } from 'react';
 import styled, { css, useTheme } from 'styled-components';
 
 import { createGlassStyle } from '../../core/mixins/glassMixins';
+import { AURA_GLASS } from '../../tokens/glass';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { usePhysicsInteraction, PhysicsInteractionOptions } from '../../hooks/usePhysicsInteraction';
@@ -72,7 +73,7 @@ const ActionRoot = styled.div<{
     props.$size === 'small' ? '32px' : props.$size === 'large' ? '48px' : '40px'};
   border-radius: 50%;
   background-color: ${props => (props.$glass ? 'rgba(36, 36, 36, 0.5)' : 'rgba(36, 36, 36, 0.85)')};
-  color: rgba(255, 255, 255, 0.9);
+  color: ${AURA_GLASS.surfaces.neutral.level2.text.primary};
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   cursor: ${props => (props.$disabled ? 'default' : 'pointer')};
   opacity: ${props => (props.$visible ? 1 : 0)};
@@ -86,10 +87,10 @@ const ActionRoot = styled.div<{
   ${props =>
     props.$glass &&
     css`
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: ${AURA_GLASS.surfaces.neutral.level2.surface.base};
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid ${AURA_GLASS.surfaces.neutral.level2.border.color};
     `}
   
   /* Transitions */
@@ -118,7 +119,7 @@ const ActionRoot = styled.div<{
     &:hover {
       background-color: ${props.$glass ? 'rgba(48, 48, 48, 0.5)' : 'rgba(48, 48, 48, 0.85)'};
       transform: translate3d(0,0,0) scale(1.02);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.2);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.26), inset 0 1px 0 ${AURA_GLASS.surfaces.neutral.level2.border.color};
     }
     &:active {
       transform: translate3d(0,0,0) scale(0.96);
@@ -136,7 +137,7 @@ const TooltipWrapper = styled.div<{
   position: absolute;
   pointer-events: none;
   background-color: rgba(36, 36, 36, 0.85);
-  color: rgba(255, 255, 255, 0.9);
+  color: ${AURA_GLASS.surfaces.neutral.level2.text.primary};
   font-size: 0.75rem;
   padding: 4px 8px;
   border-radius: 4px;
@@ -241,6 +242,9 @@ const SpeedDialActionComponent = (
   props: SpeedDialActionProps,
   ref: React.ForwardedRef<HTMLDivElement>
 ) => {
+  // Unified glass styles
+  const glassStyles = createGlassStyle({ intent: 'neutral', elevation: 'level2', tier: 'high' });
+
   const {
     className,
     style,

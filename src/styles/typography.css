@@ -1,0 +1,114 @@
+/**
+ * AuraGlass Typography System
+ * 
+ * Consistent typography tokens for all components
+ */
+
+:root {
+  /* Typography Scale */
+  --typography-heading-size: 1.5rem;
+  --typography-heading-weight: 600;
+  --typography-heading-line-height: 1.2;
+  --typography-heading-letter-spacing: -0.025em;
+  
+  --typography-subheading-size: 1.125rem;
+  --typography-subheading-weight: 500;
+  --typography-subheading-line-height: 1.4;
+  
+  --typography-body-size: 0.875rem;
+  --typography-body-weight: 400;
+  --typography-body-line-height: 1.5;
+  
+  --typography-caption-size: 0.75rem;
+  --typography-caption-weight: 400;
+  --typography-caption-line-height: 1.4;
+  --typography-caption-opacity: 0.88;
+
+  /* Enhanced text colors for glass backgrounds */
+  --typography-text-primary: rgba(255,255,255,0.98);
+  --typography-text-secondary: rgba(255,255,255,0.88);
+  --typography-text-tertiary: rgba(255,255,255,0.75);
+  --typography-text-disabled: rgba(255,255,255,0.5);
+  
+  /* Interactive text colors */
+  --typography-text-link: rgba(59,130,246,0.9);
+  --typography-text-link-hover: rgba(59,130,246,1);
+  --typography-text-error: rgba(239,68,68,0.9);
+  --typography-text-success: rgba(34,197,94,0.9);
+  --typography-text-warning: rgba(245,158,11,0.9);
+}
+
+/* Glass Typography Classes */
+.glass-heading {
+  font-size: var(--typography-heading-size);
+  font-weight: var(--typography-heading-weight);
+  line-height: var(--typography-heading-line-height);
+  letter-spacing: var(--typography-heading-letter-spacing);
+  color: var(--typography-text-primary);
+}
+
+.glass-subheading {
+  font-size: var(--typography-subheading-size);
+  font-weight: var(--typography-subheading-weight);
+  line-height: var(--typography-subheading-line-height);
+  color: var(--typography-text-primary);
+}
+
+.glass-body {
+  font-size: var(--typography-body-size);
+  font-weight: var(--typography-body-weight);
+  line-height: var(--typography-body-line-height);
+  color: var(--typography-text-primary);
+}
+
+.glass-caption {
+  font-size: var(--typography-caption-size);
+  font-weight: var(--typography-caption-weight);
+  line-height: var(--typography-caption-line-height);
+  color: var(--typography-text-secondary);
+  opacity: var(--typography-caption-opacity);
+}
+
+/* Text Color Utilities for Glass */
+.glass-text-primary { color: var(--typography-text-primary) !important; }
+.glass-text-secondary { color: var(--typography-text-secondary) !important; }
+.glass-text-tertiary { color: var(--typography-text-tertiary) !important; }
+.glass-text-disabled { color: var(--typography-text-disabled) !important; }
+
+.glass-text-link { color: var(--typography-text-link) !important; }
+.glass-text-link:hover { color: var(--typography-text-link-hover) !important; }
+.glass-text-error { color: var(--typography-text-error) !important; }
+.glass-text-success { color: var(--typography-text-success) !important; }
+.glass-text-warning { color: var(--typography-text-warning) !important; }
+
+/* Override common text color issues */
+.glass-surface,
+.glass-surface * {
+  color: var(--typography-text-primary) !important;
+}
+
+.glass-surface .secondary {
+  color: var(--typography-text-secondary) !important;
+}
+
+.glass-surface .caption {
+  color: var(--typography-text-secondary) !important;
+  opacity: var(--typography-caption-opacity) !important;
+}
+
+/* Ensure high contrast on glass backgrounds */
+*[class*="glass"] {
+  color: var(--typography-text-primary);
+}
+
+*[class*="glass"] .secondary,
+*[class*="glass"] [class*="secondary"] {
+  color: var(--typography-text-secondary);
+}
+
+/* Override any remaining black text issues */
+*[class*="glass"] *[style*="color: black"],
+*[class*="glass"] *[style*="color: #000"],
+*[class*="glass"] *[style*="color: rgba(0,0,0"] {
+  color: var(--typography-text-primary) !important;
+}

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { MagneticButton } from './GlassMagneticButton';
+import { GlassMagneticButton } from './GlassMagneticButton';
 
 const meta: Meta<typeof MagneticButton> = {
   title: 'Components/Button/MagneticButton',

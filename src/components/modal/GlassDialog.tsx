@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import { X } from 'lucide-react';
 import React, { forwardRef, useEffect, useState } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';

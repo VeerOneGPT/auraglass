@@ -1,5 +1,7 @@
+// Typography tokens available via typography.css (imported in index.css)
 import React from 'react';
 import { createGlassStyle } from '../../../core/mixins/glassMixins';
+import { glassTokenUtils } from '../../../tokens/glass';
 
 export interface TabItemProps {
   id: string;
@@ -26,13 +28,13 @@ const TabItemComponent: React.FC<TabItemProps> = ({
         alignItems: 'center',
         gap: '6px',
         padding: '8px 16px',
-        background: active ? 'rgba(255, 255, 255, 0.2)' : 'transparent',
+        background: active ? glassTokenUtils.getSurface('neutral', 'level1').surface.base : 'transparent',
         border: 'none',
         borderRadius: '6px',
-        color: active ? '#ffffff' : 'rgba(255, 255, 255, 0.7)',
+        color: active ? '#ffffff' : glassTokenUtils.getSurface('neutral', 'level1').text.secondary,
         cursor: disabled ? 'not-allowed' : 'pointer',
         opacity: disabled ? 0.5 : 1,
-        fontSize: '14px',
+        fontSize: '0.875rem', // body text
         fontWeight: active ? 600 : 400,
         transition: 'all 0.2s ease',
       }}
@@ -48,8 +50,8 @@ const TabItemComponent: React.FC<TabItemProps> = ({
             color: 'white',
             borderRadius: '10px',
             padding: '2px 6px',
-            fontSize: '10px',
-            fontWeight: 'bold',
+            fontSize: '0.625rem',
+            fontWeight: 'var(--typography-heading-weight)', // semi-bold
           }}
         >
           {badge}

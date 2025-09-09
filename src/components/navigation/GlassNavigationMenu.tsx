@@ -2,7 +2,7 @@
 
 // Removed circular import - using regular button element
 
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 import { ChevronRight } from 'lucide-react';
 import React, { useState } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';

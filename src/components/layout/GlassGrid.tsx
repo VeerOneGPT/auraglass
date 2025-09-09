@@ -2,7 +2,7 @@
 
 import React, { forwardRef } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface GlassGridProps extends React.HTMLAttributes<HTMLDivElement> {
   /**

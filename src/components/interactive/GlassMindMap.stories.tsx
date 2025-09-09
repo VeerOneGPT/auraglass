@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassMindMap } from './GlassMindMap';
 import { fn } from '@storybook/test';

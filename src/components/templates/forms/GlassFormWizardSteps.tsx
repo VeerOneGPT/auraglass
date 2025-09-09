@@ -5,7 +5,7 @@ import { createGlassStyle } from '../../../core/mixins/glassMixins';
 import { Motion } from '../../../primitives';
 import { GlassProgress } from '../../../components/data-display/GlassProgress';
 import { VStack, HStack } from '../../../components/layout/GlassStack';
-import { cn } from '@/design-system/utilsCore';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface StepIndicatorProps {
   step: {
