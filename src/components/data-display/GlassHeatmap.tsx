@@ -1,11 +1,10 @@
 'use client';
 
-import React, { forwardRef, useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import { OptimizedGlass } from '../../primitives';
-import { Motion } from '../../primitives';
 import { cn } from '@/lib/utilsComprehensive';
-import { useA11yId } from '../../utils/a11y';
+import React, { forwardRef, useCallback, useMemo, useRef, useState } from 'react';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
+import { Motion, OptimizedGlass } from '../../primitives';
+import { useA11yId } from '../../utils/a11y';
 
 export interface HeatmapDataPoint {
   x: number;
@@ -304,8 +303,8 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
             height: cellSize * internalZoomLevel,
             fontSize: `${Math.max(8, cellSize * internalZoomLevel * 0.4)}px`,
           }}
-          onClick={(e) => handleCellClick(cell, e)}
-          onMouseEnter={(e) => handleCellHover(cell, e)}
+          onClick={(e: React.MouseEvent) => handleCellClick(cell, e)}
+          onMouseEnter={(e: React.MouseEvent) => handleCellHover(cell, e)}
           onMouseLeave={() => handleCellHover(null)}
         >
           {showValues && (
@@ -492,7 +491,7 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
                 <div
                   ref={heatmapRef}
                   className="relative"
-                  onWheel={(e) => handleZoom(e.deltaY > 0 ? -0.1 : 0.1, e)}
+                  onWheel={(e: React.WheelEvent) => handleZoom(e.deltaY > 0 ? -0.1 : 0.1, e)}
                 >
                   {/* X-Axis */}
                   {xAxis && (

@@ -101,8 +101,10 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
         ref={ref}
         ior={materialProps?.ior || (variant === 'elevated' ? 1.48 : variant === 'feature' ? 1.50 : 1.45)}
         thickness={materialProps?.thickness || (size === 'sm' ? 8 : size === 'md' ? 12 : size === 'lg' ? 16 : 20)}
-        tint={materialProps?.tint || (variant === 'primary' ? { r: 59, g: 130, b: 246, a: 0.08 } : { r: 0, g: 0, b: 0, a: 0.06 })}
-        variant={materialProps?.variant || (variant === 'minimal' ? 'clear' : 'regular')}
+        tint={
+          materialProps?.tint || (variant === 'primary' ? { r: 59, g: 130, b: 246, a: 0.08 } : { r: 0, g: 0, b: 0, a: 0.06 })
+        }
+        variant={materialProps?.variant || 'regular'}
         quality={materialProps?.quality || (variant === 'feature' ? 'ultra' : 'high')}
         environmentAdaptation
         motionResponsive

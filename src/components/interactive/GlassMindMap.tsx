@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
 
 export interface MindMapNode {
@@ -407,7 +407,7 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
         <OptimizedGlass
           className="glass-px-3 glass-py-1 glass-radius-md glass-text-sm cursor-pointer hover:bg-white/10"
           intensity="subtle"
-          onClick={(e) => setZoom(1)}
+          onClick={(e: React.MouseEvent) => setZoom(1)}
         >
           Reset Zoom
         </OptimizedGlass>

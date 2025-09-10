@@ -596,13 +596,15 @@ export const glassTokenUtils = {
     const parts = [`blur(${performanceBlur}px)`];
     
     if (config.saturateMultiplier !== 1) {
-      parts.push(`saturate(${1.8 * config.saturateMultiplier})`);
+      parts.push(`saturate(${1.6 * config.saturateMultiplier})`);
     } else {
-      parts.push('saturate(1.8)');
+      parts.push('saturate(1.6)');
     }
-    
-    parts.push('brightness(1.15)');
-    parts.push('contrast(1.08)');
+
+    // Reduce brightness to avoid over-frosting that washes out labels
+    // Slightly increase contrast to preserve perceived depth
+    parts.push('brightness(0.98)');
+    parts.push('contrast(1.1)');
     
     return parts.join(' ');
   },
@@ -623,7 +625,8 @@ export const glassTokenUtils = {
       boxShadow: surface.outerShadow 
         ? `${surface.outerShadow.x}px ${surface.outerShadow.y}px ${Math.round(surface.outerShadow.blur * config.shadowMultiplier)}px ${surface.outerShadow.spread}px ${surface.outerShadow.color}`
         : 'none',
-      color: surface.text.primary,
+      // Allow theme variables to drive text color based on light/dark context
+      color: 'var(--glass-text-primary)',
       transition: `all ${AURA_GLASS.motion.defaultMs}ms ease-out`,
       position: 'relative' as const,
       transform: 'translateZ(0)' // Force hardware acceleration

@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useState, useRef, useEffect, forwardRef, useCallback, useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { OptimizedGlass } from '../../primitives/glass/GlassAdvanced'
-import { useMotionPreference } from '../../contexts/MotionPreferenceContext'
-import { useA11yId } from '../../lib/useA11yId'
-import { useGlassSound } from '../../lib/useGlassSound'
+import { AnimatePresence, motion } from 'framer-motion'
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useMotionPreference } from '../../hooks/useMotionPreference'
+import { OptimizedGlass } from '../../primitives'
+import { useA11yId } from '../../utils/a11y'
+import { useGlassSound } from '../../utils/soundDesign'
 
 export interface TessellationTile {
   id: string
@@ -80,7 +80,7 @@ export const GlassTessellation = forwardRef<HTMLDivElement, GlassTessellationPro
     
     const { prefersReducedMotion } = useMotionPreference()
     const tessellationId = useA11yId()
-    const { playSound } = useGlassSound()
+    const { play } = useGlassSound()
 
     // Morphing animation
     useEffect(() => {
@@ -256,20 +256,20 @@ export const GlassTessellation = forwardRef<HTMLDivElement, GlassTessellationPro
       onTileClick?.(tile)
       
       if (soundEnabled) {
-        playSound('click')
+        play('click')
       }
       
       setTimeout(() => setSelectedTile(null), 300)
-    }, [onTileClick, soundEnabled, playSound])
+    }, [onTileClick, soundEnabled, play])
 
     const handleTileHover = useCallback((tile: TessellationTile | null) => {
       setHoveredTile(tile?.id || null)
       onTileHover?.(tile)
       
       if (soundEnabled && tile) {
-        playSound('hover')
+        play('hover')
       }
-    }, [onTileHover, soundEnabled, playSound])
+    }, [onTileHover, soundEnabled, play])
 
     const renderTileShape = (tile: TessellationTile, position: TilePosition) => {
       const isHovered = hoveredTile === tile.id

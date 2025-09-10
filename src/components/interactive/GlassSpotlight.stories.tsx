@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassSpotlight } from './GlassSpotlight';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassSpotlight> = {
   title: 'Components/Interactive/GlassSpotlight',
@@ -23,13 +24,13 @@ type Story = StoryObj<typeof GlassSpotlight>;
 export const Default: Story = {
   args: {
     targetRect: new DOMRect(100, 100, 200, 100),
-    onClose: () => console.log('Spotlight closed'),
+    onClose: fn(),
   },
 };
 
 export const LargeTarget: Story = {
   args: {
     targetRect: new DOMRect(50, 50, 300, 200),
-    onClose: () => console.log('Large spotlight closed'),
+    onClose: fn(),
   },
 };

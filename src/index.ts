@@ -2,12 +2,12 @@
 // A comprehensive collection of glassmorphism UI components
 
 // Core Glass Primitives
-export { GlassCore as Glass, default as GlassPrimitive } from './primitives/GlassCore';
 export { GlassAdvanced } from './primitives/glass/GlassAdvanced';
-export { OptimizedGlassCore as OptimizedGlass } from './primitives/OptimizedGlassCore';
 export { OptimizedGlassAdvanced } from './primitives/glass/OptimizedGlassAdvanced';
-export { MotionNative as Motion } from './primitives/MotionNative';
+export { GlassCore as Glass, default as GlassPrimitive } from './primitives/GlassCore';
 export { MotionFramer } from './primitives/motion/MotionFramer';
+export { MotionNative as Motion } from './primitives/MotionNative';
+export { OptimizedGlassCore as OptimizedGlass } from './primitives/OptimizedGlassCore';
 
 // Localization Provider
 export { GlassLocalizationProvider } from './lib/GlassLocalizationProvider';
@@ -114,22 +114,22 @@ export { GlassToast } from './components/data-display/GlassToast';
 export { GlassVirtualTable } from './components/data-display/GlassVirtualTable';
 
 // New Components - Phase 1 (High Priority)
-export { GlassSkeletonLoader, GlassSkeletonText, GlassSkeletonCard } from './components/data-display/GlassSkeletonLoader';
+export { GlassNotificationCenter, GlassNotificationItem, GlassNotificationProvider, useNotifications } from './components/data-display/GlassNotificationCenter';
 export { GlassSkeleton, GlassSkeletonAvatar, GlassSkeletonButton } from './components/data-display/GlassSkeleton';
-export { GlassNotificationCenter, GlassNotificationProvider, useNotifications, GlassNotificationItem } from './components/data-display/GlassNotificationCenter';
-export { GlassTooltip, GlassTooltipTrigger, GlassTooltipContent } from './components/modal/GlassTooltip';
+export { GlassSkeletonCard, GlassSkeletonLoader, GlassSkeletonText } from './components/data-display/GlassSkeletonLoader';
+export { GlassTooltip, GlassTooltipContent, GlassTooltipTrigger } from './components/modal/GlassTooltip';
 
 // New Components - Phase 2 (Medium Priority)
-export { GlassAnimatedNumber, GlassAnimatedCounter, GlassAnimatedStat, useAnimatedNumber } from './components/data-display/GlassAnimatedNumber';
+export { GlassAnimated, GlassAnimationSequence, GlassAnimationTimeline, GlassMotionController, animationPresets, useMotionController } from './components/animations/GlassMotionController';
+export { GlassAnimatedCounter, GlassAnimatedNumber, GlassAnimatedStat, useAnimatedNumber } from './components/data-display/GlassAnimatedNumber';
 export { GlassCodeEditor, GlassCodeEditorWithFiles } from './components/interactive/GlassCodeEditor';
 export { GlassColorSchemeGenerator } from './components/interactive/GlassColorSchemeGenerator';
-export { GlassMotionController, GlassAnimated, GlassAnimationSequence, GlassAnimationTimeline, useMotionController, animationPresets } from './components/animations/GlassMotionController';
 
 // New Components - Phase 3 (Future Phase)
+export { GlassA11yAuditor, useA11yAudit } from './components/interactive/GlassA11yAuditor';
+export { GlassComponentPlayground, createPlaygroundExample, usePlaygroundExample } from './components/interactive/GlassComponentPlayground';
 export { GlassMindMap, useMindMap } from './components/interactive/GlassMindMap';
 export { GlassWhiteboard } from './components/interactive/GlassWhiteboard';
-export { GlassA11yAuditor, useA11yAudit } from './components/interactive/GlassA11yAuditor';
-export { GlassComponentPlayground, usePlaygroundExample, createPlaygroundExample } from './components/interactive/GlassComponentPlayground';
 
 // Interactive Components
 export { GlassAdvancedSearch } from './components/interactive/GlassAdvancedSearch';
@@ -250,83 +250,65 @@ export { MotionAwareGlass } from './components/website-components/MotionAwareGla
 
 
 // Enhanced Hooks
-export { useEnhancedPerformance, usePerformanceAwareRendering, usePerformanceLazyLoading, useAdaptiveImageLoading } from './hooks/useEnhancedPerformance';
-export { useErrorBoundary, useAsyncError, useGracefulDegradation, useErrorReporting } from './hooks/useErrorBoundary';
-export { useGlassOptimization, useOptimizedGlassComponent, useAdaptiveComponentLoading } from './hooks/useGlassOptimization';
-export { useVirtualization, useGridVirtualization, useInfiniteVirtualization, useWindowVirtualization, useTableVirtualization } from './hooks/useVirtualization';
-export { useGlassIntersection, useGlassLazyImage, useGlassIntersectionAnimation, useProgressiveLoading } from './hooks/useGlassIntersection';
 export { useAccessibilityFeature, useAccessibleAnimation, useAccessibleColors } from './hooks/useAccessibilitySettings';
-export { useSimplePhysicsHover, usePhysicsButton, usePhysicsDrag } from './hooks/usePhysicsInteraction';
+export { useAdaptiveImageLoading, useEnhancedPerformance, usePerformanceAwareRendering, usePerformanceLazyLoading } from './hooks/useEnhancedPerformance';
+export { useAsyncError, useErrorBoundary, useErrorReporting, useGracefulDegradation } from './hooks/useErrorBoundary';
+export { useGlassIntersection, useGlassIntersectionAnimation, useGlassLazyImage, useProgressiveLoading } from './hooks/useGlassIntersection';
+export { useAdaptiveComponentLoading, useGlassOptimization, useOptimizedGlassComponent } from './hooks/useGlassOptimization';
+export { useMotionPreference } from './hooks/useMotionPreference';
+export { usePhysicsButton, usePhysicsDrag, useSimplePhysicsHover } from './hooks/usePhysicsInteraction';
+export { useGridVirtualization, useInfiniteVirtualization, useTableVirtualization, useVirtualization, useWindowVirtualization } from './hooks/useVirtualization';
+export { useA11yId } from './utils/a11y';
+export { useGlassSound } from './utils/soundDesign';
 
 // Extended Hooks
 export * from './hooks/extended';
 
 // Enhanced Core Mixins
 export {
-  createGlassStyle,
-  createGlassHoverMixin,
-  createGlassFocusMixin,
-  createGlassDisabledMixin,
-  generateGlassThemeVariables,
-  createResponsiveGlassStyle,
-  glassCSS
+    createGlassDisabledMixin, createGlassFocusMixin, createGlassHoverMixin, createGlassStyle, createResponsiveGlassStyle, generateGlassThemeVariables, glassCSS
 } from './core/mixins/glassMixins';
 
 export {
-  createPerformanceMixin,
-  createOptimizedTransition,
-  createMemoryEfficientAnimation,
-  createLazyLoadMixin,
-  createVirtualizationMixin,
-  PerformanceMonitor,
-  detectDeviceCapabilities,
-  getAdaptivePerformanceConfig,
-  createDebouncedResizeObserver,
-  createCleanupManager,
-  createOptimizedScrollHandler
+    PerformanceMonitor, createCleanupManager, createDebouncedResizeObserver, createLazyLoadMixin, createMemoryEfficientAnimation, createOptimizedScrollHandler, createOptimizedTransition, createPerformanceMixin, createVirtualizationMixin, detectDeviceCapabilities,
+    getAdaptivePerformanceConfig
 } from './core/mixins/performanceMixins';
 
 // Additional Mixins
-export { zSpaceLayer, createZSpaceLayers } from './core/mixins/zSpaceLayer';
-export { glowEffects } from './core/mixins/glowEffects';
-export { createRippleEffect, createMagneticEffect } from './core/mixins/interactiveGlass';
 export { edgeHighlight } from './core/mixins/edgeEffects';
+export { glowEffects } from './core/mixins/glowEffects';
+export { createMagneticEffect, createRippleEffect } from './core/mixins/interactiveGlass';
+export { createZSpaceLayers, zSpaceLayer } from './core/mixins/zSpaceLayer';
 
 // Animation System
 export * from './animations/hooks';
 export * from './animations/physics';
 // Explicitly re-export orchestration to resolve ambiguity
 export {
-  useAnimationSequence as orchestrationUseAnimationSequence,
-  orchestrationPresets,
-  createOrchestration,
+    createOrchestration, orchestrationPresets, useAnimationSequence as orchestrationUseAnimationSequence
 } from './animations/orchestration/index';
 
 // Error Boundaries and Utils
-export { GlassErrorBoundary, GlassAsyncErrorBoundary, GlassLightErrorBoundary, GlassComponentErrorBoundary, withGlassErrorBoundary } from './utils/errorBoundary';
+export { GlassAsyncErrorBoundary, GlassComponentErrorBoundary, GlassErrorBoundary, GlassLightErrorBoundary, withGlassErrorBoundary } from './utils/errorBoundary';
 
 // Production Utilities
-export { logger, performance, safeExecute, safeExecuteAsync, features, memory, validate, data, css, browser, storage, analytics, productionConfig, initializeProduction, dev } from './utils/productionUtils';
+export { analytics, browser, css, data, dev, features, initializeProduction, logger, memory, performance, productionConfig, safeExecute, safeExecuteAsync, storage, validate } from './utils/productionUtils';
 
 // Core Production System
-export { 
-  AuraGlassProduction, 
-  initializeAuraGlass, 
-  productionUtils, 
-  getAuraGlass, 
-  devUtils,
-  defaultProductionConfig,
+export {
+    AuraGlassProduction, defaultProductionConfig, devUtils, getAuraGlass, initializeAuraGlass,
+    productionUtils
 } from './core/productionCore';
 
 // Library Utilities
 export * from './lib';
 
 // Utility Modules
-export * from './utils/themeHelpers';
-export * from './utils/elementTypes';
 export * from './utils/browserCompatibility';
 export * from './utils/deviceCapabilities';
+export * from './utils/elementTypes';
 export * from './utils/performanceOptimizations';
+export * from './utils/themeHelpers';
 
 // Design Tokens
 export * from './tokens/glass';
@@ -354,64 +336,24 @@ export type {
     // Navigation types
     GlassHeaderProps,
     // Form types
-    GlassInputProps, GlassKanbanProps,
+    GlassInputProps,
     // Dashboard types
-    GlassKPICardProps, GlassLineChartProps, GlassMetricCardProps, GlassModalProps, GlassPieChartProps, GlassPopoverProps, GlassProgressProps, GlassSegmentedControlProps, GlassSelectProps, GlassSidebarProps, GlassSliderProps, GlassSplitPaneProps, GlassStackProps, GlassStatCardProps, GlassSwitchProps, GlassTextareaProps, GlassTimelineProps, GlassToolbarProps,
+    GlassKPICardProps, GlassKanbanProps, GlassLineChartProps, GlassMetricCardProps, GlassModalProps, GlassPieChartProps, GlassPopoverProps, GlassProgressProps, GlassSegmentedControlProps, GlassSelectProps, GlassSidebarProps, GlassSliderProps, GlassSplitPaneProps, GlassStackProps, GlassStatCardProps, GlassSwitchProps, GlassTextareaProps, GlassTimelineProps, GlassToolbarProps,
     // Glass primitive types
-    OptimizedGlassProps,
-    // Production types - these are exported from types/production.ts
+    OptimizedGlassProps
 } from './types';
 
 // Re-export production types (explicitly to resolve PerformanceMetrics ambiguity)
 export type {
-  PerformanceMetrics as ProductionPerformanceMetrics,
-  VirtualizationConfig,
-  AccessibilitySettings,
-  A11yAuditRule,
-  AnimationConfig,
-  MotionPreferences,
-  GlassSkeletonLoaderProps,
-  GlassSkeletonProps,
-  GlassTooltipProps,
-  GlassNotification,
-  GlassNotificationCenterProps,
-  GlassAnimatedNumberProps,
-  GlassCodeEditorProps,
-  GlassColorSchemeGeneratorProps,
-  GlassMotionControllerProps,
-  GlassMindMapProps,
-  GlassWhiteboardProps,
-  GlassA11yAuditorProps,
-  GlassComponentPlaygroundProps,
-  ThemeConfig,
-  PhysicsInteractionReturn,
-  IntersectionReturn,
-  ValidationRule,
-  ValidationResult,
-  ChartDataPoint,
-  PieDataPoint,
-  TimelineItem,
-  SelectOption,
-  TableColumn,
-  TableRow,
-  FormField,
-  FormState,
-  GridConfig,
-  FlexConfig,
-  NavigationItem,
-  BreadcrumbItem,
-  ModalState,
-  DrawerState,
-  ComponentTestProps,
-  MockData,
-  GlassConfig,
-  GlassGlobalState,
-  GlassPlugin,
-  ConditionalGlassProps,
-  GlassPropsWithChildren,
-  GlassComponentProps,
-  PartialGlassProps,
-  NestedGlassComponent,
-  CreateGlassComponent,
+    A11yAuditRule, AccessibilitySettings, AnimationConfig, BreadcrumbItem, ChartDataPoint, ComponentTestProps, ConditionalGlassProps, CreateGlassComponent, DrawerState, FlexConfig, FormField,
+    FormState, GlassA11yAuditorProps, GlassAnimatedNumberProps,
+    GlassCodeEditorProps,
+    GlassColorSchemeGeneratorProps, GlassComponentPlaygroundProps, GlassComponentProps, GlassConfig,
+    GlassGlobalState, GlassMindMapProps, GlassMotionControllerProps, GlassNotification,
+    GlassNotificationCenterProps, GlassPlugin, GlassPropsWithChildren, GlassSkeletonLoaderProps,
+    GlassSkeletonProps,
+    GlassTooltipProps, GlassWhiteboardProps, GridConfig, IntersectionReturn, MockData, ModalState, MotionPreferences, NavigationItem, NestedGlassComponent, PartialGlassProps, PhysicsInteractionReturn, PieDataPoint, PerformanceMetrics as ProductionPerformanceMetrics, SelectOption,
+    TableColumn,
+    TableRow, ThemeConfig, TimelineItem, ValidationResult, ValidationRule, VirtualizationConfig
 } from './types/productionTypes';
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassCommand } from './GlassCommand';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassCommand> = {
   title: 'Components/Interactive/GlassCommand',
@@ -49,28 +50,28 @@ export const Default: Story = {
         id: '1',
         label: 'Create new file',
         description: 'Create a new file in the current directory',
-        action: () => console.log('Create new file'),
+        action: fn(),
         group: 'File',
       },
       {
         id: '2',
         label: 'Open file',
         description: 'Open an existing file',
-        action: () => console.log('Open file'),
+        action: fn(),
         group: 'File',
       },
       {
         id: '3',
         label: 'Search',
         description: 'Search for files and content',
-        action: () => console.log('Search'),
+        action: fn(),
         group: 'Navigation',
       },
       {
         id: '4',
         label: 'Settings',
         description: 'Open application settings',
-        action: () => console.log('Settings'),
+        action: fn(),
         group: 'Application',
       },
     ],
@@ -83,37 +84,37 @@ export const WithGroups: Story = {
       {
         id: '1',
         label: 'New Document',
-        action: () => console.log('New Document'),
+        action: fn(),
         group: 'File Operations',
       },
       {
         id: '2',
         label: 'Open Recent',
-        action: () => console.log('Open Recent'),
+        action: fn(),
         group: 'File Operations',
       },
       {
         id: '3',
         label: 'Save',
-        action: () => console.log('Save'),
+        action: fn(),
         group: 'File Operations',
       },
       {
         id: '4',
         label: 'Cut',
-        action: () => console.log('Cut'),
+        action: fn(),
         group: 'Edit',
       },
       {
         id: '5',
         label: 'Copy',
-        action: () => console.log('Copy'),
+        action: fn(),
         group: 'Edit',
       },
       {
         id: '6',
         label: 'Paste',
-        action: () => console.log('Paste'),
+        action: fn(),
         group: 'Edit',
       },
     ],

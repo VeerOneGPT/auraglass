@@ -6,8 +6,8 @@ import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { LiquidGlassMaterial } from '../../primitives/LiquidGlassMaterial';
+import { announceToScreenReader, createFormFieldA11y, useA11yId } from '../../utils/a11y';
 import { GlassButton } from '../button/GlassButton';
-import { createFormFieldA11y, useA11yId, announceToScreenReader } from '../../utils/a11y';
 
 export interface GlassInputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   /**
@@ -320,13 +320,13 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
             </GlassButton>
           )}
 
-          {clearable && value && !loading && (
+          {clearable && props.value && !loading && (
             <GlassButton
               variant="ghost"
               size="sm"
               iconOnly
               onClick={() => {
-                if (ref.current) {
+                if (ref && 'current' in ref && ref.current) {
                   ref.current.value = '';
                   ref.current.focus();
                   props?.onChange?.({ target: ref.current } as any);
@@ -480,3 +480,4 @@ GlassInput.displayName = 'GlassInput';
 // Backward-compat alias exports for legacy imports
 export { GlassTextarea as GlassTextArea } from './GlassTextarea';
 export type { GlassTextareaProps as GlassTextAreaProps } from './GlassTextarea';
+

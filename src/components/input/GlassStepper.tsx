@@ -1,11 +1,10 @@
 'use client';
 
-import React, { forwardRef, useState, useCallback, useRef, useEffect } from 'react';
-import { OptimizedGlass } from '../../primitives';
-import { Motion } from '../../primitives';
 import { cn } from '@/lib/utilsComprehensive';
-import { createFormFieldA11y, useA11yId, announceToScreenReader } from '../../utils/a11y';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
+import { Motion, OptimizedGlass } from '../../primitives';
+import { announceToScreenReader, createFormFieldA11y, useA11yId } from '../../utils/a11y';
 import { useGlassSound } from '../../utils/soundDesign';
 
 export interface GlassStepperProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
@@ -358,7 +357,7 @@ export const GlassStepper = forwardRef<HTMLDivElement, GlassStepperProps>(
         tabIndex={disabled ? -1 : 0}
         role="button"
         aria-label={type === 'increment' ? 'Increase value' : 'Decrease value'}
-        onKeyDown={(e) => {
+        onKeyDown={(e: React.KeyboardEvent) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             if (canPerformAction) {

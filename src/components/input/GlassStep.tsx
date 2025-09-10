@@ -2,8 +2,7 @@
 
 import React, { forwardRef } from 'react';
 import { cn } from '../../lib/utilsComprehensive';
-import { OptimizedGlass } from '../../primitives';
-import { Motion } from '../../primitives';
+import { Motion, OptimizedGlass } from '../../primitives';
 import { GlassStepInternalProps, Step } from './types';
 // Import the new sub-components
 import { GlassStepIcon } from './GlassStepIcon';
@@ -95,7 +94,7 @@ export const GlassStep = forwardRef<HTMLDivElement, GlassStepInternalProps>((
         onClick={handleClick}
         role={isClickable ? 'button' : undefined}
         tabIndex={isClickable && !isDisabled ? 0 : undefined}
-        onKeyDown={isClickable && !isDisabled ? (e) => {
+        onKeyDown={isClickable && !isDisabled ? (e: React.KeyboardEvent) => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             handleClick();

@@ -1,11 +1,10 @@
 'use client';
 
-import React, { forwardRef, useState } from 'react';
-import { OptimizedGlass } from '../../primitives';
-import { Motion } from '../../primitives';
 import { cn } from '@/lib/utilsComprehensive';
-import { useA11yId } from '../../utils/a11y';
+import React, { forwardRef, useState } from 'react';
 import { useMotionPreference } from '../../hooks/useMotionPreference';
+import { Motion, OptimizedGlass } from '../../primitives';
+import { useA11yId } from '../../utils/a11y';
 import { useGlassSound } from '../../utils/soundDesign';
 
 export interface GlassChipProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> {
@@ -270,7 +269,7 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
         tabIndex={isInteractive && !disabled ? 0 : -1}
         aria-checked={onSelect ? selected : undefined}
         aria-disabled={disabled}
-        onKeyDown={(e) => {
+        onKeyDown={(e: React.KeyboardEvent) => {
           if ((e.key === 'Enter' || e.key === ' ') && isInteractive && !disabled) {
             e.preventDefault();
             handleClick(e as any);

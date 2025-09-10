@@ -1,0 +1,375 @@
+name: Visual Regression Testing
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule:
+    # Run daily at 2 AM UTC to catch any environmental changes
+    - cron: '0 2 * * *'
+
+jobs:
+  visual-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        # Test on multiple Node versions for stability
+        node-version: [18, 20]
+        # Test different browser engines
+        browser: [chromium, firefox, webkit]
+        
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: |
+          npm ci --legacy-peer-deps
+          
+      - name: Install Playwright browsers
+        run: |
+          npx playwright install --with-deps ${{ matrix.browser }}
+          
+      - name: Build Storybook
+        run: |
+          npm run build-storybook
+          
+      - name: Start Storybook server
+        run: |
+          npx http-server storybook-static -p 6007 &
+          sleep 10
+          # Verify server is running
+          curl -f http://localhost:6007 || exit 1
+        
+      - name: Run visual regression tests
+        env:
+          NODE_ENV: production
+          PLAYWRIGHT_BROWSER: ${{ matrix.browser }}
+        run: |
+          npm run test:visual -- --project=${{ matrix.browser }}
+          
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-results-${{ matrix.browser }}-node${{ matrix.node-version }}
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 30
+          
+      - name: Upload visual diff images
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: visual-diffs-${{ matrix.browser }}-node${{ matrix.node-version }}
+          path: |
+            test-results/**/*-diff.png
+            test-results/**/*-actual.png
+          retention-days: 30
+
+  visual-tests-mobile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+        
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+        
+      - name: Build and start Storybook
+        run: |
+          npm run build-storybook
+          npx http-server storybook-static -p 6007 &
+          sleep 10
+          
+      - name: Run mobile visual tests
+        env:
+          NODE_ENV: production
+        run: |
+          # Run only mobile-focused tests
+          npm run test:visual -- --project="Mobile Chrome" --project="Mobile Safari" --grep="responsive|mobile"
+          
+      - name: Upload mobile test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mobile-visual-results
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 30
+
+  visual-baseline-update:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    timeout-minutes: 20
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+        
+      - name: Install Playwright
+        run: npx playwright install --with-deps
+        
+      - name: Build Storybook
+        run: npm run build-storybook
+        
+      - name: Update visual baselines
+        run: |
+          npx http-server storybook-static -p 6007 &
+          sleep 10
+          npm run test:visual:update
+          
+      - name: Commit updated baselines
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add test-results/
+          git add tests/visual/
+          if git diff --staged --quiet; then
+            echo "No visual changes detected"
+          else
+            git commit -m "Update visual regression baselines [skip ci]"
+            git push
+          fi
+
+  accessibility-visual-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+        
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+        
+      - name: Build and start Storybook
+        run: |
+          npm run build-storybook
+          npx http-server storybook-static -p 6007 &
+          sleep 10
+          
+      - name: Run accessibility visual tests
+        run: |
+          npm run test:visual -- --grep="accessibility|a11y|contrast|focus" --project=chromium
+          
+      - name: Upload accessibility results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: accessibility-visual-results
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 30
+
+  design-system-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+        
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+        
+      - name: Build and start Storybook
+        run: |
+          npm run build-storybook
+          npx http-server storybook-static -p 6007 &
+          sleep 10
+          
+      - name: Validate design system tokens
+        run: |
+          npm run test:visual -- tests/visual/design-system/ --project=chromium
+          
+      - name: Upload design system validation
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: design-system-validation
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 30
+
+  pr-visual-comment:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    needs: [visual-tests, visual-tests-mobile, accessibility-visual-audit]
+    
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        
+      - name: Generate visual test summary
+        id: summary
+        run: |
+          echo "## 🎨 Visual Regression Test Results" >> summary.md
+          echo "" >> summary.md
+          
+          # Count test results
+          TOTAL_TESTS=$(find . -name "*.png" -type f | grep -E "(actual|expected)" | wc -l)
+          DIFF_IMAGES=$(find . -name "*-diff.png" -type f | wc -l)
+          
+          echo "- **Total Visual Tests**: $TOTAL_TESTS" >> summary.md
+          echo "- **Visual Differences Found**: $DIFF_IMAGES" >> summary.md
+          echo "" >> summary.md
+          
+          if [ $DIFF_IMAGES -gt 0 ]; then
+            echo "⚠️ **Visual differences detected!** Please review the uploaded artifacts." >> summary.md
+            echo "VISUAL_CHANGES=true" >> $GITHUB_OUTPUT
+          else
+            echo "✅ **All visual tests passed!** No regressions detected." >> summary.md
+            echo "VISUAL_CHANGES=false" >> $GITHUB_OUTPUT
+          fi
+          
+          echo "" >> summary.md
+          echo "### Test Coverage" >> summary.md
+          echo "- ✅ Component variants and states" >> summary.md
+          echo "- ✅ Responsive breakpoints" >> summary.md
+          echo "- ✅ Dark mode and themes" >> summary.md
+          echo "- ✅ Accessibility focus states" >> summary.md
+          echo "- ✅ Design system tokens" >> summary.md
+          echo "" >> summary.md
+          echo "📊 [View detailed report in the Actions artifacts](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> summary.md
+          
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const summary = fs.readFileSync('summary.md', 'utf8');
+            
+            // Find existing comment
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const botComment = comments.data.find(comment => 
+              comment.user.login === 'github-actions[bot]' && 
+              comment.body.includes('Visual Regression Test Results')
+            );
+            
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: summary
+              });
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: summary
+              });
+            }
+            
+      - name: Set PR status
+        if: steps.summary.outputs.VISUAL_CHANGES == 'true'
+        run: |
+          echo "::warning::Visual differences detected in this PR. Please review the changes."
+          exit 1
+
+  performance-visual-impact:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    timeout-minutes: 15
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+        
+      - name: Install Playwright
+        run: npx playwright install --with-deps chromium
+        
+      - name: Build Storybook
+        run: npm run build-storybook
+        
+      - name: Performance impact analysis
+        run: |
+          npx http-server storybook-static -p 6007 &
+          sleep 10
+          
+          # Run performance-focused visual tests
+          npm run test:visual -- --grep="performance|animation|smooth" --project=chromium
+          
+      - name: Upload performance results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: performance-visual-impact
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 30

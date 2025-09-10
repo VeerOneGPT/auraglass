@@ -1,11 +1,10 @@
 'use client';
 
-import React, { forwardRef, useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import { OptimizedGlass } from '../../primitives';
-import { Motion } from '../../primitives';
 import { cn } from '@/lib/utilsComprehensive';
-import { useA11yId } from '../../utils/a11y';
+import React, { forwardRef, useCallback, useMemo, useRef, useState } from 'react';
 import { useMotionPreference } from '../../hooks/useMotionPreference';
+import { Motion, OptimizedGlass } from '../../primitives';
+import { useA11yId } from '../../utils/a11y';
 import { useGlassSound } from '../../utils/soundDesign';
 
 export interface GanttTask {
@@ -399,7 +398,7 @@ export const GlassGanttChart = forwardRef<HTMLDivElement, GlassGanttChartProps>(
           }}
           onMouseEnter={() => setHoveredTask(task.id)}
           onMouseLeave={() => setHoveredTask(null)}
-          onMouseDown={(e) => handleTaskDragStart(e, task.id, 'move')}
+          onMouseDown={(e: React.MouseEvent) => handleTaskDragStart(e, task.id, 'move')}
         >
           {/* Task Bar */}
           <div className="relative h-full flex items-center">
@@ -416,7 +415,7 @@ export const GlassGanttChart = forwardRef<HTMLDivElement, GlassGanttChartProps>(
               <div
                 className="absolute left-1 top-1 bottom-1 bg-primary/30 glass-radius-sm transition-all duration-300"
                 style={{ width: `${(task.progress / 100) * (bounds.width - 8)}px` }}
-                onClick={(e) => handleProgressUpdate(task.id, e, bounds.width - 8)}
+                onClick={(e: React.MouseEvent) => handleProgressUpdate(task.id, e, bounds.width - 8)}
               />
             )}
 
@@ -444,11 +443,11 @@ export const GlassGanttChart = forwardRef<HTMLDivElement, GlassGanttChartProps>(
               <>
                 <div
                   className="absolute left-0 top-0 bottom-0 w-1 cursor-ew-resize bg-primary/20 hover:bg-primary/40"
-                  onMouseDown={(e) => handleTaskDragStart(e, task.id, 'resize-start')}
+                  onMouseDown={(e: React.MouseEvent) => handleTaskDragStart(e, task.id, 'resize-start')}
                 />
                 <div
                   className="absolute right-0 top-0 bottom-0 w-1 cursor-ew-resize bg-primary/20 hover:bg-primary/40"
-                  onMouseDown={(e) => handleTaskDragStart(e, task.id, 'resize-end')}
+                  onMouseDown={(e: React.MouseEvent) => handleTaskDragStart(e, task.id, 'resize-end')}
                 />
               </>
             )}

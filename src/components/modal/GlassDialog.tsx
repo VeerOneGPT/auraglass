@@ -2,10 +2,9 @@
 
 import { cn } from '@/lib/utilsComprehensive';
 import { X } from 'lucide-react';
-import React, { forwardRef, useEffect, useState, useCallback } from 'react';
-import { OptimizedGlass } from '../../primitives';
+import React, { forwardRef, useCallback, useEffect, useState } from 'react';
+import { Motion, OptimizedGlass } from '../../primitives';
 import { LiquidGlassMaterial } from '../../primitives/LiquidGlassMaterial';
-import { Motion } from '../../primitives';
 import { GlassButton } from '../button/GlassButton';
 import type { ConsciousnessFeatures } from '../layout/GlassContainer';
 // import { usePredictiveEngine, useInteractionRecorder } from '../advanced/GlassPredictiveEngine';
@@ -100,6 +99,10 @@ export interface GlassDialogProps extends ConsciousnessFeatures {
    */
   zIndex?: number;
   className?: string;
+  /**
+   * Custom className for dialog content
+   */
+  contentClassName?: string;
 }
 
 /**
@@ -129,6 +132,7 @@ export const GlassDialog = forwardRef<HTMLDivElement, GlassDialogProps>(
       elevation = 'modal',
       zIndex = 50,
       className,
+      contentClassName,
       // Consciousness features
       consciousness,
       predictive,

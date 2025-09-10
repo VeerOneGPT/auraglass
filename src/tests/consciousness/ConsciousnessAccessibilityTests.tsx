@@ -4,9 +4,9 @@
  * Comprehensive accessibility testing to ensure consciousness-enhanced components
  * maintain full accessibility compliance and provide inclusive experiences.
  */
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import React from 'react';
 
 // Mock axe accessibility testing library
 const axe = jest.fn().mockResolvedValue({ violations: [] });
@@ -16,6 +16,12 @@ declare global {
   namespace jest {
     interface Matchers<R> {
       toHaveNoViolations(): R;
+      toHaveAttribute(name: string, value?: string): R;
+      toHaveTextContent(text: string): R;
+      toHaveFocus(): R;
+      toHaveClass(className: string): R;
+      toBeVisible(): R;
+      toBeInTheDocument(): R;
     }
   }
 }
@@ -128,11 +134,10 @@ jest.mock('../../components/advanced/GlassAchievementSystem', () => ({
 }));
 
 // Import consciousness-enhanced components
-import { ConsciousGlassContainer } from '../../components/layout/GlassContainer';
-import { ConsciousGlassButton } from '../../components/button/GlassButton';
-import { ConsciousGlassChart } from '../../components/charts/GlassChart';
-// import { ConsciousGlassModal } from '../../components/modal/GlassModal';
-import { ConsciousGlassDataTable } from '../../components/data-display/GlassDataTable';
+import { GlassButton } from '../../components/button/GlassButton';
+import { GlassChart } from '../../components/charts/GlassChart';
+import { GlassContainer } from '../../components/layout/GlassContainer';
+// import { GlassModal } from '../../components/modal/GlassModal';
 
 describe('Consciousness Interface Accessibility Compliance', () => {
   beforeEach(() => {
@@ -159,31 +164,31 @@ describe('Consciousness Interface Accessibility Compliance', () => {
   describe('ARIA Compliance', () => {
     it('should maintain proper ARIA attributes with consciousness features enabled', async () => {
       const TestApp = () => (
-        <ConsciousGlassContainer
+        <GlassContainer
           predictive={true}
           adaptive={true}
           role="main"
           aria-label="Consciousness-enhanced application container"
         >
-          <ConsciousGlassButton
+          <GlassButton
             trackAchievements={true}
             aria-describedby="button-desc"
           >
             Smart Button
-          </ConsciousGlassButton>
+          </GlassButton>
           
           <div id="button-desc">
             This button adapts to your usage patterns and provides intelligent feedback
           </div>
           
-          <ConsciousGlassChart
+          <GlassChart
             type="bar"
             data={[{ x: 'A', y: 10 }, { x: 'B', y: 20 }]}
             title="Accessible Chart"
             predictive={true}
             aria-label="Bar chart showing data comparison between A and B"
           />
-        </ConsciousGlassContainer>
+        </GlassContainer>
       );
 
       const { container } = render(<TestApp />);
@@ -200,11 +205,11 @@ describe('Consciousness Interface Accessibility Compliance', () => {
     
     it('should provide accessible descriptions for consciousness insights', async () => {
       const TestComponent = () => (
-        <ConsciousGlassContainer
+        <GlassContainer
           predictive={true}
           data-testid="insights-container"
         >
-          <ConsciousGlassChart
+          <GlassChart
             type="line"
             data={[{ x: 1, y: 10 }, { x: 2, y: 20 }, { x: 3, y: 15 }]}
             predictive={true}
@@ -215,7 +220,7 @@ describe('Consciousness Interface Accessibility Compliance', () => {
           <div id="chart-insights" role="status" aria-live="polite">
             Data shows an increasing trend with 15% growth
           </div>
-        </ConsciousGlassContainer>
+        </GlassContainer>
       );
 
       const { container } = render(<TestComponent />);
@@ -234,17 +239,17 @@ describe('Consciousness Interface Accessibility Compliance', () => {
         mockBiometricAdapter.currentStressLevel = stressLevel;
         
         return (
-          <ConsciousGlassContainer
+          <GlassContainer
             adaptive={true}
             biometricResponsive={true}
           >
-            <ConsciousGlassButton
+            <GlassButton
               adaptive={true}
               aria-describedby="adaptive-desc"
               data-testid="adaptive-button"
             >
               Adaptive Button
-            </ConsciousGlassButton>
+            </GlassButton>
             
             <div 
               id="adaptive-desc" 
@@ -259,7 +264,7 @@ describe('Consciousness Interface Accessibility Compliance', () => {
                 'Button in balanced mode for optimal interaction'
               }
             </div>
-          </ConsciousGlassContainer>
+          </GlassContainer>
         );
       };
 
@@ -293,14 +298,14 @@ describe('Consciousness Interface Accessibility Compliance', () => {
       const user = userEvent.setup();
       
       const TestApp = () => (
-        <ConsciousGlassContainer
+        <GlassContainer
           predictive={true}
           trackAchievements={true}
         >
-          <ConsciousGlassButton data-testid="button1">Button 1</ConsciousGlassButton>
-          <ConsciousGlassButton data-testid="button2">Button 2</ConsciousGlassButton>
-          <ConsciousGlassButton data-testid="button3">Button 3</ConsciousGlassButton>
-        </ConsciousGlassContainer>
+          <GlassButton data-testid="button1">Button 1</GlassButton>
+          <GlassButton data-testid="button2">Button 2</GlassButton>
+          <GlassButton data-testid="button3">Button 3</GlassButton>
+        </GlassContainer>
       );
 
       render(<TestApp />);
@@ -328,14 +333,14 @@ describe('Consciousness Interface Accessibility Compliance', () => {
       const user = userEvent.setup();
       
       const TestApp = () => (
-        <ConsciousGlassContainer
+        <GlassContainer
           spatialAudio={true}
           trackAchievements={true}
         >
-          <ConsciousGlassButton data-testid="modal-button">
+          <GlassButton data-testid="modal-button">
             Modal Action
-          </ConsciousGlassButton>
-        </ConsciousGlassContainer>
+          </GlassButton>
+        </GlassContainer>
       );
 
       render(<TestApp />);
@@ -349,21 +354,21 @@ describe('Consciousness Interface Accessibility Compliance', () => {
       const user = userEvent.setup();
       
       const TestApp = () => (
-        <ConsciousGlassContainer
+        <GlassContainer
           eyeTracking={true}
           gazeResponsive={true}
         >
-          <ConsciousGlassButton 
+          <GlassButton 
             data-testid="gaze-button"
             aria-describedby="gaze-info"
           >
             Gaze-Responsive Button
-          </ConsciousGlassButton>
+          </GlassButton>
           
           <div id="gaze-info" role="status" aria-live="polite">
             This button responds to both keyboard focus and eye gaze
           </div>
-        </ConsciousGlassContainer>
+        </GlassContainer>
       );
 
       render(<TestApp />);
@@ -380,7 +385,7 @@ describe('Consciousness Interface Accessibility Compliance', () => {
   describe('Screen Reader Compatibility', () => {
     it('should provide meaningful screen reader announcements for consciousness insights', async () => {
       const TestComponent = () => (
-        <ConsciousGlassChart
+        <GlassChart
           type="bar"
           data={[{ x: 'Q1', y: 100 }, { x: 'Q2', y: 150 }, { x: 'Q3', y: 120 }]}
           predictive={true}
@@ -415,7 +420,7 @@ describe('Consciousness Interface Accessibility Compliance', () => {
         });
         
         return (
-          <ConsciousGlassContainer
+          <GlassContainer
             adaptive={true}
             biometricResponsive={true}
           >
@@ -425,7 +430,7 @@ describe('Consciousness Interface Accessibility Compliance', () => {
                 'Interface in standard mode'
               }
             </div>
-          </ConsciousGlassContainer>
+          </GlassContainer>
         );
       };
 
@@ -442,18 +447,18 @@ describe('Consciousness Interface Accessibility Compliance', () => {
     
     it('should provide accessible audio descriptions for spatial audio', async () => {
       const TestApp = () => (
-        <ConsciousGlassContainer
+        <GlassContainer
           spatialAudio={true}
           audioFeedback={true}
         >
-          <ConsciousGlassButton data-testid="audio-button">
+          <GlassButton data-testid="audio-button">
             Audio Feedback Button
-          </ConsciousGlassButton>
+          </GlassButton>
           
           <div role="status" aria-live="polite" data-testid="audio-description">
             Button provides spatial audio feedback at position (0, 0)
           </div>
-        </ConsciousGlassContainer>
+        </GlassContainer>
       );
 
       render(<TestApp />);
@@ -493,13 +498,13 @@ describe('Consciousness Interface Accessibility Compliance', () => {
       });
       
       const TestComponent = () => (
-        <ConsciousGlassContainer
+        <GlassContainer
           adaptive={true}
           biometricResponsive={true}
           data-testid="reduced-motion-container"
         >
-          <ConsciousGlassButton>Accessible Button</ConsciousGlassButton>
-        </ConsciousGlassContainer>
+          <GlassButton>Accessible Button</GlassButton>
+        </GlassContainer>
       );
 
       render(<TestComponent />);
@@ -517,7 +522,7 @@ describe('Consciousness Interface Accessibility Compliance', () => {
       mockBiometricAdapter.adaptiveSettings.reducedMotion = true;
       
       const TestComponent = () => (
-        <ConsciousGlassChart
+        <GlassChart
           type="line"
           data={[{ x: 1, y: 10 }]}
           predictive={true}
@@ -544,15 +549,15 @@ describe('Consciousness Interface Accessibility Compliance', () => {
       });
       
       const TestComponent = () => (
-        <ConsciousGlassContainer
+        <GlassContainer
           adaptive={true}
           gazeResponsive={true}
           data-testid="high-contrast-container"
         >
-          <ConsciousGlassButton data-testid="high-contrast-button">
+          <GlassButton data-testid="high-contrast-button">
             High Contrast Button
-          </ConsciousGlassButton>
-        </ConsciousGlassContainer>
+          </GlassButton>
+        </GlassContainer>
       );
 
       const { container } = render(<TestComponent />);
@@ -573,21 +578,21 @@ describe('Consciousness Interface Accessibility Compliance', () => {
   describe('Achievement Accessibility', () => {
     it('should provide accessible achievement notifications', async () => {
       const TestComponent = () => (
-        <ConsciousGlassContainer
+        <GlassContainer
           trackAchievements={true}
         >
-          <ConsciousGlassButton 
+          <GlassButton 
             trackAchievements={true}
             achievementId="accessible_interaction"
             data-testid="achievement-button"
           >
             Achievement Button
-          </ConsciousGlassButton>
+          </GlassButton>
           
           <div role="status" aria-live="polite" data-testid="achievement-status">
             {/* Achievement notifications will be announced here */}
           </div>
-        </ConsciousGlassContainer>
+        </GlassContainer>
       );
 
       render(<TestComponent />);
@@ -614,15 +619,15 @@ describe('Consciousness Interface Accessibility Compliance', () => {
       });
       
       const TestComponent = () => (
-        <ConsciousGlassContainer
+        <GlassContainer
           predictive={true}
           role="main"
           aria-label="Application container"
         >
-          <ConsciousGlassButton aria-label="Action button">
+          <GlassButton aria-label="Action button">
             Fallback Button
-          </ConsciousGlassButton>
-        </ConsciousGlassContainer>
+          </GlassButton>
+        </GlassContainer>
       );
 
       const { container } = render(<TestComponent />);
@@ -640,7 +645,7 @@ describe('Consciousness Interface Accessibility Compliance', () => {
     
     it('should provide accessible error messages for consciousness failures', async () => {
       const TestComponent = () => (
-        <ConsciousGlassChart
+        <GlassChart
           type="bar"
           data={[]}
           predictive={true}

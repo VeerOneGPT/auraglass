@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, PanInfo } from 'framer-motion'
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
 import { useMotionPreference } from '../../hooks/useMotionPreference'
 import { OptimizedGlass } from '../../primitives'
@@ -337,37 +337,29 @@ export const GlassMasonryGrid = forwardRef<HTMLDivElement, GlassMasonryGridProps
     }, [updateLayout])
 
     // Handle drag and drop
-    const handleDragStart = useCallback((e: React.DragEvent<Element>, itemId: string) => {
+    const handleDragStart = useCallback((event: MouseEvent | TouchEvent | PointerEvent, itemId: string) => {
       if (!enableDragReorder) return
 
       setDraggedItem(itemId)
-      e.dataTransfer.effectAllowed = 'move'
       play('pickup')
     }, [enableDragReorder, play])
 
-    const handleDragOver = useCallback((e: React.DragEvent) => {
-      if (!enableDragReorder) return
-      e.preventDefault()
-      e.dataTransfer.dropEffect = 'move'
-    }, [enableDragReorder])
 
-    const handleDrop = useCallback((e: React.DragEvent, targetItemId: string) => {
+    const handleDrop = useCallback((event: MouseEvent | TouchEvent | PointerEvent, targetItemId: string) => {
       if (!enableDragReorder || !draggedItem) return
-      
-      e.preventDefault()
-      
+
       const newItems = [...items]
       const draggedIndex = newItems.findIndex(item => item.id === draggedItem)
       const targetIndex = newItems.findIndex(item => item.id === targetItemId)
-      
+
       if (draggedIndex !== -1 && targetIndex !== -1) {
-        const [draggedItem] = newItems.splice(draggedIndex, 1)
-        newItems.splice(targetIndex, 0, draggedItem)
-        
+        const [draggedItemObj] = newItems.splice(draggedIndex, 1)
+        newItems.splice(targetIndex, 0, draggedItemObj)
+
         onItemsReorder?.(newItems)
         play('place')
       }
-      
+
       setDraggedItem(null)
     }, [enableDragReorder, draggedItem, items, onItemsReorder, play])
 
@@ -509,7 +501,6 @@ export const GlassMasonryGrid = forwardRef<HTMLDivElement, GlassMasonryGridProps
             height: enableVirtualization ? '600px' : 'auto',
             maxHeight: enableVirtualization ? '600px' : 'none'
           }}
-          onDragOver={handleDragOver}
         >
           <div
             className="relative"
@@ -543,9 +534,9 @@ export const GlassMasonryGrid = forwardRef<HTMLDivElement, GlassMasonryGridProps
                   delay: shouldAnimate ? index * masonryConfig.animationDelay : 0,
                   duration: 0.3 
                 }}
-                draggable={enableDragReorder}
-                onDragStart={(e) => handleDragStart(e as React.DragEvent<Element>, item.id)}
-                onDrop={(e) => handleDrop(e, item.id)}
+                drag={enableDragReorder}
+                onDragStart={(event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => handleDragStart(event as any, item.id)}
+                onDragEnd={(event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => handleDrop(event as any, item.id)}
                 onClick={() => {
                   onItemClick?.(item, index)
                   play('select')

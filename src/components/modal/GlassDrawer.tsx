@@ -4,16 +4,15 @@ import { GlassButton } from '../button/GlassButton';
 
 import { cn } from '@/lib/utilsComprehensive';
 import { X } from 'lucide-react';
-import React, { forwardRef, useEffect, useState, useRef, useCallback } from 'react';
-import { OptimizedGlass } from '../../primitives';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import { Motion, OptimizedGlass } from '../../primitives';
 import { LiquidGlassMaterial } from '../../primitives/LiquidGlassMaterial';
-import { Motion } from '../../primitives';
-import type { ConsciousnessFeatures } from '../layout/GlassContainer';
-import { usePredictiveEngine, useInteractionRecorder } from '../advanced/GlassPredictiveEngine';
 import { useAchievements } from '../advanced/GlassAchievementSystem';
 import { useBiometricAdaptation } from '../advanced/GlassBiometricAdaptation';
 import { useEyeTracking } from '../advanced/GlassEyeTracking';
+import { useInteractionRecorder, usePredictiveEngine } from '../advanced/GlassPredictiveEngine';
 import { useSpatialAudio } from '../advanced/GlassSpatialAudio';
+import type { ConsciousnessFeatures } from '../layout/GlassContainer';
 
 export interface GlassDrawerProps extends ConsciousnessFeatures {
   /**
@@ -113,6 +112,10 @@ export interface GlassDrawerProps extends ConsciousnessFeatures {
    * Enable comprehensive consciousness tracking
    */
   consciousness?: boolean;
+  /**
+   * Custom className for drawer content
+   */
+  contentClassName?: string;
 }
 
 /**
@@ -144,6 +147,7 @@ export const GlassDrawer = forwardRef<HTMLDivElement, GlassDrawerProps>(
       animationDuration = 300,
       resizable = false,
       className,
+      contentClassName,
       // Consciousness features
       consciousness = false,
       predictive = false,

@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useState, useRef, useEffect, forwardRef, useCallback, useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { OptimizedGlass } from '../../primitives/glass/GlassAdvanced'
-import { useMotionPreference } from '../../contexts/MotionPreferenceContext'
-import { useA11yId } from '../../lib/useA11yId'
-import { useGlassSound } from '../../lib/useGlassSound'
+import { AnimatePresence, motion } from 'framer-motion'
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useMotionPreference } from '../../hooks/useMotionPreference'
+import { OptimizedGlass } from '../../primitives'
+import { useA11yId } from '../../utils/a11y'
+import { useGlassSound } from '../../utils/soundDesign'
 
 export interface GoldenRatioItem {
   id: string
@@ -82,7 +82,7 @@ export const GlassGoldenRatioGrid = forwardRef<HTMLDivElement, GlassGoldenRatioG
     
     const { prefersReducedMotion } = useMotionPreference()
     const gridId = useA11yId()
-    const { playSound } = useGlassSound()
+    const { play } = useGlassSound()
 
     // Responsive dimension handling
     useEffect(() => {
@@ -221,18 +221,18 @@ export const GlassGoldenRatioGrid = forwardRef<HTMLDivElement, GlassGoldenRatioG
       onItemClick?.(item)
       
       if (soundEnabled) {
-        playSound('click')
+        play('click')
       }
-    }, [onItemClick, soundEnabled, playSound])
+    }, [onItemClick, soundEnabled, play])
 
     const handleItemHover = useCallback((item: GoldenRatioItem | null) => {
       setHoveredItem(item?.id || null)
       onItemHover?.(item)
       
       if (soundEnabled && item) {
-        playSound('hover')
+        play('hover')
       }
-    }, [onItemHover, soundEnabled, playSound])
+    }, [onItemHover, soundEnabled, play])
 
     const getItemVariants = () => ({
       hidden: {
@@ -337,9 +337,9 @@ export const GlassGoldenRatioGrid = forwardRef<HTMLDivElement, GlassGoldenRatioG
           {/* Grid sections with items */}
           <AnimatePresence>
             {sections.map((section, index) => {
-              const hasItem = section.item
-              const isHovered = hasItem && hoveredItem === section.item.id
-              const isSelected = hasItem && selectedItem === section.item.id
+              const hasItem = !!section.item
+              const isHovered = hasItem && hoveredItem === section.item!.id
+              const isSelected = hasItem && selectedItem === section.item!.id
 
               return (
                 <motion.div
@@ -359,9 +359,9 @@ export const GlassGoldenRatioGrid = forwardRef<HTMLDivElement, GlassGoldenRatioG
                   initial="hidden"
                   animate={isSelected ? "selected" : isHovered ? "hover" : "visible"}
                   exit="hidden"
-                  onMouseEnter={() => hasItem && handleItemHover(section.item)}
+                  onMouseEnter={() => hasItem && handleItemHover(section.item!)}
                   onMouseLeave={() => handleItemHover(null)}
-                  onClick={() => hasItem && handleItemClick(section.item)}
+                  onClick={() => hasItem && handleItemClick(section.item!)}
                 >
                   {hasItem ? (
                     <div
@@ -375,7 +375,7 @@ export const GlassGoldenRatioGrid = forwardRef<HTMLDivElement, GlassGoldenRatioG
                         }
                       `}
                     >
-                      {section.item.content}
+                      {section.item!.content}
                     </div>
                   ) : (
                     <div

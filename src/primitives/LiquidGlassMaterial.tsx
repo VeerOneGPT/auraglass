@@ -1,20 +1,20 @@
 'use client';
 
-import React, { forwardRef, useRef, useEffect, useMemo, useCallback, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 import { cn } from '../lib/utilsComprehensive';
-import { 
-  LIQUID_GLASS, 
-  liquidGlassUtils,
-  type LiquidGlassMaterial as MaterialType,
-  type MaterialVariant,
-  type GlassIntent,
-  type GlassElevation,
-  type TintMode,
-  type SheenIntensity,
-  type LiquidGlassTokens
+import {
+    LIQUID_GLASS,
+    liquidGlassUtils,
+    type GlassElevation,
+    type GlassIntent,
+    type LiquidGlassTokens,
+    type LiquidGlassMaterial as MaterialType,
+    type MaterialVariant,
+    type SheenIntensity,
+    type TintMode
 } from '../tokens/glass';
 import { contrastGuard, useContrastGuard, type ContrastLevel } from '../utils/contrastGuard';
-import { useReducedMotion } from '../hooks/useReducedMotion';
 
 // Enhanced props interface for Liquid Glass Material
 export interface LiquidGlassMaterialProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
@@ -65,7 +65,19 @@ export interface LiquidGlassMaterialProps extends Omit<React.HTMLAttributes<HTML
   
   /** Enable micro-interactions */
   enableMicroInteractions?: boolean;
-  
+
+  /** Tint color for glass material */
+  tint?: { r: number; g: number; b: number; a: number };
+
+  /** Quality level for rendering */
+  quality?: 'high' | 'ultra' | 'balanced' | 'efficient';
+
+  /** Enable environmental adaptation */
+  environmentAdaptation?: boolean;
+
+  /** Enable motion responsiveness */
+  motionResponsive?: boolean;
+
   /** Custom CSS classes */
   className?: string;
   
@@ -118,6 +130,10 @@ export const LiquidGlassMaterial = forwardRef<HTMLDivElement, LiquidGlassMateria
       enableReflection,
       enableParallax,
       enableMicroInteractions,
+      tint,
+      quality,
+      environmentAdaptation,
+      motionResponsive,
       className,
       radius = 'lg',
       interactive = false,
@@ -525,8 +541,6 @@ export function useLiquidGlassState(
 
 // Export types for external use
 export type {
-  MaterialType,
-  MaterialVariant,
-  TintMode,
-  SheenIntensity,
+    MaterialType,
+    MaterialVariant, SheenIntensity, TintMode
 };

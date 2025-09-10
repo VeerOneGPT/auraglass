@@ -1,11 +1,10 @@
 'use client';
 
-import React, { forwardRef, useState, useCallback, useRef } from 'react';
-import { OptimizedGlass } from '../../primitives';
-import { Motion } from '../../primitives';
 import { cn } from '@/lib/utilsComprehensive';
-import { createFormFieldA11y, useA11yId, announceToScreenReader } from '../../utils/a11y';
+import React, { forwardRef, useCallback, useRef, useState } from 'react';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
+import { OptimizedGlass } from '../../primitives';
+import { announceToScreenReader, createFormFieldA11y, useA11yId } from '../../utils/a11y';
 
 export interface GlassSliderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   /** Current value(s) of the slider */
@@ -395,7 +394,7 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
               orientation === 'horizontal' ? 'top-1/2' : 'left-1/2'
             )}
             style={position}
-            onPointerDown={(e) => handlePointerDown(e, index)}
+            onPointerDown={(e: React.PointerEvent) => handlePointerDown(e, index)}
             role="slider"
             aria-valuemin={min}
             aria-valuemax={max}

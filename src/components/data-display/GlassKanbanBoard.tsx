@@ -1,11 +1,10 @@
 'use client';
 
-import React, { forwardRef, useState, useCallback, useMemo, useRef, useEffect } from 'react';
-import { OptimizedGlass } from '../../primitives';
-import { Motion } from '../../primitives';
 import { cn } from '@/lib/utilsComprehensive';
-import { useA11yId } from '../../utils/a11y';
+import React, { forwardRef, useCallback, useRef, useState } from 'react';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
+import { Motion, OptimizedGlass } from '../../primitives';
+import { useA11yId } from '../../utils/a11y';
 import { useGlassSound } from '../../utils/soundDesign';
 
 export interface KanbanCard {
@@ -238,7 +237,7 @@ export const GlassKanbanBoard = forwardRef<HTMLDivElement, GlassKanbanBoardProps
         <OptimizedGlass
           key={card.id}
           draggable={enableDrag && !columns.find(c => c.id === columnId)?.readOnly}
-          onDragStart={(e) => handleDragStart(card, columnId)}
+          onDragStart={(e: React.DragEvent) => handleDragStart(card, columnId)}
           onDragEnd={handleDragEnd}
           onClick={() => onCardClick?.(card, columnId)}
           onDoubleClick={() => onCardDoubleClick?.(card, columnId)}
@@ -260,7 +259,7 @@ export const GlassKanbanBoard = forwardRef<HTMLDivElement, GlassKanbanBoardProps
           role="article"
           aria-label={`Card: ${card.title}`}
           tabIndex={0}
-          onKeyDown={(e) => {
+          onKeyDown={(e: React.KeyboardEvent) => {
             if (e.key === 'Enter' || e.key === ' ') {
               onCardClick?.(card, columnId);
             }
@@ -486,8 +485,8 @@ export const GlassKanbanBoard = forwardRef<HTMLDivElement, GlassKanbanBoardProps
                         dragState.dragOverColumn === column.id && 'ring-2 ring-primary/50'
                       )}
                       style={{ width: columnWidth, minWidth: columnWidth }}
-                      onDragOver={(e) => handleDragOver(e, column.id)}
-                      onDrop={(e) => handleDrop(e, column.id)}
+                      onDragOver={(e: React.DragEvent) => handleDragOver(e, column.id)}
+                      onDrop={(e: React.DragEvent) => handleDrop(e, column.id)}
                       role="region"
                       aria-label={`Column: ${column.title}`}
                     >
@@ -507,7 +506,7 @@ export const GlassKanbanBoard = forwardRef<HTMLDivElement, GlassKanbanBoardProps
                           if (el) columnRefs.current[column.id] = el;
                         }}
                         className="flex-1 overflow-y-auto glass-p-4 glass-gap-3"
-                        onScroll={(e) => handleColumnScroll(column.id, e.currentTarget.scrollTop)}
+                        onScroll={(e: React.UIEvent) => handleColumnScroll(column.id, e.currentTarget.scrollTop)}
                       >
                         {column.cards.map((card, index) => (
                           <Motion
@@ -526,8 +525,8 @@ export const GlassKanbanBoard = forwardRef<HTMLDivElement, GlassKanbanBoardProps
                               'h-2 glass-radius-md border-2 border-dashed border-primary/30 transition-all',
                               dragState.dragOverColumn === column.id && 'bg-primary/10'
                             )}
-                            onDragOver={(e) => e.preventDefault()}
-                            onDrop={(e) => handleDrop(e, column.id, column.cards.length)}
+                            onDragOver={(e: React.DragEvent) => e.preventDefault()}
+                            onDrop={(e: React.DragEvent) => handleDrop(e, column.id, column.cards.length)}
                           />
                         )}
 

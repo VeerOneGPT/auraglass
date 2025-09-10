@@ -194,12 +194,15 @@ export const FrostedGlass = forwardRef<HTMLDivElement, FrostedGlassProps>(
           {/* Frost pattern overlay */}
           <div 
             className={cn(
-              'absolute inset-0 pointer-events-none mix-blend-overlay',
+              'absolute inset-0 pointer-events-none',
               shouldAnimate && 'animate-frost-grow'
             )}
             style={{
               ...frostPatternStyles,
-              opacity: 0.3 + intensity * 0.5,
+              // Reduce overlay strength to avoid washing out label text
+              opacity: 0.18 + intensity * 0.22,
+              // Use soft-light for gentler interaction with backdrop
+              mixBlendMode: 'soft-light',
             }}
           />
           
@@ -212,7 +215,8 @@ export const FrostedGlass = forwardRef<HTMLDivElement, FrostedGlassProps>(
             style={{
               backgroundImage: `radial-gradient(${frostColor} 1px, transparent 1px)`,
               backgroundSize: '30px 30px',
-              opacity: intensity * 0.4,
+              // Tone down sparkle overlay for readability
+              opacity: Math.min(0.22, intensity * 0.25),
             }}
           />
           
@@ -220,15 +224,16 @@ export const FrostedGlass = forwardRef<HTMLDivElement, FrostedGlassProps>(
           <div 
             className="absolute inset-0 pointer-events-none rounded-inherit"
             style={{
-              // Edge frost
-              boxShadow: `inset 0 0 ${5 + intensity * 15}px ${frostColor}`,
-              opacity: isHovered ? 0.3 + intensity * 0.4 : 0.2 + intensity * 0.3,
-              // Specular highlight
+              // Edge frost (less aggressive)
+              boxShadow: `inset 0 0 ${4 + intensity * 9}px ${frostColor}`,
+              opacity: isHovered ? 0.24 + intensity * 0.25 : 0.18 + intensity * 0.2,
+              // Specular highlight (dimmed)
               background: specular ? `
-                radial-gradient(${intensity * 80 + 40}% ${intensity * 40 + 40}% at 50% -10%, rgba(255,255,255, ${Math.min(0.35, 0.12 + intensity * 0.35)}) 0%, rgba(255,255,255,0.0) 60%),
-                linear-gradient(${lightAngle}deg, rgba(255,255,255,0.18), rgba(255,255,255,0.00) 35%)
+                radial-gradient(${intensity * 70 + 40}% ${intensity * 35 + 40}% at 50% -10%, rgba(255,255,255, ${Math.min(0.25, 0.10 + intensity * 0.22)}) 0%, rgba(255,255,255,0.0) 60%),
+                linear-gradient(${lightAngle}deg, rgba(255,255,255,0.12), rgba(255,255,255,0.00) 35%)
               ` : undefined,
-              mixBlendMode: specular ? 'screen' : 'normal',
+              // Softer blending to preserve label contrast
+              mixBlendMode: specular ? 'overlay' : 'normal',
               transform: parallax ? 'translate(var(--glass-parallax-x), var(--glass-parallax-y))' : undefined,
               transition: 'transform 150ms ease-out, opacity 300ms ease',
             }}

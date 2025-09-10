@@ -1,19 +1,17 @@
 'use client';
 
 import { cn } from '@/lib/utilsComprehensive';
-import React, { forwardRef, useEffect, useRef, useState, useCallback } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
+import { Motion, OptimizedGlass } from '../../primitives';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';
-import { OptimizedGlass } from '../../primitives';
 import { LiquidGlassMaterial } from '../../primitives/LiquidGlassMaterial';
-import { Motion } from '../../primitives';
-import { IconButton } from '../button/GlassButton';
-import { 
-  createModalA11y, 
-  useA11yId, 
-  announceToScreenReader,
-  keyboardHandlers,
-  focusUtils 
+import {
+    announceToScreenReader,
+    createModalA11y,
+    focusUtils,
+    useA11yId
 } from '../../utils/a11y';
+import { GlassButton, IconButton } from '../button/GlassButton';
 import type { ConsciousnessFeatures } from '../layout/GlassContainer';
 // import { usePredictiveEngine, useInteractionRecorder } from '../advanced/GlassPredictiveEngine';
 // import { useAchievements } from '../advanced/GlassAchievementSystem';
@@ -131,6 +129,10 @@ export interface GlassModalProps extends ConsciousnessFeatures {
    * Element to focus when modal closes
    */
   restoreFocus?: React.RefObject<HTMLElement>;
+  /**
+   * Custom className for modal content
+   */
+  contentClassName?: string;
 }
 
 /**
@@ -166,6 +168,7 @@ export const GlassModal = forwardRef<HTMLDivElement, GlassModalProps>(
       'aria-describedby': ariaDescribedBy,
       initialFocus,
       restoreFocus,
+      contentClassName,
       // Consciousness features
       consciousness,
       predictive,
@@ -659,7 +662,7 @@ export const GlassModal = forwardRef<HTMLDivElement, GlassModalProps>(
                         variant="ghost"
                         size="sm"
                         iconOnly
-                        onClick={handleClose}
+                        onClick={onClose}
                         aria-label="Close modal"
                         className="flex-shrink-0 glass-ml-4"
                       >

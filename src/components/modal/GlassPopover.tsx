@@ -517,7 +517,7 @@ export const GlassPopover = forwardRef<HTMLDivElement, GlassPopoverProps>(
                     <div className={getArrowClasses()} style={getArrowPosition()} />
                   )}
                   </OptimizedGlass>
-                )}
+                )
               ) : (
                 <div
                   ref={popoverRef}

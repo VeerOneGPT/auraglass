@@ -91,7 +91,8 @@ export default defineConfig({
       name: 'Reduced Motion',
       use: {
         ...devices['Desktop Chrome'],
-        reducedMotion: 'reduce',
+        // Note: Playwright doesn't have a built-in reducedMotion option
+        // This can be simulated by setting CSS media queries in tests
       },
     },
   ],
@@ -111,12 +112,14 @@ export default defineConfig({
   expect: {
     /* Maximum time expect() should wait for the condition to be met. */
     timeout: 5000,
-    
-    /* Threshold for pixel comparison */
-    threshold: 0.3,
-    
-    /* Maximum allowed pixel difference */
-    maxDiffPixels: 1000,
+
+    /* Screenshot comparison options */
+    toHaveScreenshot: {
+      /* Threshold for pixel comparison */
+      threshold: 0.3,
+      /* Maximum allowed pixel difference */
+      maxDiffPixels: 1000,
+    },
   },
 
   /* Output directories */

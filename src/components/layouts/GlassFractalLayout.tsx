@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useState, useRef, useEffect, forwardRef, useCallback, useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { OptimizedGlass } from '../../primitives/glass/GlassAdvanced'
-import { useMotionPreference } from '../../contexts/MotionPreferenceContext'
-import { useA11yId } from '../../lib/useA11yId'
-import { useGlassSound } from '../../lib/useGlassSound'
+import { AnimatePresence, motion } from 'framer-motion'
+import React, { forwardRef, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useMotionPreference } from '../../hooks/useMotionPreference'
+import { OptimizedGlass } from '../../primitives'
+import { useA11yId } from '../../utils/a11y'
+import { useGlassSound } from '../../utils/soundDesign'
 
 export interface FractalNode {
   id: string
@@ -74,7 +74,7 @@ export const GlassFractalLayout = forwardRef<HTMLDivElement, GlassFractalLayoutP
     
     const { prefersReducedMotion } = useMotionPreference()
     const layoutId = useA11yId()
-    const { playSound } = useGlassSound()
+    const { play } = useGlassSound()
 
     useEffect(() => {
       if (animateGrowth && !prefersReducedMotion) {
@@ -203,18 +203,18 @@ export const GlassFractalLayout = forwardRef<HTMLDivElement, GlassFractalLayoutP
       onNodeClick?.(node)
       
       if (soundEnabled) {
-        playSound('click')
+        play('click')
       }
-    }, [onNodeClick, soundEnabled, playSound])
+    }, [onNodeClick, soundEnabled, play])
 
     const handleNodeHover = useCallback((node: FractalNode | null) => {
       setHoveredNode(node?.id || null)
       onNodeHover?.(node)
       
       if (soundEnabled && node) {
-        playSound('hover')
+        play('hover')
       }
-    }, [onNodeHover, soundEnabled, playSound])
+    }, [onNodeHover, soundEnabled, play])
 
     const handleWheel = useCallback((e: React.WheelEvent) => {
       if (!interactiveZoom) return

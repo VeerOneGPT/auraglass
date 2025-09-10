@@ -6,10 +6,10 @@
  * A glass container that adapts its appearance based on content and background.
  * Migrated to use OptimizedGlass architecture.
  */
-import React, { forwardRef, useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import { cn } from '../../lib/utilsComprehensive';
-import { OptimizedGlass, Motion } from '../../primitives';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { cn } from '../../lib/utilsComprehensive';
+import { OptimizedGlass } from '../../primitives';
 
 import { useGlassTheme } from '../../hooks/useGlassTheme';
 
@@ -618,12 +618,12 @@ export const ContextAwareGlass = forwardRef<HTMLDivElement, ContextAwareGlassPro
 
     return (
       <OptimizedGlass
-        ref={node => {
+        ref={(node: HTMLDivElement | null) => {
           (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
           if (typeof ref === 'function') {
             ref(node);
-          } else if (ref) {
-            (ref as React.MutableRefObject<HTMLDivElement>).current = node!;
+          } else if (ref && 'current' in ref) {
+            (ref as React.MutableRefObject<HTMLDivElement | null>).current = node;
           }
         }}
         elevation={elevation}

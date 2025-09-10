@@ -1,23 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { GlassFractalLayout, type FractalNode } from './GlassFractalLayout';
-import { 
-  Home, 
-  Settings, 
-  User, 
-  Mail, 
-  Search, 
-  Bell, 
-  Heart, 
-  Share,
-  Folder,
-  File,
-  Code,
-  Database,
-  Server,
-  Globe,
-  Cpu,
-  Memory
+import {
+    Bell,
+    Code,
+    Cpu,
+    Database,
+    File,
+    Folder,
+    Globe,
+    HardDrive,
+    Heart,
+    Home,
+    Mail,
+    Search,
+    Server,
+    Settings,
+    Share,
+    User
 } from 'lucide-react';
+import { GlassFractalLayout, type FractalNode } from './GlassFractalLayout';
 
 // Simple tree structure
 const simpleTree: FractalNode[] = [
@@ -104,17 +104,17 @@ const networkTopology: FractalNode[] = [
         id: 'cluster1',
         content: <Cpu size={14} />,
         children: [
-          { id: 'node1', content: <Memory size={12} /> },
-          { id: 'node2', content: <Memory size={12} /> },
-          { id: 'node3', content: <Memory size={12} /> }
+          { id: 'node1', content: <HardDrive size={12} /> },
+          { id: 'node2', content: <HardDrive size={12} /> },
+          { id: 'node3', content: <HardDrive size={12} /> }
         ]
       },
       {
         id: 'cluster2',
         content: <Cpu size={14} />,
         children: [
-          { id: 'node4', content: <Memory size={12} /> },
-          { id: 'node5', content: <Memory size={12} /> }
+          { id: 'node4', content: <HardDrive size={12} /> },
+          { id: 'node5', content: <HardDrive size={12} /> }
         ]
       },
       {

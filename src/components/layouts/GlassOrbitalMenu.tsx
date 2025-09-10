@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useState, useRef, useEffect, forwardRef, useCallback } from 'react'
-import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion'
-import { OptimizedGlass } from '../../primitives/glass/GlassAdvanced'
-import { useMotionPreference } from '../../contexts/MotionPreferenceContext'
-import { useA11yId } from '../../lib/useA11yId'
-import { useGlassSound } from '../../lib/useGlassSound'
+import { AnimatePresence, motion, useMotionValue, useTransform } from 'framer-motion'
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import { useMotionPreference } from '../../hooks/useMotionPreference'
+import { OptimizedGlass } from '../../primitives'
+import { useA11yId } from '../../utils/a11y'
+import { useGlassSound } from '../../utils/soundDesign'
 
 export interface OrbitalMenuItem {
   id: string
@@ -70,7 +70,7 @@ export const GlassOrbitalMenu = forwardRef<HTMLDivElement, GlassOrbitalMenuProps
     
     const { prefersReducedMotion } = useMotionPreference()
     const menuId = useA11yId()
-    const { playSound } = useGlassSound()
+    const { play } = useGlassSound()
 
     const rotationValue = useMotionValue(0)
     const rotationTransform = useTransform(rotationValue, [0, 360], [0, 360])
@@ -94,9 +94,9 @@ export const GlassOrbitalMenu = forwardRef<HTMLDivElement, GlassOrbitalMenuProps
     const handleCenterClick = useCallback(() => {
       onOpenChange?.(!isOpen)
       if (soundEnabled) {
-        playSound(isOpen ? 'close' : 'open')
+        play(isOpen ? 'close' : 'open')
       }
-    }, [isOpen, onOpenChange, soundEnabled, playSound])
+    }, [isOpen, onOpenChange, soundEnabled, play])
 
     const handleItemClick = useCallback((item: OrbitalMenuItem) => {
       if (item.disabled) return
@@ -105,18 +105,18 @@ export const GlassOrbitalMenu = forwardRef<HTMLDivElement, GlassOrbitalMenuProps
       item.onClick?.()
       
       if (soundEnabled) {
-        playSound('click')
+        play('click')
       }
 
       setTimeout(() => setActiveItem(null), 200)
-    }, [soundEnabled, playSound])
+    }, [soundEnabled, play])
 
     const handleItemHover = useCallback((itemId: string | null) => {
       setHoveredItem(itemId)
       if (soundEnabled && itemId) {
-        playSound('hover')
+        play('hover')
       }
-    }, [soundEnabled, playSound])
+    }, [soundEnabled, play])
 
     const calculateItemPosition = useCallback((index: number, total: number) => {
       const angle = ((360 / total) * index + rotation) * (Math.PI / 180)

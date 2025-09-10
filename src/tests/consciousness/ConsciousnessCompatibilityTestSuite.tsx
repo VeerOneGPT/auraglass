@@ -4,8 +4,7 @@
  * Comprehensive testing for cross-component consciousness feature integration,
  * ensuring all consciousness-enhanced components work together seamlessly.
  */
-import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 // Mock consciousness interface hooks
@@ -51,6 +50,20 @@ const mockInteractionRecorder = {
   recordInteraction: jest.fn(),
 };
 
+// Extend Jest matchers for accessibility testing
+declare global {
+  namespace jest {
+    interface Matchers<R> {
+      toHaveAttribute(name: string, value?: string): R;
+      toHaveTextContent(text: string): R;
+      toHaveFocus(): R;
+      toHaveClass(className: string): R;
+      toBeVisible(): R;
+      toBeInTheDocument(): R;
+    }
+  }
+}
+
 // Mock hooks
 jest.mock('../../components/advanced/GlassPredictiveEngine', () => ({
   usePredictiveEngine: () => mockPredictiveEngine,
@@ -74,14 +87,14 @@ jest.mock('../../components/advanced/GlassAchievementSystem', () => ({
 }));
 
 // Import consciousness-enhanced components
-import { ConsciousGlassButton } from '../../components/button/GlassButton';
-import { ConsciousGlassContainer } from '../../components/layout/GlassContainer';
-import { ConsciousGlassHeader } from '../../components/navigation/GlassHeader';
-import { ConsciousGlassChart } from '../../components/charts/GlassChart';
-// ConsciousGlassModal not available, using regular GlassModal
-import { GlassModal } from '../../components/modal/GlassModal';
+import { GlassButton } from '../../components/button/GlassButton';
+import { GlassChart } from '../../components/charts/GlassChart';
+import { GlassContainer } from '../../components/layout/GlassContainer';
+import { GlassHeader } from '../../components/navigation/GlassHeader';
+// GlassModal not available, using regular GlassModal
+import { GlassDataTable } from '../../components/data-display/GlassDataTable';
 import { GlassCarousel } from '../../components/interactive/GlassCarousel';
-import { ConsciousGlassDataTable } from '../../components/data-display/GlassDataTable';
+import { GlassModal } from '../../components/modal/GlassModal';
 
 describe('Consciousness Interface Compatibility Test Suite', () => {
   beforeEach(() => {
@@ -102,35 +115,35 @@ describe('Consciousness Interface Compatibility Test Suite', () => {
   describe('Cross-Component Integration Tests', () => {
     it('should integrate consciousness features across nested components', async () => {
       const TestApp = () => (
-        <ConsciousGlassContainer 
+        <GlassContainer 
           predictive={true}
           adaptive={true}
           trackAchievements={true}
           usageContext="main"
         >
-          <ConsciousGlassHeader 
+          <GlassHeader 
             predictive={true}
             eyeTracking={true}
             spatialAudio={true}
           >
             Test App
-          </ConsciousGlassHeader>
+          </GlassHeader>
           
-          <ConsciousGlassButton 
+          <GlassButton 
             adaptive={true}
             biometricResponsive={true}
             audioFeedback={true}
           >
             Action Button
-          </ConsciousGlassButton>
+          </GlassButton>
           
-          <ConsciousGlassDataTable
+          <GlassDataTable
             data={[{ id: 1, name: 'Test' }]}
             columns={[{ header: 'Name', accessorKey: 'name' }]}
             predictive={true}
             gazeResponsive={true}
           />
-        </ConsciousGlassContainer>
+        </GlassContainer>
       );
 
       render(<TestApp />);
@@ -159,27 +172,27 @@ describe('Consciousness Interface Compatibility Test Suite', () => {
         mockBiometricAdapter.currentStressLevel = 0.8; // High stress
         
         return (
-          <ConsciousGlassContainer 
+          <GlassContainer 
             adaptive={true}
             biometricResponsive={true}
             data-testid="container"
           >
-            <ConsciousGlassHeader 
+            <GlassHeader 
               adaptive={true}
               biometricResponsive={true}
               data-testid="header"
             >
               Stress Test
-            </ConsciousGlassHeader>
+            </GlassHeader>
             
-            <ConsciousGlassButton 
+            <GlassButton 
               adaptive={true}
               biometricResponsive={true}
               data-testid="button"
             >
               Adaptive Button
-            </ConsciousGlassButton>
-          </ConsciousGlassContainer>
+            </GlassButton>
+          </GlassContainer>
         );
       };
 
@@ -194,7 +207,7 @@ describe('Consciousness Interface Compatibility Test Suite', () => {
 
     it('should coordinate spatial audio across multiple components', async () => {
       const TestApp = () => (
-        <ConsciousGlassContainer spatialAudio={true}>
+        <GlassContainer spatialAudio={true}>
           <GlassCarousel
             items={[{ id: '1', content: 'Slide 1' }]}
             spatialAudio={true}
@@ -211,7 +224,7 @@ describe('Consciousness Interface Compatibility Test Suite', () => {
           >
             Modal Content
           </GlassModal>
-        </ConsciousGlassContainer>
+        </GlassContainer>
       );
 
       render(<TestApp />);
@@ -230,8 +243,8 @@ describe('Consciousness Interface Compatibility Test Suite', () => {
 
     it('should handle achievement tracking across component interactions', async () => {
       const TestApp = () => (
-        <ConsciousGlassContainer trackAchievements={true}>
-          <ConsciousGlassChart
+        <GlassContainer trackAchievements={true}>
+          <GlassChart
             type="bar"
             data={[{ x: 1, y: 10 }]}
             trackAchievements={true}
@@ -239,14 +252,14 @@ describe('Consciousness Interface Compatibility Test Suite', () => {
             data-testid="chart"
           />
           
-          <ConsciousGlassButton
+          <GlassButton
             trackAchievements={true}
             achievementId="button_interaction"
             data-testid="button"
           >
             Chart Action
-          </ConsciousGlassButton>
-        </ConsciousGlassContainer>
+          </GlassButton>
+        </GlassContainer>
       );
 
       render(<TestApp />);
@@ -277,20 +290,20 @@ describe('Consciousness Interface Compatibility Test Suite', () => {
       const TestComponent = () => {
         renderCount++;
         return (
-          <ConsciousGlassContainer
+          <GlassContainer
             predictive={true}
             adaptive={true}
             eyeTracking={true}
             spatialAudio={true}
             data-testid="performance-container"
           >
-            <ConsciousGlassDataTable
+            <GlassDataTable
               data={Array.from({ length: 100 }, (_, i) => ({ id: i, name: `Item ${i}` }))}
               columns={[{ header: 'Name', accessorKey: 'name' }]}
               predictive={true}
               gazeResponsive={true}
             />
-          </ConsciousGlassContainer>
+          </GlassContainer>
         );
       };
 
@@ -312,15 +325,15 @@ describe('Consciousness Interface Compatibility Test Suite', () => {
 
     it('should efficiently manage consciousness hook subscriptions', async () => {
       const { unmount } = render(
-        <ConsciousGlassContainer
+        <GlassContainer
           predictive={true}
           eyeTracking={true}
           spatialAudio={true}
           adaptive={true}
           trackAchievements={true}
         >
-          <ConsciousGlassButton>Test</ConsciousGlassButton>
-        </ConsciousGlassContainer>
+          <GlassButton>Test</GlassButton>
+        </GlassContainer>
       );
       
       // Verify hooks are initialized
@@ -343,19 +356,19 @@ describe('Consciousness Interface Compatibility Test Suite', () => {
         mockBiometricAdapter.currentStressLevel = stress;
         
         return (
-          <ConsciousGlassContainer
+          <GlassContainer
             adaptive={true}
             biometricResponsive={true}
             data-testid="container"
           >
-            <ConsciousGlassButton
+            <GlassButton
               adaptive={true}
               biometricResponsive={true}
               data-testid="button"
             >
               Adaptive Button
-            </ConsciousGlassButton>
-          </ConsciousGlassContainer>
+            </GlassButton>
+          </GlassContainer>
         );
       };
 
@@ -387,13 +400,13 @@ describe('Consciousness Interface Compatibility Test Suite', () => {
 
     it('should handle consciousness feature toggling dynamically', async () => {
       const TestApp = ({ features }: { features: { predictive: boolean; adaptive: boolean } }) => (
-        <ConsciousGlassContainer
+        <GlassContainer
           predictive={features.predictive}
           adaptive={features.adaptive}
           data-testid="container"
         >
-          <ConsciousGlassButton data-testid="button">Test</ConsciousGlassButton>
-        </ConsciousGlassContainer>
+          <GlassButton data-testid="button">Test</GlassButton>
+        </GlassContainer>
       );
 
       const { rerender } = render(<TestApp features={{ predictive: false, adaptive: false }} />);
@@ -422,12 +435,12 @@ describe('Consciousness Interface Compatibility Test Suite', () => {
       });
       
       const TestApp = () => (
-        <ConsciousGlassContainer
+        <GlassContainer
           predictive={true}
           data-testid="container"
         >
-          <ConsciousGlassButton data-testid="button">Test</ConsciousGlassButton>
-        </ConsciousGlassContainer>
+          <GlassButton data-testid="button">Test</GlassButton>
+        </GlassContainer>
       );
 
       // Should render without crashing
@@ -445,7 +458,7 @@ describe('Consciousness Interface Compatibility Test Suite', () => {
 
     it('should maintain basic functionality when consciousness features are disabled', () => {
       const TestApp = () => (
-        <ConsciousGlassContainer
+        <GlassContainer
           predictive={false}
           adaptive={false}
           eyeTracking={false}
@@ -453,8 +466,8 @@ describe('Consciousness Interface Compatibility Test Suite', () => {
           trackAchievements={false}
           data-testid="container"
         >
-          <ConsciousGlassButton data-testid="button">Basic Button</ConsciousGlassButton>
-        </ConsciousGlassContainer>
+          <GlassButton data-testid="button">Basic Button</GlassButton>
+        </GlassContainer>
       );
 
       render(<TestApp />);
@@ -478,23 +491,23 @@ describe('Consciousness Interface Compatibility Test Suite', () => {
   describe('Accessibility Integration Tests', () => {
     it('should maintain accessibility while adding consciousness features', async () => {
       const TestApp = () => (
-        <ConsciousGlassContainer
+        <GlassContainer
           predictive={true}
           eyeTracking={true}
           role="main"
           aria-label="Consciousness-enhanced container"
         >
-          <ConsciousGlassButton
+          <GlassButton
             adaptive={true}
             aria-describedby="button-desc"
           >
             Accessible Conscious Button
-          </ConsciousGlassButton>
+          </GlassButton>
           
           <div id="button-desc">
             This button adapts to your stress level
           </div>
-        </ConsciousGlassContainer>
+        </GlassContainer>
       );
 
       render(<TestApp />);

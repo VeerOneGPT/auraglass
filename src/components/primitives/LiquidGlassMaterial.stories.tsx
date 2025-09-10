@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { LiquidGlassMaterial } from './LiquidGlassMaterial';
+import { LiquidGlassMaterial } from '../../primitives/LiquidGlassMaterial';
 
 const meta: Meta<typeof LiquidGlassMaterial> = {
   title: 'Primitives/LiquidGlassMaterial',

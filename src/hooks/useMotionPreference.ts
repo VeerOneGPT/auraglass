@@ -48,5 +48,5 @@ export function useMotionPreference() {
   const prefersReducedMotion = useReducedMotion();
   const shouldAnimate = !prefersReducedMotion;
 
-  return { shouldAnimate };
+  return { shouldAnimate, prefersReducedMotion };
 }

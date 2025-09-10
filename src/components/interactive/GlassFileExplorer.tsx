@@ -21,10 +21,10 @@ import {
 } from 'lucide-react';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { cn } from '../../lib/utilsComprehensive';
+import { OptimizedGlass } from '../../primitives';
 import { GlassButton } from '../button/GlassButton';
 import { GlassInput } from '../input/GlassInput';
 import { GlassBreadcrumb, GlassBreadcrumbItem } from '../navigation/GlassBreadcrumb';
-import { OptimizedGlass } from '../../primitives';
 
 export interface FileItem {
     id: string;
@@ -515,12 +515,12 @@ const GlassFileExplorer = React.forwardRef<HTMLDivElement, GlassFileExplorerProp
                                                         draggedItem?.id === file.id && 'glass-lift scale-[1.02] ring-1 ring-white/15 shadow-xl',
                                                         dragOverItem === file.id && 'glass-pulse-ring'
                                                     )}
-                                                    onClick={(e) => handleFileClick(file, e)}
+                                                    onClick={(e: React.MouseEvent) => handleFileClick(file, e)}
                                                     draggable={allowDragDrop}
-                                                    onDragStart={(e) => handleDragStart(e, file)}
-                                                    onDragOver={(e) => handleDragOver(e, file.id)}
+                                                    onDragStart={(e: React.DragEvent) => handleDragStart(e, file)}
+                                                    onDragOver={(e: React.DragEvent) => handleDragOver(e, file.id)}
                                                     onDragEnd={() => { setDraggedItem(null); setDragOverItem(null); }}
-                                                    onDrop={(e) => handleDrop(e, file)}
+                                                    onDrop={(e: React.DragEvent) => handleDrop(e, file)}
                                                 >
                                                     {viewMode === 'grid' ? (
                                                         <div className="flex flex-col items-center text-center">

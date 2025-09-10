@@ -1,13 +1,13 @@
 'use client';
 
 import { cn } from '@/lib/utilsComprehensive';
-import React, { forwardRef, useCallback, useEffect, useRef, useState, useImperativeHandle } from 'react';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { LiquidGlassMaterial } from '../../primitives/LiquidGlassMaterial';
-import { usePredictiveEngine, useInteractionRecorder } from '../advanced/GlassPredictiveEngine';
 import { useAchievements } from '../advanced/GlassAchievementSystem';
 import { useBiometricAdaptation } from '../advanced/GlassBiometricAdaptation';
 import { useEyeTracking } from '../advanced/GlassEyeTracking';
+import { useInteractionRecorder, usePredictiveEngine } from '../advanced/GlassPredictiveEngine';
 import { useSpatialAudio } from '../advanced/GlassSpatialAudio';
 
 export interface ConsciousnessFeatures {
@@ -114,7 +114,6 @@ export interface GlassContainerProps extends React.HTMLAttributes<HTMLDivElement
     variant?: 'regular' | 'clear';
     quality?: 'ultra' | 'high' | 'balanced' | 'efficient';
   };
-  radius?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
 }
 
 /**
@@ -429,7 +428,7 @@ export const GlassContainer = forwardRef<HTMLDivElement, GlassContainerProps>(
             if (ref) {
               if (typeof ref === 'function') {
                 ref(node);
-              } else {
+              } else if ('current' in ref) {
                 ref.current = node;
               }
             }
@@ -482,12 +481,12 @@ export const GlassContainer = forwardRef<HTMLDivElement, GlassContainerProps>(
           )}
           onClick={handleInteraction}
           onFocus={handleInteraction}
-          ref={(node) => {
+          ref={(node: HTMLDivElement | null) => {
             setContainerElement(node);
             if (ref) {
               if (typeof ref === 'function') {
                 ref(node);
-              } else {
+              } else if ('current' in ref) {
                 ref.current = node;
               }
             }
@@ -526,7 +525,7 @@ export const GlassContainer = forwardRef<HTMLDivElement, GlassContainerProps>(
         )}
         onClick={handleInteraction}
         onFocus={handleInteraction}
-        ref={(node) => {
+        ref={(node: HTMLDivElement | null) => {
           setContainerElement(node);
           if (ref) {
             if (typeof ref === 'function') {

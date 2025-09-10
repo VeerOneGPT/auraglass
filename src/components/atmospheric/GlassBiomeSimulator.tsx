@@ -26,7 +26,22 @@ export interface BiomeParticle {
   size: number;
   opacity: number;
   color: [number, number, number];
-  type: 'leaf' | 'pollen' | 'dust' | 'snow' | 'spark' | 'water' | 'spore' | 'insect';
+  // Extended to include all particle types referenced by biome configs
+  type:
+    | 'leaf'
+    | 'pollen'
+    | 'dust'
+    | 'sand'
+    | 'snow'
+    | 'ice'
+    | 'spark'
+    | 'water'
+    | 'droplet'
+    | 'spore'
+    | 'insect'
+    | 'bubble'
+    | 'fog'
+    | 'cloud';
   lifetime: number;
   rotation: number;
   rotationSpeed: number;
@@ -144,8 +159,10 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
     const [animationTime, setAnimationTime] = useState(0);
     const [cameraOffset, setCameraOffset] = useState({ x: 0, y: 0 });
 
-    // Biome configurations
-    const biomeConfigs = {
+    // Biome configurations (memoized to prevent re-creation each render)
+    // Re-creating this object every render invalidated callbacks that depend on it
+    // and caused an infinite effect loop that set state on every render.
+    const biomeConfigs = React.useMemo(() => ({
       forest: {
         colors: {
           sky: ['#87CEEB', '#98FB98'],
@@ -226,7 +243,7 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
         elements: ['water', 'tree', 'fog'],
         sounds: ['frogs', 'insects', 'bubbles']
       }
-    };
+    }), []);
 
     // Generate biome layers
     const generateBiomeLayers = useCallback((biomeType: BiomeData['type']) => {
@@ -401,6 +418,16 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
             };
             break;
 
+          case 'droplet':
+            particle = {
+              ...particle,
+              vx: (Math.random() - 0.5) * 0.4,
+              vy: Math.random() * 2.5 + 1.5,
+              color: [173, 216, 230], // light blue
+              size: Math.random() * 3 + 1
+            };
+            break;
+
           case 'dust':
             particle = {
               ...particle,
@@ -412,6 +439,17 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
             };
             break;
 
+          case 'sand':
+            particle = {
+              ...particle,
+              vx: currentBiome.windSpeed * 0.15 + (Math.random() - 0.5) * 1,
+              vy: (Math.random() - 0.5) * 0.3,
+              color: [237, 201, 175], // sandy color
+              size: Math.random() * 2 + 0.5,
+              opacity: Math.random() * 0.4 + 0.1
+            };
+            break;
+
           case 'snow':
             particle = {
               ...particle,
@@ -420,6 +458,17 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
               color: [255, 255, 255],
               size: Math.random() * 6 + 3,
               rotationSpeed: (Math.random() - 0.5) * 0.1
+            };
+            break;
+
+          case 'ice':
+            particle = {
+              ...particle,
+              vx: (Math.random() - 0.5) * currentBiome.windSpeed * 0.08,
+              vy: Math.random() * 1.5 + 0.5,
+              color: [200, 230, 255], // icy blue
+              size: Math.random() * 4 + 2,
+              rotationSpeed: (Math.random() - 0.5) * 0.08
             };
             break;
 
@@ -441,6 +490,39 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
               color: [144, 238, 144],
               size: Math.random() * 3 + 1,
               opacity: Math.random() * 0.6 + 0.2
+            };
+            break;
+
+          case 'fog':
+            particle = {
+              ...particle,
+              vx: (Math.random() - 0.5) * 0.2,
+              vy: (Math.random() - 0.5) * 0.1,
+              color: [210, 210, 220],
+              size: Math.random() * 20 + 10,
+              opacity: Math.random() * 0.2 + 0.05
+            };
+            break;
+
+          case 'bubble':
+            particle = {
+              ...particle,
+              vx: (Math.random() - 0.5) * 0.3,
+              vy: -Math.random() * 0.8,
+              color: [180, 220, 255],
+              size: Math.random() * 5 + 2,
+              opacity: Math.random() * 0.5 + 0.2
+            };
+            break;
+
+          case 'cloud':
+            particle = {
+              ...particle,
+              vx: (Math.random() - 0.5) * 0.2,
+              vy: (Math.random() - 0.5) * 0.1,
+              color: [220, 220, 230],
+              size: Math.random() * 30 + 20,
+              opacity: Math.random() * 0.25 + 0.1
             };
             break;
         }
@@ -577,6 +659,20 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
                 ctx.stroke();
                 break;
 
+              case 'cloud':
+                // Soft cloud made of overlapping circles
+                ctx.fillStyle = color;
+                ctx.globalAlpha = element.opacity * 0.6;
+                ctx.beginPath();
+                const radius = Math.max(10, Math.min(element.width, element.height) * 0.3);
+                for (let i = -2; i <= 2; i++) {
+                  ctx.moveTo(i * radius * 0.8, 0);
+                  ctx.arc(i * radius * 0.8, 0, radius * (1 - Math.abs(i) * 0.1), 0, Math.PI * 2);
+                }
+                ctx.fill();
+                ctx.globalAlpha = element.opacity;
+                break;
+
               case 'water':
                 ctx.fillStyle = color;
                 ctx.fillRect(-element.width * 0.5, 0, element.width, element.height);
@@ -630,14 +726,17 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
         });
       }
 
-      // Draw particles
+      // Draw particles (guard against malformed data)
       particles.forEach(particle => {
         ctx.save();
         ctx.globalAlpha = particle.opacity;
         ctx.translate(particle.x, particle.y);
         ctx.rotate(particle.rotation);
 
-        const color = `rgb(${particle.color[0]}, ${particle.color[1]}, ${particle.color[2]})`;
+        // Fallback color guard in case a particle was created without a color
+        const color = Array.isArray(particle.color)
+          ? `rgb(${particle.color[0]}, ${particle.color[1]}, ${particle.color[2]})`
+          : 'rgb(255, 255, 255)';
 
         switch (particle.type) {
           case 'leaf':
@@ -649,6 +748,7 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
 
           case 'pollen':
           case 'dust':
+          case 'sand':
           case 'spore':
             ctx.fillStyle = color;
             ctx.beginPath();
@@ -657,6 +757,7 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
             break;
 
           case 'snow':
+          case 'ice':
             ctx.fillStyle = color;
             ctx.beginPath();
             ctx.arc(0, 0, particle.size, 0, Math.PI * 2);
@@ -675,7 +776,21 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
             break;
 
           case 'water':
+          case 'droplet':
+          case 'bubble':
             ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(0, 0, particle.size, 0, Math.PI * 2);
+            ctx.fill();
+            break;
+
+          case 'fog':
+          case 'cloud':
+            // Render as a soft blurred circle
+            const fogGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, particle.size);
+            fogGradient.addColorStop(0, `rgba(${Array.isArray(particle.color) ? `${particle.color[0]}, ${particle.color[1]}, ${particle.color[2]}` : '255, 255, 255'}, ${Math.min(0.5, particle.opacity)})`);
+            fogGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+            ctx.fillStyle = fogGradient;
             ctx.beginPath();
             ctx.arc(0, 0, particle.size, 0, Math.PI * 2);
             ctx.fill();

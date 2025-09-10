@@ -91,7 +91,7 @@ export const DimensionalGlass = forwardRef<HTMLDivElement, DimensionalGlassProps
             ior={materialProps?.ior || 1.52}
             thickness={materialProps?.thickness || (depth * 20 + 8)}
             tint={materialProps?.tint || { r: 0, g: 0, b: 0, a: depth * 0.05 + 0.03 }}
-            variant={materialProps?.variant || 'regular'}
+            variant={(materialProps?.variant === 'clear' ? 'clear' : 'regular') as 'regular' | 'clear'}
             quality={materialProps?.quality || 'ultra'}
             environmentAdaptation
             motionResponsive
