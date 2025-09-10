@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+import React, { useEffect, useState, useRef, forwardRef, useImperativeHandle } from 'react';
 import { OptimizedGlass } from '../../primitives';
+import { useA11yId } from '../../utils/a11y';
+import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 
 export interface GlassAnimatedNumberProps {
   /** The target number to animate to */
@@ -29,6 +30,10 @@ export interface GlassAnimatedNumberProps {
   size?: 'sm' | 'md' | 'lg' | 'xl';
   /** Animation variant */
   variant?: 'count' | 'scale' | 'glow';
+  /** Respect user's motion preferences */
+  respectMotionPreference?: boolean;
+  /** ARIA label for the animated number */
+  'aria-label'?: string;
 }
 
 // Easing functions
@@ -39,7 +44,7 @@ const easingFunctions = {
   easeInOut: (t: number) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t),
 };
 
-export const GlassAnimatedNumber: React.FC<GlassAnimatedNumberProps> = ({
+export const GlassAnimatedNumber = forwardRef<HTMLDivElement, GlassAnimatedNumberProps>(({
   value,
   from = 0,
   duration = 1000,
@@ -53,16 +58,20 @@ export const GlassAnimatedNumber: React.FC<GlassAnimatedNumberProps> = ({
   className = '',
   size = 'md',
   variant = 'count',
-}) => {
+}, ref) => {
   const [displayValue, setDisplayValue] = useState(from);
   const [isAnimating, setIsAnimating] = useState(false);
   const animationRef = useRef<number>();
   const startTimeRef = useRef<number>();
   const startValueRef = useRef<number>(from);
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  // Forward ref
+  useImperativeHandle(ref, () => elementRef.current as HTMLDivElement);
 
   const sizeClasses = {
-    sm: 'text-lg',
-    md: 'text-2xl',
+    sm: 'glass-text-lg',
+    md: 'glass-text-2xl',
     lg: 'text-4xl',
     xl: 'text-6xl',
   };
@@ -162,7 +171,8 @@ export const GlassAnimatedNumber: React.FC<GlassAnimatedNumberProps> = ({
 
   return (
     <OptimizedGlass
-      className={`inline-flex items-center justify-center font-mono font-bold text-white ${sizeClasses[size]} ${className}`}
+      ref={elementRef}
+      className={`inline-flex items-center justify-center font-mono font-bold glass-text-primary ${sizeClasses[size]} ${className}`}
       style={getVariantStyles()}
       elevation="level1"
       interactive={false}
@@ -172,7 +182,9 @@ export const GlassAnimatedNumber: React.FC<GlassAnimatedNumberProps> = ({
       </span>
     </OptimizedGlass>
   );
-};
+});
+
+GlassAnimatedNumber.displayName = 'GlassAnimatedNumber';
 
 // Compound component for animated counter with label
 export const GlassAnimatedCounter: React.FC<{
@@ -191,7 +203,7 @@ export const GlassAnimatedCounter: React.FC<{
   className = '',
 }) => {
   return (
-    <div className={`flex flex-col items-center space-y-2 ${className}`}>
+    <div className={`flex flex-col items-center glass-gap-2 ${className}`}>
       <GlassAnimatedNumber
         value={value}
         from={from}
@@ -202,7 +214,7 @@ export const GlassAnimatedCounter: React.FC<{
       />
       {label && (
         <OptimizedGlass
-          className="text-sm text-white/70 font-medium"
+          className="glass-text-sm glass-text-primary/70 font-medium"
           elevation="level1"
         >
           {label}
@@ -231,8 +243,8 @@ export const GlassAnimatedStat: React.FC<{
   const percentage = total ? (value / total) * 100 : value;
 
   return (
-    <div className={`flex flex-col space-y-2 ${className}`}>
-      <div className="flex items-baseline space-x-2">
+    <div className={`flex flex-col glass-gap-2 ${className}`}>
+      <div className="flex items-baseline glass-gap-2">
         <GlassAnimatedNumber
           value={value}
           duration={duration}
@@ -246,14 +258,14 @@ export const GlassAnimatedStat: React.FC<{
             decimals={1}
             suffix="%"
             size="md"
-            className="text-white/80"
+            className="glass-text-primary/80"
           />
         )}
       </div>
 
       {label && (
         <OptimizedGlass
-          className="text-sm text-white/70"
+          className="glass-text-sm glass-text-primary/70"
           elevation="level1"
         >
           {label}
@@ -263,11 +275,11 @@ export const GlassAnimatedStat: React.FC<{
       {/* Progress bar */}
       {total && (
         <OptimizedGlass
-          className="h-2 w-full rounded-full overflow-hidden"
+          className="h-2 w-full glass-radius-full overflow-hidden"
           elevation="level1"
         >
           <div
-            className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-1000 ease-out"
+            className="h-full bg-gradient-to-r from-blue-500 to-purple-500 glass-radius-full transition-all duration-1000 ease-out"
             style={{ width: `${percentage}%` }}
           />
         </OptimizedGlass>

@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 export interface AtmosphericEffectsProps {
   qualityTier?: 'low' | 'medium' | 'high' | 'ultra';
   color?: string;

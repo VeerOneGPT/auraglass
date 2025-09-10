@@ -47,6 +47,28 @@ const meta: Meta<typeof GlobalCookieConsent> = {
     position: 'bottom',
     acceptButtonText: 'Accept All',
     declineButtonText: 'Decline',
+    cookieCategories: [
+      {
+        id: 'essential',
+        name: 'Essential',
+        description: 'Required for basic site functionality',
+        required: true,
+        cookies: [
+          { name: 'session_id', purpose: 'Authentication', duration: 'Session' },
+        ],
+      },
+      {
+        id: 'analytics',
+        name: 'Analytics',
+        description: 'Help us understand how you use our site',
+        required: false,
+        cookies: [
+          { name: 'ga_tracking', purpose: 'Page analytics', duration: '2 years' },
+        ],
+      },
+    ],
+    defaultSelectedCategories: ['essential'],
+    delay: 100, // Reduced delay for Storybook
   },
 };
 
@@ -59,7 +81,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap glass-gap-4">
       <GlobalCookieConsent {...args} />
     </div>
   ),

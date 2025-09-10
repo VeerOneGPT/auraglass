@@ -1,5 +1,4 @@
 import React, { forwardRef, useRef, useEffect, useState, useMemo, createRef, useCallback, CSSProperties } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { GlassDataGridProps, ColumnDefinition, SortState } from './types';
 import styled, { css } from 'styled-components';
 
@@ -22,7 +21,8 @@ const useVectorSpring = (options: any) => ({
   value: options?.initialValue || { x: 0, y: 0, z: 0 },
   setValue: () => {},
 });
-import DimensionalGlass from '../surfaces/DimensionalGlass';
+import { OptimizedGlass, Motion } from '../../primitives';
+import { cn } from '@/lib/utilsComprehensive';
 
 // --- Styled Components using Theme --- 
 
@@ -209,18 +209,26 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
     if (!displayData || !columns) return null;
 
     return (
-      // Use DimensionalGlass component as the outer wrapper
-      <DimensionalGlass 
-        ref={ref} // Forward ref to the DimensionalGlass
-        className={className} 
+      <OptimizedGlass 
+        ref={ref}
+        intent="neutral"
+        elevation="level2"
+        intensity="medium"
+        depth={2}
+        tint="neutral"
+        border="subtle"
+        animation="none"
+        performanceMode="medium"
+        className={cn(
+          'w-full overflow-hidden',
+          height && 'overflow-y-auto',
+          className
+        )}
         style={{
-            ...style, // Merge with existing style prop
-            ...(height && { height: typeof height === 'number' ? `${height}px` : height, overflowY: 'auto' }),
-            position: 'relative', // Keep other necessary styles
+            ...style,
+            ...(height && { height: typeof height === 'number' ? `${height}px` : height }),
             perspective: '1000px',
         }}
-        variant="default" // Pass relevant props to DimensionalGlass
-        elevation={'level1'}
       >
         <StyledTable /* Removed className and ref */ >
           <thead>
@@ -249,7 +257,7 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
                     $isSortable={isSortable}
                     // Pass raw direction for potential styling, not animation
                     $sortDirection={currentSortDirection}
-                    onClick={() => isSortable && handleSort()}
+                    onClick={(e) => isSortable && handleSort()}
                     tabIndex={isSortable ? 0 : -1}
                     onKeyDown={(e) => handleHeaderKeyDown(e)}
                     role="columnheader"
@@ -317,7 +325,7 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
             })}
           </tbody>
         </StyledTable>
-      </DimensionalGlass>
+      </OptimizedGlass>
     );
   }
 );

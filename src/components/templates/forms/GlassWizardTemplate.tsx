@@ -1,7 +1,6 @@
 'use client';
 
 import React, { forwardRef, useCallback, useEffect, useState } from 'react';
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 import { GlassButton } from '@/components/button';
 import { cn } from '@/lib/utilsComprehensive';
 import { GlassCard } from '@/components/card';
@@ -246,11 +245,11 @@ export const GlassWizardTemplate = forwardRef<HTMLDivElement, GlassWizardTemplat
     const renderHeader = () => (
       <VStack space="md">
         <VStack space="sm">
-          <h1 className="text-2xl font-bold text-foreground">
+          <h1 className="glass-text-2xl font-bold text-foreground">
             {title}
           </h1>
           {description && (
-            <p className="text-muted-foreground">
+            <p className="glass-text-secondary">
               {description}
             </p>
           )}
@@ -274,17 +273,17 @@ export const GlassWizardTemplate = forwardRef<HTMLDivElement, GlassWizardTemplat
         {/* Step header */}
         <VStack space="sm">
           <HStack space="sm" align="center">
-            <h2 className="text-xl font-semibold text-foreground">
+            <h2 className="glass-text-xl font-semibold text-foreground">
               {currentStepData.title}
             </h2>
             {currentStepData.optional && (
-              <span className="text-sm text-muted-foreground bg-muted px-2 py-1 rounded">
+              <span className="glass-text-sm glass-text-secondary bg-muted glass-px-2 glass-py-1 glass-radius-md">
                 Optional
               </span>
             )}
           </HStack>
           {currentStepData.description && (
-            <p className="text-muted-foreground">
+            <p className="glass-text-secondary">
               {currentStepData.description}
             </p>
           )}
@@ -382,7 +381,7 @@ export const GlassWizardTemplate = forwardRef<HTMLDivElement, GlassWizardTemplat
         case 'compact':
           return (
             <div className="max-w-2xl mx-auto">
-              <GlassCard variant="default" className="p-6">
+              <GlassCard variant="default" className="glass-p-6">
                 {content}
               </GlassCard>
             </div>
@@ -392,27 +391,27 @@ export const GlassWizardTemplate = forwardRef<HTMLDivElement, GlassWizardTemplat
           return (
             <div className="grid grid-cols-12 gap-8">
               <div className="col-span-4">
-                <Glass className="p-6 sticky top-8">
+                <Glass className="glass-p-6 sticky top-8">
                   <VStack space="md">
                     <h3 className="font-semibold text-foreground">Steps</h3>
                     <VStack space="sm">
                       {steps.map((step, index) => (
                         <GlassButton
                           key={step.id}
-                          onClick={() => handleStepClick(index)}
+                          onClick={(e) => handleStepClick(index)}
                           className={cn(
-                            'text-left p-3 rounded-lg transition-colors',
+                            'text-left glass-p-3 glass-radius-lg transition-colors',
                             index === currentStep
                               ? 'bg-primary/10 text-primary border border-primary/20'
                               : completedSteps.has(index)
                                 ? 'bg-success/10 text-success border border-success/20'
-                                : 'text-muted-foreground hover:bg-muted/50'
+                                : 'glass-text-secondary hover:bg-muted/50'
                           )}
                           disabled={index > currentStep && !completedSteps.has(index - 1)}
                         >
                           <div className="font-medium">{step.title}</div>
                           {step.description && (
-                            <div className="text-sm opacity-75 mt-1">
+                            <div className="glass-text-sm opacity-75 glass-mt-1">
                               {step.description}
                             </div>
                           )}
@@ -423,7 +422,7 @@ export const GlassWizardTemplate = forwardRef<HTMLDivElement, GlassWizardTemplat
                 </Glass>
               </div>
               <div className="col-span-8">
-                <GlassCard variant="default" className="p-6">
+                <GlassCard variant="default" className="glass-p-6">
                   {content}
                 </GlassCard>
               </div>
@@ -432,7 +431,7 @@ export const GlassWizardTemplate = forwardRef<HTMLDivElement, GlassWizardTemplat
 
         default:
           return (
-            <GlassCard variant="default" className="p-6">
+            <GlassCard variant="default" className="glass-p-6">
               {content}
             </GlassCard>
           );
@@ -440,7 +439,7 @@ export const GlassWizardTemplate = forwardRef<HTMLDivElement, GlassWizardTemplat
     };
 
     return (
-      <div ref={ref} className={cn('w-full space-y-8', className)} {...props}>
+      <div ref={ref} className={cn('w-full glass-auto-gap glass-auto-gap-3xl', className)} {...props}>
         {layout !== 'sidebar' && renderHeader()}
 
         <Motion>

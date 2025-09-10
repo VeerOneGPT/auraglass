@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 // Base interactive component types
 export interface GlassInteractiveProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Glass morphism variant */

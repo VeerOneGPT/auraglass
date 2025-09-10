@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { cn } from '@/lib/utilsComprehensive';
 import { GlassPopover } from '../modal/GlassPopover';
 import { GlassAvatar } from '../data-display/GlassAvatar';
 import { ChevronRight } from 'lucide-react';
+import { useA11yId } from '@/utils/a11y';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface HeaderUserMenuItem {
   id: string;
   label: string;
@@ -38,9 +39,22 @@ export interface HeaderUserMenuProps {
   
   /** Performance tier */
   tier?: 'low' | 'medium' | 'high';
+  /**
+   * Whether to respect motion preferences for animations
+   */
+  respectMotionPreference?: boolean;
 }
 
-export function HeaderUserMenu({ user, items, className }: HeaderUserMenuProps) {
+export const HeaderUserMenu = forwardRef<HTMLButtonElement, HeaderUserMenuProps>(({ 
+  user, 
+  items, 
+  respectMotionPreference = true,
+  className 
+}, ref) => {
+  // Accessibility and motion preferences
+  const menuId = useA11yId('user-menu');
+  const prefersReducedMotion = useReducedMotion();
+  const shouldReduceMotion = respectMotionPreference && prefersReducedMotion;
   const [open, setOpen] = useState(false);
 
   const statusColor =
@@ -55,25 +69,25 @@ export function HeaderUserMenu({ user, items, className }: HeaderUserMenuProps) 
       trigger="click"
       placement="bottom-end"
       appearance="glass"
-      contentClassName="w-80 p-1 ring-1 ring-white/10 shadow-[0_20px_60px_rgba(2,8,23,0.55)] rounded-2xl"
+      contentClassName="w-80 glass-p-1 ring-1 ring-white/10 shadow-[0_20px_60px_rgba(2,8,23,0.55)] rounded-2xl"
       content={
         <div className="w-80">
           {/* User header */}
-          <div className="px-4 pt-4">
+          <div className="glass-px-4 pt-4">
             <div
-              className="flex items-center gap-3 px-3 py-3 bg-gradient-to-br from-white/6 via-white/3 to-transparent border border-white/12 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
+              className="flex items-center glass-gap-3 glass-px-3 glass-py-3 bg-gradient-to-br from-white/6 via-white/3 to-transparent border border-white/12 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
               style={{ borderRadius: 18 }}
             >
               <GlassAvatar size="md" src={user.avatar} fallbackText={user.name} showStatus={!!user.status} status={user.status as any} />
               <div className="min-w-0">
-                <div className="font-semibold text-white truncate">{user.name}</div>
+                <div className="font-semibold glass-text-primary truncate">{user.name}</div>
                 {user.email && (
-                  <div className="text-xs text-white/80 truncate">{user.email}</div>
+                  <div className="glass-text-xs glass-text-primary/80 truncate">{user.email}</div>
                 )}
                 {user.status && (
-                  <div className="flex items-center gap-1 mt-1">
-                    <span className={cn('inline-block w-2 h-2 rounded-full', statusColor)} />
-                    <span className="text-xs text-white/70 capitalize">{user.status}</span>
+                  <div className="flex items-center glass-gap-1 glass-mt-1">
+                    <span className={cn('inline-block w-2 h-2 glass-radius-full', statusColor)} />
+                    <span className="glass-text-xs glass-text-primary/70 capitalize">{user.status}</span>
                   </div>
                 )}
               </div>
@@ -81,46 +95,46 @@ export function HeaderUserMenu({ user, items, className }: HeaderUserMenuProps) 
           </div>
 
           {/* Menu items */}
-          <div className="p-2">
+          <div className="glass-p-2">
             {items.map((item, idx) => (
               <React.Fragment key={item?.id}>
                 {item?.separator && idx > 0 && (
-                  <div className="my-2 border-t border-white/10" />
+                  <div className="glass-my-2 border-t border-white/10" />
                 )}
                 {item?.href ? (
                   <a
                     href={item?.href}
                     className={cn(
-                      'group w-full flex items-center justify-between gap-3 rounded-[14px] px-3 py-2.5 transition-colors',
-                      'text-white/90 hover:text-white hover:bg-white/10'
+                      'group w-full flex items-center justify-between glass-gap-3 rounded-[14px] glass-px-3 glass-py-2.5 transition-colors',
+                      'glass-text-primary/90 hover:glass-text-primary hover:bg-white/10'
                     )}
-                    onClick={() => setOpen(false)}
+                    onClick={(e) => setOpen(false)}
                   >
-                    <span className="inline-flex items-center gap-3 truncate">
-                      {item?.icon && <span className="text-white/80">{item?.icon}</span>}
+                    <span className="inline-flex items-center glass-gap-3 truncate">
+                      {item?.icon && <span className="glass-text-primary/80">{item?.icon}</span>}
                       <span className="truncate">{item?.label}</span>
                     </span>
-                    <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white/70" />
+                    <ChevronRight className="w-4 h-4 glass-text-primary/40 group-hover:glass-text-primary/70" />
                   </a>
                 ) : (
                   <button
                     type="button"
-                    onClick={() => { item?.onClick?.(); setOpen(false); }}
+                    onClick={(e) => { item?.onClick?.(); setOpen(false); }}
                     className={cn(
-                      'w-full flex items-center justify-between gap-3 rounded-[14px] px-3 py-2.5 transition-colors',
+                      'w-full flex items-center justify-between glass-gap-3 rounded-[14px] glass-px-3 glass-py-2.5 transition-colors',
                       item?.variant === 'danger'
                         ? 'text-red-300 hover:bg-red-500/10'
-                        : 'text-white/90 hover:text-white hover:bg-white/10'
+                        : 'glass-text-primary/90 hover:glass-text-primary hover:bg-white/10'
                     )}
                   >
-                    <span className="inline-flex items-center gap-3 truncate">
+                    <span className="inline-flex items-center glass-gap-3 truncate">
                       {item?.icon && (
-                        <span className={cn(item?.variant === 'danger' ? 'text-red-400' : 'text-white/80')}>{item?.icon}</span>
+                        <span className={cn(item?.variant === 'danger' ? 'text-red-400' : 'glass-text-primary/80')}>{item?.icon}</span>
                       )}
                       <span className="truncate">{item?.label}</span>
                     </span>
                     {item?.variant !== 'danger' && (
-                      <ChevronRight className="w-4 h-4 text-white/40 group-hover:text-white/70" />
+                      <ChevronRight className="w-4 h-4 glass-text-primary/40 group-hover:glass-text-primary/70" />
                     )}
                   </button>
                 )}
@@ -131,16 +145,23 @@ export function HeaderUserMenu({ user, items, className }: HeaderUserMenuProps) 
       }
     >
       <button
+        ref={ref}
         type="button"
         className={cn(
-          'flex items-center gap-2 px-1.5 py-1 rounded-full',
-          'bg-transparent text-foreground hover:bg-white/10 focus:outline-none',
+          'flex items-center glass-gap-2 glass-px-1.5 glass-py-1 glass-radius-full',
+          'bg-transparent text-foreground hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30',
+          !shouldReduceMotion && 'transition-all duration-200 hover:scale-105',
           className
         )}
         aria-label={user.name}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        id={menuId}
       >
         <GlassAvatar size="sm" src={user.avatar} fallbackText={user.name} showStatus={!!user.status} status={user.status as any} />
       </button>
     </GlassPopover>
   );
-}
+});
+
+HeaderUserMenu.displayName = 'HeaderUserMenu';

@@ -41,15 +41,15 @@ type Story = StoryObj<typeof GlassWipeSlider>;
 export const Default: Story = {
   args: {
     beforeContent: (
-      <div className="p-8 text-center bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-lg">
-        <h3 className="text-xl font-semibold mb-2">Before</h3>
-        <p className="text-sm opacity-80">Initial state content</p>
+      <div className="p-8 text-center bg-gradient-to-br from-sky-200/30 to-blue-200/30 dark:from-slate-700/30 dark:to-slate-600/30 glass-radius-lg">
+        <h3 className="glass-text-xl font-semibold glass-mb-2">Before</h3>
+        <p className="glass-text-sm opacity-80">Initial state content</p>
       </div>
     ),
     afterContent: (
-      <div className="p-8 text-center bg-gradient-to-br from-green-500/20 to-blue-500/20 rounded-lg">
-        <h3 className="text-xl font-semibold mb-2">After</h3>
-        <p className="text-sm opacity-80">Final state content</p>
+      <div className="p-8 text-center bg-gradient-to-br from-green-500/20 to-blue-500/20 glass-radius-lg">
+        <h3 className="glass-text-xl font-semibold glass-mb-2">After</h3>
+        <p className="glass-text-sm opacity-80">Final state content</p>
       </div>
     ),
     initialPosition: 50,
@@ -58,19 +58,19 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap glass-gap-4">
       <GlassWipeSlider {...args} />
     </div>
   ),
   args: {
     beforeContent: (
-      <div className="p-4 text-center bg-red-500/20 rounded">
-        <span className="text-sm">Before</span>
+      <div className="glass-p-4 text-center bg-red-500/20 glass-radius-md">
+        <span className="glass-text-sm">Before</span>
       </div>
     ),
     afterContent: (
-      <div className="p-4 text-center bg-green-500/20 rounded">
-        <span className="text-sm">After</span>
+      <div className="glass-p-4 text-center bg-green-500/20 glass-radius-md">
+        <span className="glass-text-sm">After</span>
       </div>
     ),
     initialPosition: 30,

@@ -1,8 +1,9 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '@/lib/utilsComprehensive';
+import { useA11yId } from '@/utils/a11y';
+import { useMotionPreferenceContext } from '@/contexts/MotionPreferenceContext';
 
 export interface GlassFlexProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -55,6 +56,18 @@ export interface GlassFlexProps extends React.HTMLAttributes<HTMLDivElement> {
    * Whether flex container should grow to fill available height
    */
   fullHeight?: boolean;
+  /**
+   * Whether to respect user's motion preferences
+   */
+  respectMotionPreference?: boolean;
+  /**
+   * Accessibility label for screen readers
+   */
+  'aria-label'?: string;
+  /**
+   * Accessibility role for semantic meaning
+   */
+  role?: string;
 }
 
 export interface GlassFlexItemProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -82,6 +95,18 @@ export interface GlassFlexItemProps extends React.HTMLAttributes<HTMLDivElement>
    * Order
    */
   order?: 'none' | 'first' | 'last' | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+  /**
+   * Whether to respect user's motion preferences
+   */
+  respectMotionPreference?: boolean;
+  /**
+   * Accessibility label for screen readers
+   */
+  'aria-label'?: string;
+  /**
+   * Accessibility role for semantic meaning
+   */
+  role?: string;
 }
 
 /**
@@ -102,6 +127,9 @@ export const GlassFlex = forwardRef<HTMLDivElement, GlassFlexProps>(
       gapY,
       fullWidth = false,
       fullHeight = false,
+      respectMotionPreference = true,
+      'aria-label': ariaLabel,
+      role,
       className,
       ...props
     },
@@ -148,13 +176,13 @@ export const GlassFlex = forwardRef<HTMLDivElement, GlassFlexProps>(
     };
 
     const gapClasses = {
-      none: 'gap-0',
-      xs: 'gap-1',
-      sm: 'gap-2',
-      md: 'gap-4',
-      lg: 'gap-6',
+      none: 'glass-gap-0',
+      xs: 'glass-gap-1',
+      sm: 'glass-gap-2',
+      md: 'glass-gap-4',
+      lg: 'glass-gap-6',
       xl: 'gap-8',
-      '2xl': 'gap-12',
+      '2xl': 'glass-gap-12',
     };
 
     const gapXClasses = {
@@ -185,6 +213,15 @@ export const GlassFlex = forwardRef<HTMLDivElement, GlassFlexProps>(
       responsive['2xl'] && `2xl:${directionClasses[responsive['2xl']]}`,
     ].filter(Boolean) : [];
 
+    const flexId = useA11yId();
+    const { prefersReducedMotion } = useMotionPreferenceContext();
+    const shouldRespectMotion = respectMotionPreference && !prefersReducedMotion;
+
+    const a11yProps = {
+      ...(ariaLabel && { 'aria-label': ariaLabel, id: flexId }),
+      ...(role && { role })
+    };
+
     return (
       <div
         ref={ref}
@@ -199,9 +236,12 @@ export const GlassFlex = forwardRef<HTMLDivElement, GlassFlexProps>(
           gapX && gapY && [gapXClasses[gapX], gapYClasses[gapY]],
           fullWidth && 'w-full',
           fullHeight && 'h-full',
+          // Motion preferences
+          shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none',
           ...responsiveClasses,
           className
         )}
+        {...a11yProps}
         {...props}
       />
     );
@@ -223,6 +263,9 @@ export const GlassFlexItem = forwardRef<HTMLDivElement, GlassFlexItemProps>(
       flex,
       alignSelf = 'auto',
       order = 'none',
+      respectMotionPreference = true,
+      'aria-label': ariaLabel,
+      role,
       className,
       ...props
     },
@@ -296,6 +339,15 @@ export const GlassFlexItem = forwardRef<HTMLDivElement, GlassFlexItemProps>(
       12: 'order-12',
     };
 
+    const itemId = useA11yId();
+    const { prefersReducedMotion } = useMotionPreferenceContext();
+    const shouldRespectMotion = respectMotionPreference && !prefersReducedMotion;
+
+    const a11yProps = {
+      ...(ariaLabel && { 'aria-label': ariaLabel, id: itemId }),
+      ...(role && { role })
+    };
+
     return (
       <div
         ref={ref}
@@ -307,8 +359,11 @@ export const GlassFlexItem = forwardRef<HTMLDivElement, GlassFlexItemProps>(
           ],
           alignSelfClasses[alignSelf],
           orderClasses[order],
+          // Motion preferences
+          shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none',
           className
         )}
+        {...a11yProps}
         {...props}
       />
     );

@@ -1,5 +1,4 @@
 import React, { useRef, useMemo } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { useGlassFocus } from '../../hooks/extended/useGlassFocus';
 import type { GlassFocusRingProps } from '../interactive/types';
 // No longer need mergeRefs if attaching ref to wrapper div

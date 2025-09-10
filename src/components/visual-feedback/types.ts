@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface FocusIndicatorProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'style'> {
   target?: HTMLElement | React.RefObject<HTMLElement>;
   color?: string;

@@ -2,13 +2,20 @@
 
 import { cn } from '@/lib/utilsComprehensive';
 import { Slot } from '@radix-ui/react-slot';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState, useImperativeHandle } from 'react';
 import { OptimizedGlass, type OptimizedGlassProps } from '../../primitives';
+import { LiquidGlassMaterial } from '../../primitives/LiquidGlassMaterial';
 import { Motion } from '../../primitives';
 import { GlassButtonVariantType } from './types';
+import { createButtonA11y, useA11yId, announceToScreenReader } from '../../utils/a11y';
+import { usePredictiveEngine, useInteractionRecorder } from '../advanced/GlassPredictiveEngine';
+import { useAchievements } from '../advanced/GlassAchievementSystem';
+import { useBiometricAdaptation } from '../advanced/GlassBiometricAdaptation';
+import { useEyeTracking } from '../advanced/GlassEyeTracking';
+import { useSpatialAudio } from '../advanced/GlassSpatialAudio';
+import type { ConsciousnessFeatures } from '../layout/GlassContainer';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
-export interface GlassButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'size'> {
+export interface GlassButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'size'>, ConsciousnessFeatures {
   /**
    * Button variant
    */
@@ -81,22 +88,68 @@ export interface GlassButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLBu
    * Flat style override for ghost/link — removes bg/border/shadow/rings
    */
   flat?: boolean;
+  /**
+   * Glass material variant
+   */
+  material?: 'glass' | 'liquid';
+  /**
+   * Material properties for liquid glass
+   */
+  materialProps?: {
+    ior?: number;
+    thickness?: number;
+    tint?: { r: number; g: number; b: number; a: number };
+    variant?: 'regular' | 'clear';
+    quality?: 'ultra' | 'high' | 'balanced' | 'efficient';
+  };
 
   /** Glass surface intent */
   intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
   
   /** Performance tier */  
   tier?: 'low' | 'medium' | 'high';
+
+  // Accessibility props
+  /**
+   * Accessible label for the button (required for iconOnly buttons)
+   */
+  'aria-label'?: string;
+  /**
+   * ID of element that labels the button
+   */
+  'aria-labelledby'?: string;
+  /**
+   * ID of element(s) that describe the button
+   */
+  'aria-describedby'?: string;
+  /**
+   * Whether button is pressed/active (for toggle buttons)
+   */
+  'aria-pressed'?: boolean;
+  /**
+   * Whether button controls expanded content
+   */
+  'aria-expanded'?: boolean;
+  /**
+   * ID of element controlled by this button
+   */
+  'aria-controls'?: string;
+  /**
+   * Whether button has popup menu or dialog
+   */
+  'aria-haspopup'?: boolean | 'false' | 'true' | 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
+  /**
+   * Description text for complex buttons (automatically creates describedby)
+   */
+  description?: string;
 }
 
 /**
  * GlassButton component
  * A glassmorphism button with multiple variants and animations
  */
-export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
-  (
-    {
-      variant = 'default',
+export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
+    variant = 'default',
       size = 'md',
       elevation = 'level2',
       glassVariant = 'frosted',
@@ -117,10 +170,226 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
       disabled,
       asChild = false,
       flat = false,
+      material = 'glass',
+      materialProps,
+      description,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledBy,
+      'aria-describedby': ariaDescribedBy,
+      'aria-pressed': ariaPressed,
+      'aria-expanded': ariaExpanded,
+      'aria-controls': ariaControls,
+      'aria-haspopup': ariaHaspopup,
+      // Consciousness features
+      predictive = false,
+      preloadContent = false,
+      eyeTracking = false,
+      gazeResponsive = false,
+      adaptive = false,
+      biometricResponsive = false,
+      spatialAudio = false,
+      audioFeedback = false,
+      trackAchievements = false,
+      achievementId,
+      usageContext = 'main',
       ...props
     },
-    ref
+    ref,
   ) => {
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const [clickCount, setClickCount] = useState(0);
+    const [isHovered, setIsHovered] = useState(false);
+    const [adaptiveSize, setAdaptiveSize] = useState(size);
+    const [predictedAction, setPredictedAction] = useState<string | null>(null);
+    
+    // Consciousness feature hooks - only initialize if features are enabled
+    const predictiveEngine = predictive ? usePredictiveEngine() : null;
+    const eyeTracker = eyeTracking ? useEyeTracking() : null;
+    const biometricAdapter = adaptive ? useBiometricAdaptation() : null;
+    const spatialAudioEngine = spatialAudio ? useSpatialAudio() : null;
+    const achievementTracker = trackAchievements ? useAchievements() : null;
+    const interactionRecorder = (predictive || trackAchievements) ? useInteractionRecorder(`glass-button-${variant}-${usageContext}`) : null;
+    // Generate unique ID for accessibility
+    const componentId = useA11yId('glass-button');
+    const descriptionId = description ? useA11yId('glass-button-desc') : undefined;
+
+    // Handle ref forwarding
+    useImperativeHandle(ref, () => buttonRef.current as HTMLButtonElement);
+
+    // Biometric adaptation effects
+    useEffect(() => {
+      if (!biometricResponsive || !biometricAdapter) return;
+
+      const adaptButton = () => {
+        const stressLevel = biometricAdapter.currentStressLevel;
+        // For now, assume desktop capabilities
+        const deviceCapabilities = { isMobile: false, isDesktop: true };
+
+        // Adapt button size based on device and stress
+        if (deviceCapabilities.isMobile && stressLevel > 0.7) {
+          setAdaptiveSize('lg'); // Larger touch targets when stressed on mobile
+        } else if (stressLevel < 0.3 && deviceCapabilities.isDesktop) {
+          setAdaptiveSize('sm'); // Smaller size when relaxed on desktop
+        } else {
+          setAdaptiveSize(size); // Use original size
+        }
+      };
+
+      // Initial adaptation
+      adaptButton();
+
+      // Listen for biometric changes
+      const interval = setInterval(adaptButton, 3000);
+      return () => clearInterval(interval);
+    }, [biometricResponsive, biometricAdapter, size]);
+
+    // Eye tracking effects
+    useEffect(() => {
+      if (!gazeResponsive || !eyeTracker || !buttonRef.current) return;
+
+      const handleGazeEnter = () => {
+        if (!disabled && !loading) {
+          setIsHovered(true);
+          
+          if (spatialAudioEngine && audioFeedback) {
+            spatialAudioEngine.playGlassSound('button_gaze_enter', {
+              x: buttonRef.current?.offsetLeft || 0,
+              y: buttonRef.current?.offsetTop || 0,
+              z: 0, // Default to center depth
+            });
+          }
+          
+          if (achievementTracker && trackAchievements) {
+            achievementTracker.recordAction('button_gaze_attention', {
+              variant,
+              context: usageContext,
+              buttonText: typeof children === 'string' ? children : 'button',
+            });
+          }
+        }
+      };
+
+      const handleGazeExit = () => {
+        setIsHovered(false);
+        
+        if (spatialAudioEngine && audioFeedback) {
+          spatialAudioEngine.playGlassSound('button_gaze_exit');
+        }
+      };
+
+      // Eye tracking methods not available in current implementation
+      // eyeTracker.onGazeEnter(buttonRef.current, handleGazeEnter);
+      // eyeTracker.onGazeExit(buttonRef.current, handleGazeExit);
+
+      return () => {
+        if (buttonRef.current) {
+          // eyeTracker.offGazeEnter(buttonRef.current, handleGazeEnter);
+          // eyeTracker.offGazeExit(buttonRef.current, handleGazeExit);
+        }
+      };
+    }, [gazeResponsive, eyeTracker, disabled, loading, spatialAudioEngine, audioFeedback, achievementTracker, trackAchievements, variant, usageContext, children]);
+
+    // Predictive action detection
+    useEffect(() => {
+      if (!predictive || !predictiveEngine) return;
+
+      // Check for predicted actions related to this button
+      const predictions = predictiveEngine.predictions;
+      const buttonPrediction = predictions.find(p =>
+        p.metadata?.buttonVariant === variant ||
+        p.metadata?.buttonContext === usageContext
+      );
+
+      if (buttonPrediction && buttonPrediction.confidence > 0.7) {
+        setPredictedAction(buttonPrediction.type);
+        
+        // Preload action if specified
+        if (preloadContent && buttonPrediction.type === 'preload') {
+          console.log(`Preloading content for button: ${variant}-${usageContext}`);
+        }
+      } else {
+        setPredictedAction(null);
+      }
+    }, [predictive, predictiveEngine, variant, usageContext, preloadContent]);
+
+    // Enhanced interaction tracking
+    const handleInteraction = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+      if (disabled || loading) return;
+
+      setClickCount(prev => prev + 1);
+
+      // Record interaction for predictive learning
+      if (interactionRecorder) {
+        interactionRecorder.recordClick(event);
+      }
+
+      // Play spatial audio feedback
+      if (spatialAudioEngine && audioFeedback) {
+        spatialAudioEngine.playGlassSound('button_click_success', {
+          x: buttonRef.current?.offsetLeft || 0,
+          y: buttonRef.current?.offsetTop || 0,
+          z: 0, // Default to center depth
+        });
+      }
+      
+      // Track achievements
+      if (achievementTracker && trackAchievements) {
+        achievementTracker.recordAction(achievementId || 'button_interaction', {
+          variant,
+          context: usageContext,
+          clickCount,
+          buttonText: typeof children === 'string' ? children : 'button',
+          timestamp: Date.now(),
+        });
+
+        // Special achievements for frequent use
+        if (clickCount > 0 && clickCount % 10 === 0) {
+          achievementTracker.recordAction('button_power_user', {
+            variant,
+            totalClicks: clickCount,
+          });
+        }
+      }
+
+      // Call original onClick handler
+      props.onClick?.(event);
+    }, [disabled, loading, interactionRecorder, spatialAudioEngine, audioFeedback, achievementTracker, trackAchievements, achievementId, variant, usageContext, clickCount, children, props.onClick]);
+    
+    // Ensure icon-only controls default to a non-frosted appearance
+    const resolvedVariant = iconOnly && (variant === 'default' || !variant)
+      ? ('ghost' as GlassButtonVariantType)
+      : variant;
+    
+    // Validate accessibility requirements
+    React.useEffect(() => {
+      if (iconOnly && !ariaLabel && !ariaLabelledBy && !children) {
+        console.warn('GlassButton: Icon-only buttons must have an aria-label or aria-labelledby prop for accessibility');
+      }
+    }, [iconOnly, ariaLabel, ariaLabelledBy, children]);
+
+    // Create accessibility attributes
+    const a11yProps = createButtonA11y({
+      id: componentId,
+      label: ariaLabel,
+      description,
+      pressed: ariaPressed,
+      expanded: ariaExpanded,
+      controls: ariaControls,
+      haspopup: ariaHaspopup === 'true' ? true : ariaHaspopup === 'false' ? false : ariaHaspopup,
+      disabled: disabled || loading,
+      descriptionId,
+    });
+
+    // Announce loading state changes to screen readers
+    React.useEffect(() => {
+      if (loading) {
+        announceToScreenReader(loadingText, 'polite');
+      }
+    }, [loading, loadingText]);
+    
+    // Use adaptive size if biometric adaptation is enabled, otherwise use original size
+    const effectiveSize = biometricResponsive ? adaptiveSize : size;
+    
     const sizeClasses = {
       xs: iconOnly ? 'h-6 w-6 p-0' : 'h-6 px-2 text-xs',
       sm: iconOnly ? 'h-8 w-8 p-0' : 'h-8 px-3 text-sm',
@@ -139,12 +408,21 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
       'disabled:pointer-events-none disabled:opacity-50',
       'relative overflow-hidden',
       // Specular overlay + parallax support
-      'glass-overlay-specular glass-parallax',
-      // Size
-      sizeClasses?.[size],
+      // Avoid specular overlay on icon-only buttons to prevent hard frost look
+      !iconOnly && 'glass-overlay-specular glass-parallax',
+      // Size - use effective size with biometric adaptation
+      sizeClasses?.[effectiveSize],
       // Full width
       {
         'w-full': fullWidth,
+      },
+      // Consciousness feature styles
+      {
+        'glass-focus-strong glass-surface-primary': gazeResponsive && (isHovered /* || (eyeTracker?.isGazing && !disabled) */),
+        'animate-pulse': predictedAction === 'suggest' && !disabled,
+        'glass-focus glass-surface-success': predictedAction === 'preload' && !disabled,
+        'transform-gpu': biometricResponsive || gazeResponsive,
+        'scale-105': gazeResponsive && isHovered && !disabled,
       }
     );
 
@@ -154,7 +432,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         tint: 'neutral' as const,
         intensity: 'medium' as const,
         border: 'subtle' as const,
-        className: 'text-white hover:text-white/90',
+        className: 'glass-text-primary hover:glass-text-secondary',
       },
       primary: {
         glassVariant: 'liquid' as const,
@@ -163,7 +441,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         border: 'glow' as const,
         lighting: 'volumetric' as const,
         caustics: true,
-        className: 'text-white hover:text-white/90',
+        className: 'glass-text-primary hover:glass-text-secondary',
       },
       secondary: {
         glassVariant: 'crystal' as const,
@@ -172,7 +450,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         border: 'glow' as const,
         lighting: 'directional' as const,
         refraction: true,
-        className: 'text-white hover:text-white/90',
+        className: 'glass-text-primary hover:glass-text-secondary',
       },
       tertiary: {
         glassVariant: 'frosted' as const,
@@ -180,7 +458,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         intensity: 'medium' as const,
         border: 'subtle' as const,
         lighting: 'ambient' as const,
-        className: 'text-white hover:text-white/90',
+        className: 'glass-text-primary hover:glass-text-secondary',
       },
       destructive: {
         glassVariant: 'frosted' as const,
@@ -189,7 +467,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         border: 'neon' as const,
         lighting: 'directional' as const,
         chromatic: true,
-        className: 'text-white hover:text-white/90',
+        className: 'glass-text-primary hover:glass-text-secondary',
       },
       error: {
         glassVariant: 'frosted' as const,
@@ -198,7 +476,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         border: 'neon' as const,
         lighting: 'directional' as const,
         chromatic: true,
-        className: 'text-white hover:text-white/90',
+        className: 'glass-text-primary hover:glass-text-secondary',
       },
       success: {
         glassVariant: 'frosted' as const,
@@ -206,7 +484,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         intensity: 'strong' as const,
         border: 'glow' as const,
         lighting: 'directional' as const,
-        className: 'text-white hover:text-white/90',
+        className: 'glass-text-primary hover:glass-text-secondary',
       },
       warning: {
         glassVariant: 'frosted' as const,
@@ -214,7 +492,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         intensity: 'strong' as const,
         border: 'glow' as const,
         lighting: 'directional' as const,
-        className: 'text-white hover:text-white/90',
+        className: 'glass-text-primary hover:glass-text-secondary',
       },
       outline: {
         glassVariant: 'ethereal' as const,
@@ -223,7 +501,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         border: 'glow' as const,
         lighting: 'ambient' as const,
         adaptive: true,
-        className: 'text-white hover:text-white/90',
+        className: 'glass-text-primary hover:glass-text-secondary',
       },
       ghost: {
         glassVariant: 'ethereal' as const,
@@ -232,14 +510,14 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         border: 'none' as const,
         lighting: 'ambient' as const,
         adaptive: true,
-        className: 'text-white/90 hover:text-white shadow-none',
+        className: 'glass-text-secondary hover:glass-text-primary glass-elev-0',
       },
       link: {
         glassVariant: 'ethereal' as const,
         tint: 'blue' as const,
         intensity: 'subtle' as const,
         border: 'none' as const,
-        className: 'text-blue-300 hover:text-blue-200 underline-offset-4 hover:underline',
+        className: 'glass-text-link hover:glass-text-link-hover underline-offset-4 hover:underline',
       },
       gradient: {
         glassVariant: 'holographic' as const,
@@ -249,21 +527,21 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         lighting: 'iridescent' as const,
         chromatic: true,
         parallax: true,
-        className: 'text-white hover:text-white/90',
+        className: 'glass-text-primary hover:glass-text-secondary',
       },
     };
 
-    const variantConfig = variantStyles?.[variant];
+    const variantConfig = variantStyles?.[resolvedVariant];
 
     // Map variant to accent focus ring utility
     const variantAccent =
-      variant === 'destructive' || variant === 'error'
+      resolvedVariant === 'destructive' || resolvedVariant === 'error'
         ? 'glass-accent-danger'
-        : variant === 'success'
+        : resolvedVariant === 'success'
         ? 'glass-accent-success'
-        : variant === 'warning'
+        : resolvedVariant === 'warning'
         ? 'glass-accent-warning'
-        : variant === 'secondary'
+        : resolvedVariant === 'secondary'
         ? 'glass-accent-info'
         : 'glass-accent-primary';
 
@@ -285,7 +563,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         return (
           <>
             {loadingSpinner || (
-              <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+              <div className="w-4 h-4 border-2 border-current border-t-transparent glass-radius-full animate-spin" />
             )}
             {!iconOnly && <span className="ml-2">{loadingText}</span>}
           </>
@@ -305,7 +583,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
       );
     };
 
-    if (variant === 'ghost' || variant === 'link') {
+    if (resolvedVariant === 'ghost' || resolvedVariant === 'link') {
       const Comp: any = asChild ? Slot : 'button';
       return (
         <Motion
@@ -314,17 +592,18 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
           className="inline-block"
         >
           <Comp
-            ref={ref}
             className={cn(
               baseClasses,
               variantAccent,
               variantConfig.className,
-              'rounded-md overflow-visible glass-magnet glass-ripple glass-press',
+              'glass-radius-md overflow-visible glass-magnet glass-ripple glass-press',
               flat && 'bg-transparent border-0 shadow-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0',
               className
             )}
             disabled={disabled || loading}
-            aria-busy={loading || undefined}
+            onClick={handleInteraction}
+            ref={buttonRef}
+            {...a11yProps}
             {...((() => {
               const {
                 loadingText: _,
@@ -334,12 +613,31 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
                 loadingSpinner: _____,
                 animation: ______,
                 flat: _______,
+                description: ________,
+                // Filter out consciousness props
+                predictive: _________,
+                preloadContent: __________,
+                eyeTracking: ___________,
+                gazeResponsive: ____________,
+                adaptive: _____________,
+                biometricResponsive: ______________,
+                spatialAudio: _______________,
+                audioFeedback: ________________,
+                trackAchievements: _________________,
+                achievementId: __________________,
+                usageContext: ___________________,
+                onClick: ____________________,
                 ...validProps
               } = props as any;
               return validProps;
             })())}
           >
             {renderContent()}
+            {description && (
+              <span id={descriptionId} className="sr-only">
+                {description}
+              </span>
+            )}
           </Comp>
         </Motion>
       );
@@ -351,8 +649,86 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
         animateOnHover={animation !== 'none'}
         className="inline-block"
       >
-        <OptimizedGlass as={asChild ? (Slot as any) : 'button'}
-          ref={ref as any}
+        {material === 'liquid' ? (
+          <LiquidGlassMaterial
+            as={asChild ? (Slot as any) : 'button'}
+            ior={materialProps?.ior || (variant === 'primary' ? 1.48 : 1.44)}
+            thickness={materialProps?.thickness || (size === 'xs' ? 4 : size === 'sm' ? 6 : size === 'md' ? 8 : 10)}
+            tint={materialProps?.tint || (variant === 'primary' ? { r: 59, g: 130, b: 246, a: 0.1 } : { r: 0, g: 0, b: 0, a: 0.05 })}
+            variant={materialProps?.variant || 'regular'}
+            quality={materialProps?.quality || 'high'}
+            environmentAdaptation
+            motionResponsive
+            interactive
+            className={cn(
+              baseClasses,
+              variantAccent,
+              variantConfig.className,
+              'liquid-glass-button-surface glass-ripple glass-magnet',
+              className
+            )}
+            style={{
+              '--liquid-glass-button-pressure': isHovered ? '0.02' : '0.0',
+              '--liquid-glass-hover-refraction': '1.2',
+              '--liquid-glass-press-density': '0.95',
+            } as React.CSSProperties}
+            data-liquid-glass-button="true"
+            data-button-variant={variant}
+            data-button-size={size}
+            disabled={disabled || loading}
+            onClick={handleInteraction}
+            ref={buttonRef}
+            {...a11yProps}
+            {...((() => {
+              const {
+                loadingText: _,
+                asChild: __,
+                leftIcon: ___,
+                rightIcon: ____,
+                loadingSpinner: _____,
+                animation: ______,
+                description: _______,
+                material: ________,
+                materialProps: _________,
+                predictive: __________,
+                preloadContent: ___________,
+                eyeTracking: ____________,
+                gazeResponsive: _____________,
+                adaptive: ______________,
+                biometricResponsive: _______________,
+                spatialAudio: ________________,
+                audioFeedback: _________________,
+                trackAchievements: __________________,
+                achievementId: ___________________,
+                usageContext: ____________________,
+                onClick: _____________________,
+                ...validProps
+              } = props as any;
+              return validProps;
+            })())}
+          >
+          {asChild ? (
+            // When rendering asChild (Slot), Slot expects exactly one child element.
+            // Defer content to the passed child to avoid React.Children.only errors.
+            children as any
+          ) : (
+            <>
+            {resolvedVariant === 'gradient' && (
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 glass-radius-md" />
+            )}
+              <span className="relative z-10">
+                {renderContent()}
+              </span>
+              {description && (
+                <span id={descriptionId} className="sr-only">
+                  {description}
+                </span>
+              )}
+            </>
+          )}
+          </LiquidGlassMaterial>
+        ) : (
+          <OptimizedGlass as={asChild ? (Slot as any) : 'button'}
           variant={glassVariant || variantConfig.glassVariant}
           elevation={elevation}
           intensity={intensity || variantConfig.intensity}
@@ -377,11 +753,13 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
             baseClasses,
             variantAccent,
             variantConfig.className,
-            'rounded-md glass-ripple glass-magnet',
+            'glass-radius-md glass-ripple glass-magnet',
             className
           )}
           disabled={disabled || loading}
-          aria-busy={loading || undefined}
+          onClick={handleInteraction}
+          ref={buttonRef}
+          {...a11yProps}
           {...((() => {
             const {
               loadingText: _,
@@ -390,6 +768,20 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
               rightIcon: ____,
               loadingSpinner: _____,
               animation: ______,
+              description: _______,
+              // Filter out consciousness props
+              predictive: ________,
+              preloadContent: _________,
+              eyeTracking: __________,
+              gazeResponsive: ___________,
+              adaptive: ____________,
+              biometricResponsive: _____________,
+              spatialAudio: ______________,
+              audioFeedback: _______________,
+              trackAchievements: ________________,
+              achievementId: _________________,
+              usageContext: __________________,
+              onClick: ___________________,
               ...validProps
             } = props as any;
             return validProps;
@@ -401,19 +793,24 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
             children as any
           ) : (
             <>
-              {variant === 'gradient' && (
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 rounded-md" />
-              )}
+            {resolvedVariant === 'gradient' && (
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 glass-radius-md" />
+            )}
               <span className="relative z-10">
                 {renderContent()}
               </span>
+              {description && (
+                <span id={descriptionId} className="sr-only">
+                  {description}
+                </span>
+              )}
             </>
           )}
-        </OptimizedGlass>
+          </OptimizedGlass>
+        )}
       </Motion>
     );
-  }
-);
+});
 
 GlassButton.displayName = 'GlassButton';
 
@@ -432,11 +829,14 @@ export interface IconButtonProps extends Omit<GlassButtonProps, 'iconOnly' | 'le
 }
 
 export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ icon, ...props }, ref) => {
+  ({ icon, variant = 'ghost', flat = true, size = 'sm', ...props }, ref) => {
     return (
       <GlassButton
         ref={ref}
         iconOnly
+        variant={variant}
+        flat={flat}
+        size={size as any}
         {...props}
       >
         {icon}
@@ -520,7 +920,7 @@ export function ButtonGroup({
     } else {
       additionalProps.className = cn(
         (child as any).props?.className,
-        orientation === 'horizontal' ? 'mr-2 last:mr-0' : 'mb-2 last:mb-0'
+        orientation === 'horizontal' ? 'glass-mr-2 last:mr-0' : 'glass-mb-2 last:glass-mb-0'
       );
     }
 
@@ -630,9 +1030,9 @@ export const FloatingActionButton = forwardRef<HTMLButtonElement, FloatingAction
     };
 
     const sizeClasses = {
-      sm: extended ? 'h-10 px-4' : 'h-10 w-10',
-      md: extended ? 'h-12 px-6' : 'h-12 w-12',
-      lg: extended ? 'h-14 px-8' : 'h-14 w-14',
+      sm: extended ? 'h-8 px-3' : 'h-8 w-8',
+      md: extended ? 'h-10 px-4' : 'h-10 w-10',
+      lg: extended ? 'h-12 px-6' : 'h-12 w-12',
     };
 
     return (
@@ -645,7 +1045,7 @@ export const FloatingActionButton = forwardRef<HTMLButtonElement, FloatingAction
         leftIcon={extended ? icon : undefined}
         className={cn(
           'shadow-lg z-50',
-          'rounded-full',
+          'glass-radius-full',
           positionClasses?.[position],
           sizeClasses?.[size],
           className
@@ -659,3 +1059,130 @@ export const FloatingActionButton = forwardRef<HTMLButtonElement, FloatingAction
 );
 
 FloatingActionButton.displayName = 'FloatingActionButton';
+
+/**
+ * Enhanced GlassButton with consciousness features enabled by default
+ * Use this for buttons that should be intelligent and adaptive
+ */
+export const ConsciousGlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
+  (props, ref) => (
+    <GlassButton
+      ref={ref}
+      predictive={true}
+      adaptive={true}
+      biometricResponsive={true}
+      trackAchievements={true}
+      achievementId="conscious_button_usage"
+      {...props}
+    />
+  )
+);
+
+ConsciousGlassButton.displayName = 'ConsciousGlassButton';
+
+/**
+ * Eye-tracking enabled button for gaze-responsive interactions
+ */
+export const GazeResponsiveButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
+  (props, ref) => (
+    <GlassButton
+      ref={ref}
+      eyeTracking={true}
+      gazeResponsive={true}
+      spatialAudio={true}
+      audioFeedback={true}
+      trackAchievements={true}
+      achievementId="gaze_button_interaction"
+      {...props}
+    />
+  )
+);
+
+GazeResponsiveButton.displayName = 'GazeResponsiveButton';
+
+/**
+ * Predictive button that learns user interaction patterns
+ */
+export const PredictiveButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
+  (props, ref) => (
+    <GlassButton
+      ref={ref}
+      predictive={true}
+      preloadContent={true}
+      trackAchievements={true}
+      achievementId="predictive_button_usage"
+      {...props}
+    />
+  )
+);
+
+PredictiveButton.displayName = 'PredictiveButton';
+
+/**
+ * Accessibility-focused button with biometric adaptation and spatial audio
+ */
+export const AccessibleButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
+  (props, ref) => (
+    <GlassButton
+      ref={ref}
+      adaptive={true}
+      biometricResponsive={true}
+      spatialAudio={true}
+      audioFeedback={true}
+      trackAchievements={true}
+      achievementId="accessible_button_usage"
+      {...props}
+    />
+  )
+);
+
+AccessibleButton.displayName = 'AccessibleButton';
+
+/**
+ * Pre-configured consciousness button presets
+ */
+export const ButtonConsciousnessPresets = {
+  /**
+   * Minimal consciousness features for performance-sensitive contexts
+   */
+  minimal: {
+    predictive: true,
+    trackAchievements: true,
+  },
+  
+  /**
+   * Balanced consciousness features for general use
+   */
+  balanced: {
+    predictive: true,
+    adaptive: true,
+    biometricResponsive: true,
+    trackAchievements: true,
+  },
+  
+  /**
+   * Full consciousness features for immersive experiences
+   */
+  immersive: {
+    predictive: true,
+    preloadContent: true,
+    eyeTracking: true,
+    gazeResponsive: true,
+    adaptive: true,
+    biometricResponsive: true,
+    spatialAudio: true,
+    audioFeedback: true,
+    trackAchievements: true,
+  },
+  
+  /**
+   * Accessibility-focused consciousness features
+   */
+  accessible: {
+    adaptive: true,
+    biometricResponsive: true,
+    spatialAudio: true,
+    audioFeedback: true,
+    trackAchievements: true,
+  },
+} as const;

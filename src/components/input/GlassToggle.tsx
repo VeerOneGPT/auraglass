@@ -2,7 +2,6 @@
 
 import { cn } from '@/lib/utilsComprehensive';
 import React, { createContext, useContext, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -50,7 +49,7 @@ export interface GlassToggleProps {
     /**
      * Toggle shape
      */
-    shape?: 'rounded' | 'square' | 'circle';
+    shape?: 'glass-radius-md' | 'square' | 'circle';
     /**
      * Animation type
      */
@@ -138,7 +137,7 @@ export const GlassToggle = React.forwardRef<HTMLButtonElement, GlassToggleProps>
             leftIcon,
             rightIcon,
             className,
-            shape = 'rounded',
+            shape = 'glass-radius-md',
             animation = 'scale',
             ...props
         },
@@ -179,15 +178,15 @@ export const GlassToggle = React.forwardRef<HTMLButtonElement, GlassToggleProps>
         };
 
         const sizeClasses = {
-            sm: 'h-8 px-3 text-sm',
-            md: 'h-10 px-4 text-base',
-            lg: 'h-12 px-6 text-lg',
+            sm: 'h-8 glass-px-3 glass-text-sm',
+            md: 'h-10 glass-px-4 glass-text-base',
+            lg: 'h-12 glass-px-6 glass-text-lg',
         };
 
         const shapeClasses = {
-            rounded: 'rounded-lg',
+            'glass-radius-md': 'glass-radius-lg',
             square: 'rounded-none',
-            circle: 'rounded-full',
+            circle: 'glass-radius-full',
         };
 
         const getVariantClasses = () => {
@@ -198,22 +197,22 @@ export const GlassToggle = React.forwardRef<HTMLButtonElement, GlassToggleProps>
                     return cn(
                         baseClasses,
                         pressed
-                            ? 'bg-white/20 border-white/40 text-white shadow-lg'
-                            : 'bg-white/5 hover:bg-white/10 text-white/80 hover:text-white hover:border-white/30'
+                            ? 'bg-black/40 border-white/40 glass-text-primary shadow-lg'
+                            : 'bg-black/20 hover:bg-black/30 glass-text-primary/80 hover:glass-text-primary hover:border-white/30'
                     );
                 case 'ghost':
                     return cn(
                         pressed
-                            ? 'bg-white/20 text-white shadow-md'
-                            : 'hover:bg-white/10 text-white/70 hover:text-white',
+                            ? 'bg-black/30 glass-text-primary shadow-md'
+                            : 'hover:bg-black/20 glass-text-primary/70 hover:glass-text-primary',
                         'transition-all duration-300'
                     );
                 default:
                     return cn(
                         baseClasses,
                         pressed
-                            ? 'bg-white/20 border-white/40 text-white shadow-lg scale-105'
-                            : 'bg-white/5 hover:bg-white/15 text-white/80 hover:text-white hover:border-white/30 hover:scale-105'
+                            ? 'bg-black/40 border-white/40 glass-text-primary shadow-lg scale-105'
+                            : 'bg-black/20 hover:bg-black/30 glass-text-primary/80 hover:glass-text-primary hover:border-white/30 hover:scale-105'
                     );
             }
         };
@@ -257,7 +256,7 @@ export const GlassToggle = React.forwardRef<HTMLButtonElement, GlassToggleProps>
 
 
                     className={cn(
-                        'relative flex items-center justify-center gap-2 font-medium',
+                        'relative flex items-center justify-center glass-gap-2 font-medium',
                         'focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-transparent',
                         'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none',
                         sizeClasses[size],
@@ -291,7 +290,7 @@ export const GlassToggle = React.forwardRef<HTMLButtonElement, GlassToggleProps>
 
                     {/* Active indicator for ghost variant */}
                     {variant === 'ghost' && pressed && (
-                        <div className="absolute inset-0 bg-white/10 rounded-lg animate-pulse" />
+                        <div className="absolute inset-0 bg-white/10 glass-radius-lg animate-pulse" />
                     )}
                 </OptimizedGlass>
             </Motion>
@@ -340,7 +339,7 @@ export const GlassToggleGroup: React.FC<GlassToggleGroupProps> = ({
         <ToggleGroupContext.Provider value={contextValue}>
             <div
                 className={cn(
-                    'flex gap-2 p-1 backdrop-blur-md bg-white/5 border border-white/10 rounded-lg',
+                    'flex glass-gap-2 glass-p-1 backdrop-blur-md bg-white/5 border border-white/10 glass-radius-lg',
                     {
                         'flex-row': orientation === 'horizontal',
                         'flex-col': orientation === 'vertical',

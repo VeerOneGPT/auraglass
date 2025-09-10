@@ -1,8 +1,9 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '@/lib/utilsComprehensive';
+import { useA11yId } from '@/utils/a11y';
+import { useMotionPreferenceContext } from '@/contexts/MotionPreferenceContext';
 
 export interface GlassStackProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -57,6 +58,18 @@ export interface GlassStackProps extends React.HTMLAttributes<HTMLDivElement> {
    * Custom divider render function
    */
   renderDivider?: (index: number) => React.ReactNode;
+  /**
+   * Whether to respect user's motion preferences
+   */
+  respectMotionPreference?: boolean;
+  /**
+   * Accessibility label for screen readers
+   */
+  'aria-label'?: string;
+  /**
+   * Accessibility role for semantic meaning
+   */
+  role?: string;
 }
 
 export interface GlassStackItemProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -72,6 +85,18 @@ export interface GlassStackItemProps extends React.HTMLAttributes<HTMLDivElement
    * Align this item differently from the stack alignment
    */
   alignSelf?: 'auto' | 'start' | 'center' | 'end' | 'stretch' | 'baseline';
+  /**
+   * Whether to respect user's motion preferences
+   */
+  respectMotionPreference?: boolean;
+  /**
+   * Accessibility label for screen readers
+   */
+  'aria-label'?: string;
+  /**
+   * Accessibility role for semantic meaning
+   */
+  role?: string;
 }
 
 /**
@@ -91,6 +116,9 @@ export const GlassStack = forwardRef<HTMLDivElement, GlassStackProps>(
       wrap = false,
       divider,
       renderDivider,
+      respectMotionPreference = true,
+      'aria-label': ariaLabel,
+      role,
       className,
       children,
       ...props
@@ -98,13 +126,13 @@ export const GlassStack = forwardRef<HTMLDivElement, GlassStackProps>(
     ref
   ) => {
     const spaceClasses = {
-      none: 'gap-0',
-      xs: 'gap-1',
-      sm: 'gap-2',
-      md: 'gap-4',
-      lg: 'gap-6',
+      none: 'glass-gap-0',
+      xs: 'glass-gap-1',
+      sm: 'glass-gap-2',
+      md: 'glass-gap-4',
+      lg: 'glass-gap-6',
       xl: 'gap-8',
-      '2xl': 'gap-12',
+      '2xl': 'glass-gap-12',
     };
 
     const alignClasses = {
@@ -168,6 +196,15 @@ export const GlassStack = forwardRef<HTMLDivElement, GlassStackProps>(
       }, [] as React.ReactNode[])
       : processedChildren;
 
+    const stackId = useA11yId();
+    const { prefersReducedMotion } = useMotionPreferenceContext();
+    const shouldRespectMotion = respectMotionPreference && !prefersReducedMotion;
+
+    const a11yProps = {
+      ...(ariaLabel && { 'aria-label': ariaLabel, id: stackId }),
+      ...(role && { role })
+    };
+
     return (
       <div
         ref={ref}
@@ -180,8 +217,11 @@ export const GlassStack = forwardRef<HTMLDivElement, GlassStackProps>(
           alignClasses[align],
           justifyClasses[justify],
           wrap && 'flex-wrap',
+          // Motion preferences
+          shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none',
           className
         )}
+        {...a11yProps}
         {...props}
       >
         {childrenWithDividers}
@@ -202,6 +242,9 @@ export const GlassStackItem = forwardRef<HTMLDivElement, GlassStackItemProps>(
       grow = false,
       shrink = true,
       alignSelf = 'auto',
+      respectMotionPreference = true,
+      'aria-label': ariaLabel,
+      role,
       className,
       ...props
     },
@@ -216,6 +259,15 @@ export const GlassStackItem = forwardRef<HTMLDivElement, GlassStackItemProps>(
       baseline: 'self-baseline',
     };
 
+    const itemId = useA11yId();
+    const { prefersReducedMotion } = useMotionPreferenceContext();
+    const shouldRespectMotion = respectMotionPreference && !prefersReducedMotion;
+
+    const a11yProps = {
+      ...(ariaLabel && { 'aria-label': ariaLabel, id: itemId }),
+      ...(role && { role })
+    };
+
     return (
       <div
         ref={ref}
@@ -223,8 +275,11 @@ export const GlassStackItem = forwardRef<HTMLDivElement, GlassStackItemProps>(
           grow && 'flex-grow',
           !shrink && 'flex-shrink-0',
           alignSelfClasses[alignSelf],
+          // Motion preferences
+          shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none',
           className
         )}
+        {...a11yProps}
         {...props}
       />
     );

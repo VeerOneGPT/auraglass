@@ -2,7 +2,6 @@
 
 import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useEffect, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { GlassButton, IconButton } from '../button/GlassButton';
@@ -190,8 +189,8 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
 
       const itemContent = (
         <>
-          <div className="flex items-center gap-3 flex-1 min-w-0">
-            <div className="flex-shrink-0 text-lg">
+          <div className="flex items-center glass-gap-3 flex-1 min-w-0">
+            <div className="flex-shrink-0 glass-text-lg">
               {item?.icon}
             </div>
             <span className="font-medium truncate">
@@ -208,7 +207,7 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
             )}
           </div>
           {hasChildren && (
-            <div className="flex-shrink-0 ml-2">
+            <div className="flex-shrink-0 glass-ml-2">
               <div className={cn(
                 'transition-transform duration-200',
                 isExpanded && 'rotate-90'
@@ -227,17 +226,17 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
             size="md"
             disabled={item?.disabled}
             className={cn(
-              'w-full justify-start h-12 px-4',
-              level > 0 && 'ml-6 mr-2'
+              'w-full justify-start h-12 glass-px-4',
+              level > 0 && 'ml-6 glass-mr-2'
             )}
-            onClick={() => handleItemClick(item)}
+            onClick={(e) => handleItemClick(item)}
           >
             {itemContent}
           </GlassButton>
 
           {/* Render children */}
           {hasChildren && isExpanded && (
-            <Motion preset="slideDown" className="mt-1">
+            <Motion preset="slideDown" className="glass-mt-1">
               <VStack space="xs">
                 {item?.children!.map(child =>
                   renderNavigationItem(child, level + 1)
@@ -255,8 +254,8 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
         <div key={section.id}>
           {/* Section header */}
           {section.label && (
-            <div className="px-4 py-2">
-              <h3 className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+            <div className="glass-px-4 glass-py-2">
+              <h3 className="glass-text-xs font-medium glass-text-secondary uppercase tracking-wide">
                 {section.label}
               </h3>
             </div>
@@ -319,7 +318,7 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
           {...props}
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-border/20">
+          <div className="flex items-center justify-between glass-p-4 border-b border-border/20">
             <HStack space="sm" align="center" className="flex-1 min-w-0">
               {logo && (
                 <div className="flex-shrink-0">
@@ -327,7 +326,7 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
                 </div>
               )}
               {title && (
-                <h1 className="font-bold text-lg text-foreground truncate">
+                <h1 className="font-bold glass-text-lg text-foreground truncate">
                   {title}
                 </h1>
               )}
@@ -337,13 +336,13 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
               icon="×"
               variant="ghost"
               size="sm"
-              onClick={() => onOpenChange?.(false)}
+              onClick={(e) => onOpenChange?.(false)}
               aria-label="Close navigation"
             />
           </div>
 
           {/* Navigation content */}
-          <nav className="flex-1 p-4 overflow-y-auto">
+          <nav className="flex-1 glass-p-4 overflow-y-auto">
             <VStack space="lg">
               {navigation.map(section => renderSection(section))}
               {children}
@@ -352,7 +351,7 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
 
           {/* Footer */}
           {footer && (
-            <div className="p-4 border-t border-border/20">
+            <div className="glass-p-4 border-t border-border/20">
               {footer}
             </div>
           )}

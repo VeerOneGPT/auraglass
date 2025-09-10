@@ -2,9 +2,9 @@
 
 import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';
 import { OptimizedGlass } from '../../primitives';
+import { LiquidGlassMaterial } from '../../primitives/LiquidGlassMaterial';
 import { Motion } from '../../primitives';
 
 export type PopoverPlacement =
@@ -97,6 +97,20 @@ export interface GlassPopoverProps {
    * Popover description
    */
   description?: string;
+  /**
+   * Glass material variant
+   */
+  material?: 'glass' | 'liquid';
+  /**
+   * Material properties for liquid glass
+   */
+  materialProps?: {
+    ior?: number;
+    thickness?: number;
+    tint?: { r: number; g: number; b: number; a: number };
+    variant?: 'regular' | 'clear';
+    quality?: 'ultra' | 'high' | 'balanced' | 'efficient';
+  };
 }
 
 /**
@@ -112,6 +126,8 @@ export const GlassPopover = forwardRef<HTMLDivElement, GlassPopoverProps>(
       content,
       children,
       placement = 'bottom',
+      material = 'glass',
+      materialProps,
       trigger: triggerType = 'click',
       showDelay = 200,
       hideDelay = 200,
@@ -426,35 +442,73 @@ export const GlassPopover = forwardRef<HTMLDivElement, GlassPopoverProps>(
               style={{ position: 'absolute', top: position.top, left: position.left }}
             >
               {appearance === 'glass' ? (
-                <OptimizedGlass
-                  intent="neutral"
-                  elevation="level4"
-                  intensity="strong"
-                  depth={2}
-                  tint="neutral"
-                  border="subtle"
-                  animation="none"
-                  performanceMode="medium"
-                  ref={popoverRef}
-                  className={cn(
-                    'relative max-w-xs glass-lift glass-sheen',
-                    radialReveal && 'glass-radial-reveal',
-                    'bg-background/95 backdrop-blur-md',
-                    'border border-border/20 shadow-lg',
-                    contentClassName
-                  )}
-                  onMouseEnter={triggerType === 'hover' ? handleShow : undefined}
-                  onMouseLeave={triggerType === 'hover' ? handleHide : undefined}
-                  {...props}
-                >
+                material === 'liquid' ? (
+                  <LiquidGlassMaterial
+                    ior={materialProps?.ior || 1.42}
+                    thickness={materialProps?.thickness || 6}
+                    tint={materialProps?.tint || { r: 0, g: 0, b: 0, a: 0.04 }}
+                    variant={materialProps?.variant || 'clear'}
+                    quality={materialProps?.quality || 'balanced'}
+                    environmentAdaptation
+                    motionResponsive={false}
+                    ref={popoverRef}
+                    className={cn(
+                      'relative max-w-xs liquid-glass-popover-surface',
+                      radialReveal && 'glass-radial-reveal',
+                      contentClassName
+                    )}
+                    style={{
+                      '--liquid-glass-popover-density': '0.8',
+                      '--liquid-glass-micro-refraction': '0.3',
+                    } as React.CSSProperties}
+                    data-liquid-glass-popover="true"
+                    data-popover-placement={placement}
+                    onMouseEnter={triggerType === 'hover' ? handleShow : undefined}
+                    onMouseLeave={triggerType === 'hover' ? handleHide : undefined}
+                    {...props}
+                  >
                   <FocusTrap
                     active={isOpen && (triggerType === 'focus' || triggerType === 'click')}
                     onEscape={closeOnEscape ? () => setOpen(false) : undefined}
                   >
-                    <div className="p-3">
-                      {title && <h3 className="font-medium text-foreground mb-1">{title}</h3>}
+                    <div className="glass-p-4">
+                      {content}
+                    </div>
+                  </FocusTrap>
+                  {showArrow && (
+                    <div className={getArrowClasses()} style={getArrowPosition()} />
+                  )}
+                  </LiquidGlassMaterial>
+                ) : (
+                  <OptimizedGlass
+                    intent="neutral"
+                    elevation="level4"
+                    intensity="strong"
+                    depth={2}
+                    tint="neutral"
+                    border="subtle"
+                    animation="none"
+                    performanceMode="medium"
+                    ref={popoverRef}
+                    className={cn(
+                      'relative max-w-xs glass-lift glass-sheen',
+                      radialReveal && 'glass-radial-reveal',
+                      'bg-background/95 backdrop-blur-md',
+                      'border border-border/20 shadow-lg',
+                      contentClassName
+                    )}
+                    onMouseEnter={triggerType === 'hover' ? handleShow : undefined}
+                    onMouseLeave={triggerType === 'hover' ? handleHide : undefined}
+                    {...props}
+                  >
+                  <FocusTrap
+                    active={isOpen && (triggerType === 'focus' || triggerType === 'click')}
+                    onEscape={closeOnEscape ? () => setOpen(false) : undefined}
+                  >
+                    <div className="glass-p-3">
+                      {title && <h3 className="font-medium text-foreground glass-mb-1">{title}</h3>}
                       {description && (
-                        <p className="text-sm text-muted-foreground mb-2">{description}</p>
+                        <p className="glass-text-sm glass-text-secondary glass-mb-2">{description}</p>
                       )}
                       {content}
                     </div>
@@ -462,12 +516,13 @@ export const GlassPopover = forwardRef<HTMLDivElement, GlassPopoverProps>(
                   {showArrow && (
                     <div className={getArrowClasses()} style={getArrowPosition()} />
                   )}
-                </OptimizedGlass>
+                  </OptimizedGlass>
+                )}
               ) : (
                 <div
                   ref={popoverRef}
                   className={cn(
-                    'relative max-w-xs rounded-xl bg-background text-foreground',
+                    'relative max-w-xs glass-radius-xl bg-background text-foreground',
                     'border border-border/30 shadow-2xl',
                     contentClassName
                   )}
@@ -478,9 +533,9 @@ export const GlassPopover = forwardRef<HTMLDivElement, GlassPopoverProps>(
                     active={isOpen && (triggerType === 'focus' || triggerType === 'click')}
                     onEscape={closeOnEscape ? () => setOpen(false) : undefined}
                   >
-                    <div className="p-3">
-                      {title && <h3 className="font-medium mb-1">{title}</h3>}
-                      {description && <p className="text-sm text-muted-foreground mb-2">{description}</p>}
+                    <div className="glass-p-3">
+                      {title && <h3 className="font-medium glass-mb-1">{title}</h3>}
+                      {description && <p className="glass-text-sm glass-text-secondary glass-mb-2">{description}</p>}
                       {content}
                     </div>
                   </FocusTrap>
@@ -536,11 +591,11 @@ export const GlassTooltip = forwardRef<HTMLDivElement, GlassTooltipProps>(
         placement="top"
         radialReveal={false}
         content={
-          <span className="text-sm text-foreground">
+          <span className="glass-text-sm text-foreground">
             {content}
           </span>
         }
-        contentClassName="px-2 py-1"
+        contentClassName="glass-px-2 glass-py-1"
         {...props}
       />
     );

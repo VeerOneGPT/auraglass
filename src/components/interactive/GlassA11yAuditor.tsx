@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
-import { OptimizedGlass } from '../../primitives';
+import React, { useState, useEffect, useCallback, forwardRef } from 'react';
+import { OptimizedGlass, Motion } from '../../primitives';
+import { useA11yId } from '../../utils/a11y';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 export interface A11yIssue {
   id: string;
@@ -41,6 +42,10 @@ export interface GlassA11yAuditorProps {
   onAuditComplete?: (result: A11yAuditResult) => void;
   /** Issue click handler */
   onIssueClick?: (issue: A11yIssue) => void;
+  /** Respect user's motion preferences */
+  respectMotionPreference?: boolean;
+  /** Custom ID */
+  id?: string;
 }
 
 const defaultRules = [
@@ -56,7 +61,7 @@ const defaultRules = [
   'aria-labelledby',
 ];
 
-export const GlassA11yAuditor: React.FC<GlassA11yAuditorProps> = ({
+export const GlassA11yAuditor = forwardRef<HTMLDivElement, GlassA11yAuditorProps>(({
   children,
   showPanel = true,
   autoAudit = false,
@@ -64,12 +69,17 @@ export const GlassA11yAuditor: React.FC<GlassA11yAuditorProps> = ({
   className = '',
   onAuditComplete,
   onIssueClick,
-}) => {
+  respectMotionPreference = true,
+  id,
+  ...props
+}, ref) => {
   const [isAuditing, setIsAuditing] = useState(false);
   const [auditResult, setAuditResult] = useState<A11yAuditResult | null>(null);
   const [selectedIssue, setSelectedIssue] = useState<A11yIssue | null>(null);
   const [filter, setFilter] = useState<'all' | 'error' | 'warning' | 'info'>('all');
   const [highlightedElement, setHighlightedElement] = useState<Element | null>(null);
+  const prefersReducedMotion = useReducedMotion();
+  const componentId = id || useA11yId('a11y-auditor');
 
   // Run accessibility audit
   const runAudit = useCallback(async () => {
@@ -301,19 +311,35 @@ export const GlassA11yAuditor: React.FC<GlassA11yAuditorProps> = ({
   }
 
   return (
-    <div className={`flex flex-col h-full ${className}`}>
+    <Motion
+      preset="fadeIn"
+      className={`flex flex-col h-full ${className}`}
+    >
+      <div 
+        ref={ref}
+        id={componentId}
+        className="flex flex-col h-full"
+        role="application"
+        aria-label="Accessibility auditing tool"
+        aria-describedby={`${componentId}-description`}
+        {...props}
+      >
+        <div id={`${componentId}-description`} className="sr-only">
+          Accessibility audit tool for analyzing and improving web accessibility
+        </div>
       {/* Audit Controls */}
       <OptimizedGlass
-        className="p-4 mb-4"
+        className="glass-p-4 glass-mb-4"
         intensity="medium"
         elevation="level1"
       >
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-lg font-semibold text-white">Accessibility Audit</h3>
+        <div className="flex items-center justify-between glass-mb-4">
+          <h3 className="glass-text-lg font-semibold glass-text-primary">Accessibility Audit</h3>
           <button
             onClick={runAudit}
             disabled={isAuditing}
-            className="px-4 py-2 bg-blue-500/20 text-blue-300 rounded hover:bg-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="glass-px-4 glass-py-2 bg-blue-500/20 text-blue-300 glass-radius-md hover:bg-blue-500/30 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            aria-label={isAuditing ? 'Auditing accessibility issues' : 'Run accessibility audit'}
           >
             {isAuditing ? 'Auditing...' : 'Run Audit'}
           </button>
@@ -321,53 +347,53 @@ export const GlassA11yAuditor: React.FC<GlassA11yAuditorProps> = ({
 
         {/* Score Display */}
         {auditResult && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 glass-gap-4">
             <div className="text-center">
-              <div className={`text-2xl font-bold ${getScoreColor(auditResult.score)}`}>
+              <div className={`glass-text-2xl font-bold ${getScoreColor(auditResult.score)}`}>
                 {auditResult.score}
               </div>
-              <div className="text-sm text-white/70">Score</div>
+              <div className="glass-text-sm glass-text-primary/70">Score</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-red-400">
+              <div className="glass-text-2xl font-bold text-red-400">
                 {auditResult.summary.errors}
               </div>
-              <div className="text-sm text-white/70">Errors</div>
+              <div className="glass-text-sm glass-text-primary/70">Errors</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-yellow-400">
+              <div className="glass-text-2xl font-bold text-yellow-400">
                 {auditResult.summary.warnings}
               </div>
-              <div className="text-sm text-white/70">Warnings</div>
+              <div className="glass-text-sm glass-text-primary/70">Warnings</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-400">
+              <div className="glass-text-2xl font-bold text-blue-400">
                 {auditResult.summary.info}
               </div>
-              <div className="text-sm text-white/70">Info</div>
+              <div className="glass-text-sm glass-text-primary/70">Info</div>
             </div>
           </div>
         )}
       </OptimizedGlass>
 
-      <div className="flex flex-1 gap-4">
+      <div className="flex flex-1 glass-gap-4">
         {/* Issues List */}
         <OptimizedGlass
-          className="flex-1 p-4"
+          className="flex-1 glass-p-4"
           blur="medium"
           elevation={'level1'}
         >
-          <div className="flex items-center justify-between mb-4">
-            <h4 className="text-md font-semibold text-white">Issues</h4>
-            <div className="flex gap-2">
+          <div className="flex items-center justify-between glass-mb-4">
+            <h4 className="text-md font-semibold glass-text-primary">Issues</h4>
+            <div className="flex glass-gap-2">
               {(['all', 'error', 'warning', 'info'] as const).map(type => (
                 <button
                   key={type}
-                  onClick={() => setFilter(type)}
-                  className={`px-3 py-1 text-xs rounded capitalize transition-colors ${
+                  onClick={(e) => setFilter(type)}
+                  className={`glass-px-3 glass-py-1 glass-text-xs glass-radius-md capitalize transition-colors ${
                     filter === type
-                      ? 'bg-white/20 text-white'
-                      : 'text-white/70 hover:text-white hover:bg-white/10'
+                      ? 'bg-white/20 glass-text-primary'
+                      : 'glass-text-primary/70 hover:glass-text-primary hover:bg-white/10'
                   }`}
                 >
                   {type}
@@ -376,24 +402,24 @@ export const GlassA11yAuditor: React.FC<GlassA11yAuditorProps> = ({
             </div>
           </div>
 
-          <div className="space-y-2 max-h-96 overflow-y-auto">
+          <div className="glass-gap-2 max-h-96 overflow-y-auto">
             {filteredIssues.map(issue => (
               <button
                 key={issue.id}
-                onClick={() => handleIssueClick(issue)}
-                className={`w-full text-left p-3 rounded border transition-colors ${
+                onClick={(e) => handleIssueClick(issue)}
+                className={`w-full text-left glass-p-3 glass-radius-md border transition-colors ${
                   getIssueTypeColor(issue.type)
                 } ${selectedIssue?.id === issue.id ? 'ring-2 ring-white/50' : ''}`}
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-sm font-medium">{issue.rule}</span>
-                      <span className="text-xs opacity-70">WCAG {issue.wcag}</span>
+                    <div className="flex items-center glass-gap-2 glass-mb-1">
+                      <span className="glass-text-sm font-medium">{issue.rule}</span>
+                      <span className="glass-text-xs opacity-70">WCAG {issue.wcag}</span>
                     </div>
-                    <p className="text-sm opacity-90">{issue.message}</p>
+                    <p className="glass-text-sm opacity-90">{issue.message}</p>
                     {issue.element && (
-                      <code className="text-xs opacity-70 bg-black/20 px-1 py-0.5 rounded mt-1 inline-block">
+                      <code className="glass-text-xs opacity-70 bg-black/20 glass-px-1 glass-py-0.5 glass-radius-md glass-mt-1 inline-block">
                         {issue.element}
                       </code>
                     )}
@@ -403,7 +429,7 @@ export const GlassA11yAuditor: React.FC<GlassA11yAuditorProps> = ({
             ))}
 
             {filteredIssues.length === 0 && (
-              <div className="text-center py-8 text-white/50">
+              <div className="text-center py-8 glass-text-primary/50">
                 {auditResult ? 'No issues found!' : 'Run audit to check accessibility'}
               </div>
             )}
@@ -413,46 +439,46 @@ export const GlassA11yAuditor: React.FC<GlassA11yAuditorProps> = ({
         {/* Issue Details */}
         {selectedIssue && (
           <OptimizedGlass
-            className="w-80 p-4"
+            className="w-80 glass-p-4"
             blur="medium"
             elevation={'level1'}
           >
-            <h4 className="text-md font-semibold text-white mb-4">Issue Details</h4>
+            <h4 className="text-md font-semibold glass-text-primary glass-mb-4">Issue Details</h4>
 
-            <div className="space-y-4">
+            <div className="glass-gap-4">
               <div>
-                <label className="block text-sm text-white/70 mb-1">Rule</label>
-                <div className="text-sm font-medium text-white">{selectedIssue.rule}</div>
+                <label className="block glass-text-sm glass-text-primary/70 glass-mb-1">Rule</label>
+                <div className="glass-text-sm font-medium glass-text-primary">{selectedIssue.rule}</div>
               </div>
 
               <div>
-                <label className="block text-sm text-white/70 mb-1">Type</label>
-                <span className={`px-2 py-1 text-xs rounded capitalize ${getIssueTypeColor(selectedIssue.type)}`}>
+                <label className="block glass-text-sm glass-text-primary/70 glass-mb-1">Type</label>
+                <span className={`glass-px-2 glass-py-1 glass-text-xs glass-radius-md capitalize ${getIssueTypeColor(selectedIssue.type)}`}>
                   {selectedIssue.type}
                 </span>
               </div>
 
               <div>
-                <label className="block text-sm text-white/70 mb-1">WCAG Guideline</label>
-                <div className="text-sm text-white">{selectedIssue.wcag}</div>
+                <label className="block glass-text-sm glass-text-primary/70 glass-mb-1">WCAG Guideline</label>
+                <div className="glass-text-sm glass-text-primary">{selectedIssue.wcag}</div>
               </div>
 
               <div>
-                <label className="block text-sm text-white/70 mb-1">Message</label>
-                <p className="text-sm text-white">{selectedIssue.message}</p>
+                <label className="block glass-text-sm glass-text-primary/70 glass-mb-1">Message</label>
+                <p className="glass-text-sm glass-text-primary">{selectedIssue.message}</p>
               </div>
 
               {selectedIssue.suggestion && (
                 <div>
-                  <label className="block text-sm text-white/70 mb-1">Suggestion</label>
-                  <p className="text-sm text-green-300">{selectedIssue.suggestion}</p>
+                  <label className="block glass-text-sm glass-text-primary/70 glass-mb-1">Suggestion</label>
+                  <p className="glass-text-sm text-green-300">{selectedIssue.suggestion}</p>
                 </div>
               )}
 
               {selectedIssue.code && (
                 <div>
-                  <label className="block text-sm text-white/70 mb-1">Element Code</label>
-                  <pre className="text-xs bg-black/20 p-2 rounded overflow-x-auto">
+                  <label className="block glass-text-sm glass-text-primary/70 glass-mb-1">Element Code</label>
+                  <pre className="glass-text-xs bg-black/20 glass-p-2 glass-radius-md overflow-x-auto">
                     <code>{selectedIssue.code}</code>
                   </pre>
                 </div>
@@ -477,9 +503,12 @@ export const GlassA11yAuditor: React.FC<GlassA11yAuditorProps> = ({
           }
         `}
       </style>
-    </div>
+      </div>
+    </Motion>
   );
-};
+});
+
+GlassA11yAuditor.displayName = 'GlassA11yAuditor';
 
 // Hook for programmatic audit
 export const useA11yAudit = () => {

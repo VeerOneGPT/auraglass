@@ -1,64 +1,49 @@
-// Typography tokens available via typography.css (imported in index.css)
+'use client';
+
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
-import styled, { useTheme } from 'styled-components';
-import { Box } from '../layout/Box';
 import { Check } from 'lucide-react';
-// Import animation hook (assuming useSpring or similar exists)
-// If not, we might need to implement a basic spring or use CSS transitions
-// For now, let's use CSS transitions as a placeholder for simplicity
-// import { useSpring, animated } from '@react-spring/web'; // Example if using react-spring
+import { cn } from '../../lib/utilsComprehensive';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
 
 interface GlassStepIconProps {
   index: number;
   active: boolean;
   completed: boolean;
   icon?: React.ReactNode | string;
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
+  /** Additional CSS classes */
+  className?: string;
+  /** Inline styles */
+  style?: React.CSSProperties;
 }
 
-// Extend Box props for animated component if using react-spring
-// const AnimatedIconContainer = styled(animated(Box))<{ $active: boolean, $completed: boolean }>`
-const StepIconContainer = styled(Box)<{ $active: boolean, $completed: boolean }>`
-  width: 24px;
-  height: 24px;
-  min-width: 24px; // Ensure size doesn't shrink
-  border-radius: 50%;
-  background-color: ${props =>
-    props.$active ? '#3b82f6' :
-    props.$completed ? '#10b981' :
-    '#e5e7eb'
-  };
-  color: ${props =>
-    props.$active || props.$completed ? '#ffffff' :
-    '#6b7280'
-  };
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1; // Ensure icon is above connector
-  transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease; // Add box-shadow transition
-  font-size: 0.8rem; // Size for step number
-  font-weight: var(--typography-heading-weight);
-  flex-shrink: 0;
-  border: 1px solid ${props =>
-    props.$active || props.$completed ? 'rgba(59, 130, 246, 0.3)' :
-    'rgba(0, 0, 0, 0.1)'
-  };
-  position: relative; // Needed for potential pseudo-element animations
-
-  // Add shadow based on active state (placeholder for animated version)
-  box-shadow: ${props =>
-      props.$active
-          ? '0 0 12px 3px rgba(59, 130, 246, 0.5)'
-          : 'none'
-  };
-`;
+// Get icon state classes
+const getIconStateClasses = (active: boolean, completed: boolean) => {
+  if (active) {
+    return 'bg-primary-500 glass-text-primary border-primary-300 shadow-[0_0_12px_3px_rgba(59,130,246,0.5)]';
+  }
+  if (completed) {
+    return 'bg-success-500 glass-text-primary border-success-300';
+  }
+  return 'bg-gray-200 glass-text-secondary border-gray-200 dark:bg-gray-700 dark:glass-text-secondary dark:border-gray-600';
+};
 
 export const GlassStepIcon: React.FC<GlassStepIconProps> = ({ 
     index, 
     active, 
     completed, 
-    icon 
+    icon,
+    intent = 'neutral',
+    elevation = 'level2',
+    tier = 'medium',
+    className,
+    style
 }) => {
     const getIconContent = () => {
         if (icon) {
@@ -71,32 +56,33 @@ export const GlassStepIcon: React.FC<GlassStepIconProps> = ({
         return index + 1; // Display step number
     };
 
-    // Placeholder for spring animation - replace with actual hook if available
-    /*
-    const springProps = useSpring({
-        shadowOpacity: active ? 1 : 0,
-        shadowBlur: active ? 12 : 0,
-        shadowSpread: active ? 3 : 0,
-        config: { tension: 200, friction: 20 } 
-    });
-    */
+    const iconStateClasses = getIconStateClasses(active, completed);
 
     return (
-        // Use AnimatedIconContainer if using react-spring
-        <StepIconContainer 
-            $active={active} 
-            $completed={completed}
-            // Apply animated styles if using spring
-            /*
-            style={{
-                boxShadow: springProps.shadowOpacity.to(o => 
-                    `0 0 ${springProps.shadowBlur.get()}px ${springProps.shadowSpread.get()}px rgba(primaryColorRgb, ${o * 0.5})`
-                ) 
-            }}
-            */
+        <Motion
+          className="inline-block"
         >
+          <OptimizedGlass
+            intent={intent}
+            elevation={elevation}
+            tier={tier}
+            className={cn(
+              // Base styles
+              'w-6 h-6 min-w-6 glass-radius-full',
+              'flex items-center justify-center',
+              'relative z-[1] flex-shrink-0',
+              'glass-text-xs font-semibold',
+              'transition-all duration-300 ease-in-out',
+              'border',
+              // State-based styles
+              iconStateClasses,
+              className
+            )}
+            style={style}
+          >
             {getIconContent()}
-        </StepIconContainer>
+          </OptimizedGlass>
+        </Motion>
     );
 };
 

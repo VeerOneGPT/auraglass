@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '@/lib/utilsComprehensive';
 import { GlassButton } from '../button/GlassButton';
 import { OptimizedGlass } from '../../primitives';
@@ -25,11 +24,11 @@ export function GlassTagInput({ value, onChange, placeholder = 'Add tag…', sug
   const remove = (tag: string) => onChange(value.filter(v => v !== tag));
 
   return (
-    <OptimizedGlass elevation={'level1'} className={cn('rounded-xl p-2 flex flex-wrap gap-2', className)}>
+    <OptimizedGlass elevation={'level1'} className={cn('glass-radius-xl glass-p-2 flex flex-wrap glass-gap-2', className)}>
       {value.map((t) => (
-        <span key={t} className="inline-flex items-center gap-1 px-2 py-1 text-sm rounded-lg bg-white/10 border border-white/20">
+        <span key={t} className="inline-flex items-center glass-gap-1 glass-px-2 glass-py-1 glass-text-sm glass-radius-lg bg-white/10 border border-white/20">
           {t}
-          <button onClick={() => remove(t)} className="text-white/60 hover:text-white">×</button>
+          <button onClick={(e) => remove(t)} className="glass-text-primary/60 hover:glass-text-primary">×</button>
         </span>
       ))}
       <input
@@ -44,13 +43,13 @@ export function GlassTagInput({ value, onChange, placeholder = 'Add tag…', sug
           }
         }}
         placeholder={placeholder}
-        className="flex-1 min-w-[120px] bg-transparent outline-none text-sm placeholder:text-white/50"
+        className="flex-1 min-w-[120px] bg-transparent outline-none glass-text-sm placeholder:glass-text-primary/50"
       />
       {!!suggestions.length && input && (
-        <div className="w-full -mb-1">
-          <div className="mt-1 rounded-lg border border-white/15 bg-black/20 p-1">
+        <div className="w-full -glass-mb-1">
+          <div className="glass-mt-1 glass-radius-lg border border-white/15 bg-black/20 glass-p-1">
             {suggestions.filter(s => s.toLowerCase().includes(input.toLowerCase())).slice(0,6).map(s => (
-              <GlassButton key={s} variant="ghost" size="sm" className="w-full justify-start" onClick={() => add(s)}>
+              <GlassButton key={s} variant="ghost" size="sm" className="w-full justify-start" onClick={(e) => add(s)}>
                 {s}
               </GlassButton>
             ))}

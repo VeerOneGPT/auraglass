@@ -4,7 +4,6 @@ import { GlassButton } from '../button/GlassButton';
 
 import { cn } from '@/lib/utilsComprehensive';
 import React, { createContext, forwardRef, useContext, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -123,7 +122,7 @@ export const GlassTabs = forwardRef<HTMLDivElement, GlassTabsProps>(
           ref={ref}
           className={cn(
             'glass-tabs',
-            orientation === 'vertical' ? 'flex gap-6' : 'w-full',
+            orientation === 'vertical' ? 'flex glass-gap-6' : 'w-full',
             className
           )}
           data-orientation={orientation}
@@ -150,20 +149,20 @@ export const GlassTabsList = forwardRef<HTMLDivElement, GlassTabsListProps>(
     const variantStyles = {
       default: cn(
         'glass-tabs-list',
-        'rounded-xl p-1 gap-2',
+        'glass-radius-xl glass-p-1 glass-gap-2',
       ),
       pills: cn(
         'glass-tabs-list-pills',
-        'rounded-2xl p-1.5 gap-1'
+        'rounded-2xl glass-p-1.5 glass-gap-1'
       ),
       underline: cn(
         'glass-tabs-list-underline',
         'border-b border-border/20',
-        'gap-8 px-1'
+        'gap-8 glass-px-1'
       ),
       minimal: cn(
         'glass-tabs-list-minimal',
-        'gap-4'
+        'glass-gap-4'
       ),
     };
 
@@ -211,7 +210,7 @@ export const GlassTabsList = forwardRef<HTMLDivElement, GlassTabsListProps>(
           'inline-flex items-center justify-start',
           orientation === 'horizontal' ? 'flex-row' : 'flex-col',
           variantStyles[variant],
-          variant === 'pills' ? 'rounded-2xl' : 'rounded-xl',
+          variant === 'pills' ? 'rounded-2xl' : 'glass-radius-xl',
           className
         )}
         {...(commonA11y as any)}
@@ -313,9 +312,9 @@ export const GlassTabsTrigger = forwardRef<HTMLButtonElement, GlassTabsTriggerPr
     };
 
     const baseStyles = cn(
-      'inline-flex items-center justify-center gap-2',
-      'whitespace-nowrap rounded-lg px-3 py-2',
-      'text-sm font-medium transition-all duration-200',
+      'inline-flex items-center justify-center glass-gap-2',
+      'whitespace-nowrap glass-radius-lg glass-px-3 glass-py-2',
+      'glass-text-sm font-medium transition-all duration-200',
       'focus-visible:outline-none focus-visible:ring-2',
       'focus-visible:ring-primary focus-visible:ring-offset-2',
       'disabled:pointer-events-none disabled:opacity-50'
@@ -325,25 +324,32 @@ export const GlassTabsTrigger = forwardRef<HTMLButtonElement, GlassTabsTriggerPr
       default: cn(
         isSelected
           ? 'bg-background/90 text-foreground shadow-md border border-border/20'
-          : 'text-muted-foreground hover:text-foreground hover:bg-muted/50',
+          : 'glass-text-secondary hover:text-foreground hover:bg-muted/50',
       ),
       pills: cn(
         isSelected
           ? 'bg-primary text-primary-foreground shadow-lg'
-          : 'text-muted-foreground hover:text-foreground hover:bg-background/50',
+          : 'glass-text-secondary hover:text-foreground hover:bg-background/50',
       ),
       underline: cn(
-        'relative px-1 py-3 rounded-none',
+        'relative glass-px-1 glass-py-3 rounded-none',
         isSelected
           ? 'text-primary after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary'
-          : 'text-muted-foreground hover:text-foreground',
+          : 'glass-text-secondary hover:text-foreground',
       ),
       minimal: cn(
-        'px-2 py-1 rounded-md',
+        'glass-px-2 glass-py-1 glass-radius-md',
         isSelected
           ? 'text-primary bg-primary/10'
-          : 'text-muted-foreground hover:text-foreground hover:bg-muted/30',
+          : 'glass-text-secondary hover:text-foreground hover:bg-muted/30',
       ),
+    };
+
+    // Convert Booleanish ARIA attributes to boolean
+    const buttonProps = {
+      ...props,
+      'aria-pressed': props['aria-pressed'] === 'true' ? true : props['aria-pressed'] === 'false' ? false : props['aria-pressed'] === 'mixed' ? undefined : props['aria-pressed'],
+      'aria-expanded': props['aria-expanded'] === 'true' ? true : props['aria-expanded'] === 'false' ? false : props['aria-expanded'],
     };
 
     return (
@@ -359,7 +365,7 @@ export const GlassTabsTrigger = forwardRef<HTMLButtonElement, GlassTabsTriggerPr
           }}
           role="tab"
           id={`trigger-${value}`}
-          aria-selected={isSelected}
+          aria-selected={!!isSelected}
           aria-controls={`content-${value}`}
           data-value={value}
           data-state={isSelected ? 'active' : 'inactive'}
@@ -371,7 +377,7 @@ export const GlassTabsTrigger = forwardRef<HTMLButtonElement, GlassTabsTriggerPr
           disabled={disabled}
           onClick={handleClick}
           onKeyDown={handleKeyDown}
-          {...props}
+          {...buttonProps}
         >
           {icon && (
             <span className="shrink-0">
@@ -387,10 +393,10 @@ export const GlassTabsTrigger = forwardRef<HTMLButtonElement, GlassTabsTriggerPr
 
           {badge && (
             <span className={cn(
-              'ml-2 rounded-full px-2 py-0.5 text-xs',
+              'glass-ml-2 glass-radius-full glass-px-2 glass-py-0.5 glass-text-xs',
               isSelected
                 ? 'bg-primary-foreground/20 text-primary-foreground'
-                : 'bg-background/50 text-muted-foreground'
+                : 'bg-background/50 glass-text-secondary'
             )}>
               {badge}
             </span>

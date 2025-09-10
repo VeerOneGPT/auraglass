@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 import { OptimizedGlass } from '../../primitives';
 import { cn } from "@/lib/utilsComprehensive";
@@ -69,9 +68,9 @@ const GlassFormItem = React.forwardRef<HTMLDivElement, GlassFormItemProps>(
     const id = React.useId();
 
     const spacingConfig = {
-      sm: 'space-y-1',
-      md: 'space-y-2',
-      lg: 'space-y-3',
+      sm: 'glass-auto-gap glass-auto-gap-xs',
+      md: 'glass-auto-gap glass-auto-gap-sm',
+      lg: 'glass-auto-gap glass-auto-gap-md',
     };
 
     return (
@@ -161,7 +160,7 @@ const GlassFormControl = React.forwardRef<
         'glass-form-control',
         glass && [
           'backdrop-blur-md bg-background/50',
-          'border border-border/20 rounded-lg'
+          'border border-border/20 glass-radius-lg'
         ],
         className
       )}
@@ -192,14 +191,14 @@ const GlassFormDescription = React.forwardRef<
   const { formDescriptionId } = useFormField();
 
   const sizeConfig = {
-    xs: 'text-xs',
-    sm: 'text-sm',
-    md: 'text-base',
+    xs: 'glass-text-xs',
+    sm: 'glass-text-sm',
+    md: 'glass-text-base',
   };
 
   const variantConfig = {
     default: 'text-foreground',
-    muted: 'text-muted-foreground',
+    muted: 'glass-text-secondary',
     accent: 'text-primary',
   };
 
@@ -248,9 +247,9 @@ const GlassFormMessage = React.forwardRef<
   }
 
   const sizeConfig = {
-    xs: 'text-xs',
-    sm: 'text-sm',
-    md: 'text-base',
+    xs: 'glass-text-xs',
+    sm: 'glass-text-sm',
+    md: 'glass-text-base',
   };
 
   const variantConfig = {
@@ -271,7 +270,7 @@ const GlassFormMessage = React.forwardRef<
       ref={ref}
       id={formMessageId}
       className={cn(
-        'glass-form-message font-medium flex items-center gap-1.5',
+        'glass-form-message font-medium flex items-center glass-gap-1.5',
         sizeConfig?.[size],
         variantConfig?.[variant],
         className

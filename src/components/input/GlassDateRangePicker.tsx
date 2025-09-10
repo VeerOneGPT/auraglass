@@ -3,7 +3,6 @@
 import { cn } from '@/lib/utilsComprehensive';
 import { Calendar, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 import { GlassButton } from '../button';
 import { CardContent, GlassCard } from '../card';
@@ -162,9 +161,9 @@ export const GlassDateRangePicker: React.FC<GlassDateRangePickerProps> = ({
 
     // Size configurations
     const sizeConfigs = {
-        sm: { trigger: 'h-8 px-3 text-sm', calendar: 'w-64' },
-        md: { trigger: 'h-10 px-4 text-base', calendar: 'w-80' },
-        lg: { trigger: 'h-12 px-6 text-lg', calendar: 'w-96' }
+        sm: { trigger: 'h-8 glass-px-3 glass-text-sm', calendar: 'w-64' },
+        md: { trigger: 'h-10 glass-px-4 glass-text-base', calendar: 'w-80' },
+        lg: { trigger: 'h-12 glass-px-6 glass-text-lg', calendar: 'w-96' }
     };
 
     // Update current range when value prop changes
@@ -351,34 +350,34 @@ export const GlassDateRangePicker: React.FC<GlassDateRangePickerProps> = ({
                 ref={triggerRef}
                 className={cn(
                     'relative flex items-center justify-between bg-white/10 backdrop-blur-md border border-white/20',
-                    'rounded-lg cursor-pointer transition-all duration-200',
+                    'glass-radius-lg cursor-pointer transition-all duration-200',
                     'hover:bg-white/15 hover:border-white/30 focus-within:bg-white/15 focus-within:border-white/30',
                     config.trigger,
                     disabled && 'opacity-50 cursor-not-allowed',
                     className
                 )}
-                onClick={() => !disabled && setIsOpen(!isOpen)}
+                onClick={(e) => !disabled && setIsOpen(!isOpen)}
             >
-                <div className="flex items-center gap-2 flex-1 min-w-0">
-                    <Calendar className="w-4 h-4 text-white/60 flex-shrink-0" />
+                <div className="flex items-center glass-gap-2 flex-1 min-w-0">
+                    <Calendar className="w-4 h-4 glass-text-primary/60 flex-shrink-0" />
                     <span className={cn(
                         'truncate',
-                        (!currentRange.from && !currentRange.to) ? 'text-white/50' : 'text-white'
+                        (!currentRange.from && !currentRange.to) ? 'glass-text-primary/50' : 'glass-text-primary'
                     )}>
                         {getDisplayValue()}
                     </span>
                 </div>
 
-                <div className="flex items-center gap-1">
+                <div className="flex items-center glass-gap-1">
                     {showClear && (currentRange.from || currentRange.to) && (
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
                                 handleClear();
                             }}
-                            className="p-1 hover:bg-white/20 rounded transition-colors"
+                            className="glass-p-1 hover:bg-white/20 glass-radius-md transition-colors"
                         >
-                            <X className="w-3 h-3 text-white/60" />
+                            <X className="w-3 h-3 glass-text-primary/60" />
                         </button>
                     )}
                 </div>
@@ -386,29 +385,29 @@ export const GlassDateRangePicker: React.FC<GlassDateRangePickerProps> = ({
 
             {/* Popover */}
             {isOpen && (
-                <Motion preset="fadeIn" className="absolute z-50 mt-2">
+                <Motion preset="fadeIn" className="absolute z-50 glass-mt-2">
                     <div
                         ref={popoverRef}
                         className={cn(
-                            'bg-black/20 backdrop-blur-md border border-white/20 rounded-xl shadow-2xl',
+                            'bg-black/20 backdrop-blur-md border border-white/20 glass-radius-xl shadow-2xl',
                             config.calendar,
                             popoverClassName
                         )}
                     >
                         <GlassCard variant="outline" className="border-0 bg-transparent">
-                            <CardContent className="p-4">
-                                <div className="flex gap-6">
+                            <CardContent className="glass-p-4">
+                                <div className="flex glass-gap-6">
                                     {/* Presets */}
                                     {presets && presets.length > 0 && (
                                         <div className="flex-shrink-0">
-                                            <h4 className="text-sm font-medium text-white/80 mb-3">Quick Select</h4>
-                                            <div className="space-y-1">
+                                            <h4 className="glass-text-sm font-medium glass-text-primary/80 mb-3">Quick Select</h4>
+                                            <div className="glass-gap-1">
                                                 {presets.map((preset, index) => (
                                                     <GlassButton
                                                         key={preset.label}
                                                         variant="ghost"
                                                         size="sm"
-                                                        onClick={() => handlePresetSelect(preset)}
+                                                        onClick={(e) => handlePresetSelect(preset)}
                                                         className="w-full justify-start text-left"
                                                     >
                                                         {preset.label}
@@ -421,22 +420,22 @@ export const GlassDateRangePicker: React.FC<GlassDateRangePickerProps> = ({
                                     {/* Calendar */}
                                     <div className="flex-1">
                                         {/* Header */}
-                                        <div className="flex items-center justify-between mb-4">
-                                            <h3 className="text-lg font-semibold text-white">
+                                        <div className="flex items-center justify-between glass-mb-4">
+                                            <h3 className="glass-text-lg font-semibold glass-text-primary">
                                                 {calendarData.monthName} {calendarData.year}
                                             </h3>
-                                            <div className="flex gap-1">
+                                            <div className="flex glass-gap-1">
                                                 <GlassButton
                                                     variant="ghost"
                                                     size="sm"
-                                                    onClick={() => navigateMonth('prev')}
+                                                    onClick={(e) => navigateMonth('prev')}
                                                 >
                                                     <ChevronLeft className="w-4 h-4" />
                                                 </GlassButton>
                                                 <GlassButton
                                                     variant="ghost"
                                                     size="sm"
-                                                    onClick={() => navigateMonth('next')}
+                                                    onClick={(e) => navigateMonth('next')}
                                                 >
                                                     <ChevronRight className="w-4 h-4" />
                                                 </GlassButton>
@@ -444,13 +443,13 @@ export const GlassDateRangePicker: React.FC<GlassDateRangePickerProps> = ({
                                         </div>
 
                                         {/* Calendar Grid */}
-                                        <div className="space-y-2">
+                                        <div className="glass-gap-2">
                                             {/* Week headers */}
-                                            <div className="grid grid-cols-7 gap-1">
+                                            <div className="grid grid-cols-7 glass-gap-1">
                                                 {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((day) => (
                                                     <div
                                                         key={day}
-                                                        className="text-center text-sm font-medium text-white/60 py-2"
+                                                        className="text-center glass-text-sm font-medium glass-text-primary/60 glass-py-2"
                                                     >
                                                         {day}
                                                     </div>
@@ -458,7 +457,7 @@ export const GlassDateRangePicker: React.FC<GlassDateRangePickerProps> = ({
                                             </div>
 
                                             {/* Calendar days */}
-                                            <div className="grid grid-cols-7 gap-1">
+                                            <div className="grid grid-cols-7 glass-gap-1">
                                                 {calendarData.weeks.flat().map((date, index) => {
                                                     const isInRange = isDateInRange(date);
                                                     const isBoundary = isRangeBoundary(date);
@@ -473,19 +472,19 @@ export const GlassDateRangePicker: React.FC<GlassDateRangePickerProps> = ({
                                                             className="aspect-square"
                                                         >
                                                             <button
-                                                                onClick={() => !isDisabledDate && handleDateSelect(date)}
+                                                                onClick={(e) => !isDisabledDate && handleDateSelect(date)}
                                                                 disabled={isDisabledDate}
                                                                 className={cn(
-                                                                    'w-full h-full rounded-lg text-sm font-medium transition-all duration-200',
+                                                                    'w-full h-full glass-radius-lg glass-text-sm font-medium transition-all duration-200',
                                                                     'flex items-center justify-center',
                                                                     'hover:bg-white/20 focus:bg-white/25 focus:outline-none',
                                                                     'disabled:opacity-50 disabled:cursor-not-allowed',
                                                                     {
-                                                                        'text-white/60': !isCurrentMonthDate,
-                                                                        'text-white': isCurrentMonthDate,
+                                                                        'glass-text-primary/60': !isCurrentMonthDate,
+                                                                        'glass-text-primary': isCurrentMonthDate,
                                                                         'bg-primary/20 text-primary-foreground': isBoundary,
                                                                         'bg-primary/10': isInRange && !isBoundary,
-                                                                        'bg-white/10 text-white font-semibold': isTodayDate && !isInRange && !isBoundary,
+                                                                        'bg-white/10 glass-text-primary font-semibold': isTodayDate && !isInRange && !isBoundary,
                                                                         'ring-2 ring-primary/50': isBoundary
                                                                     }
                                                                 )}
@@ -499,22 +498,22 @@ export const GlassDateRangePicker: React.FC<GlassDateRangePickerProps> = ({
                                         </div>
 
                                         {/* Footer */}
-                                        <div className="flex justify-between items-center mt-4 pt-4 border-t border-white/10">
-                                            <div className="text-sm text-white/60">
+                                        <div className="flex justify-between items-center glass-mt-4 pt-4 border-t border-white/10">
+                                            <div className="glass-text-sm glass-text-primary/60">
                                                 {selectingFrom ? 'Select start date' : 'Select end date'}
                                             </div>
-                                            <div className="flex gap-2">
+                                            <div className="flex glass-gap-2">
                                                 <GlassButton
                                                     variant="ghost"
                                                     size="sm"
-                                                    onClick={() => setIsOpen(false)}
+                                                    onClick={(e) => setIsOpen(false)}
                                                 >
                                                     Cancel
                                                 </GlassButton>
                                                 <GlassButton
                                                     variant="primary"
                                                     size="sm"
-                                                    onClick={() => setIsOpen(false)}
+                                                    onClick={(e) => setIsOpen(false)}
                                                 >
                                                     Apply
                                                 </GlassButton>

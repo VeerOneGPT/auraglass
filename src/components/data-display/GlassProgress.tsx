@@ -1,10 +1,11 @@
 'use client';
 
 import React, { forwardRef, useEffect, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { cn } from '@/lib/utilsComprehensive';
+import { useA11yId } from '../../utils/a11y';
+import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 
 export interface GlassProgressProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -26,7 +27,7 @@ export interface GlassProgressProps extends React.HTMLAttributes<HTMLDivElement>
   /**
    * Progress shape
    */
-  shape?: 'rounded' | 'pill' | 'square';
+  shape?: 'glass-radius-md' | 'pill' | 'square';
   /**
    * Whether to show value text
    */
@@ -59,6 +60,10 @@ export interface GlassProgressProps extends React.HTMLAttributes<HTMLDivElement>
    * Label position
    */
   labelPosition?: 'top' | 'bottom' | 'inline';
+  /**
+   * Respect user's motion preferences
+   */
+  respectMotionPreference?: boolean;
 }
 
 /**
@@ -72,7 +77,7 @@ export const GlassProgress = forwardRef<HTMLDivElement, GlassProgressProps>(
       max = 100,
       variant = 'default',
       size = 'md',
-      shape = 'rounded',
+      shape = 'glass-radius-md',
       showValue = false,
       formatValue,
       indeterminate = false,
@@ -81,13 +86,17 @@ export const GlassProgress = forwardRef<HTMLDivElement, GlassProgressProps>(
       striped = false,
       label,
       labelPosition = 'top',
+      respectMotionPreference = true,
       className,
       ...props
     },
     ref
   ) => {
+    const progressId = useA11yId('progress');
+    const { prefersReducedMotion } = useMotionPreferenceContext();
     const [animatedValue, setAnimatedValue] = useState(0);
     const [mounted, setMounted] = useState(false);
+    const shouldAnimate = animated && (!respectMotionPreference || !prefersReducedMotion);
 
     useEffect(() => {
       setMounted(true);
@@ -96,7 +105,7 @@ export const GlassProgress = forwardRef<HTMLDivElement, GlassProgressProps>(
     useEffect(() => {
       if (!mounted || indeterminate) return;
 
-      if (animated) {
+      if (shouldAnimate) {
         const timer = setTimeout(() => {
           setAnimatedValue(value);
         }, 100);
@@ -117,18 +126,18 @@ export const GlassProgress = forwardRef<HTMLDivElement, GlassProgressProps>(
     };
 
     const shapeClasses = {
-      rounded: 'rounded-md',
-      pill: 'rounded-full',
+      'glass-radius-md': 'glass-radius-md',
+      pill: 'glass-radius-full',
       square: 'rounded-none',
     };
 
     const variantClasses = {
-      default: 'bg-primary',
-      success: 'bg-success',
-      warning: 'bg-warning',
-      error: 'bg-destructive',
+      default: 'glass-surface-primary',
+      success: 'glass-surface-success',
+      warning: 'glass-surface-warning',
+      error: 'glass-surface-danger',
       gradient: 'bg-gradient-to-r from-primary via-secondary to-accent',
-      primary: 'bg-primary',
+      primary: 'glass-surface-primary',
     };
 
     const trackClasses = cn(
@@ -171,12 +180,12 @@ export const GlassProgress = forwardRef<HTMLDivElement, GlassProgressProps>(
       >
         {/* Top label */}
         {labelContent && labelPosition === 'top' && (
-          <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-medium text-foreground">
+          <div id={`${progressId}-label`} className="flex justify-between items-center glass-mb-2">
+            <span className="glass-text-sm font-medium text-foreground">
               {label}
             </span>
             {showValue && (
-              <span className="text-sm text-muted-foreground">
+              <span className="glass-text-sm glass-text-secondary">
                 {formatDisplayValue()}
               </span>
             )}
@@ -193,27 +202,29 @@ export const GlassProgress = forwardRef<HTMLDivElement, GlassProgressProps>(
           animation="none"
           performanceMode="medium"
           
+          id={progressId}
           className={trackClasses}
           role="progressbar"
           aria-valuenow={indeterminate ? undefined : value}
           aria-valuemin={0}
           aria-valuemax={max}
           aria-label={label || 'Progress'}
+          aria-describedby={labelContent ? `${progressId}-label` : undefined}
         >
           {/* Progress fill */}
           <div
             className={fillClasses}
             style={{
               width: indeterminate ? '100%' : `${percentage}%`,
-              transitionDuration: animated ? `${animationDuration}ms` : '0ms',
+              transitionDuration: shouldAnimate ? `${animationDuration}ms` : '0ms',
             }}
           >
             {/* Sheen sweep on fill */}
             <div className="pointer-events-none absolute inset-0 glass-sheen" />
             {/* Inline label */}
             {labelContent && labelPosition === 'inline' && (
-              <div className="flex items-center justify-center h-full px-2">
-                <span className="text-xs font-medium text-white mix-blend-difference">
+              <div className="flex items-center justify-center h-full glass-px-2">
+                <span className="glass-text-xs font-medium glass-text-primary mix-blend-difference">
                   {showValue ? formatDisplayValue() : label}
                 </span>
               </div>
@@ -228,12 +239,12 @@ export const GlassProgress = forwardRef<HTMLDivElement, GlassProgressProps>(
 
         {/* Bottom label */}
         {labelContent && labelPosition === 'bottom' && (
-          <div className="flex justify-between items-center mt-2">
-            <span className="text-sm font-medium text-foreground">
+          <div id={`${progressId}-label`} className="flex justify-between items-center glass-mt-2">
+            <span className="glass-text-sm font-medium text-foreground">
               {label}
             </span>
             {showValue && (
-              <span className="text-sm text-muted-foreground">
+              <span className="glass-text-sm glass-text-secondary">
                 {formatDisplayValue()}
               </span>
             )}
@@ -397,7 +408,7 @@ export const CircularProgress = forwardRef<HTMLDivElement, CircularProgressProps
         {/* Center content */}
         <div className="absolute inset-0 flex items-center justify-center">
           {children || (showValue && (
-            <span className="text-sm font-medium text-foreground">
+            <span className="glass-text-sm font-medium text-foreground">
               {Math.round(percentage)}%
             </span>
           ))}
@@ -461,19 +472,19 @@ export function StepProgress({
 }: StepProgressProps) {
   const sizeClasses = {
     sm: {
-      indicator: 'w-6 h-6 text-xs',
+      indicator: 'w-6 h-6 glass-text-xs',
       line: orientation === 'horizontal' ? 'h-0.5' : 'w-0.5',
-      label: 'text-xs',
+      label: 'glass-text-xs',
     },
     md: {
-      indicator: 'w-8 h-8 text-sm',
+      indicator: 'w-8 h-8 glass-text-sm',
       line: orientation === 'horizontal' ? 'h-1' : 'w-1',
-      label: 'text-sm',
+      label: 'glass-text-sm',
     },
     lg: {
-      indicator: 'w-10 h-10 text-base',
+      indicator: 'w-10 h-10 glass-text-base',
       line: orientation === 'horizontal' ? 'h-1.5' : 'w-1.5',
-      label: 'text-base',
+      label: 'glass-text-base',
     },
   };
 
@@ -516,17 +527,17 @@ export function StepProgress({
             {/* Step indicator */}
             <div
               className={cn(
-                'flex items-center justify-center rounded-full font-medium',
+                'flex items-center justify-center glass-radius-full font-medium',
                 'border-2 transition-all duration-200',
                 config.indicator,
                 {
                   'bg-primary border-primary text-primary-foreground': status === 'completed',
                   'bg-primary border-primary text-primary-foreground ring-2 ring-primary/20': status === 'current',
-                  'bg-background border-muted text-muted-foreground': status === 'pending',
+                  'bg-background border-muted glass-text-secondary': status === 'pending',
                   'cursor-pointer hover:border-primary/50': clickable && index <= currentStep,
                 }
               )}
-              onClick={() => handleStepClick(index)}
+              onClick={(e) => handleStepClick(index)}
             >
               {variant === 'numbered' || !steps ? (
                 status === 'completed' ? (
@@ -538,7 +549,7 @@ export function StepProgress({
                 )
               ) : (
                 <div className={cn(
-                  'w-2 h-2 rounded-full',
+                  'w-2 h-2 glass-radius-full',
                   status === 'completed' ? 'bg-primary-foreground' :
                   status === 'current' ? 'bg-primary-foreground' :
                   'bg-muted-foreground'
@@ -550,12 +561,12 @@ export function StepProgress({
             {stepLabel && orientation === 'horizontal' && (
               <span
                 className={cn(
-                  'ml-2 font-medium',
+                  'glass-ml-2 font-medium',
                   config.label,
                   {
                     'text-primary': status === 'current',
                     'text-foreground': status === 'completed',
-                    'text-muted-foreground': status === 'pending',
+                    'glass-text-secondary': status === 'pending',
                   }
                 )}
               >
@@ -569,7 +580,7 @@ export function StepProgress({
                 className={cn(
                   'flex-1 bg-muted',
                   config.line,
-                  orientation === 'horizontal' ? 'mx-4' : 'my-4',
+                  orientation === 'horizontal' ? 'glass-mx-4' : 'glass-my-4',
                   {
                     'bg-primary': index < currentStep,
                   }
@@ -581,12 +592,12 @@ export function StepProgress({
             {stepLabel && orientation === 'vertical' && (
               <span
                 className={cn(
-                  'mt-2 text-center font-medium',
+                  'glass-mt-2 text-center font-medium',
                   config.label,
                   {
                     'text-primary': status === 'current',
                     'text-foreground': status === 'completed',
-                    'text-muted-foreground': status === 'pending',
+                    'glass-text-secondary': status === 'pending',
                   }
                 )}
               >

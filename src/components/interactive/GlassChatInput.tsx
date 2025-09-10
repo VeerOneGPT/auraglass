@@ -19,7 +19,6 @@ import {
     X
 } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 import { GlassButton } from '../button';
 import { CardContent, GlassCard } from '../card';
@@ -369,14 +368,14 @@ export const GlassChatInput: React.FC<GlassChatInputProps> = ({
     return (
         <Motion preset="fadeIn" className="w-full">
             <GlassCard className={cn('overflow-hidden', className)} {...props}>
-                <CardContent className="p-4">
+                <CardContent className="glass-p-4">
                     {/* Attachments preview */}
                     {attachments.length > 0 && (
-                        <div className="mb-4 space-y-2">
+                        <div className="glass-mb-4 glass-gap-2">
                             {attachments.map((attachment) => (
                                 <div
                                     key={attachment.id}
-                                    className="flex items-center gap-3 p-3 bg-white/10 rounded-lg"
+                                    className="flex items-center glass-gap-3 glass-p-3 bg-white/10 glass-radius-lg"
                                 >
                                     {/* Preview */}
                                     <div className="flex-shrink-0">
@@ -384,10 +383,10 @@ export const GlassChatInput: React.FC<GlassChatInputProps> = ({
                                             <img
                                                 src={attachment.preview}
                                                 alt={attachment.file.name}
-                                                className="w-10 h-10 rounded object-cover"
+                                                className="w-10 h-10 glass-radius-md object-cover"
                                             />
                                         ) : (
-                                            <div className="w-10 h-10 rounded bg-white/20 flex items-center justify-center">
+                                            <div className="w-10 h-10 glass-radius-md bg-white/20 flex items-center justify-center">
                                                 {getFileIcon(attachment.file.type)}
                                             </div>
                                         )}
@@ -395,10 +394,10 @@ export const GlassChatInput: React.FC<GlassChatInputProps> = ({
 
                                     {/* File info */}
                                     <div className="flex-1 min-w-0">
-                                        <p className="text-white text-sm truncate">
+                                        <p className="glass-text-primary glass-text-sm truncate">
                                             {attachment.file.name}
                                         </p>
-                                        <p className="text-white/60 text-xs">
+                                        <p className="glass-text-primary/60 glass-text-xs">
                                             {formatFileSize(attachment.size)}
                                         </p>
                                     </div>
@@ -407,8 +406,8 @@ export const GlassChatInput: React.FC<GlassChatInputProps> = ({
                                     <GlassButton
                                         variant="ghost"
                                         size="sm"
-                                        onClick={() => handleRemoveAttachment(attachment.id)}
-                                        className="p-1"
+                                        onClick={(e) => handleRemoveAttachment(attachment.id)}
+                                        className="glass-p-1"
                                     >
                                         <X className="w-4 h-4" />
                                     </GlassButton>
@@ -418,7 +417,7 @@ export const GlassChatInput: React.FC<GlassChatInputProps> = ({
                     )}
 
                     {/* Input area */}
-                    <div className="flex items-end gap-3">
+                    <div className="flex items-end glass-gap-3">
                         {/* Attachment button */}
                         {enableAttachments && (
                             <GlassButton
@@ -426,7 +425,7 @@ export const GlassChatInput: React.FC<GlassChatInputProps> = ({
                                 size="sm"
                                 onClick={handleFileSelect}
                                 disabled={disabled || loading}
-                                className="p-2 flex-shrink-0"
+                                className="glass-p-2 flex-shrink-0"
                             >
                                 <Paperclip className="w-4 h-4" />
                             </GlassButton>
@@ -439,12 +438,12 @@ export const GlassChatInput: React.FC<GlassChatInputProps> = ({
                                 size="sm"
                                 onClick={handleVoiceToggle}
                                 disabled={disabled || loading}
-                                className="p-2 flex-shrink-0"
+                                className="glass-p-2 flex-shrink-0"
                             >
                                 {isRecording ? (
                                     <>
-                                        <Square className="w-4 h-4 mr-2" />
-                                        <span className="text-xs">{formatRecordingTime(recordingTime)}</span>
+                                        <Square className="w-4 h-4 glass-mr-2" />
+                                        <span className="glass-text-xs">{formatRecordingTime(recordingTime)}</span>
                                     </>
                                 ) : (
                                     <Mic className="w-4 h-4" />
@@ -454,36 +453,36 @@ export const GlassChatInput: React.FC<GlassChatInputProps> = ({
 
                         {/* Formatting toolbar */}
                         {enableFormatting && showFormatting && (
-                            <div className="flex gap-1 p-2 bg-white/10 rounded-lg mb-2">
+                            <div className="flex glass-gap-1 glass-p-2 bg-white/10 glass-radius-lg glass-mb-2">
                                 <GlassButton
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => handleFormatting('bold')}
-                                    className="p-1"
+                                    onClick={(e) => handleFormatting('bold')}
+                                    className="glass-p-1"
                                 >
                                     <Bold className="w-3 h-3" />
                                 </GlassButton>
                                 <GlassButton
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => handleFormatting('italic')}
-                                    className="p-1"
+                                    onClick={(e) => handleFormatting('italic')}
+                                    className="glass-p-1"
                                 >
                                     <Italic className="w-3 h-3" />
                                 </GlassButton>
                                 <GlassButton
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => handleFormatting('code')}
-                                    className="p-1"
+                                    onClick={(e) => handleFormatting('code')}
+                                    className="glass-p-1"
                                 >
                                     <Code className="w-3 h-3" />
                                 </GlassButton>
                                 <GlassButton
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => handleFormatting('link')}
-                                    className="p-1"
+                                    onClick={(e) => handleFormatting('link')}
+                                    className="glass-p-1"
                                 >
                                     <Link className="w-3 h-3" />
                                 </GlassButton>
@@ -500,7 +499,7 @@ export const GlassChatInput: React.FC<GlassChatInputProps> = ({
                                 placeholder={isRecording ? 'Recording...' : placeholder}
                                 disabled={disabled || loading || isRecording}
                                 className={cn(
-                                    'w-full bg-glass-fill ring-1 ring-white/10 rounded-lg px-4 py-3 text-white placeholder-white/50',
+                                    'w-full bg-glass-fill ring-1 ring-white/10 glass-radius-lg glass-px-4 glass-py-3 glass-text-primary placeholder-white/50',
                                     'focus:outline-none focus:ring-white/30 resize-none min-h-[44px] max-h-[120px]',
                                     'disabled:opacity-50 disabled:cursor-not-allowed'
                                 )}
@@ -509,22 +508,22 @@ export const GlassChatInput: React.FC<GlassChatInputProps> = ({
 
                             {/* Character count */}
                             {showCharCount && maxLength && (
-                                <div className="absolute bottom-2 right-3 text-xs text-white/50">
+                                <div className="absolute bottom-2 right-3 glass-text-xs glass-text-primary/50">
                                     {message.length}/{maxLength}
                                 </div>
                             )}
                         </div>
 
                         {/* Action buttons */}
-                        <div className="flex gap-1 flex-shrink-0">
+                        <div className="flex glass-gap-1 flex-shrink-0">
                             {/* Emoji button */}
                             {enableEmoji && (
                                 <GlassButton
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                                    onClick={(e) => setShowEmojiPicker(!showEmojiPicker)}
                                     disabled={disabled || loading}
-                                    className="p-2"
+                                    className="glass-p-2"
                                 >
                                     <Smile className="w-4 h-4" />
                                 </GlassButton>
@@ -535,9 +534,9 @@ export const GlassChatInput: React.FC<GlassChatInputProps> = ({
                                 <GlassButton
                                     variant={showFormatting ? "primary" : "ghost"}
                                     size="sm"
-                                    onClick={() => setShowFormatting(!showFormatting)}
+                                    onClick={(e) => setShowFormatting(!showFormatting)}
                                     disabled={disabled || loading}
-                                    className="p-2"
+                                    className="glass-p-2"
                                 >
                                     <Plus className="w-4 h-4" />
                                 </GlassButton>
@@ -549,10 +548,10 @@ export const GlassChatInput: React.FC<GlassChatInputProps> = ({
                                 size="sm"
                                 onClick={handleSendMessage}
                                 disabled={(!message.trim() && attachments.length === 0) || disabled || loading || isRecording}
-                                className="p-2"
+                                className="glass-p-2"
                             >
                                 {loading ? (
-                                    <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                                    <div className="w-4 h-4 border-2 border-white/20 border-t-white glass-radius-full animate-spin" />
                                 ) : (
                                     <Send className="w-4 h-4" />
                                 )}
@@ -562,13 +561,13 @@ export const GlassChatInput: React.FC<GlassChatInputProps> = ({
 
                     {/* Emoji picker */}
                     {showEmojiPicker && (
-                        <div className="mt-3 p-3 bg-white/10 rounded-lg">
-                            <div className="grid grid-cols-8 gap-2">
+                        <div className="mt-3 glass-p-3 bg-white/10 glass-radius-lg">
+                            <div className="grid grid-cols-8 glass-gap-2">
                                 {['😀', '😂', '😊', '😍', '🤔', '😎', '👍', '👎', '❤️', '🔥', '⭐', '🎉', '🙌', '✨', '💯', '🚀'].map((emoji) => (
                                     <button
                                         key={emoji}
-                                        onClick={() => handleEmojiSelect(emoji)}
-                                        className="w-8 h-8 hover:bg-white/20 rounded transition-colors text-lg"
+                                        onClick={(e) => handleEmojiSelect(emoji)}
+                                        className="w-8 h-8 hover:bg-white/20 glass-radius-md transition-colors glass-text-lg"
                                     >
                                         {emoji}
                                     </button>

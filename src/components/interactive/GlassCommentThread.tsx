@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { GlassButton } from '../button/GlassButton';
 import { OptimizedGlass } from '../../primitives';
 
@@ -23,24 +22,24 @@ export function GlassCommentThread({ comments, onReply }: GlassCommentThreadProp
   const setDraft = (id: string, v: string) => setDrafts((d) => ({ ...d, [id]: v }));
 
   const render = (c: Comment, depth = 0) => (
-    <div key={c.id} className="space-y-2">
-      <OptimizedGlass elevation={'level1'} className="rounded-lg p-3 border border-white/15">
-        <div className="text-sm text-white/90 font-medium">{c.author}</div>
-        <div className="text-sm text-white/80 whitespace-pre-wrap">{c.text}</div>
-        {c.createdAt && <div className="text-xs text-white/60 mt-1">{c.createdAt}</div>}
+    <div key={c.id} className="glass-gap-2">
+      <OptimizedGlass elevation={'level1'} className="glass-radius-lg glass-p-3 border border-white/15">
+        <div className="glass-text-sm glass-text-primary/90 font-medium">{c.author}</div>
+        <div className="glass-text-sm glass-text-primary/80 whitespace-pre-wrap">{c.text}</div>
+        {c.createdAt && <div className="glass-text-xs glass-text-primary/60 glass-mt-1">{c.createdAt}</div>}
       </OptimizedGlass>
       <div className="ml-6">
-        <div className="flex gap-2 items-center">
+        <div className="flex glass-gap-2 items-center">
           <input 
             value={drafts[c.id] ?? ''} 
             onChange={(e) => setDraft(c.id, e.target.value)} 
             placeholder="Reply…" 
-            className="flex-1 bg-transparent border border-white/20 rounded-lg px-2 py-1 text-sm outline-none" 
+            className="flex-1 bg-transparent border border-white/20 glass-radius-lg glass-px-2 glass-py-1 glass-text-sm outline-none" 
           />
-          <GlassButton size="sm" variant="secondary" onClick={() => { if (onReply && drafts[c.id]) { onReply(c.id, drafts[c.id]); setDraft(c.id, ''); } }}>Reply</GlassButton>
+          <GlassButton size="sm" variant="secondary" onClick={(e) => { if (onReply && drafts[c.id]) { onReply(c.id, drafts[c.id]); setDraft(c.id, ''); } }}>Reply</GlassButton>
         </div>
         {c.replies?.length ? (
-          <div className="mt-2 space-y-2">
+          <div className="glass-mt-2 glass-gap-2">
             {(c.replies || []).map(r => render(r, depth + 1))}
           </div>
         ) : null}
@@ -48,7 +47,7 @@ export function GlassCommentThread({ comments, onReply }: GlassCommentThreadProp
     </div>
   );
 
-  return <div className="space-y-3">{(comments || []).map(c => render(c))}</div>;
+  return <div className="glass-gap-3">{(comments || []).map(c => render(c))}</div>;
 }
 
 export default GlassCommentThread;

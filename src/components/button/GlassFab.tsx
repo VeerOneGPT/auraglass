@@ -1,22 +1,18 @@
-// Typography tokens available via typography.css (imported in index.css)
-import React, { forwardRef, useState, useEffect, useMemo, useCallback } from 'react';
-import styled, { css, useTheme } from 'styled-components';
-import { createThemeContext } from '../../core/themeContext';
+'use client';
 
-import { createAccessibleAnimation } from '../../animations/accessibleAnimation';
-import { fadeIn } from '../../animations/keyframes/basic';
-import { edgeEffects } from '../../core/mixins/edgeEffects';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
-import { glowEffects } from '../../core/mixins/glowEffects';
-import { usePhysicsInteraction, PhysicsInteractionOptions } from '../../hooks/usePhysicsInteraction';
-import { SpringConfig, SpringPresets } from '../../animations/physics/springPhysics';
-import { useAnimationContext } from '../../contexts/AnimationContext';
-import { useReducedMotion } from '../../hooks/useReducedMotion';
-import { useEnhancedReducedMotion } from '../../hooks/useEnhancedReducedMotion';
-import { AnimationProps } from '../../animations/types';
-import { useGalileoStateSpring } from '../../hooks/useGalileoStateSpring';
+import React, { forwardRef, useState, useEffect, useMemo, useCallback, useRef } from 'react';
+import { cn } from '../../lib/utilsComprehensive';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
+import { createButtonA11y, useA11yId, announceToScreenReader } from '../../utils/a11y';
+import type { ConsciousnessFeatures } from '../layout/GlassContainer';
+import { usePredictiveEngine, useInteractionRecorder } from '../advanced/GlassPredictiveEngine';
+import { useAchievements } from '../advanced/GlassAchievementSystem';
+import { useBiometricAdaptation } from '../advanced/GlassBiometricAdaptation';
+import { useEyeTracking } from '../advanced/GlassEyeTracking';
+import { useSpatialAudio } from '../advanced/GlassSpatialAudio';
 
-export interface FabProps {
+export interface FabProps extends ConsciousnessFeatures {
   /**
    * The content of the button
    */
@@ -98,287 +94,219 @@ export interface FabProps {
 
   /** Animation configuration */
   animationConfig?: any;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
+
+  /** Accessible label for the button (required for icon-only buttons) */
+  'aria-label'?: string;
+  /** ID of element that labels the button */
+  'aria-labelledby'?: string;
+  /** ID of element(s) that describe the button */
+  'aria-describedby'?: string;
+  /** Whether button is pressed/active (for toggle buttons) */
+  'aria-pressed'?: boolean;
+  /** Whether button controls expanded content */
+  'aria-expanded'?: boolean;
+  /** ID of element controlled by this button */
+  'aria-controls'?: string;
+  /** Whether button has popup menu or dialog */
+  'aria-haspopup'?: boolean | 'false' | 'true' | 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog';
+  /** Description text for complex buttons (automatically creates describedby) */
+  description?: string;
 }
 
-// Get color by name
-const getColorByName = (color: string): string => {
+// Get color by name for intent mapping
+const getColorIntent = (color: string): 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info' => {
   switch (color) {
     case 'primary':
-      return '#6366F1';
+      return 'primary';
     case 'secondary':
-      return '#8B5CF6';
+      return 'info';
     case 'success':
-      return '#10B981';
+      return 'success';
     case 'error':
-      return '#EF4444';
+      return 'danger';
     case 'warning':
-      return '#F59E0B';
+      return 'warning';
     case 'info':
-      return '#3B82F6';
+      return 'info';
     default:
-      return '#1F2937'; // default dark gray
+      return 'neutral';
   }
 };
 
-// Get size values
-const getSizeValues = (size: string, variant: string) => {
+// Get size classes
+const getSizeClasses = (size: string, variant: string) => {
   const isExtended = variant === 'extended';
 
   switch (size) {
     case 'small':
       return {
-        width: isExtended ? 'auto' : '40px',
-        height: '40px',
-        padding: isExtended ? '8px 12px' : '0',
-        fontSize: '1.25rem',
+        width: isExtended ? 'w-auto min-w-20' : 'w-10',
+        height: 'h-10',
+        padding: isExtended ? 'px-3 py-2' : 'p-0',
+        fontSize: 'glass-text-xl',
       };
     case 'large':
       return {
-        width: isExtended ? 'auto' : '64px',
-        height: '64px',
-        padding: isExtended ? '12px 20px' : '0',
-        fontSize: '1.75rem',
+        width: isExtended ? 'w-auto min-w-32' : 'w-16',
+        height: 'h-16',
+        padding: isExtended ? 'px-5 py-3' : 'p-0',
+        fontSize: 'text-3xl',
       };
     default: // medium
       return {
-        width: isExtended ? 'auto' : '56px',
-        height: '56px',
-        padding: isExtended ? '10px 16px' : '0',
-        fontSize: '1.5rem',
+        width: isExtended ? 'w-auto min-w-28' : 'w-14',
+        height: 'h-14',
+        padding: isExtended ? 'px-4 py-2.5' : 'p-0',
+        fontSize: 'glass-text-2xl',
       };
   }
 };
 
-// Get position styles
-const getPositionStyles = (position: string) => {
-  if (position === 'none') return '';
-
-  const base = css`
-    position: fixed;
-  `;
-
+// Get position classes
+const getPositionClasses = (position: string) => {
   switch (position) {
     case 'bottomRight':
-      return css`
-        ${base}
-        bottom: 16px;
-        right: 16px;
-      `;
+      return 'fixed bottom-4 right-4';
     case 'bottomLeft':
-      return css`
-        ${base}
-        bottom: 16px;
-        left: 16px;
-      `;
+      return 'fixed bottom-4 left-4';
     case 'topRight':
-      return css`
-        ${base}
-        top: 16px;
-        right: 16px;
-      `;
+      return 'fixed top-4 right-4';
     case 'topLeft':
-      return css`
-        ${base}
-        top: 16px;
-        left: 16px;
-      `;
+      return 'fixed top-4 left-4';
     case 'center':
-      return css`
-        ${base}
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      `;
+      return 'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2';
+    case 'none':
     default:
       return '';
   }
 };
 
-// Keyframes for pulse animation
-const pulse = css`
-  @keyframes pulse {
-    0% {
-      box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
-    }
-    70% {
-      box-shadow: 0 0 0 15px rgba(99, 102, 241, 0);
-    }
-    100% {
-      box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
-    }
+// Get color classes for variants
+const getColorClasses = (color: string, variant: string) => {
+  if (variant === 'glass') {
+    return 'glass-text-primary bg-white/10 backdrop-blur-md border border-white/20';
   }
-`;
-
-// Styled components
-const FabContainer = styled.button<{
-  $color: string;
-  $size: string;
-  $variant: string;
-  $position: string;
-  $pulse: boolean;
-  $enhanced: boolean;
-  $zIndex: number;
-}>`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: ${props => (props.$variant === 'extended' ? '28px' : '50%')};
-  cursor: pointer;
-  outline: none;
-  user-select: none;
-  z-index: ${props => props.$zIndex};
-  font-family: 'Inter', sans-serif;
-  font-weight: var(--typography-subheading-weight);
-  box-sizing: border-box;
-  transition: transform 140ms ease, box-shadow 160ms ease, background-color 160ms ease;
-  will-change: transform, box-shadow;
-
-  /* Size styles */
-  ${props => {
-    const { width, height, padding, fontSize } = getSizeValues(props.$size, props.$variant);
-    return css`
-      width: ${width};
-      height: ${height};
-      padding: ${padding};
-      font-size: ${fontSize};
-    `;
-  }}
-
-  /* Position styles */
-  ${props => getPositionStyles(props.$position)}
   
-  /* Variant styles */
-  ${props => {
-    if (props.$variant === 'glass') {
-      return css`
-        background-color: rgba(255, 255, 255, 0.1);
-        color: white;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-      `;
-    }
+  switch (color) {
+    case 'primary':
+      return 'bg-primary-500 glass-text-primary hover:bg-primary-600';
+    case 'secondary':
+      return 'bg-secondary-500 glass-text-primary hover:bg-secondary-600';
+    case 'success':
+      return 'bg-success-500 glass-text-primary hover:bg-success-600';
+    case 'error':
+      return 'bg-danger-500 glass-text-primary hover:bg-danger-600';
+    case 'warning':
+      return 'bg-warning-500 glass-text-primary hover:bg-warning-600';
+    case 'info':
+      return 'bg-info-500 glass-text-primary hover:bg-info-600';
+    default:
+      return 'bg-gray-700 glass-text-primary hover:bg-gray-600';
+  }
+};
 
-    // standard or extended
-    return css`
-      background-color: ${getColorByName(props.$color)};
-      color: white;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    `;
-  }}
+// Get pulse animation classes
+const getPulseClasses = (pulse: boolean, color: string) => {
+  if (!pulse) return '';
   
-  /* Glass effect for glass variant */
-  ${props =>
-    props.$variant === 'glass' &&
-    css`
-      background-color: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 10px 28px rgba(31, 38, 135, 0.28), inset 0 1px 0 rgba(255,255,255,0.35);
-    `}
-
-  /* Glass glow for glass variant */
-  ${props =>
-    props.$variant === 'glass' &&
-    css`
-      box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-    `}
-
-  /* Edge highlight for glass variant */
-  ${props =>
-    props.$variant === 'glass' &&
-    css`
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      border-radius: 50%;
-    `}
-
-  /* Pulse animation */
-  ${pulse}
-  ${props =>
-    props.$pulse &&
-    css`
-      animation: pulse 1.5s infinite;
-    `}
+  const baseClasses = 'animate-pulse-ring';
   
-  /* Disabled state */
-  &:disabled {
-    ${props =>
-      props.$variant === 'glass'
-        ? css`
-            background-color: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.4);
-          `
-        : css`
-            background-color: #e2e8f0;
-            color: #94a3b8;
-            box-shadow: none;
-          `}
-    cursor: not-allowed;
+  switch (color) {
+    case 'primary':
+      return `${baseClasses} ring-primary-400`;
+    case 'secondary':
+      return `${baseClasses} ring-secondary-400`;
+    case 'success':
+      return `${baseClasses} ring-success-400`;
+    case 'error':
+      return `${baseClasses} ring-danger-400`;
+    case 'warning':
+      return `${baseClasses} ring-warning-400`;
+    case 'info':
+      return `${baseClasses} ring-info-400`;
+    default:
+      return `${baseClasses} ring-gray-400`;
   }
+};
 
-  /* Micro-interactions */
-  &:hover:not(:disabled) {
-    transform: translateZ(0.001px) scale(1.02);
+// Get variant-specific glass props
+const getGlassVariantProps = (variant: string, enhanced: boolean) => {
+  if (variant === 'glass') {
+    return {
+      variant: 'frosted' as const,
+      intensity: enhanced ? 'ultra' as const : 'strong' as const,
+      border: 'glow' as const,
+      lighting: 'volumetric' as const,
+      caustics: enhanced,
+      refraction: enhanced,
+    };
   }
-  &:active:not(:disabled) {
-    transform: translateZ(0.001px) scale(0.985);
-    box-shadow: inset 0 6px 14px rgba(0,0,0,0.18), 0 6px 18px rgba(0,0,0,0.18);
-  }
-`;
+  
+  return {
+    variant: 'clear' as const,
+    intensity: 'medium' as const,
+    border: 'subtle' as const,
+    lighting: 'ambient' as const,
+  };
+};
 
 // Tooltip component
-const Tooltip = styled.span`
-  position: absolute;
-  background-color: rgba(15, 23, 42, 0.9);
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.2s, visibility 0.2s;
-  pointer-events: none;
-  z-index: 1;
-
-  /* Position based on parent position */
-  ${props => {
-    const parent = props?.className;
-    if (parent === 'bottomRight' || parent === 'bottomLeft') {
-      return css`
-        top: -30px;
-        left: 50%;
-        transform: translateX(-50%);
-      `;
+const TooltipComponent: React.FC<{ 
+  tooltip: string; 
+  position: string; 
+  show: boolean; 
+}> = ({ tooltip, position, show }) => {
+  const getTooltipPosition = (position: string) => {
+    if (position === 'bottomRight' || position === 'bottomLeft') {
+      return 'absolute -top-8 left-1/2 -translate-x-1/2';
     }
-    if (parent === 'topRight' || parent === 'topLeft') {
-      return css`
-        bottom: -30px;
-        left: 50%;
-        transform: translateX(-50%);
-      `;
+    if (position === 'topRight' || position === 'topLeft') {
+      return 'absolute -bottom-8 left-1/2 -translate-x-1/2';
     }
-    return css`
-      top: -30px;
-      left: 50%;
-      transform: translateX(-50%);
-    `;
-  }}
-`;
+    return 'absolute -top-8 left-1/2 -translate-x-1/2';
+  };
+  
+  return (
+    <span
+      className={cn(
+        'bg-gray-900/90 glass-text-primary px-2 py-1 glass-radius-md glass-text-xs whitespace-nowrap',
+        'pointer-events-none z-50 transition-opacity duration-200',
+        getTooltipPosition(position),
+        show ? 'opacity-100 visible' : 'opacity-0 invisible'
+      )}
+    >
+      {tooltip}
+    </span>
+  );
+};
 
 // Wrapper component to handle tooltip
-const FabWrapper = styled.div<{
-  $position: string;
-}>`
-  position: ${props => (props.$position === 'none' ? 'relative' : 'static')};
-  display: inline-block;
-
-  &:hover ${Tooltip} {
-    opacity: 1;
-    visibility: visible;
-  }
-`;
+const FabWrapper: React.FC<{ 
+  position: string; 
+  children: React.ReactNode; 
+  className?: string; 
+}> = ({ position, children, className }) => {
+  return (
+    <div
+      className={cn(
+        position === 'none' ? 'relative' : 'static',
+        'inline-block',
+        className
+      )}
+    >
+      {children}
+    </div>
+  );
+};
 
 /**
  * Fab Component
@@ -405,197 +333,265 @@ export const Fab = forwardRef<HTMLButtonElement | HTMLAnchorElement, FabProps>((
     animationConfig,
     disableAnimation,
     style,
+    intent = 'primary',
+    elevation = 'level4',
+    tier = 'high',
+    description,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+    'aria-describedby': ariaDescribedBy,
+    'aria-pressed': ariaPressed,
+    'aria-expanded': ariaExpanded,
+    'aria-controls': ariaControls,
+    'aria-haspopup': ariaHaspopup,
+    // Consciousness features
+    predictive = false,
+    preloadContent = false,
+    eyeTracking = false,
+    gazeResponsive = false,
+    adaptive = false,
+    biometricResponsive = false,
+    spatialAudio = false,
+    audioFeedback = false,
+    trackAchievements = false,
+    achievementId,
+    usageContext = 'fab',
     ...rest
   } = props;
 
-  const theme = useTheme() || {};
-  const themeContext = createThemeContext();
-
-  const animationContext = useAnimationContext();
-  const isReducedMotionSystem = useReducedMotion();
-
-  // Get prefersReducedMotion from the enhanced hook (returns boolean)
-  const prefersReducedMotion = useEnhancedReducedMotion();
-
-  // Memoize the final disable animation state
-  const finalDisableAnimation = useMemo(() => {
-    return disableAnimation ?? isReducedMotionSystem;
-  }, [disableAnimation, isReducedMotionSystem]);
-
-  // Memoize the alternative animation decision - now just based on prefersReducedMotion
-  const useAlternativeAnimation = useMemo(() => {
-    return prefersReducedMotion;
-  }, [prefersReducedMotion]);
-
-  // --- Physics Interaction Setup ---
-  const finalInteractionConfig = useMemo<Partial<PhysicsInteractionOptions>>(() => {
-    const baseOptions: Partial<PhysicsInteractionOptions> = {
-      scale: 1.02,
-      damping: 0.8,
-      stiffness: SpringPresets.default.stiffness,
-      mass: SpringPresets.default.mass,
-    };
-    
-    const contextResolvedConfig: Partial<SpringConfig> = SpringPresets.default;
-
-    let propResolvedConfig: Partial<PhysicsInteractionOptions> = {};
-    const configProp = animationConfig;
-    if (typeof configProp === 'string' && configProp in SpringPresets) {
-        const preset = SpringPresets?.[configProp as keyof typeof SpringPresets];
-        propResolvedConfig = {
-            stiffness: preset.stiffness,
-            damping: preset.damping,
-            mass: preset.mass
-        };
-    } else if (typeof configProp === 'object' && configProp !== null) {
-        if ('stiffness' in configProp || 'damping' in configProp || 'mass' in configProp) {
-            propResolvedConfig = { ...configProp } as Partial<PhysicsInteractionOptions>;
-        } else if ('tension' in configProp || 'friction' in configProp) {
-             const preset = configProp as Partial<SpringConfig>;
-             const stiffness = preset.stiffness ?? SpringPresets.default.stiffness;
-             const mass = preset.mass ?? 1;
-             propResolvedConfig = {
-                 stiffness: stiffness,
-                 damping: preset.damping ?? SpringPresets.default.damping,
-                 mass: mass
-            };
-        }
-    }
-
-    const finalStiffness = propResolvedConfig.stiffness ?? contextResolvedConfig.stiffness ?? baseOptions.stiffness;
-    const finalMass = propResolvedConfig.mass ?? contextResolvedConfig.mass ?? baseOptions.mass;
-    const finalDamping = propResolvedConfig.damping ?? contextResolvedConfig.damping ?? baseOptions.damping;
-
-    return {
-        ...baseOptions,
-        stiffness: finalStiffness,
-        damping: finalDamping,
-        mass: finalMass,
-    };
-
-  }, [animationConfig]);
-
-  const {
-    ref: physicsRef,
-    physicsState,
-    isInteracting,
-    startInteraction,
-    endInteraction,
-  } = usePhysicsInteraction(finalInteractionConfig);
-  // --- End Physics Interaction Setup --- 
-
-  // --- Visibility Animation Setup ---
-  // Memoize entrance config with proper dependencies
-  const finalEntranceConfig = useMemo(() => {
-      const baseConfig = SpringPresets.default;
-      const contextResolvedConfig: Partial<SpringConfig> = SpringPresets.default;
-      let propResolvedConfig: Partial<SpringConfig> = {};
-      const configProp = animationConfig;
-      if (typeof configProp === 'string' && configProp in SpringPresets) {
-        propResolvedConfig = SpringPresets?.[configProp as keyof typeof SpringPresets];
-      } else if (typeof configProp === 'object' && configProp !== null) {
-         if ('stiffness' in configProp || 'damping' in configProp) {
-            propResolvedConfig = configProp as Partial<SpringConfig>;
-         }
-      }
-      return { ...baseConfig, ...contextResolvedConfig, ...propResolvedConfig };
-  }, [animationConfig]);
-
-  // State to track if the element should be rendered (for exit animation)
+  const fabRef = useRef<HTMLButtonElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
   const [shouldRender, setShouldRender] = useState(isVisible);
   
-  // Callback for onRest, memoized
-  const onSpringRest = useCallback((result: { finished: boolean }) => {
-      // Use isVisible prop directly
-      if (!isVisible && result.finished) {
-          setShouldRender(false);
-      }
-  }, [isVisible, setShouldRender]); // Dependencies: isVisible prop and stable setter
+  // Consciousness feature hooks - only initialize if features are enabled
+  const predictiveEngine = predictive ? usePredictiveEngine() : null;
+  const eyeTracker = eyeTracking ? useEyeTracking() : null;
+  const biometricAdapter = adaptive ? useBiometricAdaptation() : null;
+  const spatialAudioEngine = spatialAudio ? useSpatialAudio() : null;
+  const achievementTracker = trackAchievements ? useAchievements() : null;
+  const interactionRecorder = (predictive || trackAchievements) ? useInteractionRecorder(`glass-fab-${variant}-${usageContext}`) : null;
 
-  // Memoize the entire spring configuration object
-  const visibilitySpringConfig = useMemo(() => ({
-      ...finalEntranceConfig, // Already memoized
-      immediate: finalDisableAnimation || useAlternativeAnimation, // Derived memoized values
-      onRest: onSpringRest, // Use the memoized callback
-  }), [
-      finalEntranceConfig,
-      finalDisableAnimation,
-      useAlternativeAnimation,
-      onSpringRest
-  ]);
+  // Generate unique ID for accessibility
+  const componentId = useA11yId('glass-fab');
+  const descriptionId = description ? useA11yId('glass-fab-desc') : undefined;
 
-  // Use Galileo Spring for entrance/exit animation if not using alternative
-  const { value: visibilityProgress, isAnimating: isVisibilityAnimating } = useGalileoStateSpring(
-    isVisible ? 1 : 0, 
-    visibilitySpringConfig // Pass the fully memoized config object
-  );
-
-  // Update render state when isVisible changes
+  // Handle visibility changes
   useEffect(() => {
     if (isVisible) {
       setShouldRender(true);
+    } else {
+      // Delay hiding to allow exit animation
+      const timeout = setTimeout(() => setShouldRender(false), 300);
+      return () => clearTimeout(timeout);
     }
   }, [isVisible]);
 
-  // --- Style Calculation --- 
-  const combinedStyle = useMemo(() => {
-    const baseStyle = { ...style };
-    let visibilityStyle: React.CSSProperties = {};
+  // Eye tracking effects
+  useEffect(() => {
+    if (!gazeResponsive || !eyeTracker || !fabRef.current) return;
 
-    if (useAlternativeAnimation) {
-      visibilityStyle = {
-        opacity: isVisible ? 1 : 0,
-        transition: 'opacity 0.3s ease-in-out, transform 0.3s ease-in-out',
-        transform: isVisible ? 'translateY(0) scale(1)' : 'translateY(20px) scale(0.9)',
-        pointerEvents: isVisible ? 'auto' : 'none',
-      };
-    } else {
-      const opacity = visibilityProgress;
-      const scale = 0.5 + visibilityProgress * 0.5;
-      const translateY = 20 - visibilityProgress * 20;
+    const handleGazeEnter = () => {
+      if (!disabled) {
+        setIsHovered(true);
+        
+        if (spatialAudioEngine && audioFeedback) {
+          spatialAudioEngine.playGlassSound('fab_gaze_enter', {
+            x: fabRef.current?.offsetLeft || 0,
+            y: fabRef.current?.offsetTop || 0,
+            z: 0, // Default z position
+          });
+        }
+      }
+    };
 
-      visibilityStyle = {
-        opacity,
-        transform: `translateY(${translateY}px) scale(${scale})`,
-        pointerEvents: (isVisible || isVisibilityAnimating) ? 'auto' : 'none',
-      };
+    const handleGazeExit = () => {
+      setIsHovered(false);
+    };
+
+    // Note: Eye tracking event handlers not yet implemented
+    // eyeTracker.onGazeEnter?.(fabRef.current, handleGazeEnter);
+    // eyeTracker.onGazeLeave?.(fabRef.current, handleGazeExit);
+
+    return () => {
+      // Note: Eye tracking cleanup not yet implemented
+      // if (fabRef.current) {
+      //   eyeTracker.offGazeEnter?.(fabRef.current, handleGazeEnter);
+      //   eyeTracker.offGazeLeave?.(fabRef.current, handleGazeExit);
+      // }
+    };
+  }, [gazeResponsive, eyeTracker, disabled, spatialAudioEngine, audioFeedback]);
+
+  // Enhanced interaction tracking
+  const handleInteraction = useCallback((event: React.MouseEvent<HTMLElement>) => {
+    if (disabled) return;
+
+    setClickCount(prev => prev + 1);
+
+    // Record interaction for predictive learning
+    if (interactionRecorder) {
+      interactionRecorder.recordClick(event);
     }
 
-    return {
-      ...baseStyle,
-      ...visibilityStyle,
-      willChange: (isVisible || isVisibilityAnimating) ? 'transform, opacity' : undefined,
-    };
-  }, [
-    visibilityProgress,
-    isVisible,
-    isVisibilityAnimating,
-    useAlternativeAnimation,
-    style
-  ]);
+    // Play spatial audio feedback
+    if (spatialAudioEngine && audioFeedback) {
+      spatialAudioEngine.playGlassSound('fab_click_success', {
+        x: fabRef.current?.offsetLeft || 0,
+        y: fabRef.current?.offsetTop || 0,
+        z: 0, // Default z position
+      });
+    }
+    
+    // Track achievements
+    if (achievementTracker && trackAchievements) {
+      achievementTracker.recordAction(achievementId || 'fab_interaction', {
+        variant,
+        context: usageContext,
+        clickCount,
+        timestamp: Date.now(),
+      });
+    }
+
+    // Call original onClick handler
+    onClick?.(event as React.MouseEvent<HTMLButtonElement | HTMLAnchorElement>);
+  }, [disabled, interactionRecorder, spatialAudioEngine, audioFeedback, achievementTracker, trackAchievements, achievementId, variant, usageContext, clickCount, onClick]);
+
+  // Create accessibility attributes
+  const a11yProps = createButtonA11y({
+    id: componentId,
+    label: ariaLabel,
+    description,
+    pressed: ariaPressed,
+    expanded: ariaExpanded,
+    controls: ariaControls,
+    haspopup: ariaHaspopup === 'true' ? true : ariaHaspopup === 'false' ? false : (ariaHaspopup as boolean | 'menu' | 'listbox' | 'tree' | 'grid' | 'dialog' | undefined),
+    disabled: disabled,
+    descriptionId,
+  });
+
+  // Get computed classes and styles
+  const colorIntent = getColorIntent(color);
+  const sizeClasses = getSizeClasses(size, variant);
+  const positionClasses = getPositionClasses(position);
+  const colorClasses = getColorClasses(color, variant);
+  const pulseClasses = getPulseClasses(pulse, color);
+  const glassVariantProps = getGlassVariantProps(variant, enhanced);
+
+  const baseClasses = cn(
+    // Base styles
+    'inline-flex items-center justify-center',
+    'font-medium cursor-pointer outline-none',
+    'select-none box-border transition-all duration-200',
+    'will-change-transform',
+    // Size classes
+    sizeClasses.width,
+    sizeClasses.height,
+    sizeClasses.padding,
+    sizeClasses.fontSize,
+    // Position classes
+    positionClasses,
+    // Shape
+    variant === 'extended' ? 'glass-radius-full' : 'glass-radius-full',
+    // Color classes (for non-glass variants)
+    variant !== 'glass' && colorClasses,
+    // Pulse classes
+    pulseClasses,
+    // Hover and interaction states
+    !disabled && 'hover:scale-105 active:scale-95',
+    // Disabled state
+    disabled && 'opacity-50 cursor-not-allowed pointer-events-none',
+    // Visibility animation
+    isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-75',
+    // Consciousness feature styles
+    gazeResponsive && isHovered && 'ring-2 ring-blue-400/40 shadow-lg shadow-blue-400/20',
+    className
+  );
+
+  const combinedStyle = {
+    ...style,
+    zIndex,
+    transition: 'opacity 0.3s ease-in-out, transform 0.3s ease-in-out',
+  };
 
   const Component = href ? 'a' : 'button';
 
   const fabButton = (
-    <FabContainer
-      as={Component}
-      ref={ref as any}
-      href={href}
-      disabled={disabled}
-      onClick={onClick}
-      type={href ? undefined : type}
-      className={className}
-      $color={color}
-      $size={size}
-      $variant={variant}
-      $position={position}
-      $pulse={pulse}
-      $enhanced={enhanced}
-      $zIndex={zIndex}
-      style={combinedStyle}
+    <Motion
+      preset="scaleIn"
+      duration={0.3}
+      animateOnMount={isVisible}
+      animateOnHover={!disabled}
+      className="inline-block"
     >
-      {children}
-    </FabContainer>
+      {variant === 'glass' ? (
+        <OptimizedGlass
+          intent={intent}
+          elevation={elevation}
+          tier={tier}
+          {...glassVariantProps}
+          interactive
+          hoverSheen
+          liftOnHover
+          press
+          className={baseClasses}
+          style={combinedStyle}
+          onClick={handleInteraction}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          ref={(node: HTMLElement | null) => {
+            if (typeof ref === 'function') {
+              ref(node as any);
+            } else if (ref) {
+              ref.current = node as any;
+            }
+            if (fabRef.current !== undefined) {
+              (fabRef as any).current = node;
+            }
+          }}
+          {...a11yProps}
+          {...rest}
+        >
+          <span className="relative z-10">
+            {children}
+          </span>
+          {description && (
+            <span id={descriptionId} className="sr-only">
+              {description}
+            </span>
+          )}
+        </OptimizedGlass>
+      ) : (
+        <Component
+          className={baseClasses}
+          style={combinedStyle}
+          href={href}
+          disabled={disabled}
+          onClick={handleInteraction}
+          type={href ? undefined : type}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          ref={(node: HTMLElement | null) => {
+            if (typeof ref === 'function') {
+              ref(node as HTMLButtonElement | HTMLAnchorElement);
+            } else if (ref) {
+              ref.current = node as HTMLButtonElement | HTMLAnchorElement;
+            }
+            if (fabRef.current !== undefined) {
+              (fabRef as any).current = node;
+            }
+          }}
+          {...a11yProps}
+          {...rest}
+        >
+          {children}
+          {description && (
+            <span id={descriptionId} className="sr-only">
+              {description}
+            </span>
+          )}
+        </Component>
+      )}
+    </Motion>
   );
 
   // --- Conditional Rendering Logic ---
@@ -608,9 +604,9 @@ export const Fab = forwardRef<HTMLButtonElement | HTMLAnchorElement, FabProps>((
   }
 
   return (
-    <FabWrapper $position={position}>
+    <FabWrapper position={position}>
       {fabButton}
-      <Tooltip className={position}>{tooltip}</Tooltip>
+      <TooltipComponent tooltip={tooltip} position={position} show={isHovered} />
     </FabWrapper>
   );
 });
@@ -622,10 +618,29 @@ Fab.displayName = 'Fab';
  *
  * A floating action button with glass morphism styling.
  */
-export const GlassFab = forwardRef<HTMLButtonElement, FabProps>((props, ref) => {
-  const { className, variant = 'glass', ...rest } = props;
+export const GlassFab = forwardRef<HTMLElement, FabProps>((props, ref) => {
+  const { 
+    className, 
+    variant = 'glass', 
+    intent = 'primary',
+    elevation = 'level4',
+    tier = 'high',
+    enhanced = true,
+    ...rest 
+  } = props;
 
-  return <Fab ref={ref} className={`glass-fab ${className || ''}`} variant={variant} {...rest} />;
+  return (
+    <Fab
+      ref={ref as React.RefObject<HTMLButtonElement | HTMLAnchorElement>}
+      className={cn('glass-fab', className)}
+      variant={variant}
+      intent={intent}
+      elevation={elevation}
+      tier={tier}
+      enhanced={enhanced}
+      {...rest} 
+    />
+  );
 });
 
 GlassFab.displayName = 'GlassFab';

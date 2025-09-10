@@ -2,7 +2,6 @@
 import React, { forwardRef, useEffect, useState, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { glassTokenUtils } from '../../tokens/glass';
 import { useReducedMotion } from '../../hooks/useReducedMotion';

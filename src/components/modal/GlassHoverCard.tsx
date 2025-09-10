@@ -1,10 +1,11 @@
 'use client';
 
 import { cn } from '@/lib/utilsComprehensive';
-import React, { useEffect, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+import React, { useEffect, useRef, useState, forwardRef } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
+import { useA11yId, announceToScreenReader } from '../../utils/a11y';
+import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 
 export interface GlassHoverCardProps {
     /**
@@ -55,6 +56,30 @@ export interface GlassHoverCardProps {
      * Custom trigger className
      */
     triggerClassName?: string;
+    /**
+     * Accessible title for the hover card
+     */
+    title?: string;
+    /**
+     * Accessible description for the hover card
+     */
+    description?: string;
+    /**
+     * Whether to respect motion preferences
+     */
+    respectMotionPreference?: boolean;
+    /**
+     * Custom aria-label
+     */
+    'aria-label'?: string;
+    /**
+     * Custom aria-labelledby
+     */
+    'aria-labelledby'?: string;
+    /**
+     * Custom aria-describedby
+     */
+    'aria-describedby'?: string;
 }
 
 export interface GlassHoverCardContentProps {
@@ -95,7 +120,7 @@ export interface GlassHoverCardTriggerProps {
  * GlassHoverCard component
  * A glassmorphism hover card that appears on hover
  */
-export const GlassHoverCard: React.FC<GlassHoverCardProps> = ({
+export const GlassHoverCard = forwardRef<HTMLDivElement, GlassHoverCardProps>(({
     content,
     children,
     placement = 'top',
@@ -108,16 +133,31 @@ export const GlassHoverCard: React.FC<GlassHoverCardProps> = ({
     className,
     maxWidth = '320px',
     triggerClassName,
-}) => {
+    title,
+    description,
+    respectMotionPreference = true,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+    'aria-describedby': ariaDescribedBy,
+    ...props
+}, ref) => {
     const [isOpen, setIsOpen] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const triggerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
     const showTimeoutRef = useRef<NodeJS.Timeout>();
     const hideTimeoutRef = useRef<NodeJS.Timeout>();
+    const { prefersReducedMotion } = useMotionPreferenceContext();
 
     const open = controlledOpen !== undefined ? controlledOpen : isOpen;
     const setOpen = onOpenChange || setIsOpen;
+    
+    // Generate unique IDs for accessibility
+    const hoverCardId = useA11yId('glass-hover-card');
+    const titleId = title ? useA11yId('glass-hover-card-title') : undefined;
+    const descriptionId = description ? useA11yId('glass-hover-card-desc') : undefined;
+    
+    const shouldAnimate = respectMotionPreference ? !prefersReducedMotion : true;
 
     // Calculate position based on placement and alignment
     const calculatePosition = () => {
@@ -223,8 +263,14 @@ export const GlassHoverCard: React.FC<GlassHoverCardProps> = ({
         if (open) {
             // Small delay to ensure content is rendered
             setTimeout(calculatePosition, 0);
+            
+            // Announce to screen readers when opened
+            announceToScreenReader(
+                `Hover card opened: ${title || ariaLabel || 'Hover card'}`,
+                'polite'
+            );
         }
-    }, [open, placement, align, offset]);
+    }, [open, placement, align, offset, title, ariaLabel]);
 
     // Recalculate position on window resize
     useEffect(() => {
@@ -249,6 +295,7 @@ export const GlassHoverCard: React.FC<GlassHoverCardProps> = ({
             {open && (
                 <Motion
                     preset="fadeIn"
+                    duration={shouldAnimate ? 200 : 0}
                     className="fixed z-[9999]"
                     style={{
                         left: position.x,
@@ -264,21 +311,43 @@ export const GlassHoverCard: React.FC<GlassHoverCardProps> = ({
                         )}
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
+                        role="tooltip"
+                        id={hoverCardId}
+                        aria-labelledby={ariaLabelledBy || titleId}
+                        aria-describedby={ariaDescribedBy || descriptionId}
+                        aria-label={!ariaLabelledBy && !titleId ? ariaLabel : undefined}
+                        {...props}
                     >
                         <OptimizedGlass
-            intent="neutral"
-          elevation="level3"
-          intensity="strong"
-          depth={2}
-          tint="neutral"
-          border="subtle"
-          animation="none"
-          performanceMode="medium"
-                          liftOnHover
-                          hoverSheen
-                          className="backdrop-blur-md bg-black/20 border border-white/20 shadow-2xl glass-radial-reveal"
+                            ref={ref}
+                            intent="neutral"
+                            elevation="level3"
+                            intensity="strong"
+                            depth={2}
+                            tint="neutral"
+                            border="subtle"
+                            animation="none"
+                            performanceMode="medium"
+                            liftOnHover
+                            hoverSheen
+                            className="backdrop-blur-md bg-black/20 border border-white/20 shadow-2xl glass-radial-reveal"
                         >
-                            <div className="p-4">
+                            <div className="glass-p-4">
+                                {/* Header with title and description */}
+                                {(title || description) && (
+                                    <div className="glass-mb-2">
+                                        {title && (
+                                            <h3 id={titleId} className="font-medium text-foreground glass-text-sm glass-mb-1">
+                                                {title}
+                                            </h3>
+                                        )}
+                                        {description && (
+                                            <p id={descriptionId} className="glass-text-xs glass-text-secondary">
+                                                {description}
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
                                 {content}
                             </div>
                         </OptimizedGlass>
@@ -304,7 +373,9 @@ export const GlassHoverCard: React.FC<GlassHoverCardProps> = ({
             )}
         </div>
     );
-};
+});
+
+GlassHoverCard.displayName = 'GlassHoverCard';
 
 /**
  * GlassHoverCardContent component

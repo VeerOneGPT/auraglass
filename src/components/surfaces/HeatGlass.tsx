@@ -1,180 +1,20 @@
+'use client';
+
 /**
  * HeatGlass Component
  *
- * A glass surface with heat distortion effects.
+ * A modern glass surface with heat distortion effects.
+ * Migrated to use OptimizedGlass architecture.
  */
 import React, { forwardRef, useState } from 'react';
-import styled, { keyframes, css } from 'styled-components';
-
-import { createGlassStyle } from '../../core/mixins/glassMixins';
-import { AURA_GLASS } from '../../tokens/glass';
-import { createThemeContext } from '../../core/themeContext';
+import { cn } from '@/lib/utilsComprehensive';
+import { OptimizedGlass, Motion } from '../../primitives';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import { useGlassTheme } from '../../hooks/useGlassTheme';
-
 import { HeatGlassProps } from './types';
 
-// Heat distortion animation
-const heatDistort = keyframes`
-  0% {
-    filter: url('#heat-distortion-0');
-  }
-  25% {
-    filter: url('#heat-distortion-25');
-  }
-  50% {
-    filter: url('#heat-distortion-50');
-  }
-  75% {
-    filter: url('#heat-distortion-75');
-  }
-  100% {
-    filter: url('#heat-distortion-0');
-  }
-`;
-
-// Heat glow pulse animation - using CSS custom properties for unified color management
-const heatGlow = keyframes`
-  0% {
-    box-shadow: 0 0 10px 0 var(--heat-glow-base, rgba(255, 100, 50, 0.5));
-  }
-  50% {
-    box-shadow: 0 0 20px 5px var(--heat-glow-intense, rgba(255, 100, 50, 0.7));
-  }
-  100% {
-    box-shadow: 0 0 10px 0 var(--heat-glow-base, rgba(255, 100, 50, 0.5));
-  }
-`;
-
-// Styled components
-const HeatGlassContainer = styled.div<{
-  $elevation: number;
-  $blurStrength: 'none' | 'light' | 'standard' | 'heavy';
-  $borderRadius: 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
-  $interactive: boolean;
-  $heatColor: string;
-  $animate: boolean;
-  $backgroundColor: string;
-  $isHovered: boolean;
-  $reducedMotion: boolean;
-  $glassStyles?: any;
-}>`
-  position: relative;
-  display: block;
-  width: 100%;
-  min-height: 100px;
-  border-radius: ${props => {
-    switch (props.$borderRadius) {
-      case 'none': return '0';
-      case 'sm': return '4px';
-      case 'md': return '8px';
-      case 'lg': return '12px';
-      case 'xl': return '16px';
-      case 'full': return '9999px';
-      default: return '8px';
-    }
-  }};
-  padding: 16px;
-  box-sizing: border-box;
-  overflow: hidden;
-
-  /* Basic glass styling - using unified glass system */
-  background-color: ${props => props.$backgroundColor};
-  backdrop-filter: ${props => {
-    const blurValue = (() => {
-      switch (props.$blurStrength) {
-        case 'none': return '0px';
-        case 'light': return '4px';
-        case 'standard': return '8px';
-        case 'heavy': return '12px';
-        default: return '8px';
-      }
-    })();
-    return props.$glassStyles?.backdropFilter || `blur(${blurValue})`;
-  }};
-  -webkit-backdrop-filter: ${props => {
-    const blurValue = (() => {
-      switch (props.$blurStrength) {
-        case 'none': return '0px';
-        case 'light': return '4px';
-        case 'standard': return '8px';
-        case 'heavy': return '12px';
-        default: return '8px';
-      }
-    })();
-    return props.$glassStyles?.backdropFilter || `blur(${blurValue})`;
-  }};
-  border: ${props => props.$glassStyles?.border || `1px solid ${AURA_GLASS.surfaces.neutral.level2.border.color}` };
-
-  /* Heat effect glow */
-  box-shadow: 0 0 20px 5px ${props => props.$heatColor};
-
-  /* Heat animation */
-  ${props =>
-    props.$animate &&
-    !props.$reducedMotion &&
-    css`
-      animation: ${heatGlow} 3s infinite;
-    `}
-
-  /* Hover interactions */
-  ${props =>
-    props.$interactive &&
-    css`
-      cursor: pointer;
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
-
-      &:hover {
-        box-shadow: 0 0 30px 10px ${(props: any) => props.$heatColor};
-        transform: translateY(-2px);
-      }
-
-      &:active {
-        transform: translateY(0);
-      }
-    `}
-
-  /* Heat radial gradient background enhancement */
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(
-      circle at 50% 50%,
-      ${props => props.$heatColor} 0%,
-      transparent 70%
-    );
-    opacity: 0.3;
-    pointer-events: none;
-    border-radius: inherit;
-    z-index: -1;
-  }
-`;
-
-const HeatContent = styled.div<{
-  $animate: boolean;
-  $reducedMotion: boolean;
-}>`
-  position: relative;
-  z-index: 1;
-
-  /* Heat distortion effect */
-  ${props =>
-    props.$animate &&
-    !props.$reducedMotion &&
-    css`
-      animation: ${heatDistort} 3s infinite ease-in-out;
-      animation-delay: ${Math.random() * 2}s;
-      will-change: filter;
-    `}
-`;
-
 // SVG filters for heat distortion effect
-const HeatDistortionFilters = () => (
-  <svg width="0" height="0" style={{ position: 'absolute', visibility: 'hidden' }}>
+const HeatDistortionFilters = React.memo(() => (
+  <svg width="0" height="0" className="absolute invisible">
     <defs>
       <filter id="heat-distortion-0">
         <feTurbulence type="fractalNoise" baseFrequency="0.01" numOctaves="3" seed="0" />
@@ -194,93 +34,166 @@ const HeatDistortionFilters = () => (
       </filter>
     </defs>
   </svg>
-);
+));
+
+HeatDistortionFilters.displayName = 'HeatDistortionFilters';
 
 /**
  * HeatGlass Component
- *
- * A glass surface with heat distortion effects.
+ * Modern implementation using OptimizedGlass with heat distortion effects
  */
-const HeatGlassComponent = (
-  props: HeatGlassProps,
-  ref: React.ForwardedRef<HTMLDivElement>
-) => {
-  const {
-    children,
-    className,
-    style,
-    elevation = 'level2',
-    blurStrength = 'standard',
-    borderRadius = 'md',
-    interactive = true,
-    heatColor,
-    animate = true,
-    backgroundColor,
-    ...rest
-  } = props;
+export const HeatGlass = forwardRef<HTMLDivElement, HeatGlassProps>(
+  (
+    {
+      children,
+      className,
+      style,
+      elevation = 'level2',
+      blurStrength = 'standard',
+      borderRadius = 'md',
+      interactive = true,
+      heatColor = 'rgba(255, 100, 50, 0.7)',
+      animate = true,
+      backgroundColor,
+      ...rest
+    },
+    ref
+  ) => {
+    const prefersReducedMotion = useReducedMotion();
+    const shouldAnimate = animate && !prefersReducedMotion;
+    const [isHovered, setIsHovered] = useState(false);
 
-  // Get unified glass styles
-  const glassStyles = createGlassStyle({ 
-    intent: 'danger', // heat effect uses danger colors
-    elevation: elevation as any,
-    tier: 'high' 
-  });
-  
-  // Use unified colors with heat-specific fallbacks
-  const finalHeatColor = heatColor || glassStyles.borderColor || 'rgba(255, 100, 50, 0.7)';
-  const finalBackgroundColor = backgroundColor || AURA_GLASS.surfaces.danger.level2.surface.base;
+    // Map blur strength to intensity
+    const intensityMap = {
+      none: 'subtle' as const,
+      light: 'subtle' as const,
+      standard: 'medium' as const,
+      heavy: 'strong' as const,
+    };
 
-  // Check if reduced motion is preferred
-  const prefersReducedMotion = useReducedMotion();
+    // Map border radius
+    const radiusMap = {
+      none: 'rounded-none',
+      sm: 'glass-radius-sm',
+      md: 'glass-radius-md',
+      lg: 'glass-radius-lg',
+      xl: 'glass-radius-xl',
+      full: 'glass-radius-full',
+    };
 
-  // State for hover effects
-  const [isHovered, setIsHovered] = useState(false);
+    // Map elevation to OptimizedGlass elevation levels
+    const getElevationLevel = (elev: any) => {
+      if (typeof elev === 'string' && elev.startsWith('level')) {
+        return elev as 'level1' | 'level2' | 'level3' | 'level4';
+      }
+      const numElev = typeof elev === 'number' ? elev : 2;
+      if (numElev <= 1) return 'level1';
+      if (numElev <= 2) return 'level2';
+      if (numElev <= 3) return 'level3';
+      return 'level4';
+    };
 
-  // Handle mouse events
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
+    // Handle mouse events
+    const handleMouseEnter = () => setIsHovered(true);
+    const handleMouseLeave = () => setIsHovered(false);
 
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
+    return (
+      <>
+        {/* SVG Filters for heat distortion */}
+        {shouldAnimate && <HeatDistortionFilters />}
 
-  return (
-    <>
-      {/* SVG Filters for heat distortion */}
-      {animate && !prefersReducedMotion && <HeatDistortionFilters />}
-
-      <HeatGlassContainer
-        ref={ref}
-        className={className}
-        style={style}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        $elevation={typeof elevation === 'string' ? (elevation === 'level1' ? 0 : elevation === 'level2' ? 1 : elevation === 'level3' ? 2 : elevation === 'level4' ? 3 : 4) : elevation}
-        $blurStrength={blurStrength}
-        $borderRadius={borderRadius}
-        $interactive={interactive}
-        $heatColor={finalHeatColor}
-        $animate={animate}
-        $backgroundColor={finalBackgroundColor}
-        $glassStyles={glassStyles}
-        $isHovered={isHovered}
-        $reducedMotion={prefersReducedMotion}
-        {...rest}
-      >
-        <HeatContent
-          $animate={animate}
-          $reducedMotion={prefersReducedMotion}
+        <Motion
+          preset={shouldAnimate ? "pulseIn" : "none"}
+          className="relative"
         >
-          {children}
-        </HeatContent>
-      </HeatGlassContainer>
-    </>
-  );
-};
+          <OptimizedGlass
+            ref={ref}
+            intent="danger"
+            elevation={getElevationLevel(elevation)}
+            intensity={intensityMap[blurStrength]}
+            depth={3}
+            tint="warm"
+            border="subtle"
+            animation={shouldAnimate ? "pulse" : "none"}
+            performanceMode="high"
+            liftOnHover={interactive}
+            press={interactive}
+            className={cn(
+              // Base styles
+              'relative block w-full min-h-[100px] glass-p-4 box-border overflow-hidden',
+              'transition-all duration-300',
+              
+              // Border radius
+              radiusMap[borderRadius],
+              
+              // Heat glow effect
+              'shadow-heat-glow',
+              
+              // Interactive styles
+              interactive && [
+                'cursor-pointer',
+                'hover:-translate-y-0.5',
+                'active:translate-y-0',
+              ],
+              
+              // Heat pulse animation
+              shouldAnimate && 'animate-heat-pulse',
+              
+              className
+            )}
+            style={{
+              // Heat glow box shadow
+              boxShadow: `0 0 20px 5px ${heatColor}`,
+              backgroundColor,
+              ...style,
+            } as React.CSSProperties}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            {...rest}
+          >
+            {/* Heat radial gradient background */}
+            <div 
+              className="absolute inset-0 pointer-events-none rounded-inherit -z-10 opacity-30"
+              style={{
+                background: `radial-gradient(circle at 50% 50%, ${heatColor} 0%, transparent 70%)`,
+              }}
+            />
+            
+            {/* Content with heat distortion */}
+            <div 
+              className={cn(
+                'relative z-10',
+                shouldAnimate && [
+                  'animate-heat-distortion',
+                  'will-change-auto', // Use will-change-auto instead of will-change-filter
+                ]
+              )}
+              style={{
+                // Apply heat distortion filters
+                filter: shouldAnimate ? 'url(#heat-distortion-0)' : undefined,
+                animationDelay: shouldAnimate ? `${Math.random() * 2}s` : undefined,
+              }}
+            >
+              {children}
+            </div>
+            
+            {/* Enhanced hover glow */}
+            {interactive && isHovered && (
+              <div 
+                className="absolute inset-0 pointer-events-none rounded-inherit transition-opacity duration-300"
+                style={{
+                  boxShadow: `0 0 30px 10px ${heatColor}`,
+                  opacity: 0.8,
+                }}
+              />
+            )}
+          </OptimizedGlass>
+        </Motion>
+      </>
+    );
+  }
+);
 
-// Wrap the component function with forwardRef
-const HeatGlass = forwardRef(HeatGlassComponent);
 HeatGlass.displayName = 'HeatGlass';
 
 export default HeatGlass;

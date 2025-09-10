@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/react';
 import { ThemeProvider } from '../src/theme/ThemeProvider';
+import { AnimationProvider } from '../src/contexts/AnimationContext';
 import { CursorGlow } from '../src/components/interactive/CursorGlow';
 import '../src/styles/index.css';
 
@@ -108,7 +109,8 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <ThemeProvider forceColorMode="dark">
+      <AnimationProvider>
+        <ThemeProvider forceColorMode="dark">
         <div
           style={{
             padding: '20px',
@@ -168,6 +170,7 @@ const preview: Preview = {
           </div>
         </div>
       </ThemeProvider>
+      </AnimationProvider>
     ),
   ],
 };

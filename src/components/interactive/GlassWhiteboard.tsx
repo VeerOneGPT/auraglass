@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export type DrawingTool = 'pen' | 'eraser' | 'rectangle' | 'circle' | 'line' | 'text' | 'select';
@@ -502,17 +501,17 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
     >
       {/* Toolbar */}
       {showToolbar && (
-        <div className="flex flex-wrap items-center gap-2 p-4 border-b border-white/10">
+        <div className="flex flex-wrap items-center glass-gap-2 glass-p-4 border-b border-white/10">
           {/* Tools */}
-          <div className="flex gap-1">
+          <div className="flex glass-gap-1">
             {enabledTools.map(tool => (
               <button
                 key={tool}
-                onClick={() => handleToolChange(tool)}
-                className={`px-3 py-2 rounded text-sm font-medium transition-colors ${
+                onClick={(e) => handleToolChange(tool)}
+                className={`glass-px-3 glass-py-2 glass-radius-md glass-text-sm font-medium transition-colors ${
                   currentTool === tool
-                    ? 'bg-white/20 text-white'
-                    : 'text-white/70 hover:text-white hover:bg-white/10'
+                    ? 'bg-white/20 glass-text-primary'
+                    : 'glass-text-primary/70 hover:glass-text-primary hover:bg-white/10'
                 }`}
               >
                 {tool.charAt(0).toUpperCase() + tool.slice(1)}
@@ -521,12 +520,12 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
           </div>
 
           {/* Colors */}
-          <div className="flex gap-1">
+          <div className="flex glass-gap-1">
             {availableColors.map(color => (
               <button
                 key={color}
-                onClick={() => handleColorChange(color)}
-                className={`w-8 h-8 rounded border-2 transition-all ${
+                onClick={(e) => handleColorChange(color)}
+                className={`w-8 h-8 glass-radius-md border-2 transition-all ${
                   currentColor === color
                     ? 'border-white scale-110'
                     : 'border-white/30 hover:border-white/60'
@@ -537,8 +536,8 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
           </div>
 
           {/* Brush Size */}
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-white/70">Size:</span>
+          <div className="flex items-center glass-gap-2">
+            <span className="glass-text-sm glass-text-primary/70">Size:</span>
             <input
               type="range"
               min="1"
@@ -547,12 +546,12 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
               onChange={(e) => setBrushSize(Number(e.target.value))}
               className="w-16"
             />
-            <span className="text-sm text-white/70 w-6">{brushSize}</span>
+            <span className="glass-text-sm glass-text-primary/70 w-6">{brushSize}</span>
           </div>
 
           {/* Opacity */}
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-white/70">Opacity:</span>
+          <div className="flex items-center glass-gap-2">
+            <span className="glass-text-sm glass-text-primary/70">Opacity:</span>
             <input
               type="range"
               min="0.1"
@@ -562,28 +561,28 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
               onChange={(e) => setOpacity(Number(e.target.value))}
               className="w-16"
             />
-            <span className="text-sm text-white/70 w-8">{(opacity * 100).toFixed(0)}%</span>
+            <span className="glass-text-sm glass-text-primary/70 w-8">{(opacity * 100).toFixed(0)}%</span>
           </div>
 
           {/* Actions */}
-          <div className="flex gap-1 ml-4">
+          <div className="flex glass-gap-1 glass-ml-4">
             <button
               onClick={clearCanvas}
-              className="px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded transition-colors"
+              className="glass-px-3 glass-py-2 glass-text-sm glass-text-primary/70 hover:glass-text-primary hover:bg-white/10 glass-radius-md transition-colors"
             >
               Clear
             </button>
             {selectedElements.size > 0 && (
               <button
                 onClick={deleteSelected}
-                className="px-3 py-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 rounded transition-colors"
+                className="glass-px-3 glass-py-2 glass-text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 glass-radius-md transition-colors"
               >
                 Delete Selected
               </button>
             )}
             <button
               onClick={exportAsImage}
-              className="px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/10 rounded transition-colors"
+              className="glass-px-3 glass-py-2 glass-text-sm glass-text-primary/70 hover:glass-text-primary hover:bg-white/10 glass-radius-md transition-colors"
             >
               Export
             </button>
@@ -595,14 +594,14 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
       {currentShape && currentShape.type === 'text' && (
         <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-20">
           <OptimizedGlass
-            className="p-6 max-w-sm w-full mx-4"
+            className="glass-p-6 max-w-sm w-full glass-mx-4"
             blur="medium"
             elevation={'level2'}
           >
             <input
               autoFocus
               placeholder="Enter text..."
-              className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded text-white placeholder-white/50 focus:outline-none focus:border-white/40"
+              className="w-full glass-px-3 glass-py-2 bg-white/10 border border-white/20 glass-radius-md glass-text-primary placeholder-white/50 focus:outline-none focus:border-white/40"
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   handleTextInput((e.target as HTMLInputElement).value);

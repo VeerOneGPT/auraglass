@@ -1,7 +1,6 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { createGlassStyle } from '../../../../core/mixins/glassMixins';
 import { Glass, Motion } from '../../../../primitives';
 import { GlassButton, IconButton } from '../../../button/GlassButton';
 import { GlassBadge } from '../../../data-display/GlassBadge';
@@ -99,21 +98,21 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
     const sizeClasses = {
       sm: {
         height: 'h-32',
-        padding: 'p-3',
-        title: 'text-sm',
-        subtitle: 'text-xs',
+        padding: 'glass-p-3',
+        title: 'glass-text-sm',
+        subtitle: 'glass-text-xs',
       },
       md: {
         height: 'h-48',
-        padding: 'p-4',
-        title: 'text-base',
-        subtitle: 'text-sm',
+        padding: 'glass-p-4',
+        title: 'glass-text-base',
+        subtitle: 'glass-text-sm',
       },
       lg: {
         height: 'h-64',
-        padding: 'p-6',
-        title: 'text-lg',
-        subtitle: 'text-base',
+        padding: 'glass-p-6',
+        title: 'glass-text-lg',
+        subtitle: 'glass-text-base',
       },
     };
 
@@ -132,13 +131,13 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
     // Simple bar chart renderer
     const renderBarChart = () => {
       if (!data?.dataPoints || data.dataPoints.length === 0) {
-        return <div className="flex items-center justify-center h-full text-muted-foreground">No data available</div>;
+        return <div className="flex items-center justify-center h-full glass-text-secondary">No data available</div>;
       }
 
       const maxValue = Math.max(...data.dataPoints.map(d => d.value));
       
       return (
-        <div className="flex items-end justify-between gap-2 h-full">
+        <div className="flex items-end justify-between glass-gap-2 h-full">
           {data?.dataPoints.map((point, index) => {
             const height = (point.value / maxValue) * 100;
             const color = point.color || colors[index % (colors?.length || 0)];
@@ -148,7 +147,7 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
                 key={point.label}
                 preset="slideUp"
                 delay={index * 100}
-                className="flex-1 flex flex-col items-center gap-2"
+                className="flex-1 flex flex-col items-center glass-gap-2"
               >
                 <div
                   className="w-full rounded-t transition-all duration-300 hover:opacity-80 cursor-pointer"
@@ -159,7 +158,7 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
                   }}
                   title={`${point.label}: ${point.value}`}
                 />
-                <div className="text-xs text-muted-foreground text-center truncate w-full">
+                <div className="glass-text-xs glass-text-secondary text-center truncate w-full">
                   {point.label}
                 </div>
               </Motion>
@@ -172,7 +171,7 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
     // Simple line chart renderer
     const renderLineChart = () => {
       if (!data?.dataPoints || data.dataPoints.length === 0) {
-        return <div className="flex items-center justify-center h-full text-muted-foreground">No data available</div>;
+        return <div className="flex items-center justify-center h-full glass-text-secondary">No data available</div>;
       }
 
       const maxValue = Math.max(...data.dataPoints.map(d => d.value));
@@ -232,7 +231,7 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
           {/* Labels */}
           <div className="absolute bottom-0 left-0 right-0 flex justify-between">
             {data?.dataPoints.map((point, index) => (
-              <div key={index} className="text-xs text-white/80">
+              <div key={index} className="glass-text-xs glass-text-primary/80">
                 {point.label}
               </div>
             ))}
@@ -244,7 +243,7 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
     // Simple pie chart renderer
     const renderPieChart = () => {
       if (!data?.dataPoints || data.dataPoints.length === 0) {
-        return <div className="flex items-center justify-center h-full text-muted-foreground">No data available</div>;
+        return <div className="flex items-center justify-center h-full glass-text-secondary">No data available</div>;
       }
 
       const total = data.dataPoints.reduce((sum, d) => sum + d.value, 0);
@@ -302,7 +301,7 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
     // Sparkline renderer
     const renderSparkline = () => {
       if (!data?.dataPoints || data.dataPoints.length === 0) {
-        return <div className="flex items-center justify-center h-full text-muted-foreground text-xs">No data</div>;
+        return <div className="flex items-center justify-center h-full glass-text-secondary glass-text-xs">No data</div>;
       }
 
       const maxValue = Math.max(...data.dataPoints.map(d => d.value));
@@ -329,13 +328,13 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
       if (loading) {
         return (
           <div className="flex items-center justify-center h-full">
-            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+            <div className="w-6 h-6 border-2 border-primary border-t-transparent glass-radius-full animate-spin" />
           </div>
         );
       }
 
       if (!data) {
-        return <div className="flex items-center justify-center h-full text-muted-foreground">No chart data provided</div>;
+        return <div className="flex items-center justify-center h-full glass-text-secondary">No chart data provided</div>;
       }
 
       if (renderChart) {
@@ -360,16 +359,16 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
       if (!showLegend || type === 'sparkline' || !data?.dataPoints || data.dataPoints.length === 0) return null;
 
       return (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap glass-gap-2">
           {data.dataPoints.map((point, index) => {
             const color = point.color || colors[index % (colors?.length || 0)];
             return (
-              <div key={index} className="flex items-center gap-1">
+              <div key={index} className="flex items-center glass-gap-1">
                 <div
-                  className="w-3 h-3 rounded-sm"
+                  className="w-3 h-3 glass-radius-sm"
                   style={{ backgroundColor: color }}
                 />
-                <span className="text-xs text-muted-foreground">
+                <span className="glass-text-xs glass-text-secondary">
                   {point.label}
                 </span>
               </div>
@@ -382,8 +381,7 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
     return (
       <Glass
         ref={ref}
-        rounded="lg"
-        className={cn('w-full h-full', config.padding, className)}
+        className={cn('w-full h-full glass-radius-lg', config.padding, className)}
         {...props}
       >
         <VStack space="md" className="h-full">
@@ -394,7 +392,7 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
                 {data?.title || 'Chart'}
               </h3>
               {data?.subtitle && (
-                <p className={cn('text-muted-foreground', config.subtitle)}>
+                <p className={cn('glass-text-secondary', config.subtitle)}>
                   {data?.subtitle}
                 </p>
               )}
@@ -411,7 +409,7 @@ export const ChartWidget = forwardRef<HTMLDivElement, ChartWidgetProps>(
           {data?.summary && variant !== 'minimal' && (
             <HStack space="sm" align="center">
               {data?.summary.total && (
-                <div className="text-lg font-bold text-foreground">
+                <div className="glass-text-lg font-bold text-foreground">
                   {data?.summary.total.toLocaleString()}
                 </div>
               )}

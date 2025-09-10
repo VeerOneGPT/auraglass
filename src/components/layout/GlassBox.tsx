@@ -1,8 +1,8 @@
-import React, { forwardRef } from 'react';
-import styled from 'styled-components';
+'use client';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
-import { createThemeContext } from '../../core/themeContext';
+import React, { forwardRef } from 'react';
+import { cn } from '@/lib/utilsComprehensive';
+import { OptimizedGlass } from '../../primitives';
 
 // Box props interface
 export interface BoxProps {
@@ -141,7 +141,7 @@ export interface BoxProps {
   /**
    * The elevation of the glass effect
    */
-  elevation?: 0 | 1 | 2 | 3 | 4 | 5;
+  elevation?: 0 | 1 | 2 | 3 | 4 | 5 | 'level1' | 'level2' | 'level3' | 'level4';
 
   /**
    * Additional CSS class name
@@ -166,166 +166,21 @@ const formatSpacing = (value: number | string | undefined): string => {
   return `${value * 8}px`;
 };
 
-// Styled box component
-const StyledBox = styled.div<{
-  $display?: string;
-  $flexDirection?: string;
-  $flexWrap?: string;
-  $justifyContent?: string;
-  $alignItems?: string;
-  $alignContent?: string;
-  $alignSelf?: string;
-  $p?: number | string;
-  $pt?: number | string;
-  $pr?: number | string;
-  $pb?: number | string;
-  $pl?: number | string;
-  $px?: number | string;
-  $py?: number | string;
-  $m?: number | string;
-  $mt?: number | string;
-  $mr?: number | string;
-  $mb?: number | string;
-  $ml?: number | string;
-  $mx?: number | string;
-  $my?: number | string;
-  $width?: number | string;
-  $height?: number | string;
-  $minWidth?: number | string;
-  $minHeight?: number | string;
-  $maxWidth?: number | string;
-  $maxHeight?: number | string;
-  $borderRadius?: number | string;
-  $bgcolor?: string;
-  $glass?: boolean;
-  $elevation?: number;
-  $intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
-  $tier?: 'low' | 'medium' | 'high';
-}>`
-  /* Base styles */
-  box-sizing: border-box;
-
-  /* Display */
-  ${props => props.$display && `display: ${props.$display};`}
-
-  /* Flex properties */
-  ${props => props.$flexDirection && `flex-direction: ${props.$flexDirection};`}
-  ${props => props.$flexWrap && `flex-wrap: ${props.$flexWrap};`}
-  ${props => props.$justifyContent && `justify-content: ${props.$justifyContent};`}
-  ${props => props.$alignItems && `align-items: ${props.$alignItems};`}
-  ${props => props.$alignContent && `align-content: ${props.$alignContent};`}
-  ${props => props.$alignSelf && `align-self: ${props.$alignSelf};`}
-  
-  /* Padding */
-  ${props => props.$p !== undefined && `padding: ${formatSpacing(props.$p)};`}
-  ${props => props.$pt !== undefined && `padding-top: ${formatSpacing(props.$pt)};`}
-  ${props => props.$pr !== undefined && `padding-right: ${formatSpacing(props.$pr)};`}
-  ${props => props.$pb !== undefined && `padding-bottom: ${formatSpacing(props.$pb)};`}
-  ${props => props.$pl !== undefined && `padding-left: ${formatSpacing(props.$pl)};`}
-  ${props =>
-    props.$px !== undefined &&
-    `
-    padding-left: ${formatSpacing(props.$px)};
-    padding-right: ${formatSpacing(props.$px)};
-  `}
-  ${props =>
-    props.$py !== undefined &&
-    `
-    padding-top: ${formatSpacing(props.$py)};
-    padding-bottom: ${formatSpacing(props.$py)};
-  `}
-  
-  /* Margin */
-  ${props => props.$m !== undefined && `margin: ${formatSpacing(props.$m)};`}
-  ${props => props.$mt !== undefined && `margin-top: ${formatSpacing(props.$mt)};`}
-  ${props => props.$mr !== undefined && `margin-right: ${formatSpacing(props.$mr)};`}
-  ${props => props.$mb !== undefined && `margin-bottom: ${formatSpacing(props.$mb)};`}
-  ${props => props.$ml !== undefined && `margin-left: ${formatSpacing(props.$ml)};`}
-  ${props =>
-    props.$mx !== undefined &&
-    `
-    margin-left: ${formatSpacing(props.$mx)};
-    margin-right: ${formatSpacing(props.$mx)};
-  `}
-  ${props =>
-    props.$my !== undefined &&
-    `
-    margin-top: ${formatSpacing(props.$my)};
-    margin-bottom: ${formatSpacing(props.$my)};
-  `}
-  
-  /* Dimensions */
-  ${props =>
-    props.$width !== undefined &&
-    `width: ${typeof props.$width === 'number' ? `${props.$width}px` : props.$width};`}
-  ${props =>
-    props.$height !== undefined &&
-    `height: ${typeof props.$height === 'number' ? `${props.$height}px` : props.$height};`}
-  ${props =>
-    props.$minWidth !== undefined &&
-    `min-width: ${typeof props.$minWidth === 'number' ? `${props.$minWidth}px` : props.$minWidth};`}
-  ${props =>
-    props.$minHeight !== undefined &&
-    `min-height: ${
-      typeof props.$minHeight === 'number' ? `${props.$minHeight}px` : props.$minHeight
-    };`}
-  ${props =>
-    props.$maxWidth !== undefined &&
-    `max-width: ${typeof props.$maxWidth === 'number' ? `${props.$maxWidth}px` : props.$maxWidth};`}
-  ${props =>
-    props.$maxHeight !== undefined &&
-    `max-height: ${
-      typeof props.$maxHeight === 'number' ? `${props.$maxHeight}px` : props.$maxHeight
-    };`}
-  
-  /* Border radius */
-  ${props =>
-    props.$borderRadius !== undefined &&
-    `border-radius: ${
-      typeof props.$borderRadius === 'number' ? `${props.$borderRadius}px` : props.$borderRadius
-    };`}
-  
-  /* Background color */
-  ${props => props.$bgcolor && `background-color: ${props.$bgcolor};`}
-  
-  /* Glass effect */
-  ${props => {
-    if (!props.$glass) return '';
-
-    // Map numeric elevation to string elevation
-    const elevationMap: Record<number, string> = {
-      0: 'level1',
-      1: 'level1',
-      2: 'level2',
-      3: 'level3',
-      4: 'level4',
-      5: 'level5'
-    };
-
-    const elevation = typeof props.$elevation === 'number'
-      ? elevationMap[props.$elevation] || 'level1'
-      : 'level1';
-
-    const glassStyles = createGlassStyle({
-      intent: props.$intent || 'neutral',
-      elevation: elevation as any,
-      tier: props.$tier || 'high'
-    });
-
-    return `
-      background: ${glassStyles.background};
-      backdrop-filter: ${glassStyles.backdropFilter};
-      -webkit-backdrop-filter: ${glassStyles.WebkitBackdropFilter};
-      border: ${glassStyles.border};
-      border-radius: ${glassStyles.borderRadius};
-      box-shadow: ${glassStyles.boxShadow};
-      color: ${glassStyles.color};
-      transition: ${glassStyles.transition};
-      position: ${glassStyles.position};
-      transform: ${glassStyles.transform};
-    `;
-  }}
-`;
+// Helper function to convert spacing to Tailwind class
+const spacingToTailwind = (value: number | string | undefined, prefix: string): string => {
+  if (value === undefined) return '';
+  if (typeof value === 'string') return `${prefix}-[${value}]`;
+  // Map 8px units to Tailwind spacing scale
+  const spacing = Math.round(value);
+  if (spacing === 0) return `${prefix}-0`;
+  if (spacing <= 1) return `${prefix}-1`;
+  if (spacing <= 2) return `${prefix}-2`;
+  if (spacing <= 3) return `${prefix}-3`;
+  if (spacing <= 4) return `${prefix}-4`;
+  if (spacing <= 6) return `${prefix}-6`;
+  if (spacing <= 8) return `${prefix}-8`;
+  return `${prefix}-[${spacing * 8}px]`;
+};
 
 /**
  * Box Component
@@ -335,7 +190,7 @@ const StyledBox = styled.div<{
 export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
   const {
     children,
-    component = 'div',
+    component: Component = 'div',
     display,
     flexDirection,
     flexWrap,
@@ -373,48 +228,154 @@ export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
     ...rest
   } = props;
 
+  // Build dynamic classes
+  const displayClasses = {
+    block: 'block',
+    flex: 'flex',
+    inline: 'inline',
+    'inline-block': 'inline-block',
+    'inline-flex': 'inline-flex',
+    grid: 'grid',
+    'inline-grid': 'inline-grid',
+    none: 'hidden'
+  };
+
+  const flexDirectionClasses = {
+    row: 'flex-row',
+    'row-reverse': 'flex-row-reverse',
+    column: 'flex-col',
+    'column-reverse': 'flex-col-reverse'
+  };
+
+  const flexWrapClasses = {
+    nowrap: 'flex-nowrap',
+    wrap: 'flex-wrap',
+    'wrap-reverse': 'flex-wrap-reverse'
+  };
+
+  const justifyContentClasses = {
+    'flex-start': 'justify-start',
+    'flex-end': 'justify-end',
+    center: 'justify-center',
+    'space-between': 'justify-between',
+    'space-around': 'justify-around',
+    'space-evenly': 'justify-evenly'
+  };
+
+  const alignItemsClasses = {
+    'flex-start': 'items-start',
+    'flex-end': 'items-end',
+    center: 'items-center',
+    baseline: 'items-baseline',
+    stretch: 'items-stretch'
+  };
+
+  const alignContentClasses = {
+    'flex-start': 'content-start',
+    'flex-end': 'content-end',
+    center: 'content-center',
+    'space-between': 'content-between',
+    'space-around': 'content-around',
+    stretch: 'content-stretch'
+  };
+
+  const alignSelfClasses = {
+    auto: 'self-auto',
+    'flex-start': 'self-start',
+    'flex-end': 'self-end',
+    center: 'self-center',
+    baseline: 'self-baseline',
+    stretch: 'self-stretch'
+  };
+
+  const combinedClassName = cn(
+    'box-border',
+    display && displayClasses[display],
+    flexDirection && flexDirectionClasses[flexDirection],
+    flexWrap && flexWrapClasses[flexWrap],
+    justifyContent && justifyContentClasses[justifyContent],
+    alignItems && alignItemsClasses[alignItems],
+    alignContent && alignContentClasses[alignContent],
+    alignSelf && alignSelfClasses[alignSelf],
+    // Padding
+    p !== undefined && spacingToTailwind(p, 'p'),
+    pt !== undefined && spacingToTailwind(pt, 'pt'),
+    pr !== undefined && spacingToTailwind(pr, 'pr'),
+    pb !== undefined && spacingToTailwind(pb, 'pb'),
+    pl !== undefined && spacingToTailwind(pl, 'pl'),
+    px !== undefined && spacingToTailwind(px, 'px'),
+    py !== undefined && spacingToTailwind(py, 'py'),
+    // Margin
+    m !== undefined && spacingToTailwind(m, 'm'),
+    mt !== undefined && spacingToTailwind(mt, 'mt'),
+    mr !== undefined && spacingToTailwind(mr, 'mr'),
+    mb !== undefined && spacingToTailwind(mb, 'mb'),
+    ml !== undefined && spacingToTailwind(ml, 'ml'),
+    mx !== undefined && spacingToTailwind(mx, 'mx'),
+    my !== undefined && spacingToTailwind(my, 'my'),
+    className
+  );
+
+  const combinedStyle = {
+    ...(width !== undefined && { width: typeof width === 'number' ? `${width}px` : width }),
+    ...(height !== undefined && { height: typeof height === 'number' ? `${height}px` : height }),
+    ...(minWidth !== undefined && { minWidth: typeof minWidth === 'number' ? `${minWidth}px` : minWidth }),
+    ...(minHeight !== undefined && { minHeight: typeof minHeight === 'number' ? `${minHeight}px` : minHeight }),
+    ...(maxWidth !== undefined && { maxWidth: typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth }),
+    ...(maxHeight !== undefined && { maxHeight: typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight }),
+    ...(borderRadius !== undefined && { borderRadius: typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius }),
+    ...(bgcolor && { backgroundColor: bgcolor }),
+    ...style
+  };
+
+  if (glass) {
+    // Map elevation to OptimizedGlass elevation
+    const getElevationLevel = (elev: any) => {
+      if (typeof elev === 'string' && elev.startsWith('level')) {
+        return elev as 'level1' | 'level2' | 'level3' | 'level4';
+      }
+      const numElev = typeof elev === 'number' ? elev : 1;
+      if (numElev <= 1) return 'level1';
+      if (numElev <= 2) return 'level2';
+      if (numElev <= 3) return 'level3';
+      return 'level4';
+    };
+
+    return (
+      <OptimizedGlass
+        ref={ref}
+        intent="neutral"
+        elevation={getElevationLevel(elevation)}
+        intensity="medium"
+        depth={2}
+        tint="neutral"
+        border="subtle"
+        animation="none"
+        performanceMode="medium"
+        className={combinedClassName}
+        style={combinedStyle}
+        onClick={onClick}
+        {...rest}
+      >
+        {children}
+      </OptimizedGlass>
+    );
+  }
+
   return (
-    <StyledBox
-      as={component}
+    <Component
       ref={ref}
-      className={className}
-      style={style}
-      $display={display}
-      $flexDirection={flexDirection}
-      $flexWrap={flexWrap}
-      $justifyContent={justifyContent}
-      $alignItems={alignItems}
-      $alignContent={alignContent}
-      $alignSelf={alignSelf}
-      $p={p}
-      $pt={pt}
-      $pr={pr}
-      $pb={pb}
-      $pl={pl}
-      $px={px}
-      $py={py}
-      $m={m}
-      $mt={mt}
-      $mr={mr}
-      $mb={mb}
-      $ml={ml}
-      $mx={mx}
-      $my={my}
-      $width={width}
-      $height={height}
-      $minWidth={minWidth}
-      $minHeight={minHeight}
-      $maxWidth={maxWidth}
-      $maxHeight={maxHeight}
-      $borderRadius={borderRadius}
-      $bgcolor={bgcolor}
-      $glass={glass}
-      $elevation={elevation}
+      className={cn(
+        combinedClassName,
+        // Motion preferences - temporarily disabled
+        // shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none'
+      )}
+      style={combinedStyle}
       onClick={onClick}
       {...rest}
     >
       {children}
-    </StyledBox>
+    </Component>
   );
 });
 
@@ -426,16 +387,21 @@ Box.displayName = 'Box';
  * A box component with glass morphism styling.
  */
 export const GlassBox = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
-  const { glass = true, elevation = 2, borderRadius = 8, className, ...rest } = props;
+  const {
+    glass = true,
+    elevation = 'level2',
+    borderRadius = 8,
+    className,
+    ...rest
+  } = props;
 
-  // Add glass styling to the base box
   return (
     <Box
       ref={ref}
       glass={glass}
       elevation={elevation}
       borderRadius={borderRadius}
-      className={`glass-box ${className || ''}`}
+      className={cn('glass-box', className)}
       {...rest}
     />
   );

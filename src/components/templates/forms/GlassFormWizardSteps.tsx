@@ -1,7 +1,6 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 import { Motion } from '../../../primitives';
 import { GlassProgress } from '../../../components/data-display/GlassProgress';
 import { VStack, HStack } from '../../../components/layout/GlassStack';
@@ -18,7 +17,7 @@ export interface StepIndicatorProps {
   isActive: boolean;
   isCompleted: boolean;
   isClickable: boolean;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
   layout?: 'default' | 'compact' | 'vertical';
 }
 
@@ -68,16 +67,16 @@ export interface GlassFormWizardStepsProps extends React.HTMLAttributes<HTMLDivE
  */
 const StepIndicator = forwardRef<HTMLDivElement, StepIndicatorProps>(
   ({ step, index, isActive, isCompleted, isClickable, onClick, layout = 'default' }, ref) => {
-    const handleClick = () => {
+    const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
       if (isClickable && onClick) {
-        onClick();
+        onClick(event);
       }
     };
 
     const renderStepIcon = () => {
       if (isCompleted) {
         return (
-          <div className="w-8 h-8 rounded-full bg-success flex items-center justify-center">
+          <div className="w-8 h-8 glass-radius-full bg-success flex items-center justify-center">
             <svg className="w-4 h-4 text-success-foreground" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
             </svg>
@@ -87,10 +86,10 @@ const StepIndicator = forwardRef<HTMLDivElement, StepIndicatorProps>(
 
       return (
         <div className={cn(
-          'w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium border-2 transition-colors',
+          'w-8 h-8 glass-radius-full flex items-center justify-center glass-text-sm font-medium border-2 transition-colors',
           isActive
             ? 'bg-primary border-primary text-primary-foreground'
-            : 'bg-background border-border text-muted-foreground'
+            : 'bg-background border-border glass-text-secondary'
         )}>
           {index + 1}
         </div>
@@ -107,13 +106,13 @@ const StepIndicator = forwardRef<HTMLDivElement, StepIndicatorProps>(
           {renderStepIcon()}
           <VStack space="xs" align="center">
             <span className={cn(
-              'text-sm font-medium transition-colors',
-              isActive ? 'text-primary' : isCompleted ? 'text-success' : 'text-muted-foreground'
+              'glass-text-sm font-medium transition-colors',
+              isActive ? 'text-primary' : isCompleted ? 'text-success' : 'glass-text-secondary'
             )}>
               {step.title}
             </span>
             {step.optional && (
-              <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">
+              <span className="glass-text-xs glass-text-secondary bg-muted glass-px-1.5 glass-py-0.5 glass-radius-md">
                 Optional
               </span>
             )}
@@ -124,12 +123,12 @@ const StepIndicator = forwardRef<HTMLDivElement, StepIndicatorProps>(
 
     if (layout === 'vertical') {
       return (
-        <div ref={ref} className="flex items-start space-x-4">
+        <div ref={ref} className="flex items-start glass-gap-4">
           <div className="flex flex-col items-center">
             {renderStepIcon()}
             {index < step.title.length - 1 && (
               <div className={cn(
-                'w-0.5 h-8 mt-2 transition-colors',
+                'w-0.5 h-8 glass-mt-2 transition-colors',
                 isCompleted ? 'bg-success' : 'bg-border'
               )} />
             )}
@@ -137,17 +136,17 @@ const StepIndicator = forwardRef<HTMLDivElement, StepIndicatorProps>(
           <VStack space="xs" className="flex-1">
             <span className={cn(
               'font-medium transition-colors',
-              isActive ? 'text-primary' : isCompleted ? 'text-success' : 'text-muted-foreground'
+              isActive ? 'text-primary' : isCompleted ? 'text-success' : 'glass-text-secondary'
             )}>
               {step.title}
             </span>
             {step.description && (
-              <p className="text-sm text-muted-foreground">
+              <p className="glass-text-sm glass-text-secondary">
                 {step.description}
               </p>
             )}
             {step.optional && (
-              <span className="text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded w-fit">
+              <span className="glass-text-xs glass-text-secondary bg-muted glass-px-1.5 glass-py-0.5 glass-radius-md w-fit">
                 Optional
               </span>
             )}
@@ -217,10 +216,10 @@ export const GlassFormWizardSteps = forwardRef<HTMLDivElement, GlassFormWizardSt
       return (
         <VStack space="sm">
           <HStack space="sm" align="center" justify="between">
-            <span className="text-sm font-medium text-foreground">
+            <span className="glass-text-sm font-medium text-foreground">
               Step {currentStep + 1} of {totalSteps}
             </span>
-            <span className="text-sm text-muted-foreground">
+            <span className="glass-text-sm glass-text-secondary">
               {Math.round(progressValue)}% Complete
             </span>
           </HStack>
@@ -254,7 +253,7 @@ export const GlassFormWizardSteps = forwardRef<HTMLDivElement, GlassFormWizardSt
                   isActive={index === currentStep}
                   isCompleted={completedSteps.has(index)}
                   isClickable={isStepClickable(index)}
-                  onClick={() => handleStepClick(index)}
+                  onClick={(e) => handleStepClick(index)}
                   layout={layout}
                 />
               </div>
@@ -266,7 +265,7 @@ export const GlassFormWizardSteps = forwardRef<HTMLDivElement, GlassFormWizardSt
       return (
         <div className={cn(
           'flex items-center',
-          layout === 'compact' ? 'justify-center space-x-2' : 'justify-between'
+          layout === 'compact' ? 'justify-center glass-gap-2' : 'justify-between'
         )}>
           {steps.map((step, index) => (
             <React.Fragment key={step.id}>
@@ -283,7 +282,7 @@ export const GlassFormWizardSteps = forwardRef<HTMLDivElement, GlassFormWizardSt
                   isActive={index === currentStep}
                   isCompleted={completedSteps.has(index)}
                   isClickable={isStepClickable(index)}
-                  onClick={() => handleStepClick(index)}
+                  onClick={(e) => handleStepClick(index)}
                   layout={layout}
                 />
               </div>
@@ -291,7 +290,7 @@ export const GlassFormWizardSteps = forwardRef<HTMLDivElement, GlassFormWizardSt
               {/* Connector line */}
               {index < totalSteps - 1 && layout !== 'compact' && (
                 <div className={cn(
-                  'flex-1 h-0.5 mx-4 transition-colors',
+                  'flex-1 h-0.5 glass-mx-4 transition-colors',
                   completedSteps.has(index) ? 'bg-success' : 'bg-border'
                 )} />
               )}

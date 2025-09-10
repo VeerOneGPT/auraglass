@@ -1,128 +1,10 @@
-// Typography tokens available via typography.css (imported in index.css)
-import React, { forwardRef } from "react";
-import styled from "styled-components";
-import { GlassCard } from "../card/GlassCard";
-import { createGlassStyle } from '../../core/mixins/glassMixins';
-import { createThemeContext } from "../../core/themeContext";
+'use client';
 
-// Enhanced glass card with 3D effects and dynamic lighting
-const EnhancedLinkCard = styled.div`
-  transform-style: preserve-3d;
-  transition: all 0.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  position: relative;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 20px;
-  
-  &:hover {
-    transform: translateY(-8px) scale(1.01) perspective(1000px) rotateX(2deg);
-    box-shadow: 
-      0 20px 30px -10px rgba(0, 0, 0, 0.3),
-      0 0 15px rgba(120, 120, 255, 0.2);
-  }
-  
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      120deg,
-      rgba(255, 255, 255, 0.1) 0%,
-      transparent 80%
-    );
-    z-index: 1;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-  
-  &:hover::before {
-    opacity: 1;
-  }
-`;
-
-// Enhanced icon container with glow
-const EnhancedIconContainer = styled.div`
-  position: relative;
-  transition: all 0.3s ease-out;
-  z-index: 2;
-  
-  &::after {
-    content: '';
-    position: absolute;
-    inset: -10px;
-    border-radius: 8px;
-    background: radial-gradient(
-      circle,
-      rgba(100, 100, 255, 0.15) 0%,
-      transparent 70%
-    );
-    opacity: 0;
-    z-index: -1;
-    transition: opacity 0.4s ease;
-  }
-  
-  a:hover & {
-    transform: translateY(-5px) scale(1.05);
-  }
-  
-  a:hover &::after {
-    opacity: 1;
-  }
-`;
-
-// Enhanced arrow animation
-const FloatingArrow = styled.div`
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  display: flex;
-  align-items: center;
-  
-  svg {
-    width: 16px;
-    height: 16px;
-    margin-left: 4px;
-  }
-  
-  a:hover & {
-    transform: translateX(6px);
-  }
-`;
-
-// Component containers for content sections
-const CardHeader = styled.div`
-  padding: 1rem 0;
-`;
-
-const CardContent = styled.div`
-  margin-bottom: 1rem;
-`;
-
-const CardTitle = styled.h3`
-  font-size: 1.25rem;
-  font-weight: var(--typography-heading-weight);
-  margin-bottom: 0.5rem;
-`;
-
-const CardDescription = styled.p`
-  font-size: 0.875rem;
-  opacity: 0.8;
-  margin-bottom: 1rem;
-`;
-
-const CardFooter = styled.div`
-  margin-top: auto;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-`;
-
-// Styled link wrapper
-const LinkWrapper = styled.a`
-  text-decoration: none;
-  color: inherit;
-  display: block;
-`;
+import React, { forwardRef } from 'react';
+import { cn } from '@/lib/utilsComprehensive';
+import { OptimizedGlass, Motion } from '../../primitives';
+import { useA11yId } from '../../utils/a11y';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 export interface GlassCardLinkProps {
   /** Icon to display in the card */
@@ -145,6 +27,12 @@ export interface GlassCardLinkProps {
   onClick?: (e: React.MouseEvent) => void;
   /** Optional children to render instead of default content */
   children?: React.ReactNode;
+  /** Respect user's motion preferences */
+  respectMotionPreference?: boolean;
+  /** Custom ID */
+  id?: string;
+  /** Custom ARIA label */
+  'aria-label'?: string;
 }
 
 /**
@@ -152,6 +40,7 @@ export interface GlassCardLinkProps {
  * 
  * An enhanced card with 3D transform effects and link functionality.
  * Features physics-inspired animations and intuitive hover states.
+ * Modernized to use OptimizedGlass architecture.
  */
 export const GlassCardLink = forwardRef<HTMLAnchorElement, GlassCardLinkProps>(({
   icon,
@@ -163,18 +52,27 @@ export const GlassCardLink = forwardRef<HTMLAnchorElement, GlassCardLinkProps>((
   customPreview,
   glassVariant = "frosted",
   onClick,
-  children
+  children,
+  respectMotionPreference = true,
+  id,
+  'aria-label': ariaLabel,
+  ...props
 }, ref) => {
+  const prefersReducedMotion = useReducedMotion();
+  const componentId = id || useA11yId('card-link');
+  
   const handleClick = (e: React.MouseEvent) => {
     if (onClick) {
       onClick(e);
-      // Prevent default only if custom handler is provided
       e.preventDefault();
     }
   };
+  
+  const defaultAriaLabel = ariaLabel || `${title}. ${description}. ${buttonText}.`;
 
   const ArrowIcon = () => (
     <svg 
+      className="w-4 h-4 glass-ml-1 transition-transform duration-300 group-hover:translate-x-1"
       xmlns="http://www.w3.org/2000/svg" 
       viewBox="0 0 24 24" 
       fill="none" 
@@ -188,58 +86,130 @@ export const GlassCardLink = forwardRef<HTMLAnchorElement, GlassCardLinkProps>((
     </svg>
   );
 
+  // Map glass variants to OptimizedGlass props
+  const variantMap = {
+    clear: { intensity: 'subtle' as const, tint: 'neutral' as const },
+    frosted: { intensity: 'medium' as const, tint: 'neutral' as const },
+    tinted: { intensity: 'medium' as const, tint: 'cool' as const },
+    luminous: { intensity: 'strong' as const, tint: 'warm' as const },
+  };
+
+  const variant = variantMap[glassVariant];
+
   // Render card content
   const renderCardContent = () => {
     if (children) return children;
 
     return (
       <>
-        <CardHeader>
-          {icon && (
-            <EnhancedIconContainer className="card-icon-container">
+        {/* Header */}
+        {icon && (
+          <div className="relative z-10 mb-6 transition-all duration-300 group-hover:-translate-y-1 group-hover:scale-105">
+            <div className="relative">
               {icon}
-            </EnhancedIconContainer>
-          )}
-        </CardHeader>
+              {/* Glow effect */}
+              <div className="absolute inset-0 -inset-2 glass-radius-lg bg-gradient-radial from-blue-500/20 via-blue-500/10 to-transparent opacity-0 transition-opacity duration-400 group-hover:opacity-100" />
+            </div>
+          </div>
+        )}
 
-        <CardContent>
-          <CardTitle>{title}</CardTitle>
-          <CardDescription>{description}</CardDescription>
+        {/* Content */}
+        <div className="relative z-10 mb-6">
+          <h3 
+            className="glass-mb-2 glass-text-xl font-semibold glass-text-primary transition-colors duration-200"
+          >
+            {title}
+          </h3>
+          <p className="glass-mb-4 glass-text-sm glass-text-primary/70 transition-colors duration-200">
+            {description}
+          </p>
           
           {customPreview && (
             <div className="custom-preview-container">
               {customPreview}
             </div>
           )}
-        </CardContent>
+        </div>
 
-        <CardFooter>
-          <div className="card-link-action">
-            <FloatingArrow>
-              {buttonText}
+        {/* Footer */}
+        <div className="relative z-10 mt-auto pt-4 border-t border-white/10">
+          <div className="flex items-center justify-between">
+            <div 
+              className="flex items-center glass-text-sm font-medium glass-text-primary/90 group transition-colors duration-300 group-hover:glass-text-primary"
+              aria-hidden="true"
+            >
+              <span>{buttonText}</span>
               <ArrowIcon />
-            </FloatingArrow>
+            </div>
           </div>
-        </CardFooter>
+        </div>
       </>
     );
   };
 
-  // Wrap the card in a link if no custom handler
   return (
-    <LinkWrapper 
-      ref={ref}
-      href={link}
-      className={`glass-card-link-wrapper ${className}`}
-      onClick={handleClick}
+    <Motion
+      preset="fadeIn"
+      className="group block"
     >
-      <EnhancedLinkCard className={`glass-card-link ${glassVariant}`}>
-        {renderCardContent()}
-      </EnhancedLinkCard>
-    </LinkWrapper>
+      <a
+        ref={ref}
+        id={componentId}
+        href={link}
+        onClick={handleClick}
+        aria-label={defaultAriaLabel}
+        aria-describedby={`${componentId}-description`}
+        className="block"
+      >
+        <OptimizedGlass
+          intent="neutral"
+          elevation="level2"
+          intensity={variant.intensity}
+          depth={3}
+          tint={variant.tint}
+          border="subtle"
+          animation="float"
+          performanceMode="medium"
+          liftOnHover
+          press
+          className={cn(
+            // Base styles
+            'group relative block overflow-hidden glass-radius-xl glass-p-6 text-decoration-none',
+            'transform-gpu transition-all duration-500 ease-out',
+            'perspective-1000 transform-style-preserve-3d',
+
+            // Hover effects
+            'hover:-translate-y-2 hover:scale-[1.01] hover:rotate-x-1',
+            'hover:shadow-2xl hover:shadow-blue-500/20',
+
+            // Glass overlay effect
+            'before:absolute before:inset-0 before:z-0',
+            'before:bg-gradient-to-br before:from-white/10 before:via-transparent before:to-transparent',
+            'before:opacity-0 before:transition-opacity before:duration-500',
+            'hover:before:opacity-100',
+
+            // Focus styles
+            'focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-transparent',
+
+            className
+          )}
+          style={{
+            transformStyle: 'preserve-3d',
+          }}
+          {...props}
+        >
+          <div id={`${componentId}-description`} className="sr-only">
+            Interactive card link: {title}. {description}
+          </div>
+          <div className="relative z-10 flex h-full min-h-[200px] flex-col">
+            {renderCardContent()}
+          </div>
+        </OptimizedGlass>
+      </a>
+    </Motion>
   );
 });
 
 GlassCardLink.displayName = 'GlassCardLink';
 
-export default GlassCardLink; 
+export default GlassCardLink;

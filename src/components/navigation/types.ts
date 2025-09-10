@@ -1,5 +1,4 @@
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 // Navigation component types
 export interface NavigationItem {
   id?: string;

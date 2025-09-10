@@ -20,7 +20,7 @@ const meta: Meta<typeof GlassAvatar> = {
     },
     variant: {
       control: { type: 'select' },
-      options: ['default', 'circle', 'square', 'rounded'],
+      options: ['default', 'circle', 'square', 'glass-radius-md'],
       description: 'Avatar variant',
     },
     size: {
@@ -60,7 +60,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center glass-gap-4">
       <GlassAvatar {...args} size="sm" status="online" />
       <GlassAvatar {...args} size="md" status="away" />
       <GlassAvatar {...args} size="lg" status="busy" />

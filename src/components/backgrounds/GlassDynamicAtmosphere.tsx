@@ -1,10 +1,10 @@
 import React, { forwardRef, useState, useRef, useEffect, useCallback } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled, { css, keyframes } from 'styled-components';
 
 import { createThemeContext } from '../../core/themeContext';
 import { ZLayer } from '../../core/zspace';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 // Types of atmospheric effects
 export type AtmosphereType =
@@ -120,6 +120,15 @@ export interface DynamicAtmosphereProps {
    * If true, the atmosphere will have a noise texture
    */
   noise?: boolean;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
 }
 
 // Keyframes for various animations
@@ -481,7 +490,7 @@ export const DynamicAtmosphere = forwardRef<HTMLDivElement, DynamicAtmospherePro
 
         setTransform(`translate(${offsetX}px, ${offsetY}px)`);
       },
-      [interactionMode, interactionSensitivity]
+      [interactionMode, interactionSensitivity, shouldReduceMotion]
     );
 
     // Handle scroll interaction
@@ -501,10 +510,12 @@ export const DynamicAtmosphere = forwardRef<HTMLDivElement, DynamicAtmospherePro
       const offsetY = (elementVisible - 0.5) * interactionSensitivity * 30;
 
       setTransform(`translateY(${offsetY}px)`);
-    }, [interactionMode, interactionSensitivity]);
+    }, [interactionMode, interactionSensitivity, shouldReduceMotion]);
 
     // Set up event listeners
     useEffect(() => {
+      if (shouldReduceMotion) return;
+      
       if (interactionMode === 'mouse') {
         window.addEventListener('mousemove', handleMouseMove);
       } else if (interactionMode === 'scroll') {
@@ -517,7 +528,7 @@ export const DynamicAtmosphere = forwardRef<HTMLDivElement, DynamicAtmospherePro
         window.removeEventListener('mousemove', handleMouseMove);
         window.removeEventListener('scroll', handleScroll);
       };
-    }, [interactionMode, handleMouseMove, handleScroll]);
+    }, [interactionMode, handleMouseMove, handleScroll, shouldReduceMotion]);
 
     return (
       <AtmosphereContainer

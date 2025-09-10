@@ -1,5 +1,4 @@
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 'use client';
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
@@ -30,9 +29,9 @@ const GlassSelectTrigger = React.forwardRef<
   GlassSelectTriggerProps
 >(({ className, children, size = 'md', variant = 'default', error = false, ...props }, ref) => {
   const sizeConfig = {
-    sm: 'h-8 px-2 py-1 text-xs',
-    md: 'h-10 px-3 py-2 text-sm', 
-    lg: 'h-12 px-4 py-3 text-base',
+    sm: 'h-8 glass-px-2 glass-py-1 glass-text-xs',
+    md: 'h-10 glass-px-3 glass-py-2 glass-text-sm', 
+    lg: 'h-12 glass-px-4 glass-py-3 glass-text-base',
   };
 
   const variantConfig = {
@@ -60,8 +59,8 @@ const GlassSelectTrigger = React.forwardRef<
       className={cn(
         // Base styles
         'glass-select-trigger group flex w-full items-center justify-between',
-        'rounded-lg backdrop-blur-md transition-all duration-200',
-        'text-foreground placeholder:text-muted-foreground',
+        'glass-radius-lg backdrop-blur-md transition-all duration-200',
+        'text-foreground placeholder:glass-text-secondary',
         'focus:outline-none focus:ring-offset-2 focus:ring-offset-background',
         'disabled:cursor-not-allowed disabled:opacity-50',
         '[&>span]:line-clamp-1',
@@ -107,7 +106,7 @@ const GlassSelectContent = React.forwardRef<
           'glass-select-content relative z-50 max-h-96 min-w-[8rem] overflow-hidden',
           // Darker, more legible surface for options
           'backdrop-blur-md bg-black/70 ring-1 ring-white/12',
-          'rounded-xl shadow-2xl shadow-black/40',
+          'glass-radius-xl shadow-2xl shadow-black/40',
           'text-foreground',
           
           // Animations
@@ -131,7 +130,7 @@ const GlassSelectContent = React.forwardRef<
         <GlassSelectScrollUpButton />
         <SelectPrimitive.Viewport
           className={cn(
-            'p-1',
+            'glass-p-1',
             position === "popper" && [
               'h-[var(--radix-select-trigger-height)] w-full',
               'min-w-[var(--radix-select-trigger-width)]'
@@ -174,7 +173,7 @@ const GlassSelectItem = React.forwardRef<
       className={cn(
         // Base styles
         'glass-select-item relative flex w-full cursor-pointer select-none items-center',
-        'rounded-lg py-2 pl-8 pr-2 text-sm outline-none transition-all duration-150',
+        'glass-radius-lg glass-py-2 pl-8 pr-2 glass-text-sm outline-none transition-all duration-150',
         'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
         
         // Variant styles
@@ -204,7 +203,7 @@ const GlassSelectLabel = React.forwardRef<
   <SelectPrimitive.Label
     ref={ref}
     className={cn(
-      'glass-select-label py-1.5 pl-8 pr-2 text-sm font-semibold text-muted-foreground',
+      'glass-select-label glass-py-1.5 pl-8 pr-2 glass-text-sm font-semibold glass-text-secondary',
       className
     )}
     {...props}
@@ -220,7 +219,7 @@ const GlassSelectSeparator = React.forwardRef<
   <SelectPrimitive.Separator
     ref={ref}
     className={cn(
-      'glass-select-separator -mx-1 my-1 h-px bg-border/20',
+      'glass-select-separator -glass-mx-1 glass-my-1 h-px bg-border/20',
       className
     )}
     {...props}
@@ -236,8 +235,8 @@ const GlassSelectScrollUpButton = React.forwardRef<
   <SelectPrimitive.ScrollUpButton
     ref={ref}
     className={cn(
-      'glass-select-scroll-up flex cursor-default items-center justify-center py-1',
-      'text-muted-foreground hover:text-foreground transition-colors',
+      'glass-select-scroll-up flex cursor-default items-center justify-center glass-py-1',
+      'glass-text-secondary hover:text-foreground transition-colors',
       className
     )}
     {...props}
@@ -254,8 +253,8 @@ const GlassSelectScrollDownButton = React.forwardRef<
   <SelectPrimitive.ScrollDownButton
     ref={ref}
     className={cn(
-      'glass-select-scroll-down flex cursor-default items-center justify-center py-1',
-      'text-muted-foreground hover:text-foreground transition-colors',
+      'glass-select-scroll-down flex cursor-default items-center justify-center glass-py-1',
+      'glass-text-secondary hover:text-foreground transition-colors',
       className
     )}
     {...props}

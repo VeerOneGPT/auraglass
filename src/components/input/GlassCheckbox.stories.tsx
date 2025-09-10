@@ -63,7 +63,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-4 max-w-md">
+    <div className="flex flex-col glass-gap-4 max-w-md">
       <GlassCheckbox {...args} variant="default" label="Default variant" />
       <GlassCheckbox {...args} variant="success" label="Success variant" />
       <GlassCheckbox {...args} variant="warning" label="Warning variant" />
@@ -75,7 +75,7 @@ export const Variants: Story = {
 
 export const Sizes: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-4 max-w-md">
+    <div className="flex flex-col glass-gap-4 max-w-md">
       <GlassCheckbox {...args} size="sm" label="Small size" />
       <GlassCheckbox {...args} size="md" label="Medium size" />
       <GlassCheckbox {...args} size="lg" label="Large size" />
@@ -85,7 +85,7 @@ export const Sizes: Story = {
 
 export const States: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-4 max-w-md">
+    <div className="flex flex-col glass-gap-4 max-w-md">
       <GlassCheckbox {...args} checked={false} label="Unchecked" />
       <GlassCheckbox {...args} checked={true} label="Checked" />
       <GlassCheckbox {...args} indeterminate label="Indeterminate" />

@@ -43,3 +43,10 @@ export function useAnimationDuration(baseDuration: number = 200): AnimationDurat
     duration: prefersReducedMotion ? 0 : baseDuration,
   };
 }
+
+export function useMotionPreference() {
+  const prefersReducedMotion = useReducedMotion();
+  const shouldAnimate = !prefersReducedMotion;
+
+  return { shouldAnimate };
+}

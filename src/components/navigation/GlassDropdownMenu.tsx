@@ -4,7 +4,6 @@ import { cn } from '@/lib/utilsComprehensive';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { Check, ChevronRight } from 'lucide-react';
 import React, { forwardRef } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -36,21 +35,21 @@ export const GlassDropdownMenuTrigger = forwardRef<
         ref
     ) => {
         const sizeStyles = {
-            sm: 'h-8 px-3 text-xs',
-            md: 'h-10 px-4 text-sm',
-            lg: 'h-12 px-6 text-base',
+            sm: 'h-8 glass-px-3 glass-text-xs',
+            md: 'h-10 glass-px-4 glass-text-sm',
+            lg: 'h-12 glass-px-6 glass-text-base',
         };
 
         const variantStyles = {
             default: 'bg-primary text-primary-foreground hover:bg-primary/90',
             outline: 'border border-border bg-background hover:bg-accent hover:text-accent-foreground',
             ghost: 'hover:bg-accent hover:text-accent-foreground',
-            minimal: 'text-muted-foreground hover:text-foreground',
+            minimal: 'glass-text-secondary hover:text-foreground',
         };
 
         const baseStyles = cn(
-            'inline-flex items-center justify-center gap-2',
-            'whitespace-nowrap rounded-lg font-medium',
+            'inline-flex items-center justify-center glass-gap-2',
+            'whitespace-nowrap glass-radius-lg font-medium',
             'transition-all duration-200',
             'focus-visible:outline-none focus-visible:ring-2',
             'focus-visible:ring-primary focus-visible:ring-offset-2',
@@ -103,7 +102,7 @@ export const GlassDropdownMenuContent = forwardRef<
                         align={align}
                         sideOffset={sideOffset}
                         className={cn(
-                            'z-50 min-w-[8rem] overflow-hidden rounded-xl p-1',
+                            'z-50 min-w-[8rem] overflow-hidden glass-radius-xl glass-p-1',
                             'shadow-lg border border-border/20',
                             'data-[state=open]:animate-in data-[state=closed]:animate-out',
                             'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
@@ -123,7 +122,7 @@ export const GlassDropdownMenuContent = forwardRef<
           border="subtle"
           animation="none"
           performanceMode="medium"
-                            className="p-0 glass-radial-reveal glass-lift"
+                            className="glass-p-0 glass-radial-reveal glass-lift"
                         >
                             {children}
                         </OptimizedGlass>
@@ -167,7 +166,7 @@ export const GlassDropdownMenuItem = forwardRef<
             <DropdownMenuPrimitive.Item
                 ref={ref}
                 className={cn(
-                    'relative flex cursor-default select-none items-center rounded-lg px-3 py-2 text-sm outline-none',
+                    'relative flex cursor-default select-none items-center glass-radius-lg glass-px-3 glass-py-2 glass-text-sm outline-none',
                     'transition-all duration-200 hover:-translate-y-0.5',
                     'focus:bg-accent focus:text-accent-foreground ring-0',
                 'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
@@ -183,7 +182,7 @@ export const GlassDropdownMenuItem = forwardRef<
                 )}
                 <span className="flex-1">{children}</span>
                 {shortcut && (
-                    <span className="ml-auto text-xs text-muted-foreground">
+                    <span className="ml-auto glass-text-xs glass-text-secondary">
                         {shortcut}
                     </span>
                 )}
@@ -219,7 +218,7 @@ export const GlassDropdownMenuCheckboxItem = forwardRef<
                 ref={ref}
                 className={cn(
                     'relative flex cursor-default select-none items-center',
-                    'rounded-lg px-3 py-2 text-sm outline-none',
+                    'glass-radius-lg glass-px-3 glass-py-2 glass-text-sm outline-none',
                     'transition-colors duration-200',
                     'focus:bg-accent focus:text-accent-foreground',
                     'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
@@ -270,7 +269,7 @@ export const GlassDropdownMenuRadioItem = forwardRef<
                 ref={ref}
                 className={cn(
                     'relative flex cursor-default select-none items-center',
-                    'rounded-lg px-3 py-2 text-sm outline-none',
+                    'glass-radius-lg glass-px-3 glass-py-2 glass-text-sm outline-none',
                     'transition-colors duration-200',
                     'focus:bg-accent focus:text-accent-foreground',
                     'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
@@ -279,7 +278,7 @@ export const GlassDropdownMenuRadioItem = forwardRef<
                 {...props}
             >
                 <DropdownMenuPrimitive.ItemIndicator className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-                    <div className="h-2 w-2 rounded-full bg-current" />
+                    <div className="h-2 w-2 glass-radius-full bg-current" />
                 </DropdownMenuPrimitive.ItemIndicator>
                 {icon && (
                     <span className="ml-6 mr-3 flex h-4 w-4 items-center justify-center">
@@ -315,7 +314,7 @@ export const GlassDropdownMenuLabel = forwardRef<
             <DropdownMenuPrimitive.Label
                 ref={ref}
                 className={cn(
-                    'px-2 py-1.5 text-sm font-semibold',
+                    'glass-px-2 glass-py-1.5 glass-text-sm font-semibold',
                     inset && 'pl-8',
                     className
                 )}
@@ -344,7 +343,7 @@ export const GlassDropdownMenuSeparator = forwardRef<
         return (
             <DropdownMenuPrimitive.Separator
                 ref={ref}
-                className={cn('-mx-1 my-1 h-px bg-border/20', className)}
+                className={cn('-glass-mx-1 glass-my-1 h-px bg-border/20', className)}
                 {...props}
             />
         );
@@ -370,7 +369,7 @@ export const GlassDropdownMenuShortcut = forwardRef<
         return (
             <span
                 ref={ref}
-                className={cn('ml-auto text-xs tracking-widest text-muted-foreground', className)}
+                className={cn('ml-auto glass-text-xs tracking-widest glass-text-secondary', className)}
                 {...props}
             />
         );
@@ -404,7 +403,7 @@ export const GlassDropdownMenuSubTrigger = forwardRef<
             <DropdownMenuPrimitive.SubTrigger
                 ref={ref}
                 className={cn(
-                    'flex cursor-default select-none items-center rounded-lg px-3 py-2 text-sm outline-none',
+                    'flex cursor-default select-none items-center glass-radius-lg glass-px-3 glass-py-2 glass-text-sm outline-none',
                     'focus:bg-accent focus:text-accent-foreground',
                     'data-[state=open]:bg-accent data-[state=open]:text-accent-foreground',
                     'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
@@ -444,7 +443,7 @@ export const GlassDropdownMenuSubContent = forwardRef<
             <DropdownMenuPrimitive.SubContent
                 ref={ref}
                 className={cn(
-                    'z-50 min-w-[8rem] overflow-hidden rounded-xl p-1',
+                    'z-50 min-w-[8rem] overflow-hidden glass-radius-xl glass-p-1',
                     'shadow-lg border border-border/20',
                     'data-[state=open]:animate-in data-[state=closed]:animate-out',
                     'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
@@ -464,7 +463,7 @@ export const GlassDropdownMenuSubContent = forwardRef<
           border="subtle"
           animation="none"
           performanceMode="medium"
-                    className="p-0 glass-radial-reveal glass-lift"
+                    className="glass-p-0 glass-radial-reveal glass-lift"
                 >
                     {props?.children}
                 </OptimizedGlass>

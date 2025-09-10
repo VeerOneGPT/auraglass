@@ -2,14 +2,14 @@
 
 import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
+import { useA11yId } from '../../utils/a11y';
 
 export interface GlassAvatarProps extends React.ImgHTMLAttributes<HTMLImageElement> {
     /**
      * Avatar variant
      */
-    variant?: 'default' | 'circle' | 'square' | 'rounded';
+    variant?: 'default' | 'circle' | 'square' | 'glass-radius-md';
     /**
      * Avatar size
      */
@@ -34,6 +34,10 @@ export interface GlassAvatarProps extends React.ImgHTMLAttributes<HTMLImageEleme
      * Fallback text (will generate initials)
      */
     fallbackText?: string;
+    /**
+     * ARIA label for the avatar
+     */
+    'aria-label'?: string;
 }
 
 export interface GlassAvatarGroupProps {
@@ -77,9 +81,10 @@ export const GlassAvatar = forwardRef<HTMLImageElement, GlassAvatarProps>(
             size = 'md',
             status,
             showStatus = false,
-            elevation = 1,
+            elevation = 'level1',
             fallback,
             fallbackText,
+            'aria-label': ariaLabel,
             className,
             src,
             alt,
@@ -88,30 +93,31 @@ export const GlassAvatar = forwardRef<HTMLImageElement, GlassAvatarProps>(
         },
         ref
     ) => {
+        const avatarId = useA11yId('avatar');
         const [hasError, setHasError] = React.useState(false);
         const [isLoading, setIsLoading] = React.useState(!!src);
 
         const sizeClasses = {
-            xs: 'w-6 h-6 text-xs',
-            sm: 'w-8 h-8 text-sm',
-            md: 'w-10 h-10 text-base',
-            lg: 'w-12 h-12 text-lg',
-            xl: 'w-16 h-16 text-xl',
-            '2xl': 'w-20 h-20 text-2xl',
+            xs: 'w-6 h-6 glass-text-xs',
+            sm: 'w-8 h-8 glass-text-sm',
+            md: 'w-10 h-10 glass-text-base',
+            lg: 'w-12 h-12 glass-text-lg',
+            xl: 'w-16 h-16 glass-text-xl',
+            '2xl': 'w-20 h-20 glass-text-2xl',
         };
 
         const variantClasses = {
-            default: 'rounded-md',
-            circle: 'rounded-full',
+            default: 'glass-radius-md',
+            circle: 'glass-radius-full',
             square: 'rounded-none',
-            rounded: 'rounded-lg',
+            'glass-radius-md': 'glass-radius-lg',
         };
 
         const statusColors = {
-            online: 'bg-green-400',
-            offline: 'bg-gray-400',
-            away: 'bg-yellow-400',
-            busy: 'bg-red-400',
+            online: 'glass-surface-success',
+            offline: 'glass-surface-primary',
+            away: 'glass-surface-warning',
+            busy: 'glass-surface-danger',
         };
 
         const handleError = (e: React.SyntheticEvent<HTMLImageElement>) => {
@@ -137,11 +143,11 @@ export const GlassAvatar = forwardRef<HTMLImageElement, GlassAvatarProps>(
         const showFallback = hasError || !src;
         const fallbackContent = fallback || (
             fallbackText ? (
-                <span className="font-medium text-white/80">
+                <span className="font-medium glass-text-primary/80">
                     {getInitials(fallbackText)}
                 </span>
             ) : (
-                <div className="w-4 h-4 bg-white/30 rounded" />
+                <div className="w-4 h-4 bg-white/30 glass-radius-md" />
             )
         );
 
@@ -156,7 +162,7 @@ export const GlassAvatar = forwardRef<HTMLImageElement, GlassAvatarProps>(
         return (
             <div className="relative inline-block">
                 <OptimizedGlass
-          elevation={getElevationLevel(elevation)}
+          elevation={elevation === 1 ? 'level1' : elevation === 2 ? 'level2' : elevation === 3 ? 'level3' : 'level1'}
           intensity="medium"
           depth={2}
           tint="neutral"
@@ -164,7 +170,7 @@ export const GlassAvatar = forwardRef<HTMLImageElement, GlassAvatarProps>(
           animation="none"
           performanceMode="medium"
           
-                    
+                    id={avatarId}
 
                     className={cn(
                         'relative overflow-hidden',
@@ -173,6 +179,8 @@ export const GlassAvatar = forwardRef<HTMLImageElement, GlassAvatarProps>(
                         'backdrop-blur-md bg-white/10 border border-white/20',
                         className
                     )}
+                    role="img"
+                    aria-label={ariaLabel || alt || (fallbackText ? `Avatar for ${fallbackText}` : 'Avatar')}
                 >
                     {showFallback ? (
                         <div className="flex items-center justify-center w-full h-full">
@@ -182,7 +190,7 @@ export const GlassAvatar = forwardRef<HTMLImageElement, GlassAvatarProps>(
                         <img
                             ref={ref}
                             src={src}
-                            alt={alt}
+                            alt={alt || (ariaLabel ? '' : 'Avatar image')}
                             onError={handleError}
                             onLoad={handleLoad}
                             className="w-full h-full object-cover"
@@ -192,7 +200,7 @@ export const GlassAvatar = forwardRef<HTMLImageElement, GlassAvatarProps>(
 
                     {isLoading && !hasError && (
                         <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                            <div className="w-4 h-4 border-2 border-white/30 border-t-white/60 rounded-full animate-spin" />
+                            <div className="w-4 h-4 border-2 border-white/30 border-t-white/60 glass-radius-full animate-spin" />
                         </div>
                     )}
                 </OptimizedGlass>
@@ -200,9 +208,11 @@ export const GlassAvatar = forwardRef<HTMLImageElement, GlassAvatarProps>(
                 {showStatus && status && (
                     <div
                         className={cn(
-                            'absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white',
+                            'absolute bottom-0 right-0 w-3 h-3 glass-radius-full border-2 border-white',
                             statusColors[status]
                         )}
+                        role="status"
+                        aria-label={`Status: ${status}`}
                     />
                 )}
             </div>
@@ -227,9 +237,9 @@ export const GlassAvatarGroup: React.FC<GlassAvatarGroupProps> = ({
     const hasOverflow = childArray.length > max;
 
     const spacingClasses = {
-        tight: '-space-x-1',
-        normal: '-space-x-2',
-        loose: '-space-x-3',
+        tight: '-glass-gap-1',
+        normal: '-glass-gap-2',
+        loose: '-glass-gap-3',
     };
 
     return (
@@ -249,7 +259,7 @@ export const GlassAvatarGroup: React.FC<GlassAvatarGroupProps> = ({
                         size={size}
                         elevation={2}
                         fallback={
-                            <span className="font-medium text-white/60 text-xs">
+                            <span className="font-medium glass-text-primary/60 glass-text-xs">
                                 +{childArray.length - max}
                             </span>
                         }
@@ -280,7 +290,7 @@ export const GlassAvatarFallback: React.FC<GlassAvatarFallbackProps> = ({
     if (!showFallback) {
         return (
             <div className="w-full h-full flex items-center justify-center bg-black/10">
-                <div className="w-3 h-3 border border-white/30 border-t-white/60 rounded-full animate-spin" />
+                <div className="w-3 h-3 border border-white/30 border-t-white/60 glass-radius-full animate-spin" />
             </div>
         );
     }

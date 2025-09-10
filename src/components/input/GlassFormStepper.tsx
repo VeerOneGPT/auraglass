@@ -7,7 +7,6 @@ import {
     Circle
 } from 'lucide-react';
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 
 export interface FormStep {
@@ -86,21 +85,21 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
         sm: {
             stepSize: 'w-8 h-8',
             iconSize: 'w-4 h-4',
-            fontSize: 'text-sm',
+            fontSize: 'glass-text-sm',
             lineHeight: 'h-px',
-            spacing: 'gap-4'
+            spacing: 'glass-gap-4'
         },
         md: {
             stepSize: 'w-10 h-10',
             iconSize: 'w-5 h-5',
-            fontSize: 'text-base',
+            fontSize: 'glass-text-base',
             lineHeight: 'h-0.5',
-            spacing: 'gap-6'
+            spacing: 'glass-gap-6'
         },
         lg: {
             stepSize: 'w-12 h-12',
             iconSize: 'w-6 h-6',
-            fontSize: 'text-lg',
+            fontSize: 'glass-text-lg',
             lineHeight: 'h-1',
             spacing: 'gap-8'
         }
@@ -123,38 +122,38 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
         switch (state) {
             case 'completed':
                 return {
-                    circle: 'bg-green-500 border-green-500 text-white',
-                    icon: 'text-white',
+                    circle: 'bg-green-500 border-green-500 glass-text-primary',
+                    icon: 'glass-text-primary',
                     line: 'bg-green-500',
-                    text: 'text-white'
+                    text: 'glass-text-primary'
                 };
             case 'active':
                 return {
-                    circle: 'bg-primary border-primary text-white',
-                    icon: 'text-white',
+                    circle: 'bg-primary border-primary glass-text-primary',
+                    icon: 'glass-text-primary',
                     line: 'bg-primary/50',
-                    text: 'text-white'
+                    text: 'glass-text-primary'
                 };
             case 'error':
                 return {
-                    circle: 'bg-red-500 border-red-500 text-white',
-                    icon: 'text-white',
+                    circle: 'bg-red-500 border-red-500 glass-text-primary',
+                    icon: 'glass-text-primary',
                     line: 'bg-red-500/50',
                     text: 'text-red-300'
                 };
             case 'disabled':
                 return {
-                    circle: 'bg-white/10 border-white/30 text-white/50',
-                    icon: 'text-white/50',
+                    circle: 'bg-white/10 border-white/30 glass-text-primary/50',
+                    icon: 'glass-text-primary/50',
                     line: 'bg-white/30',
-                    text: 'text-white/50'
+                    text: 'glass-text-primary/50'
                 };
             default:
                 return {
-                    circle: 'bg-white/10 border-white/30 text-white/60',
-                    icon: 'text-white/60',
+                    circle: 'bg-white/10 border-white/30 glass-text-primary/60',
+                    icon: 'glass-text-primary/60',
                     line: 'bg-white/30',
-                    text: 'text-white/60'
+                    text: 'glass-text-primary/60'
                 };
         }
     };
@@ -184,11 +183,11 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
                             <Motion
                                 preset={state === 'active' ? 'scaleIn' : 'fadeIn'}
                                 className="flex flex-col items-center cursor-pointer"
-                                onClick={() => handleStepClick(index, step)}
+                                onClick={(e) => handleStepClick(index, step)}
                             >
                                 {/* Step Circle */}
                                 <div className={cn(
-                                    'relative rounded-full border-2 flex items-center justify-center transition-all duration-200',
+                                    'relative glass-radius-full border-2 flex items-center justify-center transition-all duration-200',
                                     'hover:scale-110 group-hover:shadow-lg',
                                     config.stepSize,
                                     styles.circle
@@ -211,7 +210,7 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
 
                                     {/* Optional indicator */}
                                     {step.optional && (
-                                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full" />
+                                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 glass-radius-full" />
                                     )}
                                 </div>
 
@@ -226,8 +225,8 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
                                     </h3>
                                     {showDescriptions && step.description && (
                                         <p className={cn(
-                                            'text-xs mt-1 leading-tight',
-                                            state === 'active' ? 'text-white/80' : 'text-white/50'
+                                            'glass-text-xs glass-mt-1 leading-tight',
+                                            state === 'active' ? 'glass-text-primary/80' : 'glass-text-primary/50'
                                         )}>
                                             {step.description}
                                         </p>
@@ -239,7 +238,7 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
                         {/* Connection Line */}
                         {!isLast && showProgressLine && (
                             <div className={cn(
-                                'flex-1 mx-2 transition-all duration-300',
+                                'flex-1 glass-mx-2 transition-all duration-300',
                                 config.lineHeight,
                                 index < currentStep ? styles.line : 'bg-white/20'
                             )} />
@@ -264,12 +263,12 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
                             <Motion
                                 preset={state === 'active' ? 'slideRight' : 'fadeIn'}
                                 className="flex items-start cursor-pointer"
-                                onClick={() => handleStepClick(index, step)}
+                                onClick={(e) => handleStepClick(index, step)}
                             >
                                 {/* Step Circle */}
                                 <div className={cn(
-                                    'relative rounded-full border-2 flex items-center justify-center transition-all duration-200',
-                                    'hover:scale-110 group-hover:shadow-lg mr-4',
+                                    'relative glass-radius-full border-2 flex items-center justify-center transition-all duration-200',
+                                    'hover:scale-110 group-hover:shadow-lg glass-mr-4',
                                     config.stepSize,
                                     styles.circle
                                 )}>
@@ -291,7 +290,7 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
 
                                     {/* Optional indicator */}
                                     {step.optional && (
-                                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 rounded-full" />
+                                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 glass-radius-full" />
                                     )}
                                 </div>
 
@@ -306,8 +305,8 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
                                     </h3>
                                     {showDescriptions && step.description && (
                                         <p className={cn(
-                                            'text-sm mt-1 leading-tight',
-                                            state === 'active' ? 'text-white/80' : 'text-white/50'
+                                            'glass-text-sm glass-mt-1 leading-tight',
+                                            state === 'active' ? 'glass-text-primary/80' : 'glass-text-primary/50'
                                         )}>
                                             {step.description}
                                         </p>
@@ -318,7 +317,7 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
 
                         {/* Connection Line */}
                         {!isLast && showProgressLine && (
-                            <div className="flex justify-center py-2">
+                            <div className="flex justify-center glass-py-2">
                                 <div className={cn(
                                     'w-px h-8 transition-all duration-300',
                                     index < currentStep ? styles.line : 'bg-white/20'
@@ -360,15 +359,15 @@ export const GlassCompactStepper: React.FC<GlassCompactStepperProps> = ({
     ...props
 }) => {
     const sizeConfigs = {
-        sm: { stepSize: 'w-6 h-6', iconSize: 'w-3 h-3', fontSize: 'text-xs' },
-        md: { stepSize: 'w-8 h-8', iconSize: 'w-4 h-4', fontSize: 'text-sm' },
-        lg: { stepSize: 'w-10 h-10', iconSize: 'w-5 h-5', fontSize: 'text-base' }
+        sm: { stepSize: 'w-6 h-6', iconSize: 'w-3 h-3', fontSize: 'glass-text-xs' },
+        md: { stepSize: 'w-8 h-8', iconSize: 'w-4 h-4', fontSize: 'glass-text-sm' },
+        lg: { stepSize: 'w-10 h-10', iconSize: 'w-5 h-5', fontSize: 'glass-text-base' }
     };
 
     const config = sizeConfigs[size];
 
     return (
-        <div className={cn('flex items-center gap-2', className)}>
+        <div className={cn('flex items-center glass-gap-2', className)}>
             {steps.map((step, index) => {
                 const state = getStepState(index, step);
                 const styles = getStepStyles(state);
@@ -404,9 +403,9 @@ export const GlassCompactStepper: React.FC<GlassCompactStepperProps> = ({
                     <React.Fragment key={step.id}>
                         <div className="flex items-center">
                             <button
-                                onClick={() => onStepClick?.(index)}
+                                onClick={(e) => onStepClick?.(index)}
                                 className={cn(
-                                    'relative rounded-full border flex items-center justify-center transition-all duration-200',
+                                    'relative glass-radius-full border flex items-center justify-center transition-all duration-200',
                                     'hover:scale-110',
                                     config.stepSize,
                                     styles.circle
@@ -426,7 +425,7 @@ export const GlassCompactStepper: React.FC<GlassCompactStepperProps> = ({
                             </button>
 
                             {showLabels && (
-                                <span className={cn('ml-2 font-medium', config.fontSize, 'text-white/80')}>
+                                <span className={cn('glass-ml-2 font-medium', config.fontSize, 'glass-text-primary/80')}>
                                     {step.title}
                                 </span>
                             )}

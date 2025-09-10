@@ -1,38 +1,24 @@
 'use client';
 
-import React, { forwardRef, HTMLAttributes } from 'react';
+import React, { forwardRef, HTMLAttributes, KeyboardEvent } from 'react';
 import { cn } from '@/design-system/utilsCore';
-import AURA_GLASS, { glassTokens } from '../../tokens/glass';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 export interface GlassProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * HTML element tag to render as
    */
   as?: React.ElementType;
-  /**
-   * Elevation level for depth perception
-   */
-  elevation?: 0 | 1 | 2 | 3 | 4 | 'float' | 'modal';
   
   /**
-   * Glass variant for different visual styles
+   * Elevation level for depth perception (0-6)
    */
-  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'dark' | 'iridescent' | 'mesh' | 'feature';
+  elev?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
   
   /**
-   * Blur intensity for backdrop filter
+   * Glass variant for semantic surfaces
    */
-  blur?: 'none' | 'subtle' | 'medium' | 'strong' | 'intense';
-  
-  /**
-   * Enable interactive states (hover, active)
-   */
-  interactive?: boolean;
-  
-  /**
-   * Enable glow effect on hover
-   */
-  glow?: boolean;
+  variant?: 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
   
   /**
    * Border radius preset
@@ -40,14 +26,24 @@ export interface GlassProps extends HTMLAttributes<HTMLDivElement> {
   radius?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | 'full';
   
   /**
-   * Padding preset
+   * Blur intensity
    */
-  padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
+  blur?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
   
   /**
-   * Whether to include noise texture overlay
+   * Motion animation preset
    */
-  texture?: boolean;
+  motion?: 'none' | 'float' | 'shimmer' | 'ambient' | 'press';
+  
+  /**
+   * Enable interactive states
+   */
+  interactive?: boolean;
+  
+  /**
+   * Contrast guard mode
+   */
+  contrast?: 'auto' | 'on' | 'off';
   
   /**
    * Disabled state
@@ -55,213 +51,204 @@ export interface GlassProps extends HTMLAttributes<HTMLDivElement> {
   disabled?: boolean;
   
   /**
-   * Custom gradient background
+   * Add noise texture overlay
    */
-  gradient?: 'primary' | 'secondary' | 'radial' | 'mesh' | 'iridescent';
+  noise?: boolean;
+  
+  /**
+   * Add specular overlay
+   */
+  specular?: boolean;
+  
+  /**
+   * Add edge frost effect
+   */
+  edge?: boolean;
+  
+  /**
+   * Glow effect variant
+   */
+  glow?: 'none' | 'default' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
 }
 
 /**
- * Advanced Glass primitive component
- * Base component for glassmorphism effects with elevation system and advanced tokens
+ * Advanced Glass Primitive Component
+ * Token-first glassmorphism with full a11y support
  */
 export const GlassAdvanced = forwardRef<HTMLDivElement, GlassProps>(
   (
     {
-      as: Component = 'div' as any,
-      elevation = 'level1',
+      as: Component = 'div',
+      elev = 2,
       variant = 'default',
-      blur = 'medium',
-      interactive = false,
-      glow = false,
       radius = 'lg',
-      padding = 'md',
-      texture = true,
-      gradient = 'primary',
+      blur = 'lg',
+      motion = 'none',
+      interactive = false,
+      contrast = 'auto',
       disabled = false,
+      noise = false,
+      specular = false,
+      edge = false,
+      glow = 'none',
       className,
       children,
+      onKeyDown,
+      onClick,
+      role,
+      tabIndex,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledBy,
+      'aria-describedby': ariaDescribedBy,
       ...props
     },
     ref
   ) => {
-    // Get elevation styles
-    const getElevationStyles = () => {
-      if (elevation === 0) return {};
-      
-      const elevationKey = elevation as keyof typeof glassTokens.elevation;
-      const elevationStyles = glassTokens.elevation[elevationKey];
-      
-      return {
-        boxShadow: elevationStyles.boxShadow,
-        zIndex: elevationStyles.zIndex,
-      };
-    };
+    const prefersReducedMotion = useReducedMotion();
     
-    // Get backdrop blur styles
-    const getBlurStyles = () => {
-      if (blur === 'none') return {};
-      
-      const blurValue = glassTokens.backdrop[blur];
-      return {
-        backdropFilter: blurValue,
-        WebkitBackdropFilter: blurValue,
-      };
-    };
+    // Handle keyboard accessibility for interactive elements
+    const isClickable = !!onClick && !disabled;
+    const computedRole = role || (isClickable && Component === 'div' ? 'button' : undefined);
+    const computedTabIndex = tabIndex ?? (isClickable || interactive ? 0 : undefined);
     
-    // Get gradient background
-    const getGradientBackground = () => {
-      switch (gradient) {
-        case 'primary':
-          return glassTokens.gradients.primary;
-        case 'secondary':
-          return glassTokens.gradients.secondary;
-        case 'radial':
-          return glassTokens.gradients.primaryRadial;
-        case 'mesh':
-          return glassTokens.gradients.mesh;
-        case 'iridescent':
-          return glassTokens.gradients.iridescent;
-        default:
-          return glassTokens.gradients.primary;
+    const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+      // Call custom handler first
+      onKeyDown?.(e);
+      
+      // Handle space/enter for clickable divs
+      if (isClickable && Component === 'div' && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        onClick?.(e as any);
       }
     };
     
-    // Get variant-specific colors
-    const getVariantStyles = () => {
-      switch (variant) {
-        case 'primary':
-          return {
-            background: getGradientBackground(),
-            borderColor: glassTokens.border.primary,
-          };
-        case 'secondary':
-          return {
-            background: glassTokens.gradients.secondary,
-            borderColor: glassTokens.border.secondary,
-          };
-        case 'success':
-          return {
-            background: `linear-gradient(135deg, ${glassTokens.surface.success} 0%, rgba(34, 197, 94, 0.4) 100%)`,
-            borderColor: 'rgba(34, 197, 94, 0.4)',
-          };
-        case 'warning':
-          return {
-            background: `linear-gradient(135deg, ${glassTokens.surface.warning} 0%, rgba(245, 158, 11, 0.4) 100%)`,
-            borderColor: 'rgba(245, 158, 11, 0.4)',
-          };
-        case 'error':
-          return {
-            background: `linear-gradient(135deg, ${glassTokens.surface.error} 0%, rgba(239, 68, 68, 0.4) 100%)`,
-            borderColor: 'rgba(239, 68, 68, 0.4)',
-          };
-        case 'dark':
-          return {
-            background: `linear-gradient(135deg, ${glassTokens.surface.dark} 0%, ${glassTokens.surface.darkSubtle} 100%)`,
-            borderColor: glassTokens.border.subtle,
-          };
-        case 'iridescent':
-          return {
-            background: glassTokens.gradients.iridescent,
-            borderColor: glassTokens.border.gradient.rainbow,
-          };
-        case 'mesh':
-          return {
-            background: glassTokens.gradients.mesh,
-            borderColor: glassTokens.border.primary,
-          };
-        case 'feature':
-          return {
-            background: "linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.12) 50%, rgba(255, 255, 255, 0.15) 100%)",
-            borderColor: glassTokens.border.subtle,
-          };
-        default:
-          return {
-            background: "linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.12) 100%)",
-            borderColor: glassTokens.border.primary,
-          };
+    // Token validation in development
+    if (process.env.NODE_ENV === 'development') {
+      const validElevations = [0, 1, 2, 3, 4, 5, 6];
+      const validRadii = ['none', 'sm', 'md', 'lg', 'xl', '2xl', 'full'];
+      const validBlurs = ['none', 'sm', 'md', 'lg', 'xl'];
+      const validMotions = ['none', 'float', 'shimmer', 'ambient', 'press'];
+      
+      if (!validElevations.includes(elev)) {
+        console.warn(`GlassAdvanced: Invalid elevation "${elev}". Use 0-6.`);
       }
-    };
+      if (!validRadii.includes(radius)) {
+        console.warn(`GlassAdvanced: Invalid radius "${radius}". Use ${validRadii.join(', ')}.`);
+      }
+      if (!validBlurs.includes(blur)) {
+        console.warn(`GlassAdvanced: Invalid blur "${blur}". Use ${validBlurs.join(', ')}.`);
+      }
+      if (!validMotions.includes(motion)) {
+        console.warn(`GlassAdvanced: Invalid motion "${motion}". Use ${validMotions.join(', ')}.`);
+      }
+    }
     
-    // Always hide borders for clean glassmorphism look
-    const hideBorder = true;
+    // Build class names using tokens
+    const classes = cn(
+      // Base glass foundation
+      'glass-foundation-complete',
+      
+      // Elevation
+      elev > 0 && `glass-elev-${elev}`,
+      
+      // Radius
+      `glass-radius-${radius}`,
+      
+      // Blur
+      blur !== 'lg' && `glass-blur-${blur}`,
+      
+      // Variant surfaces
+      variant !== 'default' && `glass-surface-${variant}`,
+      
+      // Motion (respect reduced motion)
+      motion !== 'none' && !prefersReducedMotion && `glass-animate-${motion}`,
+      
+      // Interactive states
+      interactive && 'glass-state-hoverable glass-state-active',
+      
+      // Contrast guard
+      contrast === 'auto' && 'glass-contrast-guard',
+      
+      // Disabled state
+      disabled && 'glass-state-disabled',
+      
+      // Overlay effects
+      noise && 'glass-overlay-noise',
+      specular && 'glass-overlay-specular',
+      edge && 'glass-edge',
+      
+      // Glow effects
+      glow !== 'none' && `glass-glow${glow !== 'default' ? `-${glow}` : ''}`,
+      
+      // Focus utilities
+      (isClickable || interactive) && 'glass-focus',
+      
+      // Custom classes
+      className
+    );
     
-    // Combine all styles
-    const glassStyles = {
-      ...getElevationStyles(),
-      ...getBlurStyles(),
-      ...getVariantStyles(),
-      position: 'relative' as const,
-      overflow: 'hidden' as const,
-      transition: interactive ? 'transform 200ms cubic-bezier(0, 0, 0.2, 1), box-shadow 200ms cubic-bezier(0, 0, 0.2, 1)' : undefined,
-      willChange: interactive ? 'transform, box-shadow' : undefined,
-    };
+    // Ensure minimum touch target for interactive elements
+    const touchTargetClasses = (isClickable || interactive) ? 'glass-touch-target' : '';
     
-    // Radius classes
-    const radiusClasses = {
-      none: 'rounded-none',
-      sm: 'rounded-sm',
-      md: 'rounded-md',
-      lg: 'rounded-lg',
-      xl: 'rounded-xl',
-      '2xl': 'rounded-2xl',
-      full: 'rounded-full',
-    };
-    
-    // Padding classes
-    const paddingClasses = {
-      none: '',
-      sm: 'p-2',
-      md: 'p-4',
-      lg: 'p-6',
-      xl: 'p-8',
-    };
-    
-    // Use remaining props directly since custom props were already destructured
-    const domProps = props;
-
     return (
       <Component
         ref={ref}
-        className={cn(
-          'glass-primitive',
-          radiusClasses[radius],
-          paddingClasses[padding],
-          interactive && 'glass-interactive cursor-pointer',
-          glow && 'glass-glow',
-          variant === 'iridescent' && 'animate-pulse',
-          disabled && 'opacity-50 pointer-events-none',
-          className
-        )}
-        style={glassStyles}
-        {...domProps}
+        className={cn(classes, touchTargetClasses)}
+        role={computedRole}
+        tabIndex={computedTabIndex}
+        aria-disabled={disabled || undefined}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledBy}
+        aria-describedby={ariaDescribedBy}
+        onClick={disabled ? undefined : onClick}
+        onKeyDown={handleKeyDown}
+        {...props}
       >
-        {/* Noise texture overlay */}
-        {texture && (
-          <div
-            className="pointer-events-none absolute inset-0 z-[1] opacity-20 mix-blend-overlay"
-            style={{
-              backgroundImage: glassTokens.noise.subtle,
-            }}
-          />
-        )}
-        
-        {/* Content wrapper */}
-        <div className="glass-content relative z-[2]">
+        {/* Slot layering: background → frost → content → chrome */}
+        <div className="glass-layer-frost" />
+        <div className="glass-layer-ink">
           {children}
         </div>
-        
-        {/* Glow effect */}
-        {glow && (
-          <div
-            className="pointer-events-none absolute inset-0 z-0 opacity-0 transition-opacity duration-300 hover:opacity-100"
-            style={{
-              background: `radial-gradient(circle at center, ${glassTokens.glow.primary}, transparent 70%)`,
-            }}
-          />
-        )}
       </Component>
     );
   }
 );
 
 GlassAdvanced.displayName = 'GlassAdvanced';
+
+/**
+ * SSR-safe class composition helper
+ */
+export function composeGlassClasses(props: Partial<GlassProps>): string {
+  const {
+    elev = 2,
+    variant = 'default',
+    radius = 'lg',
+    blur = 'lg',
+    motion = 'none',
+    interactive = false,
+    contrast = 'auto',
+    disabled = false,
+    noise = false,
+    specular = false,
+    edge = false,
+    glow = 'none',
+  } = props;
+  
+  return cn(
+    'glass-foundation-complete',
+    elev > 0 && `glass-elev-${elev}`,
+    `glass-radius-${radius}`,
+    blur !== 'lg' && `glass-blur-${blur}`,
+    variant !== 'default' && `glass-surface-${variant}`,
+    motion !== 'none' && `glass-animate-${motion}`,
+    interactive && 'glass-state-hoverable glass-state-active',
+    contrast === 'auto' && 'glass-contrast-guard',
+    disabled && 'glass-state-disabled',
+    noise && 'glass-overlay-noise',
+    specular && 'glass-overlay-specular',
+    edge && 'glass-edge',
+    glow !== 'none' && `glass-glow${glow !== 'default' ? `-${glow}` : ''}`,
+    (interactive) && 'glass-focus'
+  );
+}

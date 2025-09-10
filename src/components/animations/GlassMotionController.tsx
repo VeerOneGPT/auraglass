@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef, createContext, useContext } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+import React, { useState, useEffect, useRef, createContext, useContext, forwardRef, ReactNode } from 'react';
 import { OptimizedGlass } from '../../primitives';
+import { useA11yId, prefersReducedMotion, announceToScreenReader } from '../../utils/a11y';
+import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 
 export type AnimationType =
   | 'fadeIn'
@@ -38,8 +39,14 @@ export interface MotionControllerProps {
   speed?: number;
   /** Whether to reduce motion for accessibility */
   reduceMotion?: boolean;
+  /** Whether to respect motion preferences */
+  respectMotionPreference?: boolean;
   /** Children to animate */
   children: React.ReactNode;
+  /** Additional CSS class */
+  className?: string;
+  /** ARIA label for the motion controller */
+  'aria-label'?: string;
 }
 
 interface MotionContextType {
@@ -79,16 +86,40 @@ const easings = {
   },
 };
 
-export const GlassMotionController: React.FC<MotionControllerProps> = ({
-  enabled = true,
-  speed = 1,
-  reduceMotion = false,
-  children,
-}) => {
+export const GlassMotionController = forwardRef<HTMLDivElement, MotionControllerProps>((
+  {
+    enabled = true,
+    speed = 1,
+    reduceMotion = false,
+    respectMotionPreference = true,
+    children,
+    className,
+    'aria-label': ariaLabel,
+    ...props
+  },
+  ref
+) => {
   const [isAnimating, setIsAnimating] = useState(false);
+  const motionPreference = useMotionPreferenceContext();
+  const controllerId = useA11yId('motion-controller');
+  
+  // Determine if motion should be reduced
+  const shouldReduceMotion = respectMotionPreference 
+    ? (reduceMotion || motionPreference.prefersReducedMotion)
+    : reduceMotion;
 
   const animate = async (element: HTMLElement, config: AnimationConfig): Promise<void> => {
-    if (!enabled || reduceMotion) return;
+    if (!enabled || shouldReduceMotion) {
+      // Still apply end state for reduced motion
+      if (shouldReduceMotion) {
+        applyEndState(element, config.type, config.direction || 'center');
+        announceToScreenReader(`Animation ${config.type} applied instantly due to reduced motion preference`, 'polite');
+      }
+      return;
+    }
+
+    setIsAnimating(true);
+    announceToScreenReader(`Starting ${config.type} animation`, 'polite');
 
     return new Promise((resolve) => {
       const {
@@ -135,6 +166,8 @@ export const GlassMotionController: React.FC<MotionControllerProps> = ({
               return;
             }
           } else {
+            setIsAnimating(false);
+            announceToScreenReader(`Animation ${config.type} completed`, 'polite');
             resolve();
           }
         }
@@ -145,10 +178,23 @@ export const GlassMotionController: React.FC<MotionControllerProps> = ({
   };
 
   const batchAnimate = async (animations: Array<{ element: HTMLElement; config: AnimationConfig }>) => {
-    if (!enabled || reduceMotion) return;
+    if (!enabled || shouldReduceMotion) {
+      // Apply end states for reduced motion
+      if (shouldReduceMotion) {
+        animations.forEach(({ element, config }) => {
+          applyEndState(element, config.type, config.direction || 'center');
+        });
+        announceToScreenReader(`${animations.length} animations applied instantly due to reduced motion preference`, 'polite');
+      }
+      return;
+    }
 
+    setIsAnimating(true);
+    announceToScreenReader(`Starting batch animation of ${animations.length} elements`, 'polite');
     const promises = animations.map(({ element, config }) => animate(element, config));
     await Promise.all(promises);
+    setIsAnimating(false);
+    announceToScreenReader('Batch animation completed', 'polite');
   };
 
   const createReverseAnimationFrame = (
@@ -242,35 +288,123 @@ export const GlassMotionController: React.FC<MotionControllerProps> = ({
     Object.assign(element.style, styles);
   };
 
+  // Apply end state without animation for reduced motion
+  const applyEndState = (
+    element: HTMLElement,
+    type: AnimationType,
+    direction: AnimationDirection
+  ) => {
+    const styles: Partial<CSSStyleDeclaration> = {};
+
+    switch (type) {
+      case 'fadeIn':
+        styles.opacity = '1';
+        break;
+      case 'fadeOut':
+        styles.opacity = '0';
+        break;
+      case 'slideIn':
+      case 'scaleIn':
+        styles.transform = 'none';
+        styles.opacity = '1';
+        break;
+      case 'slideOut':
+      case 'scaleOut':
+        styles.opacity = '0';
+        break;
+      default:
+        // For other animations, ensure element is visible
+        styles.opacity = '1';
+        styles.transform = 'none';
+        break;
+    }
+
+    Object.assign(element.style, styles);
+  };
+
   return (
-    <MotionContext.Provider value={{
-      enabled,
-      speed,
-      reduceMotion,
-      animate,
-      batchAnimate,
-    }}>
-      {children}
-    </MotionContext.Provider>
+    <div
+      ref={ref}
+      className={className}
+      id={controllerId}
+      aria-label={ariaLabel || (isAnimating ? 'Animation in progress' : 'Animation controller')}
+      aria-busy={isAnimating}
+      role="region"
+      {...props}
+    >
+      <MotionContext.Provider value={{
+        enabled: enabled && !shouldReduceMotion,
+        speed,
+        reduceMotion: shouldReduceMotion,
+        animate,
+        batchAnimate,
+      }}>
+        {children}
+      </MotionContext.Provider>
+    </div>
   );
-};
+});
+
+GlassMotionController.displayName = 'GlassMotionController';
 
 // Animated component wrapper
-export const GlassAnimated: React.FC<{
+export interface GlassAnimatedProps {
   animation?: AnimationConfig;
   children: React.ReactNode;
   className?: string;
   trigger?: 'mount' | 'hover' | 'click' | 'manual';
-}> = ({ animation, children, className = '', trigger = 'mount' }) => {
-  const { animate, enabled } = useMotionController();
-  const elementRef = useRef<HTMLDivElement>(null);
+  /** Whether to respect motion preferences */
+  respectMotionPreference?: boolean;
+  /** ARIA label for the animated element */
+  'aria-label'?: string;
+}
+
+export const GlassAnimated = forwardRef<HTMLDivElement, GlassAnimatedProps>((
+  { 
+    animation, 
+    children, 
+    className = '', 
+    trigger = 'mount',
+    respectMotionPreference = true,
+    'aria-label': ariaLabel,
+    ...props 
+  }, 
+  ref
+) => {
+  const { animate, enabled, reduceMotion } = useMotionController();
+  const elementRef = useRef<HTMLDivElement | null>(null);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const motionPreference = useMotionPreferenceContext();
+  const animatedId = useA11yId('animated');
+  
+  // Combine refs
+  const combinedRef = (node: HTMLDivElement) => {
+    elementRef.current = node;
+    if (typeof ref === 'function') {
+      ref(node);
+    } else if (ref) {
+      ref.current = node;
+    }
+  };
+  
+  const shouldReduceMotion = respectMotionPreference 
+    ? (reduceMotion || motionPreference.prefersReducedMotion)
+    : reduceMotion;
 
   useEffect(() => {
     if (!enabled || !animation || !elementRef.current || hasAnimated) return;
 
     if (trigger === 'mount') {
-      animate(elementRef.current, animation).then(() => setHasAnimated(true));
+      setIsAnimating(true);
+      animate(elementRef.current, animation)
+        .then(() => {
+          setHasAnimated(true);
+          setIsAnimating(false);
+        })
+        .catch(() => {
+          setIsAnimating(false);
+        });
     }
   }, [animate, animation, enabled, trigger, hasAnimated]);
 
@@ -278,36 +412,101 @@ export const GlassAnimated: React.FC<{
     if (!enabled || !animation || !elementRef.current) return;
 
     if (trigger === 'click') {
-      await animate(elementRef.current, animation);
+      setIsAnimating(true);
+      try {
+        await animate(elementRef.current, animation);
+      } finally {
+        setIsAnimating(false);
+      }
     }
   };
 
   const handleHover = async () => {
     if (!enabled || !animation || !elementRef.current || trigger !== 'hover') return;
 
-    await animate(elementRef.current, animation);
+    setIsAnimating(true);
+    try {
+      await animate(elementRef.current, animation);
+    } finally {
+      setIsAnimating(false);
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (trigger === 'click' && (event.key === 'Enter' || event.key === ' ')) {
+      event.preventDefault();
+      handleTrigger();
+    }
   };
 
   return (
     <div
-      ref={elementRef}
+      ref={combinedRef}
+      id={animatedId}
       className={className}
       onClick={trigger === 'click' ? handleTrigger : undefined}
       onMouseEnter={trigger === 'hover' ? handleHover : undefined}
+      onKeyDown={trigger === 'click' ? handleKeyDown : undefined}
+      tabIndex={trigger === 'click' ? 0 : undefined}
+      role={trigger === 'click' ? 'button' : undefined}
+      aria-label={ariaLabel || (trigger === 'click' ? 'Animated interactive element' : undefined)}
+      aria-busy={isAnimating}
+      aria-describedby={shouldReduceMotion ? `${animatedId}-motion-notice` : undefined}
+      {...props}
     >
       {children}
+      {shouldReduceMotion && (
+        <div id={`${animatedId}-motion-notice`} className="sr-only">
+          Motion animations are disabled due to accessibility preferences
+        </div>
+      )}
     </div>
   );
-};
+});
+
+GlassAnimated.displayName = 'GlassAnimated';
 
 // Sequence animation component
-export const GlassAnimationSequence: React.FC<{
+export interface GlassAnimationSequenceProps {
   children: React.ReactNode;
   staggerDelay?: number;
   className?: string;
-}> = ({ children, staggerDelay = 100, className = '' }) => {
-  const { batchAnimate, enabled } = useMotionController();
-  const containerRef = useRef<HTMLDivElement>(null);
+  /** Whether to respect motion preferences */
+  respectMotionPreference?: boolean;
+  /** ARIA label for the sequence */
+  'aria-label'?: string;
+}
+
+export const GlassAnimationSequence = forwardRef<HTMLDivElement, GlassAnimationSequenceProps>((
+  { 
+    children, 
+    staggerDelay = 100, 
+    className = '',
+    respectMotionPreference = true,
+    'aria-label': ariaLabel,
+    ...props 
+  },
+  ref
+) => {
+  const { batchAnimate, enabled, reduceMotion } = useMotionController();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const motionPreference = useMotionPreferenceContext();
+  const sequenceId = useA11yId('animation-sequence');
+  
+  // Combine refs
+  const combinedRef = (node: HTMLDivElement) => {
+    containerRef.current = node;
+    if (typeof ref === 'function') {
+      ref(node);
+    } else if (ref) {
+      ref.current = node;
+    }
+  };
+  
+  const shouldReduceMotion = respectMotionPreference 
+    ? (reduceMotion || motionPreference.prefersReducedMotion)
+    : reduceMotion;
 
   useEffect(() => {
     if (!enabled || !containerRef.current) return;
@@ -319,20 +518,39 @@ export const GlassAnimationSequence: React.FC<{
         type: 'fadeIn' as AnimationType,
         direction: 'up' as AnimationDirection,
         duration: 600,
-        delay: index * staggerDelay,
+        delay: shouldReduceMotion ? 0 : index * staggerDelay,
         easing: 'easeOut' as EasingType,
       },
     }));
 
-    batchAnimate(animations);
-  }, [batchAnimate, enabled, staggerDelay]);
+    setIsAnimating(true);
+    batchAnimate(animations)
+      .then(() => setIsAnimating(false))
+      .catch(() => setIsAnimating(false));
+  }, [batchAnimate, enabled, staggerDelay, shouldReduceMotion]);
 
   return (
-    <div ref={containerRef} className={className}>
+    <div 
+      ref={combinedRef} 
+      id={sequenceId}
+      className={className}
+      role="region"
+      aria-label={ariaLabel || 'Animation sequence'}
+      aria-busy={isAnimating}
+      aria-describedby={shouldReduceMotion ? `${sequenceId}-motion-notice` : undefined}
+      {...props}
+    >
       {children}
+      {shouldReduceMotion && (
+        <div id={`${sequenceId}-motion-notice`} className="sr-only">
+          Sequential animations are disabled due to accessibility preferences
+        </div>
+      )}
     </div>
   );
-};
+});
+
+GlassAnimationSequence.displayName = 'GlassAnimationSequence';
 
 // Preset animations
 export const animationPresets = {
@@ -386,7 +604,7 @@ export const animationPresets = {
 };
 
 // Animation timeline component for complex sequences
-export const GlassAnimationTimeline: React.FC<{
+export interface GlassAnimationTimelineProps {
   timeline: Array<{
     selector: string;
     animation: AnimationConfig;
@@ -394,26 +612,85 @@ export const GlassAnimationTimeline: React.FC<{
   }>;
   children: React.ReactNode;
   className?: string;
-}> = ({ timeline, children, className = '' }) => {
-  const { animate, enabled } = useMotionController();
-  const containerRef = useRef<HTMLDivElement>(null);
+  /** Whether to respect motion preferences */
+  respectMotionPreference?: boolean;
+  /** ARIA label for the timeline */
+  'aria-label'?: string;
+}
+
+export const GlassAnimationTimeline = forwardRef<HTMLDivElement, GlassAnimationTimelineProps>((
+  { 
+    timeline, 
+    children, 
+    className = '',
+    respectMotionPreference = true,
+    'aria-label': ariaLabel,
+    ...props 
+  },
+  ref
+) => {
+  const { animate, enabled, reduceMotion } = useMotionController();
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const motionPreference = useMotionPreferenceContext();
+  const timelineId = useA11yId('animation-timeline');
+  
+  // Combine refs
+  const combinedRef = (node: HTMLDivElement) => {
+    containerRef.current = node;
+    if (typeof ref === 'function') {
+      ref(node);
+    } else if (ref) {
+      ref.current = node;
+    }
+  };
+  
+  const shouldReduceMotion = respectMotionPreference 
+    ? (reduceMotion || motionPreference.prefersReducedMotion)
+    : reduceMotion;
 
   useEffect(() => {
     if (!enabled || !containerRef.current) return;
 
+    setIsAnimating(true);
+    let animationPromises: Promise<void>[] = [];
+    
     timeline.forEach(({ selector, animation, startTime = 0 }) => {
       const element = containerRef.current?.querySelector(selector) as HTMLElement;
       if (element) {
-        setTimeout(() => {
-          animate(element, animation);
-        }, startTime);
+        const promise = new Promise<void>((resolve) => {
+          setTimeout(() => {
+            animate(element, animation).then(resolve).catch(resolve);
+          }, shouldReduceMotion ? 0 : startTime);
+        });
+        animationPromises.push(promise);
       }
     });
-  }, [animate, enabled, timeline]);
+
+    Promise.all(animationPromises)
+      .then(() => setIsAnimating(false))
+      .catch(() => setIsAnimating(false));
+  }, [animate, enabled, timeline, shouldReduceMotion]);
 
   return (
-    <div ref={containerRef} className={className}>
+    <div 
+      ref={combinedRef} 
+      id={timelineId}
+      className={className}
+      role="region"
+      aria-label={ariaLabel || 'Animation timeline'}
+      aria-busy={isAnimating}
+      aria-describedby={shouldReduceMotion ? `${timelineId}-motion-notice` : undefined}
+      {...props}
+    >
       {children}
+      {shouldReduceMotion && (
+        <div id={`${timelineId}-motion-notice`} className="sr-only">
+          Timeline animations are disabled due to accessibility preferences
+        </div>
+      )}
     </div>
   );
-};
+});
+
+GlassAnimationTimeline.displayName = 'GlassAnimationTimeline';

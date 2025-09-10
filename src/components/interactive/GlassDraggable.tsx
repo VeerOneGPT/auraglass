@@ -3,7 +3,6 @@
 import { cn } from '@/lib/utilsComprehensive';
 import { GripVertical, Move } from 'lucide-react';
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 
 export interface DragData {
@@ -66,7 +65,13 @@ const DragContext = createContext<DragContextType | null>(null);
 export const useDragContext = () => {
     const context = useContext(DragContext);
     if (!context) {
-        throw new Error('useDragContext must be used within a DragProvider');
+        console.warn('useDragContext must be used within a DragProvider. Using default values.');
+        return {
+            isDragging: false,
+            dragOffset: { x: 0, y: 0 },
+            setIsDragging: () => {},
+            setDragOffset: () => {},
+        };
     }
     return context;
 };
@@ -150,7 +155,7 @@ export const GlassDraggable: React.FC<GlassDraggableProps> = ({
 
     // Default drag handle
     const defaultHandle = handle || (
-        <div className="flex items-center justify-center w-6 h-6 text-white/60 hover:text-white cursor-grab active:cursor-grabbing">
+        <div className="flex items-center justify-center w-6 h-6 glass-text-primary/60 hover:glass-text-primary cursor-grab active:cursor-grabbing">
             <GripVertical className="w-4 h-4" />
         </div>
     );
@@ -332,16 +337,16 @@ export const GlassDroppable: React.FC<GlassDroppableProps> = ({
             {/* Drop Indicator */}
             {isOver && (
                 <div className={cn(
-                    'absolute inset-0 border-2 border-dashed rounded-lg flex items-center justify-center',
+                    'absolute inset-0 border-2 border-dashed glass-radius-lg flex items-center justify-center',
                     isValidDrop ? 'border-primary bg-primary/10' : 'border-red-500 bg-red-500/10'
                 )}>
                     <div className="text-center">
                         <Move className={cn(
-                            'w-8 h-8 mx-auto mb-2',
+                            'w-8 h-8 mx-auto glass-mb-2',
                             isValidDrop ? 'text-primary' : 'text-red-500'
                         )} />
                         <p className={cn(
-                            'text-sm font-medium',
+                            'glass-text-sm font-medium',
                             isValidDrop ? 'text-primary' : 'text-red-500'
                         )}>
                             {isValidDrop ? 'Drop here' : 'Cannot drop here'}
@@ -433,8 +438,8 @@ export const GlassSortable: React.FC<GlassSortableProps> = ({
     return (
         <div
             className={cn(
-                'space-y-2',
-                direction === 'horizontal' && 'flex space-y-0 space-x-2',
+                'glass-gap-2',
+                direction === 'horizontal' && 'flex space-y-0 glass-gap-2',
                 className
             )}
             {...props}
@@ -455,7 +460,7 @@ export const GlassSortable: React.FC<GlassSortableProps> = ({
                 >
                     {/* Drag Handle */}
                     <div className="absolute top-2 right-2 z-10">
-                        <div className="flex items-center justify-center w-6 h-6 text-white/60 hover:text-white cursor-grab active:cursor-grabbing bg-black/20 rounded">
+                        <div className="flex items-center justify-center w-6 h-6 glass-text-primary/60 hover:glass-text-primary cursor-grab active:cursor-grabbing bg-black/20 glass-radius-md">
                             <Move className="w-4 h-4" />
                         </div>
                     </div>
@@ -470,7 +475,7 @@ export const GlassSortable: React.FC<GlassSortableProps> = ({
                     {/* Drop Indicator */}
                     {dragOverIndex === index && draggedIndex !== index && (
                         <div className={cn(
-                            'absolute inset-0 border-2 border-dashed border-primary rounded-lg pointer-events-none',
+                            'absolute inset-0 border-2 border-dashed border-primary glass-radius-lg pointer-events-none',
                             direction === 'vertical' ? 'border-t-0 border-b-0' : 'border-l-0 border-r-0'
                         )} />
                     )}

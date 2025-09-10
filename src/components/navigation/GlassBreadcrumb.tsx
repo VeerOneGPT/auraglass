@@ -1,12 +1,12 @@
 'use client';
 
-
 import { cn } from '@/lib/utilsComprehensive';
-import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+import React, { forwardRef } from 'react';
 import { OptimizedGlass } from '../../primitives';
+import { useA11yId } from '@/utils/a11y';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
-export interface GlassBreadcrumbProps {
+export interface GlassBreadcrumbProps extends React.HTMLAttributes<HTMLElement> {
     /**
      * Breadcrumb separator
      */
@@ -30,18 +30,18 @@ export interface GlassBreadcrumbProps {
     /**
      * Glass elevation
      */
-    elevation?: 1 | 2 | 3;
+    elevation?: 'level1' | 'level2' | 'level3' | 'level4';
     /**
      * Size variant
      */
     size?: 'sm' | 'md' | 'lg';
     /**
-     * Custom className
+     * Whether to respect motion preferences for animations
      */
-    className?: string;
+    respectMotionPreference?: boolean;
 }
 
-export interface GlassBreadcrumbItemProps {
+export interface GlassBreadcrumbItemProps extends React.HTMLAttributes<HTMLSpanElement> {
     /**
      * Whether this is the current page
      */
@@ -50,17 +50,17 @@ export interface GlassBreadcrumbItemProps {
      * Item content
      */
     children: React.ReactNode;
+    /**
+     * Whether to respect motion preferences for animations
+     */
+    respectMotionPreference?: boolean;
 }
 
-export interface GlassBreadcrumbSeparatorProps {
+export interface GlassBreadcrumbSeparatorProps extends React.HTMLAttributes<HTMLSpanElement> {
     /**
      * Custom separator content
      */
     children?: React.ReactNode;
-    /**
-     * Custom className
-     */
-    className?: string;
 }
 
 export interface GlassBreadcrumbLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -76,22 +76,36 @@ export interface GlassBreadcrumbLinkProps extends React.AnchorHTMLAttributes<HTM
      * Whether this is the current page
      */
     isCurrentPage?: boolean;
+    /**
+     * Whether to respect motion preferences for animations
+     */
+    respectMotionPreference?: boolean;
 }
 
 /**
  * GlassBreadcrumb component
  * A glassmorphism breadcrumb navigation component
  */
-export const GlassBreadcrumb: React.FC<GlassBreadcrumbProps> = ({
-    separator = '/',
-    children,
-    maxItems,
-    showEllipsis = true,
-    ellipsisComponent = '...',
-    elevation = 1,
-    size = 'md',
-    className,
-}) => {
+export const GlassBreadcrumb = forwardRef<HTMLElement, GlassBreadcrumbProps>(
+  (
+    {
+      separator = '/',
+      children,
+      maxItems,
+      showEllipsis = true,
+      ellipsisComponent = '...',
+      elevation = 'level1',
+      size = 'md',
+      respectMotionPreference = true,
+      className,
+      ...props
+    },
+    ref
+  ) => {
+    // Accessibility and motion preferences
+    const navId = useA11yId('breadcrumb');
+    const prefersReducedMotion = useReducedMotion();
+    const shouldReduceMotion = respectMotionPreference && prefersReducedMotion;
     const childArray = React.Children.toArray(children);
     let itemsToRender = childArray;
 
@@ -107,45 +121,35 @@ export const GlassBreadcrumb: React.FC<GlassBreadcrumbProps> = ({
     }
 
     const sizeClasses = {
-        sm: 'text-xs',
-        md: 'text-sm',
-        lg: 'text-base',
+        sm: 'glass-text-xs',
+        md: 'glass-text-sm',
+        lg: 'glass-text-base',
     };
 
     return (
         <OptimizedGlass
-          intent="neutral"
-          elevation={typeof elevation === 'number' ? (() => {
-            const level = Math.min(5, Math.max(1, elevation + 1));
-            switch (level) {
-              case 1: return 'level1' as const;
-              case 2: return 'level2' as const;
-              case 3: return 'level3' as const;
-              case 4: return 'level4' as const;
-              case 5: return 'level5' as const;
-              default: return 'level1' as const;
-            }
-          })() : elevation}
+          ref={ref as any}
+          elevation={elevation}
           intensity="medium"
           depth={2}
           tint="neutral"
           border="subtle"
-          animation="none"
+          animation={shouldReduceMotion ? 'none' : 'gentle'}
           performanceMode="medium"
-          liftOnHover
           
             className={cn(
-                'inline-flex items-center px-3 py-1.5 backdrop-blur-md ring-1 ring-white/10 bg-white/5',
+                'inline-flex items-center glass-px-3 glass-py-1.5 backdrop-blur-md ring-1 ring-white/10 bg-white/5',
                 sizeClasses?.[size],
                 className
             )}
+          {...props}
         >
-            <nav aria-label="Breadcrumb">
-                <ol className="flex items-center space-x-2">
+            <nav aria-label="Breadcrumb" id={navId}>
+                <ol className="flex items-center glass-gap-2">
                     {itemsToRender.map((item, index) => (
                         <li key={index} className="flex items-center">
                             {index > 0 && (
-                                <span className="mx-2 text-white/40" aria-hidden="true">
+                                <span className="glass-mx-2 glass-text-primary/40" aria-hidden="true">
                                     {separator}
                                 </span>
                             )}
@@ -156,68 +160,103 @@ export const GlassBreadcrumb: React.FC<GlassBreadcrumbProps> = ({
             </nav>
         </OptimizedGlass>
     );
-};
+  }
+);
+
+GlassBreadcrumb.displayName = 'GlassBreadcrumb';
 
 /**
  * GlassBreadcrumbItem component
  * Individual breadcrumb item
  */
-export const GlassBreadcrumbItem: React.FC<GlassBreadcrumbItemProps> = ({
-    isCurrentPage = false,
-    children,
-}) => {
+export const GlassBreadcrumbItem = forwardRef<HTMLSpanElement, GlassBreadcrumbItemProps>(
+  (
+    {
+      isCurrentPage = false,
+      children,
+      respectMotionPreference = true,
+      className,
+      ...props
+    },
+    ref
+  ) => {
+    const prefersReducedMotion = useReducedMotion();
+    const shouldReduceMotion = respectMotionPreference && prefersReducedMotion;
     return (
         <span
+            ref={ref}
             className={cn(
-                'text-white/80 transition-all duration-200',
-                !isCurrentPage && 'hover:-translate-y-0.5',
-                isCurrentPage && 'text-white font-medium'
+                'glass-text-primary/80 transition-all duration-200',
+                !isCurrentPage && !shouldReduceMotion && 'hover:-translate-y-0.5',
+                isCurrentPage && 'glass-text-primary font-medium',
+                className
             )}
             aria-current={isCurrentPage ? 'page' : undefined}
+            {...props}
         >
             {children}
         </span>
     );
-};
+  }
+);
+
+GlassBreadcrumbItem.displayName = 'GlassBreadcrumbItem';
 
 /**
  * GlassBreadcrumbSeparator component
  * Separator between breadcrumb items
  */
-export const GlassBreadcrumbSeparator: React.FC<GlassBreadcrumbSeparatorProps> = ({
-    children = '/',
-    className,
-}) => {
+export const GlassBreadcrumbSeparator = forwardRef<HTMLSpanElement, GlassBreadcrumbSeparatorProps>(
+  (
+    {
+      children = '/',
+      className,
+      ...props
+    },
+    ref
+  ) => {
     return (
         <span
+            ref={ref}
             className={cn(
-                'text-white/60 mx-2 select-none',
+                'glass-text-primary/60 glass-mx-2 select-none',
                 className
             )}
             aria-hidden="true"
+            {...props}
         >
             {children}
         </span>
     );
-};
+  }
+);
+
+GlassBreadcrumbSeparator.displayName = 'GlassBreadcrumbSeparator';
 
 /**
  * GlassBreadcrumbLink component
  * Clickable breadcrumb link
  */
-export const GlassBreadcrumbLink: React.FC<GlassBreadcrumbLinkProps> = ({
-    children,
-    href,
-    isCurrentPage = false,
-    className,
-    ...props
-}) => {
+export const GlassBreadcrumbLink = forwardRef<HTMLAnchorElement | HTMLButtonElement, GlassBreadcrumbLinkProps>(
+  (
+    {
+      children,
+      href,
+      isCurrentPage = false,
+      respectMotionPreference = true,
+      className,
+      ...props
+    },
+    ref
+  ) => {
+    const prefersReducedMotion = useReducedMotion();
+    const shouldReduceMotion = respectMotionPreference && prefersReducedMotion;
     const linkClasses = cn(
-        'text-white/70 hover:text-white transition-all duration-200',
+        'glass-text-primary/70 hover:glass-text-primary transition-all duration-200',
         'focus:outline-none glass-pulse-ring',
-        'rounded-sm px-1 py-0.5 -mx-1 -my-0.5',
-        !isCurrentPage && 'hover:-translate-y-0.5',
-        isCurrentPage && 'text-white font-medium cursor-default',
+        'glass-radius-sm glass-px-1 glass-py-0.5 -glass-mx-1 -glass-my-0.5',
+        !isCurrentPage && !shouldReduceMotion && 'hover:-translate-y-0.5',
+        isCurrentPage && 'glass-text-primary font-medium cursor-default',
         className
     );
 
@@ -231,19 +270,21 @@ export const GlassBreadcrumbLink: React.FC<GlassBreadcrumbLinkProps> = ({
 
     if (href) {
         return (
-            <a href={href} className={linkClasses} {...props}>
+            <a ref={ref as React.RefObject<HTMLAnchorElement>} href={href} className={linkClasses} {...props}>
                 {children}
             </a>
         );
     }
 
-    // Use a regular button since GlassButton expects button props but we have anchor props
     return (
-        <button className={linkClasses} onClick={props?.onClick as any} {...(props as any)}>
+        <button ref={ref as React.RefObject<HTMLButtonElement>} className={linkClasses} onClick={props?.onClick as any} {...(props as any)}>
             {children}
         </button>
     );
-};
+  }
+);
+
+GlassBreadcrumbLink.displayName = 'GlassBreadcrumbLink';
 
 /**
  * Compound Breadcrumb component with built-in structure

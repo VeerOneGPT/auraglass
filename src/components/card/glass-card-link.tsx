@@ -1,15 +1,8 @@
-import React, { useRef } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
-import styled from 'styled-components';
-import { usePhysicsInteraction } from '../../hooks/usePhysicsInteraction';
+'use client';
 
-const LinkContainer = styled.div`
-  position: relative;
-  display: inline-block;
-  overflow: hidden;
-  border-radius: 12px;
-  transition: all 0.3s ease;
-`;
+import React, { useRef } from 'react';
+import { cn } from '../../lib/utilsComprehensive';
+import { Motion } from '../../primitives';
 
 interface GlassCardLinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
   href: string;
@@ -19,34 +12,26 @@ interface GlassCardLinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorE
 export const GlassCardLink: React.FC<GlassCardLinkProps> = ({
   href,
   children,
+  className,
   ...props
 }) => {
-  const linkRef = useRef(null);
-  const { ref: physicsRef, physicsState, isInteracting } = usePhysicsInteraction({
-    scale: 1.02,
-    duration: 200,
-    enableHover: true,
-    enableClick: true,
-    damping: 0.8,
-    stiffness: 100,
-    mass: 1
-  });
-
-  // Extract only CSS-compatible properties from physics state
-  const cssPhysicsState = {
-    transform: `scale(${physicsState.scale}) rotate(${physicsState.rotation}deg)`,
-  };
-
   return (
-    <LinkContainer
-      as="a"
-      href={href}
-      ref={linkRef}
-      style={{ ...cssPhysicsState, ...props?.style }}
-      {...props}
+    <Motion
+      className="inline-block"
     >
-      {children}
-    </LinkContainer>
+      <a
+        href={href}
+        className={cn(
+          'relative inline-block overflow-hidden glass-radius-xl',
+          'transition-all duration-300 ease-in-out',
+          'focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2',
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </a>
+    </Motion>
   );
 };
 

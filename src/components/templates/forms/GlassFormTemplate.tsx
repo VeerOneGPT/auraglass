@@ -1,7 +1,6 @@
 'use client';
 
 import React, { forwardRef, useState } from 'react';
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 import { Glass } from '../../../primitives';
 import { Motion } from '../../../primitives';
 import { GlassFormBuilder } from '../../../components/interactive/GlassFormBuilder';
@@ -243,10 +242,10 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
       return (
         <VStack space="md">
           <HStack space="sm" align="center" justify="between">
-            <span className="text-sm font-medium text-foreground">
+            <span className="glass-text-sm font-medium text-foreground">
               Step {currentStep + 1} of {totalSteps}
             </span>
-            <span className="text-sm text-muted-foreground">
+            <span className="glass-text-sm glass-text-secondary">
               {Math.round(getProgress())}% Complete
             </span>
           </HStack>
@@ -263,23 +262,23 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
               <div
                 key={step.id}
                 className={cn(
-                  'flex flex-col items-center gap-2 cursor-pointer transition-opacity',
+                  'flex flex-col items-center glass-gap-2 cursor-pointer transition-opacity',
                   index > currentStep && 'opacity-50',
                   index < currentStep && 'opacity-75'
                 )}
-                onClick={() => stepValidation[index] && onStepChange?.(index)}
+                onClick={(e) => stepValidation[index] && onStepChange?.(index)}
               >
                 <div className={cn(
-                  'w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium',
+                  'w-8 h-8 glass-radius-full flex items-center justify-center glass-text-sm font-medium',
                   index === currentStep
                     ? 'bg-primary text-primary-foreground'
                     : index < currentStep
                     ? 'bg-success text-success-foreground'
-                    : 'bg-muted text-muted-foreground'
+                    : 'bg-muted glass-text-secondary'
                 )}>
                   {index < currentStep ? '✓' : index + 1}
                 </div>
-                <span className="text-xs text-center max-w-16 truncate">
+                <span className="glass-text-xs text-center max-w-16 truncate">
                   {step.title}
                 </span>
               </div>
@@ -345,11 +344,11 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
         {/* Current step header */}
         {isMultiStep && currentStepData && (
           <VStack space="sm">
-            <h2 className="text-xl font-semibold text-foreground">
+            <h2 className="glass-text-xl font-semibold text-foreground">
               {currentStepData.title}
             </h2>
             {currentStepData.description && (
-              <p className="text-muted-foreground">
+              <p className="glass-text-secondary">
                 {currentStepData.description}
               </p>
             )}
@@ -394,7 +393,7 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
           return (
             <div className="grid grid-cols-12 gap-8">
               <div className="col-span-8">
-                <GlassCard variant="default" className="p-6">
+                <GlassCard variant="default" className="glass-p-6">
                   {renderFormContent()}
                 </GlassCard>
               </div>
@@ -406,7 +405,7 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
 
         default:
           return (
-            <GlassCard variant="default" className="p-6">
+            <GlassCard variant="default" className="glass-p-6">
               {renderFormContent()}
             </GlassCard>
           );
@@ -414,7 +413,7 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
     };
 
     return (
-      <div ref={ref} className={cn('w-full space-y-8', className)} {...props}>
+      <div ref={ref} className={cn('w-full glass-auto-gap glass-auto-gap-3xl', className)} {...props}>
         {/* Header */}
         <PageHeader
           title={title}

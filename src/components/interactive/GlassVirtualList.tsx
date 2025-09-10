@@ -3,7 +3,6 @@
 import { cn } from '@/lib/utilsComprehensive';
 import { Loader2 } from 'lucide-react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 
 export interface VirtualListItem {
@@ -199,9 +198,9 @@ export const GlassVirtualList: React.FC<GlassVirtualListProps> = ({
                 {/* Loading indicator */}
                 {loading && (
                     <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-                        <div className="flex items-center gap-2 px-4 py-2 bg-black/80 backdrop-blur-md rounded-full">
+                        <div className="flex items-center glass-gap-2 glass-px-4 glass-py-2 bg-black/80 backdrop-blur-md glass-radius-full">
                             <Loader2 className="w-4 h-4 animate-spin" />
-                            <span className="text-white text-sm">Loading...</span>
+                            <span className="glass-text-primary glass-text-sm">Loading...</span>
                         </div>
                     </div>
                 )}
@@ -335,7 +334,7 @@ export const GlassVirtualGrid: React.FC<GlassVirtualGridProps> = ({
                         style={{ transform: `translateY(${offsetY}px)` }}
                     >
                         <div
-                            className="grid gap-2"
+                            className="grid glass-gap-2"
                             style={{
                                 gridTemplateColumns: `repeat(${columns}, 1fr)`,
                                 gap: `${gap}px`

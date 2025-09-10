@@ -2,12 +2,11 @@
 
 import { cn } from '@/lib/utilsComprehensive';
 import { Activity, DollarSign, Minus, Target, TrendingDown, TrendingUp, Users } from 'lucide-react';
-import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+import React, { forwardRef } from 'react';
 import { Motion } from '../../primitives';
 import { CardContent, CardHeader, CardTitle, GlassCard } from '../card';
 
-export interface GlassMetricCardProps {
+export interface GlassMetricCardProps extends React.HTMLAttributes<HTMLDivElement> {
     /**
      * Metric title/label
      */
@@ -83,63 +82,63 @@ export interface GlassMetricCardProps {
      * Click handler
      */
     onClick?: () => void;
-    /**
-     * Custom className
-     */
-    className?: string;
 }
 
 /**
  * GlassMetricCard component
  * A glassmorphism metric card for displaying various dashboard metrics
  */
-export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
-    title,
-    value,
-    unit = '',
-    description,
-    icon,
-    type = 'custom',
-    variant = 'default',
-    size = 'md',
-    layout = 'vertical',
-    showProgress = false,
-    progress = 0,
-    progressLabel,
-    trend,
-    comparison,
-    children,
-    loading = false,
-    onClick,
-    className,
-    ...props
-}) => {
+export const GlassMetricCard = forwardRef<HTMLDivElement, GlassMetricCardProps>(
+  (
+    {
+      title,
+      value,
+      unit = '',
+      description,
+      icon,
+      type = 'custom',
+      variant = 'default',
+      size = 'md',
+      layout = 'vertical',
+      showProgress = false,
+      progress = 0,
+      progressLabel,
+      trend,
+      comparison,
+      children,
+      loading = false,
+      onClick,
+      className,
+      ...props
+    },
+    ref
+  ) => {
     // Size configurations
     const sizeConfigs = {
         sm: {
-            cardClass: 'p-4',
-            titleClass: 'text-sm font-medium',
-            valueClass: 'text-xl font-bold',
+            cardClass: 'glass-p-4',
+            titleClass: 'glass-text-sm font-medium',
+            valueClass: 'glass-text-xl font-bold',
             iconSize: 'w-6 h-6',
             progressHeight: 'h-1',
         },
         md: {
-            cardClass: 'p-6',
-            titleClass: 'text-base font-medium',
-            valueClass: 'text-2xl font-bold',
+            cardClass: 'glass-p-6',
+            titleClass: 'glass-text-base font-medium',
+            valueClass: 'glass-text-2xl font-bold',
             iconSize: 'w-8 h-8',
             progressHeight: 'h-2',
         },
         lg: {
             cardClass: 'p-8',
-            titleClass: 'text-lg font-semibold',
+            titleClass: 'glass-text-lg font-semibold',
             valueClass: 'text-3xl font-bold',
             iconSize: 'w-10 h-10',
             progressHeight: 'h-3',
         },
         xl: {
-            cardClass: 'p-10',
-            titleClass: 'text-xl font-semibold',
+            cardClass: 'glass-p-10',
+            titleClass: 'glass-text-xl font-semibold',
             valueClass: 'text-4xl font-bold',
             iconSize: 'w-12 h-12',
             progressHeight: 'h-4',
@@ -162,8 +161,8 @@ export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
     // Variant color configurations
     const variantConfigs = {
         default: {
-            iconColor: 'text-white/70',
-            valueColor: 'text-white',
+            iconColor: 'glass-text-primary/70',
+            valueColor: 'glass-text-primary',
             trendUpColor: 'text-green-400',
             trendDownColor: 'text-red-400',
             trendNeutralColor: 'text-yellow-400',
@@ -225,17 +224,17 @@ export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
     if (loading) {
         return (
             <GlassCard className={cn('animate-pulse', config.cardClass, className)}>
-                <div className="space-y-4">
+                <div className="glass-gap-4">
                     <div className="flex items-center justify-between">
-                        <div className="h-4 bg-white/20 rounded w-24"></div>
-                        <div className="w-8 h-8 bg-white/20 rounded"></div>
+                        <div className="h-4 bg-white/20 glass-radius-md w-24"></div>
+                        <div className="w-8 h-8 bg-white/20 glass-radius-md"></div>
                     </div>
-                    <div className="space-y-2">
-                        <div className="h-8 bg-white/20 rounded w-32"></div>
-                        <div className="h-4 bg-white/20 rounded w-20"></div>
+                    <div className="glass-gap-2">
+                        <div className="h-8 bg-white/20 glass-radius-md w-32"></div>
+                        <div className="h-4 bg-white/20 glass-radius-md w-20"></div>
                     </div>
                     {showProgress && (
-                        <div className="h-2 bg-white/10 rounded"></div>
+                        <div className="h-2 bg-white/10 glass-radius-md"></div>
                     )}
                 </div>
             </GlassCard>
@@ -245,8 +244,14 @@ export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
     return (
         <Motion preset="fadeIn" className="w-full glass-metric-card">
             <GlassCard
-                variant="elevated"
-                elevation={'level2'}
+                ref={ref}
+                elevation="level2"
+                intensity="medium"
+                depth={2}
+                tint="neutral"
+                border="subtle"
+                animation="none"
+                performanceMode="medium"
                 hoverable={!!onClick}
                 clickable={!!onClick}
                 onClick={onClick}
@@ -268,12 +273,12 @@ export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
                         layout === 'horizontal' ? 'flex-row items-center' : 'flex-col'
                     )}>
                         <div className="flex-1">
-                            <CardTitle className={cn(config.titleClass, 'text-white/90 flex items-center gap-2')}>
+                            <CardTitle className={cn(config.titleClass, 'glass-text-primary/90 flex items-center glass-gap-2')}>
                                 {displayIcon && (
                                     <div className={cn(
-                                        'inline-flex items-center justify-center rounded-lg',
+                                        'inline-flex items-center justify-center glass-radius-lg',
                                         'bg-gradient-to-br from-white/10 to-white/5',
-                                        'border border-white/20 p-2 mr-3',
+                                        'border border-white/20 glass-p-2 mr-3',
                                         'group-hover:from-white/15 group-hover:to-white/8',
                                         'group-hover:border-white/30 group-hover:shadow-lg',
                                         'group-hover:scale-110 group-hover:-rotate-2',
@@ -281,7 +286,7 @@ export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
                                         variantConfig.iconColor
                                     )}>
                                         {/* Icon glow effect */}
-                                        <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        <div className="absolute inset-0 bg-gradient-to-br from-blue-400/20 to-purple-400/20 glass-radius-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                         <span className={cn(config.iconSize, 'relative z-10 transition-transform duration-300 group-hover:scale-110')}>
                                             {displayIcon}
                                         </span>
@@ -290,17 +295,17 @@ export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
                                 {title}
                             </CardTitle>
                             {description && (
-                                <p className="text-sm text-white/60 mt-1">{description}</p>
+                                <p className="glass-text-sm glass-text-primary/60 glass-mt-1">{description}</p>
                             )}
                         </div>
 
                         {/* Trend indicator */}
                         {trend && (
-                            <div className="flex items-center gap-1 mt-2">
+                            <div className="flex items-center glass-gap-1 glass-mt-2">
                                 {trend.direction === 'up' && <TrendingUp className={cn('w-4 h-4', variantConfig.trendUpColor)} />}
                                 {trend.direction === 'down' && <TrendingDown className={cn('w-4 h-4', variantConfig.trendDownColor)} />}
                                 {trend.direction === 'neutral' && <Minus className={cn('w-4 h-4', variantConfig.trendNeutralColor)} />}
-                                <span className={cn('text-sm font-medium',
+                                <span className={cn('glass-text-sm font-medium',
                                     trend.direction === 'up' ? variantConfig.trendUpColor :
                                         trend.direction === 'down' ? variantConfig.trendDownColor :
                                             variantConfig.trendNeutralColor
@@ -314,7 +319,7 @@ export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
 
                 <CardContent className="pt-0">
                     <div className={cn(
-                        'flex items-baseline gap-2 mb-4 relative',
+                        'flex items-baseline glass-gap-2 glass-mb-4 relative',
                         layout === 'horizontal' ? 'justify-start' : 'justify-center'
                     )}>
                         {/* Value with sophisticated hover effects */}
@@ -326,7 +331,7 @@ export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
                                 config.valueClass,
                                 variantConfig.valueColor,
                                 'relative z-10 font-bold tracking-tight',
-                                'group-hover:scale-105 group-hover:text-white',
+                                'group-hover:scale-105 group-hover:glass-text-primary',
                                 'transition-all duration-300 ease-out',
                                 'drop-shadow-sm group-hover:drop-shadow-lg'
                             )}>
@@ -336,8 +341,8 @@ export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
 
                         {unit && (
                             <span className={cn(
-                                'text-lg text-white/70 font-medium relative',
-                                'group-hover:text-white/90 transition-colors duration-300'
+                                'glass-text-lg glass-text-primary/70 font-medium relative',
+                                'group-hover:glass-text-primary/90 transition-colors duration-300'
                             )}>
                                 {unit}
                             </span>
@@ -346,8 +351,8 @@ export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
 
                     {/* Progress bar */}
                     {showProgress && (
-                        <div className="mb-4">
-                            <div className={cn('w-full rounded-full overflow-hidden', config.progressHeight, variantConfig.progressBg)}>
+                        <div className="glass-mb-4">
+                            <div className={cn('w-full glass-radius-full overflow-hidden', config.progressHeight, variantConfig.progressBg)}>
                                 <Motion
                                     preset="slideRight"
                                     className={cn('h-full', variantConfig.progressFill)}
@@ -355,9 +360,9 @@ export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
                                 />
                             </div>
                             {progressLabel && (
-                                <div className="flex justify-between items-center mt-2">
-                                    <span className="text-xs text-white/60">{progressLabel}</span>
-                                    <span className="text-xs text-white/60">{Math.round(progress)}%</span>
+                                <div className="flex justify-between items-center glass-mt-2">
+                                    <span className="glass-text-xs glass-text-primary/60">{progressLabel}</span>
+                                    <span className="glass-text-xs glass-text-primary/60">{Math.round(progress)}%</span>
                                 </div>
                             )}
                         </div>
@@ -365,16 +370,16 @@ export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
 
                     {/* Comparison */}
                     {comparison && (
-                        <div className="mb-4 p-3 bg-white/5 rounded-lg">
+                        <div className="glass-mb-4 glass-p-3 bg-white/5 glass-radius-lg">
                             <div className="flex items-center justify-between">
-                                <span className="text-sm text-white/70">{comparison.label}</span>
-                                <span className="text-sm font-medium text-white">{comparison.value}</span>
+                                <span className="glass-text-sm glass-text-primary/70">{comparison.label}</span>
+                                <span className="glass-text-sm font-medium glass-text-primary">{comparison.value}</span>
                             </div>
                         </div>
                     )}
 
                     {children && (
-                        <div className="mt-4">
+                        <div className="glass-mt-4">
                             {children}
                         </div>
                     )}
@@ -382,7 +387,10 @@ export const GlassMetricCard: React.FC<GlassMetricCardProps> = ({
             </GlassCard>
         </Motion>
     );
-};
+  }
+);
+
+GlassMetricCard.displayName = 'GlassMetricCard';
 
 // Metric Grid Component
 export interface GlassMetricGridProps {
@@ -406,7 +414,7 @@ export const GlassMetricGrid: React.FC<GlassMetricGridProps> = ({
     };
 
     return (
-        <div className={cn('grid gap-6', gridCols?.[columns as keyof typeof gridCols], className)}>
+        <div className={cn('grid glass-gap-6', gridCols?.[columns as keyof typeof gridCols], className)}>
             {metrics.map((metric, index) => (
                 <GlassMetricCard
                     key={metric?.title}

@@ -1,10 +1,11 @@
 'use client';
 
-import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+import React, { forwardRef } from 'react';
 import { cn } from '@/lib/utilsComprehensive';
 import { GlassButton } from '../button/GlassButton';
 import { OptimizedGlass } from '../../primitives';
+import { useA11yId } from '@/utils/a11y';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 export interface SegmentedItem {
   id: string;
@@ -20,21 +21,42 @@ export interface GlassSegmentedControlProps {
   size?: 'sm' | 'md' | 'lg';
   condensed?: boolean;
   className?: string;
+  /**
+   * Whether to respect motion preferences for animations
+   */
+  respectMotionPreference?: boolean;
 }
 
-export function GlassSegmentedControl({ items, value, onChange, size = 'md', condensed = false, className }: GlassSegmentedControlProps) {
+export const GlassSegmentedControl = forwardRef<HTMLDivElement, GlassSegmentedControlProps>(({ 
+  items, 
+  value, 
+  onChange, 
+  size = 'md', 
+  condensed = false, 
+  respectMotionPreference = true,
+  className 
+}, ref) => {
+  // Accessibility and motion preferences
+  const segmentedId = useA11yId('segmented-control');
+  const prefersReducedMotion = useReducedMotion();
+  const shouldReduceMotion = respectMotionPreference && prefersReducedMotion;
   const sizes = {
-    sm: 'h-8 text-xs',
-    md: 'h-9 text-sm',
-    lg: 'h-10 text-base'
+    sm: 'h-8 glass-text-xs',
+    md: 'h-9 glass-text-sm',
+    lg: 'h-10 glass-text-base'
   };
 
   return (
     <OptimizedGlass
+      ref={ref}
       elevation={'level1'}
+      animation={shouldReduceMotion ? 'none' : 'gentle'}
+      role="group"
+      aria-label="Segmented control"
+      id={segmentedId}
       className={cn(
-        // Avoid clipping child button content (icons/text) against rounded corners
-        'inline-flex items-center rounded-xl p-1 gap-1 overflow-visible',
+        // Avoid clipping child button content (icons/text) against glass-radius-md corners
+        'inline-flex items-center glass-radius-xl glass-p-1 glass-gap-1 overflow-visible',
         className
       )}
     >
@@ -46,19 +68,21 @@ export function GlassSegmentedControl({ items, value, onChange, size = 'md', con
           disabled={it.disabled}
           className={cn(
             // Prevent glyphs from being visually cropped on some GPUs/Safari when glass effects are active
-            'rounded-md overflow-visible whitespace-nowrap leading-normal',
+            'glass-radius-md overflow-visible whitespace-nowrap leading-normal',
             sizes[size],
-            condensed && 'px-2'
+            condensed && 'glass-px-2'
           )}
-          onClick={() => !it.disabled && onChange(it.id)}
+          onClick={(e) => !it.disabled && onChange(it.id)}
           aria-pressed={it.id === value}
         >
-          {it.icon && <span className="mr-2 inline-flex">{it.icon}</span>}
+          {it.icon && <span className="glass-mr-2 inline-flex">{it.icon}</span>}
           {!condensed && it.label}
         </GlassButton>
       ))}
     </OptimizedGlass>
   );
-}
+});
+
+GlassSegmentedControl.displayName = 'GlassSegmentedControl';
 
 export default GlassSegmentedControl;

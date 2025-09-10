@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface GlassSurfaceVariant {
-  default: 'default';
-  elevated: 'elevated';
-  inset: 'inset';
-  floating: 'floating';
-  layered: 'layered';
+  clear: 'clear';
+  frosted: 'frosted';
+  tinted: 'tinted';
+  luminous: 'luminous';
+  dynamic: 'dynamic';
+  crystal: 'crystal';
 }
 
 export type GlassSurfaceVariantType = keyof GlassSurfaceVariant;
@@ -145,6 +145,20 @@ export interface DimensionalGlassProps extends GlassSurfaceProps {
 
   /** Motion sensitivity */
   motionSensitivity?: any;
+  /**
+   * Glass material variant
+   */
+  material?: 'glass' | 'liquid';
+  /**
+   * Material properties for liquid glass
+   */
+  materialProps?: {
+    ior?: number;
+    thickness?: number;
+    tint?: { r: number; g: number; b: number; a: number };
+    variant?: 'regular' | 'clear';
+    quality?: 'ultra' | 'high' | 'balanced' | 'efficient';
+  };
 }
 
 export interface FrostedGlassProps extends GlassSurfaceProps {

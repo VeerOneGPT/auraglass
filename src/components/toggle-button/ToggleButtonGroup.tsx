@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * ToggleButtonGroup Component
  *
@@ -11,25 +13,19 @@ import React, {
   useState,
   useCallback,
 } from 'react';
-import styled from 'styled-components';
+import { cn } from '../../lib/utilsComprehensive';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
 import { ToggleButtonGroupProps, ToggleButtonProps } from './types';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
-// Styled components
-const GroupRoot = styled.div<{
-  $orientation: 'horizontal' | 'vertical';
-  $fullWidth: boolean;
-}>`
-  display: inline-flex;
-  flex-direction: ${props => (props.$orientation === 'vertical' ? 'column' : 'row')};
-  width: ${props => (props.$fullWidth ? '100%' : 'auto')};
-  border-radius: 4px;
-
-  /* Prevent double borders */
-  & > button + button {
-    ${props => (props.$orientation === 'horizontal' ? 'margin-left: -1px;' : 'margin-top: -1px;')}
-  }
-`;
+// Get group orientation classes
+const getGroupOrientationClasses = (orientation: 'horizontal' | 'vertical', fullWidth: boolean) => {
+  return cn(
+    'inline-flex glass-radius-md',
+    orientation === 'vertical' ? 'flex-col' : 'flex-row',
+    fullWidth ? 'w-full' : 'w-auto'
+  );
+};
 
 /**
  * ToggleButtonGroup Component Implementation
@@ -115,6 +111,13 @@ function ToggleButtonGroupComponent(
     const isGroupStart = index === 0;
     const isGroupEnd = index === childrenCount - 1;
 
+    // Determine if this button is selected
+    const isSelected = exclusive 
+      ? child.props?.value === value
+      : Array.isArray(value) 
+        ? value.includes(child.props?.value)
+        : child.props?.value === value;
+
     // Create props for the child button
     const childProps = {
       color,
@@ -122,7 +125,7 @@ function ToggleButtonGroupComponent(
       fullWidth,
       variant,
       glass,
-      selected: child.props?.value === value,
+      selected: isSelected,
       onChange: handleButtonSelection,
       grouped: true,
       groupOrientation: orientation,
@@ -133,18 +136,18 @@ function ToggleButtonGroupComponent(
     return cloneElement(child, childProps);
   });
 
+  const groupClasses = getGroupOrientationClasses(orientation, fullWidth);
+
   return (
-    <GroupRoot
+    <div
       ref={ref}
       role="group"
-      className={className}
+      className={cn(groupClasses, className)}
       style={style}
-      $orientation={orientation}
-      $fullWidth={fullWidth}
       {...rest}
     >
       {childrenWithProps}
-    </GroupRoot>
+    </div>
   );
 }
 

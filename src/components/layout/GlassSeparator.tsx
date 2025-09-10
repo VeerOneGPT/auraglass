@@ -1,8 +1,9 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '@/lib/utilsComprehensive';
+import { useA11yId } from '@/utils/a11y';
+import { useMotionPreferenceContext } from '@/contexts/MotionPreferenceContext';
 
 export interface GlassSeparatorProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'content'> {
   /** Orientation of the separator */
@@ -19,6 +20,10 @@ export interface GlassSeparatorProps extends Omit<React.HTMLAttributes<HTMLDivEl
   content?: React.ReactNode;
   /** Spacing around the content */
   spacing?: 'sm' | 'md' | 'lg';
+  /** Whether to respect user's motion preferences */
+  respectMotionPreference?: boolean;
+  /** Accessibility label for screen readers */
+  'aria-label'?: string;
 }
 
 export const GlassSeparator = forwardRef<HTMLDivElement, GlassSeparatorProps>(
@@ -31,6 +36,8 @@ export const GlassSeparator = forwardRef<HTMLDivElement, GlassSeparatorProps>(
       decorative = true,
       content,
       spacing = 'md',
+      respectMotionPreference = true,
+      'aria-label': ariaLabel,
       className,
       ...props
     },
@@ -39,25 +46,25 @@ export const GlassSeparator = forwardRef<HTMLDivElement, GlassSeparatorProps>(
     const sizeConfig = {
       sm: {
         thickness: orientation === 'horizontal' ? 'h-px' : 'w-px',
-        contentGap: 'gap-2',
-        contentPadding: 'px-2',
+        contentGap: 'glass-gap-2',
+        contentPadding: 'glass-px-2',
       },
       md: {
         thickness: orientation === 'horizontal' ? 'h-0.5' : 'w-0.5',
-        contentGap: 'gap-3',
-        contentPadding: 'px-3',
+        contentGap: 'glass-gap-3',
+        contentPadding: 'glass-px-3',
       },
       lg: {
         thickness: orientation === 'horizontal' ? 'h-1' : 'w-1',
-        contentGap: 'gap-4',
-        contentPadding: 'px-4',
+        contentGap: 'glass-gap-4',
+        contentPadding: 'glass-px-4',
       },
     };
 
     const spacingConfig = {
-      sm: 'gap-2 px-2',
-      md: 'gap-3 px-3',
-      lg: 'gap-4 px-4',
+      sm: 'glass-gap-2 glass-px-2',
+      md: 'glass-gap-3 glass-px-3',
+      lg: 'glass-gap-4 glass-px-4',
     };
 
     const variantStyles = {
@@ -72,20 +79,27 @@ export const GlassSeparator = forwardRef<HTMLDivElement, GlassSeparatorProps>(
     };
 
     const config = sizeConfig[size];
+    const separatorId = useA11yId();
+    const { prefersReducedMotion } = useMotionPreferenceContext();
+    const shouldRespectMotion = respectMotionPreference && !prefersReducedMotion;
 
     // Handle separator with content
     if (content && orientation === 'horizontal') {
       return (
         <div
           ref={ref}
+          id={separatorId}
           className={cn(
             'glass-separator-with-content',
             'flex items-center w-full',
             spacingConfig[spacing],
+            // Motion preferences
+            shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none',
             className
           )}
           role={decorative ? 'presentation' : 'separator'}
           aria-orientation={orientation}
+          aria-label={ariaLabel || (content ? `Separator with content: ${content}` : undefined)}
           {...props}
         >
           {/* Left separator */}
@@ -101,7 +115,7 @@ export const GlassSeparator = forwardRef<HTMLDivElement, GlassSeparatorProps>(
           <div className={cn(
             'glass-separator-content',
             'flex items-center justify-center shrink-0',
-            'text-muted-foreground text-sm font-medium',
+            'glass-text-secondary glass-text-sm font-medium',
             config.contentPadding
           )}>
             {content}
@@ -123,6 +137,7 @@ export const GlassSeparator = forwardRef<HTMLDivElement, GlassSeparatorProps>(
     return (
       <div
         ref={ref}
+        id={separatorId}
         className={cn(
           'glass-separator',
           
@@ -147,10 +162,14 @@ export const GlassSeparator = forwardRef<HTMLDivElement, GlassSeparatorProps>(
             config.thickness.replace('h-', 'border-t-').replace('w-', 'border-l-')
           ],
           
+          // Motion preferences
+          shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none',
+          
           className
         )}
         role={decorative ? 'presentation' : 'separator'}
         aria-orientation={orientation}
+        aria-label={ariaLabel || `${orientation} separator`}
         {...props}
       />
     );

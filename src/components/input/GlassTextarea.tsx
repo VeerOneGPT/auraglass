@@ -1,7 +1,6 @@
 'use client';
 
 import React, { forwardRef, useRef, useEffect } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { cn } from '@/lib/utilsComprehensive';
 import { AlertCircle } from 'lucide-react';
@@ -71,18 +70,18 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
 
     const sizeConfig = {
       sm: {
-        text: 'text-sm',
-        padding: 'px-3 py-2',
+        text: 'glass-text-sm',
+        padding: 'glass-px-3 glass-py-2',
         minHeight: 'min-h-[80px]',
       },
       md: {
-        text: 'text-sm',
-        padding: 'px-4 py-3',
+        text: 'glass-text-sm',
+        padding: 'glass-px-4 glass-py-3',
         minHeight: 'min-h-[100px]',
       },
       lg: {
-        text: 'text-base',
-        padding: 'px-4 py-4',
+        text: 'glass-text-base',
+        padding: 'glass-px-4 glass-py-4',
         minHeight: 'min-h-[120px]',
       },
     };
@@ -146,14 +145,14 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
           <label
             htmlFor={textareaId}
             className={cn(
-              'block font-medium text-foreground mb-2',
+              'block font-medium text-foreground glass-mb-2',
               config.text,
               props?.disabled && 'opacity-50'
             )}
           >
             {label}
             {props?.required && (
-              <span className="text-red-400 ml-1" aria-label="required">*</span>
+              <span className="text-red-400 glass-ml-1" aria-label="required">*</span>
             )}
           </label>
         )}
@@ -174,8 +173,8 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
             aria-invalid={hasError}
             className={cn(
               'glass-textarea',
-              'w-full resize-none rounded-lg backdrop-blur-md transition-all duration-200 glass-pulse-ring',
-              'placeholder:text-muted-foreground',
+              'w-full resize-none glass-radius-lg backdrop-blur-md transition-all duration-200 glass-pulse-ring',
+              'placeholder:glass-text-secondary',
               'focus:outline-none focus:ring-offset-2 focus:ring-offset-background',
               
               // Size
@@ -207,7 +206,7 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
           {/* Icon */}
           {icon && (
             <div className={cn(
-              'absolute top-3 right-3 text-muted-foreground',
+              'absolute top-3 right-3 glass-text-secondary',
               props?.disabled && 'opacity-50'
             )}>
               {icon}
@@ -225,8 +224,8 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
         {/* Character Count */}
         {showCharCount && maxLength && (
           <div className={cn(
-            'flex justify-end mt-1 text-xs',
-            currentLength > maxLength * 0.9 ? 'text-amber-400' : 'text-muted-foreground',
+            'flex justify-end glass-mt-1 glass-text-xs',
+            currentLength > maxLength * 0.9 ? 'text-amber-400' : 'glass-text-secondary',
             currentLength >= maxLength && 'text-red-400'
           )}>
             {currentLength}/{maxLength}
@@ -238,7 +237,7 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
           <p
             id={`${textareaId}-helper`}
             className={cn(
-              'mt-2 text-xs text-muted-foreground',
+              'glass-mt-2 glass-text-xs glass-text-secondary',
               props?.disabled && 'opacity-50'
             )}
           >
@@ -250,7 +249,7 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
         {errorText && (
           <p
             id={`${textareaId}-error`}
-            className="mt-2 text-xs text-red-400 flex items-center gap-1"
+            className="glass-mt-2 glass-text-xs text-red-400 flex items-center glass-gap-1"
           >
             <AlertCircle className="h-3 w-3" />
             {errorText}

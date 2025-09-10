@@ -1,7 +1,6 @@
 import React, { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 import { Line, Bar, Pie, Scatter } from 'react-chartjs-2';
 
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 export interface ChartRendererProps {
   chartType: 'line' | 'bar' | 'area' | 'pie' | 'scatter' | 'heatmap' | 'radar';
   datasets: any[];

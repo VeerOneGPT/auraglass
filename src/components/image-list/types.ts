@@ -1,5 +1,4 @@
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 // Type definitions for ImageList components
 
 export interface ImageListItemProps {
@@ -21,6 +20,13 @@ export interface ImageListItemProps {
   
   /** Performance tier */
   tier?: 'low' | 'medium' | 'high';
+
+  /** Accessibility props */
+  onClick?: (event: React.MouseEvent<HTMLLIElement>) => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLLIElement>) => void;
+  'aria-label'?: string;
+  'aria-describedby'?: string;
+  role?: string;
 }
 
 export interface ImageListItemBarProps {
@@ -45,6 +51,7 @@ export interface ImageListProps {
   className?: string;
   style?: React.CSSProperties;
   glass?: boolean;
+  glassRadiusMd?: boolean;
   rounded?: boolean;
   variableSize?: boolean;
   enableEntranceAnimation?: boolean;

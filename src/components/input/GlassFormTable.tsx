@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { GlassButton } from '../button/GlassButton';
 
 export interface ColumnDef<T=any> { key: keyof T; header: string }
@@ -15,30 +14,30 @@ export function GlassFormTable<T=any>({ columns, rows, onChange }: GlassFormTabl
   const add = () => onChange([...rows, {} as any]);
   const remove = (ri: number) => onChange(rows.filter((_,i)=>i!==ri));
   return (
-    <div className="overflow-auto rounded-xl border border-white/15">
-      <table className="w-full text-sm">
+    <div className="overflow-auto glass-radius-xl border border-white/15">
+      <table className="w-full glass-text-sm">
         <thead className="bg-white/5">
           <tr>
-            {columns.map(c=> <th key={String(c.key)} className="text-left px-3 py-2 text-white/70">{c.header}</th>)}
-            <th className="px-3 py-2" />
+            {columns.map(c=> <th key={String(c.key)} className="text-left glass-px-3 glass-py-2 glass-text-primary/70">{c.header}</th>)}
+            <th className="glass-px-3 glass-py-2" />
           </tr>
         </thead>
         <tbody>
           {rows.map((r, ri) => (
             <tr key={ri} className="border-t border-white/10">
               {columns.map(c => (
-                <td key={String(c.key)} className="px-3 py-2">
-                  <input className="bg-transparent border border-white/20 rounded px-2 py-1 w-full" value={(r as any)[c.key] ?? ''} onChange={(e)=>update(ri, c.key, e.target.value)} />
+                <td key={String(c.key)} className="glass-px-3 glass-py-2">
+                  <input className="bg-transparent border border-white/20 glass-radius-md glass-px-2 glass-py-1 w-full" value={(r as any)[c.key] ?? ''} onChange={(e)=>update(ri, c.key, e.target.value)} />
                 </td>
               ))}
-              <td className="px-3 py-2 text-right">
-                <GlassButton size="sm" variant="ghost" onClick={()=>remove(ri)}>Remove</GlassButton>
+              <td className="glass-px-3 glass-py-2 text-right">
+                <GlassButton size="sm" variant="ghost" onClick={(e) =>remove(ri)}>Remove</GlassButton>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div className="p-2">
+      <div className="glass-p-2">
         <GlassButton size="sm" variant="secondary" onClick={add}>Add Row</GlassButton>
       </div>
     </div>

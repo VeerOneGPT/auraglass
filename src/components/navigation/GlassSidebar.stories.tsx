@@ -66,7 +66,7 @@ export const Default: Story = {
       { id: 'settings', label: 'Settings', icon: '⚙️' },
     ],
     activeId: 'dashboard',
-    header: <div className="text-lg font-bold">My App</div>,
+    header: <div className="glass-text-lg font-bold">My App</div>,
   },
 };
 
@@ -76,10 +76,10 @@ export const Variants: Story = {
       <div className="w-64">
         <GlassSidebar {...args} variant="default" />
       </div>
-      <div className="w-64 ml-4">
+      <div className="w-64 glass-ml-4">
         <GlassSidebar {...args} variant="compact" />
       </div>
-      <div className="w-64 ml-4">
+      <div className="w-64 glass-ml-4">
         <GlassSidebar {...args} variant="floating" />
       </div>
     </div>
@@ -146,18 +146,18 @@ export const WithHeaderAndFooter: Story = {
     ],
     activeId: 'dashboard',
     header: (
-      <div className="flex items-center gap-2">
-        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-          <span className="text-white font-bold">A</span>
+      <div className="flex items-center glass-gap-2">
+        <div className="w-8 h-8 bg-primary glass-radius-lg flex items-center justify-center">
+          <span className="glass-text-primary font-bold">A</span>
         </div>
         <div>
           <h3 className="font-semibold">Aura Glass</h3>
-          <p className="text-xs text-muted-foreground">v1.0.0</p>
+          <p className="glass-text-xs glass-text-secondary">v1.0.0</p>
         </div>
       </div>
     ),
     footer: (
-      <div className="text-xs text-muted-foreground">
+      <div className="glass-text-xs glass-text-secondary">
         © 2024 Aura Glass
       </div>
     ),

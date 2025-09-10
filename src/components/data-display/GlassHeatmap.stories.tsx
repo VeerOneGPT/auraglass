@@ -30,23 +30,31 @@ type Story = StoryObj<typeof GlassHeatmap>;
 export const Default: Story = {
   args: {
     data: [
-      [{ value: 1, label: 'A1' }, { value: 2, label: 'A2' }, { value: 3, label: 'A3' }],
-      [{ value: 4, label: 'B1' }, { value: 5, label: 'B2' }, { value: 6, label: 'B3' }],
-      [{ value: 7, label: 'C1' }, { value: 8, label: 'C2' }, { value: 9, label: 'C3' }]
+      { x: 0, y: 0, value: 1, label: 'A1' },
+      { x: 1, y: 0, value: 2, label: 'A2' },
+      { x: 2, y: 0, value: 3, label: 'A3' },
+      { x: 0, y: 1, value: 4, label: 'B1' },
+      { x: 1, y: 1, value: 5, label: 'B2' },
+      { x: 2, y: 1, value: 6, label: 'B3' },
+      { x: 0, y: 2, value: 7, label: 'C1' },
+      { x: 1, y: 2, value: 8, label: 'C2' },
+      { x: 2, y: 2, value: 9, label: 'C3' }
     ],
   },
 };
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap glass-gap-4">
       <GlassHeatmap {...args} />
     </div>
   ),
   args: {
     data: [
-      [{ value: 1, label: 'A1' }, { value: 2, label: 'A2' }],
-      [{ value: 3, label: 'B1' }, { value: 4, label: 'B2' }]
+      { x: 0, y: 0, value: 1, label: 'A1' },
+      { x: 1, y: 0, value: 2, label: 'A2' },
+      { x: 0, y: 1, value: 3, label: 'B1' },
+      { x: 1, y: 1, value: 4, label: 'B2' }
     ],
   },
 };

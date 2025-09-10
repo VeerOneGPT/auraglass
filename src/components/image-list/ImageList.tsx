@@ -11,8 +11,8 @@ import styled from 'styled-components';
 // Hook for reduced motion
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 // Import types (assuming types.ts is updated)
 import { ImageListProps } from './types'; 
@@ -25,7 +25,7 @@ export interface ImageListContextProps {
   cols: number;
   glass: boolean;
   variableSize: boolean;
-  rounded: boolean;
+  glassRadiusMd: boolean;
 }
 
 export const ImageListContext = createContext<ImageListContextProps>({
@@ -35,7 +35,7 @@ export const ImageListContext = createContext<ImageListContextProps>({
   cols: 2,
   glass: false,
   variableSize: false,
-  rounded: false,
+  glassRadiusMd: false,
 });
 
 // Styled components
@@ -45,7 +45,7 @@ const ImageListRoot = styled.ul<{
   $gap: number;
   $cols: number;
   $glass: boolean;
-  $rounded: boolean;
+  $glassRadiusMd: boolean;
 }>`
   display: grid;
   padding: 0;
@@ -129,7 +129,7 @@ const ImageListRoot = styled.ul<{
 
   /* Rounded corners */
   ${props =>
-    props.$rounded &&
+    props.$glassRadiusMd &&
     `
     border-radius: 12px;
     overflow: hidden;
@@ -149,10 +149,10 @@ function ImageListComponent(props: ImageListProps, ref: React.ForwardedRef<HTMLU
     rowHeight = 'auto',
     variant = 'standard',
     glass = false,
-    rounded = false,
+    glassRadiusMd = false,
     variableSize = false,
     enableEntranceAnimation = true,
-    animationConfig, 
+    animationConfig,
     disableAnimation,
     motionSensitivity,
     ...rest
@@ -183,10 +183,10 @@ function ImageListComponent(props: ImageListProps, ref: React.ForwardedRef<HTMLU
       cols,
       glass,
       variableSize,
-      rounded,
+      glassRadiusMd,
     }),
     [
-      variant, rowHeight, gap, cols, glass, variableSize, rounded
+      variant, rowHeight, gap, cols, glass, variableSize, glassRadiusMd
     ]
   );
 
@@ -201,7 +201,7 @@ function ImageListComponent(props: ImageListProps, ref: React.ForwardedRef<HTMLU
         $gap={gap}
         $cols={cols}
         $glass={glass}
-        $rounded={rounded}
+        $glassRadiusMd={glassRadiusMd}
         {...rest}
       >
         {/* Ensure children (ImageListItem) have the class name */}

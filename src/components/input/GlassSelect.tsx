@@ -5,11 +5,18 @@ import { GlassInput } from './GlassInput';
 
 import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createPortal } from 'react-dom';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
+import { 
+  createComboboxA11y, 
+  createListboxOptionA11y, 
+  useA11yId, 
+  announceToScreenReader,
+  keyboardHandlers,
+  focusUtils
+} from '../../utils/a11y';
 
 export interface SelectOption {
   value: string | number;
@@ -87,6 +94,32 @@ export interface GlassSelectProps extends Omit<React.SelectHTMLAttributes<HTMLSe
    * Value change callback (preferred over onChange)
    */
   onValueChange?: (value: any) => void;
+
+  // Accessibility props
+  /**
+   * Accessible label for the select
+   */
+  label?: string;
+  /**
+   * ID of element that labels the select
+   */
+  'aria-labelledby'?: string;
+  /**
+   * ID of element(s) that describe the select
+   */
+  'aria-describedby'?: string;
+  /**
+   * Whether the select is required
+   */
+  'aria-required'?: boolean;
+  /**
+   * Whether the select value is invalid
+   */
+  'aria-invalid'?: boolean;
+  /**
+   * ID of error message element
+   */
+  'aria-errormessage'?: string;
 }
 
 /**
@@ -132,9 +165,9 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
     const [dropdownPos, setDropdownPos] = useState<{ top: number; left: number; width: number }>({ top: 0, left: 0, width: 0 });
 
     const sizeClasses = {
-      sm: 'h-8 px-3 text-sm',
-      md: 'h-10 px-4 text-sm',
-      lg: 'h-12 px-5 text-base',
+      sm: 'h-8 glass-px-3 glass-text-sm',
+      md: 'h-10 glass-px-4 glass-text-sm',
+      lg: 'h-12 px-5 glass-text-base',
     };
 
     const variantClasses = {
@@ -343,9 +376,9 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
           <GlassButton
             ref={triggerRef}
             type="button"
-            className="w-full flex items-center justify-between bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl outline-none text-left text-white/90 hover:text-white"
+            className="w-full flex items-center justify-between bg-black/20 hover:bg-black/30 border border-white/20 hover:border-white/30 glass-radius-xl outline-none text-left glass-text-primary/90 hover:glass-text-primary backdrop-blur-sm"
             disabled={disabled || loading}
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={(e) => setIsOpen(!isOpen)}
             onKeyDown={handleKeyDown}
             aria-haspopup="listbox"
             aria-expanded={isOpen}
@@ -353,26 +386,26 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
           >
             <div className="flex items-center flex-1 min-w-0">
               {leftIcon && (
-                <div className={cn('flex items-center justify-center mr-3 text-white/70', iconSize[size])}>
+                <div className={cn('flex items-center justify-center mr-3 glass-text-primary/70', iconSize[size])}>
                   {leftIcon}
                 </div>
               )}
 
               <span className={cn(
                 'flex-1 truncate',
-                selectedOptions.length === 0 ? 'text-white/60' : 'text-white/90'
+                selectedOptions.length === 0 ? 'glass-text-primary/60' : 'glass-text-primary/90'
               )}>
                 {renderSelectedValue()}
               </span>
             </div>
 
-            <div className="flex items-center gap-2 ml-2">
+            <div className="flex items-center glass-gap-2 glass-ml-2">
               {loading && (
-                <div className={cn('animate-spin rounded-full border-2 border-current border-t-transparent', iconSize[size])} />
+                <div className={cn('animate-spin glass-radius-full border-2 border-current border-t-transparent', iconSize[size])} />
               )}
 
               <div className={cn(
-                'transition-transform duration-200 text-white/70',
+                'transition-transform duration-200 glass-text-primary/70',
                 isOpen ? 'rotate-180' : 'rotate-0'
               )}>
                 ▼
@@ -402,9 +435,9 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
             <GlassButton
               ref={triggerRef}
               type="button"
-              className="w-full flex items-center justify-between bg-transparent border-0 outline-none text-left text-white/90 hover:text-white"
+              className="w-full flex items-center justify-between bg-transparent border-0 outline-none text-left glass-text-primary/90 hover:glass-text-primary"
               disabled={disabled || loading}
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={(e) => setIsOpen(!isOpen)}
               onKeyDown={handleKeyDown}
               aria-haspopup="listbox"
               aria-expanded={isOpen}
@@ -412,14 +445,14 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
             >
               <div className="flex items-center flex-1 min-w-0">
                 {leftIcon && (
-                  <div className={cn('flex items-center justify-center mr-3 text-white/70', iconSize[size])}>
+                  <div className={cn('flex items-center justify-center mr-3 glass-text-primary/70', iconSize[size])}>
                     {leftIcon}
                   </div>
                 )}
 
                 <span className={cn(
                   'flex-1 truncate',
-                  selectedOptions.length === 0 ? 'text-white/60' : 'text-white/90'
+                  selectedOptions.length === 0 ? 'glass-text-primary/60' : 'glass-text-primary/90'
                 )}>
                   {renderSelectedValue()}
                 </span>
@@ -428,11 +461,11 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
               <div className="ml-3 flex items-center">
                 {loading && (
                   <div className={cn(
-                    'animate-spin rounded-full border-2 border-current border-t-transparent', iconSize[size])} />
+                    'animate-spin glass-radius-full border-2 border-current border-t-transparent', iconSize[size])} />
                 )}
 
                 <div className={cn(
-                  'transition-transform duration-200 text-white/70',
+                  'transition-transform duration-200 glass-text-primary/70',
                   isOpen ? 'rotate-180' : 'rotate-0'
                 )}>
                   ▼
@@ -450,7 +483,7 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
             >
             <OptimizedGlass
               intent="neutral"
-              elevation={'level4'}
+              elevation={'level3'}
               intensity="strong"
               depth={2}
               tint="neutral"
@@ -467,7 +500,7 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
             >
               <FocusTrap active={isOpen}>
                 {searchable && (
-                  <div className="p-2 border-b border-border/20">
+                  <div className="glass-p-2 border-b border-border/20">
                     <GlassInput ref={searchInputRef}
                       type="text"
                       placeholder="Search options..."
@@ -477,9 +510,9 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
                         onSearch?.(e.target.value);
                       }}
                       className={cn(
-                        'w-full px-3 py-2 rounded-md outline-none',
+                        'w-full glass-px-3 glass-py-2 glass-radius-md outline-none',
                         'backdrop-blur-md bg-glass-fill ring-1 ring-white/10',
-                        'text-white/90 placeholder-white/50',
+                        'glass-text-primary/90 placeholder-white/50',
                         'focus:ring-2 focus:ring-white/30 focus:bg-white/15',
                         'transition-all duration-200'
                       )}
@@ -496,7 +529,7 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
                   {Object.entries(groupedOptions).map(([group, groupOptions]) => (
                     <React.Fragment key={group}>
                       {group && (
-                        <li className="px-3 py-2 text-xs font-medium text-white/60 bg-white/5 border-b border-white/10">
+                        <li className="glass-px-3 glass-py-2 glass-text-xs font-medium glass-text-primary/60 bg-white/5 border-b border-white/10">
                           {group}
                         </li>
                       )}
@@ -511,16 +544,16 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
                           <li
                             key={option.value}
                             className={cn(
-                              'px-3 py-2 cursor-pointer transition-all duration-200',
+                              'glass-px-3 glass-py-2 cursor-pointer transition-all duration-200',
                               'hover:bg-white/10 hover:backdrop-blur-md',
-                              'text-white/90',
+                              'glass-text-primary/90',
                               {
-                                'bg-white/20 text-white shadow-md': isSelected,
+                                'bg-white/20 glass-text-primary shadow-md': isSelected,
                                 'bg-white/5 ring-1 ring-white/20': isFocused,
                                 'opacity-50 cursor-not-allowed hover:bg-transparent': option.disabled,
                               }
                             )}
-                            onClick={() => handleOptionSelect(option)}
+                            onClick={(e) => handleOptionSelect(option)}
                             role="option"
                             aria-selected={isSelected}
                           >
@@ -530,7 +563,7 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
                               )}
 
                               {multiple && isSelected && (
-                                <span className="ml-2 text-primary">✓</span>
+                                <span className="glass-ml-2 text-primary">✓</span>
                               )}
                             </div>
                           </li>
@@ -540,7 +573,7 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
                   ))}
 
                   {filteredOptions.length === 0 && (
-                    <li className="px-3 py-4 text-white/50 text-center text-sm">
+                    <li className="glass-px-3 glass-py-4 glass-text-primary/50 text-center glass-text-sm">
                       No options found
                     </li>
                   )}
@@ -553,11 +586,11 @@ export const GlassSelect = forwardRef<HTMLSelectElement, GlassSelectProps>(
 
         {displayHelperText && (
           <p className={cn(
-            'mt-1 text-xs',
+            'glass-mt-1 glass-text-xs',
             currentState === 'error' ? 'text-destructive' :
               currentState === 'warning' ? 'text-warning' :
                 currentState === 'success' ? 'text-success' :
-                  'text-muted-foreground'
+                  'glass-text-secondary'
           )}>
             {displayHelperText}
           </p>

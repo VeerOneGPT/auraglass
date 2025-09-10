@@ -1,5 +1,4 @@
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 "use client";
 
 import { forwardRef, AnchorHTMLAttributes } from "react";
@@ -19,25 +18,25 @@ const GlassLinkButton = forwardRef<HTMLAnchorElement, GlassLinkButtonProps>(
       <a
         ref={ref}
         className={cn(
-          "group relative inline-flex items-center justify-center rounded-glass font-semibold transition-all duration-200 ease-out hover:text-white",
+          "group relative inline-flex items-center justify-center rounded-glass font-semibold transition-all duration-200 ease-out hover:glass-text-primary",
           "focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/60 focus-visible:ring-offset-2",
           "active:translate-y-px disabled:opacity-50 disabled:pointer-events-none isolate",
 
           {
-            "px-3 py-2 sm:py-1.5 text-responsive-sm touch-target": size === "sm",
-            "px-4 py-2.5 sm:py-2 text-responsive-base touch-target": size === "md",
-            "px-5 sm:px-6 py-3 text-responsive-lg touch-target": size === "lg",
+            "h-8 px-3 text-sm touch-target": size === "sm",
+            "h-10 px-4 text-sm touch-target": size === "md",
+            "h-12 px-6 text-base touch-target": size === "lg",
           },
 
           {
-            "text-white bg-gradient-to-r from-blue-500/80 to-purple-500/80 border border-white/20 backdrop-blur-md-medium shadow-glass": variant === "primary",
+            "glass-text-primary bg-gradient-to-r from-blue-500/80 to-purple-500/80 border border-white/20 backdrop-blur-md-medium shadow-glass": variant === "primary",
             "hover:shadow-glass-strong sm:hover:-translate-y-0.5": variant === "primary",
 
-            "glass-foundation-complete text-white border border-white/14 backdrop-blur-md-subtle": variant === "secondary",
+            "glass-foundation-complete glass-text-primary border border-white/14 backdrop-blur-md-subtle": variant === "secondary",
             "hover:bg-white/10 hover:border-white/25": variant === "secondary",
 
-            "bg-transparent text-white/88 border border-white/10": variant === "ghost",
-            "hover:bg-white/5 hover:text-white hover:border-white/20": variant === "ghost",
+            "bg-transparent glass-text-primary/88 border border-white/10": variant === "ghost",
+            "hover:bg-white/5 hover:glass-text-primary hover:border-white/20": variant === "ghost",
           },
 
           variant !== "primary" && intent === "primary" && "bg-gradient-to-r from-cyan-400/15 to-purple-500/15",
@@ -76,7 +75,7 @@ const GlassLinkButton = forwardRef<HTMLAnchorElement, GlassLinkButtonProps>(
           />
         )}
 
-        <span className="relative z-10 flex items-center gap-2 text-white group-hover:text-indigo-50">{children}</span>
+        <span className="relative z-10 flex items-center glass-gap-2 glass-text-primary group-hover:text-indigo-50">{children}</span>
       </a>
     );
   }

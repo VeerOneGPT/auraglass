@@ -5,7 +5,6 @@ import { GlassInput } from '../input/GlassInput';
 
 import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useCallback, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -315,11 +314,11 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
       >
         {/* Categories */}
         {showCategories && categories.length > 0 && (
-          <div className="flex items-center gap-2 mb-4 overflow-x-auto">
+          <div className="flex items-center glass-gap-2 glass-mb-4 overflow-x-auto">
             <GlassButton
               variant={!activeCategory ? 'primary' : 'ghost'}
               size="sm"
-              onClick={() => onCategoryChange?.('')}
+              onClick={(e) => onCategoryChange?.('')}
             >
               All
             </GlassButton>
@@ -329,11 +328,11 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
                 variant={activeCategory === category.id ? 'primary' : 'ghost'}
                 size="sm"
                 leftIcon={category.icon}
-                onClick={() => onCategoryChange?.(category.id)}
+                onClick={(e) => onCategoryChange?.(category.id)}
               >
                 {category.label}
                 {category.count && (
-                  <GlassBadge variant="outline" size="xs" className="ml-2">
+                  <GlassBadge variant="outline" size="xs" className="glass-ml-2">
                     {category.count}
                   </GlassBadge>
                 )}
@@ -357,7 +356,7 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
               </svg>
             }
             rightIcon={loading ? (
-              <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+              <div className="w-4 h-4 border-2 border-current border-t-transparent glass-radius-full animate-spin" />
             ) : undefined}
             clearable
             onClear={clearSearch}
@@ -381,7 +380,7 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
 
         {/* Search Results Dropdown */}
         {isOpen && (
-          <Motion preset="slideDown" className="absolute top-full left-0 right-0 mt-2 z-50">
+          <Motion preset="slideDown" className="absolute top-full left-0 right-0 glass-mt-2 z-50">
             <OptimizedGlass
           intent="neutral"
           elevation="level2"
@@ -397,21 +396,21 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
                 <div ref={resultsRef} className="overflow-y-auto max-h-96">
                   {/* Suggestions */}
                   {suggestions.length > 0 && (
-                    <div className="p-2 border-b border-border/20">
-                      <h4 className="px-3 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                    <div className="glass-p-2 border-b border-border/20">
+                      <h4 className="glass-px-3 glass-py-2 glass-text-xs font-medium glass-text-secondary uppercase tracking-wide">
                         Suggestions
                       </h4>
                       {suggestions.map((suggestion, index) => (
                         <GlassButton
                           key={suggestion}
                           className={cn(
-                            'w-full flex items-center gap-3 px-3 py-2 rounded-md text-left',
+                            'w-full flex items-center glass-gap-3 glass-px-3 glass-py-2 glass-radius-md text-left',
                             'hover:bg-muted/50 transition-colors',
                             focusedIndex === index && 'bg-muted/50'
                           )}
-                          onClick={() => handleItemSelect(index)}
+                          onClick={(e) => handleItemSelect(index)}
                         >
-                          <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 glass-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                           </svg>
                           <span>{suggestion}</span>
@@ -422,8 +421,8 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
 
                   {/* Recent Searches */}
                   {recentSearches.length > 0 && (
-                    <div className="p-2 border-b border-border/20">
-                      <h4 className="px-3 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                    <div className="glass-p-2 border-b border-border/20">
+                      <h4 className="glass-px-3 glass-py-2 glass-text-xs font-medium glass-text-secondary uppercase tracking-wide">
                         Recent Searches
                       </h4>
                       {recentSearches.map((recent, index) => {
@@ -432,13 +431,13 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
                           <GlassButton
                             key={recent}
                             className={cn(
-                              'w-full flex items-center gap-3 px-3 py-2 rounded-md text-left',
+                              'w-full flex items-center glass-gap-3 glass-px-3 glass-py-2 glass-radius-md text-left',
                               'hover:bg-muted/50 transition-colors',
                               focusedIndex === globalIndex && 'bg-muted/50'
                             )}
-                            onClick={() => handleItemSelect(globalIndex)}
+                            onClick={(e) => handleItemSelect(globalIndex)}
                           >
-                            <svg className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-4 h-4 glass-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             <span>{recent}</span>
@@ -450,8 +449,8 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
 
                   {/* Search Results */}
                   {displayResults.length > 0 ? (
-                    <div className="p-2">
-                      <h4 className="px-3 py-2 text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                    <div className="glass-p-2">
+                      <h4 className="glass-px-3 glass-py-2 glass-text-xs font-medium glass-text-secondary uppercase tracking-wide">
                         Results ({results.length})
                       </h4>
                       {displayResults.map((result, index) => {
@@ -460,15 +459,15 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
                           <GlassButton
                             key={result.id}
                             className={cn(
-                              'w-full flex items-start gap-3 px-3 py-3 rounded-md text-left',
+                              'w-full flex items-start glass-gap-3 glass-px-3 glass-py-3 glass-radius-md text-left',
                               'hover:bg-muted/50 transition-colors',
                               focusedIndex === globalIndex && 'bg-muted/50'
                             )}
-                            onClick={() => handleItemSelect(globalIndex)}
+                            onClick={(e) => handleItemSelect(globalIndex)}
                           >
                             {renderResult ? renderResult(result) : (
                               <>
-                                <div className="w-8 h-8 rounded-md bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <div className="w-8 h-8 glass-radius-md bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
                                   <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                   </svg>
@@ -478,12 +477,12 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
                                     {result.highlighted?.title || result.title}
                                   </h5>
                                   {result.description && (
-                                    <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
+                                    <p className="glass-text-sm glass-text-secondary glass-mt-1 line-clamp-2">
                                       {result.highlighted?.description || result.description}
                                     </p>
                                   )}
                                   {result.category && (
-                                    <GlassBadge variant="outline" size="xs" className="mt-2">
+                                    <GlassBadge variant="outline" size="xs" className="glass-mt-2">
                                       {result.category}
                                     </GlassBadge>
                                   )}
@@ -495,11 +494,11 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
                       })}
 
                       {results.length > maxResults && (
-                        <div className="px-3 py-2 text-center">
+                        <div className="glass-px-3 glass-py-2 text-center">
                           <GlassButton
                             variant="ghost"
                             size="sm"
-                            onClick={() => onSearch?.(internalValue, selectedFilters)}
+                            onClick={(e) => onSearch?.(internalValue, selectedFilters)}
                           >
                             View all {results.length} results
                           </GlassButton>
@@ -508,12 +507,12 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
                     </div>
                   ) : internalValue.trim() && !loading ? (
                     <div className="p-8 text-center">
-                      <div className="w-12 h-12 rounded-full bg-muted/30 flex items-center justify-center mx-auto mb-3">
-                        <svg className="w-6 h-6 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="w-12 h-12 glass-radius-full bg-muted/30 flex items-center justify-center mx-auto mb-3">
+                        <svg className="w-6 h-6 glass-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                       </div>
-                      <p className="text-muted-foreground">{emptyMessage}</p>
+                      <p className="glass-text-secondary">{emptyMessage}</p>
                     </div>
                   ) : null}
                 </div>
@@ -533,9 +532,9 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
           border="subtle"
           animation="none"
           performanceMode="medium"
-            className="mt-4 p-4 border border-border/20"
+            className="glass-mt-4 glass-p-4 border border-border/20"
           >
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between glass-mb-4">
               <h3 className="font-medium text-foreground">Filters</h3>
               {hasActiveFilters && (
                 <GlassButton
@@ -548,28 +547,28 @@ export const GlassSearchInterface = forwardRef<HTMLDivElement, GlassSearchInterf
               )}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 glass-gap-4">
               {Object.entries(filters).map(([filterId, options]) => (
                 <div key={filterId}>
-                  <h4 className="font-medium text-sm text-foreground mb-2">
+                  <h4 className="font-medium glass-text-sm text-foreground glass-mb-2">
                     {filterId.charAt(0).toUpperCase() + filterId.slice(1)}
                   </h4>
-                  <div className="space-y-2">
+                  <div className="glass-gap-2">
                     {options.map((option) => (
                       <label
                         key={option.id}
-                        className="flex items-center gap-2 cursor-pointer"
+                        className="flex items-center glass-gap-2 cursor-pointer"
                       >
                         <GlassInput type="checkbox"
                           checked={selectedFilters[filterId]?.includes(option.value) || false}
                           onChange={(e) => handleFilterChange(filterId, option.value, e.target.checked)}
-                          className="rounded border-border focus:ring-primary"
+                          className="glass-radius-md border-border focus:ring-primary"
                         />
-                        <span className="text-sm text-foreground flex-1">
+                        <span className="glass-text-sm text-foreground flex-1">
                           {option.label}
                         </span>
                         {option.count && (
-                          <span className="text-xs text-muted-foreground">
+                          <span className="glass-text-xs glass-text-secondary">
                             {option.count}
                           </span>
                         )}

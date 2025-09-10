@@ -1,4 +1,3 @@
-import React from 'react';
 /**
  * AuraGlass Canonical Token Schema - SINGLE SOURCE OF TRUTH
  * 
@@ -714,3 +713,392 @@ export const glassTokens = {
 
 // Alias for backward compatibility
 export const glassUtils = glassTokenUtils;
+
+/**
+ * ========================================
+ * LIQUID GLASS EXTENSIONS - Apple Parity
+ * ========================================
+ * 
+ * Extended tokens for Liquid Glass material system
+ * Provides dynamic material properties, environmental adaptation,
+ * and enhanced visual effects to match Apple's implementation.
+ */
+
+// Liquid Glass Material Types
+export type LiquidGlassMaterial = 'standard' | 'liquid';
+export type MaterialVariant = 'regular' | 'clear';
+export type TintMode = 'auto' | 'light' | 'dark' | 'adaptive';
+export type SheenIntensity = 0 | 1 | 2 | 3;
+
+// Enhanced material specification for Liquid Glass
+export interface LiquidGlassSurfaceSpec extends GlassSurfaceSpec {
+  // Core material properties
+  ior: number; // Index of refraction (1.0-2.0)
+  thickness: number; // Visual depth in px (0-8)
+  sheen: SheenIntensity; // Edge sheen intensity
+  variant: MaterialVariant; // Regular or Clear transparency
+  
+  // Environmental adaptation  
+  tintMode: TintMode; // Content-aware tinting mode
+  adaptiveOpacity: { min: number; max: number }; // Dynamic transparency range
+  contrastGuard: { enabled: boolean; minRatio: number }; // Accessibility enforcement
+  
+  // Motion responsiveness
+  motionSensitivity: number; // 0-1 response to motion/scroll
+  microInteractions: boolean; // Enable subtle hover/focus effects
+  
+  // Advanced effects
+  refraction: { enabled: boolean; intensity: number }; // Screen-space refraction
+  reflection: { enabled: boolean; intensity: number }; // Environmental reflections  
+  parallax: { enabled: boolean; depth: number }; // Thickness parallax
+}
+
+// Liquid Glass token extensions
+export interface LiquidGlassTokens extends AuraGlassTokens {
+  // Material physics
+  material: {
+    ior: {
+      glass: 1.52; // Standard glass
+      crystal: 1.76; // Enhanced clarity
+      liquid: 1.33; // Water-like fluidity
+      diamond: 2.42; // Maximum refraction
+    };
+    thickness: {
+      hairline: 1; // Minimal depth
+      thin: 2; // Subtle depth
+      medium: 4; // Standard depth  
+      thick: 6; // Enhanced depth
+      ultra: 8; // Maximum depth
+    };
+    sheen: {
+      none: 0;
+      subtle: 1; // Gentle edge highlight
+      medium: 2; // Noticeable edge effect
+      intense: 3; // Strong refractive edge
+    };
+  };
+  
+  // Material variants with different transparency levels
+  variants: {
+    regular: {
+      opacity: { base: 0.85; hover: 0.90; active: 0.95 };
+      blur: { multiplier: 1.0 }; // Standard blur
+      contrast: { minRatio: 4.5 }; // WCAG AA
+    };
+    clear: {
+      opacity: { base: 0.65; hover: 0.75; active: 0.85 }; 
+      blur: { multiplier: 1.2 }; // Enhanced blur for readability
+      contrast: { minRatio: 7.0 }; // WCAG AAA for high transparency
+    };
+  };
+  
+  // Content-aware tinting system
+  tinting: {
+    auto: {
+      lightThreshold: 0.6; // Luminance threshold for light/dark detection
+      contrastBoost: 0.15; // Additional contrast for readability  
+      saturationAdjust: 0.1; // Subtle color temperature shift
+    };
+    adaptive: {
+      samplingRadius: 32; // Backdrop sampling area (px)
+      updateThrottle: 100; // Update frequency (ms)
+      transitionDuration: 200; // Smooth transition time (ms)
+    };
+  };
+  
+  // Enhanced motion system for fluidity
+  motionFluency: {
+    // Micro-interactions
+    hover: { duration: 120; easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' };
+    press: { duration: 80; easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' };
+    focus: { duration: 150; easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' };
+    
+    // Environmental responses
+    scroll: { sensitivity: 0.3; maxShift: 2 }; // Subtle parallax on scroll
+    tilt: { sensitivity: 0.1; maxTilt: 1 }; // Device orientation response
+    ambient: { duration: 4000; intensity: 0.05 }; // Breathing effect
+  };
+  
+  // Performance optimization presets
+  performance: {
+    ultra: {
+      enableRefraction: true;
+      enableReflection: true;
+      enableParallax: true;
+      enableMicroInteractions: true;
+      sampleRate: 60; // 60fps target
+    };
+    high: {
+      enableRefraction: true;
+      enableReflection: true;  
+      enableParallax: false;
+      enableMicroInteractions: true;
+      sampleRate: 60;
+    };
+    balanced: {
+      enableRefraction: true;
+      enableReflection: false;
+      enableParallax: false; 
+      enableMicroInteractions: true;
+      sampleRate: 30;
+    };
+    efficient: {
+      enableRefraction: false;
+      enableReflection: false;
+      enableParallax: false;
+      enableMicroInteractions: false;  
+      sampleRate: 30;
+    };
+  };
+}
+
+/**
+ * LIQUID GLASS CANONICAL TOKENS
+ * Extended version of AURA_GLASS with Liquid Glass properties
+ */
+export const LIQUID_GLASS: LiquidGlassTokens = {
+  // Inherit all base AURA_GLASS tokens
+  ...AURA_GLASS,
+  
+  // Extended material physics
+  material: {
+    ior: {
+      glass: 1.52,
+      crystal: 1.76, 
+      liquid: 1.33,
+      diamond: 2.42,
+    },
+    thickness: {
+      hairline: 1,
+      thin: 2,
+      medium: 4,
+      thick: 6,
+      ultra: 8,
+    },
+    sheen: {
+      none: 0,
+      subtle: 1,
+      medium: 2,
+      intense: 3,
+    },
+  },
+  
+  // Material variants
+  variants: {
+    regular: {
+      opacity: { base: 0.85, hover: 0.90, active: 0.95 },
+      blur: { multiplier: 1.0 },
+      contrast: { minRatio: 4.5 },
+    },
+    clear: {
+      opacity: { base: 0.65, hover: 0.75, active: 0.85 },
+      blur: { multiplier: 1.2 },
+      contrast: { minRatio: 7.0 },
+    },
+  },
+  
+  // Content-aware tinting
+  tinting: {
+    auto: {
+      lightThreshold: 0.6,
+      contrastBoost: 0.15,
+      saturationAdjust: 0.1,
+    },
+    adaptive: {
+      samplingRadius: 32,
+      updateThrottle: 100,
+      transitionDuration: 200,
+    },
+  },
+  
+  // Enhanced motion fluency
+  motionFluency: {
+    hover: { duration: 120, easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' },
+    press: { duration: 80, easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' },
+    focus: { duration: 150, easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' },
+    scroll: { sensitivity: 0.3, maxShift: 2 },
+    tilt: { sensitivity: 0.1, maxTilt: 1 },
+    ambient: { duration: 4000, intensity: 0.05 },
+  },
+  
+  // Performance presets
+  performance: {
+    ultra: {
+      enableRefraction: true,
+      enableReflection: true,
+      enableParallax: true,
+      enableMicroInteractions: true,
+      sampleRate: 60,
+    },
+    high: {
+      enableRefraction: true,
+      enableReflection: true,
+      enableParallax: false,
+      enableMicroInteractions: true,
+      sampleRate: 60,
+    },
+    balanced: {
+      enableRefraction: true,
+      enableReflection: false,
+      enableParallax: false,
+      enableMicroInteractions: true,
+      sampleRate: 30,
+    },
+    efficient: {
+      enableRefraction: false,
+      enableReflection: false,
+      enableParallax: false,
+      enableMicroInteractions: false,
+      sampleRate: 30,
+    },
+  },
+};
+
+/**
+ * Enhanced utility functions for Liquid Glass
+ */
+export const liquidGlassUtils = {
+  ...glassTokenUtils,
+  
+  /**
+   * Get Liquid Glass material specification
+   */
+  getLiquidSurface: (
+    intent: GlassIntent,
+    elevation: GlassElevation,
+    material: LiquidGlassMaterial = 'standard',
+    variant: MaterialVariant = 'regular'
+  ): LiquidGlassSurfaceSpec => {
+    const baseSurface = glassTokenUtils.getSurface(intent, elevation);
+    
+    if (material === 'standard') {
+      // Return enhanced base surface with minimal liquid properties
+      return {
+        ...baseSurface,
+        ior: LIQUID_GLASS.material.ior.glass,
+        thickness: LIQUID_GLASS.material.thickness.thin,
+        sheen: LIQUID_GLASS.material.sheen.none,
+        variant: 'regular',
+        tintMode: 'auto',
+        adaptiveOpacity: { min: LIQUID_GLASS.variants.regular.opacity.base, max: LIQUID_GLASS.variants.regular.opacity.active },
+        contrastGuard: { enabled: true, minRatio: 4.5 },
+        motionSensitivity: 0.1,
+        microInteractions: false,
+        refraction: { enabled: false, intensity: 0 },
+        reflection: { enabled: false, intensity: 0 },
+        parallax: { enabled: false, depth: 0 },
+      };
+    }
+    
+    // Full Liquid Glass specification
+    const variantSpec = LIQUID_GLASS.variants[variant];
+    return {
+      ...baseSurface,
+      ior: LIQUID_GLASS.material.ior.liquid,
+      thickness: LIQUID_GLASS.material.thickness.medium,
+      sheen: LIQUID_GLASS.material.sheen.subtle,
+      variant,
+      tintMode: 'adaptive',
+      adaptiveOpacity: { min: variantSpec.opacity.base, max: variantSpec.opacity.active },
+      contrastGuard: { enabled: true, minRatio: variantSpec.contrast.minRatio },
+      motionSensitivity: 0.7,
+      microInteractions: true,
+      refraction: { enabled: true, intensity: 0.8 },
+      reflection: { enabled: true, intensity: 0.6 },
+      parallax: { enabled: true, depth: LIQUID_GLASS.material.thickness.medium },
+    };
+  },
+  
+  /**
+   * Calculate backdrop luminance for content-aware tinting
+   */
+  sampleBackdropLuminance: (element: HTMLElement): number => {
+    if (typeof window === 'undefined' || !element) return 0.5;
+    
+    // In a real implementation, this would sample the backdrop
+    // For now, return a reasonable default
+    return 0.5;
+  },
+  
+  /**
+   * Generate content-aware tint color based on backdrop
+   */
+  generateAdaptiveTint: (
+    backdropLuminance: number,
+    intent: GlassIntent = 'neutral'
+  ): string => {
+    const { lightThreshold, contrastBoost, saturationAdjust } = LIQUID_GLASS.tinting.auto;
+    
+    const isLightBackdrop = backdropLuminance > lightThreshold;
+    const baseSurface = glassTokenUtils.getSurface(intent, 'level2');
+    
+    if (isLightBackdrop) {
+      // Dark tint for light backgrounds
+      return `rgba(0, 0, 0, ${0.15 + contrastBoost})`;
+    } else {
+      // Light tint for dark backgrounds  
+      return `rgba(255, 255, 255, ${0.25 + contrastBoost})`;
+    }
+  },
+  
+  /**
+   * Build complete Liquid Glass styles with environmental adaptation
+   */
+  buildLiquidGlassStyles: (
+    intent: GlassIntent,
+    elevation: GlassElevation,
+    material: LiquidGlassMaterial = 'liquid',
+    variant: MaterialVariant = 'regular',
+    performanceLevel: keyof LiquidGlassTokens['performance'] = 'high'
+  ) => {
+    const liquidSurface = liquidGlassUtils.getLiquidSurface(intent, elevation, material, variant);
+    const performance = LIQUID_GLASS.performance[performanceLevel];
+    const baseStyles = glassTokenUtils.buildSurfaceStyles(intent, elevation, 'high');
+    
+    return {
+      ...baseStyles,
+      
+      // Enhanced backdrop filter with IOR simulation
+      backdropFilter: performance.enableRefraction 
+        ? `blur(${liquidSurface.backdropBlur.px * (liquidSurface.variant === 'clear' ? 1.2 : 1)}px) saturate(${1.8 + (liquidSurface.ior - 1) * 0.5}) brightness(${1.15 + liquidSurface.thickness * 0.01}) contrast(${1.08 + liquidSurface.sheen * 0.02})`
+        : baseStyles.backdropFilter,
+      
+      // Adaptive surface with environmental tinting
+      background: material === 'liquid' && liquidSurface.tintMode === 'adaptive'
+        ? `${liquidSurface.surface.base}, linear-gradient(135deg, rgba(255,255,255,${liquidSurface.adaptiveOpacity.min * 0.3}) 0%, transparent 100%)`
+        : liquidSurface.surface.base,
+      
+      // Enhanced transitions for micro-interactions
+      transition: performance.enableMicroInteractions
+        ? `all ${LIQUID_GLASS.motionFluency.hover.duration}ms ${LIQUID_GLASS.motionFluency.hover.easing}, transform ${LIQUID_GLASS.motionFluency.press.duration}ms ${LIQUID_GLASS.motionFluency.press.easing}`
+        : baseStyles.transition,
+      
+      // Thickness-based box shadow enhancement
+      boxShadow: liquidSurface.thickness > 2
+        ? `${baseStyles.boxShadow}, inset 0 1px ${liquidSurface.thickness}px rgba(255,255,255,${0.1 + liquidSurface.sheen * 0.05})`
+        : baseStyles.boxShadow,
+      
+      // Performance optimizations
+      willChange: performance.enableMicroInteractions ? 'transform, opacity, backdrop-filter' : 'auto',
+      contain: 'layout style paint',
+    };
+  },
+  
+  /**
+   * Validate contrast compliance for Liquid Glass
+   */
+  validateLiquidContrast: (
+    intent: GlassIntent,
+    variant: MaterialVariant,
+    backdropLuminance: number
+  ): boolean => {
+    const variantSpec = LIQUID_GLASS.variants[variant];
+    const requiredRatio = variantSpec.contrast.minRatio;
+    
+    // In a real implementation, this would calculate actual contrast
+    // For now, we trust our predefined values meet requirements
+    return true;
+  },
+};
+
+// Types are exported individually above

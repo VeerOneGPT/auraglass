@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const PageTransitionDemo: React.FC = () => {
@@ -8,9 +7,9 @@ export const PageTransitionDemo: React.FC = () => {
   return (
     <div style={{ position: 'relative', width: 520, height: 320 }}>
       <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
-        <button onClick={() => setPage(0)} style={btnStyle(page === 0)}>Overview</button>
-        <button onClick={() => setPage(1)} style={btnStyle(page === 1)}>Details</button>
-        <button onClick={() => setPage(2)} style={btnStyle(page === 2)}>Insights</button>
+        <button onClick={(e) => setPage(0)} style={btnStyle(page === 0)}>Overview</button>
+        <button onClick={(e) => setPage(1)} style={btnStyle(page === 1)}>Details</button>
+        <button onClick={(e) => setPage(2)} style={btnStyle(page === 2)}>Insights</button>
       </div>
 
       <div style={{ position: 'relative', borderRadius: 16, overflow: 'hidden', height: 260 }}>

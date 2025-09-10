@@ -1,5 +1,4 @@
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface MultiSelectOption<T = string | number> {
   id?: string;
   value: T;

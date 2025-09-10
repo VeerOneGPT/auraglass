@@ -4,7 +4,6 @@ import { GlassInput } from '../input/GlassInput';
 
 import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { GlassButton, IconButton } from '../button/GlassButton';
@@ -146,9 +145,9 @@ export const GlassFileUpload = forwardRef<HTMLDivElement, GlassFileUploadProps>(
     const dropZoneRef = useRef<HTMLDivElement>(null);
 
     const sizeClasses = {
-      sm: 'p-4 text-sm',
-      md: 'p-6 text-base',
-      lg: 'p-8 text-lg',
+      sm: 'glass-p-4 glass-text-sm',
+      md: 'glass-p-6 glass-text-base',
+      lg: 'p-8 glass-text-lg',
     };
 
     const variantClasses = {
@@ -399,21 +398,21 @@ export const GlassFileUpload = forwardRef<HTMLDivElement, GlassFileUploadProps>(
             animation="none"
             performanceMode="medium"
             className={cn(
-              'p-3 border border-border/20',
+              'glass-p-3 border border-border/20',
               file.status === 'error' && 'border-destructive/50 bg-destructive/5'
             )}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center glass-gap-3">
               {/* File icon/preview */}
               <div className="flex-shrink-0">
                 {showPreviews && file.type.startsWith('image/') && file.preview ? (
                   <img
                     src={file.preview}
                     alt={file.name}
-                    className="w-10 h-10 object-cover rounded"
+                    className="w-10 h-10 object-cover glass-radius-md"
                   />
                 ) : (
-                  <div className="w-10 h-10 rounded bg-muted/30 flex items-center justify-center">
+                  <div className="w-10 h-10 glass-radius-md bg-muted/30 flex items-center justify-center">
                     {getFileIcon(file.type)}
                   </div>
                 )}
@@ -421,11 +420,11 @@ export const GlassFileUpload = forwardRef<HTMLDivElement, GlassFileUploadProps>(
 
               {/* File info */}
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate">
+                <p className="glass-text-sm font-medium text-foreground truncate">
                   {file.name}
                 </p>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-xs text-muted-foreground">
+                <div className="flex items-center glass-gap-2 glass-mt-1">
+                  <span className="glass-text-xs glass-text-secondary">
                     {formatFileSize(file.size)}
                   </span>
                   <GlassBadge
@@ -445,24 +444,24 @@ export const GlassFileUpload = forwardRef<HTMLDivElement, GlassFileUploadProps>(
                   <GlassProgress
                     value={file.progress}
                     size="xs"
-                    className="mt-2"
+                    className="glass-mt-2"
                   />
                 )}
 
                 {/* Error message */}
                 {file.error && (
-                  <p className="text-xs text-destructive mt-1">{file.error}</p>
+                  <p className="glass-text-xs text-destructive glass-mt-1">{file.error}</p>
                 )}
               </div>
 
               {/* Actions */}
-              <div className="flex items-center gap-1">
+              <div className="flex items-center glass-gap-1">
                 {file.status === 'pending' && onUpload && (
                   <IconButton
                     icon="↑"
                     variant="ghost"
                     size="sm"
-                    onClick={() => handleUpload(file.id)}
+                    onClick={(e) => handleUpload(file.id)}
                     aria-label="Upload file"
                   />
                 )}
@@ -472,7 +471,7 @@ export const GlassFileUpload = forwardRef<HTMLDivElement, GlassFileUploadProps>(
                     icon="👁"
                     variant="ghost"
                     size="sm"
-                    onClick={() => onPreview(file)}
+                    onClick={(e) => onPreview(file)}
                     aria-label="Preview file"
                   />
                 )}
@@ -481,7 +480,7 @@ export const GlassFileUpload = forwardRef<HTMLDivElement, GlassFileUploadProps>(
                   icon="×"
                   variant="ghost"
                   size="sm"
-                  onClick={() => handleRemove(file.id)}
+                  onClick={(e) => handleRemove(file.id)}
                   aria-label="Remove file"
                 />
               </div>
@@ -538,7 +537,7 @@ export const GlassFileUpload = forwardRef<HTMLDivElement, GlassFileUploadProps>(
             <div className="flex flex-col items-center justify-center text-center">
               <svg
                 className={cn(
-                  'mx-auto mb-3 text-muted-foreground',
+                  'mx-auto mb-3 glass-text-secondary',
                   size === 'sm' ? 'w-8 h-8' : size === 'lg' ? 'w-12 h-12' : 'w-10 h-10'
                 )}
                 fill="none"
@@ -553,18 +552,18 @@ export const GlassFileUpload = forwardRef<HTMLDivElement, GlassFileUploadProps>(
                 />
               </svg>
 
-              <p className="text-foreground font-medium mb-1">
+              <p className="text-foreground font-medium glass-mb-1">
                 {instruction}
               </p>
 
               {helperText && (
-                <p className="text-sm text-muted-foreground">
+                <p className="glass-text-sm glass-text-secondary">
                   {helperText}
                 </p>
               )}
 
               {maxSize && (
-                <p className="text-xs text-muted-foreground mt-2">
+                <p className="glass-text-xs glass-text-secondary glass-mt-2">
                   Max file size: {formatFileSize(maxSize)}
                 </p>
               )}
@@ -574,13 +573,13 @@ export const GlassFileUpload = forwardRef<HTMLDivElement, GlassFileUploadProps>(
 
         {/* Error message */}
         {error && (
-          <p className="text-sm text-destructive mt-2">{error}</p>
+          <p className="glass-text-sm text-destructive glass-mt-2">{error}</p>
         )}
 
         {/* File list */}
         {internalFiles.length > 0 && (
-          <div className={cn('mt-4 space-y-2', {
-            'grid grid-cols-2 md:grid-cols-3 gap-3': variant === 'grid',
+          <div className={cn('glass-mt-4 glass-gap-2', {
+            'grid grid-cols-2 md:grid-cols-3 glass-gap-3': variant === 'grid',
           })}>
             {internalFiles.map((file, index) => renderFileItem(file, index))}
           </div>
@@ -588,11 +587,11 @@ export const GlassFileUpload = forwardRef<HTMLDivElement, GlassFileUploadProps>(
 
         {/* Upload all button */}
         {internalFiles.some(f => f.status === 'pending') && onUpload && !autoUpload && (
-          <div className="mt-4 flex justify-end">
+          <div className="glass-mt-4 flex justify-end">
             <GlassButton
               variant="default"
               size="sm"
-              onClick={() => {
+              onClick={(e) => {
                 internalFiles
                   .filter(f => f.status === 'pending')
                   .forEach(f => handleUpload(f.id));

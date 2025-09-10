@@ -4,8 +4,9 @@ import { GlassButton } from '../button/GlassButton';
 
 import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
+import { useA11yId } from '../../utils/a11y';
+import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 
 export interface AccordionItem {
   /**
@@ -83,6 +84,14 @@ export interface GlassAccordionProps {
    * Collapsible behavior
    */
   collapsible?: boolean;
+  /**
+   * Respect user's motion preferences
+   */
+  respectMotionPreference?: boolean;
+  /**
+   * ARIA label for the accordion
+   */
+  'aria-label'?: string;
   className?: string;
 }
 
@@ -106,11 +115,17 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
       animationDuration = 300,
       animated = true,
       collapsible = true,
+      respectMotionPreference = true,
+      'aria-label': ariaLabel,
       className,
       ...props
     },
     ref
   ) => {
+    const accordionId = useA11yId('accordion');
+    const { prefersReducedMotion } = useMotionPreferenceContext();
+    const shouldAnimate = animated && (!respectMotionPreference || !prefersReducedMotion);
+
     // Normalize value to array for consistent handling
     const normalizeValue = (val: string | string[] | undefined): string[] => {
       if (!val) return [];
@@ -217,18 +232,18 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
     // Size classes
     const sizeClasses = {
       sm: {
-        trigger: 'px-3 py-2 text-sm',
-        content: 'px-3 pb-2 text-sm',
+        trigger: 'glass-px-3 glass-py-2 glass-text-sm',
+        content: 'glass-px-3 pb-2 glass-text-sm',
         icon: 'w-4 h-4',
       },
       md: {
-        trigger: 'px-4 py-3 text-base',
-        content: 'px-4 pb-3 text-base',
+        trigger: 'glass-px-4 glass-py-3 glass-text-base',
+        content: 'glass-px-4 pb-3 glass-text-base',
         icon: 'w-5 h-5',
       },
       lg: {
-        trigger: 'px-6 py-4 text-lg',
-        content: 'px-6 pb-4 text-lg',
+        trigger: 'glass-px-6 glass-py-4 glass-text-lg',
+        content: 'glass-px-6 pb-4 glass-text-lg',
         icon: 'w-6 h-6',
       },
     };
@@ -259,8 +274,11 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
     return (
       <div
         ref={ref}
+        id={accordionId}
         className={cn('glass-accordion w-full', className)}
         role="tablist"
+        aria-label={ariaLabel || 'Accordion'}
+        aria-multiselectable={multiple}
         {...props}
       >
         {(items || []).map((item, index) => {
@@ -286,7 +304,7 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
                 {
                   'border-0': variant === 'flush',
                   'border border-border/20': variant === 'bordered',
-                  'mb-2': variant !== 'flush' && !isLast,
+                  'glass-mb-2': variant !== 'flush' && !isLast,
                   'border-t-0': variant === 'flush' && !isFirst,
                 }
               )}
@@ -306,7 +324,7 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
                     'border-b border-border/10': variant === 'flush' && isOpen,
                   }
                 )}
-                onClick={() => !item?.disabled && toggleItem(item?.id)}
+                onClick={(e) => !item?.disabled && toggleItem(item?.id)}
                 onKeyDown={(e) => !item?.disabled && handleKeyDown(e, item?.id)}
                 disabled={item?.disabled}
                 aria-expanded={isOpen}
@@ -314,9 +332,9 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
                 data-accordion-trigger={item?.id}
                 role="tab"
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center glass-gap-3">
                   {item?.icon && (
-                    <span className="flex-shrink-0 text-muted-foreground">
+                    <span className="flex-shrink-0 glass-text-secondary">
                       {item?.icon}
                     </span>
                   )}
@@ -326,7 +344,7 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
                 {showIcons && !item?.disabled && (
                   <span
                     className={cn(
-                      'flex-shrink-0 text-muted-foreground transition-transform duration-200',
+                      'flex-shrink-0 glass-text-secondary transition-transform duration-200',
                       isOpen && 'rotate-180'
                     )}
                   >
@@ -342,7 +360,7 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
               <AccordionContent
                 id={`accordion-content-${item?.id}`}
                 isOpen={isOpen}
-                animated={animated}
+                animated={shouldAnimate}
                 duration={animationDuration}
                 className={sizeClasses[size].content}
                 role="tabpanel"

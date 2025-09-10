@@ -13,7 +13,6 @@ import {
   ChartType,
 } from './ChartTypes';
 
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 export interface BaseChartProps {
   /** Chart configuration */
   config: ChartConfig;

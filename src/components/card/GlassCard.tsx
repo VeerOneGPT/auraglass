@@ -2,8 +2,8 @@
 
 import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlassCore as OptimizedGlass, type OptimizedGlassProps } from '../../primitives';
+import { LiquidGlassMaterial } from '../../primitives/LiquidGlassMaterial';
 
 export interface GlassCardProps extends Omit<OptimizedGlassProps, 'variant'> {
   /**
@@ -30,6 +30,20 @@ export interface GlassCardProps extends Omit<OptimizedGlassProps, 'variant'> {
    * Disabled state
    */
   disabled?: boolean;
+  /**
+   * Glass material variant
+   */
+  material?: 'glass' | 'liquid';
+  /**
+   * Material properties for liquid glass
+   */
+  materialProps?: {
+    ior?: number;
+    thickness?: number;
+    tint?: { r: number; g: number; b: number; a: number };
+    variant?: 'regular' | 'clear';
+    quality?: 'ultra' | 'high' | 'balanced' | 'efficient';
+  };
 }
 
 /**
@@ -41,11 +55,13 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
     {
       variant = 'default',
       size = 'md',
-      elevation = 'level1',
+      elevation = 'level2',
       hoverable = false,
       clickable = false,
       loading = false,
       disabled = false,
+      material = 'glass',
+      materialProps,
       interactive,
       className,
       children,
@@ -54,21 +70,21 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
     ref
   ) => {
     const sizeClasses = {
-      sm: 'p-3',
-      md: 'p-4',
-      lg: 'p-6',
-      xl: 'p-8',
+      sm: 'glass-glass-p-3',
+      md: 'glass-glass-p-4',
+      lg: 'glass-glass-p-6',
+      xl: 'glass-p-8',
     };
 
     const variantClasses = {
       default: '',
-      outlined: 'ring-1 ring-border/20',
+      outlined: 'glass-focus glass-border-subtle',
       elevated: '',
       interactive: 'transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]',
       feature: 'relative overflow-hidden',
       minimal: 'backdrop-blur-md bg-transparent border-0',
       primary: '',
-      outline: 'ring-1 ring-border/20',
+      outline: 'glass-focus glass-border-subtle',
     };
 
     const getElevation = (): 'level1' | 'level2' | 'level3' | 'level4' | 'level5' => {
@@ -80,7 +96,49 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
 
     const isInteractive = interactive || hoverable || clickable;
 
-    return (
+    return material === 'liquid' ? (
+      <LiquidGlassMaterial
+        ref={ref}
+        ior={materialProps?.ior || (variant === 'elevated' ? 1.48 : variant === 'feature' ? 1.50 : 1.45)}
+        thickness={materialProps?.thickness || (size === 'sm' ? 8 : size === 'md' ? 12 : size === 'lg' ? 16 : 20)}
+        tint={materialProps?.tint || (variant === 'primary' ? { r: 59, g: 130, b: 246, a: 0.08 } : { r: 0, g: 0, b: 0, a: 0.06 })}
+        variant={materialProps?.variant || (variant === 'minimal' ? 'clear' : 'regular')}
+        quality={materialProps?.quality || (variant === 'feature' ? 'ultra' : 'high')}
+        environmentAdaptation
+        motionResponsive
+        interactive={isInteractive}
+        className={cn(
+          'liquid-glass-card-surface relative glass-radius-xl overflow-hidden',
+          'transition-all duration-300 ease-out',
+          hoverable && [
+            'group'
+          ],
+          sizeClasses[size],
+          variantClasses[variant],
+          {
+            'opacity-50 pointer-events-none': disabled,
+            'cursor-pointer': clickable && !disabled,
+            'hover:scale-105 active:scale-95': hoverable && !disabled,
+            'animate-pulse': loading,
+          },
+          className
+        )}
+        style={{
+          '--liquid-glass-card-density': variant === 'minimal' ? '0.8' : '0.92',
+          '--liquid-glass-hover-lift': hoverable ? '8px' : '0px',
+          '--liquid-glass-interaction-depth': isInteractive ? '1.05' : '1.0',
+        } as React.CSSProperties}
+        data-liquid-glass-card="true"
+        data-card-variant={variant}
+        data-card-size={size}
+        {...props}
+      >
+        {loading && (
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+        )}
+        {children}
+      </LiquidGlassMaterial>
+    ) : (
       <OptimizedGlass
         ref={ref}
         elevation={getElevation()}
@@ -90,7 +148,7 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
         interactive={isInteractive}
         tier="high"
         className={cn(
-          'glass-foundation-complete relative rounded-xl overflow-hidden glass-overlay-noise glass-edge glass-overlay-specular glass-typography-reset',
+          'glass-foundation-complete relative glass-radius-xl overflow-hidden glass-overlay-noise glass-edge glass-overlay-specular glass-typography-reset',
           'transition-all duration-300 ease-out',
           // Advanced hover effects with glass enhancement
           hoverable && [
@@ -119,28 +177,28 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
         {hoverable && (
           <>
             {/* Subtle glow overlay on hover */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-lg" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none glass-radius-lg" />
 
             {/* Shimmer effect on hover */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none rounded-lg" />
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none glass-radius-lg" />
 
             {/* Border glow enhancement */}
-            <div className="absolute inset-0 rounded-lg border border-white/0 group-hover:border-white/20 transition-colors duration-300 pointer-events-none" />
+            <div className="absolute inset-0 glass-radius-lg border border-white/0 group-hover:border-white/20 transition-colors duration-300 pointer-events-none" />
           </>
         )}
 
         {/* Feature variant enhancement */}
         {variant === 'feature' && (
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-secondary/4 to-accent/6 rounded-lg" />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-secondary/4 to-accent/6 glass-radius-lg" />
         )}
 
         {/* Content with enhanced loading state */}
         <div className="relative z-10">
           {loading ? (
-            <div className="space-y-3">
-              <div className="h-4 bg-white/20 animate-pulse rounded shimmer" />
-              <div className="h-4 bg-white/15 animate-pulse rounded w-3/4 shimmer" />
-              <div className="h-4 bg-white/10 animate-pulse rounded w-1/2 shimmer" />
+            <div className="glass-auto-gap glass-auto-gap-md">
+              <div className="h-4 bg-white/20 animate-pulse glass-radius-sm shimmer" />
+              <div className="h-4 bg-white/15 animate-pulse glass-radius-sm w-3/4 shimmer" />
+              <div className="h-4 bg-white/10 animate-pulse glass-radius-sm w-1/2 shimmer" />
             </div>
           ) : (
             children
@@ -170,19 +228,19 @@ export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
 export const CardHeader = forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ size = 'md', bordered = false, className, children, ...props }, ref) => {
     const sizeClasses = {
-      sm: 'pb-2',
-      md: 'pb-3',
-      lg: 'pb-4',
+      sm: 'glass-pb-2',
+      md: 'glass-pb-3',
+      lg: 'glass-pb-4',
     };
 
     return (
       <div
         ref={ref}
         className={cn(
-          'flex flex-col space-y-1.5',
+          'flex flex-col glass-gap-1-5',
           sizeClasses[size],
           {
-            'border-b border-border/20': bordered,
+            'border-b glass-border-subtle': bordered,
           },
           className
         )}
@@ -213,16 +271,16 @@ export interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement>
 export const CardTitle = forwardRef<HTMLHeadingElement, CardTitleProps>(
   ({ size = 'md', level = 3, className, children, ...props }, ref) => {
     const sizeClasses = {
-      sm: 'text-base font-medium',
-      md: 'text-lg font-semibold',
-      lg: 'text-xl font-semibold',
-      xl: 'text-2xl font-bold',
+      sm: 'glass-glass-text-base font-medium',
+      md: 'glass-glass-text-lg font-semibold',
+      lg: 'glass-glass-text-xl font-semibold',
+      xl: 'glass-glass-text-2xl font-bold',
     };
 
     const headingProps = {
       ref,
       className: cn(
-        'text-card-foreground leading-none tracking-tight',
+        'glass-text-primary leading-none tracking-tight',
         sizeClasses[size],
         className
       ),
@@ -264,16 +322,16 @@ export interface CardDescriptionProps extends React.HTMLAttributes<HTMLParagraph
 export const CardDescription = forwardRef<HTMLParagraphElement, CardDescriptionProps>(
   ({ size = 'md', className, children, ...props }, ref) => {
     const sizeClasses = {
-      sm: 'text-xs',
-      md: 'text-sm',
-      lg: 'text-base',
+      sm: 'glass-glass-text-xs',
+      md: 'glass-glass-text-sm',
+      lg: 'glass-glass-text-base',
     };
 
     return (
       <p
         ref={ref}
         className={cn(
-          'text-muted-foreground',
+          'glass-text-secondary',
           sizeClasses[size],
           className
         )}
@@ -295,23 +353,40 @@ export interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {
    * Content padding
    */
   padding?: 'none' | 'sm' | 'md' | 'lg';
+  /**
+   * Automatically add vertical spacing between direct children
+   * Defaults to true for better readability across components
+   */
+  autoSpacing?: boolean;
+  /**
+   * Spacing size when autoSpacing is enabled
+   */
+  spacing?: 'sm' | 'md' | 'lg';
 }
 
 export const CardContent = forwardRef<HTMLDivElement, CardContentProps>(
-  ({ padding = 'none', className, children, ...props }, ref) => {
+  ({ padding = 'none', autoSpacing = true, spacing = 'md', className, children, ...props }, ref) => {
     const paddingClasses = {
       none: '',
-      sm: 'p-2',
-      md: 'p-4',
-      lg: 'p-6',
+      sm: 'glass-glass-p-2',
+      md: 'glass-glass-p-4',
+      lg: 'glass-glass-p-6',
     };
+    const spacingClass = autoSpacing
+      ? spacing === 'sm'
+        ? 'glass-auto-gap glass-auto-gap-sm'
+        : spacing === 'lg'
+          ? 'glass-auto-gap glass-auto-gap-lg'
+          : 'glass-auto-gap glass-auto-gap-md'
+      : '';
 
     return (
       <div
         ref={ref}
         className={cn(
-          'text-card-foreground',
+          'glass-text-primary',
           paddingClasses[padding],
+          spacingClass,
           className
         )}
         {...props}
@@ -354,9 +429,9 @@ export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
 
     const paddingClasses = {
       none: '',
-      sm: 'pt-2',
-      md: 'pt-3',
-      lg: 'pt-4',
+      sm: 'glass-pt-2',
+      md: 'glass-pt-3',
+      lg: 'glass-pt-4',
     };
 
     return (
@@ -367,7 +442,7 @@ export const CardFooter = forwardRef<HTMLDivElement, CardFooterProps>(
           alignClasses[align],
           paddingClasses[padding],
           {
-            'border-t border-border/20': bordered,
+            'border-t glass-border-subtle': bordered,
           },
           className
         )}
@@ -404,9 +479,9 @@ export const CardActions = forwardRef<HTMLDivElement, CardActionsProps>(
     };
 
     const spacingClasses = {
-      sm: 'gap-1',
-      md: 'gap-2',
-      lg: 'gap-3',
+      sm: 'glass-glass-gap-1',
+      md: 'glass-glass-gap-2',
+      lg: 'glass-glass-gap-3',
     };
 
     return (

@@ -1,5 +1,4 @@
 import React, { forwardRef, useState, useMemo } from 'react';
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 import { Glass } from '../../../primitives';
 import { Motion } from '../../../primitives';
 import { GlassSearchInterface } from '../../../components/interactive/GlassSearchInterface';
@@ -290,7 +289,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
               icon={mode.icon}
               variant={viewMode === mode.key ? 'primary' : 'ghost'}
               size="sm"
-              onClick={() => onViewModeChange(mode.key as any)}
+              onClick={(e) => onViewModeChange(mode.key as any)}
               aria-label={mode.label}
             />
           ))}
@@ -304,24 +303,24 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
 
       return (
         <Motion preset="slideDown">
-          <Glass rounded="lg" className="p-4">
+          <Glass className="glass-p-4 glass-radius-lg">
             <VStack space="md">
               <HStack space="sm" align="center" justify="between">
-                <h3 className="text-sm font-medium text-foreground">Filters</h3>
+                <h3 className="glass-text-sm font-medium text-foreground">Filters</h3>
                 <GlassButton
                   variant="ghost"
                   size="sm"
-                  onClick={() => onFiltersChange?.({})}
+                  onClick={(e) => onFiltersChange?.({})}
                   disabled={Object.keys(activeFilters).length === 0}
                 >
                   Clear All
                 </GlassButton>
               </HStack>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 glass-gap-4">
                 {filters.map((filter) => (
                   <div key={filter.id}>
-                    <label className="block text-sm font-medium text-foreground mb-2">
+                    <label className="block glass-text-sm font-medium text-foreground glass-mb-2">
                       {filter.label}
                     </label>
                     
@@ -332,7 +331,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
                           ...activeFilters,
                           [filter.id]: e.target.value
                         })}
-                        className="w-full px-3 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full glass-px-3 glass-py-2 bg-background border border-border glass-radius-md focus:outline-none focus:ring-2 focus:ring-primary"
                       >
                         <option value="">{filter.placeholder || 'Select...'}</option>
                         {filter.options?.map((option) => (
@@ -351,7 +350,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
                           [filter.id]: e.target.value
                         })}
                         placeholder={filter.placeholder}
-                        className="w-full px-3 py-2 bg-background border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="w-full glass-px-3 glass-py-2 bg-background border border-border glass-radius-md focus:outline-none focus:ring-2 focus:ring-primary"
                       />
                     )}
                   </div>
@@ -376,7 +375,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
         <HStack space="sm" align="center" justify="between">
           <HStack space="sm" align="center">
             {hasSelectedItems && (
-              <span className="text-sm text-muted-foreground">
+              <span className="glass-text-sm glass-text-secondary">
                 {(selectedItems?.length || 0)} item{(selectedItems?.length || 0) !== 1 ? 's' : ''} selected
               </span>
             )}
@@ -387,7 +386,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
                 variant={action.variant || 'outline'}
                 size="sm"
                 leftIcon={action.icon}
-                onClick={() => handleBulkAction(action)}
+                onClick={(e) => handleBulkAction(action)}
                 disabled={action.requiresSelection && (selectedItems?.length || 0) === 0}
               >
                 {action.label}
@@ -403,7 +402,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
                 icon="🔍"
                 variant={showFilters ? 'primary' : 'ghost'}
                 size="sm"
-                onClick={() => setShowFilters(!showFilters)}
+                onClick={(e) => setShowFilters(!showFilters)}
                 aria-label="Toggle filters"
               />
             )}
@@ -432,13 +431,13 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
               <GlassCard
                 variant="default"
                 className="h-full cursor-pointer hover:shadow-lg transition-shadow"
-                onClick={() => onRowClick?.(item)}
+                onClick={(e) => onRowClick?.(item)}
               >
                 <VStack space="sm">
-                  <div className="text-sm font-medium text-foreground">
+                  <div className="glass-text-sm font-medium text-foreground">
                     {item?.name || item?.title || item?.id}
                   </div>
-                  <div className="text-xs text-muted-foreground">
+                  <div className="glass-text-xs glass-text-secondary">
                     {item?.description || 'No description'}
                   </div>
                 </VStack>
@@ -465,7 +464,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
               <GlassCard
                 variant="outlined"
                 className="glass-foundation-complete backdrop-blur-md bg-transparent border-white/40 shadow-2xl cursor-pointer hover:shadow-2xl hover:scale-[1.01] transition-all"
-                onClick={() => onRowClick?.(item)}
+                onClick={(e) => onRowClick?.(item)}
               >
                 <HStack space="md" align="center">
                   {selectable && (
@@ -478,15 +477,15 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
                         handleSelectionChange(newSelection);
                       }}
                       onClick={(e) => e.stopPropagation()}
-                      className="rounded border-border focus:ring-primary"
+                      className="glass-radius-md border-border focus:ring-primary"
                     />
                   )}
                   
                   <VStack space="xs" className="flex-1">
-                    <div className="text-sm font-medium text-white">
+                    <div className="glass-text-sm font-medium glass-text-primary">
                       {item?.name || item?.title || item?.id}
                     </div>
-                    <div className="text-xs text-white/70">
+                    <div className="glass-text-xs glass-text-primary/70">
                       {item?.description || 'No description'}
                     </div>
                   </VStack>
@@ -509,7 +508,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
       if (loading) {
         return (
           <div className="flex items-center justify-center h-64">
-            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-primary border-t-transparent glass-radius-full animate-spin" />
           </div>
         );
       }
@@ -517,10 +516,10 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
       if ((currentPageData?.length || 0) === 0) {
         return emptyState || (
           <div className="flex flex-col items-center justify-center h-64 text-center">
-            <div className="text-lg font-medium text-muted-foreground mb-2">
+            <div className="glass-text-lg font-medium glass-text-secondary glass-mb-2">
               No items found
             </div>
-            <div className="text-sm text-muted-foreground">
+            <div className="glass-text-sm glass-text-secondary">
               Try adjusting your search or filters
             </div>
           </div>
@@ -588,12 +587,12 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
               variant="ghost"
               size="sm"
               disabled={currentPage === 1}
-              onClick={() => onPaginationChange(currentPage - 1, pageSize)}
+              onClick={(e) => onPaginationChange(currentPage - 1, pageSize)}
             >
               Previous
             </GlassButton>
             
-            <span className="text-sm text-muted-foreground">
+            <span className="glass-text-sm glass-text-secondary">
               Page {currentPage} of {totalPages}
             </span>
             
@@ -601,7 +600,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
               variant="ghost"
               size="sm"
               disabled={currentPage === totalPages}
-              onClick={() => onPaginationChange(currentPage + 1, pageSize)}
+              onClick={(e) => onPaginationChange(currentPage + 1, pageSize)}
             >
               Next
             </GlassButton>

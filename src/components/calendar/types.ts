@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface GlassCalendarProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: Date;
   onChange?: (date: Date) => void;

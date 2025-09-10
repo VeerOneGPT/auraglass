@@ -1,8 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utilsComprehensive';
-import React, { useMemo, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+import React, { useMemo, useState, forwardRef } from 'react';
 import { Motion } from '../../primitives';
 import { CardContent, CardHeader, CardTitle, GlassCard } from '../card';
 
@@ -79,7 +78,7 @@ export interface GlassPieChartProps {
  * GlassPieChart component
  * A glassmorphism pie/donut chart with interactive segments and smooth animations
  */
-export const GlassPieChart: React.FC<GlassPieChartProps> = ({
+export const GlassPieChart = forwardRef<HTMLDivElement, GlassPieChartProps>(function GlassPieChartComponent({
     title,
     data = [],
     size = 300,
@@ -88,18 +87,25 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
     legendPosition = 'right',
     showLabels = false,
     showPercentages = true,
-    colors = [
-        '#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6',
-        '#06b6d4', '#84cc16', '#f97316', '#ec4899', '#6b7280'
-    ],
+    colors,
     animationDuration = 1000,
     showTooltips = true,
-    formatValue = (value) => value.toString(),
-    formatPercentage = (percentage) => `${Math.round(percentage)}%`,
-    className,
+    formatValue,
+    formatPercentage,
     loading = false,
+    className,
     ...props
-}) => {
+}, ref) {
+    const defaultColors = [
+        '#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6',
+        '#06b6d4', '#84cc16', '#f97316', '#ec4899', '#6b7280'
+    ];
+    const actualColors = colors || defaultColors;
+    const actualAnimationDuration = animationDuration;
+    const actualShowTooltips = showTooltips;
+    const actualFormatValue = formatValue || ((value) => value.toString());
+    const actualFormatPercentage = formatPercentage || ((percentage) => `${Math.round(percentage)}%`);
+    const actualLoading = loading;
     const [hoveredSegment, setHoveredSegment] = useState<{
         index: number;
         x: number;
@@ -167,16 +173,16 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
                 endAngle,
                 labelX,
                 labelY,
-                color: item?.color || colors[index % (colors?.length || 0)]
+                color: item?.color || actualColors[index % (actualColors?.length || 0)]
             };
         });
 
         return { segments, total };
-    }, [data, centerX, centerY, radius, innerRadius, labelRadius, colors]);
+    }, [data, centerX, centerY, radius, innerRadius, labelRadius, actualColors]);
 
     // Handle segment hover
       const handleSegmentHover = (segment: typeof processedData.segments[0], event: React.MouseEvent) => {
-        if (showTooltips) {
+        if (actualShowTooltips) {
             const rect = event.currentTarget.getBoundingClientRect();
             setHoveredSegment({
                 index: processedData.segments.indexOf(segment),
@@ -200,19 +206,19 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
     }));
 
     // Loading skeleton
-    if (loading) {
+    if (actualLoading) {
         return (
-            <GlassCard className={cn('p-6', className)}>
-                <div className="animate-pulse space-y-4">
-                    <div className="h-6 bg-white/20 rounded w-48"></div>
+            <GlassCard className={cn('glass-p-6', className)}>
+                <div className="animate-pulse glass-gap-4">
+                    <div className="h-6 bg-white/20 glass-radius-md w-48"></div>
                     <div className="flex items-center justify-center">
-                        <div className="w-64 h-64 bg-white/10 rounded-full"></div>
+                        <div className="w-64 h-64 bg-white/10 glass-radius-full"></div>
                     </div>
                     {showLegend && (
-                        <div className="flex justify-center gap-4">
-                            <div className="h-4 bg-white/20 rounded w-20"></div>
-                            <div className="h-4 bg-white/20 rounded w-20"></div>
-                            <div className="h-4 bg-white/20 rounded w-20"></div>
+                        <div className="flex justify-center glass-gap-4">
+                            <div className="h-4 bg-white/20 glass-radius-md w-20"></div>
+                            <div className="h-4 bg-white/20 glass-radius-md w-20"></div>
+                            <div className="h-4 bg-white/20 glass-radius-md w-20"></div>
                         </div>
                     )}
                 </div>
@@ -221,21 +227,21 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
     }
 
     return (
-        <Motion preset="fadeIn" className="w-full">
+        <Motion ref={ref} preset="fadeIn" className="w-full">
             <GlassCard className={cn('overflow-hidden', className)} {...props}>
                 {title && (
                     <CardHeader>
-                        <CardTitle className="text-white text-lg font-semibold">
+                        <CardTitle className="glass-text-primary glass-text-lg font-semibold">
                             {title}
                         </CardTitle>
                     </CardHeader>
                 )}
 
-                <CardContent className="p-4">
+                <CardContent className="glass-p-4">
                     <div className={cn(
                         'flex',
                         legendPosition === 'right' ? 'flex-row' : 'flex-col',
-                        'items-center gap-6'
+                        'items-center glass-gap-6'
                     )}>
                         {/* Chart */}
                         <div className="relative flex-shrink-0">
@@ -257,7 +263,7 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
                                             onMouseEnter={(e) => handleSegmentHover(segment, e)}
                                             onMouseLeave={handleSegmentLeave}
                                             style={{
-                                                animation: `pieSegment ${animationDuration}ms ease-out ${index * 100}ms both`,
+                                                animation: `pieSegment ${actualAnimationDuration}ms ease-out ${index * 100}ms both`,
                                                 opacity: hoveredLegendIndex !== null && hoveredLegendIndex !== index ? 0.35 : 1,
                                             }}
                                         />
@@ -268,13 +274,13 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
                                                 x={segment.labelX}
                                                 y={segment.labelY}
                                                 textAnchor={segment.labelX > centerX ? 'start' : 'end'}
-                                                className="text-xs fill-white/80 font-medium"
+                                                className="glass-text-xs fill-white/80 font-medium"
                                                 style={{ fontSize: 'var(--typography-caption-size)' }}
                                             >
                                                 {segment.label}
                                                 {showPercentages && (
-                                                    <tspan x={segment.labelX} dy="14" className="text-xs fill-white/60">
-                                                        {formatPercentage(segment.percentage)}
+                                                    <tspan x={segment.labelX} dy="14" className="glass-text-xs fill-white/60">
+                                                        {actualFormatPercentage(segment.percentage)}
                                                     </tspan>
                                                 )}
                                             </text>
@@ -297,7 +303,7 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
                                             x={centerX}
                                             y={centerY - 5}
                                             textAnchor="middle"
-                                            className="text-sm fill-white/80 font-medium"
+                                            className="glass-text-sm fill-white/80 font-medium"
                                         >
                                             Total
                                         </text>
@@ -305,9 +311,9 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
                                             x={centerX}
                                             y={centerY + 15}
                                             textAnchor="middle"
-                                            className="text-lg fill-white font-semibold"
+                                            className="glass-text-lg fill-white font-semibold"
                                         >
-                                            {formatValue(processedData.total)}
+                                            {actualFormatValue(processedData.total)}
                                         </text>
                                     </g>
                                 )}
@@ -317,17 +323,17 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
                             {hoveredSegment && (
                                 <Motion preset="fadeIn" className="absolute z-10">
                                     <div
-                                        className={cn('absolute rounded-xl p-3 shadow-xl', 'bg-black/70 backdrop-blur-md ring-1 ring-white/10 glass-radial-reveal glass-lift')}
+                                        className={cn('absolute glass-radius-xl glass-p-3 shadow-xl', 'bg-black/70 backdrop-blur-md ring-1 ring-white/10 glass-radial-reveal glass-lift')}
                                         style={{
                                             left: hoveredSegment.x + 10,
                                             top: hoveredSegment.y - 10,
                                             transform: hoveredSegment.x > size / 2 ? 'translateX(-100%)' : 'none'
                                         }}
                                     >
-                                        <div className="text-white text-sm">
+                                        <div className="glass-text-primary glass-text-sm">
                                             <div className="font-medium">{hoveredSegment.label}</div>
-                                            <div className="text-white/80">
-                                                {formatValue(hoveredSegment.value)} ({formatPercentage(hoveredSegment.percentage)})
+                                            <div className="glass-text-primary/80">
+                                                {actualFormatValue(hoveredSegment.value)} ({actualFormatPercentage(hoveredSegment.percentage)})
                                             </div>
                                         </div>
                                     </div>
@@ -338,7 +344,7 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
                         {/* Legend */}
                         {showLegend && (legendItems?.length || 0) > 0 && (
                             <div className={cn(
-                                'flex flex-wrap gap-3',
+                                'flex flex-wrap glass-gap-3',
                                 legendPosition === 'right' ? 'flex-col' : 'justify-center'
                             )}>
                                 {legendItems.map((item) => (
@@ -346,20 +352,20 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
                                         key={item?.label}
                                         preset="slideUp"
                                         delay={item?.index * 50}
-                                        className={cn('flex items-center gap-2 px-2 py-1 rounded-md transition-all duration-200 hover:-translate-y-0.5',
+                                        className={cn('flex items-center glass-gap-2 glass-px-2 glass-py-1 glass-radius-md transition-all duration-200 hover:-translate-y-0.5',
                                           hoveredLegendIndex !== null && hoveredLegendIndex !== item?.index ? 'opacity-50' : 'opacity-100'
                                         )}
                                         onMouseEnter={() => setHoveredLegendIndex(item?.index)}
                                         onMouseLeave={() => setHoveredLegendIndex(null)}
                                     >
                                         <div
-                                            className="w-3 h-3 rounded"
+                                            className="w-3 h-3 glass-radius-md"
                                             style={{ backgroundColor: item?.color }}
                                         />
-                                        <div className="text-sm text-white/80">
+                                        <div className="glass-text-sm glass-text-primary/80">
                                             <span className="font-medium">{item?.label}</span>
-                                            <span className="ml-2 text-white/60">
-                                                {formatValue(item?.value)} ({formatPercentage(item?.percentage)})
+                                            <span className="glass-ml-2 glass-text-primary/60">
+                                                {actualFormatValue(item?.value)} ({actualFormatPercentage(item?.percentage)})
                                             </span>
                                         </div>
                                     </Motion>
@@ -371,7 +377,9 @@ export const GlassPieChart: React.FC<GlassPieChartProps> = ({
             </GlassCard>
         </Motion>
     );
-};
+});
+
+GlassPieChart.displayName = 'GlassPieChart';
 
 // Donut Chart variant
 export interface GlassDonutChartProps extends Omit<GlassPieChartProps, 'innerRadius'> {
@@ -381,20 +389,23 @@ export interface GlassDonutChartProps extends Omit<GlassPieChartProps, 'innerRad
     innerRadiusRatio?: number;
 }
 
-export const GlassDonutChart: React.FC<GlassDonutChartProps> = ({
+export const GlassDonutChart = forwardRef<HTMLDivElement, GlassDonutChartProps>(({
     size = 300,
     innerRadiusRatio = 0.6,
     ...props
-}) => {
+}, ref) => {
     const innerRadius = (size - 40) / 2 * innerRadiusRatio;
 
     return (
         <GlassPieChart
+            ref={ref}
             {...props}
             size={size}
             innerRadius={innerRadius}
         />
     );
-};
+});
+
+GlassDonutChart.displayName = 'GlassDonutChart';
 
 export default GlassPieChart;

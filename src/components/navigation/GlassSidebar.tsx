@@ -6,7 +6,6 @@ import { GlassTooltip } from '../modal/GlassPopover';
 import { cn } from '@/lib/utilsComprehensive';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import React, { createContext, forwardRef, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createPortal } from 'react-dom';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -145,7 +144,7 @@ export const GlassSidebar = forwardRef<HTMLDivElement, GlassSidebarProps>(
     const variantClasses = {
       default: 'border-r border-border/20',
       compact: 'border-r border-border/10',
-      floating: 'mx-4 my-4 squiricle border border-border/20',
+      floating: 'glass-mx-4 glass-my-4 squiricle border border-border/20',
       overlay: 'border-r border-border/20 shadow-xl',
     };
 
@@ -244,12 +243,12 @@ export const GlassSidebar = forwardRef<HTMLDivElement, GlassSidebarProps>(
             {/* Background tints removed to respect global layout color */}
             {/* Header */}
             {(header || logo) && (
-              <div className="flex-shrink-0 p-4 border-b border-border/20">
+              <div className="flex-shrink-0 glass-p-4 border-b border-border/20">
                 {header || (
                   <div className="flex items-center justify-center w-full">
                     {logo && (
                       <div className={cn(
-                        "flex items-center gap-3 transition-all duration-300",
+                        "flex items-center glass-gap-3 transition-all duration-300",
                         isCollapsed ? "scale-75 opacity-70" : "scale-100 opacity-100"
                       )}>
                         {logo}
@@ -262,14 +261,14 @@ export const GlassSidebar = forwardRef<HTMLDivElement, GlassSidebarProps>(
 
             {/* User Info */}
             {userInfo && !isCollapsed && (
-              <div className="flex-shrink-0 p-4 border-b border-border/10">
+              <div className="flex-shrink-0 glass-p-4 border-b border-border/10">
                 {userInfo}
               </div>
             )}
 
             {/* Navigation */}
             <div className={cn(
-              "flex-1 px-4 py-2",
+              "flex-1 glass-px-4 glass-py-2",
               isCollapsed ? "overflow-hidden" : "overflow-y-auto overflow-x-visible"
             )}>
               <SidebarNavigation items={items} />
@@ -277,7 +276,7 @@ export const GlassSidebar = forwardRef<HTMLDivElement, GlassSidebarProps>(
 
             {/* Footer */}
             {footer && (
-              <div className="flex-shrink-0 p-4 border-t border-border/20">
+              <div className="flex-shrink-0 glass-p-4 border-t border-border/20">
                 {footer}
               </div>
             )}
@@ -308,7 +307,7 @@ export const GlassSidebar = forwardRef<HTMLDivElement, GlassSidebarProps>(
                 onClick={handleToggleCollapse}
                 title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
                 className={cn(
-                  'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full',
+                  'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 glass-radius-full',
                   'flex items-center justify-center',
                   // Frosted surface
                   'backdrop-blur-md2xl bg-white/55 border border-white/80',
@@ -318,9 +317,9 @@ export const GlassSidebar = forwardRef<HTMLDivElement, GlassSidebarProps>(
                 aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
               >
                 {isCollapsed ? (
-                  <ChevronRight className="w-5 h-5 text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)]" strokeWidth={3} />
+                  <ChevronRight className="w-5 h-5 glass-text-primary drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)]" strokeWidth={3} />
                 ) : (
-                  <ChevronLeft className="w-5 h-5 text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)]" strokeWidth={3} />
+                  <ChevronLeft className="w-5 h-5 glass-text-primary drop-shadow-[0_1px_8px_rgba(0,0,0,0.8)]" strokeWidth={3} />
                 )}
               </button>
             </div>,
@@ -332,7 +331,7 @@ export const GlassSidebar = forwardRef<HTMLDivElement, GlassSidebarProps>(
         {variant === 'overlay' && open && (
           <div
             className="fixed inset-0 bg-black/50 z-40"
-            onClick={() => onOpenChange?.(false)}
+            onClick={(e) => onOpenChange?.(false)}
           />
         )}
       </SidebarContext.Provider>
@@ -352,7 +351,7 @@ interface SidebarNavigationProps {
 
 function SidebarNavigation({ items, level = 0 }: SidebarNavigationProps) {
   return (
-    <ul className={cn('space-y-2', level > 0 && 'ml-4')}>
+    <ul className={cn('glass-gap-2', level > 0 && 'glass-ml-4')}>
       {(items || []).map((item) => (
         <SidebarNavigationItem key={item?.id} item={item} level={level} />
       ))}
@@ -396,18 +395,18 @@ function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
       onClick={handleClick}
       disabled={item?.disabled}
       className={cn(
-        'w-full flex items-center gap-3 rounded-md transition-all duration-200 relative group',
+        'w-full flex items-center glass-gap-3 glass-radius-md transition-all duration-200 relative group',
         'hover:bg-white/10 focus:outline-none',
-        collapsed ? 'px-2 py-2.5 justify-center' : 'px-3 py-2',
-        'text-sm font-medium',
+        collapsed ? 'glass-px-2 glass-py-2.5 justify-center' : 'glass-px-3 glass-py-2',
+        'glass-text-sm font-medium',
         isActive ? 'bg-primary/15 text-primary shadow-[0_0_0_2px_${glassStyles.borderColor || "rgba(59, 130, 246, 0.2)"}]' : '',
-        !isActive && 'text-muted-foreground hover:text-foreground',
+        !isActive && 'glass-text-secondary hover:text-foreground',
         item?.disabled && 'opacity-50 cursor-not-allowed'
       )}
     >
       {/* Icon */}
       {item?.icon && (
-        <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center text-lg">
+        <span className="flex-shrink-0 w-6 h-6 flex items-center justify-center glass-text-lg">
           {React.cloneElement(item?.icon as React.ReactElement, {
             className: cn(
               (item?.icon as React.ReactElement).props?.className,
@@ -425,7 +424,7 @@ function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
           {item?.badge && (
             <span
               className={cn(
-                'flex-shrink-0 px-2 py-1 text-xs rounded-full font-medium transition-all duration-200',
+                'flex-shrink-0 glass-px-2 glass-py-1 glass-text-xs glass-radius-full font-medium transition-all duration-200',
                 'bg-black/15 border border-black/20 shadow-md backdrop-blur-md',
                 'group-hover:bg-black/20 group-hover:border-black/25 group-hover:shadow-lg',
                 'relative z-10' // Ensure badge stays above any background effects
@@ -449,7 +448,7 @@ function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
               strokeLinecap="round"
               strokeLinejoin="round"
               className={cn(
-                'flex-shrink-0 transition-transform duration-200 text-white/50',
+                'flex-shrink-0 transition-transform duration-200 glass-text-primary/50',
                 isExpanded ? 'rotate-90' : 'rotate-0'
               )}
             >
@@ -480,9 +479,9 @@ function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
       {hasChildren && !collapsed && isExpanded && (
         <Motion
           preset="slideDown"
-          className="mt-1"
+          className="glass-mt-1"
         >
-          <div className="ml-2 pl-4 border-l border-border/20">
+          <div className="glass-ml-2 pl-4 border-l border-border/20">
             <SidebarNavigation items={item?.children!} level={level + 1} />
           </div>
         </Motion>
@@ -508,7 +507,7 @@ export function SidebarBrand({ logo, title, subtitle, href, onClick, className }
 
   const Content = () => (
     <div className={cn(
-      'flex items-center gap-3',
+      'flex items-center glass-gap-3',
       collapsed && 'justify-center'
     )}>
       {logo && (
@@ -520,12 +519,12 @@ export function SidebarBrand({ logo, title, subtitle, href, onClick, className }
       {!collapsed && (title || subtitle) && (
         <div className="flex-1 min-w-0">
           {title && (
-            <h1 className="text-lg font-bold text-foreground truncate">
+            <h1 className="glass-text-lg font-bold text-foreground truncate">
               {title}
             </h1>
           )}
           {subtitle && (
-            <p className="text-xs text-muted-foreground truncate">
+            <p className="glass-text-xs glass-text-secondary truncate">
               {subtitle}
             </p>
           )}
@@ -589,17 +588,17 @@ export function SidebarUserInfo({
             <img
               src={avatar}
               alt={name}
-              className="w-8 h-8 rounded-full object-cover"
+              className="w-8 h-8 glass-radius-full object-cover"
             />
           ) : (
-            <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-              <span className="text-sm font-medium">{name.charAt(0)}</span>
+            <div className="w-8 h-8 glass-radius-full bg-primary/20 flex items-center justify-center">
+              <span className="glass-text-sm font-medium">{name.charAt(0)}</span>
             </div>
           )}
 
           {status && (
             <div className={cn(
-              'absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border border-background',
+              'absolute -bottom-0.5 -right-0.5 w-3 h-3 glass-radius-full border border-background',
               {
                 'bg-green-500': status === 'online',
                 'bg-yellow-500': status === 'away',
@@ -614,23 +613,23 @@ export function SidebarUserInfo({
   }
 
   const Content = () => (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center glass-gap-3">
       <div className="relative flex-shrink-0">
         {avatar ? (
           <img
             src={avatar}
             alt={name}
-            className="w-10 h-10 rounded-full object-cover"
+            className="w-10 h-10 glass-radius-full object-cover"
           />
         ) : (
-          <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
-            <span className="text-lg font-medium">{name.charAt(0)}</span>
+          <div className="w-10 h-10 glass-radius-full bg-primary/20 flex items-center justify-center">
+            <span className="glass-text-lg font-medium">{name.charAt(0)}</span>
           </div>
         )}
 
         {status && (
           <div className={cn(
-            'absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-background',
+            'absolute -bottom-0.5 -right-0.5 w-3 h-3 glass-radius-full border-2 border-background',
             {
               'bg-green-500': status === 'online',
               'bg-yellow-500': status === 'away',
@@ -642,9 +641,9 @@ export function SidebarUserInfo({
       </div>
 
       <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-foreground truncate">{name}</p>
+        <p className="glass-text-sm font-medium text-foreground truncate">{name}</p>
         {email && (
-          <p className="text-xs text-muted-foreground truncate">{email}</p>
+          <p className="glass-text-xs glass-text-secondary truncate">{email}</p>
         )}
       </div>
 
@@ -662,7 +661,7 @@ export function SidebarUserInfo({
         variant="ghost"
         onClick={onClick}
         className={cn(
-          'w-full text-left p-2 rounded-md',
+          'w-full text-left glass-p-2 glass-radius-md',
           'hover:bg-muted/50 transition-colors',
           className
         )}

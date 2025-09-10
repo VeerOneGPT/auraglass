@@ -1,335 +1,73 @@
-import React, { forwardRef, useState, useEffect, useCallback, useRef, useMemo, ForwardedRef, ReactNode } from 'react';
-import styled, { css } from 'styled-components';
+'use client';
 
-import { glowEffects } from '../../core/mixins/glowEffects';
-import { createGlassStyle, glassCSS } from '../../core/mixins/glassMixins';
-import { AURA_GLASS, glassTokenUtils } from '../../tokens/glass';
+import React, { forwardRef, useState, useEffect, useCallback, useRef, useMemo, ForwardedRef, ReactNode } from 'react';
+import { cn } from '@/lib/utilsComprehensive';
+import { OptimizedGlass, Motion } from '../../primitives';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useAnimationContext } from '../../contexts/AnimationContext';
 import { SpringConfig, SpringPresets } from '../../animations/physics/springPhysics';
+import { 
+  createNavigationA11y, 
+  useA11yId, 
+  announceToScreenReader, 
+  keyboardHandlers, 
+  KEYS 
+} from '../../utils/a11y';
+import { useKeyboardNavigation } from '../../utils/a11yHooks';
 
-// Glass styles for navigation  
-
-
-// Extend glowEffects with glassGlow
-const extendedGlowEffects = {
-  ...glowEffects,
-  glassGlow: glowEffects,
-};
-
-// Navigation component implementation
-const createThemeContext = (theme?: any) => ({
-  theme: theme || {},
-  getColor: (key: string) => '#ffffff',
-  getTypography: (key: string) => ({}),
-});
-
-const Badge = ({ children }: { children: React.ReactNode }) => <span>{children}</span>;
-
-const Box = ({ children, ...props }: any) => <div {...props}>{children}</div>;
-
-const Button = ({ children, onClick, ...props }: any) => (
-  <button onClick={onClick} {...props}>{children}</button>
+// Helper components
+const Badge = ({ children }: { children: React.ReactNode }) => (
+  <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] glass-px-1.5 glass-text-xs font-semibold glass-text-primary bg-blue-500 glass-radius-full">
+    {children}
+  </span>
 );
 
 const Icon = ({ name, size = 24 }: { name: string; size?: number }) => (
-  <span style={{ fontSize: size }}>🔹</span>
+  <span style={{ fontSize: size }} aria-hidden="true">🔹</span>
 );
 
 const Tooltip = ({ children, title }: { children: React.ReactNode; title: string }) => (
   <div title={title}>{children}</div>
 );
 
-const useMultiSpring = (config: any) => {
-  const { from = {}, animationConfig = {}, autoStart = false } = config;
-
-  return {
-    values: from,
-    start: (target: any) => {
-      // Placeholder implementation
-      console.log('Starting animation to:', target);
-    },
-    setValues: (values: any) => {
-      // Placeholder implementation
-      console.log('Setting values to:', values);
-    },
-  };
-};
-
-const useGalileoSprings = (targets: Record<string, number>, config?: any) => { // Create an object with the same keys as targets but with values as objects
-  const springs: Record<string, { x: number; y: number; scale: number }> = {};
-  Object.keys(targets).forEach(key => {
-    springs[key] = { x: 0, y: 0, scale: 1 };
+// Simple animation hook for indicator position
+const useIndicatorAnimation = (prefersReducedMotion: boolean) => {
+  const [indicatorStyle, setIndicatorStyle] = useState({
+    left: 0,
+    top: 0,
+    width: 0,
+    height: 0,
+    opacity: 0,
   });
 
-  return {
-    springs: Object.values(springs),
-    setSprings: () => {},
-  };
-};
+  const animateIndicator = useCallback(
+    (newStyle: typeof indicatorStyle) => {
+      if (prefersReducedMotion) {
+        setIndicatorStyle(newStyle);
+      } else {
+        // Apply smooth transition through state change
+        setIndicatorStyle(newStyle);
+      }
+    },
+    [prefersReducedMotion]
+  );
 
-const PhysicsConfig = {
-  stiffness: 100,
-  damping: 10,
-  mass: 1,
+  return { indicatorStyle, animateIndicator };
 };
 
 import { GlassNavigationProps, NavigationItem } from './types';
 
-const StyledGlassNavigation = styled.nav<{
-  $position: GlassNavigationProps['position'];
-  $variant: GlassNavigationProps['variant'];
-  $glassIntensity: number;
-  $sticky: boolean;
-  $compact: boolean;
-  $centered: boolean;
-  $zIndex: number;
-  $width?: string | number;
-}>`
-  display: flex;
-  flex-direction: ${({ $position }) =>
-    $position === 'left' || $position === 'right' ? 'column' : 'row'};
-  align-items: center;
-  justify-content: ${({ $centered }) => ($centered ? 'center' : 'space-between')};
-  padding: ${({ $compact }) => ($compact ? '0.5rem 1rem' : '0.75rem 1.5rem')};
-  width: ${({ $position, $width }) =>
-    $position === 'left' || $position === 'right'
-      ? $width
-        ? typeof $width === 'number'
-          ? `${$width}px`
-          : $width
-        : '240px'
-      : '100%'};
-  height: ${({ $position }) => ($position === 'left' || $position === 'right' ? '100%' : 'auto')};
-  box-sizing: border-box;
-  z-index: ${({ $zIndex }) => $zIndex};
+// Navigation component with glass styling
 
-  ${({ $sticky }) =>
-    $sticky &&
-    `
-    position: sticky;
-    top: 0;
-  `}
+// Remove styled components
 
-  ${({ theme, $glassIntensity, $variant }) => css`
-    ${glassCSS({
-      intent: 'neutral',
-      elevation: $variant === 'minimal' ? 'level1' : 'level2',
-      tier: $variant === 'minimal' ? 'low' : 'medium',
-    })}
-  `}
-  
-  ${({ theme }) => css`
-    ${glassCSS({
-      intent: 'neutral',
-      elevation: 'level1',
-      tier: 'medium',
-    })}
-  `}
-  
-  ${({ theme, $glassIntensity, $variant }) => {
-    if ($variant === 'prominent') {
-      const themeContext = createThemeContext(theme);
-      return extendedGlowEffects.glassGlow;
-    }
-    return '';
-  }}
-  
-  ${({ $position }) => {
-    switch ($position) {
-      case 'left':
-        return `
-          left: 0;
-          height: 100vh;
-        `;
-      case 'right':
-        return `
-          right: 0;
-          height: 100vh;
-        `;
-      case 'bottom':
-        return `
-          bottom: 0;
-          width: 100%;
-        `;
-      case 'top':
-      default:
-        return `
-          top: 0;
-          width: 100%;
-        `;
-    }
-  }}
-  
-  @media (max-width: 768px) {
-    padding: 0.5rem 1rem;
-  }
-`;
 
-const NavItemsContainer = styled.ul<{
-  $position: GlassNavigationProps['position'];
-  $variant: GlassNavigationProps['variant'];
-}>`
-  display: flex;
-  flex-direction: ${({ $position }) =>
-    $position === 'left' || $position === 'right' ? 'column' : 'row'};
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  gap: ${({ $variant }) => ($variant === 'minimal' ? '0.75rem' : '1rem')};
-  flex: 1;
-  align-items: center;
-  ${({ $position }) =>
-    ($position === 'left' || $position === 'right') &&
-    `
-      margin-top: 1.5rem;
-      width: 100%;
-    `}
-`;
 
-const LogoContainer = styled.div<{
-  $position: GlassNavigationProps['position'];
-}>`
-  display: flex;
-  align-items: center;
-  ${({ $position }) =>
-    ($position === 'left' || $position === 'right') &&
-    `
-      justify-content: center;
-      width: 100%;
-      padding: 1rem 0;
-    `}
-`;
 
-const ActionsContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-`;
 
-const ActiveIndicator = styled.div.attrs<{ $style: React.CSSProperties }>(props => ({
-  style: props.$style,
-}))<{ $style: React.CSSProperties }>`
-  position: absolute;
-  background-color: ${props => (props?.theme as any).palette?.primary?.main || '#1976d2'};
-  border-radius: 2px;
-  z-index: 0;
-  pointer-events: none;
-  will-change: left, top, width, height;
-`;
 
-const NavItem = styled.li<{
-  $isActive: boolean;
-  $disabled: boolean;
-  $variant?: GlassNavigationProps['variant'];
-}>`
-  position: relative;
-  z-index: 1;
 
-  a,
-  button {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: ${({ $variant }) => ($variant === 'minimal' ? '0.4rem 0.6rem' : '0.6rem 1rem')};
-    text-decoration: none;
-    color: ${({ theme, $isActive }) =>
-      $isActive
-        ? (theme as any).palette?.primary?.main || '#1976d2'
-        : (theme as any).palette?.text?.primary || 'inherit'};
-    border-radius: 6px;
-    font-weight: ${({ $isActive }) => ($isActive ? 600 : 400)};
-    font-size: ${({ $variant }) => ($variant === 'minimal' ? '0.875rem' : '0.9375rem')};
-    border: none;
-    background: none;
-    cursor: pointer;
-    transition: transform 0.1s;
-    opacity: ${({ $disabled }) => ($disabled ? 0.5 : 1)};
-    pointer-events: ${({ $disabled }) => ($disabled ? 'none' : 'auto')};
 
-    &:hover {
-      background: ${AURA_GLASS.surfaces.neutral.level2.surface.base};
-    }
-
-    &:active {
-      transform: scale(0.98);
-    }
-  }
-`;
-
-const ChildrenContainer = styled.ul<{
-  $isOpen: boolean;
-}>`
-  list-style: none;
-  margin: 0;
-  padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 6px;
-  margin-top: 0.25rem;
-  overflow: hidden;
-  will-change: max-height, opacity;
-`;
-
-const MobileMenuButton = styled.button`
-  display: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0.5rem;
-  color: inherit;
-
-  @media (max-width: 768px) {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-`;
-
-const NavDivider = styled.div<{
-  $position: GlassNavigationProps['position'];
-}>`
-  ${({ $position }) =>
-    $position === 'left' || $position === 'right'
-      ? `
-        width: 80%;
-        height: 1px;
-        margin: 0.75rem auto;
-      `
-      : `
-        width: 1px;
-        height: 1.5rem;
-        margin: 0 0.75rem;
-      `}
-  background-color: ${AURA_GLASS.surfaces.neutral.level2.border.color};
-`;
-
-const CollapsibleButton = styled.button<{
-  $collapsed: boolean;
-}>`
-  position: absolute;
-  ${({ $collapsed }) => ($collapsed ? 'right: -12px;' : 'left: calc(100% - 12px);')}
-  top: 50%;
-  transform: translateY(-50%);
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: ${AURA_GLASS.surfaces.neutral.level2.surface.base};
-  border: 1px solid ${AURA_GLASS.surfaces.neutral.level2.border.color};
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &:hover {
-    background: ${AURA_GLASS.surfaces.neutral.level2.border.color};
-  }
-
-  svg {
-    transition: transform 0.2s;
-    transform: rotate(${({ $collapsed }) => ($collapsed ? '0deg' : '180deg')});
-  }
-`;
 
 /**
  * A glass-styled navigation component with various layout options
@@ -370,6 +108,33 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
     const itemRefs = useRef<Record<string, HTMLLIElement | null>>({});
     const { defaultSpring } = useAnimationContext();
 
+    // Enhanced keyboard navigation with accessibility
+    const navigationItems = items.filter(item => !item.disabled).map(item => ({ 
+      id: item.id || item.key, 
+      disabled: item.disabled 
+    }));
+    
+    const {
+      focusedIndex,
+      selectedIds,
+      handleKeyDown: handleNavKeyDown,
+      registerItem,
+      focusItem
+    } = useKeyboardNavigation({
+      items: navigationItems,
+      orientation: position === 'left' || position === 'right' ? 'vertical' : 'horizontal',
+      loop: true,
+      homeEndKeys: true,
+      onActivate: (id) => {
+        const item = items.find(item => (item.id || item.key) === id);
+        if (item) {
+          handleItemClick(id, item);
+        }
+      }
+    });
+
+    const navId = useA11yId('glass-navigation');
+
     const finalChildAnimationConfig = useMemo(() => {
       const baseFallback: SpringConfig = SpringPresets.default; 
       let resolvedConfig: SpringConfig;
@@ -389,18 +154,11 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
       return prefersReducedMotion;
     }, [prefersReducedMotion]);
 
-    const initialIndicatorStyle = { left: 0, top: 0, width: 0, height: 0, opacity: 0 }; 
-    const { values: indicatorStyle, start: animateIndicator } = useMultiSpring({
-      from: initialIndicatorStyle,
-      animationConfig: { tension: 300, friction: 30 },
-      autoStart: false,
-    });
+    const { indicatorStyle, animateIndicator } = useIndicatorAnimation(prefersReducedMotion);
 
     useEffect(() => {
       if (disableChildAnimation) {
-        animateIndicator({ 
-          to: { ...indicatorStyle, opacity: 0 }, 
-        });
+        animateIndicator({ ...indicatorStyle, opacity: 0 });
         return;
       }
 
@@ -411,7 +169,7 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
         const itemRect = activeElement.getBoundingClientRect();
         const containerRect = containerElement.getBoundingClientRect();
 
-        let newStyle: typeof initialIndicatorStyle;
+        let newStyle: typeof indicatorStyle;
         if (position === 'left' || position === 'right') {
           newStyle = {
             left: position === 'left' ? 0 : containerRect.width - 3,
@@ -429,9 +187,9 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
             opacity: 1,
           };
         }
-        animateIndicator({ to: newStyle });
+        animateIndicator(newStyle);
       } else {
-        animateIndicator({ to: { ...indicatorStyle, opacity: 0 } });
+        animateIndicator({ ...indicatorStyle, opacity: 0 });
       }
     }, [activeItem, position, collapsed, disableChildAnimation, animateIndicator, indicatorStyle]);
 
@@ -473,22 +231,31 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
       setCollapsed((prev: boolean) => !prev);
     }, []);
 
-    const childSpringTargets = useMemo(() => {
-      const targets: Record<string, number> = {};
-      items.forEach((item: any) => {
-        if (item?.children && item?.children.length > 0) {
-          const isExpanded = expandedItems.includes(item?.id);
-          targets[`${item?.id}_opacity`] = isExpanded ? 1 : 0;
-          targets[`${item?.id}_maxHeight`] = isExpanded ? 500 : 0;
-        }
-      });
-      return targets;
-    }, [items, expandedItems]);
+    // Navigation positioning and styling classes
+    const getPositionClasses = (position: GlassNavigationProps['position']) => {
+      const base = 'flex items-center box-border';
+      switch (position) {
+        case 'left':
+        case 'right':
+          return cn(base, 'flex-col h-full');
+        default:
+          return cn(base, 'flex-row w-full');
+      }
+    };
 
-    const childSpringValues = useGalileoSprings(childSpringTargets, {
-      config: finalChildAnimationConfig,
-      immediate: disableChildAnimation,
-    });
+    const getPositionStyles = (position: GlassNavigationProps['position']) => {
+      switch (position) {
+        case 'left':
+          return { left: 0, height: '100vh' };
+        case 'right':
+          return { right: 0, height: '100vh' };
+        case 'bottom':
+          return { bottom: 0, width: '100%' };
+        case 'top':
+        default:
+          return { top: 0, width: '100%' };
+      }
+    };
 
     const renderNavItem = useCallback(
       (item: NavigationItem, level = 0): ReactNode => {
@@ -504,24 +271,30 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
 
         if (item?.customElement) {
           return (
-            <NavItem
+            <li
               ref={assignRef}
               key={item?.id || item?.key}
-              $isActive={isActive}
-              $disabled={!!item?.disabled}
-              $variant={variant}
-              className={item?.className}
+              className={cn(
+                'relative z-10',
+                item?.className
+              )}
             >
               {item?.customElement}
-            </NavItem>
+            </li>
           );
         }
 
         const content = (
           <>
-            {item?.icon && <span className="nav-item-icon">{item?.icon}</span>}
+            {item?.icon && (
+              <span className="nav-item-icon" aria-hidden="true">
+                {item?.icon}
+              </span>
+            )}
 
-            {(!collapsed || level > 0) && <span className="nav-item-label">{item?.label}</span>}
+            {(!collapsed || level > 0) && (
+              <span className="nav-item-label">{item?.label}</span>
+            )}
 
             {item?.badge && (
               <Badge>
@@ -530,18 +303,42 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
             )}
 
             {hasChildren && !collapsed && (
-              <span className="nav-item-expand-icon">
+              <span className="nav-item-expand-icon" aria-hidden="true">
                 <Icon name={isExpanded ? 'expand_less' : 'expand_more'} />
               </span>
             )}
           </>
         );
 
+        const itemClasses = cn(
+          'flex items-center glass-gap-2 text-decoration-none border-none bg-transparent cursor-pointer transition-all duration-200',
+          'glass-radius-md border-0 outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50',
+          {
+            'glass-px-2 glass-py-1.5 glass-text-sm': variant === 'minimal',
+            'glass-px-4 glass-py-2.5 glass-text-base': variant !== 'minimal',
+            'text-blue-600 font-semibold bg-blue-50/50': isActive,
+            'glass-text-secondary font-normal hover:bg-white/10': !isActive,
+            'opacity-50 pointer-events-none': item?.disabled,
+            'active:scale-[0.98]': !item?.disabled,
+          }
+        );
+
+        // Create accessibility attributes for navigation items
+        const itemA11yProps = createNavigationA11y({
+          id: item?.id || item?.key,
+          current: isActive ? 'page' : undefined,
+          expanded: hasChildren ? isExpanded : undefined,
+          controls: hasChildren ? `${item?.id || item?.key}-submenu` : undefined,
+          posinset: level === 0 ? items.findIndex(i => i.id === item?.id) + 1 : undefined,
+          setsize: level === 0 ? items.length : undefined,
+        });
+
         const navItem = item?.href ? (
           <a
             href={item?.href}
             target={item?.external ? '_blank' : undefined}
             rel={item?.external ? 'noopener noreferrer' : undefined}
+            className={itemClasses}
             onClick={e => {
               if (item?.disabled) {
                 e.preventDefault();
@@ -549,34 +346,41 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
               }
               handleItemClick(item?.id || item?.key, item);
             }}
+            onKeyDown={handleNavKeyDown}
+            {...itemA11yProps}
+            aria-disabled={item?.disabled}
+            ref={(el) => {
+              registerItem(item?.id || item?.key, el);
+              assignRef(el as any);
+            }}
           >
             {content}
           </a>
         ) : (
           <button
             type="button"
-            onClick={() => handleItemClick(item?.id || item?.key, item)}
+            className={itemClasses}
+            onClick={(e) => handleItemClick(item?.id || item?.key, item)}
+            onKeyDown={handleNavKeyDown}
             disabled={item?.disabled}
+            {...itemA11yProps}
+            ref={(el) => {
+              registerItem(item?.id || item?.key, el);
+              assignRef(el as any);
+            }}
           >
             {content}
           </button>
         );
 
-        const childrenStyle = {
-          opacity: isExpanded ? 1 : 0,
-          maxHeight: isExpanded ? '500px' : '0px',
-          overflow: 'hidden',
-          visibility: (isExpanded ? 'visible' : 'hidden') as React.CSSProperties['visibility'],
-        };
-
         return (
-          <NavItem
+          <li
             ref={assignRef}
             key={item?.id || item?.key}
-            $isActive={isActive}
-            $disabled={!!item?.disabled}
-            $variant={variant}
-            className={item?.className}
+            className={cn(
+              'relative z-10',
+              item?.className
+            )}
           >
             {item?.tooltip && !collapsed ? (
               <Tooltip title={item?.tooltip}>{navItem}</Tooltip>
@@ -587,30 +391,71 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
             )}
 
             {hasChildren && (
-              <ChildrenContainer $isOpen={isExpanded && !collapsed} style={childrenStyle}>
+              <ul
+                className={cn(
+                  'list-none m-0 glass-p-2 glass-mt-1 glass-radius-md bg-white/5 overflow-hidden transition-all duration-300',
+                  {
+                    'opacity-100 max-h-[500px] visible': isExpanded && !collapsed,
+                    'opacity-0 max-h-0 invisible': !isExpanded || collapsed,
+                  }
+                )}
+              >
                 {item?.children?.map((child: any) => renderNavItem(child, level + 1))}
-              </ChildrenContainer>
+              </ul>
             )}
-          </NavItem>
+          </li>
         );
       },
-      [activeItem, expandedItems, collapsed, variant, handleItemClick, childSpringValues]
+      [activeItem, expandedItems, collapsed, variant, handleItemClick]
     );
 
+    // Determine glass elevation based on variant
+    const glassElevation = variant === 'minimal' ? 'level1' : 'level2';
+    const glassTier = variant === 'minimal' ? 'low' : 'medium';
+
     return (
-      <StyledGlassNavigation
-        ref={ref as React.RefObject<HTMLDivElement>}
-        $position={position}
-        $variant={variant}
-        $glassIntensity={glassIntensity}
-        $sticky={sticky}
-        $compact={compact}
-        $centered={centered}
-        $zIndex={zIndex}
-        $width={width}
-        className={className}
+      <nav>
+        <OptimizedGlass
+          ref={ref as React.RefObject<HTMLDivElement>}
+          intent="neutral"
+        elevation={glassElevation}
+        tier={glassTier}
+        intensity="medium"
+        depth={variant === 'prominent' ? 3 : 2}
+        tint="neutral"
+        border="subtle"
+        animation={prefersReducedMotion ? "none" : "gentle"}
+        performanceMode="medium"
+        id={navId}
+        role="navigation"
+        aria-label="Main navigation"
+        onKeyDown={handleNavKeyDown}
+        className={cn(
+          // Base navigation styles
+          getPositionClasses(position),
+          {
+            'justify-center': centered,
+            'justify-between': !centered,
+            'glass-p-2 glass-px-4': compact,
+            'glass-p-3 glass-px-6': !compact,
+            'sticky top-0': sticky,
+          },
+          // Position-specific styling
+          position === 'left' || position === 'right' ? 'w-60' : 'w-full',
+          position === 'left' || position === 'right' ? 'h-screen' : 'h-auto',
+          // Mobile responsive
+          'md:glass-p-2 md:glass-px-4',
+          className
+        )}
         style={{
+          ...getPositionStyles(position),
           ...style,
+          zIndex,
+          width: width 
+            ? typeof width === 'number'
+              ? `${width}px`
+              : width
+            : position === 'left' || position === 'right' ? '240px' : '100%',
           maxWidth: maxWidth
             ? typeof maxWidth === 'number'
               ? `${maxWidth}px`
@@ -619,43 +464,121 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
         }}
         {...rest}
       >
-        <MobileMenuButton onClick={toggleMobileMenu}>
-          <Icon name={mobileMenuOpen ? 'close' : 'menu'} />
-        </MobileMenuButton>
-
-        {logo && <LogoContainer $position={position}>{logo}</LogoContainer>}
-
-        <NavItemsContainer
-          ref={navItemsRef}
-          $position={position}
-          $variant={variant}
-          className={mobileMenuOpen ? 'mobile-open' : ''}
+        {/* Mobile menu toggle */}
+        <button
+          onClick={toggleMobileMenu}
+          className={cn(
+            'hidden md:hidden lg:hidden',
+            'bg-transparent border-none cursor-pointer glass-p-2 text-inherit',
+            'flex items-center justify-center',
+            'max-md:flex'
+          )}
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileMenuOpen}
         >
-          {!prefersReducedMotion && <ActiveIndicator $style={indicatorStyle as React.CSSProperties} />}
+          <Icon name={mobileMenuOpen ? 'close' : 'menu'} />
+        </button>
+
+        {/* Logo container */}
+        {logo && (
+          <div
+            className={cn(
+              'flex items-center',
+              {
+                'justify-center w-full glass-p-4': position === 'left' || position === 'right',
+              }
+            )}
+          >
+            {logo}
+          </div>
+        )}
+
+        {/* Navigation items container */}
+        <ul
+          ref={navItemsRef}
+          className={cn(
+            'flex list-none m-0 glass-p-0 flex-1 items-center relative',
+            {
+              'flex-col glass-gap-4': position === 'left' || position === 'right',
+              'flex-row glass-gap-4': position === 'top' || position === 'bottom',
+              'glass-gap-3': variant === 'minimal',
+              'mt-6 w-full': position === 'left' || position === 'right',
+              'mobile-open': mobileMenuOpen,
+            }
+          )}
+          role="menubar"
+          aria-orientation={position === 'left' || position === 'right' ? 'vertical' : 'horizontal'}
+        >
+          {/* Active indicator */}
+          {!prefersReducedMotion && (
+            <div
+              className="absolute bg-blue-500 glass-radius-sm z-0 pointer-events-none transition-all duration-300 ease-out"
+              style={{
+                left: `${indicatorStyle.left}px`,
+                top: `${indicatorStyle.top}px`,
+                width: `${indicatorStyle.width}px`,
+                height: `${indicatorStyle.height}px`,
+                opacity: indicatorStyle.opacity,
+              }}
+            />
+          )}
+          
+          {/* Navigation items */}
           {items.map((item: any) => renderNavItem(item))}
-        </NavItemsContainer>
+        </ul>
 
-        {showDivider && <NavDivider $position={position} />}
+        {/* Divider */}
+        {showDivider && (
+          <div
+            className={cn(
+              'bg-white/20',
+              {
+                'w-4/5 h-px my-3 mx-auto': position === 'left' || position === 'right',
+                'w-px h-6 mx-3': position === 'top' || position === 'bottom',
+              }
+            )}
+          />
+        )}
 
-        {actions && <ActionsContainer>{actions}</ActionsContainer>}
+        {/* Actions container */}
+        {actions && (
+          <div className="flex items-center glass-gap-3">
+            {actions}
+          </div>
+        )}
 
+        {/* Collapsible button */}
         {collapsible && (position === 'left' || position === 'right') && (
-          <CollapsibleButton
-            $collapsed={collapsed}
+          <button
             onClick={toggleCollapsed}
             title={collapsed ? 'Expand' : 'Collapse'}
             aria-label={collapsed ? 'Expand navigation' : 'Collapse navigation'}
+            className={cn(
+              'absolute top-1/2 -translate-y-1/2 w-6 h-6 glass-radius-full',
+              'flex items-center justify-center cursor-pointer',
+              'bg-white/10 border border-white/20 transition-all duration-200',
+              'hover:bg-white/20',
+              {
+                '-right-3': !collapsed,
+                '-left-3': collapsed,
+              }
+            )}
           >
-            <Icon name={position === 'left'
-              ? collapsed
-                ? 'chevron_right'
-                : 'chevron_left'
-              : collapsed
-              ? 'chevron_left'
-              : 'chevron_right'} />
-          </CollapsibleButton>
+            <Icon
+              name={
+                position === 'left'
+                  ? collapsed
+                    ? 'chevron_right'
+                    : 'chevron_left'
+                  : collapsed
+                  ? 'chevron_left'
+                  : 'chevron_right'
+              }
+            />
+          </button>
         )}
-      </StyledGlassNavigation>
+      </OptimizedGlass>
+      </nav>
     );
   }
 );

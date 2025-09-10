@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import DynamicAtmosphere from './GlassDynamicAtmosphere';
-import { GlassDynamicAtmosphere } from './GlassDynamicAtmosphere';
+import { DynamicAtmosphere } from './GlassDynamicAtmosphere';
 
 const meta: Meta<typeof DynamicAtmosphere> = {
   title: 'Components/Backgrounds/DynamicAtmosphere',
@@ -34,7 +33,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap glass-gap-4">
       <DynamicAtmosphere {...args} type="subtle" />
       <DynamicAtmosphere {...args} type="nebula" />
       <DynamicAtmosphere {...args} type="aurora" />

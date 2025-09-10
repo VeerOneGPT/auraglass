@@ -4,8 +4,7 @@
  * A hierarchical list with collapsible items.
  */
 import React, { forwardRef, useState, useCallback, useMemo, createContext } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
-import { glassStyleCSS } from '../../core/mixins/glassMixins';
+import { glassStyleCSS, createGlassStyle } from '../../core/mixins/glassMixins';
 import { AURA_GLASS } from '../../tokens/glass';
 import styled, { css } from 'styled-components';
 

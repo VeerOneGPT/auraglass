@@ -1,6 +1,9 @@
-import React, { useState, useEffect, createContext, useContext } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+'use client';
+
+import React, { useState, useEffect, createContext, useContext, forwardRef } from 'react';
+import { cn } from '@/lib/utilsComprehensive';
 import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
 
 export type NotificationType = 'success' | 'error' | 'warning' | 'info';
 
@@ -17,15 +20,17 @@ export interface GlassNotification {
   persistent?: boolean;
 }
 
-export interface GlassNotificationCenterProps {
+export interface GlassNotificationCenterProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Position of the notification center */
   position?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left' | 'top-center' | 'bottom-center';
   /** Maximum number of notifications to show */
   maxNotifications?: number;
-  /** Custom className */
-  className?: string;
   /** Auto-hide delay for non-persistent notifications (ms) */
   autoHideDelay?: number;
+  /** Animation preset for notifications */
+  animation?: 'slide' | 'fade' | 'scale' | 'bounce';
+  /** Whether to show clear all button */
+  showClearAll?: boolean;
 }
 
 interface NotificationContextType {
@@ -40,7 +45,13 @@ const NotificationContext = createContext<NotificationContextType | undefined>(u
 export const useNotifications = () => {
   const context = useContext(NotificationContext);
   if (!context) {
-    throw new Error('useNotifications must be used within a GlassNotificationProvider');
+    console.warn('useNotifications must be used within a GlassNotificationProvider. Using default values.');
+    return {
+      notifications: [],
+      addNotification: () => {},
+      removeNotification: () => {},
+      clearAll: () => {},
+    };
   }
   return context;
 };
@@ -86,12 +97,23 @@ export const GlassNotificationProvider: React.FC<{ children: React.ReactNode }> 
   );
 };
 
-export const GlassNotificationCenter: React.FC<GlassNotificationCenterProps> = ({
-  position = 'top-right',
-  maxNotifications = 5,
-  className = '',
-  autoHideDelay = 5000,
-}) => {
+/**
+ * GlassNotificationCenter component
+ * A notification center with glassmorphism styling for managing toast notifications
+ */
+export const GlassNotificationCenter = forwardRef<HTMLDivElement, GlassNotificationCenterProps>(
+  (
+    {
+      position = 'top-right',
+      maxNotifications = 5,
+      autoHideDelay = 5000,
+      animation = 'slide',
+      showClearAll = true,
+      className,
+      ...props
+    },
+    ref
+  ) => {
   const { notifications, removeNotification, clearAll } = useNotifications();
 
   const positionClasses = {
@@ -139,46 +161,82 @@ export const GlassNotificationCenter: React.FC<GlassNotificationCenterProps> = (
     return null;
   }
 
-  return (
-    <div className={`fixed z-50 space-y-2 ${positionClasses[position]} ${className}`}>
-      {/* Clear All Button */}
-      {notifications.length > 1 && (
-        <OptimizedGlass
-          className="px-3 py-1 rounded-full text-xs cursor-pointer hover:bg-white/10 transition-colors"
-          elevation={'level1'}
-          onClick={clearAll}
-        >
-          Clear All ({notifications.length})
-        </OptimizedGlass>
-      )}
-
-      {/* Notifications */}
-      {displayedNotifications.map((notification, index) => {
-        const typeStyles = getTypeStyles(notification.type);
-
-        return (
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          'fixed z-50 glass-gap-2',
+          positionClasses[position],
+          className
+        )}
+        {...props}
+      >
+        {/* Clear All Button */}
+        {showClearAll && notifications.length > 1 && (
           <OptimizedGlass
-            key={notification.id}
-            className={`min-w-80 max-w-sm p-4 rounded-lg border backdrop-blur-md ${typeStyles.bgClass}
-                       animate-in slide-in-from-right-2 fade-in duration-300`}
-            style={{
-              animationDelay: `${index * 100}ms`,
-            }}
-            elevation={'level2'}
+            elevation="level1"
+            intensity="medium"
+            depth={1}
+            tint="neutral"
+            border="subtle"
+            animation="none"
+            performanceMode="low"
+            className="glass-px-3 glass-py-1 glass-radius-full glass-text-xs cursor-pointer hover:bg-white/10 transition-colors"
+            onClick={clearAll}
           >
-            <div className="flex items-start space-x-3">
+            Clear All ({notifications.length})
+          </OptimizedGlass>
+        )}
+
+        {/* Notifications */}
+        {displayedNotifications.map((notification, index) => {
+          const typeStyles = getTypeStyles(notification.type);
+
+          const getMotionPreset = () => {
+            switch (animation) {
+              case 'fade':
+                return 'fadeIn';
+              case 'scale':
+                return 'scaleIn';
+              case 'bounce':
+                return 'bounceIn';
+              case 'slide':
+              default:
+                return position.includes('right') ? 'slideInRight' : 'slideInLeft';
+            }
+          };
+
+          return (
+            <Motion
+              key={notification.id}
+              delay={index * 100}
+            >
+              <OptimizedGlass
+                elevation="level2"
+                intensity="medium"
+                depth={2}
+                tint="neutral"
+                border="subtle"
+                animation="none"
+                performanceMode="medium"
+                className={cn(
+                  'min-w-80 max-w-sm glass-p-4 glass-radius-lg border backdrop-blur-md',
+                  typeStyles.bgClass
+                )}
+              >
+            <div className="flex items-start glass-gap-3">
               {/* Icon */}
-              <div className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-sm font-bold ${typeStyles.iconClass}`}>
+              <div className={`flex-shrink-0 w-6 h-6 glass-radius-full flex items-center justify-center glass-text-sm font-bold ${typeStyles.iconClass}`}>
                 {typeStyles.icon}
               </div>
 
               {/* Content */}
               <div className="flex-1 min-w-0">
-                <h4 className="text-sm font-semibold text-white">
+                <h4 className="glass-text-sm font-semibold glass-text-primary">
                   {notification.title}
                 </h4>
                 {notification.message && (
-                  <p className="mt-1 text-sm text-white/80">
+                  <p className="glass-mt-1 glass-text-sm glass-text-primary/80">
                     {notification.message}
                   </p>
                 )}
@@ -187,7 +245,7 @@ export const GlassNotificationCenter: React.FC<GlassNotificationCenterProps> = (
                 {notification.action && (
                   <button
                     onClick={notification.action.onClick}
-                    className="mt-2 text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
+                    className="glass-mt-2 glass-text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
                   >
                     {notification.action.label}
                   </button>
@@ -196,8 +254,8 @@ export const GlassNotificationCenter: React.FC<GlassNotificationCenterProps> = (
 
               {/* Close Button */}
               <button
-                onClick={() => removeNotification(notification.id)}
-                className="flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center text-white/60 hover:text-white/90 hover:bg-white/10 transition-colors"
+                onClick={(e) => removeNotification(notification.id)}
+                className="flex-shrink-0 w-5 h-5 glass-radius-full flex items-center justify-center glass-text-primary/60 hover:glass-text-primary/90 hover:bg-white/10 transition-colors"
               >
                 ✕
               </button>
@@ -205,47 +263,71 @@ export const GlassNotificationCenter: React.FC<GlassNotificationCenterProps> = (
 
             {/* Progress Bar for Auto-hide */}
             {!notification.persistent && notification.duration && (
-              <div className="mt-3 h-1 bg-white/20 rounded-full overflow-hidden">
+              <div className="mt-3 h-1 bg-white/20 glass-radius-full overflow-hidden">
                 <div
-                  className="h-full bg-white/40 rounded-full transition-all duration-100 ease-linear"
+                  className="h-full bg-white/40 glass-radius-full transition-all duration-100 ease-linear"
                   style={{
                     animation: `shrink ${notification.duration}ms linear forwards`,
                   }}
                 />
               </div>
             )}
-          </OptimizedGlass>
-        );
-      })}
-    </div>
-  );
-};
+              </OptimizedGlass>
+            </Motion>
+          );
+        })}
+      </div>
+    );
+  }
+);
 
-// Helper component for creating notifications
-export const GlassNotificationItem: React.FC<{
+GlassNotificationCenter.displayName = 'GlassNotificationCenter';
+
+/**
+ * Helper component for creating individual notifications
+ */
+export interface GlassNotificationItemProps extends React.HTMLAttributes<HTMLDivElement> {
   notification: GlassNotification;
   onClose: () => void;
-}> = ({ notification, onClose }) => {
-  const typeStyles = getTypeStyles(notification.type);
+}
 
-  return (
-    <OptimizedGlass
-      className={`p-4 rounded-lg border ${typeStyles.bgClass}`}
-      elevation={'level1'}
-    >
-      <div className="flex items-start space-x-3">
-        <div className={`w-6 h-6 rounded-full flex items-center justify-center text-sm ${typeStyles.iconClass}`}>
+export const GlassNotificationItem = forwardRef<HTMLDivElement, GlassNotificationItemProps>(
+  ({ notification, onClose, className, ...props }, ref) => {
+    const typeStyles = getTypeStyles(notification.type);
+
+    return (
+      <OptimizedGlass
+        ref={ref}
+        elevation="level1"
+        intensity="medium"
+        depth={2}
+        tint="neutral"
+        border="subtle"
+        animation="none"
+        performanceMode="medium"
+        className={cn(
+          'glass-p-4 glass-radius-lg border',
+          typeStyles.bgClass,
+          className
+        )}
+        {...props}
+      >
+      <div className="flex items-start glass-gap-3">
+        <div className={`w-6 h-6 glass-radius-full flex items-center justify-center glass-text-sm ${typeStyles.iconClass}`}>
           {typeStyles.icon}
         </div>
         <div className="flex-1">
           <h4 className="font-semibold">{notification.title}</h4>
-          {notification.message && <p className="text-sm opacity-80">{notification.message}</p>}
+          {notification.message && <p className="glass-text-sm opacity-80">{notification.message}</p>}
         </div>
-        <button onClick={onClose} className="text-white/60 hover:text-white">✕</button>
+        <button onClick={onClose} className="glass-text-primary/60 hover:glass-text-primary">✕</button>
       </div>
-    </OptimizedGlass>
-  );
-};
+      </OptimizedGlass>
+    );
+  }
+);
+
+GlassNotificationItem.displayName = 'GlassNotificationItem';
 
 // Helper function for notification styles
 const getTypeStyles = (type: NotificationType) => {
@@ -286,9 +368,41 @@ const shrinkKeyframes = `
   }
 `;
 
-// Inject keyframes
-if (typeof document !== 'undefined') {
-  const style = document.createElement('style');
-  style.textContent = shrinkKeyframes;
-  document.head.appendChild(style);
+// Inject keyframes safely with SSR check
+if (typeof document !== 'undefined' && typeof window !== 'undefined') {
+  const existingStyle = document.querySelector('#glass-notification-styles');
+  if (!existingStyle) {
+    const style = document.createElement('style');
+    style.id = 'glass-notification-styles';
+    style.textContent = shrinkKeyframes;
+    document.head.appendChild(style);
+  }
 }
+
+/**
+ * Utility hooks and helpers for notifications
+ */
+export const useNotificationCenter = () => {
+  const { addNotification, removeNotification, clearAll } = useNotifications();
+
+  const notify = {
+    success: (title: string, message?: string, options?: Partial<GlassNotification>) => {
+      addNotification({ type: 'success', title, message, ...options });
+    },
+    error: (title: string, message?: string, options?: Partial<GlassNotification>) => {
+      addNotification({ type: 'error', title, message, ...options });
+    },
+    warning: (title: string, message?: string, options?: Partial<GlassNotification>) => {
+      addNotification({ type: 'warning', title, message, ...options });
+    },
+    info: (title: string, message?: string, options?: Partial<GlassNotification>) => {
+      addNotification({ type: 'info', title, message, ...options });
+    },
+  };
+
+  return {
+    notify,
+    removeNotification,
+    clearAll,
+  };
+};

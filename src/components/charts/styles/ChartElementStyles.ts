@@ -1,9 +1,8 @@
 import React from 'react';
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 import { CSSProperties } from 'react';
 import styled, { css } from 'styled-components';
 
-import { glassStyleCSS } from '../../../core/mixins/glassMixins';
+import { glassStyleCSS, createGlassStyle } from '../../../core/mixins/glassMixins';
 export interface ChartElementStyles {
   line: CSSProperties;
   area: CSSProperties;

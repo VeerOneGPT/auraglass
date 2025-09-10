@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { GlassButton } from '../button/GlassButton';
 import { cn } from '@/lib/utilsComprehensive';
 
@@ -17,7 +16,7 @@ export function GlassInlineEdit({ value, onChange, placeholder = 'Edit…', clas
   const [draft, setDraft] = React.useState(value);
   React.useEffect(() => setDraft(value), [value]);
   return (
-    <div className={cn('inline-flex items-center gap-2', className)}>
+    <div className={cn('inline-flex items-center glass-gap-2', className)}>
       {editing ? (
         <>
           <input
@@ -29,14 +28,14 @@ export function GlassInlineEdit({ value, onChange, placeholder = 'Edit…', clas
               if (e.key === 'Escape') { setDraft(value); setEditing(false); }
             }}
             placeholder={placeholder}
-            className="bg-transparent border border-white/20 rounded-lg px-2 py-1 text-sm outline-none"
+            className="bg-transparent border border-white/20 glass-radius-lg glass-px-2 glass-py-1 glass-text-sm outline-none"
           />
-          <GlassButton size="sm" variant="primary" onClick={() => { onChange(draft); setEditing(false); }}>Save</GlassButton>
-          <GlassButton size="sm" variant="ghost" onClick={() => { setDraft(value); setEditing(false); }}>Cancel</GlassButton>
+          <GlassButton size="sm" variant="primary" onClick={(e) => { onChange(draft); setEditing(false); }}>Save</GlassButton>
+          <GlassButton size="sm" variant="ghost" onClick={(e) => { setDraft(value); setEditing(false); }}>Cancel</GlassButton>
         </>
       ) : (
-        <button className="px-2 py-1 rounded-lg hover:bg-white/10 text-sm" onClick={() => setEditing(true)}>
-          {value || <span className="text-white/60">{placeholder}</span>}
+        <button className="glass-px-2 glass-py-1 glass-radius-lg hover:bg-white/10 glass-text-sm" onClick={(e) => setEditing(true)}>
+          {value || <span className="glass-text-primary/60">{placeholder}</span>}
         </button>
       )}
     </div>

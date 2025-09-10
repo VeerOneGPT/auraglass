@@ -1,8 +1,16 @@
-import React, { forwardRef, createContext, useContext, useState, useEffect } from 'react';
-import styled from 'styled-components';
+'use client';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
-import { createThemeContext } from '../../core/themeContext';
+/**
+ * ThemedGlassComponents Component
+ *
+ * A component that applies themed glass styling to its children.
+ * Migrated to use OptimizedGlass architecture.
+ */
+import React, { forwardRef, createContext, useContext, useState, useEffect } from 'react';
+import { cn } from '../../lib/utilsComprehensive';
+import { OptimizedGlass, Motion } from '../../primitives';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+
 import { useGlassTheme } from '../../hooks/useGlassTheme';
 
 // Create a context to pass down theme information to children
@@ -20,19 +28,16 @@ const ThemedGlassContext = createContext<ThemedGlassContextType>({
 // Hook to use the themed glass context
 export const useThemedGlass = () => useContext(ThemedGlassContext);
 
-// Styled container with glass effect
-const GlassContainer = styled.div<{
-  $glassIntensity: number;
-  $applyGlassEffect: boolean;
-}>`
-  ${({ $glassIntensity }) => `
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  `}
-`;
+// Helper to map glass intensity to elevation level
+const mapIntensityToElevation = (intensity: number): 'level1' | 'level2' | 'level3' | 'level4' => {
+  if (intensity <= 0.3) return 'level1';
+  if (intensity <= 0.6) return 'level2';
+  if (intensity <= 0.8) return 'level3';
+  return 'level4';
+};
 
 /**
+ * ThemedGlassComponents Component Props
  * A component that applies themed glass styling to its children
  */
 interface ThemedGlassComponentsProps {
@@ -67,8 +72,9 @@ export const ThemedGlassComponents = forwardRef<HTMLDivElement, ThemedGlassCompo
     },
     ref
   ) => {
-    // Simplified theme usage
+    // Hooks
     const { theme } = useGlassTheme();
+    const prefersReducedMotion = useReducedMotion();
     const isDarkMode = theme === 'dark';
 
     // Track transitions for animation
@@ -77,6 +83,9 @@ export const ThemedGlassComponents = forwardRef<HTMLDivElement, ThemedGlassCompo
     // Use provided values or fallback to current context
     const effectiveColorMode = colorMode || (isDarkMode ? 'dark' : 'light');
     const effectiveVariant = variant || 'default';
+    
+    // Map glass intensity to elevation level
+    const elevation = mapIntensityToElevation(glassIntensity);
 
     // Create context value
     const contextValue: ThemedGlassContextType = {
@@ -97,37 +106,31 @@ export const ThemedGlassComponents = forwardRef<HTMLDivElement, ThemedGlassCompo
       }
     }, [effectiveColorMode, effectiveVariant, animated, transitionDuration]);
 
-    // If we're not changing theme or variant, just render with context
-    if (!effectiveVariant && !effectiveColorMode) {
-      return (
-        <ThemedGlassContext.Provider value={contextValue}>
-          <GlassContainer
-            ref={ref}
-            className={className}
-            style={style}
-            $glassIntensity={glassIntensity}
-            $applyGlassEffect={applyGlassEffect}
-            {...rest}
-          >
-            {children}
-          </GlassContainer>
-        </ThemedGlassContext.Provider>
-      );
-    }
-
-    // Simplified rendering
+    // Render with OptimizedGlass architecture
     return (
       <ThemedGlassContext.Provider value={contextValue}>
-        <GlassContainer
+        <OptimizedGlass
           ref={ref}
-          className={className}
-          style={style}
-          $glassIntensity={glassIntensity}
-          $applyGlassEffect={applyGlassEffect}
+          elevation={elevation}
+          intent="neutral"
+          tier="high"
+          interactive={animated && !prefersReducedMotion}
+          className={cn(
+            'themed-glass-container',
+            animated && !prefersReducedMotion && 'transition-all duration-300',
+            isTransitioning && 'glass-transitioning',
+            className
+          )}
+          style={{
+            ...style,
+            ...(animated && !prefersReducedMotion && {
+              transitionDuration: `${transitionDuration}ms`,
+            }),
+          }}
           {...rest}
         >
           {children}
-        </GlassContainer>
+        </OptimizedGlass>
       </ThemedGlassContext.Provider>
     );
   }

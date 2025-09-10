@@ -7,7 +7,6 @@ import { GlassBadge } from '../../../data-display/GlassBadge';
 import { VStack, HStack } from '../../../layout/GlassStack';
 import { cn } from '../../../../lib/utilsComprehensive';
 
-import { createGlassStyle } from '../../../../core/mixins/glassMixins';
 export interface TableColumn {
   id: string;
   header: string;
@@ -129,25 +128,25 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
 
     const sizeClasses = {
       sm: {
-        padding: 'p-3',
-        title: 'text-sm',
-        subtitle: 'text-xs',
-        cell: 'px-2 py-1 text-xs',
-        header: 'px-2 py-2 text-xs',
+        padding: 'glass-p-3',
+        title: 'glass-text-sm',
+        subtitle: 'glass-text-xs',
+        cell: 'glass-px-2 glass-py-1 glass-text-xs',
+        header: 'glass-px-2 glass-py-2 glass-text-xs',
       },
       md: {
-        padding: 'p-4',
-        title: 'text-base',
-        subtitle: 'text-sm',
-        cell: 'px-3 py-2 text-sm',
-        header: 'px-3 py-2 text-sm',
+        padding: 'glass-p-4',
+        title: 'glass-text-base',
+        subtitle: 'glass-text-sm',
+        cell: 'glass-px-3 glass-py-2 glass-text-sm',
+        header: 'glass-px-3 glass-py-2 glass-text-sm',
       },
       lg: {
-        padding: 'p-6',
-        title: 'text-lg',
-        subtitle: 'text-base',
-        cell: 'px-4 py-3 text-base',
-        header: 'px-4 py-3 text-base',
+        padding: 'glass-p-6',
+        title: 'glass-text-lg',
+        subtitle: 'glass-text-base',
+        cell: 'glass-px-4 glass-py-3 glass-text-base',
+        header: 'glass-px-4 glass-py-3 glass-text-base',
       },
     };
 
@@ -204,7 +203,7 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
       }
 
       if (value === null || value === undefined) {
-        return <span className="text-muted-foreground">—</span>;
+        return <span className="glass-text-secondary">—</span>;
       }
 
       return String(value);
@@ -214,14 +213,14 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
       if (loading) {
         return (
           <div className="flex items-center justify-center py-8">
-            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+            <div className="w-6 h-6 border-2 border-primary border-t-transparent glass-radius-full animate-spin" />
           </div>
         );
       }
 
       if ((displayRows?.length || 0) === 0) {
         return (
-          <div className="flex items-center justify-center py-8 text-muted-foreground">
+          <div className="flex items-center justify-center py-8 glass-text-secondary">
             No data available
           </div>
         );
@@ -235,7 +234,7 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
               <thead>
                 <tr className="border-b border-border/20">
                   {showRowNumbers && (
-                    <th className={cn(config.header, 'w-12 text-left font-medium text-muted-foreground')}>
+                    <th className={cn(config.header, 'w-12 text-left font-medium glass-text-secondary')}>
                       #
                     </th>
                   )}
@@ -244,7 +243,7 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
                       key={column.id}
                       className={cn(
                         config.header,
-                        'font-medium text-muted-foreground',
+                        'font-medium glass-text-secondary',
                         {
                           'text-left': column.align === 'left' || !column.align,
                           'text-center': column.align === 'center',
@@ -253,7 +252,7 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
                         }
                       )}
                       style={{ width: column.width }}
-                      onClick={() => handleSort(column.id)}
+                      onClick={(e) => handleSort(column.id)}
                     >
                       <HStack space="xs" align="center" className="justify-start">
                         <span>{column.header}</span>
@@ -297,10 +296,10 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
                     animationDelay: `${Math.min(index, 15) * 50}ms`,
                     animationFillMode: 'both'
                   }}
-                  onClick={() => onRowClick?.(row)}
+                  onClick={(e) => onRowClick?.(row)}
                 >
                   {showRowNumbers && (
-                    <td className={cn(config.cell, 'text-muted-foreground')}>
+                    <td className={cn(config.cell, 'glass-text-secondary')}>
                       {index + 1}
                     </td>
                   )}
@@ -356,7 +355,7 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
                     {data?.title || 'Table'}
                   </h3>
                   {data?.subtitle && (
-                    <p className={cn('text-muted-foreground', config.subtitle)}>
+                    <p className={cn('glass-text-secondary', config.subtitle)}>
                       {data?.subtitle}
                     </p>
                   )}
@@ -368,12 +367,12 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
               {data?.summary && (
                 <HStack space="sm" align="center">
                   {data?.summary.total && (
-                    <span className="text-sm text-muted-foreground">
+                    <span className="glass-text-sm glass-text-secondary">
                       Total: {data?.summary.total.toLocaleString()}
                     </span>
                   )}
                   {data?.summary.filtered && data?.summary.filtered !== data?.summary.total && (
-                    <span className="text-sm text-muted-foreground">
+                    <span className="glass-text-sm glass-text-secondary">
                       Showing: {data?.summary.filtered.toLocaleString()}
                     </span>
                   )}
@@ -393,7 +392,7 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
               {/* Footer */}
               {(data?.rows?.length || 0) > maxRows && (
                 <HStack space="sm" align="center" justify="center">
-                  <span className="text-xs text-muted-foreground">
+                  <span className="glass-text-xs glass-text-secondary">
                     Showing {maxRows} of {data?.rows?.length || 0} rows
                   </span>
                   <GlassButton variant="ghost" size="xs">
@@ -409,8 +408,7 @@ export const TableWidget = forwardRef<HTMLDivElement, TableWidgetProps>(
     return (
       <Glass
         ref={ref}
-        rounded="lg"
-        className={cn('w-full h-full', config.padding, className)}
+        className={cn('w-full h-full glass-radius-lg', config.padding, className)}
         {...props}
       >
         {renderContent()}

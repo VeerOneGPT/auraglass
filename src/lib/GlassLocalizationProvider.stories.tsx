@@ -30,41 +30,41 @@ const DateDisplayComponent = () => {
   const nextYear = adapter.addYears(now, 1);
 
   return (
-    <div className="space-y-4">
+    <div className="glass-auto-gap glass-auto-gap-lg">
       <div className="text-center mb-6">
-        <h3 className="text-lg font-semibold mb-2">Date Formatting Demo</h3>
-        <p className="text-sm opacity-80">Using the Glass Localization Provider for date operations.</p>
+        <h3 className="glass-text-lg glass-font-semibold mb-2">Date Formatting Demo</h3>
+        <p className="glass-text-sm opacity-80">Using the Glass Localization Provider for date operations.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 glass-gaglass-p-4">
         <GlassCard>
-          <div className="p-4">
+          <div className="glass-p-4">
             <h4 className="font-medium mb-2">Current Date</h4>
-            <p className="text-sm opacity-80">{adapter.format(now, 'PPP')}</p>
+            <p className="glass-text-sm opacity-80">{adapter.format(now, 'PPP')}</p>
             <p className="text-xs opacity-60 mt-1">{adapter.format(now, 'PPpp')}</p>
           </div>
         </GlassCard>
 
         <GlassCard>
-          <div className="p-4">
+          <div className="glass-p-4">
             <h4 className="font-medium mb-2">Tomorrow</h4>
-            <p className="text-sm opacity-80">{adapter.format(tomorrow, 'PPP')}</p>
+            <p className="glass-text-sm opacity-80">{adapter.format(tomorrow, 'PPP')}</p>
             <p className="text-xs opacity-60 mt-1">{adapter.format(tomorrow, 'EEEE')}</p>
           </div>
         </GlassCard>
 
         <GlassCard>
-          <div className="p-4">
+          <div className="glass-p-4">
             <h4 className="font-medium mb-2">Next Month</h4>
-            <p className="text-sm opacity-80">{adapter.format(nextMonth, 'PPP')}</p>
+            <p className="glass-text-sm opacity-80">{adapter.format(nextMonth, 'PPP')}</p>
             <p className="text-xs opacity-60 mt-1">{adapter.format(nextMonth, 'MMMM yyyy')}</p>
           </div>
         </GlassCard>
 
         <GlassCard>
-          <div className="p-4">
+          <div className="glass-p-4">
             <h4 className="font-medium mb-2">Next Year</h4>
-            <p className="text-sm opacity-80">{adapter.format(nextYear, 'PPP')}</p>
+            <p className="glass-text-sm opacity-80">{adapter.format(nextYear, 'PPP')}</p>
             <p className="text-xs opacity-60 mt-1">{adapter.format(nextYear, 'yyyy')}</p>
           </div>
         </GlassCard>
@@ -99,9 +99,9 @@ const DateParsingDemo = () => {
     <GlassCard>
       <div className="p-6">
         <h4 className="font-medium mb-4">Date Parsing Demo</h4>
-        <div className="space-y-4">
+        <div className="glass-auto-gap glass-auto-gap-lg">
           <div>
-            <label className="block text-sm font-medium mb-2">Date String (yyyy-MM-dd)</label>
+            <label className="block glass-text-sm font-medium mb-2">Date String (yyyy-MM-dd)</label>
             <input
               type="text"
               value={inputValue}
@@ -117,8 +117,8 @@ const DateParsingDemo = () => {
 
           {parsedDate && (
             <div className="mt-4 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
-              <p className="text-sm font-medium text-green-400">Parsed Successfully!</p>
-              <p className="text-sm opacity-80">{adapter.format(parsedDate, 'PPP')}</p>
+              <p className="glass-text-sm font-medium text-green-400">Parsed Successfully!</p>
+              <p className="glass-text-sm opacity-80">{adapter.format(parsedDate, 'PPP')}</p>
               <p className="text-xs opacity-60">{parsedDate.toISOString()}</p>
             </div>
           )}
@@ -155,7 +155,7 @@ export const DateParsing: Story = {
 export const MultipleComponents: Story = {
   render: (args) => (
     <GlassLocalizationProvider {...args}>
-      <div className="space-y-6 max-w-4xl">
+      <div className="glass-auto-gap glass-auto-gap-2xl max-w-4xl">
         <DateDisplayComponent />
         <DateParsingDemo />
       </div>
@@ -166,18 +166,18 @@ export const MultipleComponents: Story = {
 export const WithCalendar: Story = {
   render: (args) => (
     <GlassLocalizationProvider {...args}>
-      <div className="space-y-6">
+      <div className="glass-auto-gap glass-auto-gap-2xl">
         <DateDisplayComponent />
 
         <GlassCard>
           <div className="p-6">
             <h4 className="font-medium mb-4">Calendar Integration</h4>
-            <p className="text-sm opacity-80">
+            <p className="glass-text-sm opacity-80">
               The GlassLocalizationProvider works seamlessly with date picker and calendar components
               to provide consistent date formatting and localization across your application.
             </p>
-            <div className="mt-4 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-              <p className="text-sm font-medium text-blue-400">Integration Ready</p>
+            <div className="mt-4 glass-p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+              <p className="glass-text-sm font-medium text-blue-400">Integration Ready</p>
               <p className="text-xs opacity-80 mt-1">
                 Ready to be used with GlassCalendar, GlassDatePicker, and other date components.
               </p>

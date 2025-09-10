@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export interface MindMapNode {
@@ -268,7 +267,7 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
             x={midX}
             y={midY - 5}
             textAnchor="middle"
-            className="text-xs fill-white/70"
+            className="glass-text-xs fill-white/70"
           >
             {connection.label}
           </text>
@@ -324,7 +323,7 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
                 if (e.key === 'Escape') handleEditCancel();
               }}
               onBlur={handleEditSubmit}
-              className="w-full h-full px-2 py-1 bg-transparent border border-white/30 rounded text-white text-sm focus:outline-none focus:border-white/60"
+              className="w-full h-full glass-px-2 glass-py-1 bg-transparent border border-white/30 glass-radius-md glass-text-primary glass-text-sm focus:outline-none focus:border-white/60"
             />
           </foreignObject>
         );
@@ -374,7 +373,7 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
           <g
             className={`cursor-pointer ${isDragged ? 'cursor-grabbing' : 'cursor-grab'}`}
             onMouseDown={(e) => handleMouseDown(e, node.id)}
-            onClick={() => handleNodeClick(node)}
+            onClick={(e) => handleNodeClick(node)}
             onDoubleClick={() => handleNodeDoubleClick(node)}
           >
             {shapeElement}
@@ -382,7 +381,7 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
               x={node.position.x + nodeSize / 2}
               y={node.position.y + nodeHeight / 2 + 4}
               textAnchor="middle"
-              className="text-sm fill-white font-medium pointer-events-none select-none"
+              className="glass-text-sm fill-white font-medium pointer-events-none select-none"
             >
               {node.icon && <tspan x={node.position.x + nodeSize / 2 - 15}>{node.icon}</tspan>}
               <tspan x={node.icon ? node.position.x + nodeSize / 2 + 15 : node.position.x + nodeSize / 2}>
@@ -404,16 +403,16 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
       elevation="level1"
     >
       {/* Toolbar */}
-      <div className="absolute top-4 left-4 z-10 flex space-x-2">
+      <div className="absolute top-4 left-4 z-10 flex glass-gap-2">
         <OptimizedGlass
-          className="px-3 py-1 rounded text-sm cursor-pointer hover:bg-white/10"
+          className="glass-px-3 glass-py-1 glass-radius-md glass-text-sm cursor-pointer hover:bg-white/10"
           intensity="subtle"
-          onClick={() => setZoom(1)}
+          onClick={(e) => setZoom(1)}
         >
           Reset Zoom
         </OptimizedGlass>
         <OptimizedGlass
-          className="px-3 py-1 rounded text-sm"
+          className="glass-px-3 glass-py-1 glass-radius-md glass-text-sm"
           intensity="subtle"
         >
           Zoom: {(zoom * 100).toFixed(0)}%
@@ -422,7 +421,7 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
 
       {/* Mini-map */}
       {showMinimap && (
-        <div className="absolute bottom-4 right-4 z-10 w-32 h-24 bg-black/20 rounded border border-white/20">
+        <div className="absolute bottom-4 right-4 z-10 w-32 h-24 bg-black/20 glass-radius-md border border-white/20">
           <svg className="w-full h-full" viewBox="0 0 320 240">
             {positionedNodes.map(node => (
               <circle

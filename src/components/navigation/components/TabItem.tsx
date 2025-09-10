@@ -1,6 +1,5 @@
 // Typography tokens available via typography.css (imported in index.css)
 import React from 'react';
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 import { glassTokenUtils } from '../../../tokens/glass';
 
 export interface TabItemProps {
@@ -10,7 +9,7 @@ export interface TabItemProps {
   badge?: string | number;
   disabled?: boolean;
   active?: boolean;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const TabItemComponent: React.FC<TabItemProps> = ({

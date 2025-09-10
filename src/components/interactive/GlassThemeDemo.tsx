@@ -1,8 +1,16 @@
-// Typography tokens available via typography.css (imported in index.css)
-import React, { forwardRef, useState } from 'react';
-import styled from 'styled-components';
+'use client';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+/**
+ * GlassThemeDemo Component
+ *
+ * A comprehensive theme demo component to showcase themed Glass UI components.
+ * Migrated to use OptimizedGlass architecture.
+ */
+import React, { forwardRef, useState } from 'react';
+import { cn } from '../../lib/utilsComprehensive';
+import { OptimizedGlass, Motion } from '../../primitives';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+
 import { GlassAlert as Alert } from '../data-display/GlassAlert';
 import { GlassAvatar as Avatar } from '../data-display/GlassAvatar';
 import { GlassBadge as Badge } from '../data-display/GlassBadge';
@@ -24,74 +32,13 @@ import { GlassThemeSwitcher } from './GlassThemeSwitcher';
 import { CursorGlow } from './CursorGlow';
 import { GlassThemeDemoProps } from './types';
 
-// Styled components
-const StyledDemo = styled.div<{
-  $glassIntensity: number;
-  $minimal: boolean;
-}>`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: ${({ $minimal }) => ($minimal ? '1rem' : '2rem')};
-  border-radius: 12px;
-  width: 100%;
-
-  ${({ theme }) => ({
-    ...createGlassStyle({
-      intent: 'neutral',
-      elevation: 'level2',
-      tier: 'high'
-    }),
-    background: 'rgba(255, 255, 255, 0.4)',
-    backdropFilter: 'blur(8px)',
-  })}
-
-  ${({ theme }) => ({
-    ...createGlassStyle({
-      intent: 'neutral',
-      elevation: 'level1',
-      tier: 'high'
-    }),
-    border: '1px solid ${glassStyles.borderColor || "rgba(255, 255, 255, 0.3)"}',
-  })}
-`;
-
-const Header = styled.header`
-  margin-bottom: 1rem;
-`;
-
-const DemoSection = styled.section`
-  margin-top: 1.5rem;
-`;
-
-const ComponentGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-top: 1rem;
-`;
-
-const ComponentCard = styled(Card)`
-  padding: 1.25rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-`;
-
-const ComponentTitle = styled(Typography)`
-  margin-bottom: 1rem;
-  font-weight: var(--typography-subheading-weight);
-`;
-
-const CodePreview = styled.pre`
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  padding: 0.75rem;
-  font-family: 'Consolas', 'Monaco', 'Andale Mono', monospace;
-  font-size: 0.85rem;
-  overflow: auto;
-  margin-top: 1rem;
-`;
+// Helper to map glass intensity to elevation level
+const mapIntensityToElevation = (intensity: number): 'level1' | 'level2' | 'level3' | 'level4' => {
+  if (intensity <= 0.3) return 'level1';
+  if (intensity <= 0.6) return 'level2';
+  if (intensity <= 0.8) return 'level3';
+  return 'level4';
+};
 
 // Categories of components to showcase
 const COMPONENT_CATEGORIES = {
@@ -103,7 +50,10 @@ const COMPONENT_CATEGORIES = {
 };
 
 /**
- * A comprehensive theme demo component to showcase themed Glass UI components
+ * GlassThemeDemo Component
+ *
+ * A comprehensive theme demo component to showcase themed Glass UI components.
+ * Now optimized with OptimizedGlass architecture for better performance.
  */
 export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
   (
@@ -124,50 +74,67 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
       interactive = true,
       includedCategories = Object.keys(COMPONENT_CATEGORIES),
       minimal = false,
+      animation,
       ...rest
     }: GlassThemeDemoProps,
     ref
   ) => {
+    const prefersReducedMotion = useReducedMotion();
     const [activeTab, setActiveTab] = useState(0);
+    
+    // Map glass intensity to elevation level
+    const elevation = mapIntensityToElevation(glassIntensity);
 
     // Example components by category
     const categoryExamples = {
       inputs: (
-        <ComponentGrid>
-          <ComponentCard>
-            <ComponentTitle variant="h6">Button</ComponentTitle>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 glass-gap-6 glass-mt-4">
+          <Card className={cn(
+            'p-5 h-full flex flex-col',
+            'transition-all duration-200',
+            !prefersReducedMotion && 'hover:scale-[1.02]'
+          )}>
+            <Typography variant="h6" className="glass-mb-4 font-semibold">Button</Typography>
             <Box style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <Button variant="primary">Primary</Button>
               <Button variant="outline">Outline</Button>
               <Button variant="ghost">Ghost</Button>
             </Box>
             {showCode && (
-              <CodePreview>
+              <pre className="bg-black/10 glass-radius-md glass-p-3 font-mono glass-text-sm overflow-auto glass-mt-4">
                 {`<Button variant="contained">Contained</Button>
 <Button variant="outlined">Outlined</Button>
 <Button variant="text">Text</Button>`}
-              </CodePreview>
+              </pre>
             )}
-          </ComponentCard>
+          </Card>
 
-          <ComponentCard>
-            <ComponentTitle variant="h6">Text Field</ComponentTitle>
+          <Card className={cn(
+            'p-5 h-full flex flex-col',
+            'transition-all duration-200',
+            !prefersReducedMotion && 'hover:scale-[1.02]'
+          )}>
+            <Typography variant="h6" className="glass-mb-4 font-semibold">Text Field</Typography>
             <Box style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <TextField placeholder="Standard" />
               <TextField placeholder="With placeholder" />
               <TextField placeholder="Disabled" disabled />
             </Box>
             {showCode && (
-              <CodePreview>
+              <pre className="bg-black/10 glass-radius-md glass-p-3 font-mono glass-text-sm overflow-auto glass-mt-4">
                 {`<TextField label="Standard" />
 <TextField label="With placeholder" placeholder="Type here..." />
 <TextField label="Disabled" disabled />`}
-              </CodePreview>
+              </pre>
             )}
-          </ComponentCard>
+          </Card>
 
-          <ComponentCard>
-            <ComponentTitle variant="h6">Select</ComponentTitle>
+          <Card className={cn(
+            'p-5 h-full flex flex-col',
+            'transition-all duration-200',
+            !prefersReducedMotion && 'hover:scale-[1.02]'
+          )}>
+            <Typography variant="h6" className="glass-mb-4 font-semibold">Select</Typography>
             <Select
               placeholder="Select Option"
               options={[
@@ -177,7 +144,7 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
               ]}
             />
             {showCode && (
-              <CodePreview>
+              <pre className="bg-black/10 glass-radius-md glass-p-3 font-mono glass-text-sm overflow-auto glass-mt-4">
                 {`<Select
   label="Select Option"
   options={[
@@ -186,40 +153,52 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
     { value: 'option3', label: 'Option 3' },
   ]}
 />`}
-              </CodePreview>
+              </pre>
             )}
-          </ComponentCard>
+          </Card>
 
-          <ComponentCard>
-            <ComponentTitle variant="h6">Checkbox & Radio</ComponentTitle>
+          <Card className={cn(
+            'p-5 h-full flex flex-col',
+            'transition-all duration-200',
+            !prefersReducedMotion && 'hover:scale-[1.02]'
+          )}>
+            <Typography variant="h6" className="glass-mb-4 font-semibold">Checkbox & Radio</Typography>
             <Box style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <Checkbox label="Checkbox Option" />
               <Radio options={[{ value: 'radio1', label: 'Radio Option' }]} />
               <Switch label="Switch Option" />
             </Box>
             {showCode && (
-              <CodePreview>
+              <pre className="bg-black/10 glass-radius-md glass-p-3 font-mono glass-text-sm overflow-auto glass-mt-4">
                 {`<Checkbox label="Checkbox Option" />
 <Radio label="Radio Option" name="radio-group" />
 <Switch label="Switch Option" />`}
-              </CodePreview>
+              </pre>
             )}
-          </ComponentCard>
+          </Card>
 
-          <ComponentCard>
-            <ComponentTitle variant="h6">Slider</ComponentTitle>
+          <Card className={cn(
+            'p-5 h-full flex flex-col',
+            'transition-all duration-200',
+            !prefersReducedMotion && 'hover:scale-[1.02]'
+          )}>
+            <Typography variant="h6" className="glass-mb-4 font-semibold">Slider</Typography>
             <Slider defaultValue={50} aria-label="Slider" />
             {showCode && (
-              <CodePreview>{`<Slider defaultValue={50} aria-label="Slider" />`}</CodePreview>
+              <pre className="bg-black/10 glass-radius-md glass-p-3 font-mono glass-text-sm overflow-auto glass-mt-4">{`<Slider defaultValue={50} aria-label="Slider" />`}</pre>
             )}
-          </ComponentCard>
-        </ComponentGrid>
+          </Card>
+        </div>
       ),
 
       feedback: (
-        <ComponentGrid>
-          <ComponentCard>
-            <ComponentTitle variant="h6">Alert</ComponentTitle>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 glass-gap-6 glass-mt-4">
+          <Card className={cn(
+            'p-5 h-full flex flex-col',
+            'transition-all duration-200',
+            !prefersReducedMotion && 'hover:scale-[1.02]'
+          )}>
+            <Typography variant="h6" className="glass-mb-4 font-semibold">Alert</Typography>
             <Box style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <Alert variant="info">Info message</Alert>
               <Alert variant="success">Success message</Alert>
@@ -227,31 +206,39 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
               <Alert variant="error">Error message</Alert>
             </Box>
             {showCode && (
-              <CodePreview>
+              <pre className="bg-black/10 glass-radius-md glass-p-3 font-mono glass-text-sm overflow-auto glass-mt-4">
                 {`<Alert severity="info">Info message</Alert>
 <Alert severity="success">Success message</Alert>
 <Alert severity="warning">Warning message</Alert>
 <Alert severity="error">Error message</Alert>`}
-              </CodePreview>
+              </pre>
             )}
-          </ComponentCard>
+          </Card>
 
-          <ComponentCard>
-            <ComponentTitle variant="h6">Progress</ComponentTitle>
+          <Card className={cn(
+            'p-5 h-full flex flex-col',
+            'transition-all duration-200',
+            !prefersReducedMotion && 'hover:scale-[1.02]'
+          )}>
+            <Typography variant="h6" className="glass-mb-4 font-semibold">Progress</Typography>
             <Box style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <Progress variant="primary" value={75} />
               <Progress variant="gradient" indeterminate />
             </Box>
             {showCode && (
-              <CodePreview>
+              <pre className="bg-black/10 glass-radius-md glass-p-3 font-mono glass-text-sm overflow-auto glass-mt-4">
                 {`<Progress variant="determinate" value={75} />
 <Progress variant="indeterminate" />`}
-              </CodePreview>
+              </pre>
             )}
-          </ComponentCard>
+          </Card>
 
-          <ComponentCard>
-            <ComponentTitle variant="h6">Badge</ComponentTitle>
+          <Card className={cn(
+            'p-5 h-full flex flex-col',
+            'transition-all duration-200',
+            !prefersReducedMotion && 'hover:scale-[1.02]'
+          )}>
+            <Typography variant="h6" className="glass-mb-4 font-semibold">Badge</Typography>
             <Box style={{ display: 'flex', gap: '16px' }}>
               <Badge content="4">
                 <Button>Messages</Button>
@@ -261,23 +248,27 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
               </Badge>
             </Box>
             {showCode && (
-              <CodePreview>
+              <pre className="bg-black/10 glass-radius-md glass-p-3 font-mono glass-text-sm overflow-auto glass-mt-4">
                 {`<Badge content={4}>
   <Button>Messages</Button>
 </Badge>
 <Badge content="New" color="error">
   <Button>Updates</Button>
 </Badge>`}
-              </CodePreview>
+              </pre>
             )}
-          </ComponentCard>
-        </ComponentGrid>
+          </Card>
+        </div>
       ),
 
       layout: (
-        <ComponentGrid>
-          <ComponentCard>
-            <ComponentTitle variant="h6">Card</ComponentTitle>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 glass-gap-6 glass-mt-4">
+          <Card className={cn(
+            'p-5 h-full flex flex-col',
+            'transition-all duration-200',
+            !prefersReducedMotion && 'hover:scale-[1.02]'
+          )}>
+            <Typography variant="h6" className="glass-mb-4 font-semibold">Card</Typography>
             <Card>
               <Box style={{ padding: '16px' }}>
                 <Typography variant="h4">Card Title</Typography>
@@ -288,7 +279,7 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
               </Box>
             </Card>
             {showCode && (
-              <CodePreview>
+              <pre className="bg-black/10 glass-radius-md glass-p-3 font-mono glass-text-sm overflow-auto glass-mt-4">
                 {`<Card>
   <Box p={2}>
     <Typography variant="h6">Card Title</Typography>
@@ -298,50 +289,62 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
     </Box>
   </Box>
 </Card>`}
-              </CodePreview>
+              </pre>
             )}
-          </ComponentCard>
+          </Card>
 
-          <ComponentCard>
-            <ComponentTitle variant="h6">Paper Card</ComponentTitle>
+          <Card className={cn(
+            'p-5 h-full flex flex-col',
+            'transition-all duration-200',
+            !prefersReducedMotion && 'hover:scale-[1.02]'
+          )}>
+            <Typography variant="h6" className="glass-mb-4 font-semibold">Paper Card</Typography>
             <Card>
               <Box style={{ padding: '16px' }}>
                 <Typography>Paper Component</Typography>
               </Box>
             </Card>
             {showCode && (
-              <CodePreview>
+              <pre className="bg-black/10 glass-radius-md glass-p-3 font-mono glass-text-sm overflow-auto glass-mt-4">
                 {`<Paper elevation={'level2'}>
   <Box p={2}>
     <Typography>Paper Component</Typography>
   </Box>
 </Paper>`}
-              </CodePreview>
+              </pre>
             )}
-          </ComponentCard>
+          </Card>
 
-          <ComponentCard>
-            <ComponentTitle variant="h6">Box Layout</ComponentTitle>
+          <Card className={cn(
+            'p-5 h-full flex flex-col',
+            'transition-all duration-200',
+            !prefersReducedMotion && 'hover:scale-[1.02]'
+          )}>
+            <Typography variant="h6" className="glass-mb-4 font-semibold">Box Layout</Typography>
             <Box>
               <Typography>Above divider</Typography>
               <Box style={{ marginTop: '16px', marginBottom: '16px', borderTop: '1px solid rgba(0,0,0,0.1)' }} />
               <Typography>Below divider</Typography>
             </Box>
             {showCode && (
-              <CodePreview>
+              <pre className="bg-black/10 glass-radius-md glass-p-3 font-mono glass-text-sm overflow-auto glass-mt-4">
                 {`<Typography>Above divider</Typography>
 <Divider style={{ marginTop: '16px', marginBottom: '16px' }} />
 <Typography>Below divider</Typography>`}
-              </CodePreview>
+              </pre>
             )}
-          </ComponentCard>
-        </ComponentGrid>
+          </Card>
+        </div>
       ),
 
       navigation: (
-        <ComponentGrid>
-          <ComponentCard>
-            <ComponentTitle variant="h6">Tabs</ComponentTitle>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 glass-gap-6 glass-mt-4">
+          <Card className={cn(
+            'p-5 h-full flex flex-col',
+            'transition-all duration-200',
+            !prefersReducedMotion && 'hover:scale-[1.02]'
+          )}>
+            <Typography variant="h6" className="glass-mb-4 font-semibold">Tabs</Typography>
             <Tabs defaultValue="tab1">
               <GlassTabsList>
                 <GlassTabsTrigger value="tab1">Tab 1</GlassTabsTrigger>
@@ -353,22 +356,26 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
               <TabsContent value="tab3">Tab 3 Content</TabsContent>
             </Tabs>
             {showCode && (
-              <CodePreview>
+              <pre className="bg-black/10 glass-radius-md glass-p-3 font-mono glass-text-sm overflow-auto glass-mt-4">
                 {`<Tabs value={0}>
    <TabPanel value={0} index={0}>Tab 1 Content</TabPanel>
    <TabPanel value={0} index={1}>Tab 2 Content</TabPanel>
    <TabPanel value={0} index={2}>Tab 3 Content</TabPanel>
 </Tabs>`}
-              </CodePreview>
+              </pre>
             )}
-          </ComponentCard>
-        </ComponentGrid>
+          </Card>
+        </div>
       ),
 
       display: (
-        <ComponentGrid>
-          <ComponentCard>
-            <ComponentTitle variant="h6">Typography</ComponentTitle>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 glass-gap-6 glass-mt-4">
+          <Card className={cn(
+            'p-5 h-full flex flex-col',
+            'transition-all duration-200',
+            !prefersReducedMotion && 'hover:scale-[1.02]'
+          )}>
+            <Typography variant="h6" className="glass-mb-4 font-semibold">Typography</Typography>
             <Box style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <Typography variant="h3">Heading 3</Typography>
               <Typography variant="h5">Heading 5</Typography>
@@ -378,19 +385,23 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
               <Typography variant="p">Caption text</Typography>
             </Box>
             {showCode && (
-              <CodePreview>
+              <pre className="bg-black/10 glass-radius-md glass-p-3 font-mono glass-text-sm overflow-auto glass-mt-4">
                 {`<Typography variant="h3">Heading 3</Typography>
 <Typography variant="h5">Heading 5</Typography>
 <Typography variant="subtitle1">Subtitle 1</Typography>
 <Typography variant="body1">Body 1 text</Typography>
 <Typography variant="body2">Body 2 text</Typography>
 <Typography variant="caption">Caption text</Typography>`}
-              </CodePreview>
+              </pre>
             )}
-          </ComponentCard>
+          </Card>
 
-          <ComponentCard>
-            <ComponentTitle variant="h6">Chip</ComponentTitle>
+          <Card className={cn(
+            'p-5 h-full flex flex-col',
+            'transition-all duration-200',
+            !prefersReducedMotion && 'hover:scale-[1.02]'
+          )}>
+            <Typography variant="h6" className="glass-mb-4 font-semibold">Chip</Typography>
             <Box style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
               <Chip label="Basic" value="10" />
               <Chip label="Success" value="5" intent="success" />
@@ -398,31 +409,35 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
               <Chip label="Danger" value="1" intent="danger" />
             </Box>
             {showCode && (
-              <CodePreview>
+              <pre className="bg-black/10 glass-radius-md glass-p-3 font-mono glass-text-sm overflow-auto glass-mt-4">
                 {`<Chip label="Basic" />
-<Chip label="Clickable" onClick={() => {}} />
+<Chip label="Clickable" onClick={(e) => {}} />
 <Chip label="Deletable" onDelete={() => {}} />
 <Chip label="With Avatar">`}
-              </CodePreview>
+              </pre>
             )}
-          </ComponentCard>
+          </Card>
 
-          <ComponentCard>
-            <ComponentTitle variant="h6">Avatar</ComponentTitle>
+          <Card className={cn(
+            'p-5 h-full flex flex-col',
+            'transition-all duration-200',
+            !prefersReducedMotion && 'hover:scale-[1.02]'
+          )}>
+            <Typography variant="h6" className="glass-mb-4 font-semibold">Avatar</Typography>
             <Box style={{ display: 'flex', gap: '8px' }}>
               <Avatar>A</Avatar>
               <Avatar>B</Avatar>
               <Avatar alt="User" />
             </Box>
             {showCode && (
-              <CodePreview>
+              <pre className="bg-black/10 glass-radius-md glass-p-3 font-mono glass-text-sm overflow-auto glass-mt-4">
                 {`<Avatar>A</Avatar>
 <Avatar color="primary">B</Avatar>
 <Avatar alt="User" />`}
-              </CodePreview>
+              </pre>
             )}
-          </ComponentCard>
-        </ComponentGrid>
+          </Card>
+        </div>
       ),
     };
 
@@ -432,12 +447,17 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
       .map(([key, label]) => ({ key, label }));
 
     return (
-      <StyledDemo
+      <OptimizedGlass
         ref={ref}
-        className={className}
+        elevation={elevation}
+        tier="high"
+        className={cn(
+          'flex flex-col glass-gap-6 w-full glass-radius-xl',
+          minimal ? 'glass-p-4' : 'p-8',
+          'relative overflow-hidden',
+          className
+        )}
         style={style}
-        $glassIntensity={glassIntensity}
-        $minimal={minimal}
         {...rest}
       >
         {/* Local cursor glow overlay for theme showcase */}
@@ -446,7 +466,7 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
         </div>
 
         {/* Custom header or default header */}
-        <Header>
+        <header className="glass-mb-4">
           {header || (
             <>
               <Typography variant="h4" style={{ marginBottom: '8px' }}>
@@ -459,18 +479,18 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
               )}
             </>
           )}
-        </Header>
+        </header>
 
         {/* Theme switcher */}
         {showThemeSwitcher && (
-          <DemoSection>
+          <section className="mt-6">
             <GlassThemeSwitcher compact={minimal} themes={[]} />
-          </DemoSection>
+          </section>
         )}
 
         {/* Component examples */}
         {showExamples && (
-          <DemoSection>
+          <section className="mt-6">
             {useTabs && filteredCategories.length > 1 ? (
               <>
                 <Tabs defaultValue={filteredCategories[0]?.key}>
@@ -501,22 +521,22 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
                 ))}
               </>
             )}
-          </DemoSection>
+          </section>
         )}
 
         {/* Custom examples */}
         {customExamples && (
-          <DemoSection>
+          <section className="mt-6">
             <Typography variant="h5" style={{ marginBottom: '16px' }}>
               Custom Examples
             </Typography>
             {customExamples}
-          </DemoSection>
+          </section>
         )}
 
         {/* Performance metrics */}
         {showPerformanceMetrics && (
-          <DemoSection>
+          <section className="mt-6">
             <Typography variant="h5" style={{ marginBottom: '16px' }}>
               Performance Metrics
             </Typography>
@@ -525,7 +545,7 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
                 <Typography>Theme performance metrics and optimization data</Typography>
               </Box>
             </Card>
-          </DemoSection>
+          </section>
         )}
 
         {/* Footer */}
@@ -534,7 +554,7 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
             {footer}
           </Box>
         )}
-      </StyledDemo>
+      </OptimizedGlass>
     );
   }
 );

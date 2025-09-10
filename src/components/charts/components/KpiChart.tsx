@@ -1,6 +1,5 @@
 // Typography tokens available via typography.css (imported in index.css)
 import React from 'react';
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 
 export interface KpiData {
   value: number | string;

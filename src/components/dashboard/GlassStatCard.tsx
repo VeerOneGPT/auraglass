@@ -14,7 +14,6 @@ import {
     Zap
 } from 'lucide-react';
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 import { CardContent, CardHeader, CardTitle, GlassCard } from '../card';
 
@@ -129,29 +128,29 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
     // Size configurations
     const sizeConfigs = {
         sm: {
-            cardClass: 'p-4',
-            titleClass: 'text-sm font-medium',
-            valueClass: 'text-xl font-bold',
+            cardClass: 'glass-p-4',
+            titleClass: 'glass-text-sm font-medium',
+            valueClass: 'glass-text-xl font-bold',
             iconSize: 'w-6 h-6',
             sparklineHeight: 'h-6',
         },
         md: {
-            cardClass: 'p-6',
-            titleClass: 'text-base font-medium',
-            valueClass: 'text-2xl font-bold',
+            cardClass: 'glass-p-6',
+            titleClass: 'glass-text-base font-medium',
+            valueClass: 'glass-text-2xl font-bold',
             iconSize: 'w-8 h-8',
             sparklineHeight: 'h-8',
         },
         lg: {
             cardClass: 'p-8',
-            titleClass: 'text-lg font-semibold',
+            titleClass: 'glass-text-lg font-semibold',
             valueClass: 'text-3xl font-bold',
             iconSize: 'w-10 h-10',
             sparklineHeight: 'h-10',
         },
         xl: {
-            cardClass: 'p-10',
-            titleClass: 'text-xl font-semibold',
+            cardClass: 'glass-p-10',
+            titleClass: 'glass-text-xl font-semibold',
             valueClass: 'text-4xl font-bold',
             iconSize: 'w-12 h-12',
             sparklineHeight: 'h-12',
@@ -176,12 +175,12 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
     // Variant color configurations
     const variantConfigs = {
         default: {
-            iconColor: 'text-white/70',
-            valueColor: 'text-white',
+            iconColor: 'glass-text-primary/70',
+            valueColor: 'glass-text-primary',
             trendUpColor: 'text-green-400',
             trendDownColor: 'text-red-400',
             trendNeutralColor: 'text-yellow-400',
-            sparklineColor: 'text-white/60',
+            sparklineColor: 'glass-text-primary/60',
         },
         success: {
             iconColor: 'text-green-400',
@@ -257,17 +256,17 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
     if (loading) {
         return (
             <GlassCard className={cn('animate-pulse', config.cardClass, className)}>
-                <div className="space-y-4">
+                <div className="glass-gap-4">
                     <div className="flex items-center justify-between">
-                        <div className="h-4 bg-white/20 rounded w-24"></div>
-                        <div className="w-8 h-8 bg-white/20 rounded"></div>
+                        <div className="h-4 bg-white/20 glass-radius-md w-24"></div>
+                        <div className="w-8 h-8 bg-white/20 glass-radius-md"></div>
                     </div>
-                    <div className="space-y-2">
-                        <div className="h-8 bg-white/20 rounded w-32"></div>
-                        <div className="h-4 bg-white/20 rounded w-20"></div>
+                    <div className="glass-gap-2">
+                        <div className="h-8 bg-white/20 glass-radius-md w-32"></div>
+                        <div className="h-4 bg-white/20 glass-radius-md w-20"></div>
                     </div>
                     {showSparkline && (
-                        <div className={cn('bg-white/10 rounded', config.sparklineHeight)}></div>
+                        <div className={cn('bg-white/10 glass-radius-md', config.sparklineHeight)}></div>
                     )}
                 </div>
             </GlassCard>
@@ -300,7 +299,7 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
                         layout === 'horizontal' ? 'flex-row items-center' : 'flex-col'
                     )}>
                         <div className="flex-1">
-                            <CardTitle className={cn(config.titleClass, 'text-white/90 flex items-center gap-2')}>
+                            <CardTitle className={cn(config.titleClass, 'glass-text-primary/90 flex items-center glass-gap-2')}>
                                 {displayIcon && (
                                     <span className={cn(config.iconSize, variantConfig.iconColor)}>
                                         {displayIcon}
@@ -309,17 +308,17 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
                                 {title}
                             </CardTitle>
                             {description && (
-                                <p className="text-sm text-white/60 mt-1">{description}</p>
+                                <p className="glass-text-sm glass-text-primary/60 glass-mt-1">{description}</p>
                             )}
                         </div>
 
                         {/* Trend indicator */}
                         {trend && (
-                            <div className="flex items-center gap-1 mt-2">
+                            <div className="flex items-center glass-gap-1 glass-mt-2">
                                 {trend.direction === 'up' && <ArrowUpIcon className={cn('w-4 h-4', variantConfig.trendUpColor)} />}
                                 {trend.direction === 'down' && <ArrowDownIcon className={cn('w-4 h-4', variantConfig.trendDownColor)} />}
                                 {trend.direction === 'neutral' && <Minus className={cn('w-4 h-4', variantConfig.trendNeutralColor)} />}
-                                <span className={cn('text-sm font-medium',
+                                <span className={cn('glass-text-sm font-medium',
                                     trend.direction === 'up' ? variantConfig.trendUpColor :
                                         trend.direction === 'down' ? variantConfig.trendDownColor :
                                             variantConfig.trendNeutralColor
@@ -333,14 +332,14 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
 
                 <CardContent className="pt-0">
                     <div className={cn(
-                        'flex items-baseline gap-2 mb-4',
+                        'flex items-baseline glass-gap-2 glass-mb-4',
                         layout === 'horizontal' ? 'justify-start' : 'justify-center'
                     )}>
                         <span className={cn(config.valueClass, variantConfig.valueColor)}>
                             {value}
                         </span>
                         {unit && (
-                            <span className="text-lg text-white/70 font-medium">
+                            <span className="glass-text-lg glass-text-primary/70 font-medium">
                                 {unit}
                             </span>
                         )}
@@ -348,7 +347,7 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
 
                     {/* Sparkline */}
                     {showSparkline && (sparklineData?.length || 0) > 0 && (
-                        <div className="mb-4">
+                        <div className="glass-mb-4">
                             <svg
                                 width="100%"
                                 height={config.sparklineHeight.replace('h-', '')}
@@ -367,42 +366,42 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
 
                     {/* Progress bar */}
                     {progress !== undefined && (
-                        <div className="mb-4">
-                            <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                        <div className="glass-mb-4">
+                            <div className="w-full bg-white/10 glass-radius-full h-2 overflow-hidden">
                                 <Motion
                                     preset="slideRight"
-                                    className="h-full bg-gradient-to-r from-primary/60 to-primary rounded-full"
+                                    className="h-full bg-gradient-to-r from-primary/60 to-primary glass-radius-full"
                                     style={{ width: `${Math.min(progress, 100)}%` }}
                                 />
                             </div>
-                            <div className="flex justify-between items-center mt-1">
-                                <span className="text-xs text-white/60">Progress</span>
-                                <span className="text-xs text-white/60">{Math.round(progress)}%</span>
+                            <div className="flex justify-between items-center glass-mt-1">
+                                <span className="glass-text-xs glass-text-primary/60">Progress</span>
+                                <span className="glass-text-xs glass-text-primary/60">{Math.round(progress)}%</span>
                             </div>
                         </div>
                     )}
 
                     {/* Previous value comparison */}
                     {previousValue && (
-                        <div className="mb-4 p-3 bg-white/5 rounded-lg">
+                        <div className="glass-mb-4 glass-p-3 bg-white/5 glass-radius-lg">
                             <div className="flex items-center justify-between">
-                                <span className="text-sm text-white/70">Previous period</span>
-                                <span className="text-sm font-medium text-white">{previousValue}{unit}</span>
+                                <span className="glass-text-sm glass-text-primary/70">Previous period</span>
+                                <span className="glass-text-sm font-medium glass-text-primary">{previousValue}{unit}</span>
                             </div>
                         </div>
                     )}
 
                     {/* Additional stats */}
                     {additionalStats && (additionalStats?.length || 0) > 0 && (
-                        <div className="space-y-3">
+                        <div className="glass-gap-3">
                             {additionalStats.map((stat, index) => (
                                 <div key={index} className="flex items-center justify-between">
-                                    <span className="text-sm text-white/70">{stat.label}</span>
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-sm font-medium text-white">{stat.value}</span>
+                                    <span className="glass-text-sm glass-text-primary/70">{stat.label}</span>
+                                    <div className="flex items-center glass-gap-2">
+                                        <span className="glass-text-sm font-medium glass-text-primary">{stat.value}</span>
                                         {stat.change !== undefined && (
                                             <span className={cn(
-                                                'text-xs font-medium',
+                                                'glass-text-xs font-medium',
                                                 stat.change > 0 ? 'text-green-400' :
                                                     stat.change < 0 ? 'text-red-400' : 'text-yellow-400'
                                             )}>
@@ -442,7 +441,7 @@ export const GlassStatGrid: React.FC<GlassStatGridProps> = ({
     };
 
     return (
-        <div className={cn('grid gap-6', gridCols?.[columns as keyof typeof gridCols], className)}>
+        <div className={cn('grid glass-gap-6', gridCols?.[columns as keyof typeof gridCols], className)}>
             {stats.map((stat, index) => (
                 <GlassStatCard
                     key={stat.title}

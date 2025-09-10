@@ -4,10 +4,11 @@ import { GlassButton } from '../button/GlassButton';
 
 import { cn } from '@/lib/utilsComprehensive';
 import { AlertCircle, AlertTriangle, CheckCircle, Info, X } from 'lucide-react';
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+import React, { createContext, useContext, useEffect, useState, forwardRef } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
+import { useA11yId } from '../../utils/a11y';
+import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 
 export interface ToastData {
     id: string;
@@ -174,7 +175,7 @@ export const GlassToast: React.FC<GlassToastProps> = ({
             duration={300}
         >
             <OptimizedGlass
-          elevation={'level3'}
+          elevation={'level4'}
           intensity="strong"
           depth={2}
           tint="neutral"
@@ -184,7 +185,7 @@ export const GlassToast: React.FC<GlassToastProps> = ({
           liftOnHover
           
                 className={cn(
-                    'relative min-w-80 max-w-md p-4 backdrop-blur-md',
+                    'relative min-w-80 max-w-md glass-p-4 backdrop-blur-md',
                     'border border-white/20 shadow-2xl',
                     bgColor,
                     className
@@ -205,7 +206,7 @@ export const GlassToast: React.FC<GlassToastProps> = ({
                     </div>
                 )}
 
-                <div className="flex items-start gap-3">
+                <div className="flex items-start glass-gap-3">
                     {/* Icon */}
                     <div className="flex-shrink-0 mt-0.5">
                         {icon}
@@ -214,13 +215,13 @@ export const GlassToast: React.FC<GlassToastProps> = ({
                     {/* Content */}
                     <div className="flex-1 min-w-0">
                         {title && (
-                            <h4 className="text-white font-medium text-sm leading-tight mb-1">
+                            <h4 className="glass-text-primary font-medium glass-text-sm leading-tight glass-mb-1">
                                 {title}
                             </h4>
                         )}
 
                         {description && (
-                            <p className="text-white/80 text-sm leading-relaxed">
+                            <p className="glass-text-primary/80 glass-text-sm leading-relaxed">
                                 {description}
                             </p>
                         )}
@@ -239,10 +240,10 @@ export const GlassToast: React.FC<GlassToastProps> = ({
                     {/* Close button */}
                     <GlassButton
                         onClick={handleDismiss}
-                        className="flex-shrink-0 p-1 rounded-md hover:bg-white/10 transition-colors duration-200"
+                        className="flex-shrink-0 glass-p-1 glass-radius-md hover:bg-white/10 transition-colors duration-200"
                         aria-label="Close toast"
                     >
-                        <X className="w-4 h-4 text-white/60 hover:text-white" />
+                        <X className="w-4 h-4 glass-text-primary/60 hover:glass-text-primary" />
                     </GlassButton>
                 </div>
             </OptimizedGlass>
@@ -361,7 +362,7 @@ export const GlassToastViewport: React.FC<GlassToastViewportProps & {
         return (
             <div
                 className={cn(
-                    'fixed z-[9999] flex flex-col gap-3 pointer-events-none',
+                    'fixed z-[9999] flex flex-col glass-gap-3 pointer-events-none',
                     positionClasses[position],
                     className
                 )}
@@ -397,10 +398,10 @@ export const GlassToastAction: React.FC<GlassToastActionProps & {
             <GlassButton
                 onClick={onClick}
                 className={cn(
-                    'inline-flex items-center justify-center px-3 py-1.5',
-                    'text-xs font-medium text-white/90',
-                    'bg-white/10 hover:bg-white/20 border border-white/20',
-                    'rounded-md transition-all duration-200',
+                    'inline-flex items-center justify-center glass-px-3 glass-py-1.5',
+                    'glass-text-xs font-medium glass-text-primary/90',
+                    'bg-black/30 hover:bg-black/40 border border-white/30 hover:border-white/40',
+                    'glass-radius-md transition-all duration-200',
                     'focus:outline-none focus:ring-2 focus:ring-white/30',
                     className
                 )}

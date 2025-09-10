@@ -5,9 +5,10 @@ import { GlassButton } from '../button/GlassButton';
 
 import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
+import { useA11yId } from '../../utils/a11y';
+import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 
 export interface GlassBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   /**
@@ -31,7 +32,7 @@ export interface GlassBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   /**
    * Badge shape
    */
-  shape?: 'rounded' | 'pill' | 'square';
+  shape?: 'glass-radius-md' | 'pill' | 'square';
   /**
    * Whether badge has a dot indicator
    */
@@ -60,6 +61,14 @@ export interface GlassBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
    * Animation preset
    */
   animation?: 'scale' | 'fade' | 'bounce';
+  /**
+   * Respect user's motion preferences
+   */
+  respectMotionPreference?: boolean;
+  /**
+   * ARIA label for the badge
+   */
+  'aria-label'?: string;
 }
 
 /**
@@ -71,7 +80,7 @@ export const GlassBadge = forwardRef<HTMLSpanElement, GlassBadgeProps>(
     {
       variant = 'default',
       size = 'sm',
-      shape = 'rounded',
+      shape = 'glass-radius-md',
       dot = false,
       leftIcon,
       rightIcon,
@@ -79,35 +88,41 @@ export const GlassBadge = forwardRef<HTMLSpanElement, GlassBadgeProps>(
       onRemove,
       animate = false,
       animation = 'scale',
+      respectMotionPreference = true,
+      'aria-label': ariaLabel,
       className,
       children,
       ...props
     },
     ref
   ) => {
+    const badgeId = useA11yId('badge');
+    const { prefersReducedMotion } = useMotionPreferenceContext();
+    const shouldAnimate = animate && (!respectMotionPreference || !prefersReducedMotion);
+
     const sizeClasses = {
-      xs: dot ? 'w-2 h-2' : 'px-1.5 py-0.5 text-xs',
-      sm: dot ? 'w-2.5 h-2.5' : 'px-2 py-1 text-xs',
-      md: dot ? 'w-3 h-3' : 'px-2.5 py-1 text-sm',
-      lg: dot ? 'w-3.5 h-3.5' : 'px-3 py-1.5 text-sm',
+      xs: dot ? 'w-2 h-2' : 'glass-px-1.5 glass-py-0.5 glass-text-xs',
+      sm: dot ? 'w-2.5 h-2.5' : 'glass-px-2 glass-py-1 glass-text-xs',
+      md: dot ? 'w-3 h-3' : 'glass-px-2.5 glass-py-1 glass-text-sm',
+      lg: dot ? 'w-3.5 h-3.5' : 'glass-px-3 glass-py-1.5 glass-text-sm',
     };
 
     const shapeClasses = {
-      rounded: 'rounded-md',
-      pill: 'rounded-full',
+      'glass-radius-md': 'glass-radius-md',
+      pill: 'glass-radius-full',
       square: 'rounded-none',
     };
 
     const variantClasses = {
-      default: 'bg-muted/50 text-muted-foreground border-0',
-      primary: 'bg-primary/10 text-blue-200 border-0',
-      secondary: 'bg-secondary/10 text-white/90 border-0',
-      success: 'bg-success/10 text-green-200 border-0',
-      warning: 'bg-warning/10 text-yellow-200 border-0',
-      error: 'bg-destructive/10 text-red-200 border-0',
-      info: 'bg-info/10 text-cyan-200 border-0',
+      default: 'bg-muted/50 glass-text-secondary border-0',
+      primary: 'glass-surface-primary/10 glass-text-primary border-0',
+      secondary: 'bg-secondary/10 glass-text-primary/90 border-0',
+      success: 'glass-surface-success/10 glass-text-success border-0',
+      warning: 'glass-surface-warning/10 glass-text-primary border-0',
+      error: 'glass-surface-danger/10 glass-text-danger border-0',
+      info: 'glass-surface-info/10 glass-text-primary border-0',
       outline: 'bg-transparent text-foreground border border-white/10',
-      ghost: 'bg-transparent text-white/70 border-0',
+      ghost: 'bg-transparent glass-text-primary/70 border-0',
     };
 
     const dotVariantClasses = {
@@ -146,17 +161,20 @@ export const GlassBadge = forwardRef<HTMLSpanElement, GlassBadgeProps>(
       const content = (
         <span
           ref={ref}
+          id={badgeId}
           className={cn(
-            'inline-block rounded-full flex-shrink-0',
+            'inline-block glass-radius-full flex-shrink-0',
             sizeClasses[size],
             (dotVariantClasses as any)[variant] ?? dotVariantClasses.default,
             className
           )}
+          role="status"
+          aria-label={ariaLabel || `${variant} status indicator`}
           {...props}
         />
       );
 
-      return animate ? (
+      return shouldAnimate ? (
         <Motion preset={getAnimationPreset()}>
           {content}
         </Motion>
@@ -173,15 +191,17 @@ export const GlassBadge = forwardRef<HTMLSpanElement, GlassBadgeProps>(
         animation="none"
         performanceMode="medium"
         ref={ref as any}
-
+        id={badgeId}
         className={cn(
-          'inline-flex items-center gap-1 font-medium',
+          'inline-flex items-center glass-gap-1 font-medium',
           'transition-all duration-200',
           sizeClasses[size],
           shapeClasses[shape],
           (variantClasses as any)[variant] ?? variantClasses.default,
           className
         )}
+        role={removable ? 'button' : 'status'}
+        aria-label={ariaLabel || (children ? `Badge: ${children}` : `${variant} badge`)}
         {...props}
       >
         {leftIcon && (
@@ -208,7 +228,7 @@ export const GlassBadge = forwardRef<HTMLSpanElement, GlassBadgeProps>(
             onClick={onRemove}
             className={cn(
               'flex-shrink-0 flex items-center justify-center',
-              'hover:bg-current/20 rounded-full transition-colors',
+              'hover:bg-current/20 glass-radius-full transition-colors',
               'focus:outline-none focus:ring-1 focus:ring-current',
               iconSize[size]
             )}
@@ -232,7 +252,7 @@ export const GlassBadge = forwardRef<HTMLSpanElement, GlassBadgeProps>(
       </OptimizedGlass>
     );
 
-    return animate ? (
+    return shouldAnimate ? (
       <Motion preset={getAnimationPreset()}>
         {content}
       </Motion>
@@ -364,9 +384,9 @@ export function BadgeGroup({
   className,
 }: BadgeGroupProps) {
   const spacingClasses = {
-    tight: 'gap-1',
-    normal: 'gap-2',
-    relaxed: 'gap-3',
+    tight: 'glass-gap-1',
+    normal: 'glass-gap-2',
+    relaxed: 'glass-gap-3',
   };
 
   const visibleBadges = max ? badges.slice(0, max) : badges;

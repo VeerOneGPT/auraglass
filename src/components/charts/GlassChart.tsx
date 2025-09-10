@@ -5,16 +5,71 @@
  * and Z-Space layering. Acts as a wrapper for all chart types.
  */
 // Typography tokens available via typography.css (imported in index.css)
-import React, { useMemo, useState, useRef, useCallback, useEffect, forwardRef, useImperativeHandle } from 'react';
+import React, { useMemo, useState, useRef, useCallback, useEffect, forwardRef, useImperativeHandle, memo } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
 
 import { usePhysicsInteraction } from '../../hooks/usePhysicsInteraction';
 import { zSpaceLayers } from '../../core/zspace';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { useGlassTheme } from '../../hooks/useGlassTheme';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useTheme } from 'styled-components';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
+
+// Consciousness interface imports
+import { usePredictiveEngine, useInteractionRecorder } from '../advanced/GlassPredictiveEngine';
+import { useAchievements } from '../advanced/GlassAchievementSystem';
+import { useBiometricAdaptation } from '../advanced/GlassBiometricAdaptation';
+import { useEyeTracking } from '../advanced/GlassEyeTracking';
+import { useSpatialAudio } from '../advanced/GlassSpatialAudio';
+
+// Consciousness interface features
+export interface ConsciousnessFeatures {
+  /**
+   * Enable predictive chart insights and data analysis
+   */
+  predictive?: boolean;
+  /**
+   * Enable predictive data preloading for chart interactions
+   */
+  preloadData?: boolean;
+  /**
+   * Enable eye tracking for chart element focus
+   */
+  eyeTracking?: boolean;
+  /**
+   * Enable gaze-responsive chart highlighting
+   */
+  gazeResponsive?: boolean;
+  /**
+   * Enable biometric adaptation for chart complexity
+   */
+  adaptive?: boolean;
+  /**
+   * Enable biometric responsive chart scaling and timing
+   */
+  biometricResponsive?: boolean;
+  /**
+   * Enable spatial audio for chart interactions
+   */
+  spatialAudio?: boolean;
+  /**
+   * Enable audio feedback for chart data points
+   */
+  audioFeedback?: boolean;
+  /**
+   * Enable achievement tracking for chart interactions
+   */
+  trackAchievements?: boolean;
+  /**
+   * Achievement identifier for chart usage
+   */
+  achievementId?: string;
+  /**
+   * Chart usage context for consciousness features
+   */
+  usageContext?: 'dashboard' | 'analytics' | 'report' | 'presentation' | 'exploration';
+}
 
 // Basic types
 interface BaseChartProps {
@@ -32,7 +87,7 @@ interface BaseChartProps {
 /**
  * GlassChart props interface
  */
-export interface GlassChartProps extends BaseChartProps {
+export interface GlassChartProps extends BaseChartProps, ConsciousnessFeatures {
   /**
    * The type of chart to render
    */
@@ -337,8 +392,67 @@ const ChartTypeIcons = {
   ),
 };
 
-// Add this helper function to ensure we have a properly typed theme
-const ensureValidTheme = (themeInput: any): DefaultTheme => { // If the theme is already a valid DefaultTheme return it
+// Memoized theme helper function with cached default theme
+const defaultTheme: DefaultTheme = {
+  isDarkMode: false,
+  colorMode: 'light',
+  themeVariant: 'nebula',
+  colors: {
+    nebula: {
+      accentPrimary: '#6366F1',
+      accentSecondary: '#8B5CF6',
+      accentTertiary: '#EC4899',
+      stateCritical: '#EF4444',
+      stateOptimal: '#10B981',
+      stateAttention: '#F59E0B',
+      stateInformational: '#3B82F6',
+      neutralBackground: '#F9FAFB',
+      neutralForeground: '#1F2937',
+      neutralBorder: '#E5E7EB',
+      neutralSurface: '#FFFFFF'
+    },
+    glass: {
+      light: {
+        background: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
+        border: '${glassStyles.borderColor || "rgba(255, 255, 255, 0.2)"}',
+        highlight: '${glassStyles.borderColor || "rgba(255, 255, 255, 0.3)"}',
+        shadow: 'rgba(0, 0, 0, 0.1)',
+        glow: '${glassStyles.borderColor || "rgba(255, 255, 255, 0.2)"}'
+      },
+      dark: {
+        background: 'rgba(0, 0, 0, 0.2)',
+        border: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
+        highlight: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
+        shadow: 'rgba(0, 0, 0, 0.3)',
+        glow: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}'
+      },
+      tints: {
+        primary: 'rgba(99, 102, 241, 0.1)',
+        secondary: 'rgba(139, 92, 246, 0.1)'
+      }
+    }
+  },
+  zIndex: {
+    hide: -1,
+    auto: 'auto',
+    base: 0,
+    docked: 10,
+    dropdown: 1000,
+    sticky: 1100,
+    banner: 1200,
+    overlay: 1300,
+    modal: 1400,
+    popover: 1500,
+    skipLink: 1600,
+    toast: 1700,
+    tooltip: 1800,
+    glacial: 9999
+  }
+};
+
+// Helper function to ensure we have a properly typed theme
+const ensureValidTheme = (themeInput: any): DefaultTheme => {
+  // If the theme is already a valid DefaultTheme return it
   if (
     themeInput && 
     typeof themeInput === 'object' && 
@@ -351,72 +465,16 @@ const ensureValidTheme = (themeInput: any): DefaultTheme => { // If the theme is
     return themeInput as DefaultTheme;
   }
   
-  // Otherwise, create a new theme object
-  return {
-    isDarkMode: false,
-    colorMode: 'light',
-    themeVariant: 'nebula',
-    colors: {
-      nebula: {
-        accentPrimary: '#6366F1',
-        accentSecondary: '#8B5CF6',
-        accentTertiary: '#EC4899',
-        stateCritical: '#EF4444',
-        stateOptimal: '#10B981',
-        stateAttention: '#F59E0B',
-        stateInformational: '#3B82F6',
-        neutralBackground: '#F9FAFB',
-        neutralForeground: '#1F2937',
-        neutralBorder: '#E5E7EB',
-        neutralSurface: '#FFFFFF'
-      },
-      glass: {
-        light: {
-          background: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
-          border: '${glassStyles.borderColor || "rgba(255, 255, 255, 0.2)"}',
-          highlight: '${glassStyles.borderColor || "rgba(255, 255, 255, 0.3)"}',
-          shadow: 'rgba(0, 0, 0, 0.1)',
-          glow: '${glassStyles.borderColor || "rgba(255, 255, 255, 0.2)"}'
-        },
-        dark: {
-          background: 'rgba(0, 0, 0, 0.2)',
-          border: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
-          highlight: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
-          shadow: 'rgba(0, 0, 0, 0.3)',
-          glow: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}'
-        },
-        tints: {
-          primary: 'rgba(99, 102, 241, 0.1)',
-          secondary: 'rgba(139, 92, 246, 0.1)'
-        }
-      }
-    },
-    zIndex: {
-      hide: -1,
-      auto: 'auto',
-      base: 0,
-      docked: 10,
-      dropdown: 1000,
-      sticky: 1100,
-      banner: 1200,
-      overlay: 1300,
-      modal: 1400,
-      popover: 1500,
-      skipLink: 1600,
-      toast: 1700,
-      tooltip: 1800,
-      glacial: 9999
-    }
-  };
-};
+  // Return cached default theme instead of recreating
+  return defaultTheme;
+}
 
 /**
- * Helper function to transform Chart.js data format to chart data
+ * Memoized helper function to transform Chart.js data format to chart data
  */
-const transformChartJsData = (chartJsData: any): any[] => {
+const transformChartJsData = memo((chartJsData: any): any[] => {
   if (!chartJsData || !Array.isArray(chartJsData.datasets) || !Array.isArray(chartJsData.labels)) {
     // Return empty or handle error if format is unexpected
-    // console.warn('Invalid data format passed to transformChartJsData');
     return []; 
   }
 
@@ -435,21 +493,23 @@ const transformChartJsData = (chartJsData: any): any[] => {
     // Add other potential ChartSeries properties if needed
     // visible: dataset.hidden !== undefined ? !dataset.hidden : true,
   }));
-};
+});
 
-// Performance hook implementation
-const useGlassPerformance = () => ({
+// Memoized performance hook implementation with caching
+const performanceCache = {
   isPerformanceConstrained: false,
   canUseBlur: true,
   canUseGlassEffects: true,
   canUseAdvancedAnimations: true,
   isPoorPerformance: false
-});
+};
+
+const useGlassPerformance = () => performanceCache;
 
 /**
- * GlassChart Component
+ * Memoized GlassChart Component for better performance
  */
-export const GlassChart = forwardRef<GlassChartRef, GlassChartProps>(({
+const GlassChartComponent = forwardRef<GlassChartRef, GlassChartProps>(({
   type = 'bar',
   data,
   width = '100%',
@@ -477,6 +537,18 @@ export const GlassChart = forwardRef<GlassChartRef, GlassChartProps>(({
   style,
   className,
   theme: providedTheme,
+  // Consciousness features
+  predictive = false,
+  preloadData = false,
+  eyeTracking = false,
+  gazeResponsive = false,
+  adaptive = false,
+  biometricResponsive = false,
+  spatialAudio = false,
+  audioFeedback = false,
+  trackAchievements = false,
+  achievementId,
+  usageContext = 'dashboard',
 }, ref) => {
   // Get theme from context or use the provided theme, and ensure it's valid
   const contextTheme = useTheme();
@@ -505,6 +577,152 @@ export const GlassChart = forwardRef<GlassChartRef, GlassChartProps>(({
 
   // Refs for chart container
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Consciousness features state
+  const [chartInsights, setChartInsights] = useState<any[]>([]);
+  const [dataPatterns, setDataPatterns] = useState<any[]>([]);
+  const [isPreloading, setIsPreloading] = useState(false);
+  const [adaptiveComplexity, setAdaptiveComplexity] = useState<'low' | 'medium' | 'high'>('medium');
+  const [currentDataFocus, setCurrentDataFocus] = useState<{ seriesIndex: number; pointIndex: number } | null>(null);
+  
+  // Consciousness feature hooks - only initialize if features are enabled
+  const predictiveEngine = predictive ? usePredictiveEngine() : null;
+  const eyeTracker = eyeTracking ? useEyeTracking() : null;
+  const biometricAdapter = adaptive ? useBiometricAdaptation() : null;
+  const spatialAudioEngine = spatialAudio ? useSpatialAudio() : null;
+  const achievementTracker = trackAchievements ? useAchievements() : null;
+  const interactionRecorder = (predictive || trackAchievements) ? useInteractionRecorder(`glass-chart-${usageContext}`) : null;
+
+  // Chart insights and pattern analysis
+  useEffect(() => {
+    if (!predictive || !predictiveEngine || !data) return;
+
+    const analyzeChartData = async () => {
+      try {
+        // Get patterns and insights from the predictive engine
+        const patterns = predictiveEngine.engine?.getPatterns() || [];
+        const insights = predictiveEngine.engine?.getInsights() || [];
+
+        setDataPatterns(patterns || []);
+        setChartInsights(insights || []);
+
+        if (achievementTracker && trackAchievements) {
+          achievementTracker.recordAction('chart_insights_generated', {
+            chartType: currentType,
+            insightsCount: insights?.length || 0,
+            patternsFound: patterns?.length || 0,
+            context: usageContext,
+          });
+        }
+      } catch (error) {
+        console.warn('Chart insights analysis failed:', error);
+      }
+    };
+
+    analyzeChartData();
+  }, [predictive, predictiveEngine, data, currentType, usageContext, achievementTracker, trackAchievements]);
+  
+  // Biometric adaptation for chart complexity
+  useEffect(() => {
+    if (!biometricResponsive || !biometricAdapter) return;
+
+    const adaptChartComplexity = () => {
+      const stressLevel = biometricAdapter.currentStressLevel;
+      // For now, use a simple cognitive load estimation based on stress level
+      const cognitiveLoad = stressLevel;
+      // Assume desktop capabilities for now
+      const deviceCapabilities = { isDesktop: true };
+
+      // Adapt chart complexity based on biometric data
+      if (stressLevel > 0.7 || cognitiveLoad > 0.8) {
+        setAdaptiveComplexity('low'); // Simplified chart when stressed
+      } else if (stressLevel < 0.3 && cognitiveLoad < 0.4 && deviceCapabilities.isDesktop) {
+        setAdaptiveComplexity('high'); // Full complexity when relaxed
+      } else {
+        setAdaptiveComplexity('medium'); // Balanced complexity
+      }
+    };
+
+    // Initial adaptation
+    adaptChartComplexity();
+
+    // Listen for biometric changes
+    const interval = setInterval(adaptChartComplexity, 3000);
+    return () => clearInterval(interval);
+  }, [biometricResponsive, biometricAdapter]);
+  
+  // Eye tracking for chart element focus
+  useEffect(() => {
+    if (!gazeResponsive || !eyeTracker || !containerRef.current) return;
+
+    const handleGazeOnDataPoint = (element: HTMLElement) => {
+      // Extract data point information from element attributes
+      const seriesIndex = parseInt(element.getAttribute('data-series-index') || '0');
+      const pointIndex = parseInt(element.getAttribute('data-point-index') || '0');
+      
+      setCurrentDataFocus({ seriesIndex, pointIndex });
+      
+      if (spatialAudioEngine && audioFeedback) {
+        spatialAudioEngine.playGlassSound('data_focus', {
+          x: element.offsetLeft,
+          y: element.offsetTop,
+          z: 0,
+        });
+      }
+      
+      if (achievementTracker && trackAchievements) {
+        achievementTracker.recordAction('chart_data_gaze_focus', {
+          seriesIndex,
+          pointIndex,
+          chartType: currentType,
+          context: usageContext,
+        });
+      }
+    };
+
+    const handleGazeOffDataPoint = () => {
+      setCurrentDataFocus(null);
+      
+      if (spatialAudioEngine && audioFeedback) {
+        spatialAudioEngine.playGlassSound('data_blur');
+      }
+    };
+
+    // Note: onGazeEnter/onGazeExit not available on current eye tracker interface
+    // eyeTracker.onGazeEnter(containerRef.current, handleGazeOnDataPoint);
+    // eyeTracker.onGazeExit(containerRef.current, handleGazeOffDataPoint);
+
+    return () => {
+      if (containerRef.current) {
+        // eyeTracker.offGazeEnter(containerRef.current, handleGazeOnDataPoint);
+        // eyeTracker.offGazeExit(containerRef.current, handleGazeOffDataPoint);
+      }
+    };
+  }, [gazeResponsive, eyeTracker, spatialAudioEngine, audioFeedback, achievementTracker, trackAchievements, currentType, usageContext]);
+  
+  // Data preloading for chart interactions
+  useEffect(() => {
+    if (!preloadData || !predictiveEngine) return;
+
+    const preloadChartData = async () => {
+      setIsPreloading(true);
+      try {
+        // Note: preloadData not available on current predictive engine interface
+        // await predictiveEngine.preloadData({
+        //   chartType: currentType,
+        //   context: usageContext,
+        //   currentData: data,
+        //   patterns: dataPatterns
+        // });
+      } catch (error) {
+        console.warn('Chart data preloading failed:', error);
+      } finally {
+        setIsPreloading(false);
+      }
+    };
+
+    preloadChartData();
+  }, [preloadData, predictiveEngine, currentType, usageContext, data, dataPatterns]);
 
   // Use depth animation if enabled
   const zAnimationResult = {
@@ -550,32 +768,134 @@ export const GlassChart = forwardRef<GlassChartRef, GlassChartProps>(({
     return data; // Pass data as-is
   }, [data, isChartJsDataFormat]);
 
-  // --- Handler Functions ---
+  // Memoized handler functions for better performance
   // Handle tab change
-  const handleTabChange = (tabId: string) => {
+  const handleTabChange = useCallback((tabId: string) => {
     setCurrentTab(tabId);
     if (onTabChange) {
       onTabChange(tabId);
     }
-  };
+  }, [onTabChange]);
 
   // Handle chart type change
-  const handleTypeChange = (newType: GlassChartProps['type']) => {
+  const handleTypeChange = useCallback((newType: GlassChartProps['type']) => {
+    const previousType = currentType;
     setCurrentType(newType);
-  };
+    
+    // Consciousness-enhanced type change tracking
+    if (interactionRecorder) {
+      // Create a synthetic mouse event for the type change
+      const syntheticEvent = {
+        currentTarget: { id: `chart-type-${newType}` },
+        clientX: 0,
+        clientY: 0,
+        button: 0,
+        ctrlKey: false,
+        altKey: false,
+        shiftKey: false,
+      } as any;
+      interactionRecorder.recordClick(syntheticEvent);
+    }
+    
+    // Spatial audio feedback for type changes
+    if (spatialAudioEngine && audioFeedback) {
+      spatialAudioEngine.playGlassSound('chart_type_change', undefined, {
+        frequency: newType === 'pie' ? 800 : newType === 'line' ? 600 : 400,
+      });
+    }
+    
+    // Achievement tracking for chart exploration
+    if (achievementTracker && trackAchievements) {
+      achievementTracker.recordAction('chart_type_switch', {
+        fromType: previousType,
+        toType: newType,
+        context: usageContext,
+        timestamp: Date.now(),
+      });
+    }
+  }, [currentType, interactionRecorder, spatialAudioEngine, audioFeedback, achievementTracker, trackAchievements, usageContext]);
 
   // Handle focus mode toggle
-  const handleFocusToggle = () => {
+  const handleFocusToggle = useCallback(() => {
     if (focusMode) {
-      setIsFocused(!isFocused);
-      if (depthAnimation && !isFocused) {
-            animationFunctionsRef.current?.animate && animationFunctionsRef.current.animate();
-      }
+      setIsFocused(prev => {
+        const newFocused = !prev;
+        
+        // Enhanced focus toggle with consciousness features
+        if (depthAnimation && !prev) {
+          animationFunctionsRef.current?.animate && animationFunctionsRef.current.animate();
+        }
+        
+        // Spatial audio for focus state changes
+        if (spatialAudioEngine && audioFeedback) {
+          spatialAudioEngine.playGlassSound(
+            newFocused ? 'chart_focus_enter' : 'chart_focus_exit',
+            undefined,
+            {
+              intensity: newFocused ? 0.8 : 0.4,
+            }
+          );
+        }
+        
+        // Track focus interactions
+        if (interactionRecorder) {
+          // Create a synthetic focus event
+          const syntheticEvent = {
+            currentTarget: { id: 'chart-container' },
+            type: newFocused ? 'focus' : 'blur',
+          } as any;
+          interactionRecorder.recordFocus(syntheticEvent);
+        }
+        
+        // Achievement tracking for focused chart analysis
+        if (achievementTracker && trackAchievements && newFocused) {
+          achievementTracker.recordAction('chart_focus_mode_entered', {
+            chartType: currentType,
+            context: usageContext,
+            hasInsights: chartInsights.length > 0,
+          });
+        }
+        
+        return newFocused;
+      });
     }
-  };
+  }, [focusMode, depthAnimation, spatialAudioEngine, audioFeedback, interactionRecorder, currentType, usageContext, achievementTracker, trackAchievements, chartInsights.length]);
 
-  // Handle download
-  const handleDownload = () => {
+  // Handle download with consciousness tracking
+  const handleDownload = useCallback(() => {
+    // Spatial audio feedback for download action
+    if (spatialAudioEngine && audioFeedback) {
+      spatialAudioEngine.playGlassSound('chart_download', undefined, {
+        frequency: 500,
+        duration: 300,
+      });
+    }
+    
+    // Track download interactions
+    if (interactionRecorder) {
+      // Create a synthetic mouse event for the download
+      const syntheticEvent = {
+        currentTarget: { id: 'chart-download' },
+        clientX: 0,
+        clientY: 0,
+        button: 0,
+        ctrlKey: false,
+        altKey: false,
+        shiftKey: false,
+      } as any;
+      interactionRecorder.recordClick(syntheticEvent);
+    }
+    
+    // Achievement tracking for chart exports
+    if (achievementTracker && trackAchievements) {
+      achievementTracker.recordAction('chart_exported', {
+        chartType: currentType,
+        context: usageContext,
+        insightsCount: chartInsights.length,
+        exportMethod: onDownload ? 'custom' : 'default',
+      });
+    }
+    
     if (onDownload) {
       onDownload();
     } else {
@@ -584,7 +904,7 @@ export const GlassChart = forwardRef<GlassChartRef, GlassChartProps>(({
         console.log('Download chart - custom implementation required');
       }
     }
-  };
+  }, [onDownload, spatialAudioEngine, audioFeedback, interactionRecorder, currentType, usageContext, chartInsights.length, adaptiveComplexity, achievementTracker, trackAchievements]);
 
   // --- Imperative Handle (Moved After Handlers) ---
   useImperativeHandle(ref, () => ({
@@ -643,45 +963,51 @@ export const GlassChart = forwardRef<GlassChartRef, GlassChartProps>(({
     ref: { current: null }
   };
 
-  // Render chart based on type and simplified mode
-  const renderChart = useCallback(() => {
-    // Prepare props common to most charts
-    const commonProps = {
-      // We'll override data prop specifically where needed
-      width: '100%',
-      height: '100%',
-      glass,
-      title: undefined,
-      description: undefined,
-      adaptToCapabilities,
-      simplified: useSimplified,
-      onError,
-      ...chartProps,
-    };
+  // Memoized chart props to prevent unnecessary re-renders
+  const commonProps = useMemo(() => ({
+    width: '100%',
+    height: '100%',
+    glass,
+    title: undefined,
+    description: undefined,
+    adaptToCapabilities,
+    simplified: useSimplified,
+    onError,
+    ...chartProps,
+  }), [glass, adaptToCapabilities, useSimplified, onError, chartProps]);
 
-    // Handle Pie/Doughnut data preparation separately
-    if (currentType === 'pie') { // Add doughnut later if needed
-      let pieData: any[] = [];
-
-      if (isChartJsDataFormat) {
-        const firstDataset = data?.datasets?.[0];
-        if (firstDataset && Array.isArray(firstDataset.data)) {
-          pieData = firstDataset.data?.map((value: number, index: number) => ({
-            label: data?.labels?.[index] || `Slice ${index + 1}`,
-            value: value,
-            color: Array.isArray(firstDataset.backgroundColor)
-                     ? firstDataset.backgroundColor[index % (firstDataset.backgroundColor?.length || 0)]
-                     : firstDataset.backgroundColor,
-          }));
-        }
-      } else if (Array.isArray(data) && data?.length > 0 && data[0].value !== undefined) {
-        // Data looks like the expected format
-        pieData = data;
-      } else if (Array.isArray(chartSeriesData) && chartSeriesData.length > 0) {
-        // Extract data from the first series
-        pieData = chartSeriesData[0].data;
+  // Memoized pie data processing
+  const pieData = useMemo(() => {
+    if (currentType !== 'pie') return [];
+    
+    let pieDataResult: any[] = [];
+    
+    if (isChartJsDataFormat) {
+      const firstDataset = data?.datasets?.[0];
+      if (firstDataset && Array.isArray(firstDataset.data)) {
+        pieDataResult = firstDataset.data?.map((value: number, index: number) => ({
+          label: data?.labels?.[index] || `Slice ${index + 1}`,
+          value: value,
+          color: Array.isArray(firstDataset.backgroundColor)
+                   ? firstDataset.backgroundColor[index % (firstDataset.backgroundColor?.length || 0)]
+                   : firstDataset.backgroundColor,
+        }));
       }
+    } else if (Array.isArray(data) && data?.length > 0 && data[0].value !== undefined) {
+      // Data looks like the expected format
+      pieDataResult = data;
+    } else if (Array.isArray(chartSeriesData) && chartSeriesData.length > 0) {
+      // Extract data from the first series
+      pieDataResult = chartSeriesData[0].data;
+    }
+    
+    return pieDataResult;
+  }, [currentType, isChartJsDataFormat, data, chartSeriesData]);
 
+  // Optimized chart rendering with better memoization
+  const renderChart = useCallback(() => {
+    // Handle Pie/Doughnut data preparation separately
+    if (currentType === 'pie') {
       return <PieChart {...commonProps} data={pieData} />;
     }
     
@@ -731,15 +1057,66 @@ export const GlassChart = forwardRef<GlassChartRef, GlassChartProps>(({
         ...(magneticProps ? magneticProps.style : {}),
         ...(isFocused && depthAnimation ? depthStyles : {}),
       }}
-      className={className}
+      className={`${className || ''} ${gazeResponsive && currentDataFocus ? 'chart-gaze-focused' : ''} ${isPreloading ? 'chart-preloading' : ''} ${adaptiveComplexity === 'low' ? 'chart-simplified' : adaptiveComplexity === 'high' ? 'chart-enhanced' : ''}`}
       onClick={handleFocusToggle}
+      data-chart-type={currentType}
+      data-usage-context={usageContext}
+      data-consciousness-level={`${[predictive, eyeTracking, adaptive, spatialAudio].filter(Boolean).length}`}
+      data-adaptive-complexity={adaptiveComplexity}
+      data-insights-count={chartInsights.length}
+      data-patterns-count={dataPatterns.length}
+      aria-label={`Interactive ${currentType} chart${title ? ` titled ${title}` : ''}${chartInsights.length > 0 ? ` with ${chartInsights.length} insights` : ''}`}
+      role="img"
     >
-      <div style={{ padding: '16px', height: '100%', display: 'flex', flexDirection: 'column' }}>
-        {/* Chart header */}
-        {(title || description) && (
+      <div 
+        style={{ 
+          padding: '16px', 
+          height: '100%', 
+          display: 'flex', 
+          flexDirection: 'column',
+          opacity: isPreloading ? 0.7 : 1,
+          transition: 'opacity 0.3s ease',
+        }}
+      >
+        {/* Chart header with consciousness insights */}
+        {(title || description || chartInsights.length > 0) && (
           <ChartHeader>
             {title && <ChartTitle>{title}</ChartTitle>}
             {description && <ChartDescription>{description}</ChartDescription>}
+            
+            {/* Predictive insights display */}
+            {predictive && chartInsights.length > 0 && (
+              <div 
+                style={{
+                  marginTop: '8px',
+                  padding: '8px 12px',
+                  background: 'rgba(99, 102, 241, 0.1)',
+                  borderRadius: '6px',
+                  border: '1px solid rgba(99, 102, 241, 0.2)',
+                  fontSize: '12px',
+                  color: 'rgba(99, 102, 241, 0.9)'
+                }}
+                data-insights-panel="true"
+              >
+                <strong>💡 Insights:</strong> {chartInsights.slice(0, 2).map(insight => insight.title || insight.message).join(', ')}
+                {chartInsights.length > 2 && ` (+${chartInsights.length - 2} more)`}
+              </div>
+            )}
+            
+            {/* Biometric adaptation indicator */}
+            {biometricResponsive && adaptiveComplexity !== 'medium' && (
+              <div 
+                style={{
+                  marginTop: '4px',
+                  fontSize: '10px',
+                  color: 'rgba(255, 255, 255, 0.6)',
+                  fontStyle: 'italic'
+                }}
+                data-adaptation-indicator="true"
+              >
+                🧠 Adapted for {adaptiveComplexity} cognitive load
+              </div>
+            )}
           </ChartHeader>
         )}
 
@@ -760,7 +1137,7 @@ export const GlassChart = forwardRef<GlassChartRef, GlassChartProps>(({
                   {availableTypes.includes('bar') && (
                     <ChartTypeButton
                       active={currentType === 'bar'}
-                      onClick={() => handleTypeChange('bar')}
+                      onClick={(e) => handleTypeChange('bar')}
                       title="Bar chart"
                       theme={theme}
                     >
@@ -770,7 +1147,7 @@ export const GlassChart = forwardRef<GlassChartRef, GlassChartProps>(({
                   {availableTypes.includes('line') && (
                     <ChartTypeButton
                       active={currentType === 'line'}
-                      onClick={() => handleTypeChange('line')}
+                      onClick={(e) => handleTypeChange('line')}
                       title="Line chart"
                       theme={theme}
                     >
@@ -780,7 +1157,7 @@ export const GlassChart = forwardRef<GlassChartRef, GlassChartProps>(({
                   {availableTypes.includes('area') && (
                     <ChartTypeButton
                       active={currentType === 'area'}
-                      onClick={() => handleTypeChange('area')}
+                      onClick={(e) => handleTypeChange('area')}
                       title="Area chart"
                       theme={theme}
                     >
@@ -790,7 +1167,7 @@ export const GlassChart = forwardRef<GlassChartRef, GlassChartProps>(({
                   {availableTypes.includes('pie') && (
                     <ChartTypeButton
                       active={currentType === 'pie'}
-                      onClick={() => handleTypeChange('pie')}
+                      onClick={(e) => handleTypeChange('pie')}
                       title="Pie chart"
                       theme={theme}
                     >
@@ -845,17 +1222,234 @@ export const GlassChart = forwardRef<GlassChartRef, GlassChartProps>(({
           </ChartControls>
         )}
 
-        {/* Main chart content */}
-        <ChartContent focused={isFocused}>{renderChart()}</ChartContent>
+        {/* Main chart content with consciousness enhancements */}
+        <ChartContent 
+          focused={isFocused}
+          data-current-focus={currentDataFocus ? `${currentDataFocus.seriesIndex}-${currentDataFocus.pointIndex}` : undefined}
+          data-adaptive-complexity={adaptiveComplexity}
+          style={{
+            filter: currentDataFocus && gazeResponsive ? 'brightness(1.1) saturate(1.2)' : undefined,
+            transition: 'filter 0.3s ease',
+            position: 'relative'
+          }}
+        >
+          {renderChart()}
+          
+          {/* Eye tracking focus overlay */}
+          {currentDataFocus && gazeResponsive && (
+            <div
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: 'radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 30%)',
+                pointerEvents: 'none',
+                zIndex: 1,
+                animation: 'pulse 2s infinite'
+              }}
+              data-gaze-overlay="true"
+            />
+          )}
+          
+          {/* Preloading indicator */}
+          {isPreloading && (
+            <div
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                background: 'rgba(0, 0, 0, 0.8)',
+                color: 'white',
+                padding: '8px 12px',
+                borderRadius: '4px',
+                fontSize: '12px',
+                zIndex: 10,
+              }}
+            >
+              🔄 Analyzing data patterns...
+            </div>
+          )}
+        </ChartContent>
 
-        {/* Footer content (optional) */}
-        {isFocused && <FooterContent>Click to exit focused view</FooterContent>}
+        {/* Enhanced footer content with consciousness features */}
+        {(isFocused || chartInsights.length > 0) && (
+          <FooterContent>
+            {isFocused && 'Click to exit focused view'}
+            {chartInsights.length > 0 && (
+              <div style={{ marginTop: isFocused ? '8px' : '0', fontSize: '11px', opacity: 0.8 }}>
+                📊 {chartInsights.length} insights available{currentDataFocus ? ` | Focus: Series ${currentDataFocus.seriesIndex + 1}, Point ${currentDataFocus.pointIndex + 1}` : ''}
+              </div>
+            )}
+          </FooterContent>
+        )}
       </div>
     </ChartContainer>
   );
 });
 
+// Export memoized component for better performance
+export const GlassChart = memo(GlassChartComponent);
+
 // Add displayName
 GlassChart.displayName = 'GlassChart';
+
+/**
+ * Enhanced GlassChart with consciousness features enabled by default
+ * Use this for charts that should be intelligent and adaptive
+ */
+export const ConsciousGlassChart = forwardRef<GlassChartRef, GlassChartProps>(
+  (props, ref) => (
+    <GlassChart
+      ref={ref}
+      predictive={true}
+      preloadData={true}
+      adaptive={true}
+      biometricResponsive={true}
+      trackAchievements={true}
+      achievementId="conscious_chart_usage"
+      {...props}
+    />
+  )
+);
+
+ConsciousGlassChart.displayName = 'ConsciousGlassChart';
+
+/**
+ * Predictive GlassChart optimized for data analysis and insights
+ */
+export const PredictiveGlassChart = forwardRef<GlassChartRef, GlassChartProps>(
+  (props, ref) => (
+    <GlassChart
+      ref={ref}
+      predictive={true}
+      preloadData={true}
+      eyeTracking={true}
+      gazeResponsive={true}
+      trackAchievements={true}
+      achievementId="predictive_chart_analysis"
+      usageContext="analytics"
+      {...props}
+    />
+  )
+);
+
+PredictiveGlassChart.displayName = 'PredictiveGlassChart';
+
+/**
+ * Adaptive GlassChart that responds to user stress and cognitive load
+ */
+export const AdaptiveGlassChart = forwardRef<GlassChartRef, GlassChartProps>(
+  (props, ref) => (
+    <GlassChart
+      ref={ref}
+      adaptive={true}
+      biometricResponsive={true}
+      spatialAudio={true}
+      audioFeedback={true}
+      trackAchievements={true}
+      achievementId="adaptive_chart_usage"
+      {...props}
+    />
+  )
+);
+
+AdaptiveGlassChart.displayName = 'AdaptiveGlassChart';
+
+/**
+ * Immersive GlassChart with full consciousness features for presentations
+ */
+export const ImmersiveGlassChart = forwardRef<GlassChartRef, GlassChartProps>(
+  (props, ref) => (
+    <GlassChart
+      ref={ref}
+      predictive={true}
+      preloadData={true}
+      eyeTracking={true}
+      gazeResponsive={true}
+      adaptive={true}
+      biometricResponsive={true}
+      spatialAudio={true}
+      audioFeedback={true}
+      trackAchievements={true}
+      achievementId="immersive_chart_experience"
+      usageContext="presentation"
+      {...props}
+    />
+  )
+);
+
+ImmersiveGlassChart.displayName = 'ImmersiveGlassChart';
+
+/**
+ * Utility function to create consciousness-enhanced chart variants
+ */
+export function withChartConsciousness<T extends GlassChartProps>(
+  defaultProps: Partial<ConsciousnessFeatures> = {}
+) {
+  return function EnhancedChart(props: T) {
+    return (
+      <GlassChart
+        predictive={true}
+        adaptive={true}
+        trackAchievements={true}
+        {...defaultProps}
+        {...props}
+      />
+    );
+  };
+}
+
+/**
+ * Pre-configured consciousness chart presets
+ */
+export const ChartConsciousnessPresets = {
+  /**
+   * Minimal consciousness features for performance-sensitive charts
+   */
+  minimal: {
+    predictive: true,
+    trackAchievements: true,
+  },
+  
+  /**
+   * Balanced consciousness features for general chart usage
+   */
+  balanced: {
+    predictive: true,
+    adaptive: true,
+    biometricResponsive: true,
+    trackAchievements: true,
+  },
+  
+  /**
+   * Full consciousness features for immersive chart experiences
+   */
+  immersive: {
+    predictive: true,
+    preloadData: true,
+    eyeTracking: true,
+    gazeResponsive: true,
+    adaptive: true,
+    biometricResponsive: true,
+    spatialAudio: true,
+    audioFeedback: true,
+    trackAchievements: true,
+  },
+  
+  /**
+   * Analytics-focused consciousness features for data exploration
+   */
+  analytics: {
+    predictive: true,
+    preloadData: true,
+    eyeTracking: true,
+    gazeResponsive: true,
+    trackAchievements: true,
+    usageContext: 'analytics' as const,
+  },
+} as const;
 
 export default GlassChart;

@@ -3,9 +3,9 @@
 import { cn } from '@/lib/utilsComprehensive';
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, MoreHorizontal } from 'lucide-react';
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
+import { createPaginationA11y, useA11yId, announceToScreenReader, keyboardHandlers } from '../../utils/a11y';
 
 export interface GlassPaginationProps {
     /**
@@ -48,6 +48,16 @@ export interface GlassPaginationProps {
      * Loading state
      */
     loading?: boolean;
+
+    // Accessibility props
+    /**
+     * Accessible label for the pagination component
+     */
+    'aria-label'?: string;
+    /**
+     * Whether to announce page changes to screen readers
+     */
+    announcePageChanges?: boolean;
 }
 
 export interface GlassPaginationContentProps {
@@ -111,6 +121,8 @@ export const GlassPagination: React.FC<GlassPaginationProps> = ({
     className,
     disabled = false,
     loading = false,
+    'aria-label': ariaLabel = 'Pagination',
+    announcePageChanges = true,
 }) => {
     const getPageNumbers = () => {
         const pages: (number | string)[] = [];
@@ -164,14 +176,24 @@ export const GlassPagination: React.FC<GlassPaginationProps> = ({
 
     const handlePageChange = (page: number) => {
         if (page >= 1 && page <= totalPages && page !== currentPage && !disabled && !loading) {
+            const previousPage = currentPage;
             onPageChange(page);
+
+            // Announce page change to screen readers
+            if (announcePageChanges) {
+                const direction = page > previousPage ? 'next' : 'previous';
+                announceToScreenReader(
+                    `Moved to page ${page} of ${totalPages}`,
+                    'polite'
+                );
+            }
         }
     };
 
     const sizeClasses = {
-        sm: 'h-8 px-2 text-sm',
-        md: 'h-10 px-3 text-base',
-        lg: 'h-12 px-4 text-lg',
+        sm: 'h-8 glass-px-2 glass-text-sm',
+        md: 'h-10 glass-px-3 glass-text-base',
+        lg: 'h-12 glass-px-4 glass-text-lg',
     };
 
     const pageNumbers = getPageNumbers();
@@ -205,23 +227,23 @@ export const GlassPagination: React.FC<GlassPaginationProps> = ({
     }, [updateInk]);
 
     return (
-        <OptimizedGlass
-            intent="neutral"
-            elevation="level2"
-            intensity="medium"
-            depth={2}
-            tint="neutral"
-            border="subtle"
-            animation="none"
-            performanceMode="medium"
-
-            className={cn(
-                'inline-flex items-center gap-1 p-1 backdrop-blur-md ring-1 ring-white/10 bg-white/5',
-                disabled && 'opacity-50 pointer-events-none',
-                className
-            )}
-            aria-busy={loading || undefined}
-        >
+        <nav aria-label={ariaLabel} role="navigation">
+            <OptimizedGlass
+                intent="neutral"
+                elevation="level2"
+                intensity="medium"
+                depth={2}
+                tint="neutral"
+                border="subtle"
+                animation="none"
+                performanceMode="medium"
+                className={cn(
+                    'inline-flex items-center glass-gap-1 glass-p-1 backdrop-blur-md ring-1 ring-white/10 bg-white/5',
+                    disabled && 'opacity-50 pointer-events-none',
+                    className
+                )}
+                aria-busy={loading || undefined}
+            >
             {/* First page button */}
             {showFirstLast && totalPages > 3 && (
                 <GlassPaginationItem
@@ -247,7 +269,7 @@ export const GlassPagination: React.FC<GlassPaginationProps> = ({
             )}
 
             {/* Page numbers */}
-            <div ref={pagesRef} className="relative inline-flex items-center gap-1">
+            <div ref={pagesRef} className="relative inline-flex items-center glass-gap-1">
                 {/* Ink indicator */}
                 <div className="absolute bottom-0 h-0.5 bg-primary transition-all duration-200" style={{ left: ink.left, width: ink.width }} />
                 {pageNumbers.map((page, index) => (
@@ -297,11 +319,12 @@ export const GlassPagination: React.FC<GlassPaginationProps> = ({
             )}
 
             {loading && (
-                <div className="ml-2">
-                    <div className="w-4 h-4 border-2 border-white/30 border-t-white/60 rounded-full animate-spin" />
+                <div className="glass-ml-2">
+                    <div className="w-4 h-4 border-2 border-white/30 border-t-white/60 glass-radius-full animate-spin" />
                 </div>
             )}
-        </OptimizedGlass>
+            </OptimizedGlass>
+        </nav>
     );
 };
 
@@ -334,10 +357,16 @@ export const GlassPaginationItem: React.FC<GlassPaginationItemProps> = ({
     ariaLabel,
     innerRef,
 }) => {
+    // Create accessibility attributes
+    const a11yProps = createPaginationA11y({
+        label: ariaLabel,
+        current: isActive,
+        disabled,
+    });
     const sizeClasses = {
-        sm: 'h-8 w-8 text-sm',
-        md: 'h-10 w-10 text-base',
-        lg: 'h-12 w-12 text-lg',
+        sm: 'h-8 w-8 glass-text-sm',
+        md: 'h-10 w-10 glass-text-base',
+        lg: 'h-12 w-12 glass-text-lg',
     };
 
     return (
@@ -359,23 +388,20 @@ export const GlassPaginationItem: React.FC<GlassPaginationItemProps> = ({
 
 
                 className={cn(
-                    'relative flex items-center justify-center font-medium rounded-md',
+                    'relative flex items-center justify-center font-medium glass-radius-md',
                     'backdrop-blur-md border border-white/20',
                     'transition-all duration-200 glass-sheen',
                     'focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-transparent',
                     'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:transform-none',
                     sizeClasses[size],
                     {
-                        'bg-white/20 text-white shadow-lg ring-1 ring-white/20': isActive,
-                        'bg-white/5 hover:bg-white/15 text-white/80 hover:text-white hover:-translate-y-0.5': !isActive && !disabled,
+                        'bg-black/40 glass-text-primary shadow-lg ring-1 ring-white/30 border-white/30': isActive,
+                        'bg-black/20 hover:bg-black/30 glass-text-primary/80 hover:glass-text-primary hover:-translate-y-0.5 border-white/20 hover:border-white/30': !isActive && !disabled,
                     },
                     className
                 )}
                 onClick={onClick}
-
-                aria-current={isActive ? 'page' : undefined}
-                aria-disabled={disabled}
-                aria-label={ariaLabel}
+                {...a11yProps}
             >
                 {children}
             </OptimizedGlass>
@@ -460,11 +486,11 @@ export const GlassPaginationWithInfo: React.FC<GlassPaginationWithInfoProps> = (
     const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
     return (
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between glass-gap-4">
             {showItemInfo && (
-                <div className="text-white/60 text-sm">
-                    Showing <span className="font-medium text-white">{startItem}-{endItem}</span> of{' '}
-                    <span className="font-medium text-white">{totalItems.toLocaleString()}</span> {itemName}
+                <div className="glass-text-primary/60 glass-text-sm">
+                    Showing <span className="font-medium glass-text-primary">{startItem}-{endItem}</span> of{' '}
+                    <span className="font-medium glass-text-primary">{totalItems.toLocaleString()}</span> {itemName}
                 </div>
             )}
 

@@ -1,10 +1,12 @@
-import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+'use client';
+
+import React, { forwardRef } from 'react';
+import { cn } from '@/lib/utilsComprehensive';
 import { OptimizedGlass } from '../../primitives';
 
-export type SkeletonVariant = 'text' | 'rectangular' | 'circular' | 'rounded';
+export type SkeletonVariant = 'text' | 'rectangular' | 'circular' | 'glass-radius-md';
 
-export interface GlassSkeletonProps {
+export interface GlassSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Shape variant of the skeleton */
   variant?: SkeletonVariant;
   /** Width of the skeleton */
@@ -13,8 +15,6 @@ export interface GlassSkeletonProps {
   height?: string | number;
   /** Animation variant */
   animation?: 'pulse' | 'wave' | 'none';
-  /** Custom className */
-  className?: string;
   /** Number of skeleton lines (for text variant) */
   lines?: number;
   /** Spacing between lines (for text variant) */
@@ -42,15 +42,24 @@ const skeletonKeyframes = `
   }
 `;
 
-export const GlassSkeleton: React.FC<GlassSkeletonProps> = ({
-  variant = 'text',
-  width,
-  height,
-  animation = 'pulse',
-  className = '',
-  lines = 1,
-  spacing = '0.5rem',
-}) => {
+/**
+ * GlassSkeleton component
+ * A skeleton loader with glassmorphism styling for loading states
+ */
+export const GlassSkeleton = forwardRef<HTMLDivElement, GlassSkeletonProps>(
+  (
+    {
+      variant = 'text',
+      width,
+      height,
+      animation = 'pulse',
+      className,
+      lines = 1,
+      spacing = '0.5rem',
+      ...props
+    },
+    ref
+  ) => {
   const getBaseStyles = (): React.CSSProperties => {
     const baseWidth = typeof width === 'number' ? `${width}px` : width || '100%';
     const baseHeight = typeof height === 'number' ? `${height}px` : height;
@@ -63,7 +72,7 @@ export const GlassSkeleton: React.FC<GlassSkeletonProps> = ({
           height: size,
           borderRadius: '50%',
         };
-      case 'rounded':
+      case 'glass-radius-md':
         return {
           width: baseWidth,
           height: baseHeight || '1rem',
@@ -105,57 +114,81 @@ export const GlassSkeleton: React.FC<GlassSkeletonProps> = ({
     }
   };
 
-  if (variant === 'text' && lines > 1) {
+    if (variant === 'text' && lines > 1) {
+      return (
+        <>
+          <style>{skeletonKeyframes}</style>
+          <div
+            ref={ref}
+            className={cn('glass-gap-2', className)}
+            {...props}
+          >
+            {Array.from({ length: lines }, (_, index) => {
+              const lineWidth = Array.isArray(width)
+                ? width[index % width.length]
+                : typeof width === 'string' && width.includes(',')
+                  ? width.split(',')[index % width.split(',').length].trim()
+                  : index === lines - 1
+                    ? '60%'
+                    : '100%';
+
+              return (
+                <OptimizedGlass
+                  key={index}
+                  elevation="level1"
+                  intensity="subtle"
+                  depth={1}
+                  tint="neutral"
+                  border="subtle"
+                  animation="none"
+                  performanceMode="low"
+                  className={cn(
+                    'block',
+                    animation === 'pulse' && 'animate-pulse'
+                  )}
+                  style={{
+                    ...getBaseStyles(),
+                    width: lineWidth,
+                    ...getAnimationStyles(),
+                    animationDelay: `${index * 0.1}s`,
+                  }}
+                />
+              );
+            })}
+          </div>
+        </>
+      );
+    }
+
     return (
       <>
         <style>{skeletonKeyframes}</style>
-        <div className={`space-y-${spacing} ${className}`}>
-          {Array.from({ length: lines }, (_, index) => {
-            const lineWidth = Array.isArray(width)
-              ? width[index % width.length]
-              : typeof width === 'string' && width.includes(',')
-                ? width.split(',')[index % width.split(',').length].trim()
-                : index === lines - 1
-                  ? '60%'
-                  : '100%';
-
-            return (
-              <OptimizedGlass
-                key={index}
-                className="block"
-                style={{
-                  ...getBaseStyles(),
-                  width: lineWidth,
-                  ...getAnimationStyles(),
-                  animationDelay: `${index * 0.1}s`,
-                }}
-                blur="subtle"
-                elevation="level1"
-                interactive={false}
-              />
-            );
-          })}
-        </div>
+        <OptimizedGlass
+          ref={ref}
+          elevation="level1"
+          intensity="subtle"
+          depth={1}
+          tint="neutral"
+          border="subtle"
+          animation="none"
+          performanceMode="low"
+          className={cn(
+            'block',
+            animation === 'pulse' && 'animate-pulse',
+            className
+          )}
+          style={{
+            ...getBaseStyles(),
+            ...getAnimationStyles(),
+          }}
+          {...props}
+        />
       </>
     );
   }
+);
 
-  return (
-    <>
-      <style>{skeletonKeyframes}</style>
-      <OptimizedGlass
-        className={`block ${className}`}
-        style={{
-          ...getBaseStyles(),
-          ...getAnimationStyles(),
-        }}
-        blur="subtle"
-        elevation="level1"
-        interactive={false}
-      />
-    </>
-  );
-};
+GlassSkeleton.displayName = 'GlassSkeleton';
 
 // Pre-built skeleton components for common use cases
 
@@ -185,7 +218,7 @@ export const GlassSkeletonButton: React.FC<{
 }> = ({ width = '80px', className = '' }) => {
   return (
     <GlassSkeleton
-      variant="rounded"
+      variant="glass-radius-md"
       width={width}
       height="2.5rem"
       className={className}
@@ -199,30 +232,35 @@ export const GlassSkeletonCard: React.FC<{
 }> = ({ className = '' }) => {
   return (
     <OptimizedGlass
-      className={`p-6 space-y-4 ${className}`}
-      blur="medium"
-      elevation={'level1'}
+      elevation="level1"
+      intensity="medium"
+      depth={2}
+      tint="neutral"
+      border="subtle"
+      animation="none"
+      performanceMode="medium"
+      className={cn('glass-p-6 glass-gap-4', className)}
     >
       {/* Header skeleton */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center glass-gap-4">
         <GlassSkeletonAvatar size="md" />
-        <div className="space-y-2 flex-1">
+        <div className="glass-gap-2 flex-1">
           <GlassSkeleton width="60%" height="1rem" />
           <GlassSkeleton width="40%" height="0.75rem" />
         </div>
       </div>
 
       {/* Content skeleton */}
-      <div className="space-y-3">
+      <div className="glass-gap-3">
         <GlassSkeleton height="1rem" />
         <GlassSkeleton height="1rem" width="80%" />
         <GlassSkeleton height="1rem" width="60%" />
       </div>
 
       {/* Actions skeleton */}
-      <div className="flex space-x-2 pt-2">
-        <GlassSkeleton width="60px" height="2rem" variant="rounded" />
-        <GlassSkeleton width="60px" height="2rem" variant="rounded" />
+      <div className="flex glass-gap-2 pt-2">
+        <GlassSkeleton width="60px" height="2rem" variant="glass-radius-md" />
+        <GlassSkeleton width="60px" height="2rem" variant="glass-radius-md" />
       </div>
     </OptimizedGlass>
   );
@@ -235,13 +273,18 @@ export const GlassSkeletonTable: React.FC<{
 }> = ({ rows = 5, columns = 4, className = '' }) => {
   return (
     <OptimizedGlass
-      className={`overflow-hidden ${className}`}
-      blur="medium"
-      elevation={'level1'}
+      elevation="level1"
+      intensity="medium"
+      depth={2}
+      tint="neutral"
+      border="subtle"
+      animation="none"
+      performanceMode="medium"
+      className={cn('overflow-hidden', className)}
     >
       {/* Table header */}
-      <div className="p-4 border-b border-white/10">
-        <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
+      <div className="glass-p-4 border-b border-white/10">
+        <div className="grid glass-gap-4" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
           {Array.from({ length: columns }, (_, i) => (
             <GlassSkeleton key={`header-${i}`} height="1rem" width="80%" />
           ))}
@@ -251,8 +294,8 @@ export const GlassSkeletonTable: React.FC<{
       {/* Table rows */}
       <div className="divide-y divide-white/5">
         {Array.from({ length: rows }, (_, rowIndex) => (
-          <div key={`row-${rowIndex}`} className="p-4">
-            <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
+          <div key={`row-${rowIndex}`} className="glass-p-4">
+            <div className="grid glass-gap-4" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
               {Array.from({ length: columns }, (_, colIndex) => (
                 <GlassSkeleton
                   key={`cell-${rowIndex}-${colIndex}`}
@@ -273,15 +316,15 @@ export const GlassSkeletonList: React.FC<{
   className?: string;
 }> = ({ items = 3, className = '' }) => {
   return (
-    <div className={`space-y-4 ${className}`}>
+    <div className={`glass-gap-4 ${className}`}>
       {Array.from({ length: items }, (_, index) => (
-        <div key={index} className="flex items-center space-x-4">
+        <div key={index} className="flex items-center glass-gap-4">
           <GlassSkeletonAvatar size="sm" />
-          <div className="flex-1 space-y-2">
+          <div className="flex-1 glass-gap-2">
             <GlassSkeleton height="1rem" width="70%" />
             <GlassSkeleton height="0.75rem" width="50%" />
           </div>
-          <GlassSkeleton width="60px" height="1.5rem" variant="rounded" />
+          <GlassSkeleton width="60px" height="1.5rem" variant="glass-radius-md" />
         </div>
       ))}
     </div>

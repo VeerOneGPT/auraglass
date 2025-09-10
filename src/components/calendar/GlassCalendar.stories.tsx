@@ -109,15 +109,15 @@ export const Views: Story = {
   render: (args) => (
     <div className="space-y-8 w-full max-w-4xl">
       <div>
-        <h4 className="text-lg font-semibold mb-4 text-white">Month View</h4>
+        <h4 className="glass-text-lg font-semibold glass-mb-4 glass-text-primary">Month View</h4>
         <GlassCalendar {...args} view="month" />
       </div>
       <div>
-        <h4 className="text-lg font-semibold mb-4 text-white">Week View</h4>
+        <h4 className="glass-text-lg font-semibold glass-mb-4 glass-text-primary">Week View</h4>
         <GlassCalendar {...args} view="week" />
       </div>
       <div>
-        <h4 className="text-lg font-semibold mb-4 text-white">Day View</h4>
+        <h4 className="glass-text-lg font-semibold glass-mb-4 glass-text-primary">Day View</h4>
         <GlassCalendar {...args} view="day" />
       </div>
     </div>

@@ -14,7 +14,6 @@ import {
     XCircle
 } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 import { GlassButton } from '../button';
 import { CardContent, CardHeader, CardTitle, GlassCard } from '../card';
@@ -189,7 +188,7 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
             default:
                 return {
                     icon: Activity,
-                    color: 'text-gray-400',
+                    color: 'glass-text-secondary',
                     bgColor: 'bg-gray-500/20',
                     borderColor: 'border-gray-500/30'
                 };
@@ -259,16 +258,16 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
     // Loading skeleton
     if (loading) {
         return (
-            <GlassCard className={cn('p-6', className)}>
-                <div className="animate-pulse space-y-4">
-                    <div className="h-6 bg-white/20 rounded w-48"></div>
-                    <div className="space-y-3">
+            <GlassCard className={cn('glass-p-6', className)}>
+                <div className="animate-pulse glass-auto-gap glass-auto-gap-lg">
+                    <div className="h-6 bg-white/20 glass-radius-md w-48"></div>
+                    <div className="glass-auto-gap glass-auto-gap-md">
                         {Array.from({ length: 5 }).map((_, i) => (
-                            <div key={i} className="flex gap-3">
-                                <div className="w-8 h-8 bg-white/20 rounded-full flex-shrink-0"></div>
-                                <div className="flex-1 space-y-2">
-                                    <div className="h-4 bg-white/20 rounded w-3/4"></div>
-                                    <div className="h-3 bg-white/20 rounded w-1/2"></div>
+                            <div key={i} className="flex glass-gap-3">
+                                <div className="w-8 h-8 bg-white/20 glass-radius-full flex-shrink-0"></div>
+                                <div className="flex-1 glass-auto-gap glass-auto-gap-sm">
+                                    <div className="h-4 bg-white/20 glass-radius-md w-3/4"></div>
+                                    <div className="h-3 bg-white/20 glass-radius-md w-1/2"></div>
                                 </div>
                             </div>
                         ))}
@@ -284,22 +283,22 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
                 <CardHeader className="pb-4">
                     <div className="flex items-center justify-between">
                         <div>
-                            <CardTitle className="text-white text-xl font-semibold">
+                            <CardTitle className="glass-text-primary glass-text-xl font-semibold">
                                 {title}
                             </CardTitle>
                             {subtitle && (
-                                <p className="text-sm text-white/60 mt-1">{subtitle}</p>
+                                <p className="glass-text-sm glass-text-primary/60 glass-mt-1">{subtitle}</p>
                             )}
                         </div>
 
                         {/* Filters */}
                         {showFilters && filterOptions.length > 1 && (
-                            <div className="flex items-center gap-2">
-                                <Filter className="w-4 h-4 text-white/60" />
+                            <div className="flex items-center glass-gap-2">
+                                <Filter className="w-4 h-4 glass-text-primary/60" />
                                 <select
                                     value={selectedFilter}
                                     onChange={(e) => setSelectedFilter(e.target.value)}
-                                    className="bg-glass-fill ring-1 ring-white/10 rounded px-3 py-1 text-sm text-white focus:outline-none focus:ring-white/30"
+                                    className="bg-glass-fill ring-1 ring-white/10 glass-radius-md glass-px-3 glass-py-1 glass-text-sm glass-text-primary focus:outline-none focus:ring-white/30"
                                 >
                                     <option value="all">All Types</option>
                                     {filterOptions.slice(1).map(type => (
@@ -315,19 +314,19 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
 
                 <CardContent className="pt-0">
                     {filteredActivities.length === 0 ? (
-                        <div className="flex flex-col items-center justify-center py-12">
-                            <Activity className="w-12 h-12 text-white/40 mb-4" />
-                            <p className="text-white/60 text-center">{emptyMessage}</p>
+                        <div className="flex flex-col items-center justify-center glass-py-12">
+                            <Activity className="w-12 h-12 glass-text-primary/40 glass-mb-4" />
+                            <p className="glass-text-primary/60 text-center">{emptyMessage}</p>
                         </div>
                     ) : (
-                        <div className="space-y-4">
+                        <div className="glass-auto-gap glass-auto-gap-lg">
                             {groupByDate ? (
                                 Object.entries(groupedActivities).map(([date, items]) => (
                                     <div key={date}>
                                         {groupByDate && items.length > 0 && (
-                                            <div className="flex items-center gap-2 mb-3">
+                                            <div className="flex items-center glass-gap-2 mb-3">
                                                 <div className="h-px bg-white/20 flex-1"></div>
-                                                <span className="text-xs text-white/60 font-medium px-2 py-1 bg-white/10 rounded">
+                                                <span className="glass-text-xs glass-text-primary/60 font-medium glass-px-2 glass-py-1 bg-white/10 glass-radius-md">
                                                     {new Date(date).toLocaleDateString(undefined, {
                                                         weekday: 'long',
                                                         year: 'numeric',
@@ -339,7 +338,7 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
                                             </div>
                                         )}
 
-                                        <div className="space-y-3">
+                                        <div className="glass-auto-gap glass-auto-gap-md">
                                             {items
                                                 .filter(activity => {
                                                     if (selectedFilter === 'all') return true;
@@ -354,21 +353,21 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
                                                         <div
                                                             key={activity.id}
                                                             className={cn(
-                                                                'flex gap-3 p-3 rounded-lg border transition-all duration-200 animate-slide-in-up',
+                                                                'flex glass-gap-3 glass-p-3 glass-radius-lg border transition-all duration-200 animate-slide-in-up',
                                                                 'hover:bg-white/5 cursor-pointer glass-foundation-complete backdrop-blur-md bg-transparent border-white/40 shadow-2xl',
                                                                 config.bgColor,
                                                                 config.borderColor,
-                                                                compact && 'p-2'
+                                                                compact && 'glass-p-2'
                                                             )}
                                                             style={{ 
                                                                 animationDelay: `${Math.min(index, 15) * 50}ms`,
                                                                 animationFillMode: 'both'
                                                             }}
-                                                            onClick={() => onActivityClick?.(activity)}
+                                                            onClick={(e) => onActivityClick?.(activity)}
                                                         >
                                                             {/* Activity Icon */}
                                                             <div className={cn(
-                                                                'flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center',
+                                                                'flex-shrink-0 w-8 h-8 glass-radius-full flex items-center justify-center',
                                                                 config.bgColor,
                                                                 compact && 'w-6 h-6'
                                                             )}>
@@ -381,18 +380,18 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
 
                                                             {/* Content */}
                                                             <div className="flex-1 min-w-0">
-                                                                <div className="flex items-start justify-between gap-2 min-w-0">
+                                                                <div className="flex items-start justify-between glass-gap-2 min-w-0">
                                                                     <div className="flex-1 min-w-0">
                                                                         <p className={cn(
-                                                                            'text-white font-medium truncate',
-                                                                            compact ? 'text-sm' : 'text-base'
+                                                                            'glass-text-primary font-medium truncate',
+                                                                            compact ? 'glass-text-sm' : 'glass-text-base'
                                                                         )} title={activity.title}>
                                                                             {activity.title}
                                                                         </p>
                                                                         {activity.description && (
                                                                             <p className={cn(
-                                                                                'text-white/70 mt-1 line-clamp-2',
-                                                                                compact ? 'text-xs' : 'text-sm'
+                                                                                'glass-text-primary/70 glass-mt-1 line-clamp-2',
+                                                                                compact ? 'glass-text-xs' : 'glass-text-sm'
                                                                             )} title={activity.description}>
                                                                                 {activity.description}
                                                                             </p>
@@ -401,7 +400,7 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
 
                                                                     {/* Actions */}
                                                                     {activity.actions && activity.actions.length > 0 && (
-                                                                        <div className="flex items-center gap-1">
+                                                                        <div className="flex items-center glass-gap-1">
                                                                             {activity.actions.map((action, actionIndex) => (
                                                                                 <GlassButton
                                                                                     key={actionIndex}
@@ -411,7 +410,7 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
                                                                                         e.stopPropagation();
                                                                                         action.onClick();
                                                                                     }}
-                                                                                    className="p-1"
+                                                                                    className="glass-p-1"
                                                                                 >
                                                                                     {action.icon || <MoreHorizontal className="w-3 h-3" />}
                                                                                 </GlassButton>
@@ -421,30 +420,30 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
                                                                 </div>
 
                                                                 {/* Metadata */}
-                                                                <div className="flex items-center gap-3 mt-2">
+                                                                <div className="flex items-center glass-gap-3 glass-mt-2">
                                                                     {activity.user && showAvatars && (
-                                                                        <div className="flex items-center gap-2">
+                                                                        <div className="flex items-center glass-gap-2">
                                                                             {activity.user.avatar ? (
                                                                                 <img
                                                                                     src={activity.user.avatar}
                                                                                     alt={activity.user.name}
-                                                                                    className="w-5 h-5 rounded-full"
+                                                                                    className="w-5 h-5 glass-radius-full"
                                                                                 />
                                                                             ) : (
-                                                                                <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
-                                                                                    <span className="text-xs text-white/80 font-medium">
+                                                                                <div className="w-5 h-5 glass-radius-full bg-white/20 flex items-center justify-center">
+                                                                                    <span className="glass-text-xs glass-text-primary/80 font-medium">
                                                                                         {activity.user.name.charAt(0).toUpperCase()}
                                                                                     </span>
                                                                                 </div>
                                                                             )}
-                                                                            <span className="text-xs text-white/60">
+                                                                            <span className="glass-text-xs glass-text-primary/60">
                                                                                 {activity.user.name}
                                                                             </span>
                                                                         </div>
                                                                     )}
 
                                                                     {showTimestamps && (
-                                                                        <span className="text-xs text-white/50 flex items-center gap-1">
+                                                                        <span className="glass-text-xs glass-text-primary/50 flex items-center glass-gap-1">
                                                                             <Clock className="w-3 h-3" />
                                                                             {formatTimestamp(activity.timestamp)}
                                                                         </span>
@@ -462,7 +461,7 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
                                                                     )}
 
                                                                     {activity.tags && activity.tags.length > 0 && (
-                                                                        <div className="flex flex-wrap gap-1 items-center">
+                                                                        <div className="flex flex-wrap glass-gap-1 items-center">
                                                                             {activity.tags.slice(0, compact ? 1 : 2).map((tag, tagIndex) => (
                                                                                 <GlassBadge
                                                                                     key={tagIndex}
@@ -491,7 +490,7 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
                                 ))
                             ) : (
                                 // Ungrouped view
-                                <div className="space-y-3">
+                                <div className="glass-auto-gap glass-auto-gap-md">
                                     {filteredActivities.map((activity, index) => {
                                         const config = getActivityTypeConfig(activity.type);
                                         const IconComponent = config.icon;
@@ -502,17 +501,17 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
                                                 preset="slideUp"
                                                 delay={index * 50}
                                                 className={cn(
-                                                    'flex gap-3 p-3 rounded-lg border transition-all duration-200',
+                                                    'flex glass-gap-3 glass-p-3 glass-radius-lg border transition-all duration-200',
                                                     'hover:bg-white/5 cursor-pointer',
                                                     config.bgColor,
                                                     config.borderColor,
-                                                    compact && 'p-2'
+                                                    compact && 'glass-p-2'
                                                 )}
-                                                onClick={() => onActivityClick?.(activity)}
+                                                onClick={(e) => onActivityClick?.(activity)}
                                             >
                                                 {/* Activity Icon */}
                                                 <div className={cn(
-                                                    'flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center',
+                                                    'flex-shrink-0 w-8 h-8 glass-radius-full flex items-center justify-center',
                                                     config.bgColor,
                                                     compact && 'w-6 h-6'
                                                 )}>
@@ -525,18 +524,18 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
 
                                                 {/* Content */}
                                                 <div className="flex-1 min-w-0">
-                                                    <div className="flex items-start justify-between gap-2 min-w-0">
+                                                    <div className="flex items-start justify-between glass-gap-2 min-w-0">
                                                         <div className="flex-1 min-w-0">
                                                             <p className={cn(
-                                                                'text-white font-medium truncate',
-                                                                compact ? 'text-sm' : 'text-base'
+                                                                'glass-text-primary font-medium truncate',
+                                                                compact ? 'glass-text-sm' : 'glass-text-base'
                                                             )} title={activity.title}>
                                                                 {activity.title}
                                                             </p>
                                                             {activity.description && (
                                                                 <p className={cn(
-                                                                    'text-white/70 mt-1 line-clamp-2',
-                                                                    compact ? 'text-xs' : 'text-sm'
+                                                                    'glass-text-primary/70 glass-mt-1 line-clamp-2',
+                                                                    compact ? 'glass-text-xs' : 'glass-text-sm'
                                                                 )} title={activity.description}>
                                                                     {activity.description}
                                                                 </p>
@@ -545,30 +544,30 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
                                                     </div>
 
                                                     {/* Metadata */}
-                                                    <div className="flex items-center gap-3 mt-2">
+                                                    <div className="flex items-center glass-gap-3 glass-mt-2">
                                                         {activity.user && showAvatars && (
-                                                            <div className="flex items-center gap-2">
+                                                            <div className="flex items-center glass-gap-2">
                                                                 {activity.user.avatar ? (
                                                                     <img
                                                                         src={activity.user.avatar}
                                                                         alt={activity.user.name}
-                                                                        className="w-5 h-5 rounded-full"
+                                                                        className="w-5 h-5 glass-radius-full"
                                                                     />
                                                                 ) : (
-                                                                    <div className="w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
-                                                                        <span className="text-xs text-white/80 font-medium">
+                                                                    <div className="w-5 h-5 glass-radius-full bg-white/20 flex items-center justify-center">
+                                                                        <span className="glass-text-xs glass-text-primary/80 font-medium">
                                                                             {activity.user.name.charAt(0).toUpperCase()}
                                                                         </span>
                                                                     </div>
                                                                 )}
-                                                                <span className="text-xs text-white/60">
+                                                                <span className="glass-text-xs glass-text-primary/60">
                                                                     {activity.user.name}
                                                                 </span>
                                                             </div>
                                                         )}
 
                                                         {showTimestamps && (
-                                                            <span className="text-xs text-white/50 flex items-center gap-1">
+                                                            <span className="glass-text-xs glass-text-primary/50 flex items-center glass-gap-1">
                                                                 <Clock className="w-3 h-3" />
                                                                 {formatTimestamp(activity.timestamp)}
                                                             </span>

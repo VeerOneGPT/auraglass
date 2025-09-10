@@ -5,7 +5,6 @@ import { createMotionAwareInteractive, createMotionAwareVariants } from '../../l
 import { cn } from '@/lib/utilsComprehensive';
 import { motion } from 'framer-motion';
 import React, { forwardRef } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 interface MotionAwareGlassProps extends Omit<React.ComponentProps<typeof motion.div>, 'variants' | 'initial' | 'animate' | 'whileHover' | 'whileTap'> {
   variant?: 'base' | 'subtle' | 'strong' | 'card' | 'button' | 'input';
@@ -36,7 +35,7 @@ export const MotionAwareGlass = forwardRef<HTMLDivElement, MotionAwareGlassProps
 
     // Get appropriate glass variant classes
     const getVariantClasses = () => {
-      const baseClasses = 'backdrop-filter border border-opacity-20 rounded-lg';
+      const baseClasses = 'backdrop-filter border border-opacity-20 glass-radius-lg';
 
       switch (variant) {
         case 'subtle':
@@ -44,11 +43,11 @@ export const MotionAwareGlass = forwardRef<HTMLDivElement, MotionAwareGlassProps
         case 'strong':
           return cn(baseClasses, 'glass-strong bg-white/10 border-white/20');
         case 'card':
-          return cn(baseClasses, 'glass-foundation-complete bg-white/8 border-white/15 p-6 shadow-lg');
+          return cn(baseClasses, 'glass-foundation-complete bg-white/8 border-white/15 glass-p-6 shadow-lg');
         case 'button':
-          return cn(baseClasses, 'glass-button-secondary bg-white/8 border-white/15 px-6 py-3 cursor-pointer');
+          return cn(baseClasses, 'glass-button-secondary bg-white/8 border-white/15 glass-px-6 glass-py-3 cursor-pointer');
         case 'input':
-          return cn(baseClasses, 'glass-input bg-white/5 border-white/10 px-4 py-2');
+          return cn(baseClasses, 'glass-input bg-white/5 border-white/10 glass-px-4 glass-py-2');
         default:
           return cn(baseClasses, 'glass-foundation-complete bg-white/8 border-white/15');
       }

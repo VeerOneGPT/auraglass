@@ -51,10 +51,10 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-4">
-      <div className="relative w-80 h-40 bg-gray-900/20 rounded border">
+    <div className="flex flex-col glass-gap-4">
+      <div className="relative w-80 h-40 bg-gray-900/20 glass-radius-md border">
         <ChartGrid {...args} />
-        <div className="absolute inset-0 flex items-center justify-center text-white/50">
+        <div className="absolute inset-0 flex items-center justify-center glass-text-primary/50">
           Grid Example
         </div>
       </div>

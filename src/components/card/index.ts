@@ -1,5 +1,4 @@
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 export { GlassCard, type GlassCardProps } from './GlassCard';
 
 // Basic card sub-components for compatibility

@@ -114,7 +114,7 @@ export interface AriaProps {
   'aria-owns'?: string;
   'aria-placeholder'?: string;
   'aria-posinset'?: number;
-  'aria-pressed'?: boolean | 'mixed';
+  'aria-pressed'?: boolean;
   'aria-readonly'?: boolean;
   'aria-required'?: boolean;
   'aria-roledescription'?: string;

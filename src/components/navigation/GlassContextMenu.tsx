@@ -1,10 +1,11 @@
 'use client';
 
 import { cn } from '@/lib/utilsComprehensive';
-import React, { useEffect, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+import React, { useEffect, useRef, useState, forwardRef } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
+import { useA11yId } from '@/utils/a11y';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 export interface ContextMenuItem {
     id: string;
@@ -52,6 +53,10 @@ export interface GlassContextMenuProps {
      * Custom className
      */
     className?: string;
+    /**
+     * Whether to respect motion preferences for animations
+     */
+    respectMotionPreference?: boolean;
 }
 
 export interface GlassContextMenuContentProps {
@@ -260,11 +265,11 @@ export const GlassContextMenuContent: React.FC<GlassContextMenuContentProps> = (
                     maxWidth,
                 }}
             >
-                <div className="py-1">
+                <div className="glass-py-1">
                     {items.map((item, index) => (
                         <React.Fragment key={item?.id}>
                             {item?.separator && index > 0 && (
-                                <div className="h-px bg-white/20 mx-2 my-1" />
+                                <div className="h-px bg-white/20 glass-mx-2 glass-my-1" />
                             )}
                             <GlassContextMenuItem
                                 item={item}
@@ -283,7 +288,7 @@ export const GlassContextMenuContent: React.FC<GlassContextMenuContentProps> = (
                                 isSubmenu={false}
                             />
                             {item?.children && submenuOpen === item?.id && (
-                                <div className="absolute left-full top-0 ml-1">
+                                <div className="absolute left-full top-0 glass-ml-1">
                                     <GlassContextMenuContent
                                         items={item?.children}
                                         position={{ x: 0, y: 0 }}
@@ -313,25 +318,25 @@ export const GlassContextMenuItem: React.FC<GlassContextMenuItemProps> = ({
     const [isHovered, setIsHovered] = useState(false);
 
     if (item?.separator) {
-        return <div className="h-px bg-white/20 mx-2 my-1" />;
+        return <div className="h-px bg-white/20 glass-mx-2 glass-my-1" />;
     }
 
     return (
         <div
             className={cn(
-                'relative flex items-center px-3 py-2 cursor-pointer transition-all duration-200',
-                'text-white/90 hover:text-white rounded-lg',
+                'relative flex items-center glass-px-3 glass-py-2 cursor-pointer transition-all duration-200',
+                'glass-text-primary/90 hover:glass-text-primary glass-radius-lg',
                 'hover:bg-white/10 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/10',
                 'glass-press',
                 {
-                    'bg-white/20 text-white': isSelected,
+                    'bg-white/20 glass-text-primary': isSelected,
                     'opacity-50 cursor-not-allowed': item?.disabled,
                     'text-red-400 hover:text-red-300': item?.destructive,
                 }
             )}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            onClick={() => !item?.disabled && onClick(item)}
+            onClick={(e) => !item?.disabled && onClick(item)}
         >
             {item?.icon && (
                 <div className="flex items-center justify-center w-4 h-4 mr-3">
@@ -339,18 +344,18 @@ export const GlassContextMenuItem: React.FC<GlassContextMenuItemProps> = ({
                 </div>
             )}
 
-            <span className="flex-1 text-sm font-medium truncate">
+            <span className="flex-1 glass-text-sm font-medium truncate">
                 {item?.label}
             </span>
 
             {item?.shortcut && (
-                <span className="ml-6 text-xs text-white/50 font-mono">
+                <span className="ml-6 glass-text-xs glass-text-primary/50 font-mono">
                     {item?.shortcut}
                 </span>
             )}
 
             {item?.children && (
-                <div className="ml-3 text-white/50">
+                <div className="ml-3 glass-text-primary/50">
                     ▶
                 </div>
             )}

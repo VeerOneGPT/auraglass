@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 // Dashboard template types
 export interface GlassDashboardProps extends React.HTMLAttributes<HTMLDivElement> {
   layout?: 'grid' | 'masonry' | 'flex';

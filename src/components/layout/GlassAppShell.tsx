@@ -2,11 +2,12 @@
 
 import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useEffect, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { GlassContainer } from './GlassContainer';
 import { VStack } from './GlassStack';
+import { useA11yId } from '@/utils/a11y';
+import { useMotionPreferenceContext } from '@/contexts/MotionPreferenceContext';
 
 export interface GlassAppShellProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -73,6 +74,18 @@ export interface GlassAppShellProps extends React.HTMLAttributes<HTMLDivElement>
    * Page transition animation
    */
   pageTransition?: boolean;
+  /**
+   * Whether to respect user's motion preferences
+   */
+  respectMotionPreference?: boolean;
+  /**
+   * Accessibility label for the main application shell
+   */
+  'aria-label'?: string;
+  /**
+   * Accessibility role for the shell
+   */
+  role?: string;
 }
 
 export interface BreadcrumbItem {
@@ -129,6 +142,14 @@ export interface ContentSectionProps {
    * Glass elevation (for card variant)
    */
   elevation?: 0 | 1 | 2 | 3 | 4;
+  /**
+   * Whether to respect user's motion preferences
+   */
+  respectMotionPreference?: boolean;
+  /**
+   * Section ID for accessibility
+   */
+  id?: string;
   className?: string;
 }
 
@@ -155,6 +176,9 @@ export const GlassAppShell = forwardRef<HTMLDivElement, GlassAppShellProps>(
       loading = false,
       loadingComponent,
       pageTransition = true,
+      respectMotionPreference = true,
+      'aria-label': ariaLabel = 'Application shell',
+      role = 'application',
       className,
       children,
       ...props
@@ -164,6 +188,9 @@ export const GlassAppShell = forwardRef<HTMLDivElement, GlassAppShellProps>(
     const [sidebarCollapsed, setSidebarCollapsed] = useState(defaultCollapsed);
     const [sidebarOverlay, setSidebarOverlay] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const shellId = useA11yId();
+    const { prefersReducedMotion, isMotionSafe } = useMotionPreferenceContext();
+    const shouldRespectMotion = respectMotionPreference && !prefersReducedMotion;
 
     // Handle responsive behavior
     useEffect(() => {
@@ -191,11 +218,11 @@ export const GlassAppShell = forwardRef<HTMLDivElement, GlassAppShellProps>(
     };
 
     const paddingClasses = {
-      none: 'p-0',
-      sm: 'p-4',
-      md: 'p-6',
+      none: 'glass-p-0',
+      sm: 'glass-p-4',
+      md: 'glass-p-6',
       lg: 'p-8',
-      xl: 'p-12',
+      xl: 'glass-p-12',
     };
 
     const maxWidthClasses = {
@@ -209,7 +236,7 @@ export const GlassAppShell = forwardRef<HTMLDivElement, GlassAppShellProps>(
 
     const variantClasses = {
       default: '',
-      floating: 'p-4',
+      floating: 'glass-p-4',
       minimal: 'bg-transparent',
     };
 
@@ -235,9 +262,14 @@ export const GlassAppShell = forwardRef<HTMLDivElement, GlassAppShellProps>(
     return (
       <div
         ref={ref}
+        id={shellId}
+        role={role}
+        aria-label={ariaLabel}
         className={cn(
           'flex h-screen overflow-hidden',
           'bg-gradient-to-br from-background via-background/95 to-surface/50',
+          // Motion preferences
+          shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none',
           variantClasses?.[variant],
           className
         )}
@@ -252,11 +284,17 @@ export const GlassAppShell = forwardRef<HTMLDivElement, GlassAppShellProps>(
           {headerElement}
 
           {/* Main content */}
-          <main className={cn(
-            'flex-1 overflow-auto',
-            'scrollbar-thin scrollbar-track-transparent scrollbar-thumb-border/30',
-            'hover:scrollbar-thumb-border/50'
-          )}>
+          <main 
+            role="main"
+            aria-label="Main content"
+            className={cn(
+              'flex-1 overflow-auto',
+              'scrollbar-thin scrollbar-track-transparent scrollbar-thumb-border/30',
+              'hover:scrollbar-thumb-border/50',
+              // Motion preferences
+              shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none'
+            )}
+          >
             {loading && loadingComponent ? (
               <div className="flex items-center justify-center h-full">
                 {loadingComponent}
@@ -271,11 +309,14 @@ export const GlassAppShell = forwardRef<HTMLDivElement, GlassAppShellProps>(
                 radius={variant === 'floating' ? 'lg' : 'none'}
                 className={cn(
                   'min-h-full',
-                  variant === 'floating' && 'my-4'
+                  variant === 'floating' && 'glass-my-4'
                 )}
               >
-                {pageTransition ? (
-                  <Motion preset="fadeIn" className="h-full">
+                {pageTransition && shouldRespectMotion ? (
+                  <Motion
+                    preset="fadeIn"
+                    className="h-full"
+                  >
                     {children}
                   </Motion>
                 ) : (
@@ -287,7 +328,14 @@ export const GlassAppShell = forwardRef<HTMLDivElement, GlassAppShellProps>(
 
           {/* Footer */}
           {footer && (
-            <footer className="flex-shrink-0 border-t border-border/20">
+            <footer 
+              role="contentinfo"
+              className={cn(
+                'flex-shrink-0 border-t border-border/20',
+                // Motion preferences
+                shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none'
+              )}
+            >
               {footer}
             </footer>
           )}
@@ -326,7 +374,7 @@ export const PageHeader = forwardRef<HTMLDivElement, PageHeaderProps>(
       <div
         ref={ref}
         className={cn(
-          'space-y-4 pb-8 border-b border-border/20',
+          'glass-gap-4 pb-8 border-b border-border/20',
           variantClasses?.[variant],
           className
         )}
@@ -334,15 +382,15 @@ export const PageHeader = forwardRef<HTMLDivElement, PageHeaderProps>(
       >
         {/* Breadcrumb */}
         {breadcrumb && (
-          <div className="text-sm text-muted-foreground">
+          <div className="glass-text-sm glass-text-secondary">
             {Array.isArray(breadcrumb) ? (
               <nav aria-label="Breadcrumb">
-                <ol className="flex items-center space-x-2">
+                <ol className="flex items-center glass-gap-2">
                   {breadcrumb.map((item, index) => {
                     const isLast = index === breadcrumb.length - 1;
                     return (
                       <li key={index} className="flex items-center">
-                        {index > 0 && <span className="mx-2">/</span>}
+                        {index > 0 && <span className="glass-mx-2">/</span>}
                         {item?.href && !isLast ? (
                           <a
                             href={item?.href}
@@ -368,16 +416,16 @@ export const PageHeader = forwardRef<HTMLDivElement, PageHeaderProps>(
 
         {/* Title section */}
         <div className={cn(
-          'flex gap-4',
+          'flex glass-gap-4',
           variant === 'centered' ? 'flex-col items-center' : 'flex-col sm:flex-row sm:items-center sm:justify-between'
         )}>
-          <div className="space-y-2">
+          <div className="glass-gap-2">
             <h1 className="text-3xl font-bold text-foreground">
               {title}
             </h1>
             {description && (
               <p className={cn(
-                'text-lg text-muted-foreground',
+                'glass-text-lg glass-text-secondary',
                 variant === 'centered' ? 'max-w-2xl' : 'max-w-3xl'
               )}>
                 {description}
@@ -412,24 +460,33 @@ export const ContentSection = forwardRef<HTMLDivElement, ContentSectionProps>(
       children,
       variant = 'default',
       elevation = 'level1',
+      respectMotionPreference = true,
+      id,
       className,
       ...props
     },
     ref
   ) => {
+    const sectionId = useA11yId();
+    const { prefersReducedMotion, isMotionSafe } = useMotionPreferenceContext();
+    const shouldRespectMotion = respectMotionPreference && !prefersReducedMotion;
+
     const content = (
       <VStack space="lg" className="w-full">
         {/* Section header */}
         {(title || description || actions) && (
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="space-y-1">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between glass-gap-4">
+            <div className="glass-gap-1">
               {title && (
-                <h2 className="text-xl font-semibold text-foreground">
+                <h2 
+                  id={`${id || sectionId}-title`}
+                  className="glass-text-xl font-semibold text-foreground"
+                >
                   {title}
                 </h2>
               )}
               {description && (
-                <p className="text-muted-foreground">
+                <p className="glass-text-secondary">
                   {description}
                 </p>
               )}
@@ -459,10 +516,18 @@ export const ContentSection = forwardRef<HTMLDivElement, ContentSectionProps>(
           depth={2}
           tint="neutral"
           border="subtle"
-          animation="none"
+          animation={shouldRespectMotion ? "shimmer" : "none"}
           performanceMode="medium"
           ref={ref}
-          className={cn('p-6 w-full', className)}
+          id={id || sectionId}
+          role="region"
+          aria-labelledby={title ? `${id || sectionId}-title` : undefined}
+          className={cn(
+            'glass-p-6 w-full',
+            // Motion preferences
+            shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none',
+            className
+          )}
           {...props}
         >
           {content}
@@ -473,7 +538,15 @@ export const ContentSection = forwardRef<HTMLDivElement, ContentSectionProps>(
     return (
       <section
         ref={ref}
-        className={cn('w-full', className)}
+        id={id || sectionId}
+        role="region"
+        aria-labelledby={title ? `${id || sectionId}-title` : undefined}
+        className={cn(
+          'w-full',
+          // Motion preferences
+          shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none',
+          className
+        )}
         {...props}
       >
         {content}

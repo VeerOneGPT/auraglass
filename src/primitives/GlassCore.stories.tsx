@@ -15,51 +15,52 @@ const meta: Meta<typeof GlassCore> = {
     },
   },
   argTypes: {
-    variant: {
+    intent: {
       control: { type: 'select' },
-      options: ['frosted', 'crystal', 'tinted', 'metallic', 'neon'] as GlassVariant[],
-      description: 'Glass morphism variant that determines the visual style',
+      options: ['neutral', 'primary', 'success', 'warning', 'danger', 'info'],
+      description: 'Glass semantic intent that affects color theming',
     },
-    blur: {
+    elevation: {
       control: { type: 'select' },
-      options: ['none', 'light', 'medium', 'heavy', 'ultra'] as BlurIntensity[],
-      description: 'Blur intensity for the glass effect',
+      options: ['level1', 'level2', 'level3', 'level4'],
+      description: 'Glass elevation level affecting shadow and blur intensity',
     },
-    opacity: {
-      control: { type: 'range', min: 0, max: 1, step: 0.1 },
-      description: 'Background opacity of the glass surface',
+    tier: {
+      control: { type: 'select' },
+      options: ['low', 'medium', 'high', 'ultra'],
+      description: 'Performance quality tier for rendering optimization',
     },
-    rounded: {
+    radius: {
       control: { type: 'select' },
       options: ['none', 'sm', 'md', 'lg', 'xl', 'full'],
       description: 'Border radius of the glass surface',
     },
-    glow: {
+    interactive: {
       control: 'boolean',
-      description: 'Enable glow effect around the glass surface',
+      description: 'Enable interactive states (hover, focus, active)',
     },
-    glowColor: {
-      control: 'color',
-      description: 'Color of the glow effect',
-    },
-    glowIntensity: {
-      control: { type: 'range', min: 0, max: 1, step: 0.1 },
-      description: 'Intensity of the glow effect',
-    },
-    hover: {
+    hoverLift: {
       control: 'boolean',
-      description: 'Enable hover effects for interactive feedback',
+      description: 'Enable hover lift effect',
+    },
+    focusRing: {
+      control: 'boolean',
+      description: 'Enable focus ring for accessibility',
+    },
+    press: {
+      control: 'boolean',
+      description: 'Enable press effect for interactive feedback',
     },
   },
   args: {
-    variant: 'frosted',
-    blur: 'medium',
-    opacity: 0.1,
-    rounded: 'md',
-    glow: false,
-    glowColor: 'rgba(255, 255, 255, 0.5)',
-    glowIntensity: 0.5,
-    hover: false,
+    intent: 'neutral',
+    elevation: 'level2',
+    tier: 'high',
+    radius: 'md',
+    interactive: false,
+    hoverLift: false,
+    focusRing: false,
+    press: false,
   },
 };
 
@@ -77,14 +78,14 @@ export const Default: Story = {
   },
 };
 
-export const Variants: Story = {
+export const Intents: Story = {
   render: (args) => (
     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl">
-      {(['frosted', 'crystal', 'tinted', 'metallic', 'neon'] as GlassVariant[]).map((variant) => (
-        <GlassCore key={variant} {...args} variant={variant}>
+      {(['neutral', 'primary', 'success', 'warning', 'danger', 'info'] as const).map((intent) => (
+        <GlassCore key={intent} {...args} intent={intent}>
           <div className="p-4 text-center">
-            <h4 className="text-sm font-medium capitalize mb-1">{variant}</h4>
-            <p className="text-xs opacity-70">Variant</p>
+            <h4 className="text-sm font-medium capitalize mb-1">{intent}</h4>
+            <p className="text-xs opacity-70">Intent</p>
           </div>
         </GlassCore>
       ))}
@@ -95,14 +96,14 @@ export const Variants: Story = {
   },
 };
 
-export const BlurIntensities: Story = {
+export const Elevations: Story = {
   render: (args) => (
     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl">
-      {(['none', 'light', 'medium', 'heavy', 'ultra'] as BlurIntensity[]).map((blur) => (
-        <GlassCore key={blur} {...args} blur={blur}>
+      {(['level1', 'level2', 'level3', 'level4'] as const).map((elevation) => (
+        <GlassCore key={elevation} {...args} elevation={elevation}>
           <div className="p-4 text-center">
-            <h4 className="text-sm font-medium capitalize mb-1">{blur}</h4>
-            <p className="text-xs opacity-70">Blur</p>
+            <h4 className="text-sm font-medium capitalize mb-1">{elevation}</h4>
+            <p className="text-xs opacity-70">Elevation</p>
           </div>
         </GlassCore>
       ))}
@@ -113,27 +114,28 @@ export const BlurIntensities: Story = {
   },
 };
 
-export const WithGlow: Story = {
+export const Interactive: Story = {
   args: {
-    glow: true,
-    glowColor: 'rgba(59, 130, 246, 0.5)',
-    glowIntensity: 0.8,
+    interactive: true,
+    hoverLift: true,
+    focusRing: true,
+    press: true,
     children: (
       <div className="p-6 text-center">
-        <h3 className="text-lg font-semibold mb-2">Glowing Glass</h3>
-        <p className="text-sm opacity-80">Glass surface with blue glow effect.</p>
+        <h3 className="text-lg font-semibold mb-2">Interactive Glass</h3>
+        <p className="text-sm opacity-80">Glass surface with interactive effects.</p>
       </div>
     ),
   },
 };
 
-export const InteractiveHover: Story = {
+export const HoverLift: Story = {
   args: {
-    hover: true,
+    hoverLift: true,
     children: (
       <div className="p-6 text-center cursor-pointer">
-        <h3 className="text-lg font-semibold mb-2">Interactive Glass</h3>
-        <p className="text-sm opacity-80">Hover over this surface to see the effect.</p>
+        <h3 className="text-lg font-semibold mb-2">Hover Lift Effect</h3>
+        <p className="text-sm opacity-80">Hover over this surface to see the lift effect.</p>
       </div>
     ),
   },
@@ -142,11 +144,11 @@ export const InteractiveHover: Story = {
 export const DifferentBorderRadii: Story = {
   render: (args) => (
     <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl">
-      {(['none', 'sm', 'md', 'lg', 'xl', 'full'] as const).map((rounded) => (
-        <GlassCore key={rounded} {...args} rounded={rounded}>
+      {(['none', 'sm', 'md', 'lg', 'xl', 'full'] as const).map((radius) => (
+        <GlassCore key={radius} {...args} radius={radius}>
           <div className="p-4 text-center">
-            <h4 className="text-sm font-medium capitalize mb-1">{rounded}</h4>
-            <p className="text-xs opacity-70">Rounded</p>
+            <h4 className="text-sm font-medium capitalize mb-1">{radius}</h4>
+            <p className="text-xs opacity-70">Radius</p>
           </div>
         </GlassCore>
       ))}
@@ -159,11 +161,10 @@ export const DifferentBorderRadii: Story = {
 
 export const ContentShowcase: Story = {
   args: {
-    variant: 'luminous',
-    blur: 'intense',
-    glow: true,
-    glowColor: 'rgba(147, 51, 234, 0.3)',
-    hover: true,
+    intent: 'primary',
+    elevation: 'level3',
+    interactive: true,
+    hoverLift: true,
     children: (
       <div className="p-8 text-center">
         <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center">

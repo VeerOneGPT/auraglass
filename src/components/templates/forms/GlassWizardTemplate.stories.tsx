@@ -90,8 +90,8 @@ const sampleSteps = [
     schema: [],
     component: (
       <div className="text-center py-8">
-        <h3 className="text-lg font-semibold mb-4">Ready to Complete Setup</h3>
-        <p className="text-muted-foreground">
+        <h3 className="glass-text-lg font-semibold glass-mb-4">Ready to Complete Setup</h3>
+        <p className="glass-text-secondary">
           Please review your information and click Finish to complete the setup.
         </p>
       </div>

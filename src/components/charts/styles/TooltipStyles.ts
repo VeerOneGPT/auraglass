@@ -2,7 +2,6 @@ import React from 'react';
 import { CSSProperties } from 'react';
 import styled from 'styled-components';
 
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 export interface TooltipStyles {
   container: CSSProperties;
   header: CSSProperties;

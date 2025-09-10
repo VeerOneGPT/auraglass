@@ -4,10 +4,10 @@
  * A component that visually indicates the current state of a UI element.
  */
 import React, { forwardRef } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled, { keyframes } from 'styled-components';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { createGlassStyle } from '../../utils/createGlassStyle';
 
 import { StateIndicatorProps } from './types';
 
@@ -100,8 +100,8 @@ const StateOverlay = styled.div<{
   ${props =>
     props.$glass &&
     `
-    ${createGlassStyle({ intent: 'neutral', elevation: 'level2' })};
-    -webkit-${createGlassStyle({ intent: 'neutral', elevation: 'level2' })};
+    ${createGlassStyle({ elev: 2, variant: 'default' })};
+    -webkit-${createGlassStyle({ elev: 2, variant: 'default' })};
   `}
 
   /* Animate loading state */
@@ -128,7 +128,7 @@ function StateIndicatorComponent(
   ref: React.ForwardedRef<HTMLDivElement>
 ) {
   // Unified glass styles
-  const glassStyles = createGlassStyle({ intent: 'neutral', elevation: 'level2', tier: 'high' });
+  const glassStyles = createGlassStyle({ elev: 2, variant: 'default' });
 
   const {
     children,

@@ -57,7 +57,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap glass-gap-4">
       <GlassAdvancedSearch {...args} />
     </div>
   ),

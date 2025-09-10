@@ -97,7 +97,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 glass-gap-6">
       <GlassStatCard
         {...args}
         variant="default"
@@ -177,7 +177,7 @@ export const WithProgress: Story = {
 
 export const Sizes: Story = {
   render: (args) => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 glass-gap-6">
       <GlassStatCard {...args} size="sm" title="Small Size" value="1.2K" />
       <GlassStatCard {...args} size="md" title="Medium Size" value="2.4K" />
       <GlassStatCard {...args} size="lg" title="Large Size" value="5.8K" />

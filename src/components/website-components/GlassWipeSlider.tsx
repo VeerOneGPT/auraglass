@@ -1,36 +1,35 @@
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 "use client";
 
 import { useAnimationDuration, useMotionAwareAnimation } from '../../hooks/useMotionPreference';
 import { cn } from '../../lib/utilsComprehensive';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState, memo } from 'react';
 
-// Icons for handle indicators
-const ChevronLeftIcon = () => (
+// Memoized icons for handle indicators to prevent unnecessary re-renders
+const ChevronLeftIcon = memo(() => (
   <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
     <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
   </svg>
-);
+));
 
-const ChevronRightIcon = () => (
+const ChevronRightIcon = memo(() => (
   <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
     <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
   </svg>
-);
+));
 
-const ChevronUpIcon = () => (
+const ChevronUpIcon = memo(() => (
   <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
     <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
   </svg>
-);
+));
 
-const ChevronDownIcon = () => (
+const ChevronDownIcon = memo(() => (
   <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
     <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
   </svg>
-);
+));
 
 // Preset positions for common comparisons
 export const SLIDER_PRESETS = {
@@ -99,7 +98,7 @@ interface GlassWipeSliderProps {
   onDragEnd?: () => void;
 }
 
-export function GlassWipeSlider({
+const GlassWipeSliderComponent = ({
   beforeContent,
   afterContent,
   className,
@@ -124,7 +123,7 @@ export function GlassWipeSlider({
   onSnapToPreset,
   onDragStart,
   onDragEnd,
-}: GlassWipeSliderProps) {
+}: GlassWipeSliderProps) => {
   // Motion-aware hooks
   const { getAnimationProps, getTransition } = useMotionAwareAnimation();
   const { duration } = useAnimationDuration(200);
@@ -144,25 +143,28 @@ export function GlassWipeSlider({
   const animationFrame = useRef<number | null>(null);
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
+  // Memoized motion configuration to prevent unnecessary spring recreations
+  const springConfig = { stiffness: 300, damping: 30 };
+  
   // Motion values for smooth animations
   const motionX = useMotionValue(initialPosition);
   const motionY = useMotionValue(initialPosition);
-  const springX = useSpring(motionX, { stiffness: 300, damping: 30 });
-  const springY = useSpring(motionY, { stiffness: 300, damping: 30 });
+  const springX = useSpring(motionX, springConfig);
+  const springY = useSpring(motionY, springConfig);
 
   const handleTransform = useTransform(
     orientation === 'horizontal' ? springX : springY,
     [0, 100],
-    orientation === 'horizontal'
-      ? ['translateX(-50%) translateY(-50%)', 'translateX(-50%) translateY(-50%)']
-      : ['translateX(-50%) translateY(-50%)', 'translateX(-50%) translateY(-50%)']
+    ['translateX(-50%) translateY(-50%)', 'translateX(-50%) translateY(-50%)']
   );
 
-  // Snap to preset positions
+  // Memoized preset values to prevent recreation on every render
+  const presetValues = React.useMemo(() => Object.values(SLIDER_PRESETS), []);
+  
+  // Optimized snap to preset positions
   const snapToNearestPreset = useCallback((currentPos: number) => {
     if (!enableSnapping) return currentPos;
 
-    const presetValues = Object.values(SLIDER_PRESETS);
     const nearest = presetValues.reduce((prev, curr) =>
       Math.abs(curr - currentPos) < Math.abs(prev - currentPos) ? curr : prev
     );
@@ -173,7 +175,7 @@ export function GlassWipeSlider({
     }
 
     return currentPos;
-  }, [enableSnapping, snapThreshold, onSnapToPreset]);
+  }, [enableSnapping, snapThreshold, onSnapToPreset, presetValues]);
 
   // Apply momentum when drag ends
   const applyMomentum = useCallback(() => {
@@ -226,6 +228,7 @@ export function GlassWipeSlider({
     lastPosition.current = position;
   };
 
+  // Optimized handle move with better performance
   const handleMove = useCallback((clientPos: number) => {
     if (!containerRef.current) return;
 
@@ -238,23 +241,22 @@ export function GlassWipeSlider({
     const newPosition = (offset / size) * 100;
     const clampedPosition = Math.max(0, Math.min(100, newPosition));
 
-    // Calculate velocity for momentum
+    // Calculate velocity for momentum (optimized)
     const now = Date.now();
     const timeDelta = now - lastUpdateTime.current;
-    const positionDelta = clampedPosition - lastPosition.current;
-
+    
     if (timeDelta > 0) {
+      const positionDelta = clampedPosition - lastPosition.current;
       setVelocity(positionDelta / timeDelta);
+      lastUpdateTime.current = now;
+      lastPosition.current = clampedPosition;
     }
-
-    lastUpdateTime.current = now;
-    lastPosition.current = clampedPosition;
 
     setPosition(clampedPosition);
     motionX.set(clampedPosition);
     motionY.set(clampedPosition);
 
-    // Debounced callback
+    // Debounced callback with cleanup
     if (debounceTimeout.current) {
       clearTimeout(debounceTimeout.current);
     }
@@ -397,16 +399,18 @@ export function GlassWipeSlider({
     }
   };
 
-  // Handle size variants
-  const handleSizes = {
+  // Memoized handle size variants to prevent recreation
+  const handleSizes = React.useMemo(() => ({
     sm: 'w-10 h-10',
     md: 'w-12 h-12',
     lg: 'w-14 h-14',
-  };
+  }), []);
 
-  // Dynamic styles based on props
-  const containerHeight = typeof height === 'string' ? height : `${height}px`;
-  const containerMinHeight = minHeight ? (typeof minHeight === 'string' ? minHeight : `${minHeight}px`) : undefined;
+  // Memoized dynamic styles based on props
+  const containerStyles = React.useMemo(() => ({
+    height: typeof height === 'string' ? height : `${height}px`,
+    minHeight: minHeight ? (typeof minHeight === 'string' ? minHeight : `${minHeight}px`) : undefined
+  }), [height, minHeight]);
 
   // Clean up on unmount
   useEffect(() => {
@@ -420,28 +424,31 @@ export function GlassWipeSlider({
     };
   }, []);
 
-  // Computed values
-  const isVertical = orientation === 'vertical';
-  const cursorClass = isVertical ? 'cursor-row-resize' : 'cursor-col-resize';
-  const clipPath = isVertical
-    ? `inset(${100 - position}% 0 0 0)`
-    : `inset(0 ${100 - position}% 0 0)`;
+  // Memoized computed values for better performance
+  const computedValues = React.useMemo(() => {
+    const isVertical = orientation === 'vertical';
+    const cursorClass = isVertical ? 'cursor-row-resize' : 'cursor-col-resize';
+    const clipPath = isVertical
+      ? `inset(${100 - position}% 0 0 0)`
+      : `inset(0 ${100 - position}% 0 0)`;
+    
+    return { isVertical, cursorClass, clipPath };
+  }, [orientation, position]);
+  
+  const { isVertical, cursorClass, clipPath } = computedValues;
 
   return (
     <div
       ref={containerRef}
       className={cn(
-        "relative w-full overflow-hidden rounded-lg select-none glass-card-motion-aware",
+        "relative w-full overflow-hidden glass-radius-lg select-none glass-card-motion-aware",
         cursorClass,
         {
           'h-96': !height || height === '24rem',
         },
         className
       )}
-      style={{
-        height: containerHeight,
-        minHeight: containerMinHeight,
-      }}
+      style={containerStyles}
       role="slider"
       aria-valuemin={0}
       aria-valuemax={100}
@@ -588,32 +595,32 @@ export function GlassWipeSlider({
         transition={getTransition(duration / 1000)}
       >
         {/* Glass handle */}
-        <div className="w-full h-full rounded-full glass-foundation-complete bg-glass-gradient-strong backdrop-blur-md-medium border border-white/30 flex items-center justify-center group relative overflow-hidden">
+        <div className="w-full h-full glass-radius-full glass-foundation-complete bg-glass-gradient-strong backdrop-blur-md-medium border border-white/30 flex items-center justify-center group relative overflow-hidden">
           {/* Arrow indicators */}
           <div className={cn(
-            "flex items-center gap-1 text-white/70 group-hover:text-white/90 transition-colors duration-200 relative z-10",
+            "flex items-center glass-gap-1 glass-text-primary/70 group-hover:glass-text-primary/90 transition-colors duration-200 relative z-10",
             isVertical ? "flex-col" : "flex-row"
           )}>
             {isVertical ? (
               <>
                 <ChevronUpIcon />
-                <div className="w-1 h-1 rounded-full bg-current opacity-50" />
+                <div className="w-1 h-1 glass-radius-full bg-current opacity-50" />
                 <ChevronDownIcon />
               </>
             ) : (
               <>
                 <ChevronLeftIcon />
-                <div className="w-1 h-1 rounded-full bg-current opacity-50" />
+                <div className="w-1 h-1 glass-radius-full bg-current opacity-50" />
                 <ChevronRightIcon />
               </>
             )}
           </div>
 
           {/* Multi-layer glow effects */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 glass-radius-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
           <div
-            className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400/30 to-purple-500/30 transition-opacity duration-200"
+            className="absolute inset-0 glass-radius-full bg-gradient-to-r from-blue-400/30 to-purple-500/30 transition-opacity duration-200"
             style={{
               opacity: isDragging ? 0.7 : 0
             }}
@@ -621,12 +628,12 @@ export function GlassWipeSlider({
 
           {/* Focus ring */}
           {isFocused && (
-            <div className="absolute -inset-1 rounded-full border-2 border-blue-400/50 animate-pulse" />
+            <div className="absolute -inset-1 glass-radius-full border-2 border-blue-400/50 animate-pulse" />
           )}
 
           {/* Ripple effect for interactions */}
           <div
-            className="absolute inset-0 rounded-full bg-white/20 scale-0 transition-transform duration-200"
+            className="absolute inset-0 glass-radius-full bg-white/20 scale-0 transition-transform duration-200"
             style={{
               transform: isDragging ? 'scale(1.5)' : 'scale(0)',
               opacity: isDragging ? 0.3 : 0
@@ -640,7 +647,7 @@ export function GlassWipeSlider({
         <>
           <motion.div
             className={cn(
-              "absolute chip chip-muted text-sm pointer-events-none z-10",
+              "absolute chip chip-muted glass-text-sm pointer-events-none z-10",
               isVertical ? "top-4 left-1/2 transform -translate-x-1/2" : "top-4 left-4"
             )}
             {...getAnimationProps({
@@ -651,13 +658,13 @@ export function GlassWipeSlider({
           >
             <div className="font-medium">{labels.after}</div>
             {labels.afterDescription && (
-              <div className="text-xs text-white/60 mt-0.5">{labels.afterDescription}</div>
+              <div className="glass-text-xs glass-text-primary/60 mt-0.5">{labels.afterDescription}</div>
             )}
           </motion.div>
 
           <motion.div
             className={cn(
-              "absolute chip chip-muted text-sm pointer-events-none z-10",
+              "absolute chip chip-muted glass-text-sm pointer-events-none z-10",
               isVertical ? "bottom-4 left-1/2 transform -translate-x-1/2" : "top-4 right-4"
             )}
             {...getAnimationProps({
@@ -668,7 +675,7 @@ export function GlassWipeSlider({
           >
             <div className="font-medium">{labels.before}</div>
             {labels.beforeDescription && (
-              <div className="text-xs text-white/60 mt-0.5">{labels.beforeDescription}</div>
+              <div className="glass-text-xs glass-text-primary/60 mt-0.5">{labels.beforeDescription}</div>
             )}
           </motion.div>
         </>
@@ -678,7 +685,7 @@ export function GlassWipeSlider({
       {showProgress && (
         <motion.div
           className={cn(
-            "absolute chip chip-muted text-xs pointer-events-none z-10",
+            "absolute chip chip-muted glass-text-xs pointer-events-none z-10",
             isVertical
               ? "bottom-4 right-4"
               : "bottom-4 left-1/2 transform -translate-x-1/2"
@@ -689,10 +696,10 @@ export function GlassWipeSlider({
           })}
           transition={getTransition(0.3, 'ease-out')}
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center glass-gap-2">
             <div className="font-mono font-medium">{Math.round(position)}%</div>
             {enableSnapping && (
-              <div className="w-1 h-1 rounded-full bg-white/40" />
+              <div className="w-1 h-1 glass-radius-full bg-white/40" />
             )}
           </div>
         </motion.div>
@@ -705,8 +712,8 @@ export function GlassWipeSlider({
             <div
               key={key}
               className={cn(
-                "absolute w-2 h-2 rounded-full bg-white/30 backdrop-blur-md border border-white/20 transition-all duration-200",
-                Math.abs(position - value) <= snapThreshold ? 'bg-blue-400/60 scale-125' : ''
+                "absolute w-2 h-2 glass-radius-full bg-white/30 backdrop-blur-md border border-white/20 transition-all duration-200",
+                Math.abs(position - value) <= snapThreshold ? 'glass-surface-primary/60 scale-125' : ''
               )}
               style={{
                 ...(isVertical ? {
@@ -729,7 +736,7 @@ export function GlassWipeSlider({
         <div
           id="slider-metrics"
           className={cn(
-            "absolute glass-foundation-complete bg-glass-gradient-strong backdrop-blur-md-medium border border-white/20 rounded-lg p-4 z-10 max-w-sm",
+            "absolute glass-foundation-complete bg-glass-gradient-strong backdrop-blur-md-medium border border-white/20 glass-radius-lg glass-p-4 z-10 max-w-sm",
             isVertical
               ? "top-1/2 right-4 transform -translate-y-1/2"
               : "top-4 left-1/2 transform -translate-x-1/2"
@@ -738,20 +745,20 @@ export function GlassWipeSlider({
             opacity: isHovered || isDragging || isFocused ? 0.95 : 0.7
           }}
         >
-          <div className="space-y-2">
+          <div className="glass-auto-gap glass-auto-gap-sm">
             {metrics.map((metric, index) => (
               <div
                 key={index}
                 className={cn(
-                  "flex items-center justify-between text-sm",
-                  metric?.highlight ? 'text-cyan-300 font-semibold' : 'text-white/80'
+                  "flex items-center justify-between glass-text-sm",
+                  metric?.highlight ? 'glass-text-primary font-semibold' : 'glass-text-primary/80'
                 )}
               >
                 <span className="font-medium">{metric?.label}</span>
-                <div className="flex items-center gap-2 font-mono">
-                  <span className="text-red-300">{metric?.beforeValue}{metric?.unit}</span>
-                  <span className="text-white/50">→</span>
-                  <span className="text-green-300">{metric?.afterValue}{metric?.unit}</span>
+                <div className="flex items-center glass-gap-2 font-mono">
+                  <span className="glass-text-danger">{metric?.beforeValue}{metric?.unit}</span>
+                  <span className="glass-text-primary/50">→</span>
+                  <span className="glass-text-success">{metric?.afterValue}{metric?.unit}</span>
                 </div>
               </div>
             ))}
@@ -766,7 +773,10 @@ export function GlassWipeSlider({
       </div>
     </div>
   );
-}
+};
+
+// Export optimized memoized component
+export const GlassWipeSlider = memo(GlassWipeSliderComponent);
 
 // Comparison content components for common use cases
 export function ComparisonImage({
@@ -803,7 +813,7 @@ export function ComparisonContent({
 }) {
   const backgroundClasses = {
     gradient: 'bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900',
-    solid: 'bg-slate-900',
+    solid: 'glass-surface-primary',
     glass: 'glass-foundation-complete bg-glass-gradient-subtle backdrop-blur-md-medium',
     transparent: 'bg-transparent'
   };
@@ -833,32 +843,32 @@ export function FeatureComparison({
 }) {
   return (
     <ComparisonContent className={className} background="glass">
-      <div className="w-full max-w-md space-y-4">
+      <div className="w-full max-w-md glass-auto-gap glass-auto-gap-lg">
         {title && (
-          <h3 className="text-lg font-semibold text-white text-center mb-6">{title}</h3>
+          <h3 className="glass-text-lg font-semibold glass-text-primary text-center mb-6">{title}</h3>
         )}
-        <div className="space-y-2">
+        <div className="glass-auto-gap glass-auto-gap-sm">
           {beforeFeatures.map((feature, index) => {
             const afterFeature = afterFeatures?.[index];
             return (
-              <div key={feature.name} className="flex items-center justify-between py-2 px-3 surface-1">
+              <div key={feature.name} className="flex items-center justify-between glass-py-2 glass-px-3 surface-1">
                 <span className={cn(
-                  "text-sm",
-                  feature.highlight ? 'text-cyan-300 font-medium' : 'text-white/90'
+                  "glass-text-sm",
+                  feature.highlight ? 'glass-text-primary font-medium' : 'glass-text-primary/90'
                 )}>
                   {feature.name}
                 </span>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center glass-gap-3">
                   <div className={cn(
-                    "w-2 h-2 rounded-full",
-                    feature.available ? 'bg-green-400' : 'bg-red-400'
+                    "w-2 h-2 glass-radius-full",
+                    feature.available ? 'glass-surface-success' : 'glass-surface-danger'
                   )} />
                   {afterFeature && (
                     <>
-                      <span className="text-white/40">→</span>
+                      <span className="glass-text-primary/40">→</span>
                       <div className={cn(
-                        "w-2 h-2 rounded-full",
-                        afterFeature.available ? 'bg-green-400' : 'bg-red-400'
+                        "w-2 h-2 glass-radius-full",
+                        afterFeature.available ? 'glass-surface-success' : 'glass-surface-danger'
                       )} />
                     </>
                   )}
@@ -884,33 +894,33 @@ export function MetricsComparison({
 }) {
   return (
     <ComparisonContent className={className} background="glass">
-      <div className="w-full max-w-lg space-y-4">
+      <div className="w-full max-w-lg glass-auto-gap glass-auto-gap-lg">
         {title && (
-          <h3 className="text-xl font-semibold text-white text-center mb-6">{title}</h3>
+          <h3 className="glass-text-xl font-semibold glass-text-primary text-center mb-6">{title}</h3>
         )}
-        <div className="grid gap-4">
+        <div className="grid glass-gap-4">
           {metrics.map((metric, index) => (
-            <div key={index} className="surface-1 p-4">
-              <div className="text-center space-y-3">
+            <div key={index} className="surface-1 glass-p-4">
+              <div className="text-center glass-auto-gap glass-auto-gap-md">
                 <div className={cn(
-                  "text-sm font-medium",
-                  metric?.highlight ? 'text-cyan-300' : 'text-white/80'
+                  "glass-text-sm font-medium",
+                  metric?.highlight ? 'glass-text-primary' : 'glass-text-primary/80'
                 )}>
                   {metric?.label}
                 </div>
-                <div className="flex items-center justify-center gap-4">
+                <div className="flex items-center justify-center glass-gap-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-red-300 font-mono">
+                    <div className="glass-text-2xl font-bold glass-text-danger font-mono">
                       {metric?.beforeValue}{metric?.unit}
                     </div>
-                    <div className="text-xs text-white/50 mt-1">Before</div>
+                    <div className="glass-text-xs glass-text-primary/50 glass-mt-1">Before</div>
                   </div>
-                  <div className="text-white/40 text-xl">→</div>
+                  <div className="glass-text-primary/40 glass-text-xl">→</div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-green-300 font-mono">
+                    <div className="glass-text-2xl font-bold glass-text-success font-mono">
                       {metric?.afterValue}{metric?.unit}
                     </div>
-                    <div className="text-xs text-white/50 mt-1">After</div>
+                    <div className="glass-text-xs glass-text-primary/50 glass-mt-1">After</div>
                   </div>
                 </div>
               </div>

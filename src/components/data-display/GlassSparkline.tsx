@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '@/lib/utilsComprehensive';
 
 export interface GlassSparklineProps {

@@ -1,7 +1,8 @@
 import React, { useRef, useState, useCallback, useEffect, forwardRef, CSSProperties } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { GlassButton, GlassButtonProps } from './GlassButton';
 import { Slot } from '@radix-ui/react-slot';
+import { Motion } from '../../primitives';
+import { announceToScreenReader } from '../../utils/a11y';
 
 export interface MagneticButtonProps extends GlassButtonProps {
   /**
@@ -29,6 +30,16 @@ export interface MagneticButtonProps extends GlassButtonProps {
    * @default false
    */
   asChild?: boolean;
+  /**
+   * Whether to announce magnetic interactions to screen readers (for users who navigate with voice control)
+   * @default false
+   */
+  announceInteractions?: boolean;
+  /**
+   * Whether to reduce magnetic effect when user prefers reduced motion
+   * @default true
+   */
+  respectReducedMotion?: boolean;
 }
 
 /**
@@ -43,6 +54,8 @@ export const MagneticButton = forwardRef<HTMLElement, MagneticButtonProps>(funct
     onPointerEnter,
     onPointerLeave,
     asChild = false,
+    announceInteractions = false,
+    respectReducedMotion = true,
     children,
     ...restProps
   },
@@ -54,6 +67,20 @@ export const MagneticButton = forwardRef<HTMLElement, MagneticButtonProps>(funct
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const animationFrame = useRef<number | null>(null);
+
+  // Check if user prefers reduced motion
+  const prefersReducedMotion = useCallback(() => {
+    return respectReducedMotion && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }, [respectReducedMotion]);
+
+  // Accessibility: Announce when magnetic interaction becomes available
+  const announceInteractionRef = useRef(false);
+  useEffect(() => {
+    if (announceInteractions && !announceInteractionRef.current && !prefersReducedMotion()) {
+      announceToScreenReader('Interactive magnetic button available', 'polite');
+      announceInteractionRef.current = true;
+    }
+  }, [announceInteractions, prefersReducedMotion]);
 
   const combinedRef = useCallback(
     (node: HTMLElement | null) => {
@@ -72,6 +99,11 @@ export const MagneticButton = forwardRef<HTMLElement, MagneticButtonProps>(funct
   );
 
   const calculateMagneticAttraction = useCallback((distanceX: number, distanceY: number, rect: DOMRect) => {
+      // Disable magnetic effect if user prefers reduced motion
+      if (prefersReducedMotion()) {
+          return { x: 0, y: 0 };
+      }
+
       const distance = Math.sqrt(distanceX ** 2 + distanceY ** 2);
 
       if (distance > magneticRadius || !rect) {
@@ -94,7 +126,7 @@ export const MagneticButton = forwardRef<HTMLElement, MagneticButtonProps>(funct
           x: pullToX,
           y: pullToY,
       };
-  }, [magneticRadius, magneticStrength]);
+  }, [magneticRadius, magneticStrength, prefersReducedMotion]);
 
   const handlePointerMove = useCallback((e: PointerEvent) => {
       if (!elementRef.current || !isHovered) return;
@@ -192,21 +224,30 @@ export const MagneticButton = forwardRef<HTMLElement, MagneticButtonProps>(funct
 
   const combinedStyle: CSSProperties = {
     ...propStyle,
-    transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
-    transition: isHovered ? 'transform 0.05s linear' : 'transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1)',
-    willChange: 'transform',
+    transform: prefersReducedMotion() ? 'none' : `translate3d(${position.x}px, ${position.y}px, 0)`,
+    transition: prefersReducedMotion() 
+      ? 'none'
+      : isHovered 
+        ? 'transform 0.05s linear' 
+        : 'transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1)',
+    willChange: prefersReducedMotion() ? 'auto' : 'transform',
   };
 
   return (
-    <Comp
-      ref={combinedRef}
-      style={combinedStyle}
-      onPointerEnter={handlePointerEnter}
-      onPointerLeave={handlePointerLeave}
-      {...restProps}
+    <Motion
+      preset="none"
+      className="inline-block"
     >
-      {children}
-    </Comp>
+      <Comp
+        ref={combinedRef}
+        style={combinedStyle}
+        onPointerEnter={handlePointerEnter}
+        onPointerLeave={handlePointerLeave}
+        {...restProps}
+      >
+        {children}
+      </Comp>
+    </Motion>
   );
 }
 );

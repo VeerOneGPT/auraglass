@@ -4,12 +4,12 @@
  * A button component with ripple effect feedback.
  */
 import React, { forwardRef, useState, useRef, useCallback } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled, { css } from 'styled-components';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { GlassButton as Button } from '../button';
 import { glassStyleCSS } from '../../core/mixins/glassMixins';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 // Import base Button
 import { GlassButtonProps as ButtonProps } from '../button/types'; // Import ButtonProps from correct file
 
@@ -207,7 +207,16 @@ function RippleButtonComponent(
         style={style} // Pass style to Button
         onClick={onClick} // Pass original onClick
         onMouseDown={handleMouseDown} // Use our wrapper mouse down
-        {...rest} // Pass rest of Button props
+        {...{
+          ...rest,
+          'aria-pressed': rest['aria-pressed'] === 'true' ? true :
+                         rest['aria-pressed'] === 'false' ? false :
+                         rest['aria-pressed'] === 'mixed' ? undefined :
+                         rest['aria-pressed'],
+          'aria-expanded': rest['aria-expanded'] === 'true' ? true :
+                          rest['aria-expanded'] === 'false' ? false :
+                          rest['aria-expanded']
+        }} // Pass rest of Button props with aria attribute transformations
       >
         {children}
       </Button>

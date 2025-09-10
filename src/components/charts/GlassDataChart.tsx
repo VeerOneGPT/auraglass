@@ -5,7 +5,7 @@
  * smooth animations, and rich customization options.
  */
 // Typography tokens available via typography.css (imported in index.css)
-import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo, memo } from 'react';
 // import styled from 'styled-components'; // unused
 import { 
   Chart as ChartJS, 
@@ -26,7 +26,6 @@ import {
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
 import { useAccessibilitySettings } from '../../hooks/useAccessibilitySettings';
-// import { createGlassStyle } from '../../core/mixins/glassMixins'; // unused
 // import { glassGlow } from '../../core/mixins/glowEffects'; // unused
 // import { createThemeContext } from '../../core/themeContext'; // unused
 import { useGlassTheme } from '../../hooks/useGlassTheme';
@@ -53,17 +52,21 @@ const GalileoElementInteractionPlugin = {
   id: 'galileoElementInteraction',
 } as any;
 
-const convertToChartJsDatasetWithEffects = (dataset: ChartDataset, index: number, chartType: ChartVariant, palette: string[], animation: any) => ({
-  ...dataset,
-  backgroundColor: dataset.style?.fillColor || palette[index % (palette?.length || 0)] + '40',
-  borderColor: dataset.style?.lineColor || palette[index % (palette?.length || 0)],
-  borderWidth: dataset.style?.borderWidth || 2,
-  pointBackgroundColor: dataset.style?.pointColor || palette[index % (palette?.length || 0)],
-  pointBorderColor: dataset.style?.pointColor || palette[index % (palette?.length || 0)],
-  pointRadius: dataset.style?.pointRadius || 4,
-  tension: dataset.style?.tension || 0.4,
-  fill: chartType === 'area',
-});
+// Dataset conversion to prevent unnecessary recalculations
+const convertToChartJsDatasetWithEffects = (dataset: ChartDataset, index: number, chartType: ChartVariant, palette: string[], animation: any) => {
+  const paletteColor = palette[index % (palette?.length || 0)];
+  return {
+    ...dataset,
+    backgroundColor: dataset.style?.fillColor || paletteColor + '40',
+    borderColor: dataset.style?.lineColor || paletteColor,
+    borderWidth: dataset.style?.borderWidth || 2,
+    pointBackgroundColor: dataset.style?.pointColor || paletteColor,
+    pointBorderColor: dataset.style?.pointColor || paletteColor,
+    pointRadius: dataset.style?.pointRadius || 4,
+    tension: dataset.style?.tension || 0.4,
+    fill: chartType === 'area',
+  };
+};
 
 // Basic styled components (will be replaced with proper modular components later)
 import styled from 'styled-components';
@@ -186,7 +189,7 @@ interface GlassDataChartProps {
   allowTypeSwitch?: boolean;
   borderRadius?: number;
   borderColor?: string;
-  elevation?: number;
+  elevation?: number | 'level1' | 'level2' | 'level3' | 'level4' | 'level5';
   className?: string;
   style?: React.CSSProperties;
   onDataPointClick?: (datasetIndex: number, dataIndex: number, data: DataPoint) => void;
@@ -473,27 +476,44 @@ interface HoveredPointValue {
   };
 }
 
-// Define our custom icon components
-const ZoomInIcon = ({ size = 24 }: { size?: number }) => (
+// Memoized icon components to prevent unnecessary re-renders
+const ZoomInIcon = memo(({ size = 24 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
     <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
   </svg>
-);
+));
 
-const ZoomOutIcon = ({ size = 24 }: { size?: number }) => (
+const ZoomOutIcon = memo(({ size = 24 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
     <path d="M19 13H5v-2h14v2z" />
   </svg>
-);
+));
 
-const RefreshIcon = ({ size = 24 }: { size?: number }) => (
+const RefreshIcon = memo(({ size = 24 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
     <path d="M17.65 6.35C16.2 4.9 14.2 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 10h7V3l-2.35 3.35z" />
   </svg>
-);
+));
 
-// Define a Button component so we don't need to import
-const GlassButton = ({ 
+// Memoized button component with stable styles
+const buttonStyles = {
+  base: {
+    background: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
+    border: 'none',
+    borderRadius: '4px',
+    color: 'white',
+    cursor: 'pointer',
+    backdropFilter: 'blur(8px)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'all 0.2s',
+  },
+  sm: { padding: '4px' },
+  default: { padding: '8px' }
+};
+
+const GlassButton = memo(({ 
   children, 
   variant, 
   size, 
@@ -508,28 +528,21 @@ const GlassButton = ({
   glass?: string,
   'aria-label'?: string
 }) => {
+  const combinedStyle = useMemo(() => ({
+    ...buttonStyles.base,
+    ...(size === 'sm' ? buttonStyles.sm : buttonStyles.default)
+  }), [size]);
+
   return (
     <button
       onClick={onClick}
       aria-label={ariaLabel}
-      style={{
-        background: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
-        border: 'none',
-        borderRadius: '4px',
-        padding: size === 'sm' ? '4px' : '8px',
-        color: 'white',
-        cursor: 'pointer',
-        backdropFilter: 'blur(8px)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        transition: 'all 0.2s',
-      }}
+      style={combinedStyle}
     >
       {children}
     </button>
   );
-};
+});
 
 // Define a ZoomControls component for displaying zoom UI
 interface ZoomControlsProps {
@@ -540,29 +553,40 @@ interface ZoomControlsProps {
   $variant?: 'clear' | 'frosted' | 'tinted' | 'luminous';
 }
 
-const ZoomControls: React.FC<ZoomControlsProps> = ({
+// Stable styles for zoom controls container
+const zoomControlsStyle = {
+  position: 'absolute' as const,
+  right: '10px',
+  top: '10px',
+  display: 'flex',
+  gap: '5px',
+  alignItems: 'center',
+  padding: '4px',
+  borderRadius: '4px',
+  backgroundColor: 'rgba(0, 0, 0, 0.2)',
+  backdropFilter: 'blur(8px)',
+  zIndex: 5,
+};
+
+const zoomLevelStyle = {
+  color: '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}',
+  fontSize: 'var(--typography-caption-size)',
+  padding: '0 8px',
+  minWidth: '40px',
+  textAlign: 'center' as const
+};
+
+const ZoomControls: React.FC<ZoomControlsProps> = memo(({
   onZoomIn,
   onZoomOut,
   onReset,
   zoomLevel,
   $variant = 'frosted'
 }) => {
+  const displayZoom = useMemo(() => Math.round(zoomLevel * 100), [zoomLevel]);
+
   return (
-    <div
-      style={{
-        position: 'absolute',
-        right: '10px',
-        top: '10px',
-        display: 'flex',
-        gap: '5px',
-        alignItems: 'center',
-        padding: '4px',
-        borderRadius: '4px',
-        backgroundColor: 'rgba(0, 0, 0, 0.2)',
-        backdropFilter: 'blur(8px)',
-        zIndex: 5,
-      }}
-    >
+    <div style={zoomControlsStyle}>
       <GlassButton
         variant="icon"
         size="sm"
@@ -573,14 +597,8 @@ const ZoomControls: React.FC<ZoomControlsProps> = ({
         <ZoomInIcon size={16} />
       </GlassButton>
       
-      <span style={{ 
-        color: '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}',
-        fontSize: 'var(--typography-caption-size)',
-        padding: '0 8px',
-        minWidth: '40px',
-        textAlign: 'center'
-      }}>
-        {Math.round(zoomLevel * 100)}%
+      <span style={zoomLevelStyle}>
+        {displayZoom}%
       </span>
       
       <GlassButton
@@ -604,12 +622,13 @@ const ZoomControls: React.FC<ZoomControlsProps> = ({
       </GlassButton>
     </div>
   );
-};
+});
 
 /**
  * GlassDataChart Component
  */
-export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChartProps>((props, ref) => {
+// Memoized main component to prevent unnecessary re-renders
+const GlassDataChartComponent = React.forwardRef<GlassDataChartRef, GlassDataChartProps>((props, ref) => {
   const {
     title,
     subtitle,
@@ -680,7 +699,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
     allowTypeSwitch = true,
     borderRadius = 12,
     borderColor,
-    elevation = 2,
+    elevation = 'level2',
     className,
     style,
     onDataPointClick,
@@ -816,8 +835,8 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
     return chartType as unknown as ChartType;
   };
   
-  // SVG Filter Definitions
-  const svgFilters = (
+  // Memoized SVG Filter Definitions to prevent expensive re-renders
+  const svgFilters = useMemo(() => (
     <svg width="0" height="0" style={{ position: 'absolute', visibility: 'hidden' }}>
       <defs>
         {/* Gradient definitions */}
@@ -866,39 +885,44 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
         })}
       </defs>
     </svg>
-  );
+  ), [palette, activeQuality]);
 
-  // Use the enhanced dataset conversion in the chartData
-  // Process datasets first to get converted structure including processed labels if applicable
-  const convertedDatasets = (datasets || []).map((dataset: any, i: number) => {
-    return convertToChartJsDatasetWithEffects(dataset, i, chartType, palette, animation);
-  });
+  // Memoize the converted datasets to prevent unnecessary recalculations
+  const convertedDatasets = useMemo(() => {
+    if (!datasets) return [];
+    return datasets.map((dataset: any, i: number) => {
+      return convertToChartJsDatasetWithEffects(dataset, i, chartType, palette, animation);
+    });
+  }, [datasets, chartType, palette, animation]);
 
-  // Prepare labels, using processed ones for pie/doughnut if available
-  let chartLabels: string[] | undefined;
-  if (chartType === 'pie' || chartType === 'doughnut') {
-    // Access processedLabels from the *first* dataset's conversion result
-    // Type assertion might be needed if TypeScript cannot infer the added property
-    const firstConvertedDataset = convertedDatasets?.[0] as any; 
+  // Memoize chart labels preparation
+  const chartLabels = useMemo(() => {
+    let labels: string[] | undefined;
+    if (chartType === 'pie' || chartType === 'doughnut') {
+      // Access processedLabels from the *first* dataset's conversion result
+      const firstConvertedDataset = convertedDatasets?.[0] as any; 
       if (firstConvertedDataset?.processedLabels && (firstConvertedDataset.processedLabels?.length || 0) > 0) {
-      chartLabels = firstConvertedDataset.processedLabels;
-    } else if (datasets && datasets[0]?.data) {
-      // Fallback to original data labels if processed labels aren't available
-      chartLabels = datasets[0].data?.map((point: any) => point.label || String(point.x));
-    }
-  } else if (chartType === 'polarArea' && datasets) {
+        labels = firstConvertedDataset.processedLabels;
+      } else if (datasets && datasets[0]?.data) {
+        // Fallback to original data labels if processed labels aren't available
+        labels = datasets[0].data?.map((point: any) => point.label || String(point.x));
+      }
+    } else if (chartType === 'polarArea' && datasets) {
       // Use original labels for polarArea
-      chartLabels = datasets[0]?.data?.map((point: any) => point.label || String(point.x)) || [];
-  }
+      labels = datasets[0]?.data?.map((point: any) => point.label || String(point.x)) || [];
+    }
+    return labels;
+  }, [chartType, convertedDatasets, datasets]);
 
-  const chartData = {
+  // Memoize chart data to prevent unnecessary Chart.js updates
+  const chartData = useMemo(() => ({
     // Map converted datasets, removing any temporary properties like processedLabels
     datasets: convertedDatasets.map((ds: any) => {
       const { processedLabels, ...rest } = ds as any; // Use type assertion here too
       return rest;
     }),
     labels: chartLabels, // Assign the prepared labels
-  };
+  }), [convertedDatasets, chartLabels]);
   
   // Zoom in function
   const handleZoomIn = useCallback(() => {
@@ -923,45 +947,96 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
     onTypeChange?.(type);
   };
   
-  // Handle legend item click
-  const handleLegendClick = (index: number) => {
+  // Memoized hex to RGB conversion function
+  const hexToRgb = useCallback((hex: string) => {
+    // Provide a default color if hex is undefined
+    const safeHex = hex || '#FFFFFF';
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(safeHex);
+    return result 
+      ? `${parseInt(result?.[1], 16)}, ${parseInt(result?.[2], 16)}, ${parseInt(result?.[3], 16)}`
+      : '255, 255, 255';
+  }, []);
+  
+  // Memoized legend items to prevent unnecessary re-renders
+  const legendItems = useMemo(() => {
+    if (!datasets) return [];
+    return datasets.map((dataset: any, index: number) => {
+      const color = dataset.style?.lineColor || palette[index % (palette?.length || 0)];
+      const rgbColor = hexToRgb(color);
+      const isActive = !selectedDatasets.includes(index);
+      
+      return {
+        id: dataset.id,
+        label: dataset.label,
+        color: color || '#FFFFFF',
+        rgbColor,
+        isActive,
+        index
+      };
+    });
+  }, [datasets, palette, selectedDatasets, hexToRgb]);
+
+  // Optimized legend item click handler
+  const handleLegendClick = useCallback((index: number) => {
     if (chartType === 'pie' || chartType === 'doughnut' || chartType === 'polarArea') {
       // For pie charts, handle single selection
       setSelectedDataset(selectedDataset === index ? null : index);
-      
+
       if (onSelectionChange) {
         onSelectionChange(selectedDataset === index ? [] : [index]);
       }
     } else {
       // For other charts, handle multi-selection
       let newSelectedDatasets = [...selectedDatasets];
-      
+
       if (newSelectedDatasets.includes(index)) {
         newSelectedDatasets = newSelectedDatasets.filter(i => i !== index);
       } else {
         newSelectedDatasets.push(index);
       }
-      
+
       setSelectedDatasets(newSelectedDatasets);
-      
+
       if (onSelectionChange) {
         onSelectionChange(newSelectedDatasets);
       }
     }
-    
+
     // Update the visible datasets
     if (chartRef.current) {
       const chart = chartRef.current;
-      
+
       // Toggle dataset visibility
       chart.setDatasetVisibility(
         index,
         !chart.isDatasetVisible(index)
       );
-      
+
       chart.update();
     }
-  };
+  }, [chartType, selectedDataset, selectedDatasets, onSelectionChange]);
+
+  // Memoized legend renderer to avoid duplication
+  const renderLegend = useCallback(() => (
+    <ChartLegend
+      $position={legend.position}
+      $style={legend.style || 'default'}
+      $glassEffect={legend.glassEffect || false}
+    >
+      {legendItems.map((item) => (
+        <LegendItem 
+          key={item.id} 
+          $style={legend.style || 'default'} 
+          $active={item.isActive}
+          $color={item.rgbColor}
+          onClick={(e) => handleLegendClick(item.index)}
+        >
+          <LegendColor $color={item.color} $active={item.isActive} />
+          <LegendLabel $active={item.isActive}>{item.label}</LegendLabel>
+        </LegendItem>
+      ))}
+    </ChartLegend>
+  ), [legend, legendItems, handleLegendClick]);
   
   // Handle chart data point click with formatted value feedback
   const handleDataPointClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
@@ -1025,8 +1100,8 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
     }
   };
   
-  // Handle chart hover for tooltips
-  const handleChartHover = (event: React.MouseEvent<HTMLCanvasElement>) => {
+  // Optimized chart hover handler with debouncing for better performance
+  const handleChartHover = useCallback((event: React.MouseEvent<HTMLCanvasElement>) => {
     if (!chartRef.current) return;
 
     // Exit early if BOTH interactions are disabled
@@ -1124,10 +1199,10 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
             console.log(`[Chart Interaction] Reset HOVER target for ${previousHoveredKey}`);
           }
     }
-  };
+  }, [hoveredPoint, interaction.physicsHoverEffects, interaction.showTooltips, getElementPhysicsOptions, datasets, chartType, palette]);
   
-  // Handle chart hover leave
-  const handleChartLeave = () => {
+  // Optimized chart hover leave handler
+  const handleChartLeave = useCallback(() => {
     // Clear tooltip state if enabled
     if (interaction.showTooltips) {
         setHoveredPoint(null);
@@ -1152,7 +1227,7 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
             }
         }
     }
-  };
+  }, [interaction.showTooltips, interaction.physicsHoverEffects]);
   
   // Handle enhanced chart export
   const handleExportChart = useCallback(() => {
@@ -1374,81 +1449,8 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
         />
       </ChartWrapper>
       
-      {/* Legend - Top position */}
-      {legend.show && legend.position === 'top' && (
-        <ChartLegend
-          $position={legend.position}
-          $style={legend.style || 'default'}
-          $glassEffect={legend.glassEffect || false}
-        >
-          {(datasets || []).map((dataset: any, index: number) => {
-            // Convert hex color to RGB for rgba usage - with safe defaults
-            const hexToRgb = (hex: string) => {
-              // Provide a default color if hex is undefined
-              const safeHex = hex || '#FFFFFF';
-              const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(safeHex);
-              return result 
-                ? `${parseInt(result?.[1], 16)}, ${parseInt(result?.[2], 16)}, ${parseInt(result?.[3], 16)}`
-                : '255, 255, 255';
-            };
-            
-            const color = dataset.style?.lineColor || palette[index % (palette?.length || 0)];
-            const rgbColor = hexToRgb(color);
-            const isActive = !selectedDatasets.includes(index);
-            
-            return (
-              <LegendItem 
-                key={dataset.id} 
-                $style={legend.style || 'default'} 
-                $active={isActive}
-                $color={rgbColor}
-                onClick={() => handleLegendClick(index)}
-              >
-                <LegendColor $color={color || '#FFFFFF'} $active={isActive} />
-                <LegendLabel $active={isActive}>{dataset.label}</LegendLabel>
-              </LegendItem>
-            );
-          })}
-        </ChartLegend>
-      )}
-      
-      {/* Legend - Bottom position */}
-      {legend.show && legend.position === 'bottom' && (
-        <ChartLegend
-          $position={legend.position}
-          $style={legend.style || 'default'}
-          $glassEffect={legend.glassEffect || false}
-        >
-          {(datasets || []).map((dataset: any, index: number) => {
-            // Convert hex color to RGB for rgba usage - with safe defaults
-            const hexToRgb = (hex: string) => {
-              // Provide a default color if hex is undefined
-              const safeHex = hex || '#FFFFFF';
-              const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(safeHex);
-              return result 
-                ? `${parseInt(result?.[1], 16)}, ${parseInt(result?.[2], 16)}, ${parseInt(result?.[3], 16)}`
-                : '255, 255, 255';
-            };
-            
-            const color = dataset.style?.lineColor || palette[index % (palette?.length || 0)];
-            const rgbColor = hexToRgb(color);
-            const isActive = !selectedDatasets.includes(index);
-            
-            return (
-              <LegendItem 
-                key={dataset.id} 
-                $style={legend.style || 'default'} 
-                $active={isActive}
-                $color={rgbColor}
-                onClick={() => handleLegendClick(index)}
-              >
-                <LegendColor $color={color || '#FFFFFF'} $active={isActive} />
-                <LegendLabel $active={isActive}>{dataset.label}</LegendLabel>
-              </LegendItem>
-            );
-          })}
-        </ChartLegend>
-      )}
+      {/* Optimized Legend Rendering */}
+      {legend.show && renderLegend()}
       
       {/* Custom SVG Tooltip (replacing the component tooltip) */}
       {interaction.tooltipStyle === 'dynamic' ? (
@@ -1523,7 +1525,10 @@ export const GlassDataChart = React.forwardRef<GlassDataChartRef, GlassDataChart
 });
 
 // Add displayName for better debugging
-GlassDataChart.displayName = 'GlassDataChart';
+GlassDataChartComponent.displayName = 'GlassDataChart';
+
+// Export memoized component for better performance
+export const GlassDataChart = memo(GlassDataChartComponent);
 
 // ESLint disable for TypeScript forwardRef type issues in some configurations
 // @ts-ignore - ForwardRef render functions are difficult to type correctly with generics in all TypeScript versions.

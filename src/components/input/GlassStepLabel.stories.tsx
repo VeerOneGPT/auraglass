@@ -53,7 +53,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap glass-gap-4">
       <GlassStepLabel {...args} />
       <GlassStepLabel {...args} label="Completed Step" active={false} completed={true} />
       <GlassStepLabel {...args} label="Inactive Step" active={false} completed={false} />

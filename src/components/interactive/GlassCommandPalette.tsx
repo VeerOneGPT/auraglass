@@ -4,7 +4,6 @@ import { GlassButton } from '../button/GlassButton';
 
 import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { GlassBadge } from '../data-display/GlassBadge';
@@ -425,7 +424,7 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
         />
 
         {/* Command Palette */}
-        <Motion preset="scaleIn" duration={200} className="relative w-full max-w-2xl mx-4">
+        <Motion preset="scaleIn" duration={200} className="relative w-full max-w-2xl glass-mx-4">
           <OptimizedGlass ref={ref}
             intent="neutral"
             elevation="level4"
@@ -436,14 +435,14 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
             animation="float"
             performanceMode="high"
             className={cn(
-              'w-full max-h-[80vh] overflow-hidden rounded-xl',
+              'w-full max-h-[80vh] overflow-hidden glass-radius-xl',
               className
             )}
             onKeyDown={handleKeyDown}
             {...props}
           >
             {/* Search Input */}
-            <div className="p-4 border-b border-border/10">
+            <div className="glass-p-4 border-b border-border/10">
               <GlassInput
                 ref={inputRef}
                 value={search}
@@ -459,8 +458,8 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
                   search && (
                     <GlassButton
                       type="button"
-                      className="p-1 rounded hover:bg-muted/20 transition-colors"
-                      onClick={() => setSearch('')}
+                      className="glass-p-1 glass-radius-md hover:bg-muted/20 transition-colors"
+                      onClick={(e) => setSearch('')}
                     >
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -480,20 +479,20 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
             >
               {loading ? (
                 <div className="flex items-center justify-center py-8">
-                  <div className="flex items-center gap-3">
-                    <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-                    <span className="text-muted-foreground">{loadingMessage}</span>
+                  <div className="flex items-center glass-gap-3">
+                    <div className="w-5 h-5 border-2 border-primary border-t-transparent glass-radius-full animate-spin" />
+                    <span className="glass-text-secondary">{loadingMessage}</span>
                   </div>
                 </div>
               ) : (filteredItems?.length || 0) === 0 ? (
-                <div className="py-8 text-center text-muted-foreground">
+                <div className="py-8 text-center glass-text-secondary">
                   {emptyMessage}
                 </div>
               ) : (
                 Object.entries(groupedItems).map(([category, categoryItems]) => (
                   <div key={category}>
                     {showCategories && Object.keys(groupedItems).length > 1 && (
-                      <div className="px-4 py-2 text-xs font-medium text-muted-foreground bg-muted/10 border-b border-border/5">
+                      <div className="glass-px-4 glass-py-2 glass-text-xs font-medium glass-text-secondary bg-muted/10 border-b border-border/5">
                         {search ? 'Results' : category}
                       </div>
                     )}
@@ -518,21 +517,21 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
                           key={item?.id}
                           type="button"
                           className={cn(
-                            'w-full flex items-center gap-3 px-4 py-3 text-left transition-colors',
+                            'w-full flex items-center glass-gap-3 glass-px-4 glass-py-3 text-left transition-colors',
                             'hover:bg-muted/20 focus:bg-muted/20 focus:outline-none',
                             {
                               'bg-primary/10 border-l-2 border-primary': isSelected,
                               'opacity-50 cursor-not-allowed': item?.disabled,
                             }
                           )}
-                          onClick={() => handleSelect(item)}
+                          onClick={(e) => handleSelect(item)}
                           disabled={item?.disabled}
                           role="option"
                           aria-selected={isSelected}
                         >
                           {/* Icon */}
                           {item?.icon && (
-                            <span className="flex-shrink-0 text-muted-foreground">
+                            <span className="flex-shrink-0 glass-text-secondary">
                               {item?.icon}
                             </span>
                           )}
@@ -543,7 +542,7 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
                               {item?.label}
                             </div>
                             {item?.description && (
-                              <div className="text-sm text-muted-foreground truncate">
+                              <div className="glass-text-sm glass-text-secondary truncate">
                                 {item?.description}
                               </div>
                             )}
@@ -565,21 +564,21 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
 
             {/* Footer */}
             {(filteredItems?.length || 0) > 0 && (
-              <div className="px-4 py-2 text-xs text-muted-foreground bg-muted/5 border-t border-border/5">
+              <div className="glass-px-4 glass-py-2 glass-text-xs glass-text-secondary bg-muted/5 border-t border-border/5">
                 <div className="flex items-center justify-between">
                   <span>
                     {(filteredItems?.length || 0)} {(filteredItems?.length || 0) === 1 ? 'result' : 'results'}
                   </span>
-                  <div className="flex items-center gap-4">
-                    <span className="flex items-center gap-1">
+                  <div className="flex items-center glass-gap-4">
+                    <span className="flex items-center glass-gap-1">
                       <GlassBadge variant="secondary" size="sm">↑↓</GlassBadge>
                       Navigate
                     </span>
-                    <span className="flex items-center gap-1">
+                    <span className="flex items-center glass-gap-1">
                       <GlassBadge variant="secondary" size="sm">↵</GlassBadge>
                       Select
                     </span>
-                    <span className="flex items-center gap-1">
+                    <span className="flex items-center glass-gap-1">
                       <GlassBadge variant="secondary" size="sm">Esc</GlassBadge>
                       Close
                     </span>

@@ -1,8 +1,10 @@
+'use client';
+
 import React, { forwardRef } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
-import styled from 'styled-components';
+import { cn } from '../../lib/utilsComprehensive';
+import { OptimizedGlass } from '../../primitives';
+import { Motion } from '../../primitives';
 import { GlassStepInternalProps, Step } from './types';
-import { Box } from '../layout/Box';
 // Import the new sub-components
 import { GlassStepIcon } from './GlassStepIcon';
 import { GlassStepLabel } from './GlassStepLabel';
@@ -16,19 +18,36 @@ interface GlassStepProps {
   orientation: 'horizontal' | 'vertical';
   isLast?: boolean;
   onClick?: () => void;
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
+  /** Additional CSS classes */
+  className?: string;
+  /** Inline styles */
+  style?: React.CSSProperties;
 }
 
-// Wrapper for the entire step including icon and label
-const StepWrapper = styled(Box)<{ $orientation: 'horizontal' | 'vertical', $clickable: boolean }>`
-  display: flex;
-  flex-direction: ${props => props.$orientation === 'vertical' ? 'column' : 'row'};
-  align-items: center;
-  position: relative; // Needed for vertical connector positioning maybe?
-  cursor: ${props => props.$clickable ? 'pointer' : 'default'};
-  flex: 1;, // Allow steps to take space especially horizontally
-  padding: 8px 0; // Add some padding
-  text-align: ${props => props.$orientation === 'vertical' ? 'center' : 'left'};
-`;
+// Get step state classes
+const getStepStateClasses = (active: boolean, completed: boolean, disabled: boolean, clickable: boolean) => {
+  const baseClasses = [
+    'flex items-center relative flex-1 glass-p-2 transition-all duration-300 ease-in-out',
+    clickable && !disabled ? 'cursor-pointer hover:bg-glass-light-primary/5 hover:scale-[1.01]' : 'cursor-default'
+  ];
+  
+  if (disabled) {
+    baseClasses.push('opacity-50 pointer-events-none');
+  }
+  
+  return baseClasses.filter(Boolean).join(' ');
+};
+
+// Get orientation classes
+const getOrientationClasses = (orientation: 'horizontal' | 'vertical') => {
+  return orientation === 'vertical' ? 'flex-col text-center' : 'flex-row text-left';
+};
 
 // Use the specific internal props type
 export const GlassStep = forwardRef<HTMLDivElement, GlassStepInternalProps>((
@@ -38,7 +57,12 @@ export const GlassStep = forwardRef<HTMLDivElement, GlassStepInternalProps>((
     active,
     completed,
     orientation,
-    onClick
+    onClick,
+    intent = 'neutral',
+    elevation = 'level1',
+    tier = 'medium',
+    className,
+    style
   },
   ref // Receive the forwarded ref
 ) => {
@@ -52,30 +76,54 @@ export const GlassStep = forwardRef<HTMLDivElement, GlassStepInternalProps>((
     }
   };
 
+  const stepStateClasses = getStepStateClasses(active, completed, isDisabled, isClickable);
+  const orientationClasses = getOrientationClasses(finalOrientation);
+
   return (
-    // Attach the ref to the StepWrapper
-    <StepWrapper
-      ref={ref}
-      $orientation={finalOrientation}
-      $clickable={isClickable && !isDisabled}
-      onClick={handleClick}
-      style={{ opacity: isDisabled ? 0.5 : 1 }} // Dim disabled steps
-    >
-      {/* Use GlassStepIcon component */}
-      <GlassStepIcon 
-          index={index} 
-          active={active} 
-          completed={completed} 
-          icon={step.icon} 
-      />
-      {/* Use GlassStepLabel component */}
-      <GlassStepLabel
-          label={step.label || step.title}
-          active={active}
-          completed={completed}
-          orientation={finalOrientation}
-      />
-    </StepWrapper>
+    <Motion>
+      <OptimizedGlass
+        ref={ref}
+        intent={intent}
+        elevation={elevation}
+        tier={tier}
+        className={cn(
+          stepStateClasses,
+          orientationClasses,
+          className
+        )}
+        style={style}
+        onClick={handleClick}
+        role={isClickable ? 'button' : undefined}
+        tabIndex={isClickable && !isDisabled ? 0 : undefined}
+        onKeyDown={isClickable && !isDisabled ? (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleClick();
+          }
+        } : undefined}
+      >
+        {/* Use GlassStepIcon component */}
+        <GlassStepIcon 
+            index={index} 
+            active={active} 
+            completed={completed} 
+            icon={step.icon}
+            intent={intent}
+            elevation={elevation}
+            tier={tier}
+        />
+        {/* Use GlassStepLabel component */}
+        <GlassStepLabel
+            label={step.label || step.title}
+            active={active}
+            completed={completed}
+            orientation={finalOrientation}
+            intent={intent}
+            elevation={elevation}
+            tier={tier}
+        />
+      </OptimizedGlass>
+    </Motion>
   );
 });
 

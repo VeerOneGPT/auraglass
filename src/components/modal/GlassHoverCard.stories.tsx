@@ -66,14 +66,14 @@ type Story = StoryObj<typeof GlassHoverCard>;
 export const Default: Story = {
   args: {
     children: (
-      <button className="px-4 py-2 bg-blue-500/20 backdrop-blur-md border border-white/20 rounded-lg hover:bg-blue-500/30 transition-colors">
+      <button className="glass-px-4 glass-py-2 bg-blue-500/20 backdrop-blur-md border border-white/20 glass-radius-lg hover:bg-blue-500/30 transition-colors">
         Hover me
       </button>
     ),
     content: (
-      <div className="p-4">
-        <h3 className="font-semibold mb-2">Default Hover Card</h3>
-        <p className="text-sm opacity-80">
+      <div className="glass-p-4">
+        <h3 className="font-semibold glass-mb-2">Default Hover Card</h3>
+        <p className="glass-text-sm opacity-80">
           This is a basic hover card with glassmorphism effects.
         </p>
       </div>
@@ -87,9 +87,9 @@ export const Placements: Story = {
       <GlassHoverCard
         {...args}
         placement="top"
-        content={<div className="p-3"><Info className="w-4 h-4 inline mr-2" />Top placement</div>}
+        content={<div className="glass-p-3"><Info className="w-4 h-4 inline glass-mr-2" />Top placement</div>}
       >
-        <button className="px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded hover:bg-white/20 transition-colors">
+        <button className="glass-px-3 glass-py-2 bg-white/10 backdrop-blur-md border border-white/20 glass-radius-md hover:bg-white/20 transition-colors">
           Top
         </button>
       </GlassHoverCard>
@@ -97,9 +97,9 @@ export const Placements: Story = {
       <GlassHoverCard
         {...args}
         placement="right"
-        content={<div className="p-3"><Info className="w-4 h-4 inline mr-2" />Right placement</div>}
+        content={<div className="glass-p-3"><Info className="w-4 h-4 inline glass-mr-2" />Right placement</div>}
       >
-        <button className="px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded hover:bg-white/20 transition-colors">
+        <button className="glass-px-3 glass-py-2 bg-white/10 backdrop-blur-md border border-white/20 glass-radius-md hover:bg-white/20 transition-colors">
           Right
         </button>
       </GlassHoverCard>
@@ -107,9 +107,9 @@ export const Placements: Story = {
       <GlassHoverCard
         {...args}
         placement="bottom"
-        content={<div className="p-3"><Info className="w-4 h-4 inline mr-2" />Bottom placement</div>}
+        content={<div className="glass-p-3"><Info className="w-4 h-4 inline glass-mr-2" />Bottom placement</div>}
       >
-        <button className="px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded hover:bg-white/20 transition-colors">
+        <button className="glass-px-3 glass-py-2 bg-white/10 backdrop-blur-md border border-white/20 glass-radius-md hover:bg-white/20 transition-colors">
           Bottom
         </button>
       </GlassHoverCard>
@@ -117,9 +117,9 @@ export const Placements: Story = {
       <GlassHoverCard
         {...args}
         placement="left"
-        content={<div className="p-3"><Info className="w-4 h-4 inline mr-2" />Left placement</div>}
+        content={<div className="glass-p-3"><Info className="w-4 h-4 inline glass-mr-2" />Left placement</div>}
       >
-        <button className="px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded hover:bg-white/20 transition-colors">
+        <button className="glass-px-3 glass-py-2 bg-white/10 backdrop-blur-md border border-white/20 glass-radius-md hover:bg-white/20 transition-colors">
           Left
         </button>
       </GlassHoverCard>
@@ -127,9 +127,9 @@ export const Placements: Story = {
       <GlassHoverCard
         {...args}
         placement="top-start"
-        content={<div className="p-3"><Info className="w-4 h-4 inline mr-2" />Top start</div>}
+        content={<div className="glass-p-3"><Info className="w-4 h-4 inline glass-mr-2" />Top start</div>}
       >
-        <button className="px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded hover:bg-white/20 transition-colors">
+        <button className="glass-px-3 glass-py-2 bg-white/10 backdrop-blur-md border border-white/20 glass-radius-md hover:bg-white/20 transition-colors">
           Top-Start
         </button>
       </GlassHoverCard>
@@ -137,9 +137,9 @@ export const Placements: Story = {
       <GlassHoverCard
         {...args}
         placement="bottom-end"
-        content={<div className="p-3"><Info className="w-4 h-4 inline mr-2" />Bottom end</div>}
+        content={<div className="glass-p-3"><Info className="w-4 h-4 inline glass-mr-2" />Bottom end</div>}
       >
-        <button className="px-3 py-2 bg-white/10 backdrop-blur-md border border-white/20 rounded hover:bg-white/20 transition-colors">
+        <button className="glass-px-3 glass-py-2 bg-white/10 backdrop-blur-md border border-white/20 glass-radius-md hover:bg-white/20 transition-colors">
           Bottom-End
         </button>
       </GlassHoverCard>
@@ -150,37 +150,37 @@ export const Placements: Story = {
 export const WithRichContent: Story = {
   args: {
     children: (
-      <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-purple-500/20 to-blue-500/20 backdrop-blur-md border border-white/20 rounded-lg cursor-pointer hover:from-purple-500/30 hover:to-blue-500/30 transition-all">
+      <div className="flex items-center glass-gap-3 glass-p-3 bg-gradient-to-r from-sky-200/20 to-blue-200/20 dark:from-slate-700/20 dark:to-slate-600/20 backdrop-blur-md border border-white/20 glass-radius-lg cursor-pointer hover:from-sky-200/30 hover:to-blue-200/30 dark:hover:from-slate-700/30 dark:hover:to-slate-600/30 transition-all">
         <User className="w-5 h-5" />
         <div>
           <div className="font-medium">John Doe</div>
-          <div className="text-sm opacity-70">Software Engineer</div>
+          <div className="glass-text-sm opacity-70">Software Engineer</div>
         </div>
       </div>
     ),
     content: (
-      <div className="p-4 max-w-xs">
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
-            <User className="w-5 h-5 text-white" />
+      <div className="glass-p-4 max-w-xs">
+        <div className="flex items-center glass-gap-3 mb-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-sky-300 to-blue-400 dark:from-slate-600 dark:to-slate-500 glass-radius-full flex items-center justify-center">
+            <User className="w-5 h-5 glass-text-primary" />
           </div>
           <div>
             <h4 className="font-semibold">John Doe</h4>
-            <p className="text-sm opacity-80">Software Engineer</p>
+            <p className="glass-text-sm opacity-80">Software Engineer</p>
           </div>
         </div>
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 text-sm">
+        <div className="glass-gap-2">
+          <div className="flex items-center glass-gap-2 glass-text-sm">
             <Settings className="w-4 h-4" />
             <span>5 years experience</span>
           </div>
-          <div className="flex items-center gap-2 text-sm">
+          <div className="flex items-center glass-gap-2 glass-text-sm">
             <Info className="w-4 h-4" />
             <span>React, TypeScript, Node.js</span>
           </div>
         </div>
         <div className="mt-3 pt-3 border-t border-white/20">
-          <button className="w-full px-3 py-1 bg-white/20 hover:bg-white/30 rounded text-sm transition-colors">
+          <button className="w-full glass-px-3 glass-py-1 bg-white/20 hover:bg-white/30 glass-radius-md glass-text-sm transition-colors">
             View Profile
           </button>
         </div>
@@ -194,13 +194,13 @@ export const WithRichContent: Story = {
 export const WithDelay: Story = {
   args: {
     children: (
-      <button className="px-4 py-2 bg-green-500/20 backdrop-blur-md border border-white/20 rounded-lg hover:bg-green-500/30 transition-colors">
+      <button className="glass-px-4 glass-py-2 bg-green-500/20 backdrop-blur-md border border-white/20 glass-radius-lg hover:bg-green-500/30 transition-colors">
         Hover with delay
       </button>
     ),
     content: (
-      <div className="p-3">
-        <p className="text-sm">This card appears after a 500ms delay and stays for 300ms after hover ends.</p>
+      <div className="glass-p-3">
+        <p className="glass-text-sm">This card appears after a 500ms delay and stays for 300ms after hover ends.</p>
       </div>
     ),
     showDelay: 500,

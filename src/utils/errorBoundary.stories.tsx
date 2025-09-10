@@ -43,7 +43,7 @@ const ErrorComponent = ({ shouldError }: { shouldError: boolean }) => {
   if (shouldError) {
     throw new Error('This is a test error for demonstration purposes');
   }
-  return <div className="p-4 text-center">Component rendered successfully!</div>;
+  return <div className="glass-p-4 text-center">Component rendered successfully!</div>;
 };
 
 // Component that throws async error
@@ -62,7 +62,7 @@ const AsyncErrorComponent = ({ shouldError }: { shouldError: boolean }) => {
     throw new Error('Async error occurred');
   }
 
-  return <div className="p-4 text-center">Async component working...</div>;
+  return <div className="glass-p-4 text-center">Async component working...</div>;
 };
 
 export const Default: Story = {
@@ -92,7 +92,7 @@ export const AsyncErrorBoundary: Story = {
 export const LightErrorBoundary: Story = {
   render: (args) => (
     <GlassLightErrorBoundary
-      fallback={<div className="p-4 text-center text-red-400">Something went wrong!</div>}
+      fallback={<div className="glass-p-4 text-center text-red-400">Something went wrong!</div>}
       onError={(error) => console.error('Light error boundary caught:', error)}
     >
       <ErrorComponent shouldError={true} />
@@ -116,19 +116,19 @@ export const WithRetry: Story = {
       <GlassErrorBoundary
         {...args}
         fallback={({ retry }) => (
-          <div className="p-6 text-center space-y-4">
+          <div className="p-6 text-center glass-auto-gap glass-auto-gap-lg">
             <h3 className="text-lg font-semibold">Error Occurred</h3>
             <p className="text-sm opacity-80">Something went wrong, but you can retry.</p>
             <div className="space-x-2">
               <button
                 onClick={retry}
-                className="px-4 py-2 bg-blue-500/20 rounded-lg hover:bg-blue-500/30 transition-colors"
+                className="glass-px-4 glass-py-2 glass-surface-primary rounded-lg hover:bg-blue-500/30 transition-colors"
               >
                 Retry
               </button>
               <button
                 onClick={() => setShouldError(false)}
-                className="px-4 py-2 bg-green-500/20 rounded-lg hover:bg-green-500/30 transition-colors"
+                className="glass-px-4 glass-py-2 glass-surface-success rounded-lg hover:bg-green-500/30 transition-colors"
               >
                 Fix Error
               </button>
@@ -147,7 +147,7 @@ export const WithCustomFallback: Story = {
     <GlassErrorBoundary
       {...args}
       fallback={({ error, retry, errorId }) => (
-        <div className="p-8 text-center space-y-4 max-w-md">
+        <div className="p-8 text-center glass-auto-gap glass-auto-gap-lg max-w-md">
           <div className="w-16 h-16 mx-auto rounded-full bg-red-500/20 flex items-center justify-center">
             <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
@@ -163,7 +163,7 @@ export const WithCustomFallback: Story = {
           <div className="flex justify-center space-x-2">
             <button
               onClick={retry}
-              className="px-6 py-2 bg-blue-500/20 rounded-lg hover:bg-blue-500/30 transition-colors font-medium"
+              className="px-6 glass-py-2 glass-surface-primary rounded-lg hover:bg-blue-500/30 transition-colors font-medium"
             >
               Try Again
             </button>

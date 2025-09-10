@@ -1,35 +1,33 @@
+'use client';
+
 import React, { forwardRef } from 'react';
 import { cn } from '../lib/utilsComprehensive';
-import { createGlassStyle } from '../core/mixins/glassMixins';
-
-// Define local types that were missing from glassMixins
-type GlassVariant = 'clear' | 'frosted' | 'tinted' | 'luminous' | 'dynamic';
-type BlurIntensity = 'none' | 'subtle' | 'medium' | 'strong' | 'intense';
+import { createGlassStyle, GlassIntent, GlassElevation, QualityTier } from '../core/mixins/glassMixins';
 
 export interface GlassProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Glass morphism variant */
-  variant?: GlassVariant;
+  /** Glass semantic intent */
+  intent?: GlassIntent;
 
-  /** Blur strength */
-  blur?: BlurIntensity;
+  /** Glass elevation level */
+  elevation?: GlassElevation;
 
-  /** Background opacity */
-  opacity?: number;
+  /** Performance quality tier */
+  tier?: QualityTier;
 
   /** Border radius */
-  rounded?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  radius?: 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
 
-  /** Enable glow effect */
-  glow?: boolean;
+  /** Enable interactive states */
+  interactive?: boolean;
 
-  /** Glow color */
-  glowColor?: string;
+  /** Enable hover lift effect */
+  hoverLift?: boolean;
 
-  /** Glow intensity */
-  glowIntensity?: number;
+  /** Enable focus ring */
+  focusRing?: boolean;
 
-  /** Enable hover effects */
-  hover?: boolean;
+  /** Enable press effect */
+  press?: boolean;
 
   /** Custom CSS classes */
   className?: string;
@@ -41,14 +39,14 @@ export interface GlassProps extends React.HTMLAttributes<HTMLDivElement> {
 const GlassCore = forwardRef<HTMLDivElement, GlassProps>(
   (
     {
-      variant = 'frosted',
-      blur = 'medium' as BlurIntensity,
-      opacity = 0.1,
-      rounded = 'md',
-      glow = false,
-      glowColor = 'rgba(255, 255, 255, 0.5)',
-      glowIntensity = 0.5,
-      hover = false,
+      intent = 'neutral',
+      elevation = 'level2',
+      tier = 'high',
+      radius = 'md',
+      interactive = false,
+      hoverLift = false,
+      focusRing = false,
+      press = false,
       className,
       children,
       style,
@@ -56,18 +54,32 @@ const GlassCore = forwardRef<HTMLDivElement, GlassProps>(
     },
     ref
   ) => {
-    // Generate glass styles using the mixin
+    // Generate glass styles using the modern token-based mixin
     const glassStyles = createGlassStyle({
-      intent: 'neutral',
-      elevation: 'level2',
-      tier: 'high',
-      interactive: hover,
+      intent,
+      elevation,
+      tier,
+      interactive,
+      hoverLift,
+      focusRing,
+      press,
     });
 
-    // Combine custom styles with glass styles
+    // Apply border radius based on token system
+    const radiusStyles = {
+      borderRadius: 
+        radius === 'none' ? '0px' : 
+        radius === 'sm' ? '4px' :
+        radius === 'md' ? '8px' :
+        radius === 'lg' ? '12px' :
+        radius === 'xl' ? '16px' :
+        radius === 'full' ? '9999px' : '8px',
+    };
+
+    // Combine all styles
     const combinedStyles = {
       ...glassStyles,
-      borderRadius: rounded === 'none' ? '0px' : rounded === 'sm' ? '4px' : rounded === 'md' ? '8px' : rounded === 'lg' ? '12px' : rounded === 'xl' ? '16px' : rounded === 'full' ? '9999px' : '8px',
+      ...radiusStyles,
       ...style,
     };
 
@@ -75,10 +87,12 @@ const GlassCore = forwardRef<HTMLDivElement, GlassProps>(
       <div
         ref={ref}
         className={cn(
-          'glass-surface',
+          'glass-foundation-basic',
           {
-            'glass-hover': hover,
-            'glass-glow': glow,
+            'glass-state-interactive': interactive,
+            'glass-state-hoverable': hoverLift,
+            'glass-focus': focusRing,
+            'glass-state-pressable': press,
           },
           className
         )}
@@ -95,3 +109,12 @@ GlassCore.displayName = 'GlassCore';
 
 export { GlassCore };
 export default GlassCore;
+
+// Export modern types
+export type { GlassIntent, GlassElevation, QualityTier };
+
+// Legacy types for backward compatibility
+/** @deprecated Use GlassIntent instead */
+export type GlassVariant = 'clear' | 'frosted' | 'tinted' | 'luminous' | 'dynamic';
+/** @deprecated Use elevation levels instead */
+export type BlurIntensity = 'none' | 'subtle' | 'medium' | 'strong' | 'intense';

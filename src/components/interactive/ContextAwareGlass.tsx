@@ -1,12 +1,17 @@
-import React, { forwardRef, useState, useRef, useEffect, useCallback, useMemo } from 'react';
-import styled, { css } from 'styled-components';
+'use client';
 
-import { edgeEffects } from '../../core/mixins/edgeEffects';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
-import { glowEffects } from '../../core/mixins/glowEffects';
-import { createThemeContext } from '../../core/themeContext';
-import { useGlassTheme } from '../../hooks/useGlassTheme';
+/**
+ * ContextAwareGlass Component
+ *
+ * A glass container that adapts its appearance based on content and background.
+ * Migrated to use OptimizedGlass architecture.
+ */
+import React, { forwardRef, useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { cn } from '../../lib/utilsComprehensive';
+import { OptimizedGlass, Motion } from '../../primitives';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+
+import { useGlassTheme } from '../../hooks/useGlassTheme';
 
 // Adaptation modes for context-aware glass
 export type AdaptationMode =
@@ -175,68 +180,27 @@ const toCssDimension = (value: string | number | undefined): string => {
   return typeof value === 'number' ? `${value}px` : value;
 };
 
-// Styled components
-const GlassContainer = styled.div<{
-  $blurStrength: number;
-  $opacity: number;
-  $borderOpacity: number;
-  $enableEdgeHighlight: boolean;
-  $enableGlow: boolean;
-  $glowColor: string;
-  $borderRadius: string;
-  $padding: string;
-  $isDarkMode: boolean;
-}>`
-  position: relative;
-  overflow: hidden;
-  border-radius: ${props => props.$borderRadius};
-  padding: ${props => props.$padding};
+// Helper to map blur strength to elevation level
+const mapBlurToElevation = (blurStrength: number): 'level1' | 'level2' | 'level3' | 'level4' => {
+  if (blurStrength <= 8) return 'level1';
+  if (blurStrength <= 12) return 'level2';
+  if (blurStrength <= 16) return 'level3';
+  return 'level4';
+};
 
-  /* Apply glass surface effect */
-  ${props =>
-    `
-    background: rgba(255, 255, 255, ${props.$opacity});
-    backdrop-filter: blur(${props.$blurStrength}px);
-    border: 1px solid rgba(255, 255, 255, ${props.$borderOpacity});
-    `}
-
-  /* Apply edge highlight if enabled */
-  ${props =>
-    props.$enableEdgeHighlight &&
-    `
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    `}
-
-  /* Apply glow effect if enabled */
-  ${props =>
-    props.$enableGlow &&
-    `
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-    `}
-`;
-
-const DebugInfo = styled.div<{
-  $isDarkMode: boolean;
-}>`
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: ${props =>
-    props.$isDarkMode ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.7)'};
-  color: ${props => (props.$isDarkMode ? 'white' : 'black')};
-  font-size: 0.625rem;
-  padding: 4px;
-  border-bottom-left-radius: 4px;
-  z-index: 1;
-  pointer-events: none;
-  font-family: monospace;
-`;
+// Helper to map opacity to glass intensity
+const mapOpacityToIntensity = (opacity: number): 'subtle' | 'medium' | 'strong' | 'intense' => {
+  if (opacity <= 0.15) return 'subtle';
+  if (opacity <= 0.25) return 'medium';
+  if (opacity <= 0.35) return 'strong';
+  return 'intense';
+};
 
 /**
  * ContextAwareGlass Component
  *
  * A glass container that adapts its appearance based on content and background.
+ * Now optimized with OptimizedGlass architecture for better performance.
  */
 export const ContextAwareGlass = forwardRef<HTMLDivElement, ContextAwareGlassProps>(
   (props, ref) => {
@@ -648,8 +612,12 @@ export const ContextAwareGlass = forwardRef<HTMLDivElement, ContextAwareGlassPro
       }
     }, [enableContinuousAdaptation, adaptationMode, adaptationInterval, adjustGlassSettings]);
 
+    // Map values to OptimizedGlass props
+    const elevation = mapBlurToElevation(blurStrength);
+    const intensity = mapOpacityToIntensity(opacity);
+
     return (
-      <GlassContainer
+      <OptimizedGlass
         ref={node => {
           (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
           if (typeof ref === 'function') {
@@ -658,28 +626,47 @@ export const ContextAwareGlass = forwardRef<HTMLDivElement, ContextAwareGlassPro
             (ref as React.MutableRefObject<HTMLDivElement>).current = node!;
           }
         }}
-        className={className}
-        $blurStrength={blurStrength}
-        $opacity={opacity}
-        $borderOpacity={borderOpacity}
-        $enableEdgeHighlight={enableEdgeHighlight}
-        $enableGlow={enableGlow}
-        $glowColor={glowColor}
-        $borderRadius={borderRadiusValue}
-        $padding={paddingValue}
-        $isDarkMode={isDarkMode}
+        elevation={elevation}
+        intensity={intensity}
+        intent="neutral"
+        tier="high"
+        interactive={enableEdgeHighlight}
+        glow={enableGlow}
+        glowColor={glowColor}
+        className={cn(
+          'relative overflow-hidden',
+          className
+        )}
+        style={{
+          borderRadius: borderRadiusValue,
+          padding: paddingValue,
+          ...((enableGlow && !prefersReducedMotion) && {
+            filter: `drop-shadow(0 0 20px ${glowColor})`,
+          }),
+          ...(enableEdgeHighlight && {
+            boxShadow: isDarkMode 
+              ? '0 0 20px rgba(255, 255, 255, 0.1)' 
+              : '0 0 20px rgba(0, 0, 0, 0.1)',
+          }),
+        }}
         {...rest}
       >
         {debug && (
-          <DebugInfo $isDarkMode={isDarkMode}>
+          <div className={cn(
+            'absolute top-0 right-0 z-10 pointer-events-none',
+            'glass-text-xs glass-p-1 rounded-bl font-mono',
+            isDarkMode 
+              ? 'bg-black/70 glass-text-primary' 
+              : 'bg-white/70 text-black'
+          )}>
             <div>Content: {detectedContentType}</div>
             <div>Background: {detectedBackgroundType}</div>
             <div>Blur: {blurStrength.toFixed(1)}px</div>
             <div>Opacity: {opacity.toFixed(2)}</div>
-          </DebugInfo>
+          </div>
         )}
         {children}
-      </GlassContainer>
+      </OptimizedGlass>
     );
   }
 );

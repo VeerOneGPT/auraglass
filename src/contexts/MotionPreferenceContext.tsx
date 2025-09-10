@@ -13,7 +13,11 @@ const MotionPreferenceContext = createContext<MotionPreferenceContextType>({
 export const useMotionPreferenceContext = () => {
   const context = useContext(MotionPreferenceContext);
   if (!context) {
-    throw new Error('useMotionPreferenceContext must be used within a MotionPreferenceProvider');
+    console.warn('useMotionPreferenceContext must be used within a MotionPreferenceProvider. Using default values.');
+    return {
+      prefersReducedMotion: false,
+      isMotionSafe: true,
+    };
   }
   return context;
 };

@@ -1,10 +1,11 @@
 'use client';
 
-import React, { forwardRef, useId, useState, useCallback, useRef, useEffect } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+import React, { forwardRef, useState, useCallback, useRef } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { cn } from '@/lib/utilsComprehensive';
+import { createFormFieldA11y, useA11yId, announceToScreenReader } from '../../utils/a11y';
+import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 
 export interface GlassSliderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   /** Current value(s) of the slider */
@@ -49,6 +50,18 @@ export interface GlassSliderProps extends Omit<React.HTMLAttributes<HTMLDivEleme
   formatValue?: (value: number) => string;
   /** Range mode (multiple thumbs) */
   range?: boolean;
+  /** Error message */
+  error?: string;
+  /** Whether the slider is required */
+  required?: boolean;
+  /** Respect user's motion preferences */
+  respectMotionPreference?: boolean;
+  /** Accessible label for the slider */
+  'aria-label'?: string;
+  /** ID of element that labels the slider */
+  'aria-labelledby'?: string;
+  /** ID of element(s) that describe the slider */
+  'aria-describedby'?: string;
 }
 
 export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
@@ -75,17 +88,53 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
       inverted = false,
       formatValue = (val) => val.toString(),
       range = false,
+      error,
+      required = false,
+      respectMotionPreference = true,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledBy,
+      'aria-describedby': ariaDescribedBy,
       className,
       id,
       ...props
     },
     ref
   ) => {
-    const sliderId = useId();
+    const { prefersReducedMotion, isMotionSafe } = useMotionPreferenceContext();
+    const shouldAnimate = isMotionSafe && !prefersReducedMotion;
+    
+    // Generate unique IDs for accessibility
+    const sliderId = useA11yId('glass-slider');
     const finalId = id || sliderId;
+    const labelId = label ? useA11yId('glass-slider-label') : undefined;
+    const descriptionId = description ? useA11yId('glass-slider-description') : undefined;
+    const errorId = error ? useA11yId('glass-slider-error') : undefined;
     const trackRef = useRef<HTMLDivElement>(null);
     const [isDragging, setIsDragging] = useState(false);
     const [dragIndex, setDragIndex] = useState(0);
+    
+    const isInvalid = !!error;
+    
+    // Create accessibility attributes
+    const a11yProps = createFormFieldA11y({
+      id: finalId,
+      label: !ariaLabelledBy && !labelId ? (ariaLabel || label) : undefined,
+      description: description,
+      error: error,
+      required: required,
+      invalid: isInvalid,
+      disabled: disabled,
+      labelId: ariaLabelledBy || labelId,
+      descriptionId: ariaDescribedBy || descriptionId,
+      errorId: errorId,
+    });
+    
+    // Announce error state changes
+    React.useEffect(() => {
+      if (error) {
+        announceToScreenReader(`Slider error: ${error}`, 'assertive');
+      }
+    }, [error]);
 
     // Initialize internal value
     const getInitialValue = () => {
@@ -105,19 +154,19 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
       sm: {
         track: orientation === 'horizontal' ? 'h-1.5' : 'w-1.5',
         thumb: 'h-4 w-4',
-        label: 'text-xs',
+        label: 'glass-text-xs',
         tick: 'h-1 w-px',
       },
       md: {
         track: orientation === 'horizontal' ? 'h-2' : 'w-2',
         thumb: 'h-5 w-5',
-        label: 'text-sm',
+        label: 'glass-text-sm',
         tick: 'h-1.5 w-px',
       },
       lg: {
         track: orientation === 'horizontal' ? 'h-3' : 'w-3',
         thumb: 'h-6 w-6',
-        label: 'text-base',
+        label: 'glass-text-base',
         tick: 'h-2 w-px',
       },
     };
@@ -213,7 +262,13 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
       
       onChange?.(finalValue);
       onValueChange?.(finalValue);
-    }, [value, onChange, onValueChange, isRange]);
+      
+      // Announce value changes for screen readers
+      const valueText = isRange 
+        ? `Range from ${formatValue(clampedValues[0])} to ${formatValue(clampedValues[1])}`
+        : `Value ${formatValue(clampedValues[0])}`;
+      announceToScreenReader(valueText, 'polite');
+    }, [value, onChange, onValueChange, isRange, formatValue]);
 
     const handlePointerDown = (event: React.PointerEvent, thumbIndex: number) => {
       if (disabled) return;
@@ -313,24 +368,28 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
           : { bottom: `${percentage}%` };
 
         return (
-          <Motion
+          <OptimizedGlass
             key={index}
-            preset="scaleIn"
+            elevation="level3"
+            intensity="strong"
+            depth={2}
+            tint="neutral"
+            border="glow"
+            animation={shouldAnimate && respectMotionPreference ? "float" : "none"}
+            performanceMode="high"
+            liftOnHover={!disabled}
+            press
             className={cn(
               'glass-slider-thumb absolute flex items-center justify-center',
-              'border backdrop-blur-md rounded-full cursor-grab transition-all duration-200 glass-magnet glass-press',
-              'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
+              'glass-radius-full cursor-grab transition-all duration-200 glass-focus',
               'transform -translate-x-1/2 -translate-y-1/2',
               
               // Size
               config.thumb,
               
-              // Colors
-              colors.thumb,
-              
               // States
               disabled && 'opacity-50 cursor-not-allowed',
-              isDragging && dragIndex === index && 'scale-110 cursor-grabbing',
+              isDragging && dragIndex === index && (shouldAnimate && respectMotionPreference ? 'scale-110' : '') + ' cursor-grabbing',
               
               // Position
               orientation === 'horizontal' ? 'top-1/2' : 'left-1/2'
@@ -342,18 +401,14 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
             aria-valuemax={max}
             aria-valuenow={val}
             aria-valuetext={formatValue(val)}
+            aria-invalid={isInvalid || undefined}
             tabIndex={disabled ? -1 : 0}
           >
-            {thumbContent || (
-              <>
-                <div className="absolute inset-0 rounded-full backdrop-blur-md bg-white/25 border border-white/40 shadow-[inset_0_1px_2px_rgba(255,255,255,0.35),inset_0_-1px_3px_rgba(0,0,0,0.25)]" />
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/15 to-transparent" />
-              </>
-            )}
+            {thumbContent}
             
             {showValue && (
               <div className={cn(
-                'absolute whitespace-nowrap px-2 py-1 rounded-md',
+                'absolute whitespace-nowrap glass-px-2 glass-py-1 glass-radius-md',
                 'bg-background/80 border border-border/20',
                 'text-foreground font-medium backdrop-blur-md',
                 config.label,
@@ -362,7 +417,7 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
                 {formatValue(val)}
               </div>
             )}
-          </Motion>
+          </OptimizedGlass>
         );
       });
     };
@@ -372,10 +427,12 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
         {/* Label */}
         {label && (
           <label
+            id={labelId}
             htmlFor={finalId}
             className={cn(
-              'glass-slider-label block font-medium text-foreground mb-2',
-              config.label
+              'glass-slider-label block font-medium text-foreground glass-mb-2',
+              config.label,
+              required && 'after:content-["*"] after:glass-ml-1 after:text-destructive'
             )}
           >
             {label}
@@ -390,14 +447,23 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
             'glass-slider relative flex items-center',
             orientation === 'horizontal' ? 'w-full h-6' : 'h-32 w-6',
             disabled && 'opacity-50',
+            error && 'ring-2 ring-destructive/50 glass-radius-lg',
           )}
+          {...a11yProps}
+          aria-orientation={orientation}
+          aria-valuemin={min}
+          aria-valuemax={max}
+          aria-valuenow={isRange ? undefined : valueArray[0]}
+          aria-valuetext={isRange ? `Range from ${formatValue(valueArray[0])} to ${formatValue(valueArray[1] || valueArray[0])}` : formatValue(valueArray[0])}
+          aria-invalid={isInvalid || undefined}
+          aria-required={required || undefined}
           {...props}
         >
           {/* Track */}
           <div
             ref={trackRef}
             className={cn(
-              'glass-slider-track relative backdrop-blur-md rounded-full border border-border/20',
+              'glass-slider-track relative backdrop-blur-md glass-radius-full border border-border/20',
               orientation === 'horizontal' ? 'w-full' : 'h-full',
               config.track,
               colors.track,
@@ -433,7 +499,7 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
             {/* Fill */}
             <div
               className={cn(
-                'glass-slider-fill absolute rounded-full transition-all duration-150',
+                'glass-slider-fill absolute glass-radius-full transition-all duration-150',
                 orientation === 'horizontal' ? 'h-full top-0' : 'w-full left-0',
                 colors.fill
               )}
@@ -444,7 +510,7 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
             </div>
             
             {/* Background gradient */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+            <div className="absolute inset-0 glass-radius-full bg-gradient-to-r from-transparent via-white/5 to-transparent" />
           </div>
           
           {/* Thumbs */}
@@ -453,20 +519,38 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
         
         {/* Description */}
         {description && (
-          <p className={cn(
-            'glass-slider-description text-muted-foreground mt-1',
-            size === 'sm' ? 'text-xs' : 'text-sm'
-          )}>
+          <p 
+            id={descriptionId}
+            className={cn(
+              'glass-slider-description glass-text-secondary glass-mt-1',
+              size === 'sm' ? 'glass-text-xs' : 'glass-text-sm'
+            )}
+          >
             {description}
+          </p>
+        )}
+        
+        {/* Error message */}
+        {error && (
+          <p 
+            id={errorId}
+            className={cn(
+              'glass-slider-error text-destructive glass-mt-1',
+              size === 'sm' ? 'glass-text-xs' : 'glass-text-sm'
+            )}
+            role="alert"
+            aria-live="polite"
+          >
+            {error}
           </p>
         )}
         
         {/* Min/Max labels */}
         {showValue && (
           <div className={cn(
-            'flex justify-between mt-2',
+            'flex justify-between glass-mt-2',
             config.label,
-            'text-muted-foreground'
+            'glass-text-secondary'
           )}>
             <span>{formatValue(min)}</span>
             <span>{formatValue(max)}</span>

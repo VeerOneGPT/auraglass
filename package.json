@@ -16,17 +16,29 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx --fix",
     "lint:check": "eslint src --ext .ts,.tsx",
+    "lint:tokens": "node scripts/ci/token-lint.js",
+    "lint:styles": "node scripts/ci/style-audit.js",
+    "lint:staged": "lint-staged",
+    "prepare": "husky install",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "test:visual": "percy exec -- jest --testPathPattern=visual",
+    "test:visual": "playwright test --config=playwright.config.ts",
+    "test:visual:headed": "playwright test --config=playwright.config.ts --headed",
+    "test:visual:update": "playwright test --config=playwright.config.ts --update-snapshots",
     "test:a11y": "jest --testPathPattern=a11y",
     "test:performance": "jest --testPathPattern=performance",
     "test:glass-contrast": "jest --testPathPattern=glass-contrast.spec.ts",
     "glass:generate-css": "node scripts/generate-glass-css-simple.js",
     "glass:validate": "node scripts/verify-glass-pipeline.js",
     "glass:visual-tests": "node scripts/glass-visual-test-generator.js",
-    "glass:full-check": "npm run typecheck && npm run lint:check && npm run glass:validate && npm run test:glass-contrast",
+    "glass:full-check": "npm run typecheck && npm run lint:check && npm run lint:tokens && npm run lint:styles && npm run glass:validate && npm run test:glass-contrast",
+    "codemod:tokens": "node tools/codemods/auraglass-from-raw.mjs",
+    "codemod:focus": "node tools/codemods/focusify.mjs",
+    "codemod:all": "npm run codemod:tokens && npm run codemod:focus",
+    "check:perf": "npm run build && npm run size-check",
+    "ci": "npm run glass:full-check && npm run test:coverage",
+    "release": "npm run ci && npx semantic-release",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "prepublishOnly": "npm run build",
@@ -71,7 +83,6 @@
     "@storybook/jest": "^0.2.3",
     "@storybook/react": "^9.1.5",
     "@storybook/react-vite": "9.1.5",
-    "@storybook/test": "^9.1.5",
     "@storybook/testing-library": "^0.2.2",
     "@testing-library/jest-dom": "^5.16.0",
     "@testing-library/react": "^14.0.0",
@@ -149,5 +160,15 @@
   "sideEffects": [
     "*.css",
     "src/styles/**/*"
-  ]
+  ],
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": [
+      "eslint --fix",
+      "node scripts/ci/token-lint.js",
+      "node scripts/ci/style-audit.js"
+    ],
+    "src/**/*.css": [
+      "node scripts/ci/token-lint.js"
+    ]
+  }
 }

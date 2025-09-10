@@ -1,5 +1,4 @@
 import React, { useEffect, useState, memo, useCallback } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { useAccessibleAnimation } from '../../hooks/useAccessibilitySettings';
 import { GlassComponentErrorBoundary } from '../../utils/errorBoundary';
@@ -129,10 +128,10 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
     };
 
     return (
-      <div className={`flex flex-col items-center justify-center space-y-4 ${className}`}>
+      <div className={`flex flex-col items-center justify-center glass-gap-4 ${className}`}>
         <div style={{ position: 'relative' }}>
           <OptimizedGlass
-            className={`rounded-full ${sizeClasses[size]}`}
+            className={`glass-radius-full ${sizeClasses[size]}`}
             style={getAnimationStyle()}
             intensity="medium"
             elevation="level1"
@@ -157,11 +156,11 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
 
         {text && (
           <OptimizedGlass
-            className="px-4 py-2 rounded-lg"
+            className="glass-px-4 glass-py-2 glass-radius-lg"
             intensity="subtle"
             elevation="level1"
           >
-            <span className="text-sm text-white/70 font-medium">
+            <span className="glass-text-sm glass-text-primary/70 font-medium">
               {text}
             </span>
           </OptimizedGlass>
@@ -207,11 +206,11 @@ export const GlassSkeletonText: React.FC<GlassSkeletonTextProps> = ({
   };
 
   return (
-    <div className={`space-y-2 ${className}`}>
+    <div className={`glass-gap-2 ${className}`}>
       {Array.from({ length: lines }, (_, i) => (
         <OptimizedGlass
           key={i}
-          className="h-4 rounded"
+          className="h-4 glass-radius-md"
           style={{
             width: widths[i % widths.length],
             animation: 'glass-pulse 2s ease-in-out infinite',
@@ -232,21 +231,21 @@ export const GlassSkeletonCard: React.FC<{
 }> = ({ className = '' }) => {
   return (
     <OptimizedGlass
-      className={`p-6 space-y-4 ${className}`}
+      className={`glass-p-6 glass-gap-4 ${className}`}
       intensity="medium"
       elevation="level1"
     >
       <GlassSkeletonText lines={1} width="60%" />
       <GlassSkeletonText lines={2} width={['100%', '80%']} />
-      <div className="flex space-x-2">
+      <div className="flex glass-gap-2">
         <OptimizedGlass
-          className="h-8 w-16 rounded"
+          className="h-8 w-16 glass-radius-md"
           style={{ animation: 'glass-pulse 2s ease-in-out infinite' }}
           intensity="subtle"
           elevation="level1"
         />
         <OptimizedGlass
-          className="h-8 w-16 rounded"
+          className="h-8 w-16 glass-radius-md"
           style={{
             animation: 'glass-pulse 2s ease-in-out infinite',
             animationDelay: '0.2s'

@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 export interface AnimationContextType {
   reducedMotion: boolean;
@@ -10,7 +10,7 @@ export interface AnimationContextType {
   };
 }
 
-export const AnimationContext = createContext<AnimationContextType>({
+const defaultContextValue: AnimationContextType = {
   reducedMotion: false,
   setReducedMotion: () => {},
   defaultSpring: {
@@ -18,12 +18,62 @@ export const AnimationContext = createContext<AnimationContextType>({
     damping: 10,
     mass: 1,
   },
-});
+};
+
+export const AnimationContext = createContext<AnimationContextType>(defaultContextValue);
+
+// AnimationProvider component
+export interface AnimationProviderProps {
+  children: React.ReactNode;
+  defaultReducedMotion?: boolean;
+  defaultSpring?: {
+    stiffness: number;
+    damping: number;
+    mass: number;
+  };
+}
+
+export const AnimationProvider: React.FC<AnimationProviderProps> = ({
+  children,
+  defaultReducedMotion = false,
+  defaultSpring = { stiffness: 100, damping: 10, mass: 1 },
+}) => {
+  const [reducedMotion, setReducedMotion] = useState(defaultReducedMotion);
+
+  // Check for prefers-reduced-motion
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+      setReducedMotion(mediaQuery.matches);
+      
+      const handleChange = (e: MediaQueryListEvent) => {
+        setReducedMotion(e.matches);
+      };
+      
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
+    }
+  }, []);
+
+  const contextValue: AnimationContextType = {
+    reducedMotion,
+    setReducedMotion,
+    defaultSpring,
+  };
+
+  return (
+    <AnimationContext.Provider value={contextValue}>
+      {children}
+    </AnimationContext.Provider>
+  );
+};
 
 export const useAnimation = () => {
   const context = useContext(AnimationContext);
   if (!context) {
-    throw new Error('useAnimation must be used within an AnimationProvider');
+    // Instead of throwing, return default values to prevent crashes
+    console.warn('useAnimation must be used within an AnimationProvider. Using default values.');
+    return defaultContextValue;
   }
   return context;
 };

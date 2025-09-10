@@ -13,7 +13,6 @@ import {
     ZoomIn
 } from 'lucide-react';
 import React, { useCallback, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 import { GlassButton } from '../button';
 import { CardContent, GlassCard } from '../card';
@@ -173,7 +172,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
 
     // Grid Layout
     const renderGridLayout = () => (
-        <div className={cn('grid gap-4', getGridColumnsClass())}>
+        <div className={cn('grid glass-gap-4', getGridColumnsClass())}>
             {filteredImages.map((image, index) => (
                 <div
                     key={image.id}
@@ -186,14 +185,14 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                     <GlassCard
                         variant="elevated"
                         interactive
-                        onClick={() => handleImageClick(image, index)}
+                        onClick={(e) => handleImageClick(image, index)}
                         className={cn(
                             'overflow-hidden cursor-pointer hover:scale-[1.02] transition-all duration-200 glass-sheen glass-tilt',
                             selectedImages.has(image.id) && 'ring-2 ring-primary',
                             getAspectRatioClass()
                         )}
                     >
-                        <CardContent className="p-0">
+                        <CardContent className="glass-p-0">
                             <div className="relative overflow-hidden">
                                 <img
                                     src={image.thumbnail || image.src}
@@ -206,14 +205,14 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                                 {enableSelection && (
                                     <div className="absolute top-2 left-2">
                                         <div className={cn(
-                                            'w-5 h-5 rounded border-2 transition-all',
+                                            'w-5 h-5 glass-radius-md border-2 transition-all',
                                             selectedImages.has(image.id)
                                                 ? 'bg-primary border-primary'
                                                 : 'bg-white/20 border-white/40'
                                         )}>
                                             {selectedImages.has(image.id) && (
                                                 <div className="w-full h-full flex items-center justify-center">
-                                                    <div className="w-2 h-2 bg-white rounded-full" />
+                                                    <div className="w-2 h-2 bg-white glass-radius-full" />
                                                 </div>
                                             )}
                                         </div>
@@ -223,7 +222,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                                 {/* Overlay with actions */}
                                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-200">
                                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <div className="flex gap-2">
+                                        <div className="flex glass-gap-2">
                                             <GlassButton
                                                 variant="secondary"
                                                 size="sm"
@@ -231,7 +230,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                                                     e.stopPropagation();
                                                     if (enableLightbox) setLightboxIndex(index);
                                                 }}
-                                                className="p-2"
+                                                className="glass-p-2"
                                             >
                                                 <ZoomIn className="w-4 h-4" />
                                             </GlassButton>
@@ -242,7 +241,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                                                         variant="secondary"
                                                         size="sm"
                                                         onClick={(e) => e.stopPropagation()}
-                                                        className="p-2"
+                                                        className="glass-p-2"
                                                     >
                                                         <Heart className="w-4 h-4" />
                                                     </GlassButton>
@@ -251,7 +250,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                                                         variant="secondary"
                                                         size="sm"
                                                         onClick={(e) => e.stopPropagation()}
-                                                        className="p-2"
+                                                        className="glass-p-2"
                                                     >
                                                         <Share2 className="w-4 h-4" />
                                                     </GlassButton>
@@ -263,12 +262,12 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
 
                                 {/* Image Info */}
                                 {showInfo && image.title && (
-                                    <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black/80 to-transparent">
-                                        <h3 className="text-white font-medium text-sm truncate">
+                                    <div className="absolute bottom-0 left-0 right-0 glass-p-3 bg-gradient-to-t from-black/80 to-transparent">
+                                        <h3 className="glass-text-primary font-medium glass-text-sm truncate">
                                             {image.title}
                                         </h3>
                                         {image.description && (
-                                            <p className="text-white/80 text-xs mt-1 line-clamp-2">
+                                            <p className="glass-text-primary/80 glass-text-xs glass-mt-1 line-clamp-2">
                                                 {image.description}
                                             </p>
                                         )}
@@ -278,17 +277,17 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
 
                             {/* Card Footer */}
                             {(image.likes || image.views || image.tags) && (
-                                <div className="p-3 border-t border-white/10">
-                                    <div className="flex items-center justify-between text-xs text-white/60">
-                                        <div className="flex items-center gap-3">
+                                <div className="glass-p-3 border-t border-white/10">
+                                    <div className="flex items-center justify-between glass-text-xs glass-text-primary/60">
+                                        <div className="flex items-center glass-gap-3">
                                             {image.likes && (
-                                                <span className="flex items-center gap-1">
+                                                <span className="flex items-center glass-gap-1">
                                                     <Heart className="w-3 h-3" />
                                                     {image.likes}
                                                 </span>
                                             )}
                                             {image.views && (
-                                                <span className="flex items-center gap-1">
+                                                <span className="flex items-center glass-gap-1">
                                                     <Eye className="w-3 h-3" />
                                                     {image.views}
                                                 </span>
@@ -296,7 +295,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                                         </div>
 
                                         {image.tags && image.tags.length > 0 && (
-                                            <div className="flex gap-1">
+                                            <div className="flex glass-gap-1">
                                                 {image.tags.slice(0, 2).map((tag, tagIndex) => (
                                                     <GlassBadge key={tagIndex} variant="outline" size="sm">
                                                         {tag}
@@ -316,7 +315,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
 
     // List Layout
     const renderListLayout = () => (
-        <div className="space-y-4">
+        <div className="glass-auto-gap glass-auto-gap-lg">
             {filteredImages.map((image, index) => (
                 <div
                     key={image.id}
@@ -329,10 +328,10 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                     <GlassCard
                         variant="elevated"
                         interactive
-                        onClick={() => handleImageClick(image, index)}
+                        onClick={(e) => handleImageClick(image, index)}
                         className="overflow-hidden cursor-pointer hover:scale-[1.01] transition-transform"
                     >
-                        <CardContent className="p-0">
+                        <CardContent className="glass-p-0">
                             <div className="flex">
                                 <div className="w-32 h-32 flex-shrink-0">
                                     <img
@@ -343,27 +342,27 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                                     />
                                 </div>
 
-                                <div className="flex-1 p-4">
+                                <div className="flex-1 glass-p-4">
                                     <div className="flex items-start justify-between">
                                         <div className="flex-1">
-                                            <h3 className="text-white font-medium mb-1">
+                                            <h3 className="glass-text-primary font-medium glass-mb-1">
                                                 {image.title}
                                             </h3>
                                             {image.description && (
-                                                <p className="text-white/70 text-sm mb-2">
+                                                <p className="glass-text-primary/70 glass-text-sm glass-mb-2">
                                                     {image.description}
                                                 </p>
                                             )}
 
-                                            <div className="flex items-center gap-4 text-xs text-white/60">
+                                            <div className="flex items-center glass-gap-4 glass-text-xs glass-text-primary/60">
                                                 {image.likes && (
-                                                    <span className="flex items-center gap-1">
+                                                    <span className="flex items-center glass-gap-1">
                                                         <Heart className="w-3 h-3" />
                                                         {image.likes}
                                                     </span>
                                                 )}
                                                 {image.views && (
-                                                    <span className="flex items-center gap-1">
+                                                    <span className="flex items-center glass-gap-1">
                                                         <Eye className="w-3 h-3" />
                                                         {image.views}
                                                     </span>
@@ -377,7 +376,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                                         </div>
 
                                         {showActions && (
-                                            <div className="flex gap-1 ml-4">
+                                            <div className="flex glass-gap-1 glass-ml-4">
                                                 <GlassButton
                                                     variant="ghost"
                                                     size="sm"
@@ -385,7 +384,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                                                         e.stopPropagation();
                                                         if (enableLightbox) setLightboxIndex(index);
                                                     }}
-                                                    className="p-2"
+                                                    className="glass-p-2"
                                                 >
                                                     <ZoomIn className="w-4 h-4" />
                                                 </GlassButton>
@@ -394,7 +393,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                                                     variant="ghost"
                                                     size="sm"
                                                     onClick={(e) => e.stopPropagation()}
-                                                    className="p-2"
+                                                    className="glass-p-2"
                                                 >
                                                     <Heart className="w-4 h-4" />
                                                 </GlassButton>
@@ -403,7 +402,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                                                     variant="ghost"
                                                     size="sm"
                                                     onClick={(e) => e.stopPropagation()}
-                                                    className="p-2"
+                                                    className="glass-p-2"
                                                 >
                                                     <Share2 className="w-4 h-4" />
                                                 </GlassButton>
@@ -412,7 +411,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                                     </div>
 
                                     {image.tags && image.tags.length > 0 && (
-                                        <div className="flex gap-1 mt-3">
+                                        <div className="flex glass-gap-1 mt-3">
                                             {image.tags.map((tag, tagIndex) => (
                                                 <GlassBadge key={tagIndex} variant="outline" size="sm">
                                                     {tag}
@@ -436,13 +435,13 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
         const image = images[lightboxIndex];
 
         return (
-            <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
+            <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center glass-p-4">
                 <div className="relative max-w-4xl max-h-full">
                     {/* Close Button */}
                     <GlassButton
                         variant="secondary"
                         size="sm"
-                        onClick={() => setLightboxIndex(null)}
+                        onClick={(e) => setLightboxIndex(null)}
                         className="absolute top-4 right-4 z-10"
                     >
                         <X className="w-4 h-4" />
@@ -454,7 +453,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                             <GlassButton
                                 variant="secondary"
                                 size="lg"
-                                onClick={() => handleLightboxNav('prev')}
+                                onClick={(e) => handleLightboxNav('prev')}
                                 className="absolute left-4 top-1/2 transform -translate-y-1/2"
                             >
                                 <ChevronLeft className="w-6 h-6" />
@@ -463,7 +462,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                             <GlassButton
                                 variant="secondary"
                                 size="lg"
-                                onClick={() => handleLightboxNav('next')}
+                                onClick={(e) => handleLightboxNav('next')}
                                 className="absolute right-4 top-1/2 transform -translate-y-1/2"
                             >
                                 <ChevronRight className="w-6 h-6" />
@@ -488,14 +487,14 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
 
                     {/* Image Info */}
                     {image && (image.title || image.description) && (
-                        <div className="mt-4 text-center">
+                        <div className="glass-mt-4 text-center">
                             {image.title && (
-                                <h3 className="text-white text-lg font-medium mb-1">
+                                <h3 className="glass-text-primary glass-text-lg font-medium glass-mb-1">
                                     {image.title}
                                 </h3>
                             )}
                             {image.description && (
-                                <p className="text-white/80">
+                                <p className="glass-text-primary/80">
                                     {image.description}
                                 </p>
                             )}
@@ -508,15 +507,15 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
 
     return (
         <Motion preset="fadeIn" className="w-full">
-            <div className={cn('space-y-6', className)} {...props}>
+            <div className={cn('glass-auto-gap glass-auto-gap-2xl', className)} {...props}>
                 {/* Header with filters and view options */}
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center glass-gap-4">
                         {showFilters && categories.length > 0 && (
                             <select
                                 value={filterCategory}
                                 onChange={(e) => setFilterCategory(e.target.value)}
-                                className="bg-glass-fill ring-1 ring-white/10 rounded px-3 py-1 text-sm text-white focus:outline-none focus:ring-white/30"
+                                className="bg-glass-fill ring-1 ring-white/10 glass-radius-md glass-px-3 glass-py-1 glass-text-sm glass-text-primary focus:outline-none focus:ring-white/30"
                             >
                                 <option value="all">All Categories</option>
                                 {categories.map(category => (
@@ -534,12 +533,12 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                         )}
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center glass-gap-2">
                         <GlassButton
                             variant={viewMode === 'grid' ? 'primary' : 'ghost'}
                             size="sm"
-                            onClick={() => setViewMode('grid')}
-                            className="p-2"
+                            onClick={(e) => setViewMode('grid')}
+                            className="glass-p-2"
                         >
                             <Grid3X3 className="w-4 h-4" />
                         </GlassButton>
@@ -547,8 +546,8 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                         <GlassButton
                             variant={viewMode === 'list' ? 'primary' : 'ghost'}
                             size="sm"
-                            onClick={() => setViewMode('list')}
-                            className="p-2"
+                            onClick={(e) => setViewMode('list')}
+                            className="glass-p-2"
                         >
                             <List className="w-4 h-4" />
                         </GlassButton>
@@ -557,11 +556,11 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
 
                 {/* Gallery Content */}
                 {filteredImages.length === 0 ? (
-                    <div className="text-center py-12">
-                        <div className="text-white/60 mb-4">
+                    <div className="text-center glass-py-12">
+                        <div className="glass-text-primary/60 glass-mb-4">
                             <Grid3X3 className="w-12 h-12 mx-auto" />
                         </div>
-                        <p className="text-white/60">
+                        <p className="glass-text-primary/60">
                             {filterCategory === 'all' ? 'No images to display' : `No images in ${filterCategory} category`}
                         </p>
                     </div>

@@ -53,16 +53,16 @@ type Story = StoryObj<typeof GlassPopover>;
 export const Default: Story = {
   args: {
     content: (
-      <div className="p-4">
-        <h3 className="font-semibold mb-2">Popover Content</h3>
-        <p className="text-sm">This is the content inside the popover.</p>
-        <button className="mt-2 px-3 py-1 bg-blue-500 text-white rounded text-sm">
+      <div className="glass-p-4">
+        <h3 className="font-semibold glass-mb-2">Popover Content</h3>
+        <p className="glass-text-sm">This is the content inside the popover.</p>
+        <button className="glass-mt-2 glass-px-3 glass-py-1 bg-blue-500 glass-text-primary glass-radius-md glass-text-sm">
           Action
         </button>
       </div>
     ),
     children: (
-      <button className="px-4 py-2 bg-blue-500 text-white rounded">
+      <button className="glass-px-4 glass-py-2 bg-blue-500 glass-text-primary glass-radius-md">
         Click me
       </button>
     ),
@@ -74,23 +74,23 @@ export const WithTitle: Story = {
     title: 'Settings',
     description: 'Configure your preferences',
     content: (
-      <div className="p-4 space-y-3">
+      <div className="glass-p-4 glass-gap-3">
         <div className="flex items-center justify-between">
-          <span className="text-sm">Notifications</span>
+          <span className="glass-text-sm">Notifications</span>
           <input type="checkbox" defaultChecked />
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-sm">Dark Mode</span>
+          <span className="glass-text-sm">Dark Mode</span>
           <input type="checkbox" />
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-sm">Auto-save</span>
+          <span className="glass-text-sm">Auto-save</span>
           <input type="checkbox" defaultChecked />
         </div>
       </div>
     ),
     children: (
-      <button className="px-4 py-2 bg-gray-500 text-white rounded">
+      <button className="glass-px-4 glass-py-2 bg-gray-500 glass-text-primary glass-radius-md">
         Settings
       </button>
     ),

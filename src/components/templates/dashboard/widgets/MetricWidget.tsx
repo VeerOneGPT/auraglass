@@ -7,7 +7,6 @@ import { GlassBadge } from '../../../data-display/GlassBadge';
 import { VStack, HStack } from '../../../layout/GlassStack';
 import { cn } from '../../../../lib/utilsComprehensive';
 
-import { createGlassStyle } from '../../../../core/mixins/glassMixins';
 export interface MetricData {
   value: string | number;
   label: string;
@@ -85,22 +84,22 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
   ) => {
     const sizeClasses = {
       sm: {
-        value: 'text-lg',
-        label: 'text-xs',
-        icon: 'text-lg',
-        padding: 'p-3',
+        value: 'glass-text-lg',
+        label: 'glass-text-xs',
+        icon: 'glass-text-lg',
+        padding: 'glass-p-3',
       },
       md: {
-        value: 'text-2xl',
-        label: 'text-sm',
-        icon: 'text-xl',
-        padding: 'p-4',
+        value: 'glass-text-2xl',
+        label: 'glass-text-sm',
+        icon: 'glass-text-xl',
+        padding: 'glass-p-4',
       },
       lg: {
         value: 'text-3xl',
-        label: 'text-base',
-        icon: 'text-2xl',
-        padding: 'p-6',
+        label: 'glass-text-base',
+        icon: 'glass-text-2xl',
+        padding: 'glass-p-6',
       },
     };
 
@@ -110,9 +109,9 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
         change: {
           up: 'text-success',
           down: 'text-destructive',
-          neutral: 'text-muted-foreground',
+          neutral: 'glass-text-secondary',
         },
-        icon: 'text-muted-foreground',
+        icon: 'glass-text-secondary',
         background: '',
       },
       primary: {
@@ -120,7 +119,7 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
         change: {
           up: 'text-success',
           down: 'text-destructive', 
-          neutral: 'text-muted-foreground',
+          neutral: 'glass-text-secondary',
         },
         icon: 'text-primary/70',
         background: 'bg-primary/5',
@@ -130,7 +129,7 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
         change: {
           up: 'text-success',
           down: 'text-destructive',
-          neutral: 'text-muted-foreground',
+          neutral: 'glass-text-secondary',
         },
         icon: 'text-success/70',
         background: 'bg-success/5',
@@ -140,7 +139,7 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
         change: {
           up: 'text-success',
           down: 'text-destructive',
-          neutral: 'text-muted-foreground',
+          neutral: 'glass-text-secondary',
         },
         icon: 'text-warning/70',
         background: 'bg-warning/5',
@@ -150,7 +149,7 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
         change: {
           up: 'text-success',
           down: 'text-destructive',
-          neutral: 'text-muted-foreground',
+          neutral: 'glass-text-secondary',
         },
         icon: 'text-destructive/70',
         background: 'bg-destructive/5',
@@ -207,7 +206,7 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
                 <div className={cn('font-bold', config.value, colors.value)}>
                   {formatValue(data?.value)}{data?.unit}
                 </div>
-                <div className={cn('text-muted-foreground', config.label)}>
+                <div className={cn('glass-text-secondary', config.label)}>
                   {data?.label || 'Metric'}
                 </div>
               </VStack>
@@ -227,7 +226,7 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
           return (
             <VStack space="md">
               <HStack space="sm" align="center" justify="between">
-                <div className={cn('text-muted-foreground', config.label)}>
+                <div className={cn('glass-text-secondary', config.label)}>
                   {data?.label || 'Metric'}
                 </div>
                 {data?.icon && (
@@ -244,14 +243,14 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
                 
                 {showTarget && data?.target && (
                   <div className="w-full">
-                    <div className="flex justify-between text-xs text-muted-foreground mb-1">
+                    <div className="flex justify-between glass-text-xs glass-text-secondary glass-mb-1">
                       <span>Progress</span>
                       <span>{Math.round(getTargetProgress())}%</span>
                     </div>
-                    <div className="w-full bg-muted/30 rounded-full h-2">
+                    <div className="w-full bg-muted/30 glass-radius-full h-2">
                       <Motion
                         className={cn(
-                          'h-full rounded-full transition-all duration-500',
+                          'h-full glass-radius-full transition-all duration-500',
                           getTargetProgress() >= 100 ? 'bg-success' : 'bg-primary'
                         )}
                         style={{ width: `${getTargetProgress()}%` }}
@@ -264,13 +263,13 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
               {showTrend && (data?.change || data?.changeLabel) && (
                 <HStack space="sm" align="center">
                   {data?.change && (
-                    <div className={cn('text-xs font-medium flex items-center gap-1', getChangeColor())}>
+                    <div className={cn('glass-text-xs font-medium flex items-center glass-gap-1', getChangeColor())}>
                       <span>{getTrendIcon()}</span>
                       <span>{data?.change > 0 ? '+' : ''}{data?.change}%</span>
                     </div>
                   )}
                   {data?.changeLabel && (
-                    <div className="text-xs text-muted-foreground">
+                    <div className="glass-text-xs glass-text-secondary">
                       {data?.changeLabel}
                     </div>
                   )}
@@ -278,7 +277,7 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
               )}
 
               {data?.description && (
-                <div className="text-xs text-muted-foreground">
+                <div className="glass-text-xs glass-text-secondary">
                   {data?.description}
                 </div>
               )}
@@ -289,15 +288,15 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
           return (
             <HStack space="sm" align="center" justify="between">
               <VStack space="none">
-                <div className={cn('font-bold text-lg', colors.value)}>
+                <div className={cn('font-bold glass-text-lg', colors.value)}>
                   {formatValue(data?.value)}{data?.unit}
                 </div>
-                <div className="text-xs text-muted-foreground">
+                <div className="glass-text-xs glass-text-secondary">
                   {data?.label || 'Metric'}
                 </div>
               </VStack>
               {data?.icon && (
-                <div className={cn('text-lg', colors.icon)}>
+                <div className={cn('glass-text-lg', colors.icon)}>
                   {data?.icon}
                 </div>
               )}
@@ -308,7 +307,7 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
           return (
             <VStack space="md">
               <HStack space="sm" align="center" justify="between">
-                <div className={cn('text-muted-foreground', config.label)}>
+                <div className={cn('glass-text-secondary', config.label)}>
                   {data?.label || 'Metric'}
                 </div>
                 {data?.icon && (
@@ -324,12 +323,12 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
 
               {showTrend && data?.change && (
                 <HStack space="sm" align="center">
-                  <div className={cn('text-sm font-medium flex items-center gap-1', getChangeColor())}>
+                  <div className={cn('glass-text-sm font-medium flex items-center glass-gap-1', getChangeColor())}>
                     <span>{getTrendIcon()}</span>
                     <span>{data?.change > 0 ? '+' : ''}{data?.change}%</span>
                   </div>
                   {data?.changeLabel && (
-                    <div className="text-sm text-muted-foreground">
+                    <div className="glass-text-sm glass-text-secondary">
                       {data?.changeLabel}
                     </div>
                   )}
@@ -343,9 +342,8 @@ export const MetricWidget = forwardRef<HTMLDivElement, MetricWidgetProps>(
     return (
       <GlassCore
         ref={ref}
-        rounded="lg"
         className={cn(
-          'w-full h-full',
+          'w-full h-full glass-radius-lg',
           config.padding,
           colors.background,
           className

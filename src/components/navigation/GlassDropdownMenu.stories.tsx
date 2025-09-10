@@ -121,13 +121,13 @@ export const WithIcons: Story = {
 
       <GlassDropdownMenuContent className="w-56">
         <GlassDropdownMenuItem>
-          <span className="mr-2">📝</span>
+          <span className="glass-mr-2">📝</span>
           New File
           <GlassDropdownMenuShortcut>⌘N</GlassDropdownMenuShortcut>
         </GlassDropdownMenuItem>
 
         <GlassDropdownMenuItem>
-          <span className="mr-2">📁</span>
+          <span className="glass-mr-2">📁</span>
           Open Folder
           <GlassDropdownMenuShortcut>⌘O</GlassDropdownMenuShortcut>
         </GlassDropdownMenuItem>
@@ -135,13 +135,13 @@ export const WithIcons: Story = {
         <GlassDropdownMenuSeparator />
 
         <GlassDropdownMenuItem>
-          <span className="mr-2">💾</span>
+          <span className="glass-mr-2">💾</span>
           Save
           <GlassDropdownMenuShortcut>⌘S</GlassDropdownMenuShortcut>
         </GlassDropdownMenuItem>
 
         <GlassDropdownMenuItem>
-          <span className="mr-2">🔄</span>
+          <span className="glass-mr-2">🔄</span>
           Refresh
           <GlassDropdownMenuShortcut>⌘R</GlassDropdownMenuShortcut>
         </GlassDropdownMenuItem>
@@ -159,19 +159,19 @@ export const DestructiveItems: Story = {
 
       <GlassDropdownMenuContent className="w-56">
         <GlassDropdownMenuItem>
-          <span className="mr-2">✏️</span>
+          <span className="glass-mr-2">✏️</span>
           Edit
         </GlassDropdownMenuItem>
 
         <GlassDropdownMenuItem>
-          <span className="mr-2">📋</span>
+          <span className="glass-mr-2">📋</span>
           Duplicate
         </GlassDropdownMenuItem>
 
         <GlassDropdownMenuSeparator />
 
         <GlassDropdownMenuItem variant="destructive">
-          <span className="mr-2">🗑️</span>
+          <span className="glass-mr-2">🗑️</span>
           Delete
         </GlassDropdownMenuItem>
       </GlassDropdownMenuContent>

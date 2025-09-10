@@ -1,11 +1,12 @@
 'use client';
 
 import { cn } from '@/lib/utilsComprehensive';
-import React, { useEffect, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
+import { useA11yId } from '@/utils/a11y';
+import { useMotionPreferenceContext } from '@/contexts/MotionPreferenceContext';
 
-export interface GlassScrollAreaProps {
+export interface GlassScrollAreaProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onScroll'> {
     /**
      * Scroll area content
      */
@@ -39,10 +40,6 @@ export interface GlassScrollAreaProps {
      */
     scrollbarClassName?: string;
     /**
-     * Custom className
-     */
-    className?: string;
-    /**
      * Callback when scroll position changes
      */
     onScroll?: (scrollTop: number, scrollLeft: number) => void;
@@ -50,9 +47,21 @@ export interface GlassScrollAreaProps {
      * Enable smooth scrolling
      */
     smoothScrolling?: boolean;
+    /**
+     * Whether to respect user's motion preferences
+     */
+    respectMotionPreference?: boolean;
+    /**
+     * Accessibility label for screen readers
+     */
+    'aria-label'?: string;
+    /**
+     * Accessibility role for semantic meaning
+     */
+    role?: string;
 }
 
-export interface GlassScrollBarProps {
+export interface GlassScrollBarProps extends React.HTMLAttributes<HTMLDivElement> {
     /**
      * Scrollbar orientation
      */
@@ -62,32 +71,39 @@ export interface GlassScrollBarProps {
      */
     size?: 'sm' | 'md' | 'lg';
     /**
-     * Custom className
-     */
-    className?: string;
-    /**
      * Show scrollbar thumb
      */
     showThumb?: boolean;
+    /**
+     * Whether to respect user's motion preferences
+     */
+    respectMotionPreference?: boolean;
 }
 
 /**
  * GlassScrollArea component
  * A glassmorphism scrollable area with custom scrollbars
  */
-export const GlassScrollArea: React.FC<GlassScrollAreaProps> = ({
-    children,
-    maxHeight = '200px',
-    maxWidth,
-    direction = 'vertical',
-    showScrollbars = 'auto',
-    scrollbarSize = 'md',
-    scrollbarPosition = 'inside',
-    scrollbarClassName,
-    className,
-    onScroll,
-    smoothScrolling = false,
-}) => {
+export const GlassScrollArea = forwardRef<HTMLDivElement, GlassScrollAreaProps>((
+    {
+        children,
+        maxHeight = '200px',
+        maxWidth,
+        direction = 'vertical',
+        showScrollbars = 'auto',
+        scrollbarSize = 'md',
+        scrollbarPosition = 'inside',
+        scrollbarClassName,
+        className,
+        onScroll,
+        smoothScrolling = false,
+        respectMotionPreference = true,
+        'aria-label': ariaLabel = 'Scrollable content area',
+        role = 'region',
+        ...props
+    },
+    ref
+) => {
     const [scrollTop, setScrollTop] = useState(0);
     const [scrollLeft, setScrollLeft] = useState(0);
     const [isHovering, setIsHovering] = useState(false);
@@ -98,6 +114,9 @@ export const GlassScrollArea: React.FC<GlassScrollAreaProps> = ({
 
     const containerRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
+    const scrollAreaId = useA11yId();
+    const { prefersReducedMotion, isMotionSafe } = useMotionPreferenceContext();
+    const shouldRespectMotion = respectMotionPreference && !prefersReducedMotion && isMotionSafe;
 
     // Update dimensions when content changes
     useEffect(() => {
@@ -178,31 +197,37 @@ export const GlassScrollArea: React.FC<GlassScrollAreaProps> = ({
 
     return (
         <OptimizedGlass
+            ref={ref}
+            id={scrollAreaId}
             intent="neutral"
-          elevation="level1"
-          intensity="medium"
-          depth={2}
-          tint="neutral"
-          border="subtle"
-          animation="none"
-          performanceMode="medium"
-          
+            elevation="level1"
+            intensity="medium"
+            depth={2}
+            tint="neutral"
+            border="subtle"
+            animation={shouldRespectMotion ? "shimmer" : "none"}
+            performanceMode="medium"
+            role={role}
+            aria-label={ariaLabel}
             className={cn(
                 'relative backdrop-blur-md ring-1 ring-white/10 bg-white/5',
-                scrollbarPosition === 'outside' && 'p-2',
+                scrollbarPosition === 'outside' && 'glass-p-2',
                 smoothScrolling && 'scroll-smooth',
+                // Motion preferences
+                shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none',
                 className
             )}
             style={{
                 maxHeight: typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight,
                 maxWidth: typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth,
             }}
-            >
+            {...props}
+        >
                 <div
                     ref={containerRef}
                     className={cn(
                         'relative overflow-hidden',
-                        scrollbarPosition === 'inside' && 'rounded-lg'
+                        scrollbarPosition === 'inside' && 'glass-radius-lg'
                     )}
                     onMouseEnter={() => setIsHovering(true)}
                     onMouseLeave={() => setIsHovering(false)}
@@ -256,31 +281,50 @@ export const GlassScrollArea: React.FC<GlassScrollAreaProps> = ({
             </div>
         </OptimizedGlass>
     );
-};
+});
+
+GlassScrollArea.displayName = 'GlassScrollArea';
 
 /**
  * GlassScrollBar component
  * Custom scrollbar with glassmorphism styling
  */
-export const GlassScrollBar: React.FC<GlassScrollBarProps> = ({
-    orientation,
-    size = 'md',
-    className,
-    showThumb = true,
-}) => {
+export const GlassScrollBar = forwardRef<HTMLDivElement, GlassScrollBarProps>((
+    {
+        orientation,
+        size = 'md',
+        className,
+        showThumb = true,
+        respectMotionPreference = true,
+        ...props
+    },
+    ref
+) => {
     const [isDragging, setIsDragging] = useState(false);
     const [thumbPosition, setThumbPosition] = useState(0);
     const [thumbSize, setThumbSize] = useState(50);
 
-    const scrollbarRef = useRef<HTMLDivElement>(null);
+    const internalRef = useRef<HTMLDivElement>(null);
+    const scrollbarRef = ref || internalRef;
+
+    // Handle ref access safely for both function and object refs
+    const getScrollbarElement = () => {
+        if (typeof scrollbarRef === 'function') {
+            return null; // Function refs don't have current property
+        }
+        return scrollbarRef.current;
+    };
     const thumbRef = useRef<HTMLDivElement>(null);
+    const { prefersReducedMotion, isMotionSafe } = useMotionPreferenceContext();
+    const shouldRespectMotion = respectMotionPreference && !prefersReducedMotion && isMotionSafe;
 
     // Calculate thumb position and size based on scroll
     useEffect(() => {
         const updateThumb = () => {
-            if (!scrollbarRef.current?.parentElement) return;
+            const scrollbarElement = getScrollbarElement();
+            if (!scrollbarElement?.parentElement) return;
 
-            const container = scrollbarRef.current.parentElement;
+            const container = scrollbarElement.parentElement;
             const content = container.firstElementChild as HTMLElement;
 
             if (!content) return;
@@ -311,7 +355,7 @@ export const GlassScrollBar: React.FC<GlassScrollBarProps> = ({
             setThumbPosition(newThumbPosition);
         };
 
-        const container = scrollbarRef.current?.parentElement;
+        const container = getScrollbarElement()?.parentElement;
         if (container) {
             updateThumb();
             container.addEventListener('scroll', updateThumb);
@@ -326,11 +370,12 @@ export const GlassScrollBar: React.FC<GlassScrollBarProps> = ({
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
-            if (!isDragging || !scrollbarRef.current?.parentElement) return;
+            const scrollbarElement = getScrollbarElement();
+            if (!isDragging || !scrollbarElement?.parentElement) return;
 
-            const container = scrollbarRef.current.parentElement;
+            const container = scrollbarElement.parentElement;
             const content = container.firstElementChild as HTMLElement;
-            const rect = scrollbarRef.current.getBoundingClientRect();
+            const rect = scrollbarElement.getBoundingClientRect();
 
             const clickPosition = orientation === 'vertical'
                 ? e.clientY - rect.top
@@ -374,8 +419,8 @@ export const GlassScrollBar: React.FC<GlassScrollBarProps> = ({
         : 'absolute bottom-0 left-0 right-0 h-6';
 
     const thumbClasses = orientation === 'vertical'
-        ? 'absolute right-1 rounded-full cursor-pointer'
-        : 'absolute bottom-1 rounded-full cursor-pointer';
+        ? 'absolute right-1 glass-radius-full cursor-pointer'
+        : 'absolute bottom-1 glass-radius-full cursor-pointer';
 
     return (
         <div
@@ -383,14 +428,17 @@ export const GlassScrollBar: React.FC<GlassScrollBarProps> = ({
             className={cn(
                 scrollbarClasses,
                 'pointer-events-auto',
+                // Motion preferences
+                shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none',
                 className
             )}
             onMouseDown={handleMouseDown}
+            {...props}
         >
             {/* Track */}
             <div
                 className={cn(
-                    'absolute bg-white/10 rounded-full transition-all duration-200',
+                    'absolute bg-white/10 glass-radius-full transition-all duration-200',
                     orientation === 'vertical'
                         ? 'right-1 top-1 bottom-1 w-1 hover:w-2'
                         : 'bottom-1 left-1 right-1 h-1 hover:h-2'
@@ -404,7 +452,7 @@ export const GlassScrollBar: React.FC<GlassScrollBarProps> = ({
                     className={cn(
                         thumbClasses,
                         'backdrop-blur-md bg-white/30 border border-white/20',
-                        'hover:bg-white/40 transition-all duration-200',
+                        shouldRespectMotion ? 'hover:bg-white/40 transition-all duration-200' : 'hover:bg-white/40',
                         isDragging && 'bg-white/50 scale-110',
                         size === 'sm' && 'w-1 h-4',
                         size === 'md' && 'w-2 h-6',
@@ -418,7 +466,9 @@ export const GlassScrollBar: React.FC<GlassScrollBarProps> = ({
             )}
         </div>
     );
-};
+});
+
+GlassScrollBar.displayName = 'GlassScrollBar';
 
 /**
  * Hook for managing scroll area state

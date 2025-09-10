@@ -213,7 +213,7 @@ export class GlassErrorBoundary extends Component<ErrorBoundaryProps, ErrorBound
           intensity="medium"
           elevation="level2"
         >
-          <div className="space-y-4">
+          <div className="glass-auto-gap glass-auto-gap-lg">
             {/* Error Icon */}
             <div className="w-16 h-16 mx-auto bg-red-500/20 rounded-full flex items-center justify-center">
               <svg
@@ -247,7 +247,7 @@ export class GlassErrorBoundary extends Component<ErrorBoundaryProps, ErrorBound
             </p>
 
             {/* Action Buttons */}
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col glass-auto-gap glass-auto-gap-sm">
               {retryCount < maxRetries && (
                 <button
                   onClick={this.handleRetry}
@@ -383,7 +383,7 @@ export class GlassAsyncErrorBoundary extends Component<
           intensity="medium"
           elevation="level1"
         >
-          <div className="space-y-4">
+          <div className="glass-auto-gap glass-auto-gap-lg">
             <div className="w-12 h-12 mx-auto bg-yellow-500/20 rounded-full flex items-center justify-center">
               {isTimeout ? (
                 <svg className="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -484,7 +484,7 @@ export const GlassComponentErrorBoundary: React.FC<{
           intensity="subtle"
           elevation="level1"
         >
-          <div className="space-y-3">
+          <div className="glass-auto-gap glass-auto-gap-md">
             <div className="w-10 h-10 mx-auto bg-red-500/20 rounded-full flex items-center justify-center">
               <span className="text-red-400 text-sm">⚠</span>
             </div>

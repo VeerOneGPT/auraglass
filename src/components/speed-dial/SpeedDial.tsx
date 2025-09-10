@@ -6,10 +6,10 @@
 import React, { forwardRef, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import styled, { css } from 'styled-components';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { AURA_GLASS } from '../../tokens/glass';
 import { createThemeContext } from '../../core/themeContext';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 import SpeedDialAction from './SpeedDialAction';
 import SpeedDialIcon from './SpeedDialIcon';

@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 // PerformantGlass removed - using OptimizedGlass
 import { OptimizedGlassCore as OptimizedGlass, OptimizedGlassProps } from '../../primitives/OptimizedGlassCore';
 import { cn } from '../../lib/utilsComprehensive';
@@ -67,11 +66,11 @@ const GlassPanel = React.forwardRef<HTMLDivElement, GlassPanelProps>(
         className={cn(
           'relative overflow-hidden transition-all duration-200',
           // Map padding to className since OptimizedGlass doesn't have padding prop
-          padding === 'none' ? 'p-0' :
-            padding === 'sm' ? 'p-2' :
-              padding === 'md' ? 'p-4' :
-                padding === 'lg' ? 'p-6' :
-                  padding === 'xl' ? 'p-8' : 'p-4',
+          padding === 'none' ? 'glass-p-0' :
+            padding === 'sm' ? 'glass-p-2' :
+              padding === 'md' ? 'glass-p-4' :
+                padding === 'lg' ? 'glass-p-6' :
+                  padding === 'xl' ? 'p-8' : 'glass-p-4',
           className
         )}
         {...props}

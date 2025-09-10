@@ -51,15 +51,15 @@ type Story = StoryObj<typeof GlassSplitPane>;
 export const Default: Story = {
   args: {
     left: (
-      <div className="p-4 bg-blue-500/20 rounded-lg">
-        <h3 className="text-lg font-semibold mb-2">Left Pane</h3>
-        <p className="text-sm">This is the left side content.</p>
+      <div className="glass-p-4 bg-blue-500/20 glass-radius-lg">
+        <h3 className="glass-text-lg font-semibold glass-mb-2">Left Pane</h3>
+        <p className="glass-text-sm">This is the left side content.</p>
       </div>
     ),
     right: (
-      <div className="p-4 bg-green-500/20 rounded-lg">
-        <h3 className="text-lg font-semibold mb-2">Right Pane</h3>
-        <p className="text-sm">This is the right side content.</p>
+      <div className="glass-p-4 bg-green-500/20 glass-radius-lg">
+        <h3 className="glass-text-lg font-semibold glass-mb-2">Right Pane</h3>
+        <p className="glass-text-sm">This is the right side content.</p>
       </div>
     ),
   },
@@ -70,15 +70,15 @@ export const VerticalSplit: Story = {
     direction: 'vertical',
     initial: 30,
     left: (
-      <div className="p-4 bg-purple-500/20 rounded-lg">
-        <h3 className="text-lg font-semibold mb-2">Top Pane</h3>
-        <p className="text-sm">This is the top section.</p>
+      <div className="glass-p-4 bg-purple-500/20 glass-radius-lg">
+        <h3 className="glass-text-lg font-semibold glass-mb-2">Top Pane</h3>
+        <p className="glass-text-sm">This is the top section.</p>
       </div>
     ),
     right: (
-      <div className="p-4 bg-orange-500/20 rounded-lg">
-        <h3 className="text-lg font-semibold mb-2">Bottom Pane</h3>
-        <p className="text-sm">This is the bottom section with more content.</p>
+      <div className="glass-p-4 bg-orange-500/20 glass-radius-lg">
+        <h3 className="glass-text-lg font-semibold glass-mb-2">Bottom Pane</h3>
+        <p className="glass-text-sm">This is the bottom section with more content.</p>
       </div>
     ),
   },

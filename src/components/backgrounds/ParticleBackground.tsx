@@ -4,10 +4,12 @@
  * A dynamic background with animated particles.
  */
 import React, { forwardRef, useRef, useEffect, useState, useMemo, useCallback } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled from 'styled-components';
 
+import { OptimizedGlass } from '../../primitives';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
+import { useA11yId } from '../../utils/a11y';
 import { ParticleBackgroundProps } from './types';
 
 // Particle interface
@@ -21,13 +23,27 @@ interface Particle {
   color: string;
 }
 
-// Canvas Style
-const CanvasContainer = styled.div`
+// Canvas Style with OptimizedGlass integration
+const CanvasContainer = styled(OptimizedGlass).attrs<{
+  $intent: string;
+  $elevation: string;
+  $tier: string;
+}>(props => ({
+  intent: props.$intent as any,
+  elevation: props.$elevation as any,
+  tier: props.$tier as any,
+}))`
   position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
-`;
+  
+  /* Ensure background is accessible */
+  &:focus {
+    outline: 2px solid var(--glass-border-focus);
+    outline-offset: 2px;
+  }
+` as React.ComponentType<any>;
 
 const ParticleCanvas = styled.canvas`
   position: absolute;
@@ -97,11 +113,20 @@ const ParticleBackgroundComponent = (
     size,
     speed,
     color,
+    intent = 'neutral',
+    elevation = 'level2',
+    tier = 'medium',
+    respectMotionPreference = true,
     ...rest
   } = props;
 
-  // Check if reduced motion is preferred
+  // Accessibility and motion preferences
+  const componentId = useA11yId('particle-bg');
   const prefersReducedMotion = useReducedMotion();
+  const { prefersReducedMotion: motionPrefersReduced } = useMotionPreferenceContext();
+  
+  // Determine if motion should be reduced based on all preferences
+  const shouldReduceMotion = respectMotionPreference && (prefersReducedMotion || motionPrefersReduced);
 
   // Refs
   const containerRef = useRef<HTMLDivElement>(null);
@@ -155,7 +180,7 @@ const ParticleBackgroundComponent = (
 
   // Handle canvas animation
   useEffect(() => {
-    if (prefersReducedMotion) return;
+    if (shouldReduceMotion) return;
 
     const canvas = canvasRef.current;
     const container = containerRef.current;
@@ -212,8 +237,8 @@ const ParticleBackgroundComponent = (
           }
         }
 
-        // Connect to mouse if interactive
-        if (interactive && mousePosition) {
+        // Connect to mouse if interactive and motion is allowed
+        if (interactive && mousePosition && !shouldReduceMotion) {
           const mouseX = mousePosition.x * canvas.width;
           const mouseY = mousePosition.y * canvas.height;
 
@@ -258,11 +283,11 @@ const ParticleBackgroundComponent = (
       }
       window.removeEventListener('resize', resizeCanvas);
     };
-  }, [particles, connectParticles, interactive, mousePosition, prefersReducedMotion]);
+  }, [particles, connectParticles, interactive, mousePosition, shouldReduceMotion]);
 
   // Handle mouse movement
   useEffect(() => {
-    if (!interactive || prefersReducedMotion) return;
+    if (!interactive || shouldReduceMotion) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
@@ -279,7 +304,7 @@ const ParticleBackgroundComponent = (
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [interactive, prefersReducedMotion]);
+  }, [interactive, shouldReduceMotion]);
 
   // Combine external ref with internal containerRef
   const setRefs = useCallback(
@@ -299,10 +324,27 @@ const ParticleBackgroundComponent = (
   );
 
   return (
-    <CanvasContainer ref={setRefs} className={className} style={style} {...rest}>
+    <CanvasContainer 
+      ref={setRefs} 
+      className={className} 
+      style={style}
+      $intent={intent}
+      $elevation={elevation}
+      $tier={tier}
+      id={componentId}
+      role="img"
+      aria-label={`Interactive particle background with ${actualCount} ${connectParticles ? 'connected' : 'floating'} particles${interactive && !shouldReduceMotion ? ', responding to mouse movement' : ''}`}
+      aria-hidden="true"
+      tabIndex={interactive ? 0 : -1}
+      {...rest}
+    >
       <BackgroundLayer $baseColor={baseColor} />
 
-      <ParticleCanvas ref={canvasRef} />
+      <ParticleCanvas 
+        ref={canvasRef}
+        aria-hidden="true"
+        role="presentation"
+      />
 
       <BlurLayer $blur={blur} $blurAmount={blurAmount} />
 

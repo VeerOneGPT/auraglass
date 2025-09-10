@@ -5,7 +5,6 @@
  * and momentum scrolling for overflow tabs.
  */
 import React, { useState, useRef, useEffect, useCallback, useMemo, forwardRef, useImperativeHandle } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 // import { useThemeColor, ThemeColors } from '../../hooks/useGlassTheme';
 import { useAccessibilitySettings } from '../../hooks/useAccessibilitySettings';
 import { TabBarContainer, TabSelector } from './styled';
@@ -19,6 +18,8 @@ import { GlassTabBarProps, TabItem, ScrollPosition, ScrollAnimationRef, TabBarRe
 import { useAnimationContext } from '../../contexts/AnimationContext';
 import { AnimationProps } from '../../types/animations';
 import { SpringConfig } from '../../animations/physics/springPhysics';
+import { cn } from '@/lib/utilsComprehensive';
+import { OptimizedGlassCore as OptimizedGlass } from '../../primitives';
 
 /**
  * GlassTabBar Component
@@ -874,25 +875,50 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
     ].includes(key))
   );
 
+  // Container styling classes
+  const containerClasses = cn(
+    'glass-tab-bar flex items-center relative overflow-hidden glass-radius-lg glass-p-1',
+    {
+      'flex-col': effectiveOrientation === 'vertical',
+      'flex-row': effectiveOrientation === 'horizontal',
+    },
+    className
+  );
+
+  // Container styles
+  const containerStyle = {
+    width: effectiveWidth,
+    height: effectiveHeight,
+    borderRadius: typeof borderRadius === 'number' ? `${borderRadius}px` : borderRadius || '8px',
+    ...style,
+  };
+
+  // Glass configuration based on props
+  const glassConfig = {
+    elevation: elevated ? 'level2' : 'level1',
+    tier: 'medium',
+    intensity: 'medium',
+    depth: elevated ? 3 : 2,
+    tint: 'neutral',
+    border: 'subtle',
+    animation: finalDisableAnimation ? 'none' : 'gentle',
+    performanceMode: 'medium',
+  } as const;
+
   return (
-    <TabBarContainer
+    <OptimizedGlass
       ref={tabsRef}
-      className={`glass-tab-bar ${className || ''}`}
-      style={style}
-      $orientation={effectiveOrientation}
-      $variant={variant}
-      $glassVariant={glassVariant}
-      $blurStrength={blurStrength}
-      $elevated={elevated}
-      $background={background}
-      $color={color}
-      $width={effectiveWidth}
-      $height={effectiveHeight}
-      $borderRadius={borderRadius}
-      $iconPosition={effectiveIconPosition}
-      $verticalDisplayMode={effectiveVerticalDisplayMode}
-      $placement={placement}
-      $isResponsive={!!responsiveOrientation}
+      intent="neutral"
+      elevation={glassConfig.elevation as any}
+      tier={glassConfig.tier as any}
+      intensity={glassConfig.intensity as any}
+      depth={glassConfig.depth}
+      tint={glassConfig.tint as any}
+      border={glassConfig.border as any}
+      animation={glassConfig.animation as any}
+      performanceMode={glassConfig.performanceMode as any}
+      className={containerClasses}
+      style={containerStyle}
       onMouseMove={isScrolling ? handleScrollGestureMove : magneticSelector}
       onMouseLeave={isScrolling ? handleScrollGestureEnd : handleMouseLeave}
       onMouseDown={handleScrollGestureStart}
@@ -907,14 +933,43 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
     >
       {/* Selector indicator */}
       {variant !== 'default' && (
-        <TabSelector
-          $position={usePhysicsAnimation ? springProps.left : selectorStyle.left}
-          $width={usePhysicsAnimation ? springProps.width : selectorStyle.width}
-        />
+        <div
+          className="absolute transition-all duration-300 ease-out will-change-transform pointer-events-none glass-radius-lg"
+          style={{
+            height: 'calc(100% - 8px)',
+            left: `${usePhysicsAnimation ? springProps.left : selectorStyle.left}px`,
+            width: `${usePhysicsAnimation ? springProps.width : selectorStyle.width}px`,
+            background: 'linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.16) 100%)',
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.5), 0 0 8px rgba(255,255,255,0.3)',
+            backdropFilter: 'blur(12px) saturate(120%)',
+            WebkitBackdropFilter: 'blur(12px) saturate(120%)',
+          }}
+        >
+          {/* Specular sheen */}
+          <div
+            className="absolute inset-0 pointer-events-none glass-radius-lg"
+            style={{
+              background: 'radial-gradient(120% 60% at 20% 0%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 40%)',
+              mixBlendMode: 'overlay',
+            }}
+          />
+        </div>
       )}
       
       {/* Magnetic trail effect */}
-      {animationStyle === 'spring' && <MagneticTrailEffect />}
+      {animationStyle === 'spring' && !finalDisableAnimation && (
+        <div className="absolute inset-0 pointer-events-none glass-radius-lg opacity-30">
+          <div
+            className="absolute glass-radius-full bg-blue-400/20 transition-all duration-500 ease-out"
+            style={{
+              left: `${tabMagneticData.closestTabIndex !== null ? tabMagneticData.closestTabIndex * 60 : 0}px`,
+              width: '60px',
+              height: '100%',
+              transform: `scale(${tabMagneticData.selectionProgress})`,
+            }}
+          />
+        </div>
+      )}
       
       {/* Tab buttons */}
       {visibleTabs.map((tab, index) => {
@@ -939,7 +994,7 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
             badge={tab.badge}
             disabled={tab.disabled}
             active={isActive}
-            onClick={() => handleTabClick(null as any, index)}
+            onClick={(e) => handleTabClick(e, index)}
           />
         );
       })}
@@ -976,7 +1031,7 @@ export const GlassTabBar = forwardRef<TabBarRef, GlassTabBarProps & AnimationPro
             }}
           />
       )}
-    </TabBarContainer>
+    </OptimizedGlass>
   );
 });
 

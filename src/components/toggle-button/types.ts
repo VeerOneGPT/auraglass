@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface ToggleButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'size' | 'onChange'> {
   selected?: boolean;
   value?: string | number;

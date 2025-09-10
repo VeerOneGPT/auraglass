@@ -1,7 +1,6 @@
 'use client';
 
 import React, { forwardRef, useState, useCallback } from 'react';
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 import { Glass } from '../../../primitives';
 import { Motion } from '../../../primitives';
 import { GlassGrid, GlassGridItem } from '../../layout/GlassGrid';
@@ -194,15 +193,15 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
     const defaultWidgetRenderers = {
       metric: ({ widget }: { widget: DashboardWidget }) => (
         <VStack space="md">
-          <div className="text-2xl font-bold text-foreground">
+          <div className="glass-text-2xl font-bold text-foreground">
             {widget.data?.value || '0'}
           </div>
-          <div className="text-sm text-muted-foreground">
+          <div className="glass-text-sm glass-text-secondary">
             {widget.data?.label || 'Metric'}
           </div>
           {widget.data?.change && (
             <div className={cn(
-              'text-xs font-medium',
+              'glass-text-xs font-medium',
               widget.data?.change > 0 ? 'text-success' : 'text-destructive'
             )}>
               {widget.data?.change > 0 ? '+' : ''}{widget.data?.change}%
@@ -212,11 +211,11 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
       ),
       chart: ({ widget }: { widget: DashboardWidget }) => (
         <VStack space="md">
-          <div className="text-sm font-medium text-foreground">
+          <div className="glass-text-sm font-medium text-foreground">
             {widget.data?.title || 'Chart'}
           </div>
-          <div className="h-32 bg-muted/30 rounded flex items-center justify-center">
-            <span className="text-muted-foreground">
+          <div className="h-32 bg-muted/30 glass-radius-md flex items-center justify-center">
+            <span className="glass-text-secondary">
               {widget.data?.chartType ? `${widget.data?.chartType} Chart` : 'Chart Widget'}
             </span>
           </div>
@@ -224,21 +223,21 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
       ),
       table: ({ widget }: { widget: DashboardWidget }) => (
         <VStack space="md">
-          <div className="text-sm font-medium text-foreground">
+          <div className="glass-text-sm font-medium text-foreground">
             {widget.data?.title || 'Table'}
           </div>
-          <div className="space-y-2">
+          <div className="glass-auto-gap glass-auto-gap-sm">
             {(widget.data?.rows || []).slice(0, 3).map((row: any, index: number) => (
-              <div key={index} className="flex justify-between text-sm">
+              <div key={index} className="flex justify-between glass-text-sm">
                 <span className="text-foreground">{row.name}</span>
-                <span className="text-muted-foreground">{row.value}</span>
+                <span className="glass-text-secondary">{row.value}</span>
               </div>
             ))}
           </div>
         </VStack>
       ),
       text: ({ widget }: { widget: DashboardWidget }) => (
-        <div className="text-sm text-foreground">
+        <div className="glass-text-sm text-foreground">
           {widget.data?.content || widget.data?.title || 'Text Widget'}
         </div>
       ),
@@ -252,7 +251,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
 
       if (!WidgetRenderer) {
         return (
-          <div className="h-full flex items-center justify-center text-muted-foreground">
+          <div className="h-full flex items-center justify-center glass-text-secondary">
             Unknown widget type: {widget.type}
           </div>
         );
@@ -266,14 +265,14 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
       if (!editMode || (availableWidgets?.length || 0) === 0) return null;
 
       return (
-        <div className="grid grid-cols-2 gap-2 p-2">
+        <div className="grid grid-cols-2 glass-gap-2 glass-p-2">
           {availableWidgets.map((widgetType) => (
             <GlassButton
               key={widgetType.type}
               variant="ghost"
               size="sm"
               leftIcon={widgetType.icon}
-              onClick={() => handleAddWidget(widgetType.type)}
+              onClick={(e) => handleAddWidget(widgetType.type)}
               className="justify-start"
             >
               {widgetType.title}
@@ -286,7 +285,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
     if (loading) {
       return (
         <div className="flex items-center justify-center h-64">
-          <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-2 border-primary border-t-transparent glass-radius-full animate-spin" />
         </div>
       );
     }
@@ -296,7 +295,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
     }
 
     return (
-      <div ref={ref} className={cn('w-full space-y-6', className)} {...props}>
+      <div ref={ref} className={cn('w-full glass-auto-gap glass-auto-gap-2xl', className)} {...props}>
         {/* Header */}
         <PageHeader
           title={title}
@@ -309,7 +308,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
                   variant={editMode ? 'primary' : 'outline'}
                   size="sm"
                   leftIcon={editMode ? '✓' : '✏️'}
-                  onClick={() => onEditModeChange?.(!editMode)}
+                  onClick={(e) => onEditModeChange?.(!editMode)}
                 >
                   {editMode ? 'Done' : 'Edit'}
                 </GlassButton>
@@ -321,9 +320,9 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
         {/* Add widget section */}
         {editMode && (availableWidgets?.length || 0) > 0 && (
           <Motion preset="slideDown">
-            <Glass rounded="lg" className="p-4">
+            <Glass className="glass-p-4 glass-radius-lg">
               <VStack space="sm">
-                <h3 className="text-sm font-medium text-foreground">Add Widget</h3>
+                <h3 className="glass-text-sm font-medium text-foreground">Add Widget</h3>
                 {renderAddWidgetMenu()}
               </VStack>
             </Glass>
@@ -358,8 +357,8 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
                 )}
               >
                 {/* Widget header */}
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-sm font-medium text-foreground truncate">
+                <div className="flex items-center justify-between glass-mb-4">
+                  <h3 className="glass-text-sm font-medium text-foreground truncate">
                     {widget.title}
                   </h3>
                   {editMode && (
@@ -369,7 +368,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
                           icon="🗑️"
                           variant="ghost"
                           size="xs"
-                          onClick={() => onWidgetRemove?.(widget.id)}
+                          onClick={(e) => onWidgetRemove?.(widget.id)}
                           aria-label="Remove widget"
                         />
                       )}
@@ -377,7 +376,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
                         icon="⚙️"
                         variant="ghost"
                         size="xs"
-                        onClick={() => {
+                        onClick={(e) => {
                           // Handle widget configuration
                         }}
                         aria-label="Configure widget"
@@ -415,7 +414,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
                     style={{ gridColumnStart: x + 1, gridRowStart: y + 1 }}
                   >
                     <div
-                      className="h-full border-2 border-dashed border-primary/30 rounded-lg bg-primary/5 flex items-center justify-center transition-colors hover:border-primary/50 hover:bg-primary/10"
+                      className="h-full border-2 border-dashed border-primary/30 glass-radius-lg bg-primary/5 flex items-center justify-center transition-colors hover:border-primary/50 hover:bg-primary/10"
                       onDragOver={(e) => {
                         e.preventDefault();
                         setDragOverPosition({ x, y });
@@ -425,7 +424,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
                         handleDrop({ x, y });
                       }}
                     >
-                      <span className="text-xs text-primary/60">Drop here</span>
+                      <span className="glass-text-xs text-primary/60">Drop here</span>
                     </div>
                   </GlassGridItem>
                 );

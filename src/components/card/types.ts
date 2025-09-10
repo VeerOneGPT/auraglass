@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface GlassCardVariant {
   default: 'default';
   elevated: 'elevated';

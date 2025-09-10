@@ -1,11 +1,11 @@
 // Typography tokens available via typography.css (imported in index.css)
-import React, { forwardRef, useState, useEffect, useMemo, useCallback } from 'react';
+import React, { forwardRef, useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { glassTokenUtils } from '../../tokens/glass';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { useAnimationContext } from '../../contexts/AnimationContext';
 import { Box } from '../layout/Box';
 import { GlassButton as Button } from '../button';
 import { Typography } from '../data-display/Typography';
@@ -35,7 +35,6 @@ const getCookie = (name: string): string | null => {
 
 // Physics/Animation Imports
 import { useGalileoStateSpring, GalileoStateSpringOptions } from '../../hooks/useGalileoStateSpring';
-import { useAnimationContext } from '../../contexts/AnimationContext';
 import { SpringConfig, SpringPresets } from '../../animations/physics/springPhysics';
 
 const StyledGlobalCookieConsent = styled.div<{
@@ -264,21 +263,32 @@ export const GlobalCookieConsent = forwardRef<HTMLDivElement, GlobalCookieConsen
 
     const shouldAnimate = animate && !prefersReducedMotion;
 
-    // Set initial selected categories
-    useEffect(() => {
-      const initialCategories = [...defaultSelectedCategories];
+    // Memoize initial categories to prevent infinite loops
+    const initialCategories = useMemo(() => {
+      const categories = [...defaultSelectedCategories];
 
       // Always include required categories
       cookieCategories
         .filter(category => category.required)
         .forEach(category => {
-          if (!initialCategories.includes(category.id)) {
-            initialCategories.push(category.id);
+          if (!categories.includes(category.id)) {
+            categories.push(category.id);
           }
         });
 
-      setSelectedCategories(initialCategories);
+      return categories;
     }, [cookieCategories, defaultSelectedCategories]);
+
+    // Track if categories have been initialized to prevent loops
+    const categoriesInitialized = useRef(false);
+
+    // Set initial selected categories only once
+    useEffect(() => {
+      if (!categoriesInitialized.current) {
+        setSelectedCategories(initialCategories);
+        categoriesInitialized.current = true;
+      }
+    }, [initialCategories]);
 
     // Check if consent was previously given
     useEffect(() => {
@@ -438,7 +448,7 @@ export const GlobalCookieConsent = forwardRef<HTMLDivElement, GlobalCookieConsen
             {category.cookies && category.cookies.length > 0 && (
               <>
                 <DetailsToggle
-                  onClick={() => {
+                  onClick={(e) => {
                     // Logic to show cookie details could be expanded here
                   }}
                 >
@@ -516,18 +526,18 @@ export const GlobalCookieConsent = forwardRef<HTMLDivElement, GlobalCookieConsen
             <div className="dialog-container">
               <div className="dialog-header">
                 <Typography variant="h6">Cookie Settings</Typography>
-                <Button variant="ghost" onClick={() => setShowDetailsModal(false)}>
+                <Button variant="ghost" onClick={(e) => setShowDetailsModal(false)}>
                   ×
                 </Button>
               </div>
               <div className="dialog-content">{renderCategories()}</div>
               <div className="dialog-actions">
-                <Button variant="outline" onClick={() => setShowDetailsModal(false)}>
+                <Button variant="outline" onClick={(e) => setShowDetailsModal(false)}>
                   Cancel
                 </Button>
                 <Button
                   variant="primary"
-                  onClick={() => {
+                  onClick={(e) => {
                     handleSavePreferences();
                     setShowDetailsModal(false);
                   }}

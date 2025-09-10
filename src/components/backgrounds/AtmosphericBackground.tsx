@@ -4,10 +4,12 @@
  * A dynamic background component with atmospheric effects.
  */
 import React, { forwardRef, useState, useEffect, useRef } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled, { keyframes, css } from 'styled-components';
 
+import { OptimizedGlass } from '../../primitives';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
+import { useA11yId } from '../../utils/a11y';
 import { AtmosphericBackgroundProps } from './types';
 
 // Animation keyframes
@@ -43,13 +45,27 @@ const defaultGradientColors = [
   'rgba(244, 114, 182, 0.5)', // Pink
 ];
 
-// Styled components
-const BackgroundContainer = styled.div`
+// Styled components with OptimizedGlass integration
+const BackgroundContainer = styled(OptimizedGlass).attrs<{
+  $intent: string;
+  $elevation: string;
+  $tier: string;
+}>(props => ({
+  intent: props.$intent as any,
+  elevation: props.$elevation as any,
+  tier: props.$tier as any,
+}))`
   position: relative;
   overflow: hidden;
   width: 100%;
   height: 100%;
-`;
+  
+  /* Ensure background is accessible */
+  &:focus {
+    outline: 2px solid var(--glass-border-focus);
+    outline-offset: 2px;
+  }
+` as React.ComponentType<any>;
 
 const GradientLayer = styled.div<{
   $baseColor: string;
@@ -157,11 +173,20 @@ const AtmosphericBackgroundComponent = (
     interactive = false,
     blur = false,
     blurAmount = 5,
+    intent = 'neutral',
+    elevation = 'level2',
+    tier = 'medium',
+    respectMotionPreference = true,
     ...rest
   } = props;
 
-  // Check if reduced motion is preferred
+  // Accessibility and motion preferences
+  const componentId = useA11yId('atmospheric-bg');
   const prefersReducedMotion = useReducedMotion();
+  const { prefersReducedMotion: motionPrefersReduced } = useMotionPreferenceContext();
+  
+  // Determine if motion should be reduced based on all preferences
+  const shouldReduceMotion = respectMotionPreference && (prefersReducedMotion || motionPrefersReduced);
 
   // State for mouse position
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
@@ -171,7 +196,7 @@ const AtmosphericBackgroundComponent = (
 
   // Handle mouse movement for interactive mode
   useEffect(() => {
-    if (!interactive || prefersReducedMotion) return;
+    if (!interactive || shouldReduceMotion) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
@@ -190,7 +215,7 @@ const AtmosphericBackgroundComponent = (
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [interactive, prefersReducedMotion]);
+  }, [interactive, shouldReduceMotion]);
 
   // Handle forwarded ref
   const setRefs = (element: HTMLDivElement) => {
@@ -207,20 +232,36 @@ const AtmosphericBackgroundComponent = (
   };
 
   return (
-    <BackgroundContainer ref={setRefs} className={className} style={style} {...rest}>
+    <BackgroundContainer 
+      ref={setRefs} 
+      className={className} 
+      style={style}
+      $intent={intent}
+      $elevation={elevation}
+      $tier={tier}
+      id={componentId}
+      role="img"
+      aria-label={`Atmospheric background with ${animate && !shouldReduceMotion ? 'animated' : 'static'} ${gradientColors.length} color gradient`}
+      aria-hidden="true"
+      tabIndex={interactive ? 0 : -1}
+      {...rest}
+    >
       <GradientLayer
         $baseColor={baseColor}
         $gradientColors={gradientColors}
-        $animate={animate}
+        $animate={animate && !shouldReduceMotion}
         $duration={animationDuration}
         $intensity={intensity}
-        $reducedMotion={prefersReducedMotion}
-        $interactive={interactive}
+        $reducedMotion={shouldReduceMotion}
+        $interactive={interactive && !shouldReduceMotion}
         $cursorX={mousePosition.x}
         $cursorY={mousePosition.y}
       />
 
-      <AtmosphericEffect $animate={animate} $reducedMotion={prefersReducedMotion} />
+      <AtmosphericEffect 
+        $animate={animate && !shouldReduceMotion} 
+        $reducedMotion={shouldReduceMotion} 
+      />
 
       <BlurLayer $blur={blur} $blurAmount={blurAmount} />
 

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 import { glassTokenUtils } from '../../../tokens/glass';
 export interface ChartFiltersProps {
   palette?: string[];

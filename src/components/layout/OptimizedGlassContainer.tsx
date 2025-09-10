@@ -1,9 +1,10 @@
-import React, { forwardRef, useState, useEffect, useRef, useCallback } from 'react';
-import styled from 'styled-components';
+'use client';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+import React, { forwardRef, useState, useEffect, useRef, useCallback } from 'react';
+import { cn } from '@/lib/utilsComprehensive';
+import { OptimizedGlass } from '../../primitives';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import { Box } from './Box';
+import { useA11yId } from '@/utils/a11y';
 
 // Types
 export enum OptimizationLevel {
@@ -15,14 +16,12 @@ export enum OptimizationLevel {
   AGGRESSIVE = 'heavy'
 }
 
-export interface OptimizedGlassContainerProps {
+export interface OptimizedGlassContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
   initialOptimizationLevel?: 'none' | 'light' | 'moderate' | 'heavy';
   autoOptimize?: boolean;
   performanceThreshold?: number;
   glassIntensity?: number;
-  className?: string;
-  style?: React.CSSProperties;
   targetFps?: number;
   checkInterval?: number;
   showIndicator?: boolean;
@@ -30,104 +29,61 @@ export interface OptimizedGlassContainerProps {
   preserveBlur?: boolean;
   onOptimizationChange?: (level: string) => void;
   maxOptimizationLevel?: 'none' | 'light' | 'moderate' | 'heavy';
+  /**
+   * Accessibility label for screen readers
+   */
+  'aria-label'?: string;
+  /**
+   * Accessibility role for semantic meaning
+   */
+  role?: string;
 }
 
-// Styled components
-const Container = styled.div<{
-  $optimizationLevel: 'none' | 'light' | 'moderate' | 'heavy';
-  $glassIntensity: number;
-  $preserveBlur: boolean;
-}>`
-  position: relative;
+// Performance monitoring hook
+const usePerformanceMonitoring = (
+  targetFps: number,
+  checkInterval: number,
+  threshold: number
+) => {
+  const [currentFps, setCurrentFps] = useState(60);
+  const [performanceScore, setPerformanceScore] = useState(1);
+  const frameCountRef = useRef(0);
+  const lastTimeRef = useRef(performance.now());
 
-  ${({ $glassIntensity, $optimizationLevel, $preserveBlur }) => {
-    // Apply different glass effects based on optimization level
-    let glassOptions;
+  useEffect(() => {
+    let animationFrame: number;
+    
+    const measureFps = () => {
+      const now = performance.now();
+      frameCountRef.current++;
+      
+      if (now - lastTimeRef.current >= checkInterval) {
+        const fps = (frameCountRef.current * 1000) / (now - lastTimeRef.current);
+        setCurrentFps(fps);
+        setPerformanceScore(fps / targetFps);
+        
+        frameCountRef.current = 0;
+        lastTimeRef.current = now;
+      }
+      
+      animationFrame = requestAnimationFrame(measureFps);
+    };
+    
+    animationFrame = requestAnimationFrame(measureFps);
+    
+    return () => {
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+    };
+  }, [targetFps, checkInterval]);
 
-    switch ($optimizationLevel) {
-      case 'none':
-        glassOptions = {
-          intensity: $glassIntensity,
-          backgroundOpacity: 0.6,
-          blurStrength: 12,
-        };
-        break;
-
-      case 'light':
-        glassOptions = {
-          intensity: $glassIntensity * 0.8,
-          backgroundOpacity: 0.65,
-          blurStrength: $preserveBlur ? 8 : 6,
-        };
-        break;
-
-      case 'moderate':
-        glassOptions = {
-          intensity: $glassIntensity * 0.6,
-          backgroundOpacity: 0.7,
-          blurStrength: $preserveBlur ? 6 : 4,
-        };
-        break;
-
-      case 'heavy':
-        glassOptions = {
-          intensity: $glassIntensity * 0.4,
-          backgroundOpacity: 0.8,
-          blurStrength: $preserveBlur ? 4 : 2,
-        };
-        break;
-
-      default:
-        glassOptions = {
-          intensity: $glassIntensity,
-          backgroundOpacity: 0.6,
-          blurStrength: 10,
-        };
-    }
-
-    return `
-    background: rgba(255, 255, 255, ${glassOptions.backgroundOpacity});
-    backdrop-filter: blur(${glassOptions.blurStrength}px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    `;
-  }}
-
-  ${({ $optimizationLevel }) => {
-    // Only apply border effects for lower optimization levels
-    if ($optimizationLevel === 'heavy') {
-      return '';
-    }
-
-    return `
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    `;
-  }}
-  
-  /* Ensure smooth transitions between optimization levels */
-  transition: background-color 0.3s ease, 
-              backdrop-filter 0.5s ease, 
-              border 0.3s ease, 
-              box-shadow 0.5s ease;
-`;
-
-const PerformanceIndicator = styled.div<{
-  $status: 'good' | 'warning' | 'critical';
-}>`
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background-color: ${({ $status }) =>
-    $status === 'good' ? '#4caf50' : $status === 'warning' ? '#ff9800' : '#f44336'};
-  opacity: 0.7;
-  transition: background-color 0.3s ease;
-  z-index: 10;
-`;
+  return { currentFps, performanceScore };
+};
 
 /**
- * A container that automatically optimizes glass effects based on performance
+ * OptimizedGlassContainer Component
+ * A container that automatically adjusts glass effects based on performance
  */
 export const OptimizedGlassContainer = forwardRef<HTMLDivElement, OptimizedGlassContainerProps>(
   (
@@ -135,191 +91,174 @@ export const OptimizedGlassContainer = forwardRef<HTMLDivElement, OptimizedGlass
       children,
       initialOptimizationLevel = 'none',
       autoOptimize = true,
-      performanceThreshold = 45,
-      glassIntensity = 0.7,
+      performanceThreshold = 0.8,
+      glassIntensity = 0.6,
       className,
       style,
       targetFps = 60,
-      checkInterval = 2000,
+      checkInterval = 1000,
       showIndicator = false,
-      preferReducedMotion = true,
-      preserveBlur = false,
+      preferReducedMotion,
+      preserveBlur = true,
       onOptimizationChange,
       maxOptimizationLevel = 'heavy',
-      ...rest
-    }: any,
+      'aria-label': ariaLabel = 'Optimized glass container',
+      role = 'region',
+      ...props
+    },
     ref
   ) => {
-    // State
-    const [optimizationLevel, setOptimizationLevel] =
-      useState<'none' | 'light' | 'moderate' | 'heavy'>(initialOptimizationLevel || 'none');
-    const [fps, setFps] = useState<number>(0);
-
-    // Refs
-    const frameCountRef = useRef(0);
-    const lastTimeRef = useRef(performance.now());
-    const checkIntervalRef = useRef<NodeJS.Timeout | null>(null);
-
-    // Check if user prefers reduced motion
+    const [optimizationLevel, setOptimizationLevel] = useState(initialOptimizationLevel);
     const prefersReducedMotion = useReducedMotion();
+    const shouldReduceMotion = preferReducedMotion ?? prefersReducedMotion;
+    const containerId = useA11yId();
 
-    // Initialize based on device capability
-    useEffect(() => {
-      // If user prefers reduced motion, set higher optimization
-      if (preferReducedMotion && prefersReducedMotion) {
-        // Set higher optimization for reduced motion users
-        const reducedMotionLevel = 'heavy';
-        setOptimizationLevel(reducedMotionLevel);
-
-        if (onOptimizationChange) {
-          onOptimizationChange(reducedMotionLevel);
-        }
-
-        return;
-      }
-
-      // Simplified device capability check
-      let initialLevel = initialOptimizationLevel || 'none';
-
-      if (autoOptimize) {
-        // Simplified auto-optimization logic
-        if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
-          // For low-end devices, use higher optimization
-          initialLevel = 'heavy';
-        } else if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 8) {
-          // For mid-range devices, use moderate optimization
-          initialLevel = 'moderate';
-        }
-
-        setOptimizationLevel(initialLevel);
-
-        if (onOptimizationChange) {
-          onOptimizationChange(initialLevel);
-        }
-      }
-    }, [
-      initialOptimizationLevel,
-      autoOptimize,
-      preferReducedMotion,
-      prefersReducedMotion,
-      onOptimizationChange,
-      maxOptimizationLevel,
-    ]);
-
-    // Function to measure performance and update optimization
-    const measurePerformance = useCallback(() => {
-      const now = performance.now();
-      frameCountRef.current++;
-
-      const elapsed = now - lastTimeRef.current;
-
-      if (elapsed >= 1000) {
-        // Calculate FPS
-        const currentFps = Math.round((frameCountRef.current * 1000) / elapsed);
-        setFps(currentFps);
-
-        // Reset counter
-        frameCountRef.current = 0;
-        lastTimeRef.current = now;
-
-        // Update optimization level if auto-optimize is enabled
-        if (autoOptimize && !prefersReducedMotion) {
-          let newLevel = optimizationLevel;
-
-          // Adjust optimization based on FPS
-          if (currentFps < performanceThreshold * 0.5) {
-            // Severe performance issues - max optimization
-            newLevel = 'heavy';
-          } else if (currentFps < performanceThreshold * 0.7) {
-            // Significant performance issues - higher optimization
-            newLevel = 'heavy';
-          } else if (currentFps < performanceThreshold) {
-            // Moderate performance issues - moderate optimization
-            newLevel = 'moderate';
-          } else if (currentFps > targetFps * 0.9 && optimizationLevel !== 'none') {
-            // Good performance - gradually reduce optimization
-            switch (optimizationLevel) {
-              case 'heavy':
-                newLevel = 'moderate';
-                break;
-              case 'moderate':
-                newLevel = 'light';
-                break;
-              case 'light':
-                newLevel = 'none';
-                break;
-              default:
-                newLevel = 'none';
-            }
-          }
-
-          // Update optimization level if changed
-          if (newLevel !== optimizationLevel) {
-            setOptimizationLevel(newLevel);
-
-            if (onOptimizationChange) {
-              onOptimizationChange(newLevel);
-            }
-          }
-        }
-      }
-
-      requestAnimationFrame(measurePerformance);
-    }, [
-      autoOptimize,
-      optimizationLevel,
-      performanceThreshold,
+    // Performance monitoring
+    const { currentFps, performanceScore } = usePerformanceMonitoring(
       targetFps,
-      prefersReducedMotion,
-      onOptimizationChange,
+      checkInterval,
+      performanceThreshold
+    );
+
+    // Auto optimization logic
+    useEffect(() => {
+      if (!autoOptimize) return;
+
+      const maxLevelIndex = ['none', 'light', 'moderate', 'heavy'].indexOf(maxOptimizationLevel);
+      let newLevel = optimizationLevel;
+
+      if (performanceScore < performanceThreshold) {
+        // Performance is poor, increase optimization
+        const currentIndex = ['none', 'light', 'moderate', 'heavy'].indexOf(optimizationLevel);
+        if (currentIndex < maxLevelIndex) {
+          newLevel = ['none', 'light', 'moderate', 'heavy'][currentIndex + 1] as typeof optimizationLevel;
+        }
+      } else if (performanceScore > performanceThreshold + 0.1) {
+        // Performance is good, reduce optimization
+        const currentIndex = ['none', 'light', 'moderate', 'heavy'].indexOf(optimizationLevel);
+        if (currentIndex > 0) {
+          newLevel = ['none', 'light', 'moderate', 'heavy'][currentIndex - 1] as typeof optimizationLevel;
+        }
+      }
+
+      if (newLevel !== optimizationLevel) {
+        setOptimizationLevel(newLevel);
+        onOptimizationChange?.(newLevel);
+      }
+    }, [
+      autoOptimize,
+      performanceScore,
+      performanceThreshold,
+      optimizationLevel,
       maxOptimizationLevel,
+      onOptimizationChange,
     ]);
 
-    // Start performance measurement if auto-optimize is enabled
-    useEffect(() => {
-      if (autoOptimize) {
-        // Initialize
-        frameCountRef.current = 0;
-        lastTimeRef.current = performance.now();
+    // Map optimization level to glass properties
+    const getGlassProps = () => {
+      const baseIntensity = shouldReduceMotion ? 'subtle' as const : 'medium' as const;
 
-        // Start measurement loop
-        const animFrameId = requestAnimationFrame(measurePerformance);
-
-        // Cleanup
-        return () => {
-          cancelAnimationFrame(animFrameId);
-
-          if (checkIntervalRef.current) {
-            clearInterval(checkIntervalRef.current);
-          }
-        };
+      switch (optimizationLevel) {
+        case 'none':
+          return {
+            intensity: 'ultra' as const,
+            performanceMode: 'ultra' as const,
+            animation: shouldReduceMotion ? 'none' as const : 'float' as const,
+            depth: 4,
+          };
+        case 'light':
+          return {
+            intensity: 'strong' as const,
+            performanceMode: 'high' as const,
+            animation: shouldReduceMotion ? 'none' as const : 'gentle' as const,
+            depth: 3,
+          };
+        case 'moderate':
+          return {
+            intensity: baseIntensity,
+            performanceMode: 'medium' as const,
+            animation: 'none' as const,
+            depth: 2,
+          };
+        case 'heavy':
+          return {
+            intensity: 'subtle' as const,
+            performanceMode: 'low' as const,
+            animation: 'none' as const,
+            depth: 1,
+          };
+        default:
+          return {
+            intensity: baseIntensity,
+            performanceMode: 'medium' as const,
+            animation: shouldReduceMotion ? 'none' as const : 'gentle' as const,
+            depth: 2,
+          };
       }
-    }, [autoOptimize, measurePerformance]);
+    };
 
-    // Get status based on FPS and optimization level
-    const getStatus = (): 'good' | 'warning' | 'critical' => {
-      if (optimizationLevel === 'heavy') return 'critical';
-      if (optimizationLevel === 'moderate') return 'warning';
-      if (fps < performanceThreshold) return 'warning';
-      return 'good';
+    const glassProps = getGlassProps();
+
+    // Performance indicator component
+    const PerformanceIndicator = () => {
+      if (!showIndicator) return null;
+
+      const getIndicatorColor = () => {
+        if (performanceScore >= 0.9) return 'text-green-400';
+        if (performanceScore >= 0.7) return 'text-yellow-400';
+        return 'text-red-400';
+      };
+
+      return (
+        <div className="absolute top-2 right-2 z-50 bg-black/50 glass-text-primary glass-p-2 glass-radius-md glass-text-xs font-mono">
+          <div>FPS: <span className={getIndicatorColor()}>{Math.round(currentFps)}</span></div>
+          <div>Level: <span className="text-blue-400">{optimizationLevel}</span></div>
+          <div>Score: <span className={getIndicatorColor()}>{(performanceScore * 100).toFixed(0)}%</span></div>
+        </div>
+      );
     };
 
     return (
-      <Container
+      <OptimizedGlass
         ref={ref}
-        className={className}
-        style={style}
-        $optimizationLevel={optimizationLevel}
-        $glassIntensity={glassIntensity}
-        $preserveBlur={preserveBlur}
-        {...rest}
+        id={containerId}
+        intent="neutral"
+        elevation="level2"
+        intensity={glassProps.intensity}
+        depth={glassProps.depth}
+        tint="neutral"
+        border="subtle"
+        animation={glassProps.animation}
+        performanceMode={glassProps.performanceMode}
+        role={role}
+        aria-label={ariaLabel}
+        aria-live={showIndicator ? 'polite' : undefined}
+        aria-atomic={showIndicator ? 'true' : undefined}
+        className={cn(
+          'relative',
+          // Apply different styling based on optimization level
+          {
+            'backdrop-blur-xl': optimizationLevel === 'none' && preserveBlur,
+            'backdrop-blur-lg': optimizationLevel === 'light' && preserveBlur,
+            'backdrop-blur-md': optimizationLevel === 'moderate' && preserveBlur,
+            'backdrop-blur-sm': optimizationLevel === 'heavy' && preserveBlur,
+          },
+          className
+        )}
+        style={{
+          // Adjust opacity based on glass intensity and optimization level
+          '--glass-opacity': glassIntensity * (optimizationLevel === 'heavy' ? 0.5 : 1),
+          ...style,
+        } as React.CSSProperties}
+        {...props}
       >
-        {showIndicator && <PerformanceIndicator $status={getStatus()} />}
-
+        <PerformanceIndicator />
         {children}
-      </Container>
+      </OptimizedGlass>
     );
   }
 );
 
 OptimizedGlassContainer.displayName = 'OptimizedGlassContainer';
+
+export default OptimizedGlassContainer;

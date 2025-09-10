@@ -1,6 +1,6 @@
-import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 'use client';
+
+import React from 'react';
 
 import { GlassButton } from '../button/GlassButton';
 
@@ -8,6 +8,8 @@ import { cn } from '@/lib/utilsComprehensive';
 import { AlertCircle, AlertTriangle, CheckCircle, Info, X } from 'lucide-react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
+import { useA11yId } from '../../utils/a11y';
+import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 
 // Glass Alert text color variants
 const alertTextVariants = {
@@ -25,7 +27,7 @@ export interface GlassAlertProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Alert size */
   size?: 'sm' | 'md' | 'lg';
   /** Glass elevation */
-  elevation?: 0 | 1 | 2 | 3 | 4;
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
   /** Whether to show default icon */
   showIcon?: boolean;
   /** Custom icon to display */
@@ -48,6 +50,10 @@ export interface GlassAlertProps extends React.HTMLAttributes<HTMLDivElement> {
   intensity?: 'subtle' | 'medium' | 'strong' | 'extreme' | 'ultra';
   /** Performance mode */
   performanceMode?: 'low' | 'medium' | 'high' | 'ultra';
+  /** Respect user's motion preferences */
+  respectMotionPreference?: boolean;
+  /** ARIA live region priority */
+  'aria-live'?: 'polite' | 'assertive' | 'off';
 }
 
 const GlassAlert = React.forwardRef<HTMLDivElement, GlassAlertProps>(
@@ -55,7 +61,7 @@ const GlassAlert = React.forwardRef<HTMLDivElement, GlassAlertProps>(
     className,
     variant = 'default',
     size = 'md',
-    elevation = 1,
+    elevation = 'level1',
     showIcon = true,
     icon,
     dismissible = false,
@@ -67,15 +73,20 @@ const GlassAlert = React.forwardRef<HTMLDivElement, GlassAlertProps>(
     lighting = 'ambient',
     intensity = 'medium',
     performanceMode = 'medium',
+    respectMotionPreference = true,
+    'aria-live': ariaLive = 'polite',
     children,
     ...props
   }, ref) => {
+    const alertId = useA11yId('alert');
+    const { prefersReducedMotion } = useMotionPreferenceContext();
     const [dismissed, setDismissed] = React.useState(false);
+    const shouldAnimate = animate && (!respectMotionPreference || !prefersReducedMotion);
 
     const sizeStyles = {
-      sm: 'p-3 text-sm',
-      md: 'p-4 text-base',
-      lg: 'p-6 text-lg',
+      sm: 'glass-p-3 glass-text-sm',
+      md: 'glass-p-4 glass-text-base',
+      lg: 'glass-p-6 glass-text-lg',
     };
 
     // Get OptimizedGlass intent
@@ -121,23 +132,16 @@ const GlassAlert = React.forwardRef<HTMLDivElement, GlassAlertProps>(
 
     const displayVariant = (variant === 'destructive' ? 'error' : variant) as keyof typeof alertTextVariants;
 
-    // Convert numeric elevation to level string
-    const getElevationLevel = (elev?: 0 | 1 | 2 | 3 | 4): 'level1' | 'level2' | 'level3' | 'level4' => {
-      if (elev === 0) return 'level1';
-      if (elev === 1) return 'level1';
-      if (elev === 2) return 'level2';
-      if (elev === 3) return 'level3';
-      if (elev === 4) return 'level4';
-      return 'level1'; // default
-    };
     const alertContent = (
       <OptimizedGlass
         intent={getGlassIntent()}
-        elevation={getElevationLevel(elevation)}
-        tier="medium"
-        rounded="md"
-        glow={false}
-        hover={false}
+        elevation={elevation}
+        intensity={intensity}
+        depth={2}
+        tint="neutral"
+        border={border}
+        animation={animation}
+        performanceMode={performanceMode}
         ref={ref}
         className={cn(
           'relative w-full transition-all duration-200',
@@ -147,10 +151,10 @@ const GlassAlert = React.forwardRef<HTMLDivElement, GlassAlertProps>(
           '[&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-current',
           className
         )}
-        liftOnHover
-        press
-        hoverSheen
         role="alert"
+        aria-live={ariaLive}
+        aria-atomic="true"
+        id={alertId}
         {...props}
       >
         {/* Icon */}
@@ -166,7 +170,7 @@ const GlassAlert = React.forwardRef<HTMLDivElement, GlassAlertProps>(
           <GlassButton
             onClick={handleDismiss}
             className={cn(
-              'absolute right-4 top-4 rounded-md p-1',
+              'absolute right-4 top-4 glass-radius-md glass-p-1',
               'opacity-70 hover:opacity-100 transition-opacity',
               'focus:outline-none focus:ring-2 focus:ring-current focus:ring-offset-2'
             )}
@@ -178,7 +182,7 @@ const GlassAlert = React.forwardRef<HTMLDivElement, GlassAlertProps>(
       </OptimizedGlass>
     );
 
-    return animate ? (
+    return shouldAnimate ? (
       <Motion preset="slideUp">
         {alertContent}
       </Motion>
@@ -196,16 +200,16 @@ export interface GlassAlertTitleProps extends React.HTMLAttributes<HTMLHeadingEl
 const GlassAlertTitle = React.forwardRef<HTMLParagraphElement, GlassAlertTitleProps>(
   ({ className, size = 'md', ...props }, ref) => {
     const sizeConfig = {
-      sm: 'text-sm',
-      md: 'text-base',
-      lg: 'text-lg',
+      sm: 'glass-text-sm',
+      md: 'glass-text-base',
+      lg: 'glass-text-lg',
     };
 
     return (
       <h5
         ref={ref}
         className={cn(
-          'glass-alert-title mb-1 font-semibold leading-none tracking-tight',
+          'glass-alert-title glass-mb-1 font-semibold leading-none tracking-tight',
           sizeConfig[size],
           className
         )}
@@ -225,9 +229,9 @@ export interface GlassAlertDescriptionProps extends React.HTMLAttributes<HTMLDiv
 const GlassAlertDescription = React.forwardRef<HTMLParagraphElement, GlassAlertDescriptionProps>(
   ({ className, size = 'sm', ...props }, ref) => {
     const sizeConfig = {
-      xs: 'text-xs',
-      sm: 'text-sm',
-      md: 'text-base',
+      xs: 'glass-text-xs',
+      sm: 'glass-text-sm',
+      md: 'glass-text-base',
     };
 
     return (
@@ -262,9 +266,9 @@ const GlassAlertActions = React.forwardRef<HTMLDivElement, GlassAlertActionsProp
     };
 
     const spacingConfig = {
-      sm: 'gap-2 mt-2',
-      md: 'gap-3 mt-3',
-      lg: 'gap-4 mt-4',
+      sm: 'glass-gap-2 glass-mt-2',
+      md: 'glass-gap-3 mt-3',
+      lg: 'glass-gap-4 glass-mt-4',
     };
 
     return (

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface AtmosphericBackgroundProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: 'clear' | 'cloudy' | 'rainy' | 'stormy' | 'foggy' | 'sunny';
   intensity?: number;
@@ -24,6 +23,9 @@ export interface AtmosphericBackgroundProps extends React.HTMLAttributes<HTMLDiv
   
   /** Performance tier */
   tier?: 'low' | 'medium' | 'high';
+  
+  /** If true, respects user's motion preferences */
+  respectMotionPreference?: boolean;
 }
 
 export interface GlassDynamicAtmosphereProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -33,6 +35,18 @@ export interface GlassDynamicAtmosphereProps extends React.HTMLAttributes<HTMLDi
   interactive?: boolean;
   colorPalette?: string[];
   animationSpeed?: number;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
+  
+  /** If true, respects user's motion preferences */
+  respectMotionPreference?: boolean;
 }
 
 export interface ParticleBackgroundProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -51,4 +65,16 @@ export interface ParticleBackgroundProps extends React.HTMLAttributes<HTMLDivEle
   connectParticles?: boolean;
   blur?: boolean;
   blurAmount?: number;
+
+  /** Glass surface intent */
+  intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
+  
+  /** Glass surface elevation */
+  elevation?: 'level1' | 'level2' | 'level3' | 'level4';
+  
+  /** Performance tier */
+  tier?: 'low' | 'medium' | 'high';
+  
+  /** If true, respects user's motion preferences */
+  respectMotionPreference?: boolean;
 }

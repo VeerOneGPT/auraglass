@@ -1,10 +1,11 @@
 'use client';
 
 import React, { forwardRef, useState, useEffect } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { GlassMobileNav, MobileNavItem, MobileNavSection } from './GlassMobileNav';
 import { GlassBottomNav, BottomNavItem } from './GlassBottomNav';
 import { cn } from '@/lib/utilsComprehensive';
+import { useA11yId } from '@/utils/a11y';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 
 export interface ResponsiveNavConfig {
   /**
@@ -86,6 +87,10 @@ export interface GlassResponsiveNavProps {
    * Children content
    */
   children?: React.ReactNode;
+  /**
+   * Whether to respect motion preferences for animations
+   */
+  respectMotionPreference?: boolean;
 }
 
 /**
@@ -108,11 +113,16 @@ export const GlassResponsiveNav = forwardRef<HTMLDivElement, GlassResponsiveNavP
       title,
       footer,
       elevation = 'level2',
+      respectMotionPreference = true,
       className,
       children,
     },
     ref
   ) => {
+    // Accessibility and motion preferences
+    const navId = useA11yId('responsive-nav');
+    const prefersReducedMotion = useReducedMotion();
+    const shouldReduceMotion = respectMotionPreference && prefersReducedMotion;
     const {
       mobileBreakpoint = 768,
       tabletBreakpoint = 1024,
@@ -162,7 +172,7 @@ export const GlassResponsiveNav = forwardRef<HTMLDivElement, GlassResponsiveNavP
     };
 
     return (
-      <div ref={ref} className={cn('relative', className)}>
+      <div ref={ref} className={cn('relative', className)} id={navId} role="navigation" aria-label="Responsive navigation">
         {/* Mobile/Drawer Navigation */}
         {shouldShowMobileNav() && (
           <GlassMobileNav

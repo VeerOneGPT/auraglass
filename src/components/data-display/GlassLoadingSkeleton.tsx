@@ -1,11 +1,12 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { glassTokenUtils } from '../../tokens/glass';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { cn } from '@/lib/utilsComprehensive';
+import { useA11yId } from '../../utils/a11y';
+import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 
 export interface GlassLoadingSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Number of skeleton rows to display */
@@ -24,6 +25,10 @@ export interface GlassLoadingSkeletonProps extends React.HTMLAttributes<HTMLDivE
   variant?: 'default' | 'card' | 'list' | 'table' | 'form' | 'dashboard';
   /** Show shimmer effect */
   shimmer?: boolean;
+  /** Respect user's motion preferences */
+  respectMotionPreference?: boolean;
+  /** ARIA label for the loading skeleton */
+  'aria-label'?: string;
 }
 
 export const GlassLoadingSkeleton = forwardRef<HTMLDivElement, GlassLoadingSkeletonProps>(
@@ -37,12 +42,19 @@ export const GlassLoadingSkeleton = forwardRef<HTMLDivElement, GlassLoadingSkele
       animate = true,
       variant = 'default',
       shimmer = true,
+      respectMotionPreference = true,
+      'aria-label': ariaLabel,
       className,
       children,
       ...props
     },
     ref
   ) => {
+    const skeletonId = useA11yId('skeleton');
+    const { prefersReducedMotion } = useMotionPreferenceContext();
+    const shouldAnimate = animate && (!respectMotionPreference || !prefersReducedMotion);
+    const shouldShimmer = shimmer && (!respectMotionPreference || !prefersReducedMotion);
+    
     const avatarSizes = {
       sm: 'w-8 h-8',
       md: 'w-12 h-12',
@@ -52,8 +64,8 @@ export const GlassLoadingSkeleton = forwardRef<HTMLDivElement, GlassLoadingSkele
 
     const baseClasses = cn(
       'glass-skeleton',
-      'rounded-md',
-      shimmer && animate && 'animate-pulse',
+      'glass-radius-md',
+      shouldShimmer && shouldAnimate && 'animate-pulse',
       'backdrop-blur-md'
     );
 
@@ -68,10 +80,10 @@ export const GlassLoadingSkeleton = forwardRef<HTMLDivElement, GlassLoadingSkele
     });
 
     const renderBasicSkeleton = () => (
-      <div className="space-y-3">
+      <div className="glass-auto-gap glass-auto-gap-md">
         {avatar && (
           <div 
-            className={cn('rounded-full', baseClasses, avatarSizes[avatarSize])} 
+            className={cn('glass-radius-full', baseClasses, avatarSizes[avatarSize])} 
             style={getSkeletonStyle()}
           />
         )}
@@ -104,21 +116,21 @@ export const GlassLoadingSkeleton = forwardRef<HTMLDivElement, GlassLoadingSkele
           border="subtle"
           animation="none"
           performanceMode="medium"
-           className="p-6">
-        <div className="space-y-4">
+           className="glass-p-6">
+        <div className="glass-auto-gap glass-auto-gap-lg">
           {/* Header */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center glass-gap-4">
             {avatar && (
-              <div className={cn('rounded-full', baseClasses, avatarSizes[avatarSize])} style={getSkeletonStyle()} />
+              <div className={cn('glass-radius-full', baseClasses, avatarSizes[avatarSize])} style={getSkeletonStyle()} />
             )}
-            <div className="space-y-2 flex-1">
+            <div className="glass-auto-gap glass-auto-gap-sm flex-1">
               <div className={cn(baseClasses, 'h-5 w-3/4')} style={getSkeletonStyle()} />
               <div className={cn(baseClasses, 'h-4 w-1/2')} style={getSkeletonStyle()} />
             </div>
           </div>
           
           {/* Content */}
-          <div className="space-y-2">
+          <div className="glass-auto-gap glass-auto-gap-sm">
             {Array.from({ length: rows }, (_, index) => (
               <div
                 key={index}
@@ -129,33 +141,33 @@ export const GlassLoadingSkeleton = forwardRef<HTMLDivElement, GlassLoadingSkele
           </div>
           
           {/* Actions */}
-          <div className="flex space-x-3 pt-2">
-            <div className={cn(baseClasses, 'h-9 w-20 rounded-lg')} style={getSkeletonStyle()} />
-            <div className={cn(baseClasses, 'h-9 w-16 rounded-lg')} style={getSkeletonStyle()} />
+          <div className="flex glass-gap-3 pt-2">
+            <div className={cn(baseClasses, 'h-9 w-20 glass-radius-lg')} style={getSkeletonStyle()} />
+            <div className={cn(baseClasses, 'h-9 w-16 glass-radius-lg')} style={getSkeletonStyle()} />
           </div>
         </div>
       </OptimizedGlass>
     );
 
     const renderListSkeleton = () => (
-      <div className="space-y-3">
+      <div className="glass-auto-gap glass-auto-gap-md">
         {Array.from({ length: rows }, (_, index) => (
-          <div key={index} className="flex items-center space-x-4 p-3">
-            <div className={cn('rounded-full', baseClasses, 'w-10 h-10')} style={getSkeletonStyle()} />
-            <div className="space-y-2 flex-1">
+          <div key={index} className="flex items-center glass-gap-4 glass-p-3">
+            <div className={cn('glass-radius-full', baseClasses, 'w-10 h-10')} style={getSkeletonStyle()} />
+            <div className="glass-auto-gap glass-auto-gap-sm flex-1">
               <div className={cn(baseClasses, 'h-4 w-3/4')} style={getSkeletonStyle()} />
               <div className={cn(baseClasses, 'h-3 w-1/2')} style={getSkeletonStyle()} />
             </div>
-            <div className={cn(baseClasses, 'h-6 w-16 rounded')} style={getSkeletonStyle()} />
+            <div className={cn(baseClasses, 'h-6 w-16 glass-radius-md')} style={getSkeletonStyle()} />
           </div>
         ))}
       </div>
     );
 
     const renderTableSkeleton = () => (
-      <div className="space-y-2">
+      <div className="glass-auto-gap glass-auto-gap-sm">
         {/* Header */}
-        <div className="grid grid-cols-4 gap-4 p-4 border-b border-white/10">
+        <div className="grid grid-cols-4 glass-gap-4 glass-p-4 border-b border-white/10">
           {Array.from({ length: 4 }, (_, index) => (
             <div key={index} className={cn(baseClasses, 'h-4 w-16')} style={getSkeletonStyle()} />
           ))}
@@ -163,7 +175,7 @@ export const GlassLoadingSkeleton = forwardRef<HTMLDivElement, GlassLoadingSkele
         
         {/* Rows */}
         {Array.from({ length: rows }, (_, rowIndex) => (
-          <div key={rowIndex} className="grid grid-cols-4 gap-4 p-4">
+          <div key={rowIndex} className="grid grid-cols-4 glass-gap-4 glass-p-4">
             {Array.from({ length: 4 }, (_, colIndex) => (
               <div key={colIndex} className={cn(baseClasses, 'h-4')} style={getSkeletonStyle()} />
             ))}
@@ -173,23 +185,23 @@ export const GlassLoadingSkeleton = forwardRef<HTMLDivElement, GlassLoadingSkele
     );
 
     const renderFormSkeleton = () => (
-      <div className="space-y-6">
+      <div className="glass-auto-gap glass-auto-gap-2xl">
         {Array.from({ length: rows }, (_, index) => (
-          <div key={index} className="space-y-2">
+          <div key={index} className="glass-auto-gap glass-auto-gap-sm">
             <div className={cn(baseClasses, 'h-4 w-24')} style={getSkeletonStyle()} />
-            <div className={cn(baseClasses, 'h-10 w-full rounded-lg')} style={getSkeletonStyle()} />
+            <div className={cn(baseClasses, 'h-10 w-full glass-radius-lg')} style={getSkeletonStyle()} />
           </div>
         ))}
         
-        <div className="flex space-x-3 pt-4">
-          <div className={cn(baseClasses, 'h-10 w-24 rounded-lg')} style={getSkeletonStyle()} />
-          <div className={cn(baseClasses, 'h-10 w-20 rounded-lg')} style={getSkeletonStyle()} />
+        <div className="flex glass-gap-3 pt-4">
+          <div className={cn(baseClasses, 'h-10 w-24 glass-radius-lg')} style={getSkeletonStyle()} />
+          <div className={cn(baseClasses, 'h-10 w-20 glass-radius-lg')} style={getSkeletonStyle()} />
         </div>
       </div>
     );
 
     const renderDashboardSkeleton = () => (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 glass-gap-6">
         {Array.from({ length: rows }, (_, index) => (
           <OptimizedGlass
           elevation={'level1'}
@@ -199,16 +211,16 @@ export const GlassLoadingSkeleton = forwardRef<HTMLDivElement, GlassLoadingSkele
           border="subtle"
           animation="none"
           performanceMode="medium"
-          key={index}  className="p-6">
-            <div className="space-y-4">
+          key={index}  className="glass-p-6">
+            <div className="glass-auto-gap glass-auto-gap-lg">
               <div className="flex items-center justify-between">
                 <div className={cn(baseClasses, 'h-5 w-24')} style={getSkeletonStyle()} />
-                <div className={cn(baseClasses, 'h-6 w-6 rounded')} style={getSkeletonStyle()} />
+                <div className={cn(baseClasses, 'h-6 w-6 glass-radius-md')} style={getSkeletonStyle()} />
               </div>
               
               <div className={cn(baseClasses, 'h-8 w-16')} style={getSkeletonStyle()} />
               
-              <div className="space-y-2">
+              <div className="glass-auto-gap glass-auto-gap-sm">
                 <div className={cn(baseClasses, 'h-3 w-full')} style={getSkeletonStyle()} />
                 <div className={cn(baseClasses, 'h-3 w-3/4')} style={getSkeletonStyle()} />
               </div>
@@ -241,20 +253,23 @@ export const GlassLoadingSkeleton = forwardRef<HTMLDivElement, GlassLoadingSkele
 
     return (
       <Motion
-        preset={animate ? 'fadeIn' : undefined}
+        preset={shouldAnimate ? 'fadeIn' : undefined}
         className={cn('glass-loading-skeleton', className)}
       >
         <div
           ref={ref}
+          id={skeletonId}
           role="status"
-          aria-label="Loading content"
+          aria-label={ariaLabel || 'Loading content'}
+          aria-busy="true"
+          aria-live="polite"
           className="relative"
           {...props}
         >
           {renderSkeleton()}
           
           {/* Premium Shimmer overlay */}
-          {shimmer && (
+          {shouldShimmer && (
             <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-blue-300/10 to-transparent animate-shimmer" />
           )}
         </div>

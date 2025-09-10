@@ -4,7 +4,7 @@ import { cn } from '@/design-system/utilsCore';
 import React, { forwardRef, HTMLAttributes, useEffect, useMemo, useState } from 'react';
 
 export interface OptimizedGlassProps extends HTMLAttributes<HTMLDivElement> {
-  elevation?: 0 | 1 | 2 | 3 | 4 | 'float';
+  elevation?: 'level0' | 'level1' | 'level2' | 'level3' | 'level4' | 'float';
   blur?: 'none' | 'subtle' | 'medium' | 'strong' | 'intense';
   variant?:
   | 'default'
@@ -57,12 +57,12 @@ const GLASS_BASE_CLASSES = {
 }
 
 const ELEVATION_CLASSES = {
-  0: '',
-  1: 'shadow-2xl',
-  2: 'shadow-2xl',
-  3: 'shadow-2xl',
-  4: 'shadow-2xl',
-  float: 'shadow-glass-float'
+  level0: '',
+  level1: 'glass-elev-1',
+  level2: 'glass-elev-2',
+  level3: 'glass-elev-3',
+  level4: 'glass-elev-4',
+  float: 'glass-elev-float'
 }
 
 const BLUR_CLASSES = {

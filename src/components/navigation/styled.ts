@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { createGlassStyle } from '../../utils/createGlassStyle';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 export const TabBarContainer = styled.div<{
   $orientation?: 'horizontal' | 'vertical';
   $variant?: 'default' | 'pills' | 'underline';
@@ -31,7 +31,7 @@ export const TabBarContainer = styled.div<{
       default: return 'blur(8px)';
     }
   }};
-  ...createGlassStyle({ elevation: 'level1' });
+  ...createGlassStyle({ elev: 1 });
   border-radius: ${props => typeof props.$borderRadius === 'number' ? `${props.$borderRadius}px` : props.$borderRadius || '8px'};
   padding: 4px;
   overflow: hidden;
@@ -39,7 +39,7 @@ export const TabBarContainer = styled.div<{
   ${props => props.$width && `width: ${typeof props.$width === 'number' ? `${props.$width}px` : props.$width};`}
   ${props => props.$height && `height: ${typeof props.$height === 'number' ? `${props.$height}px` : props.$height};`}
   ${props => props.$elevated && (() => {
-    const glassStyles = createGlassStyle({ elevation: 'level2' });
+    const glassStyles = createGlassStyle({ elev: 2 });
     return Object.entries(glassStyles)
       .map(([key, value]) => `${key.replace(/([A-Z])/g, '-$1').toLowerCase()}:${value};`)
       .join('');
@@ -58,7 +58,7 @@ export const TabSelector = styled.div<{ $position: number; $width: number }>`
   /* Glassy highlight with subtle glow and local blur */
   background: linear-gradient(180deg, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0.16) 100%);
   ${(() => {
-    const glassStyles = createGlassStyle({ elevation: 'level2' });
+    const glassStyles = createGlassStyle({ elev: 2 });
     return Object.entries(glassStyles)
       .map(([key, value]) => `${key.replace(/([A-Z])/g, '-$1').toLowerCase()}:${value};`)
       .join('');

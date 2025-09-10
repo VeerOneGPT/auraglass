@@ -1,8 +1,9 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '@/lib/utilsComprehensive';
+import { useA11yId } from '@/utils/a11y';
+import { useMotionPreferenceContext } from '@/contexts/MotionPreferenceContext';
 
 export interface GlassGridProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -51,6 +52,18 @@ export interface GlassGridProps extends React.HTMLAttributes<HTMLDivElement> {
    * Justify content
    */
   justify?: 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly';
+  /**
+   * Whether to respect user's motion preferences
+   */
+  respectMotionPreference?: boolean;
+  /**
+   * Accessibility label for screen readers
+   */
+  'aria-label'?: string;
+  /**
+   * Accessibility role for semantic meaning
+   */
+  role?: string;
 }
 
 export interface GlassGridItemProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -96,6 +109,18 @@ export interface GlassGridItemProps extends React.HTMLAttributes<HTMLDivElement>
    * Item justification
    */
   justifySelf?: 'auto' | 'start' | 'end' | 'center' | 'stretch';
+  /**
+   * Whether to respect user's motion preferences
+   */
+  respectMotionPreference?: boolean;
+  /**
+   * Accessibility label for screen readers
+   */
+  'aria-label'?: string;
+  /**
+   * Accessibility role for semantic meaning
+   */
+  role?: string;
 }
 
 /**
@@ -115,19 +140,22 @@ export const GlassGrid = forwardRef<HTMLDivElement, GlassGridProps>(
       flow = 'row',
       align = 'stretch',
       justify = 'start',
+      respectMotionPreference = true,
+      'aria-label': ariaLabel,
+      role,
       className,
       ...props
     },
     ref
   ) => {
     const gapClasses = {
-      none: 'gap-0',
-      xs: 'gap-1',
-      sm: 'gap-2',
-      md: 'gap-4',
-      lg: 'gap-6',
+      none: 'glass-gap-0',
+      xs: 'glass-gap-1',
+      sm: 'glass-gap-2',
+      md: 'glass-gap-4',
+      lg: 'glass-gap-6',
       xl: 'gap-8',
-      '2xl': 'gap-12',
+      '2xl': 'glass-gap-12',
     };
 
     const gapXClasses = {
@@ -200,6 +228,15 @@ export const GlassGrid = forwardRef<HTMLDivElement, GlassGridProps>(
       gridTemplateColumns: `repeat(auto-fit, minmax(${minColWidth}, 1fr))`,
     } : undefined;
 
+    const gridId = useA11yId();
+    const { prefersReducedMotion } = useMotionPreferenceContext();
+    const shouldRespectMotion = respectMotionPreference && !prefersReducedMotion;
+
+    const a11yProps = {
+      ...(ariaLabel && { 'aria-label': ariaLabel, id: gridId }),
+      ...(role && { role })
+    };
+
     return (
       <div
         ref={ref}
@@ -211,10 +248,13 @@ export const GlassGrid = forwardRef<HTMLDivElement, GlassGridProps>(
           flowClasses[flow],
           alignClasses[align],
           justifyClasses[justify],
+          // Motion preferences
+          shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none',
           ...responsiveClasses,
           className
         )}
         style={gridStyle}
+        {...a11yProps}
         {...props}
       />
     );
@@ -239,6 +279,9 @@ export const GlassGridItem = forwardRef<HTMLDivElement, GlassGridItemProps>(
       rowEnd = 'auto',
       alignSelf = 'auto',
       justifySelf = 'auto',
+      respectMotionPreference = true,
+      'aria-label': ariaLabel,
+      role,
       className,
       ...props
     },
@@ -351,6 +394,15 @@ export const GlassGridItem = forwardRef<HTMLDivElement, GlassGridItemProps>(
       responsive['2xl'] && `2xl:${colSpanClasses[responsive['2xl']]}`,
     ].filter(Boolean) : [];
 
+    const itemId = useA11yId();
+    const { prefersReducedMotion } = useMotionPreferenceContext();
+    const shouldRespectMotion = respectMotionPreference && !prefersReducedMotion;
+
+    const a11yProps = {
+      ...(ariaLabel && { 'aria-label': ariaLabel, id: itemId }),
+      ...(role && { role })
+    };
+
     return (
       <div
         ref={ref}
@@ -363,9 +415,12 @@ export const GlassGridItem = forwardRef<HTMLDivElement, GlassGridItemProps>(
           rowEndClasses[rowEnd],
           alignSelfClasses[alignSelf],
           justifySelfClasses[justifySelf],
+          // Motion preferences
+          shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none',
           ...responsiveClasses,
           className
         )}
+        {...a11yProps}
         {...props}
       />
     );

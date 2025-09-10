@@ -1,17 +1,16 @@
+'use client';
+
 /**
  * EnhancedGlassTabs Component
  *
  * High-contrast, accessibility-focused tab component for chart navigation
  * with glass morphism styling.
  */
-// Typography tokens available via typography.css (imported in index.css)
-import React, { useState, useEffect, useRef, useCallback, forwardRef, useImperativeHandle } from 'react';
-import styled, { DefaultTheme, useTheme } from 'styled-components';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
-import {
-  glowEffects
-} from '../../core/mixins/glowEffects';
+import React, { useState, useEffect, useRef, useCallback, forwardRef, useImperativeHandle, useMemo } from 'react';
+import { cn } from '@/lib/utilsComprehensive';
+import { OptimizedGlass, Motion } from '../../primitives';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { useA11yId } from '@/utils/a11y';
 
 /**
  * TabItem interface
@@ -121,6 +120,11 @@ export interface EnhancedGlassTabsProps {
    * Inline styles
    */
   style?: React.CSSProperties;
+
+  /**
+   * Whether to respect motion preferences for animations
+   */
+  respectMotionPreference?: boolean;
 }
 
 // Ref interface
@@ -135,55 +139,7 @@ export interface EnhancedGlassTabsRef {
   getTabElement: (tabId: string) => HTMLButtonElement | null;
 }
 
-/**
- * StyledTabsContainer component
- */
-const StyledTabsContainer = styled.div<{
-  variant: 'default' | 'elevated' | 'outlined' | 'text';
-  color: EnhancedGlassTabsProps['color'];
-  size: EnhancedGlassTabsProps['size'];
-  highContrast: boolean;
-  theme: any;
-}>`
-  display: flex;
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  border-radius: 8px;
-
-  ${props =>
-    props?.variant !== 'text' &&
-    `
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    `}
-
-  ${props =>
-    props?.variant === 'text' &&
-    `
-    background: transparent;
-  `}
-`;
-
-/**
- * StyledTabsList component
- */
-const StyledTabsList = styled.div<{
-  fullWidth: boolean;
-}>`
-  display: flex;
-  width: 100%;
-  position: relative;
-
-  & > * {
-    flex: ${props => (props?.fullWidth ? 1 : 'none')};
-  }
-`;
-
-/**
- * Get colors for the tabs
- */
+// Color utility functions
 const getTabColors = (
   color: EnhancedGlassTabsProps['color'],
   isDarkMode: boolean,
@@ -215,249 +171,26 @@ const getTabColors = (
   };
 };
 
-/**
- * StyledTab component
- */
-const StyledTab = styled.button<{
-  active: boolean;
-  disabled: boolean;
-  color: EnhancedGlassTabsProps['color'];
-  variant: EnhancedGlassTabsProps['variant'];
-  size: EnhancedGlassTabsProps['size'];
-  highContrast: boolean;
-  textAlign: 'center' | 'left' | 'right';
-  theme: any;
-}>`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: ${props => {
-    switch (props?.textAlign) {
-      case 'left':
-        return 'flex-start';
-      case 'right':
-        return 'flex-end';
-      default:
-        return 'center';
-    }
-  }};
-  gap: 8px;
-  white-space: nowrap;
-  border: none;
-  cursor: ${props => (props?.disabled ? 'not-allowed' : 'pointer')};
-  padding: ${props => {
-    switch (props?.size) {
-      case 'small':
-        return '8px 16px';
-      case 'large':
-        return '16px 24px';
-      default:
-        return '12px 20px';
-    }
-  }};
-  font-size: ${props => {
-    switch (props?.size) {
-      case 'small':
-        return '14px';
-      case 'large':
-        return '16px';
-      default:
-        return '15px';
-    }
-  }};
-  font-weight: ${props => (props?.active ? 600 : 500)};
-  outline: none;
-  background: transparent;
-  transition: background-color 0.2s ease, color 0.2s ease;
 
-  ${props => {
-    const colors = getTabColors(props?.color, false, props?.highContrast);
 
-    return `
-      color: ${
-        props?.disabled
-          ? colors.disabledText
-          : props?.active
-          ? colors.activeText
-          : colors.inactiveText
-      };
 
-      backgroundColor: ${props?.active ? colors.activeBg : 'transparent'};
 
-      &:hover:not(:disabled) {
-        backgroundColor: ${!props?.active ? colors.hoverBg : colors.activeBg};
-        color: ${colors.activeText};
-      }
 
-      &:focus-visible {
-        boxShadow: 0 0 0 2px ${colors.activeColor}40;
-      }
-    `;
-  }}
-
-  ${props =>
-    !props?.disabled &&
-    !props?.active &&
-    `
-    &:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
-    `}
-
-  ${props =>
-    props?.active &&
-    props?.variant !== 'text' &&
-    `
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
-    `}
-`;
-
-/**
- * StyledTabIndicator component
- */
-const StyledTabIndicator = styled.div<{
-  left: number;
-  width: number;
-  height: number;
-  bottom: number;
-  color: EnhancedGlassTabsProps['color'];
-  animation: 'slide' | 'fade' | 'none';
-  highContrast: boolean;
-  theme: any;
-}>`
-  position: absolute;
-  bottom: ${props => props?.bottom}px;
-  height: ${props => props?.height}px;
-  background-color: ${props => {
-    const colors = getTabColors(props?.color, props?.theme.isDarkMode, props?.highContrast);
-    return colors.activeColor;
-  }};
-  border-radius: ${props => props?.height / 2}px;
-
-  ${props =>
-    props?.animation === 'slide' &&
-    `
-    transition: left 0.3s ease, width 0.3s ease;
-    left: ${props?.left}px;
-    width: ${props?.width}px;
-  `}
-
-  ${props =>
-    props?.animation === 'fade' &&
-    `
-    transition: opacity 0.2s ease;
-    left: ${props?.left}px;
-    width: ${props?.width}px;
-    opacity: 1;
-  `}
+// Utility to detect dark mode preference
+const useIsDarkMode = () => {
+  const [isDark, setIsDark] = useState(false);
   
-  ${props =>
-    props?.animation === 'none' &&
-    `
-    left: ${props?.left}px;
-    width: ${props?.width}px;
-  `}
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    setIsDark(mediaQuery.matches);
+    
+    const handleChange = (e: MediaQueryListEvent) => setIsDark(e.matches);
+    mediaQuery.addEventListener('change', handleChange);
+    
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
   
-  ${props =>
-    `
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-    `}
-`;
-
-/**
- * StyledBadge component
- */
-const StyledBadge = styled.span<{
-  color: EnhancedGlassTabsProps['color'];
-  theme: any;
-}>`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 18px;
-  height: 18px;
-  padding: 0 6px;
-  font-size: var(--typography-caption-size);
-  font-weight: var(--typography-heading-weight);
-  border-radius: 9px;
-  background-color: ${props => {
-    const colors = getTabColors(props?.color, props?.theme.isDarkMode, true);
-    return colors.activeColor;
-  }};
-  color: white;
-`;
-
-// Add this helper function to ensure we have a properly typed theme
-const ensureValidTheme = (themeInput: any): DefaultTheme => { // If the theme is already a valid DefaultTheme return it
-  if (
-    themeInput && 
-    typeof themeInput === 'object' && 
-    'isDarkMode' in themeInput && 
-    'colorMode' in themeInput && 
-    'themeVariant' in themeInput && 
-    'colors' in themeInput && 
-    'zIndex' in themeInput
-  ) {
-    return themeInput as DefaultTheme;
-  }
-  
-  // Otherwise, create a new theme object
-  return {
-    isDarkMode: false,
-    colorMode: 'light',
-    themeVariant: 'nebula',
-    colors: {
-      nebula: {
-        accentPrimary: '#6366F1',
-        accentSecondary: '#8B5CF6',
-        accentTertiary: '#EC4899',
-        stateCritical: '#EF4444',
-        stateOptimal: '#10B981',
-        stateAttention: '#F59E0B',
-        stateInformational: '#3B82F6',
-        neutralBackground: '#F9FAFB',
-        neutralForeground: '#1F2937',
-        neutralBorder: '#E5E7EB',
-        neutralSurface: '#FFFFFF'
-      },
-      glass: {
-        light: {
-          background: 'rgba(255, 255, 255, 0.1)',
-          border: 'rgba(255, 255, 255, 0.2)',
-          highlight: 'rgba(255, 255, 255, 0.3)',
-          shadow: 'rgba(0, 0, 0, 0.1)',
-          glow: 'rgba(255, 255, 255, 0.2)'
-        },
-        dark: {
-          background: 'rgba(0, 0, 0, 0.2)',
-          border: 'rgba(255, 255, 255, 0.1)',
-          highlight: 'rgba(255, 255, 255, 0.1)',
-          shadow: 'rgba(0, 0, 0, 0.3)',
-          glow: 'rgba(255, 255, 255, 0.1)'
-        },
-        tints: {
-          primary: 'rgba(99, 102, 241, 0.1)',
-          secondary: 'rgba(139, 92, 246, 0.1)'
-        }
-      }
-    },
-    zIndex: {
-      hide: -1,
-      auto: 'auto',
-      base: 0,
-      docked: 10,
-      dropdown: 1000,
-      sticky: 1100,
-      banner: 1200,
-      overlay: 1300,
-      modal: 1400,
-      popover: 1500,
-      skipLink: 1600,
-      toast: 1700,
-      tooltip: 1800,
-      glacial: 9999
-    }
-  };
+  return isDark;
 };
 
 /**
@@ -479,13 +212,16 @@ export const EnhancedGlassTabs = forwardRef<EnhancedGlassTabsRef, EnhancedGlassT
   textAlign = 'center',
   className,
   style,
+  respectMotionPreference = true,
 }, ref) => {
-  // Get theme from context and ensure it's valid
-  const providedTheme = useTheme();
-  const theme = ensureValidTheme(providedTheme);
-  
   // Check for reduced motion preference
   const prefersReducedMotion = useReducedMotion();
+  const shouldReduceMotion = respectMotionPreference && prefersReducedMotion;
+  const isDarkMode = useIsDarkMode();
+  
+  // Generate unique IDs for accessibility
+  const tablistId = useA11yId('tablist');
+  const tabIdPrefix = useA11yId('tab');
 
   // Refs for tab elements
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -596,65 +332,147 @@ export const EnhancedGlassTabs = forwardRef<EnhancedGlassTabsRef, EnhancedGlassT
     };
   }, [currentTab, size]); // Only re-run when tab or size changes
 
+  // Get color scheme for styling
+  const colors = useMemo(() => getTabColors(color, isDarkMode, highContrast), [color, isDarkMode, highContrast]);
+
+  // Size-based styling
+  const sizeClasses = {
+    small: { padding: 'glass-py-2 glass-px-4', text: 'glass-text-sm', indicatorHeight: 2 },
+    medium: { padding: 'glass-py-3 px-5', text: 'glass-text-base', indicatorHeight: 3 },
+    large: { padding: 'glass-py-4 glass-px-6', text: 'glass-text-lg', indicatorHeight: 4 },
+  };
+
+  const sizeConfig = sizeClasses[size];
+
+  // Text alignment classes
+  const alignmentClasses = {
+    left: 'justify-start',
+    center: 'justify-center',
+    right: 'justify-end',
+  };
+
   return (
-    <StyledTabsContainer
+    <OptimizedGlass
       ref={containerRef}
-      variant={variant}
-      color={color}
-      size={size}
-      highContrast={highContrast}
-      className={className}
+      intent="neutral"
+      elevation={variant === 'elevated' ? 'level2' : 'level1'}
+      tier="medium"
+      intensity="medium"
+      depth={2}
+      tint="neutral"
+      border={variant === 'outlined' ? 'subtle' : 'none'}
+      animation={shouldReduceMotion ? 'none' : 'gentle'}
+      performanceMode="medium"
+      className={cn(
+        'flex relative overflow-hidden w-full glass-radius-lg',
+        {
+          'bg-transparent': variant === 'text',
+        },
+        className
+      )}
       style={style}
-      theme={theme}
     >
-      <StyledTabsList fullWidth={fullWidth}>
-        {tabs.map(tab => {
-          // Use a stable function reference by wrapping in anonymous function
+      <div
+        className={cn(
+          'flex w-full relative',
+          {
+            '[&>*]:flex-1': fullWidth,
+          }
+        )}
+        role="tablist"
+        aria-orientation="horizontal"
+        id={tablistId}
+      >
+        {tabs.map((tab) => {
+          const isActive = currentTab === tab.id;
+          
           return (
-            <StyledTab
+            <button
               key={tab.id}
               ref={(element) => {
-                // Store the ref without triggering updates
-                  if (tabRefs.current) tabRefs.current[tab.id] = element;
+                if (tabRefs.current) tabRefs.current[tab.id] = element;
               }}
-              active={currentTab === tab.id}
-              disabled={!!tab.disabled}
-              color={color}
-              variant={variant}
-              size={size}
-              highContrast={highContrast}
-              textAlign={textAlign}
-              onClick={() => !tab.disabled && handleTabChange(tab.id)}
-              aria-selected={currentTab === tab.id}
               role="tab"
-              tabIndex={tab.disabled ? -1 : 0}
-              theme={theme}
+              id={`${tabIdPrefix}-${tab.id}`}
+              tabIndex={tab.disabled ? -1 : isActive ? 0 : -1}
+              aria-selected={isActive}
+              aria-controls={`tabpanel-${tab.id}`}
+              disabled={tab.disabled}
+              className={cn(
+                'relative flex items-center glass-gap-2 whitespace-nowrap border-none cursor-pointer',
+                'outline-none transition-all duration-200 ease-out',
+                'focus-visible:ring-2 focus-visible:ring-offset-2',
+                sizeConfig.padding,
+                sizeConfig.text,
+                alignmentClasses[textAlign],
+                {
+                  'cursor-not-allowed opacity-50': tab.disabled,
+                  'bg-transparent': !isActive,
+                  'font-semibold': isActive,
+                  'font-medium': !isActive,
+                }
+              )}
+              style={{
+                color: tab.disabled
+                  ? colors.disabledText
+                  : isActive
+                  ? colors.activeText
+                  : colors.inactiveText,
+                backgroundColor: isActive ? colors.activeBg : 'transparent',
+              } as React.CSSProperties}
+              onMouseEnter={(e) => {
+                if (!tab.disabled && !isActive) {
+                  e.currentTarget.style.backgroundColor = colors.hoverBg;
+                  e.currentTarget.style.color = colors.activeText;
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!tab.disabled && !isActive) {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                  e.currentTarget.style.color = colors.inactiveText;
+                }
+              }}
+              onClick={() => !tab.disabled && handleTabChange(tab.id)}
             >
-              {tab.icon && <span>{tab.icon}</span>}
+              {tab.icon && (
+                <span aria-hidden="true">{tab.icon}</span>
+              )}
               <span>{tab.label}</span>
               {tab.badgeCount !== undefined && tab.badgeCount > 0 && (
-                <StyledBadge color={color} theme={theme}>
+                <span
+                  className="inline-flex items-center justify-center min-w-[18px] h-[18px] glass-px-1.5 glass-text-xs font-semibold glass-text-primary glass-radius-full"
+                  style={{ backgroundColor: colors.activeColor }}
+                >
                   {tab.badgeCount > 99 ? '99+' : tab.badgeCount}
-                </StyledBadge>
+                </span>
               )}
-            </StyledTab>
+            </button>
           );
         })}
-      </StyledTabsList>
+      </div>
 
+      {/* Active indicator */}
       {showIndicator && currentTab && (
-        <StyledTabIndicator
-          left={indicatorStyle.left}
-          width={indicatorStyle.width}
-          height={indicatorStyle.height}
-          bottom={indicatorStyle.bottom}
-          color={color}
-          animation={prefersReducedMotion ? 'none' : indicatorAnimation}
-          highContrast={highContrast}
-          theme={theme}
+        <div
+          className={cn(
+            'absolute pointer-events-none',
+            {
+              'transition-all duration-300 ease-out': indicatorAnimation === 'slide' && !shouldReduceMotion,
+              'transition-opacity duration-200 ease-out': indicatorAnimation === 'fade' && !shouldReduceMotion,
+            }
+          )}
+          style={{
+            left: `${indicatorStyle.left}px`,
+            width: `${indicatorStyle.width}px`,
+            height: `${sizeConfig.indicatorHeight}px`,
+            bottom: `${indicatorStyle.bottom}px`,
+            backgroundColor: colors.activeColor,
+            borderRadius: `${sizeConfig.indicatorHeight / 2}px`,
+            boxShadow: '0 0 8px rgba(255, 255, 255, 0.3)',
+          }}
         />
       )}
-    </StyledTabsContainer>
+    </OptimizedGlass>
   );
 });
 

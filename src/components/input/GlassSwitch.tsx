@@ -1,11 +1,11 @@
 'use client';
 
-import { GlassButton } from '../button/GlassButton';
 
 import { cn } from '@/lib/utilsComprehensive';
-import React, { forwardRef, useId } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
-import { Motion } from '../../primitives';
+import React, { forwardRef } from 'react';
+import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
+import { OptimizedGlass } from '../../primitives';
+import { announceToScreenReader, createFormFieldA11y, useA11yId } from '../../utils/a11y';
 
 export interface GlassSwitchProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onChange'> {
   /** Whether the switch is checked */
@@ -39,6 +39,18 @@ export interface GlassSwitchProps extends Omit<React.ButtonHTMLAttributes<HTMLBu
   focusRing?: boolean;
   /** Custom thumb content */
   thumbContent?: React.ReactNode;
+  /** Error message */
+  error?: string;
+  /** Whether the switch is required */
+  required?: boolean;
+  /** Respect user's motion preferences */
+  respectMotionPreference?: boolean;
+  /** Accessible label for the switch */
+  'aria-label'?: string;
+  /** ID of element that labels the switch */
+  'aria-labelledby'?: string;
+  /** ID of element(s) that describe the switch */
+  'aria-describedby'?: string;
 }
 
 export const GlassSwitch = forwardRef<HTMLButtonElement, GlassSwitchProps>(
@@ -58,18 +70,54 @@ export const GlassSwitch = forwardRef<HTMLButtonElement, GlassSwitchProps>(
       icons,
       focusRing = true,
       thumbContent,
+      error,
+      required = false,
+      respectMotionPreference = true,
+      'aria-label': ariaLabel,
+      'aria-labelledby': ariaLabelledBy,
+      'aria-describedby': ariaDescribedBy,
       className,
       id,
       ...props
     },
     ref
   ) => {
+    const { prefersReducedMotion, isMotionSafe } = useMotionPreferenceContext();
+    
+    // Generate unique IDs for accessibility
+    const switchId = useA11yId('glass-switch');
+    const finalId = id || switchId;
+    const labelId = label ? useA11yId('glass-switch-label') : undefined;
+    const descriptionId = description ? useA11yId('glass-switch-description') : undefined;
+    const errorId = error ? useA11yId('glass-switch-error') : undefined;
+    
     const [internalChecked, setInternalChecked] = React.useState(defaultChecked);
     const isChecked = checked !== undefined ? checked : internalChecked;
-    const switchId = useId();
-    const finalId = id || switchId;
+    
+    const isInvalid = !!error;
+    
+    // Create accessibility attributes
+    const a11yProps = createFormFieldA11y({
+      id: finalId,
+      label: !ariaLabelledBy && !labelId ? (ariaLabel || label) : undefined,
+      description: description,
+      error: error,
+      required: required,
+      invalid: isInvalid,
+      disabled: disabled || loading,
+      labelId: ariaLabelledBy || labelId,
+      descriptionId: ariaDescribedBy || descriptionId,
+      errorId: errorId,
+    });
+    
+    // Announce error state changes
+    React.useEffect(() => {
+      if (error) {
+        announceToScreenReader(`Switch error: ${error}`, 'assertive');
+      }
+    }, [error]);
 
-    const handleToggle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleToggle = (event: React.MouseEvent) => {
       if (disabled || loading) return;
 
       const newChecked = !isChecked;
@@ -80,7 +128,10 @@ export const GlassSwitch = forwardRef<HTMLButtonElement, GlassSwitchProps>(
 
       onChange?.(newChecked);
       onCheckedChange?.(newChecked);
-      props?.onClick?.(event);
+      props?.onClick?.(event as any);
+
+      // Announce state change
+      announceToScreenReader(`Switch ${newChecked ? 'on' : 'off'}`, 'polite');
     };
 
     const sizeConfig = {
@@ -88,22 +139,22 @@ export const GlassSwitch = forwardRef<HTMLButtonElement, GlassSwitchProps>(
         track: 'h-5 w-9',
         thumb: 'h-4 w-4',
         translate: 'translate-x-4',
-        text: 'text-xs',
-        gap: 'gap-2',
+        text: 'glass-text-xs',
+        gap: 'glass-gap-2',
       },
       md: {
         track: 'h-6 w-11',
         thumb: 'h-5 w-5',
         translate: 'translate-x-5',
-        text: 'text-sm',
-        gap: 'gap-3',
+        text: 'glass-text-sm',
+        gap: 'glass-gap-3',
       },
       lg: {
         track: 'h-7 w-14',
         thumb: 'h-6 w-6',
         translate: 'translate-x-7',
-        text: 'text-base',
-        gap: 'gap-4',
+        text: 'glass-text-base',
+        gap: 'glass-gap-4',
       },
     };
 
@@ -164,107 +215,57 @@ export const GlassSwitch = forwardRef<HTMLButtonElement, GlassSwitchProps>(
     const colors = variantConfig?.[variant];
 
     const switchElement = (
-      <GlassButton
-        ref={ref}
+      <OptimizedGlass
+        as="button"
+        ref={ref as any}
         role="switch"
         type="button"
-        aria-checked={isChecked}
-        aria-labelledby={label ? `${finalId}-label` : undefined}
-        aria-describedby={description ? `${finalId}-description` : undefined}
-        disabled={disabled || loading}
-        id={finalId}
+        elevation={isChecked ? 'level2' : 'level1'}
+        intensity={isChecked ? 'medium' : 'subtle'}
+        depth={2}
+        tint={isChecked ? 'primary' : 'neutral'}
+        border="subtle"
+        animation={isMotionSafe && respectMotionPreference ? "shimmer" : "none"}
+        performanceMode="medium"
+        liftOnHover={!disabled}
+        press
         className={cn(
-          // Base styles
-          'glass-switch relative inline-flex shrink-0 cursor-pointer glass-ripple glass-press',
-          'border backdrop-blur-md rounded-full transition-all duration-200',
-
-          // Size
+          'glass-switch relative inline-flex shrink-0 cursor-pointer glass-radius-full transition-all duration-200',
           config.track,
-
-          // State colors
-          isChecked ? colors.track.checked : colors.track.unchecked,
-
-          // Disabled state
           disabled && 'opacity-50 cursor-not-allowed',
-
-          // Loading state
           loading && 'cursor-wait',
-
-          // Focus styles
-          focusRing && [
-            'focus:outline-none focus:ring-2 focus:ring-offset-2',
-            'focus:ring-primary focus:ring-offset-background',
-          ],
-
+          focusRing && 'glass-focus',
+          error && 'ring-2 ring-destructive/50',
           className
         )}
         onClick={handleToggle}
+        aria-checked={!!isChecked}
+        aria-invalid={isInvalid || undefined}
+        aria-required={required || undefined}
+        disabled={disabled || loading}
+        id={finalId}
+        {...a11yProps}
         {...props}
       >
-        {/* Subtle sheen on track */}
-        <div className="pointer-events-none absolute inset-0 rounded-full glass-sheen" />
-
-        {/* Thumb */}
-        <Motion
-          preset="scaleIn"
+        <div
           className={cn(
-            'pointer-events-none relative flex items-center justify-center',
-            'rounded-full border backdrop-blur-md transition-all duration-200',
-
-            // Size
+            'pointer-events-none relative flex items-center justify-center glass-radius-full transition-all duration-200 shadow-lg',
             config.thumb,
-
-            // Position
-            isChecked ? config.translate : 'translate-x-0.5',
-
-            // Colors
-            isChecked ? colors.thumb.checked : colors.thumb.unchecked,
-
-            // Border
-            'border-white/20',
+            isChecked ? config.translate : 'translate-x-0.5'
           )}
-        >
-          {/* Loading spinner */}
-          {loading && (
-            <div className={cn(
-              'animate-spin rounded-full border-2 border-current border-t-transparent',
-              size === 'sm' ? 'w-3 h-3' : size === 'md' ? 'w-4 h-4' : 'w-5 h-5'
-            )} />
-          )}
-
-          {/* Icons */}
-          {!loading && icons && (
-            <div className={cn(
-              'flex items-center justify-center',
-              size === 'sm' ? 'text-xs' : 'text-sm'
-            )}>
-              {isChecked ? icons.checked : icons.unchecked}
-            </div>
-          )}
-
-          {/* Custom thumb content */}
-          {!loading && !icons && thumbContent && (
-            <div className="flex items-center justify-center">
-              {thumbContent}
-            </div>
-          )}
-
-          {/* Thumb highlight */}
-          <div className="absolute inset-0 rounded-full bg-gradient-to-br from-white/20 to-transparent" />
-        </Motion>
-
-        {/* Ripple is handled by glass-ripple utility */}
-      </GlassButton>
+        />
+      </OptimizedGlass>
     );
 
     const labelElement = label && (
       <label
         htmlFor={finalId}
-        id={`${finalId}-label`}
+        id={labelId}
         className={cn(
           'glass-switch-label cursor-pointer font-medium text-foreground',
           config.text,
-          disabled && 'cursor-not-allowed opacity-70'
+          disabled && 'cursor-not-allowed opacity-70',
+          required && 'after:content-["*"] after:glass-ml-1 after:text-destructive'
         )}
       >
         {label}
@@ -273,19 +274,33 @@ export const GlassSwitch = forwardRef<HTMLButtonElement, GlassSwitchProps>(
 
     const descriptionElement = description && (
       <p
-        id={`${finalId}-description`}
+        id={descriptionId}
         className={cn(
-          'glass-switch-description text-muted-foreground',
-          size === 'sm' ? 'text-xs' : 'text-sm',
+          'glass-switch-description glass-text-secondary',
+          size === 'sm' ? 'glass-text-xs' : 'glass-text-sm',
           disabled && 'opacity-70'
         )}
       >
         {description}
       </p>
     );
+    
+    const errorElement = error && (
+      <p 
+        id={errorId}
+        className={cn(
+          'glass-switch-error text-destructive glass-mt-1',
+          size === 'sm' ? 'glass-text-xs' : 'glass-text-sm'
+        )}
+        role="alert"
+        aria-live="polite"
+      >
+        {error}
+      </p>
+    );
 
     // Render based on label position
-    if (!label && !description) {
+    if (!label && !description && !error) {
       return switchElement;
     }
 
@@ -308,14 +323,14 @@ export const GlassSwitch = forwardRef<HTMLButtonElement, GlassSwitchProps>(
 
         {(labelPosition === 'top' || labelPosition === 'bottom') && switchElement}
 
-        <div className="space-y-1">
+        <div className="glass-gap-1">
           {labelElement}
           {descriptionElement}
+          {errorElement}
         </div>
       </div>
     );
-  }
-);
+});
 
 GlassSwitch.displayName = 'GlassSwitch';
 

@@ -5,7 +5,6 @@ import { GlassButton } from '../button/GlassButton';
 import { cn } from '@/lib/utilsComprehensive';
 import { ChevronRight } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 
@@ -151,9 +150,9 @@ export const GlassMenubar: React.FC<GlassMenubarProps> = ({
     };
 
     const sizeClasses = {
-        sm: 'h-8 px-3 text-sm',
-        md: 'h-10 px-4 text-base',
-        lg: 'h-12 px-6 text-lg',
+        sm: 'h-8 glass-px-3 glass-text-sm',
+        md: 'h-10 glass-px-4 glass-text-base',
+        lg: 'h-12 glass-px-6 glass-text-lg',
     };
 
     return (
@@ -180,7 +179,7 @@ export const GlassMenubar: React.FC<GlassMenubarProps> = ({
                     {item?.separator && (
                         <div className={cn(
                             'bg-white/20',
-                            orientation === 'horizontal' ? 'w-px h-6 mx-2' : 'h-px w-6 my-2'
+                            orientation === 'horizontal' ? 'w-px h-6 glass-mx-2' : 'h-px w-6 glass-my-2'
                         )} />
                     )}
 
@@ -202,8 +201,8 @@ export const GlassMenubar: React.FC<GlassMenubarProps> = ({
                             className={cn(
                                 'absolute z-[9999]',
                                 orientation === 'horizontal'
-                                    ? 'top-full left-0 mt-1'
-                                    : 'top-0 left-full ml-1'
+                                    ? 'top-full left-0 glass-mt-1'
+                                    : 'top-0 left-full glass-ml-1'
                             )}
                         >
                             <GlassMenubar
@@ -273,7 +272,7 @@ export const GlassMenubarContent: React.FC<GlassMenubarContentProps> = ({
         >
             <OptimizedGlass
             intent="neutral"
-          elevation={'level4'}
+          elevation={'level3'}
           intensity="strong"
           depth={2}
           tint="neutral"
@@ -284,7 +283,7 @@ export const GlassMenubarContent: React.FC<GlassMenubarContentProps> = ({
                 
                 className={cn(
                     'backdrop-blur-md bg-black/20 border border-white/20 shadow-2xl',
-                    'min-w-48 py-1',
+                    'min-w-48 glass-py-1',
                     className
                 )}
             >
@@ -309,9 +308,9 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
     className,
 }) => {
     const sizeClasses = {
-        sm: 'h-8 px-3 text-sm',
-        md: 'h-10 px-4 text-base',
-        lg: 'h-12 px-6 text-lg',
+        sm: 'h-8 glass-px-3 glass-text-sm',
+        md: 'h-10 glass-px-4 glass-text-base',
+        lg: 'h-12 glass-px-6 glass-text-lg',
     };
 
     const handleClick = () => {
@@ -330,7 +329,7 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
 
     if (item?.separator) {
         return (
-            <div className="h-px bg-white/20 mx-2 my-1" />
+            <div className="h-px bg-white/20 glass-mx-2 glass-my-1" />
         );
     }
 
@@ -362,15 +361,15 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
         <GlassButton
             className={cn(
                 'relative flex items-center justify-between w-full',
-                'text-white/80 hover:text-white transition-colors duration-200',
-                'hover:bg-white/10 rounded-md hover:-translate-y-0.5',
+                'glass-text-primary/80 hover:glass-text-primary transition-colors duration-200',
+                'hover:bg-white/10 glass-radius-md hover:-translate-y-0.5',
                 'after:absolute after:left-0 after:bottom-0 after:h-0.5 after:bg-primary after:transition-all after:duration-200',
                 (isHovered || hasSubmenuOpen) ? 'after:opacity-100 after:w-full' : 'after:opacity-0 after:w-0',
                 'focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-transparent',
                 'disabled:opacity-50 disabled:cursor-not-allowed',
                 sizeClasses?.[size],
                 {
-                    'bg-white/20 text-white': isHovered || hasSubmenuOpen,
+                    'bg-white/20 glass-text-primary': isHovered || hasSubmenuOpen,
                     'font-medium': item?.checked,
                 },
                 className
@@ -383,7 +382,7 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
             role="menuitem"
             onKeyDown={handleKeyDown}
         >
-            <div className="flex items-center gap-3">
+            <div className="flex items-center glass-gap-3">
                 {/* Icon */}
                 {item?.icon && (
                     <div className="flex items-center justify-center w-4 h-4">
@@ -394,12 +393,12 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
                 {/* Checkbox/Radio indicator */}
                 {item?.type === 'checkbox' && (
                     <div className={cn(
-                        'w-4 h-4 border border-white/40 rounded',
+                        'w-4 h-4 border border-white/40 glass-radius-md',
                         item?.checked && 'bg-white border-white'
                     )}>
                         {item?.checked && (
                             <div className="w-full h-full flex items-center justify-center">
-                                <div className="w-2 h-2 bg-black rounded-sm" />
+                                <div className="w-2 h-2 bg-black glass-radius-sm" />
                             </div>
                         )}
                     </div>
@@ -407,12 +406,12 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
 
                 {item?.type === 'radio' && (
                     <div className={cn(
-                        'w-4 h-4 border border-white/40 rounded-full',
+                        'w-4 h-4 border border-white/40 glass-radius-full',
                         item?.checked && 'border-white'
                     )}>
                         {item?.checked && (
                             <div className="w-full h-full flex items-center justify-center">
-                                <div className="w-2 h-2 bg-white rounded-full" />
+                                <div className="w-2 h-2 bg-white glass-radius-full" />
                             </div>
                         )}
                     </div>
@@ -424,17 +423,17 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
                 </span>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center glass-gap-2">
                 {/* Shortcut */}
                 {item?.shortcut && (
-                    <span className="text-white/50 text-xs font-mono">
+                    <span className="glass-text-primary/50 glass-text-xs font-mono">
                         {item?.shortcut}
                     </span>
                 )}
 
                 {/* Submenu indicator */}
                 {item?.children && item?.children.length > 0 && (
-                    <ChevronRight className="w-4 h-4 text-white/50" />
+                    <ChevronRight className="w-4 h-4 glass-text-primary/50" />
                 )}
             </div>
         </GlassButton>

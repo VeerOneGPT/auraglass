@@ -68,7 +68,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-4 max-w-md">
+    <div className="flex flex-col glass-gap-4 max-w-md">
       <GlassInput {...args} variant="default" placeholder="Default variant" />
       <GlassInput {...args} variant="filled" placeholder="Filled variant" />
       <GlassInput {...args} variant="outlined" placeholder="Outlined variant" />
@@ -79,7 +79,7 @@ export const Variants: Story = {
 
 export const States: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-4 max-w-md">
+    <div className="flex flex-col glass-gap-4 max-w-md">
       <GlassInput {...args} state="default" placeholder="Default state" />
       <GlassInput {...args} state="success" placeholder="Success state" />
       <GlassInput {...args} state="warning" placeholder="Warning state" />
@@ -90,7 +90,7 @@ export const States: Story = {
 
 export const Sizes: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-4 max-w-md">
+    <div className="flex flex-col glass-gap-4 max-w-md">
       <GlassInput {...args} size="sm" placeholder="Small size" />
       <GlassInput {...args} size="md" placeholder="Medium size" />
       <GlassInput {...args} size="lg" placeholder="Large size" />
@@ -100,7 +100,7 @@ export const Sizes: Story = {
 
 export const WithIcons: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-4 max-w-md">
+    <div className="flex flex-col glass-gap-4 max-w-md">
       <GlassInput {...args} leftIcon="🔍" placeholder="With left icon" />
       <GlassInput {...args} rightIcon="✨" placeholder="With right icon" />
       <GlassInput {...args} leftIcon="👤" rightIcon="✓" placeholder="With both icons" />

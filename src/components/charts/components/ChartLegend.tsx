@@ -1,6 +1,5 @@
 // Typography tokens available via typography.css (imported in index.css)
 import React from 'react';
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 
 export interface ChartLegendProps {
   datasets?: any[];
@@ -55,7 +54,7 @@ export const ChartLegend: React.FC<ChartLegendProps> = ({
             opacity: dataset.hidden ? 0.5 : 1,
             cursor: interactive ? 'pointer' : 'default',
           }}
-          onClick={() => interactive && onItemClick && onItemClick(index)}
+          onClick={(e) => interactive && onItemClick && onItemClick(index)}
         >
           <div
             style={{

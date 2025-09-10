@@ -22,9 +22,10 @@ import {
     Video,
     X
 } from 'lucide-react';
-import React, { useCallback, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
+import React, { useCallback, useRef, useState, forwardRef } from 'react';
 import { Motion } from '../../primitives';
+import { useA11yId } from '../../utils/a11y';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { GlassButton } from '../button';
 import { CardContent, CardHeader, CardTitle, GlassCard } from '../card';
 import { GlassBadge } from '../data-display';
@@ -115,13 +116,21 @@ export interface GlassAdvancedSearchProps {
      * Custom className
      */
     className?: string;
+    /**
+     * Respect user's motion preferences
+     */
+    respectMotionPreference?: boolean;
+    /**
+     * Custom ID
+     */
+    id?: string;
 }
 
 /**
  * GlassAdvancedSearch component
  * A comprehensive search interface with filters, suggestions, and advanced features
  */
-export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
+export const GlassAdvancedSearch = forwardRef<HTMLDivElement, GlassAdvancedSearchProps>(({
     placeholder = 'Search...',
     filters = [],
     suggestions = [],
@@ -136,8 +145,10 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
     onResultClick,
     onSaveSearch,
     className,
+    respectMotionPreference = true,
+    id,
     ...props
-}) => {
+}, ref) => {
     const [query, setQuery] = useState('');
     const [activeFilters, setActiveFilters] = useState<Record<string, any>>({});
     const [showSuggestions, setShowSuggestions] = useState(false);
@@ -148,6 +159,8 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
     const [searchHistory, setSearchHistory] = useState<string[]>([]);
     const [savedSearches, setSavedSearches] = useState<Array<{ name: string; query: string; filters: Record<string, any> }>>([]);
 
+    const prefersReducedMotion = useReducedMotion();
+    const componentId = id || useA11yId('advanced-search');
     const inputRef = useRef<HTMLInputElement>(null);
     const suggestionsRef = useRef<HTMLDivElement>(null);
 
@@ -263,23 +276,37 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
     ).length;
 
     return (
-        <Motion preset="fadeIn" className="w-full">
-            <GlassCard className={cn('overflow-hidden', className)} {...props}>
+        <Motion 
+            preset="fadeIn"
+            className="w-full"
+        >
+            <GlassCard 
+                ref={ref}
+                id={componentId}
+                className={cn('overflow-hidden', className)} 
+                role="search"
+                aria-label="Advanced search interface"
+                aria-describedby={`${componentId}-description`}
+                {...props}
+            >
+                <div id={`${componentId}-description`} className="sr-only">
+                    Advanced search interface with filters, suggestions, and result management
+                </div>
                 <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
-                        <CardTitle className="text-white text-lg font-semibold flex items-center gap-2">
+                        <CardTitle className="glass-text-primary glass-text-lg font-semibold flex items-center glass-gap-2">
                             <Search className="w-5 h-5" />
                             Advanced Search
                         </CardTitle>
 
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center glass-gap-2">
                             {enableSavedSearches && (
                                 <GlassButton
                                     variant="ghost"
                                     size="sm"
                                     onClick={handleSaveSearch}
                                     disabled={!query.trim()}
-                                    className="p-2"
+                                    className="glass-p-2"
                                 >
                                     <Save className="w-4 h-4" />
                                 </GlassButton>
@@ -288,12 +315,12 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
                             <GlassButton
                                 variant="ghost"
                                 size="sm"
-                                onClick={() => setShowFilters(!showFilters)}
-                                className="p-2 relative"
+                                onClick={(e) => setShowFilters(!showFilters)}
+                                className="glass-p-2 relative"
                             >
                                 <Filter className="w-4 h-4" />
                                 {activeFilterCount > 0 && (
-                                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary text-white text-xs rounded-full flex items-center justify-center">
+                                    <span className="absolute -top-1 -right-1 w-5 h-5 bg-primary glass-text-primary glass-text-xs glass-radius-full flex items-center justify-center">
                                         {activeFilterCount}
                                     </span>
                                 )}
@@ -302,28 +329,28 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
                     </div>
                 </CardHeader>
 
-                <CardContent className="pt-0 space-y-4">
+                <CardContent className="pt-0 glass-auto-gap glass-auto-gap-lg">
                     {/* Search Input */}
                     <div className="relative">
                         <div className="relative">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60 w-4 h-4" />
+                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 glass-text-primary/60 w-4 h-4" />
                             <input
                                 ref={inputRef}
                                 type="text"
                                 value={query}
                                 onChange={handleSearchInput}
                                 placeholder={placeholder}
-                                className="w-full pl-10 pr-4 py-3 bg-white/10 ring-1 ring-white/10 rounded-lg text-white placeholder-white/50 focus:outline-none focus:ring-white/30"
+                                className="w-full pl-10 pr-4 glass-py-3 bg-white/10 ring-1 ring-white/10 glass-radius-lg glass-text-primary placeholder-white/50 focus:outline-none focus:ring-white/30"
                             />
                             {query && (
                                 <GlassButton
                                     variant="ghost"
                                     size="sm"
-                                    onClick={() => {
+                                    onClick={(e) => {
                                         setQuery('');
                                         setShowSuggestions(false);
                                     }}
-                                    className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1"
+                                    className="absolute right-2 top-1/2 transform -translate-y-1/2 glass-p-1"
                                 >
                                     <X className="w-4 h-4" />
                                 </GlassButton>
@@ -332,30 +359,30 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
 
                         {/* Search Suggestions */}
                         {showSuggestions && suggestions.length > 0 && (
-                            <Motion preset="slideDown" className="absolute top-full left-0 right-0 mt-2 z-10">
+                            <Motion preset="slideDown" className="absolute top-full left-0 right-0 glass-mt-2 z-10">
                                 <div
                                     ref={suggestionsRef}
-                                    className="bg-black/80 backdrop-blur-md border border-white/20 rounded-lg shadow-xl max-h-64 overflow-y-auto"
+                                    className="bg-black/80 backdrop-blur-md border border-white/20 glass-radius-lg shadow-xl max-h-64 overflow-y-auto"
                                 >
                                     {suggestions.map((suggestion) => (
                                         <button
                                             key={suggestion.id}
-                                            onClick={() => handleSuggestionClick(suggestion)}
-                                            className="w-full text-left px-4 py-3 hover:bg-white/10 transition-colors flex items-center gap-3 first:rounded-t-lg last:rounded-b-lg"
+                                            onClick={(e) => handleSuggestionClick(suggestion)}
+                                            className="w-full text-left glass-px-4 glass-py-3 hover:bg-white/10 transition-colors flex items-center glass-gap-3 first:rounded-t-lg last:rounded-b-lg"
                                         >
                                             {suggestion.icon && (
-                                                <span className="text-white/60">{suggestion.icon}</span>
+                                                <span className="glass-text-primary/60">{suggestion.icon}</span>
                                             )}
                                             <div className="flex-1">
-                                                <span className="text-white">{suggestion.text}</span>
+                                                <span className="glass-text-primary">{suggestion.text}</span>
                                                 {suggestion.category && (
-                                                    <span className="text-white/60 text-sm ml-2">
+                                                    <span className="glass-text-primary/60 glass-text-sm glass-ml-2">
                                                         in {suggestion.category}
                                                     </span>
                                                 )}
                                             </div>
                                             {suggestion.count && (
-                                                <span className="text-white/60 text-sm">
+                                                <span className="glass-text-primary/60 glass-text-sm">
                                                     {suggestion.count}
                                                 </span>
                                             )}
@@ -368,7 +395,7 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
 
                     {/* Active Filters */}
                     {activeFilterCount > 0 && (
-                        <div className="flex flex-wrap gap-2">
+                        <div className="flex flex-wrap glass-gap-2">
                             {Object.entries(activeFilters).map(([filterId, value]) => {
                                 if (!value || value === '' || (Array.isArray(value) && value.length === 0)) return null;
 
@@ -379,16 +406,16 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
                                     <GlassBadge
                                         key={filterId}
                                         variant="secondary"
-                                        className="flex items-center gap-2"
+                                        className="flex items-center glass-gap-2"
                                     >
-                                        <span className="text-sm">
+                                        <span className="glass-text-sm">
                                             {filter?.label}: {displayValue}
                                         </span>
                                         <GlassButton
                                             variant="ghost"
                                             size="sm"
-                                            onClick={() => handleFilterChange(filterId, null)}
-                                            className="p-0 h-auto"
+                                            onClick={(e) => handleFilterChange(filterId, null)}
+                                            className="glass-p-0 h-auto"
                                         >
                                             <X className="w-3 h-3" />
                                         </GlassButton>
@@ -400,7 +427,7 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
                                 variant="ghost"
                                 size="sm"
                                 onClick={handleClearFilters}
-                                className="text-sm"
+                                className="glass-text-sm"
                             >
                                 Clear all
                             </GlassButton>
@@ -409,11 +436,11 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
 
                     {/* Advanced Filters Panel */}
                     {showFilters && enableAdvancedFilters && (
-                        <Motion preset="slideDown" className="space-y-4 p-4 bg-white/5 rounded-lg">
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <Motion preset="slideDown" className="glass-auto-gap glass-auto-gap-lg glass-p-4 bg-white/5 glass-radius-lg">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 glass-gap-4">
                                 {filters.map((filter) => (
-                                    <div key={filter.id} className="space-y-2">
-                                        <label className="text-white/80 text-sm font-medium">
+                                    <div key={filter.id} className="glass-auto-gap glass-auto-gap-sm">
+                                        <label className="glass-text-primary/80 glass-text-sm font-medium">
                                             {filter.label}
                                         </label>
 
@@ -423,7 +450,7 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
                                                 value={activeFilters[filter.id] || ''}
                                                 onChange={(e) => handleFilterChange(filter.id, e.target.value)}
                                                 placeholder={filter.placeholder}
-                                className="w-full px-3 py-2 bg-white/10 ring-1 ring-white/10 rounded text-white placeholder-white/50 focus:outline-none focus:ring-white/30"
+                                className="w-full glass-px-3 glass-py-2 bg-white/10 ring-1 ring-white/10 glass-radius-md glass-text-primary placeholder-white/50 focus:outline-none focus:ring-white/30"
                                             />
                                         )}
 
@@ -431,7 +458,7 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
                                             <select
                                                 value={activeFilters[filter.id] || ''}
                                                 onChange={(e) => handleFilterChange(filter.id, e.target.value)}
-                                className="w-full px-3 py-2 bg-white/10 ring-1 ring-white/10 rounded text-white focus:outline-none focus:ring-white/30"
+                                className="w-full glass-px-3 glass-py-2 bg-white/10 ring-1 ring-white/10 glass-radius-md glass-text-primary focus:outline-none focus:ring-white/30"
                                             >
                                                 <option value="">All</option>
                                                 {filter.options?.map(option => (
@@ -447,7 +474,7 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
                                                 type="date"
                                                 value={activeFilters[filter.id] || ''}
                                                 onChange={(e) => handleFilterChange(filter.id, e.target.value)}
-                                className="w-full px-3 py-2 bg-white/10 ring-1 ring-white/10 rounded text-white focus:outline-none focus:ring-white/30"
+                                className="w-full glass-px-3 glass-py-2 bg-white/10 ring-1 ring-white/10 glass-radius-md glass-text-primary focus:outline-none focus:ring-white/30"
                                             />
                                         )}
                                     </div>
@@ -458,22 +485,22 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
 
                     {/* Search History */}
                     {enableHistory && searchHistory.length > 0 && !query && (
-                        <div className="space-y-2">
-                            <h4 className="text-white/80 text-sm font-medium flex items-center gap-2">
+                        <div className="glass-auto-gap glass-auto-gap-sm">
+                            <h4 className="glass-text-primary/80 glass-text-sm font-medium flex items-center glass-gap-2">
                                 <History className="w-4 h-4" />
                                 Recent Searches
                             </h4>
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap glass-gap-2">
                                 {searchHistory.slice(0, 5).map((search, index) => (
                                     <GlassButton
                                         key={index}
                                         variant="ghost"
                                         size="sm"
-                                        onClick={() => {
+                                        onClick={(e) => {
                                             setQuery(search);
                                             onSearch?.(search, activeFilters);
                                         }}
-                                        className="text-sm"
+                                        className="glass-text-sm"
                                     >
                                         {search}
                                     </GlassButton>
@@ -485,19 +512,19 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
                     {/* Results Header */}
                     {query && (
                         <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-4">
+                            <div className="flex items-center glass-gap-4">
                                 {showStats && (
-                                    <span className="text-white/80 text-sm">
+                                    <span className="glass-text-primary/80 glass-text-sm">
                                         {loading ? 'Searching...' : `${results.length} results`}
                                     </span>
                                 )}
 
-                                <div className="flex items-center gap-2">
-                                    <span className="text-white/80 text-sm">Sort:</span>
+                                <div className="flex items-center glass-gap-2">
+                                    <span className="glass-text-primary/80 glass-text-sm">Sort:</span>
                                     <select
                                         value={sortBy}
                                         onChange={(e) => setSortBy(e.target.value as any)}
-                                        className="bg-white/10 ring-1 ring-white/10 rounded px-2 py-1 text-sm text-white focus:outline-none"
+                                        className="bg-white/10 ring-1 ring-white/10 glass-radius-md glass-px-2 glass-py-1 glass-text-sm glass-text-primary focus:outline-none"
                                     >
                                         <option value="relevance">Relevance</option>
                                         <option value="date">Date</option>
@@ -507,20 +534,20 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
                                     <GlassButton
                                         variant="ghost"
                                         size="sm"
-                                        onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-                                        className="p-1"
+                                        onClick={(e) => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+                                        className="glass-p-1"
                                     >
                                         {sortOrder === 'asc' ? <SortAsc className="w-4 h-4" /> : <SortDesc className="w-4 h-4" />}
                                     </GlassButton>
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center glass-gap-2">
                                 <GlassButton
                                     variant={viewMode === 'list' ? 'primary' : 'ghost'}
                                     size="sm"
-                                    onClick={() => setViewMode('list')}
-                                    className="p-2"
+                                    onClick={(e) => setViewMode('list')}
+                                    className="glass-p-2"
                                 >
                                     <List className="w-4 h-4" />
                                 </GlassButton>
@@ -528,8 +555,8 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
                                 <GlassButton
                                     variant={viewMode === 'grid' ? 'primary' : 'ghost'}
                                     size="sm"
-                                    onClick={() => setViewMode('grid')}
-                                    className="p-2"
+                                    onClick={(e) => setViewMode('grid')}
+                                    className="glass-p-2"
                                 >
                                     <Grid3X3 className="w-4 h-4" />
                                 </GlassButton>
@@ -539,21 +566,21 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
 
                     {/* Search Results */}
                     {query && (
-                        <div className="space-y-3">
+                        <div className="glass-auto-gap glass-auto-gap-md">
                             {loading ? (
-                                <div className="flex items-center justify-center py-12">
-                                    <div className="animate-spin rounded-full h-8 w-8 border-2 border-white/20 border-t-white/60"></div>
+                                <div className="flex items-center justify-center glass-py-12">
+                                    <div className="animate-spin glass-radius-full h-8 w-8 border-2 border-white/20 border-t-white/60"></div>
                                 </div>
                             ) : results.length === 0 ? (
-                                <div className="text-center py-12">
-                                    <Search className="w-12 h-12 text-white/40 mx-auto mb-4" />
-                                    <p className="text-white/60">No results found for "{query}"</p>
+                                <div className="text-center glass-py-12">
+                                    <Search className="w-12 h-12 glass-text-primary/40 mx-auto glass-mb-4" />
+                                    <p className="glass-text-primary/60">No results found for "{query}"</p>
                                 </div>
                             ) : (
                                 <div className={cn(
                                     viewMode === 'grid'
-                                        ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
-                                        : 'space-y-3'
+                                        ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 glass-gap-4'
+                                        : 'glass-auto-gap glass-auto-gap-md'
                                 )}>
                                     {results.map((result) => (
                                         <Motion
@@ -561,43 +588,43 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
                                             preset="fadeIn"
                                             className={cn(
                                                 'cursor-pointer transition-all duration-200 hover:scale-[1.02]',
-                                                viewMode === 'list' && 'p-4 bg-white/5 rounded-lg'
+                                                viewMode === 'list' && 'glass-p-4 bg-white/5 glass-radius-lg'
                                             )}
-                                            onClick={() => handleResultClick(result)}
+                                            onClick={(e) => handleResultClick(result)}
                                         >
-                                            <div className="flex gap-3">
+                                            <div className="flex glass-gap-3">
                                                 {/* Thumbnail */}
                                                 {result.thumbnail && (
                                                     <div className="flex-shrink-0">
                                                         <img
                                                             src={result.thumbnail}
                                                             alt={result.title}
-                                                            className="w-12 h-12 rounded object-cover"
+                                                            className="w-12 h-12 glass-radius-md object-cover"
                                                         />
                                                     </div>
                                                 )}
 
                                                 {/* Content */}
                                                 <div className="flex-1 min-w-0">
-                                                    <div className="flex items-start justify-between gap-2">
+                                                    <div className="flex items-start justify-between glass-gap-2">
                                                         <div className="flex-1">
-                                                            <h3 className="text-white font-medium truncate">
+                                                            <h3 className="glass-text-primary font-medium truncate">
                                                                 {result.title}
                                                             </h3>
                                                             {result.description && (
-                                                                <p className="text-white/70 text-sm mt-1 line-clamp-2">
+                                                                <p className="glass-text-primary/70 glass-text-sm glass-mt-1 line-clamp-2">
                                                                     {result.description}
                                                                 </p>
                                                             )}
 
                                                             {/* Metadata */}
-                                                            <div className="flex items-center gap-3 mt-2 text-xs text-white/60">
-                                                                <div className="flex items-center gap-1">
+                                                            <div className="flex items-center glass-gap-3 glass-mt-2 glass-text-xs glass-text-primary/60">
+                                                                <div className="flex items-center glass-gap-1">
                                                                     {getResultTypeIcon(result.type)}
                                                                     <span className="capitalize">{result.type}</span>
                                                                 </div>
 
-                                                                <div className="flex items-center gap-1">
+                                                                <div className="flex items-center glass-gap-1">
                                                                     <Clock className="w-3 h-3" />
                                                                     {result.updatedAt.toLocaleDateString()}
                                                                 </div>
@@ -609,7 +636,7 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
                                                         </div>
 
                                                         {/* Actions */}
-                                                        <div className="flex items-center gap-1">
+                                                        <div className="flex items-center glass-gap-1">
                                                             <GlassButton
                                                                 variant="ghost"
                                                                 size="sm"
@@ -617,7 +644,7 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
                                                                     e.stopPropagation();
                                                                     // Handle favorite
                                                                 }}
-                                                                className="p-1"
+                                                                className="glass-p-1"
                                                             >
                                                                 <Star className="w-3 h-3" />
                                                             </GlassButton>
@@ -626,7 +653,7 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
                                                                 variant="ghost"
                                                                 size="sm"
                                                                 onClick={(e) => e.stopPropagation()}
-                                                                className="p-1"
+                                                                className="glass-p-1"
                                                             >
                                                                 <MoreHorizontal className="w-3 h-3" />
                                                             </GlassButton>
@@ -644,6 +671,8 @@ export const GlassAdvancedSearch: React.FC<GlassAdvancedSearchProps> = ({
             </GlassCard>
         </Motion>
     );
-};
+});
+
+GlassAdvancedSearch.displayName = 'GlassAdvancedSearch';
 
 export default GlassAdvancedSearch;

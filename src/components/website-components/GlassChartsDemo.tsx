@@ -1,5 +1,4 @@
 import React from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 // Localized semantic colors to avoid cross-package imports
 const semanticColors = {

@@ -5,7 +5,6 @@ import { GlassInput } from '../input/GlassInput';
 
 import { cn } from '@/lib/utilsComprehensive';
 import React, { forwardRef, useCallback, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 import { GlassCard } from '../card/GlassCard';
 import { GlassBadge } from '../data-display/GlassBadge';
@@ -187,16 +186,16 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
     const [autoSaveTimer, setAutoSaveTimer] = useState<NodeJS.Timeout>();
 
     const sizeClasses = {
-      sm: 'text-sm',
-      md: 'text-base',
-      lg: 'text-lg',
+      sm: 'glass-text-sm',
+      md: 'glass-text-base',
+      lg: 'glass-text-lg',
     };
 
     const variantClasses = {
-      default: 'space-y-6',
-      compact: 'space-y-4',
-      wizard: 'space-y-8',
-      inline: 'space-y-2',
+      default: 'glass-auto-gap glass-auto-gap-2xl',
+      compact: 'glass-auto-gap glass-auto-gap-lg',
+      wizard: 'glass-auto-gap glass-auto-gap-3xl',
+      inline: 'glass-auto-gap glass-auto-gap-sm',
     };
 
     // Get all fields for progress calculation
@@ -354,31 +353,31 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
 
         case 'checkbox':
           return (
-            <label className="flex items-center gap-3 cursor-pointer">
+            <label className="flex items-center glass-gap-3 cursor-pointer">
               <GlassInput type="checkbox"
                 id={field.id}
                 checked={value}
                 onChange={(e) => handleValueChange(field.id, e.target.checked)}
                 disabled={isDisabled}
-                className="rounded border-border focus:ring-primary"
+                className="glass-radius-md border-border focus:ring-primary"
               />
               <span className={cn('font-medium', sizeClasses[size])}>
                 {field.label}
-                {field.required && <span className="text-destructive ml-1">*</span>}
+                {field.required && <span className="text-destructive glass-ml-1">*</span>}
               </span>
             </label>
           );
 
         case 'radio':
           return (
-            <div className="space-y-2">
+            <div className="glass-auto-gap glass-auto-gap-sm">
               <label className={cn('font-medium text-foreground', sizeClasses[size])}>
                 {field.label}
-                {field.required && <span className="text-destructive ml-1">*</span>}
+                {field.required && <span className="text-destructive glass-ml-1">*</span>}
               </label>
-              <div className="space-y-2">
+              <div className="glass-auto-gap glass-auto-gap-sm">
                 {field.options?.map((option) => (
-                  <label key={option.value} className="flex items-center gap-3 cursor-pointer">
+                  <label key={option.value} className="flex items-center glass-gap-3 cursor-pointer">
                     <GlassInput type="radio"
                       name={field.id}
                       value={option.value}
@@ -387,7 +386,7 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
                       disabled={isDisabled}
                       className="border-border focus:ring-primary"
                     />
-                    <span className="text-sm">{option.label}</span>
+                    <span className="glass-text-sm">{option.label}</span>
                   </label>
                 ))}
               </div>
@@ -461,30 +460,30 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
         {(title || description || showProgress) && (
           <div className="mb-6">
             {title && (
-              <h2 className={cn('font-semibold text-foreground mb-2', {
-                'text-lg': size === 'sm',
-                'text-xl': size === 'md',
-                'text-2xl': size === 'lg',
+              <h2 className={cn('font-semibold text-foreground glass-mb-2', {
+                'glass-text-lg': size === 'sm',
+                'glass-text-xl': size === 'md',
+                'glass-text-2xl': size === 'lg',
               })}>
                 {title}
               </h2>
             )}
 
             {description && (
-              <p className="text-muted-foreground mb-4">{description}</p>
+              <p className="glass-text-secondary glass-mb-4">{description}</p>
             )}
 
             {showProgress && (
-              <div className="flex items-center gap-4">
-                <div className="flex-1 bg-muted/30 rounded-full h-2">
+              <div className="flex items-center glass-gap-4">
+                <div className="flex-1 bg-muted/30 glass-radius-full h-2">
                   <div
-                    className="bg-primary h-2 rounded-full transition-all duration-300"
+                    className="bg-primary h-2 glass-radius-full transition-all duration-300"
                     style={{
                       width: `${allFields.length > 0 ? (filledFields.length / allFields.length) * 100 : 0}%`
                     }}
                   />
                 </div>
-                <span className="text-sm text-muted-foreground">
+                <span className="glass-text-sm glass-text-secondary">
                   {filledFields.length} / {allFields.length} completed
                 </span>
               </div>
@@ -496,25 +495,25 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
         <div className={variantClasses[variant]}>
           {schema && schema.length > 0 ? schema.filter(section => section && section.id && section.fields && section.fields.length > 0).map((section) => (
             <Motion key={section.id} preset="slideDown">
-              <GlassCard variant="default" className="p-6">
+              <GlassCard variant="default" className="glass-p-6">
                 {/* Section header */}
                 <div
                   className={cn(
-                    'flex items-center justify-between mb-4',
+                    'flex items-center justify-between glass-mb-4',
                     section.collapsible && 'cursor-pointer'
                   )}
                   onClick={section.collapsible ? () => toggleSection(section.id) : undefined}
                 >
                   <div>
                     <h3 className={cn('font-medium text-foreground', {
-                      'text-base': size === 'sm',
-                      'text-lg': size === 'md',
-                      'text-xl': size === 'lg',
+                      'glass-text-base': size === 'sm',
+                      'glass-text-lg': size === 'md',
+                      'glass-text-xl': size === 'lg',
                     })}>
                       {section.title}
                     </h3>
                     {section.description && (
-                      <p className="text-sm text-muted-foreground mt-1">
+                      <p className="glass-text-sm glass-text-secondary glass-mt-1">
                         {section.description}
                       </p>
                     )}
@@ -532,7 +531,7 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
 
                 {/* Section fields */}
                 {(!section.collapsible || expandedSections.has(section.id)) && (
-                  <div className="grid grid-cols-12 gap-4">
+                  <div className="grid grid-cols-12 glass-gap-4">
                     {section.fields
                       ?.filter(field => field && field.id && shouldShowField(field))
                       ?.sort((a, b) => (a?.layout?.order || 0) - (b?.layout?.order || 0))
@@ -543,7 +542,7 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
                         >
                           {renderFieldComponent(field)}
                           {field.description && (
-                            <p className="text-xs text-muted-foreground mt-1">
+                            <p className="glass-text-xs glass-text-secondary glass-mt-1">
                               {field.description}
                             </p>
                           )}
@@ -554,14 +553,14 @@ export const GlassFormBuilder = forwardRef<HTMLFormElement, GlassFormBuilderProp
               </GlassCard>
             </Motion>
           )) : (
-            <div className="text-center py-8 text-muted-foreground">
+            <div className="text-center py-8 glass-text-secondary">
               <p>No form sections configured</p>
             </div>
           )}
         </div>
 
         {/* Form actions */}
-        <div className="flex items-center justify-end gap-3 mt-8">
+        <div className="flex items-center justify-end glass-gap-3 mt-8">
           {autoSave && (
             <GlassBadge variant="outline" size="sm">
               Auto-save enabled

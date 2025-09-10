@@ -4,10 +4,10 @@
  * A component that provides visual feedback effects.
  */
 import React, { forwardRef, useState, useRef, useEffect } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled, { keyframes, css } from 'styled-components';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 import { VisualFeedbackProps } from './types';
 

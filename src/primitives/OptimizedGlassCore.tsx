@@ -1,9 +1,17 @@
 import React, { forwardRef, useMemo } from 'react';
-import { cn } from '../lib/utilsComprehensive';
 import { createGlassStyle, GlassOptions } from '../core/mixins/glassMixins';
+import { cn } from '../lib/utilsComprehensive';
 import { detectDevice } from '../utils/deviceCapabilities';
 
+// Polymorphic component type helper
+type PolymorphicRef<T extends React.ElementType> = React.ComponentPropsWithRef<T>['ref'];
+type PolymorphicComponentProps<T extends React.ElementType, Props = {}> = {
+  as?: T;
+} & Props & Omit<React.ComponentPropsWithoutRef<T>, keyof Props>;
+
 export interface OptimizedGlassProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** The HTML element or component to render as */
+  as?: React.ElementType;
   /** Glass intent (replaces variant) */
   intent?: 'neutral' | 'primary' | 'success' | 'warning' | 'danger' | 'info';
 
@@ -80,29 +88,30 @@ export interface OptimizedGlassProps extends React.HTMLAttributes<HTMLDivElement
   children?: React.ReactNode;
 }
 
-const OptimizedGlassCore = forwardRef<HTMLDivElement, OptimizedGlassProps>(
-  (
-    {
-      intent = 'neutral',
-      elevation = 'level2', 
-      tier = 'high',
-      rounded = 'md',
-      glow = false,
-      glowColor = 'rgba(255, 255, 255, 0.5)',
-      glowIntensity = 0.5,
-      hover = false,
-      interactive = false,
-      press = false,
-      animation = 'none',
-      liftOnHover = false,
-      hoverSheen = false,
-      className,
-      children,
-      style,
-      ...props
-    },
-    ref
-  ) => {
+const OptimizedGlassCore = forwardRef<
+  React.ElementRef<any>,
+  PolymorphicComponentProps<React.ElementType, OptimizedGlassProps>
+>((props, ref) => {
+  const {
+    as: Component = 'div',
+    intent = 'neutral',
+    elevation = 'level2',
+    tier = 'high',
+    rounded = 'md',
+    glow = false,
+    glowColor = 'rgba(255, 255, 255, 0.5)',
+    glowIntensity = 0.5,
+    hover = false,
+    interactive = false,
+    press = false,
+    animation = 'none',
+    liftOnHover = false,
+    hoverSheen = false,
+    className,
+    children,
+    style,
+    ...restProps
+  } = props;
     // Detect device capabilities for auto tier selection
     const device = useMemo(() => detectDevice(), []);
 
@@ -155,7 +164,7 @@ const OptimizedGlassCore = forwardRef<HTMLDivElement, OptimizedGlassProps>(
     };
 
     return (
-      <div
+      <Component
         ref={ref}
         className={cn(
           'optimized-glass-surface',
@@ -167,16 +176,16 @@ const OptimizedGlassCore = forwardRef<HTMLDivElement, OptimizedGlassProps>(
             'glass-glow': glow,
             'glass-press': press,
             'glass-tier-high': computedTier === 'high',
-            'glass-tier-medium': computedTier === 'medium',  
+            'glass-tier-medium': computedTier === 'medium',
             'glass-tier-low': computedTier === 'low',
           },
           className
         )}
         style={combinedStyles}
-        {...props}
+        {...restProps}
       >
         {children}
-      </div>
+      </Component>
     );
   }
 );

@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 export interface GlassButtonVariant {
   default: 'default';
   primary: 'primary';

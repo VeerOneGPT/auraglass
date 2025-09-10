@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 export type GlassModalVariantType = 'default' | 'fullscreen' | 'centered' | 'side' | 'bottom';
 
 export type GlassModalSizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl';

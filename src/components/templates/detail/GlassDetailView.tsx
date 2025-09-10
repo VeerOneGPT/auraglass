@@ -1,7 +1,6 @@
 'use client';
 
 import React, { forwardRef, useState } from 'react';
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 import { GlassButton, IconButton } from '@/components/button';
 import { cn } from '@/lib/utilsComprehensive';
 import { GlassCard } from '@/components/card';
@@ -219,12 +218,12 @@ export const GlassDetailView = forwardRef<HTMLDivElement, GlassDetailViewProps>(
       };
 
       return (
-        <div key={field.id} className={cn('space-y-1', widthClasses[field.width || 'auto'])}>
-          <label className="text-sm font-medium text-muted-foreground">
+        <div key={field.id} className={cn('glass-auto-gap glass-auto-gap-xs', widthClasses[field.width || 'auto'])}>
+          <label className="glass-text-sm font-medium glass-text-secondary">
             {field.label}
           </label>
           <HStack space="sm" align="center">
-            <div className="text-sm text-foreground">
+            <div className="glass-text-sm text-foreground">
               {renderFieldValue(field)}
             </div>
             {field.copyable && (
@@ -232,7 +231,7 @@ export const GlassDetailView = forwardRef<HTMLDivElement, GlassDetailViewProps>(
                 icon="📋"
                 variant="ghost"
                 size="xs"
-                onClick={() => navigator.clipboard?.writeText(String(field.value))}
+                onClick={(e) => navigator.clipboard?.writeText(String(field.value))}
                 aria-label="Copy to clipboard"
               />
             )}
@@ -257,11 +256,11 @@ export const GlassDetailView = forwardRef<HTMLDivElement, GlassDetailViewProps>(
               onClick={section.collapsible ? () => toggleSection(section.id) : undefined}
             >
               <VStack space="xs">
-                <h3 className="text-lg font-semibold text-foreground">
+                <h3 className="glass-text-lg font-semibold text-foreground">
                   {section.title}
                 </h3>
                 {section.description && (
-                  <p className="text-sm text-muted-foreground">
+                  <p className="glass-text-sm glass-text-secondary">
                     {section.description}
                   </p>
                 )}
@@ -283,7 +282,7 @@ export const GlassDetailView = forwardRef<HTMLDivElement, GlassDetailViewProps>(
                 {section.component ? (
                   section.component
                 ) : section.fields ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 glass-gap-6">
                     {section.fields.map(renderField)}
                   </div>
                 ) : null}
@@ -306,12 +305,12 @@ export const GlassDetailView = forwardRef<HTMLDivElement, GlassDetailViewProps>(
               {tabs.map((tab) => (
                 <GlassButton
                   key={tab.id}
-                  onClick={() => handleTabChange(tab.id)}
+                  onClick={(e) => handleTabChange(tab.id)}
                   className={cn(
-                    'flex items-center gap-2 py-2 px-1 border-b-2 transition-colors',
+                    'flex items-center glass-gap-2 glass-py-2 glass-px-1 border-b-2 transition-colors',
                     currentTab === tab.id
                       ? 'border-primary text-primary font-medium'
-                      : 'border-transparent text-muted-foreground hover:text-foreground'
+                      : 'border-transparent glass-text-secondary hover:text-foreground'
                   )}
                 >
                   {tab.icon}
@@ -339,7 +338,7 @@ export const GlassDetailView = forwardRef<HTMLDivElement, GlassDetailViewProps>(
       <VStack space="md">
         {/* Breadcrumb */}
         {breadcrumb && (
-          <div className="text-sm text-muted-foreground">
+          <div className="glass-text-sm glass-text-secondary">
             {breadcrumb}
           </div>
         )}
@@ -359,7 +358,7 @@ export const GlassDetailView = forwardRef<HTMLDivElement, GlassDetailViewProps>(
 
             <VStack space="xs">
               <HStack space="sm" align="center">
-                <h1 className="text-2xl font-bold text-foreground">
+                <h1 className="glass-text-2xl font-bold text-foreground">
                   {title}
                 </h1>
                 {status && (
@@ -370,7 +369,7 @@ export const GlassDetailView = forwardRef<HTMLDivElement, GlassDetailViewProps>(
               </HStack>
 
               {subtitle && (
-                <p className="text-lg text-muted-foreground">
+                <p className="glass-text-lg glass-text-secondary">
                   {subtitle}
                 </p>
               )}
@@ -422,7 +421,7 @@ export const GlassDetailView = forwardRef<HTMLDivElement, GlassDetailViewProps>(
       if (loading) {
         return (
           <div className="flex items-center justify-center h-64">
-            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-primary border-t-transparent glass-radius-full animate-spin" />
           </div>
         );
       }
@@ -430,8 +429,8 @@ export const GlassDetailView = forwardRef<HTMLDivElement, GlassDetailViewProps>(
       if (error) {
         return (
           <GlassCard variant="default" className="p-8 text-center">
-            <div className="text-destructive font-medium mb-2">Error</div>
-            <div className="text-muted-foreground">{error}</div>
+            <div className="text-destructive font-medium glass-mb-2">Error</div>
+            <div className="glass-text-secondary">{error}</div>
           </GlassCard>
         );
       }
@@ -480,7 +479,7 @@ export const GlassDetailView = forwardRef<HTMLDivElement, GlassDetailViewProps>(
     };
 
     return (
-      <div ref={ref} className={cn('w-full space-y-8', className)} {...props}>
+      <div ref={ref} className={cn('w-full glass-auto-gap glass-auto-gap-3xl', className)} {...props}>
         {/* Header */}
         {renderHeader()}
 

@@ -2,7 +2,6 @@ import React from 'react';
 import { useMemo, useCallback, useState } from 'react';
 import { ChartQualityTier, ChartType, ChartPhysicsConfig } from '../types';
 
-import { createGlassStyle } from '../../../core/mixins/glassMixins';
 // Re-export types for convenience
 export type QualityTier = ChartQualityTier;
 export type PhysicsParams = {

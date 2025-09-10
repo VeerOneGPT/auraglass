@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { cn } from '../lib/utilsComprehensive';
 import { useMultiSpring } from '../animations/hooks/useMultiSpringBasic';
 
@@ -96,8 +96,26 @@ const MotionNative = forwardRef<HTMLDivElement, MotionProps>(
       { config: springConfig || { stiffness: 200, damping: 25, mass: 1 } }
     );
 
-    // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Check for reduced motion preference safely
+    const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+    
+    useEffect(() => {
+      if (typeof window !== 'undefined' && window.matchMedia) {
+        const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const updatePreference = () => setPrefersReducedMotion(mq.matches);
+        updatePreference();
+        
+        if (mq.addEventListener) {
+          mq.addEventListener('change', updatePreference);
+          return () => mq.removeEventListener('change', updatePreference);
+        } else {
+          // @ts-ignore - Legacy API
+          mq.addListener(updatePreference);
+          return () => mq.removeListener(updatePreference);
+        }
+      }
+    }, []);
+
     const shouldAnimate = !respectReducedMotion || !prefersReducedMotion;
 
     // Generate animation keyframes based on type and direction

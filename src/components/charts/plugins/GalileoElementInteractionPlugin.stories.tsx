@@ -139,8 +139,8 @@ export const Default: Story = {
         >
           <div className="absolute inset-0 pointer-events-none" style={style} />
           <div className="relative text-center">
-            <div className="w-8 h-8 rounded-full mx-auto mb-2" style={{ backgroundColor: dotColor }} />
-            <p className="text-sm font-medium">{label}</p>
+            <div className="w-8 h-8 glass-radius-full mx-auto glass-mb-2" style={{ backgroundColor: dotColor }} />
+            <p className="glass-text-sm font-medium">{label}</p>
           </div>
         </div>
       );
@@ -149,21 +149,21 @@ export const Default: Story = {
     return (
       <div className="p-8 space-y-6">
         <div className="text-center">
-          <h3 className="text-xl font-semibold mb-2">Galileo Element Interaction Plugin</h3>
-          <p className="text-sm opacity-80 mb-4">
+          <h3 className="glass-text-xl font-semibold glass-mb-2">Galileo Element Interaction Plugin</h3>
+          <p className="glass-text-sm opacity-80 glass-mb-4">
             Hover over and click the elements below to see the interactive effects.
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-4 justify-center">
-          <LensCard className="p-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 backdrop-blur-md border border-white/20 rounded-lg cursor-pointer" label="Data Point 1" dotColor="#3B82F6" />
-          <LensCard className="p-4 bg-gradient-to-br from-green-500/20 to-blue-500/20 backdrop-blur-md border border-white/20 rounded-lg cursor-pointer" label="Data Point 2" dotColor="#10B981" />
-          <LensCard className="p-4 bg-gradient-to-br from-purple-500/20 to-pink-500/20 backdrop-blur-md border border-white/20 rounded-lg cursor-pointer" label="Data Point 3" dotColor="#A855F7" />
+        <div className="flex flex-wrap glass-gap-4 justify-center">
+          <LensCard className="glass-p-4 bg-gradient-to-br from-sky-200/20 to-blue-200/20 dark:from-slate-700/20 dark:to-slate-600/20 backdrop-blur-md border border-white/20 glass-radius-lg cursor-pointer" label="Data Point 1" dotColor="#3B82F6" />
+          <LensCard className="glass-p-4 bg-gradient-to-br from-green-500/20 to-blue-500/20 backdrop-blur-md border border-white/20 glass-radius-lg cursor-pointer" label="Data Point 2" dotColor="#10B981" />
+          <LensCard className="glass-p-4 bg-gradient-to-br from-blue-200/20 to-indigo-200/20 dark:from-slate-600/20 dark:to-slate-500/20 backdrop-blur-md border border-white/20 glass-radius-lg cursor-pointer" label="Data Point 3" dotColor="#6366F1" />
         </div>
 
-        <div className="bg-gray-900/50 backdrop-blur-md border border-white/10 rounded-lg p-4">
-          <h4 className="text-sm font-semibold mb-2">Plugin Status:</h4>
-          <p className="text-xs opacity-75">
+        <div className="bg-gray-900/50 backdrop-blur-md border border-white/10 glass-radius-lg glass-p-4">
+          <h4 className="glass-text-sm font-semibold glass-mb-2">Plugin Status:</h4>
+          <p className="glass-text-xs opacity-75">
             Plugin created successfully with effects: Magnetic, Ripple, Glow
           </p>
         </div>
@@ -202,24 +202,24 @@ export const DisabledEffects: Story = {
     return (
       <div className="p-8 space-y-6">
         <div className="text-center">
-          <h3 className="text-xl font-semibold mb-2">Disabled Effects</h3>
-          <p className="text-sm opacity-80 mb-4">
+          <h3 className="glass-text-xl font-semibold glass-mb-2">Disabled Effects</h3>
+          <p className="glass-text-sm opacity-80 glass-mb-4">
             All interactive effects are disabled. Elements won't respond to hover or click.
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-4 justify-center">
-          <div className="chart-element p-4 bg-gradient-to-br from-red-500/20 to-orange-500/20 backdrop-blur-md border border-white/20 rounded-lg cursor-pointer">
+        <div className="flex flex-wrap glass-gap-4 justify-center">
+          <div className="chart-element glass-p-4 bg-gradient-to-br from-red-500/20 to-orange-500/20 backdrop-blur-md border border-white/20 glass-radius-lg cursor-pointer">
             <div className="text-center">
-              <div className="w-8 h-8 bg-red-500 rounded-full mx-auto mb-2"></div>
-              <p className="text-sm font-medium">No Effects</p>
+              <div className="w-8 h-8 bg-red-500 glass-radius-full mx-auto glass-mb-2"></div>
+              <p className="glass-text-sm font-medium">No Effects</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-gray-900/50 backdrop-blur-md border border-white/10 rounded-lg p-4">
-          <h4 className="text-sm font-semibold mb-2">Plugin Status:</h4>
-          <p className="text-xs opacity-75">
+        <div className="bg-gray-900/50 backdrop-blur-md border border-white/10 glass-radius-lg glass-p-4">
+          <h4 className="glass-text-sm font-semibold glass-mb-2">Plugin Status:</h4>
+          <p className="glass-text-xs opacity-75">
             Plugin created with all effects disabled
           </p>
         </div>

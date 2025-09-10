@@ -30,8 +30,8 @@ const meta: Meta<typeof GlassCoachmarks> = {
         id: '1',
         content: (
           <div>
-            <h3 className="font-semibold mb-2">Welcome to GlassCoachmarks!</h3>
-            <p className="text-sm">This is your first step in the guided tour.</p>
+            <h3 className="font-semibold glass-mb-2">Welcome to GlassCoachmarks!</h3>
+            <p className="glass-text-sm">This is your first step in the guided tour.</p>
           </div>
         ),
       },
@@ -39,8 +39,8 @@ const meta: Meta<typeof GlassCoachmarks> = {
         id: '2',
         content: (
           <div>
-            <h3 className="font-semibold mb-2">Step 2</h3>
-            <p className="text-sm">Learn about the features available.</p>
+            <h3 className="font-semibold glass-mb-2">Step 2</h3>
+            <p className="glass-text-sm">Learn about the features available.</p>
           </div>
         ),
       },
@@ -59,8 +59,8 @@ export const Default: Story = {
         id: 'welcome',
         content: (
           <div>
-            <h3 className="font-semibold mb-2">Welcome!</h3>
-            <p className="text-sm">This is a guided tour of the application.</p>
+            <h3 className="font-semibold glass-mb-2">Welcome!</h3>
+            <p className="glass-text-sm">This is a guided tour of the application.</p>
           </div>
         ),
       },
@@ -79,8 +79,8 @@ export const MultiStep: Story = {
         id: 'step1',
         content: (
           <div>
-            <h3 className="font-semibold mb-2">Step 1</h3>
-            <p className="text-sm">First step in the tour.</p>
+            <h3 className="font-semibold glass-mb-2">Step 1</h3>
+            <p className="glass-text-sm">First step in the tour.</p>
           </div>
         ),
       },
@@ -88,8 +88,8 @@ export const MultiStep: Story = {
         id: 'step2',
         content: (
           <div>
-            <h3 className="font-semibold mb-2">Step 2</h3>
-            <p className="text-sm">Second step with more information.</p>
+            <h3 className="font-semibold glass-mb-2">Step 2</h3>
+            <p className="glass-text-sm">Second step with more information.</p>
           </div>
         ),
       },
@@ -97,8 +97,8 @@ export const MultiStep: Story = {
         id: 'step3',
         content: (
           <div>
-            <h3 className="font-semibold mb-2">Step 3</h3>
-            <p className="text-sm">Final step of the tour.</p>
+            <h3 className="font-semibold glass-mb-2">Step 3</h3>
+            <p className="glass-text-sm">Final step of the tour.</p>
           </div>
         ),
       },

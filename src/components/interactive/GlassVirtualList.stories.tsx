@@ -48,7 +48,7 @@ export const Default: Story = {
       id: `item-${i}`,
       height: 50,
       component: ({ index }: { index: number }) => (
-        <div className="p-3 border-b border-white/10">
+        <div className="glass-p-3 border-b border-white/10">
           Item {index + 1}
         </div>
       ),
@@ -64,7 +64,7 @@ export const DynamicHeight: Story = {
       id: `dynamic-${i}`,
       height: 30 + Math.random() * 50, // Random height between 30-80px
       component: ({ index }: { index: number }) => (
-        <div className="p-3 border-b border-white/10">
+        <div className="glass-p-3 border-b border-white/10">
           Dynamic Item {index + 1} - Height: {30 + Math.random() * 50}px
         </div>
       ),

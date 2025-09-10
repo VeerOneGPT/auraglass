@@ -2,11 +2,12 @@
  * ImageListItem Component
  *
  * An item component for the ImageList with glass morphism styling.
+ * Features comprehensive accessibility support including ARIA labels,
+ * keyboard navigation, and screen reader announcements.
  */
-import React, { forwardRef, useContext, useState, useMemo } from 'react';
+import React, { forwardRef, useContext, useState, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';
 import { glassTokenUtils } from '../../tokens/glass';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -21,7 +22,7 @@ const ImageListItemRoot = styled.li<{
   $index?: number;
   $hoverOverlay: boolean;
   $elevation: number;
-  $rounded: boolean;
+  $glassRadiusMd: boolean;
   $reducedMotion: boolean;
 }>`
   position: relative;
@@ -84,7 +85,7 @@ const ImageListItemRoot = styled.li<{
   
   /* Rounded corners */
   ${props =>
-    props.$rounded &&
+    props.$glassRadiusMd &&
     `
     border-radius: 8px;
     overflow: hidden;
@@ -136,9 +137,6 @@ const HoverOverlay = styled.div<{
  * ImageListItem Component Implementation
  */
 function ImageListItemComponent(props: ImageListItemProps, ref: React.ForwardedRef<HTMLLIElement>) {
-  // Unified glass styles
-  const glassStyles = createGlassStyle({ intent: 'neutral', elevation: 'level2', tier: 'high' });
-
   const {
     children,
     className,
@@ -152,6 +150,11 @@ function ImageListItemComponent(props: ImageListItemProps, ref: React.ForwardedR
     alt,
     src,
     srcSet,
+    onClick,
+    onKeyDown,
+    'aria-label': ariaLabel,
+    'aria-describedby': ariaDescribedBy,
+    role,
     ...rest
   } = props;
 
@@ -178,7 +181,7 @@ function ImageListItemComponent(props: ImageListItemProps, ref: React.ForwardedR
 
   // Merge props with context
   const glass = propGlass !== undefined ? propGlass : contextGlass;
-  const rounded = propRounded !== undefined ? propRounded : contextRounded;
+  const glassRadiusMd = propRounded !== undefined ? propRounded : contextRounded;
 
   // Simplified animation settings
   const finalDisableAnimation = prefersReducedMotion;
@@ -186,7 +189,56 @@ function ImageListItemComponent(props: ImageListItemProps, ref: React.ForwardedR
   // State for hover and focus
   const [isFocused, setIsFocused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  // Simplified animation (removed complex spring logic)
+  
+  // Accessibility handlers
+  const handleClick = useCallback((event: React.MouseEvent<HTMLLIElement>) => {
+    onClick?.(event);
+  }, [onClick]);
+  
+  const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLLIElement>) => {
+    // Handle Enter and Space key activation
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      if (onClick) {
+        onClick(event as any);
+      }
+    }
+    // Pass through any custom key handling
+    onKeyDown?.(event);
+  }, [onClick, onKeyDown]);
+  
+  // Generate accessible description
+  const accessibleDescription = useMemo(() => {
+    if (alt) return alt;
+    if (ariaLabel) return ariaLabel;
+    return 'Image in gallery';
+  }, [alt, ariaLabel]);
+  
+  // Determine if this item is interactive
+  const isInteractive = Boolean(onClick);
+  
+  // Generate ARIA attributes
+  const ariaAttributes = useMemo(() => {
+    const attributes: Record<string, any> = {};
+    
+    if (isInteractive) {
+      attributes.role = role || 'button';
+      attributes['aria-label'] = ariaLabel || accessibleDescription;
+      if (ariaDescribedBy) {
+        attributes['aria-describedby'] = ariaDescribedBy;
+      }
+    } else {
+      attributes.role = role || 'listitem';
+      attributes['aria-label'] = ariaLabel || accessibleDescription;
+    }
+    
+    // Add state information
+    if (hoverOverlay && (isHovered || isFocused)) {
+      attributes['aria-expanded'] = 'true';
+    }
+    
+    return attributes;
+  }, [role, ariaLabel, ariaDescribedBy, accessibleDescription, isInteractive, hoverOverlay, isHovered, isFocused]);
 
   // Convert string elevation to number
   const getElevationNumber = (elev?: 0 | 'level1' | 'level2' | 'level3' | 'level4'): number => {
@@ -198,9 +250,16 @@ function ImageListItemComponent(props: ImageListItemProps, ref: React.ForwardedR
     return 0; // default
   };
 
-  // Prepare image element if src is provided
+  // Prepare image element if src is provided with enhanced accessibility
   const image = src ? (
-    <img src={src} srcSet={srcSet} alt={alt || ''} loading="lazy" {...rest} />
+    <img 
+      src={src} 
+      srcSet={srcSet} 
+      alt={alt || accessibleDescription} 
+      loading="lazy" 
+      role={alt ? undefined : 'presentation'}
+      {...rest} 
+    />
   ) : null;
 
   return (
@@ -214,13 +273,16 @@ function ImageListItemComponent(props: ImageListItemProps, ref: React.ForwardedR
       $glass={glass}
       $hoverOverlay={hoverOverlay}
       $elevation={getElevationNumber(elevation)}
-      $rounded={rounded}
+      $glassRadiusMd={glassRadiusMd}
       $reducedMotion={prefersReducedMotion}
-      tabIndex={0}
+      tabIndex={isInteractive ? 0 : -1}
+      onClick={isInteractive ? handleClick : undefined}
+      onKeyDown={isInteractive ? handleKeyDown : undefined}
       onMouseEnter={() => { setIsHovered(true); }}
       onMouseLeave={() => { setIsHovered(false); }}
       onFocus={() => { setIsFocused(true); }}
       onBlur={() => { setIsFocused(false); }}
+      {...ariaAttributes}
     >
       <ImageContainer $glass={glass}>
         {image}

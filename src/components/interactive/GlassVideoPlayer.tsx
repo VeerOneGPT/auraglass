@@ -15,7 +15,6 @@ import {
     VolumeX
 } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { Motion } from '../../primitives';
 import { GlassButton } from '../button';
 import { CardContent, GlassCard } from '../card';
@@ -325,7 +324,7 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
     if (sources.length === 0) {
         return (
             <GlassCard className={cn('p-8', className)}>
-                <div className="text-center text-white/60">
+                <div className="text-center glass-text-primary/60">
                     No video sources provided
                 </div>
             </GlassCard>
@@ -345,7 +344,7 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
                 onMouseMove={handleMouseMove}
                 {...props}
             >
-                <CardContent className="p-0">
+                <CardContent className="glass-p-0">
                     {/* Video Element */}
                     <div className="relative bg-black aspect-video overflow-hidden">
                         <video
@@ -380,14 +379,14 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
                         {/* Loading State */}
                         {isLoading && (
                             <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                                <Loader2 className="w-8 h-8 text-white animate-spin" />
+                                <Loader2 className="w-8 h-8 glass-text-primary animate-spin" />
                             </div>
                         )}
 
                         {/* Error State */}
                         {error && (
-                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 text-white">
-                                <AlertCircle className="w-12 h-12 mb-4" />
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 glass-text-primary">
+                                <AlertCircle className="w-12 h-12 glass-mb-4" />
                                 <p>{error}</p>
                             </div>
                         )}
@@ -399,7 +398,7 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
                                     variant="secondary"
                                     size="lg"
                                     onClick={handlePlayPause}
-                                    className="p-6 rounded-full"
+                                    className="glass-p-6 glass-radius-full"
                                 >
                                     <Play className="w-8 h-8" />
                                 </GlassButton>
@@ -410,20 +409,20 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
                         {controls && showControls && (
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent">
                                 {/* Top Bar */}
-                                <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center">
+                                <div className="absolute top-0 left-0 right-0 glass-p-4 flex justify-between items-center">
                                     {title && (
                                         <GlassBadge variant="secondary" className="bg-black/50">
                                             {title}
                                         </GlassBadge>
                                     )}
 
-                                    <div className="flex items-center gap-2">
+                                    <div className="flex items-center glass-gap-2">
                                         {enableTheaterMode && (
                                             <GlassButton
                                                 variant="ghost"
                                                 size="sm"
-                                                onClick={() => setIsTheaterMode(!isTheaterMode)}
-                                                className="text-white"
+                                                onClick={(e) => setIsTheaterMode(!isTheaterMode)}
+                                                className="glass-text-primary"
                                             >
                                                 {isTheaterMode ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
                                             </GlassButton>
@@ -432,8 +431,8 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
                                         <GlassButton
                                             variant="ghost"
                                             size="sm"
-                                            onClick={() => setShowSettings(!showSettings)}
-                                            className="text-white"
+                                            onClick={(e) => setShowSettings(!showSettings)}
+                                            className="glass-text-primary"
                                         >
                                             <Settings className="w-4 h-4" />
                                         </GlassButton>
@@ -442,12 +441,12 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
 
                                 {/* Center Controls */}
                                 <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <div className="flex items-center glass-gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <GlassButton
                                             variant="secondary"
                                             size="lg"
-                                            onClick={() => handleSkip(-10)}
-                                            className="p-3"
+                                            onClick={(e) => handleSkip(-10)}
+                                            className="glass-p-3"
                                         >
                                             <SkipBack className="w-6 h-6" />
                                         </GlassButton>
@@ -456,7 +455,7 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
                                             variant="secondary"
                                             size="lg"
                                             onClick={handlePlayPause}
-                                            className="p-4"
+                                            className="glass-p-4"
                                         >
                                             {isPlaying ? (
                                                 <Pause className="w-8 h-8" />
@@ -468,8 +467,8 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
                                         <GlassButton
                                             variant="secondary"
                                             size="lg"
-                                            onClick={() => handleSkip(10)}
-                                            className="p-3"
+                                            onClick={(e) => handleSkip(10)}
+                                            className="glass-p-3"
                                         >
                                             <SkipForward className="w-6 h-6" />
                                         </GlassButton>
@@ -477,26 +476,26 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
                                 </div>
 
                                 {/* Bottom Controls */}
-                                <div className="absolute bottom-0 left-0 right-0 p-4">
+                                <div className="absolute bottom-0 left-0 right-0 glass-p-4">
                                     {/* Progress Bar */}
                                     <div
-                                        className="w-full h-1 bg-white/20 rounded-full mb-4 cursor-pointer"
+                                        className="w-full h-1 bg-white/20 glass-radius-full glass-mb-4 cursor-pointer"
                                         onClick={handleSeek}
                                     >
                                         <div
-                                            className="h-full bg-primary rounded-full transition-all duration-100"
+                                            className="h-full bg-primary glass-radius-full transition-all duration-100"
                                             style={{ width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
                                         />
                                     </div>
 
                                     {/* Control Buttons */}
                                     <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-4">
+                                        <div className="flex items-center glass-gap-4">
                                             <GlassButton
                                                 variant="ghost"
                                                 size="sm"
                                                 onClick={handlePlayPause}
-                                                className="text-white p-2"
+                                                className="glass-text-primary glass-p-2"
                                             >
                                                 {isPlaying ? (
                                                     <Pause className="w-5 h-5" />
@@ -505,12 +504,12 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
                                                 )}
                                             </GlassButton>
 
-                                            <div className="flex items-center gap-2">
+                                            <div className="flex items-center glass-gap-2">
                                                 <GlassButton
                                                     variant="ghost"
                                                     size="sm"
                                                     onClick={handleMuteToggle}
-                                                    className="text-white p-2"
+                                                    className="glass-text-primary glass-p-2"
                                                 >
                                                     {isMuted || volume === 0 ? (
                                                         <VolumeX className="w-5 h-5" />
@@ -519,28 +518,28 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
                                                     )}
                                                 </GlassButton>
 
-                                                <div className="w-20 h-1 bg-white/20 rounded-full cursor-pointer">
+                                                <div className="w-20 h-1 bg-white/20 glass-radius-full cursor-pointer">
                                                     <div
-                                                        className="h-full bg-white rounded-full"
+                                                        className="h-full bg-white glass-radius-full"
                                                         style={{ width: `${isMuted ? 0 : volume * 100}%` }}
                                                     />
                                                 </div>
                                             </div>
 
-                                            <span className="text-white text-sm">
+                                            <span className="glass-text-primary glass-text-sm">
                                                 {formatTime(currentTime)} / {formatTime(duration)}
                                             </span>
                                         </div>
 
-                                        <div className="flex items-center gap-2">
-                                            <span className="text-white text-sm">{playbackSpeed}x</span>
+                                        <div className="flex items-center glass-gap-2">
+                                            <span className="glass-text-primary glass-text-sm">{playbackSpeed}x</span>
 
                                             {enableFullscreen && (
                                                 <GlassButton
                                                     variant="ghost"
                                                     size="sm"
                                                     onClick={handleFullscreenToggle}
-                                                    className="text-white p-2"
+                                                    className="glass-text-primary glass-p-2"
                                                 >
                                                     {isFullscreen ? (
                                                         <Minimize className="w-5 h-5" />

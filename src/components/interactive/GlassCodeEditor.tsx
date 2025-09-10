@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { OptimizedGlass } from '../../primitives';
 
 export type Language =
@@ -174,7 +173,7 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
     const colors = {
       keywords: 'text-blue-400',
       strings: 'text-green-400',
-      comments: 'text-gray-500',
+      comments: 'glass-text-secondary',
       numbers: 'text-purple-400',
       functions: 'text-yellow-400',
       types: 'text-cyan-400',
@@ -183,7 +182,7 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
       selectors: 'text-orange-400',
       keys: 'text-blue-300',
     };
-    return colors[type as keyof typeof colors] || 'text-white';
+    return colors[type as keyof typeof colors] || 'glass-text-primary';
   };
 
   // Handle keyboard shortcuts
@@ -265,24 +264,24 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
       elevation={'level1'}
     >
       {/* Toolbar */}
-      <div className="flex items-center justify-between p-3 border-b border-white/10">
-        <div className="flex items-center space-x-4">
-          <span className="text-sm text-white/70 font-medium">
+      <div className="flex items-center justify-between glass-p-3 border-b border-white/10">
+        <div className="flex items-center glass-gap-4">
+          <span className="glass-text-sm glass-text-primary/70 font-medium">
             {language.toUpperCase()}
           </span>
           {lineNumbers && (
-            <span className="text-xs text-white/50">
+            <span className="glass-text-xs glass-text-primary/50">
               Ln {cursorPosition.line}, Col {cursorPosition.column}
             </span>
           )}
         </div>
 
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center glass-gap-2">
           {!readOnly && (
             <>
               <button
-                className="px-2 py-1 text-xs text-white/70 hover:text-white hover:bg-white/10 rounded transition-colors"
-                onClick={() => {
+                className="glass-px-2 glass-py-1 glass-text-xs glass-text-primary/70 hover:glass-text-primary hover:bg-white/10 glass-radius-md transition-colors"
+                onClick={(e) => {
                   const textarea = textareaRef.current;
                   if (textarea) {
                     textarea.value = '';
@@ -294,8 +293,8 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
                 Clear
               </button>
               <button
-                className="px-2 py-1 text-xs text-white/70 hover:text-white hover:bg-white/10 rounded transition-colors"
-                onClick={() => {
+                className="glass-px-2 glass-py-1 glass-text-xs glass-text-primary/70 hover:glass-text-primary hover:bg-white/10 glass-radius-md transition-colors"
+                onClick={(e) => {
                   navigator.clipboard?.writeText(currentValue);
                 }}
               >
@@ -311,20 +310,20 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
         {/* Syntax Highlighted Background */}
         <pre
           ref={preRef}
-          className={`absolute inset-0 p-4 font-mono text-sm overflow-auto pointer-events-none whitespace-pre-wrap break-words ${
+          className={`absolute inset-0 glass-p-4 font-mono glass-text-sm overflow-auto pointer-events-none whitespace-pre-wrap break-words ${
             wordWrap ? 'break-words' : 'whitespace-pre'
           }`}
           style={{ fontSize, lineHeight: '1.5' }}
         >
           <code
             dangerouslySetInnerHTML={{ __html: highlightedCode || placeholder }}
-            className={currentValue ? '' : 'text-white/30'}
+            className={currentValue ? '' : 'glass-text-primary/30'}
           />
         </pre>
 
         {/* Line Numbers */}
         {lineNumbers && (
-          <div className="absolute left-0 top-0 bottom-0 w-12 bg-black/20 border-r border-white/10 p-4 text-right text-white/50 text-sm font-mono select-none">
+          <div className="absolute left-0 top-0 bottom-0 w-12 bg-black/20 border-r border-white/10 glass-p-4 text-right glass-text-primary/50 glass-text-sm font-mono select-none">
             {lines.map((_, index) => (
               <div key={index} className="leading-6">
                 {index + 1}
@@ -345,7 +344,7 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
           onClick={updateCursorPosition}
           readOnly={readOnly}
           placeholder={placeholder}
-          className={`w-full p-4 font-mono text-sm bg-transparent text-transparent caret-white outline-none resize-none overflow-auto ${
+          className={`w-full glass-p-4 font-mono glass-text-sm bg-transparent text-transparent caret-white outline-none resize-none overflow-auto ${
             wordWrap ? 'break-words' : 'whitespace-pre'
           } ${lineNumbers ? 'pl-16' : ''}`}
           style={{
@@ -375,23 +374,23 @@ export const GlassCodeEditorWithFiles: React.FC<{
   const currentFile = files.find(f => f.name === activeFile) || files[0];
 
   return (
-    <div className={`grid grid-cols-4 gap-4 ${className}`}>
+    <div className={`grid grid-cols-4 glass-gap-4 ${className}`}>
       {/* File Explorer */}
       <OptimizedGlass
-        className="col-span-1 p-4"
+        className="col-span-1 glass-p-4"
         blur="medium"
         elevation={'level1'}
       >
-        <h3 className="text-sm font-semibold text-white mb-4">Files</h3>
-        <div className="space-y-2">
+        <h3 className="glass-text-sm font-semibold glass-text-primary glass-mb-4">Files</h3>
+        <div className="glass-gap-2">
           {files.map(file => (
             <button
               key={file.name}
-              onClick={() => setActiveFile(file.name)}
-              className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
+              onClick={(e) => setActiveFile(file.name)}
+              className={`w-full text-left glass-px-3 glass-py-2 glass-radius-md glass-text-sm transition-colors ${
                 activeFile === file.name
-                  ? 'bg-white/20 text-white'
-                  : 'text-white/70 hover:text-white hover:bg-white/10'
+                  ? 'bg-white/20 glass-text-primary'
+                  : 'glass-text-primary/70 hover:glass-text-primary hover:bg-white/10'
               }`}
             >
               {file.name}
