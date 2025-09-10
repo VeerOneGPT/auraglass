@@ -6,6 +6,7 @@ import { OptimizedGlass } from '../../primitives'
 import { useA11yId } from '../../utils/a11y'
 import { useMotionPreference } from '../../hooks/useMotionPreference'
 import { createGlassStyle } from '../../utils/createGlassStyle'
+import { cn } from '@/lib/utilsComprehensive'
 
 export interface QuantumMenuState {
   id: string
@@ -208,7 +209,7 @@ export const GlassSuperpositionalMenu = forwardRef<HTMLDivElement, GlassSuperpos
 
       return (
         <svg
-          className="absolute inset-0 pointer-events-none"
+          className={cn("glass-absolute glass-inset-0 glass-pointer-events-none")}
           width="200"
           height="50"
           style={{ zIndex: -1 }}
@@ -233,11 +234,11 @@ export const GlassSuperpositionalMenu = forwardRef<HTMLDivElement, GlassSuperpos
     }
 
     const QuantumNoise = () => (
-      <div className="absolute inset-0 pointer-events-none">
+      <div className={cn("glass-absolute glass-inset-0 glass-pointer-events-none")}>
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-1 h-1 bg-white/20 rounded-full"
+            className={cn("glass-absolute glass-w-1 glass-h-1 glass-surface-muted glass-radius-full")}
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -257,7 +258,7 @@ export const GlassSuperpositionalMenu = forwardRef<HTMLDivElement, GlassSuperpos
     )
 
     const EntanglementLines = () => (
-      <svg className="absolute inset-0 pointer-events-none" style={{ zIndex: 10 }}>
+      <svg className={cn("glass-absolute glass-inset-0 glass-pointer-events-none")} style={{ zIndex: 10 }}>
         {currentStates.map(state => 
           state.entangled?.map(entangledId => {
             const entangledState = currentStates.find(s => s.id === entangledId)
@@ -297,7 +298,7 @@ export const GlassSuperpositionalMenu = forwardRef<HTMLDivElement, GlassSuperpos
 
     const QuantumState = ({ state, index }: { state: QuantumMenuState; index: number }) => (
       <motion.div
-        className="relative"
+        className={cn("glass-relative")}
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{
           opacity: getStateOpacity(state),
@@ -316,19 +317,18 @@ export const GlassSuperpositionalMenu = forwardRef<HTMLDivElement, GlassSuperpos
         onClick={() => performMeasurement(state.id)}
       >
         <div
-          className={`
-            relative p-4 rounded-lg cursor-pointer border-2 transition-all duration-300
-            ${createGlassStyle({ 
+          className={cn(
+            "glass-relative glass-p-4 glass-radius-lg glass-cursor-pointer glass-border-2 glass-transition-all glass-duration-300",
+            createGlassStyle({ 
               variant: 'default',
               opacity: state.coherence 
-            })}
-            ${collapsedState === state.id 
-              ? 'border-green-400 bg-green-400/20' 
+            }),
+            collapsedState === state.id 
+              ? "glass-border-success glass-surface-success" 
               : state.entangled?.length 
-                ? 'border-pink-400 bg-pink-400/20'
-                : 'border-indigo-400 bg-indigo-400/20'
-            }
-          `}
+                ? "glass-border-accent glass-surface-accent"
+                : "glass-border-primary glass-surface-primary"
+          )}
           style={{
             backdropFilter: `blur(${4 + state.coherence * 8}px)`,
             boxShadow: `0 0 ${state.probability * 20}px ${
@@ -340,24 +340,24 @@ export const GlassSuperpositionalMenu = forwardRef<HTMLDivElement, GlassSuperpos
             <WaveFunction state={state} index={index} />
           )}
 
-          <div className="relative z-10">
-            <div className="flex items-center space-x-3">
+          <div className={cn("glass-relative glass-z-10")}>
+            <div className={cn("glass-flex glass-items-center glass-space-x-3")}>
               {state.icon && (
-                <span className="text-2xl">{state.icon}</span>
+                <span className={cn("glass-text-2xl")}>{state.icon}</span>
               )}
-              <div className="flex-1">
-                <h3 className="text-white/90 font-medium">
+              <div className={cn("glass-flex-1")}>
+                <h3 className={cn("glass-text-primary glass-font-medium")}>
                   {state.label}
                 </h3>
                 {showProbabilities && (
-                  <div className="flex items-center space-x-2 text-sm text-white/60">
+                  <div className={cn("glass-flex glass-items-center glass-space-x-2 glass-text-sm glass-text-secondary")}>
                     <span>P: {(state.probability * 100).toFixed(1)}%</span>
                     <span>•</span>
                     <span>C: {(state.coherence * 100).toFixed(0)}%</span>
                     {state.entangled?.length && (
                       <>
                         <span>•</span>
-                        <span className="text-pink-400">
+                        <span className={cn("glass-text-accent")}>
                           ⚛ {state.entangled.length}
                         </span>
                       </>
@@ -368,13 +368,13 @@ export const GlassSuperpositionalMenu = forwardRef<HTMLDivElement, GlassSuperpos
             </div>
 
             {/* Quantum indicators */}
-            <div className="mt-2 flex space-x-2">
+            <div className={cn("glass-mt-2 glass-flex glass-space-x-2")}>
               <div
-                className="h-1 bg-indigo-400 rounded-full"
+                className={cn("glass-h-1 glass-surface-primary glass-radius-full")}
                 style={{ width: `${state.probability * 100}%` }}
               />
               <div
-                className="h-1 bg-blue-400 rounded-full opacity-60"
+                className={cn("glass-h-1 glass-surface-info glass-radius-full glass-opacity-60")}
                 style={{ width: `${state.coherence * 100}%` }}
               />
             </div>
@@ -383,7 +383,7 @@ export const GlassSuperpositionalMenu = forwardRef<HTMLDivElement, GlassSuperpos
           {/* Quantum field visualization */}
           {!collapsedState && (
             <motion.div
-              className="absolute inset-0 rounded-lg pointer-events-none"
+              className={cn("glass-absolute glass-inset-0 glass-radius-lg glass-pointer-events-none")}
               animate={{
                 background: [
                   `radial-gradient(circle at ${50 + Math.sin(quantumTime) * 20}% ${50 + Math.cos(quantumTime * 0.7) * 20}%, 
@@ -411,7 +411,7 @@ export const GlassSuperpositionalMenu = forwardRef<HTMLDivElement, GlassSuperpos
       <OptimizedGlass
         ref={ref}
         variant="frosted"
-        className={`relative p-6 space-y-4 ${className}`}
+        className={cn("glass-relative glass-p-6 glass-space-y-4", className)}
         {...props}
       >
         {/* Quantum field background */}
@@ -419,27 +419,27 @@ export const GlassSuperpositionalMenu = forwardRef<HTMLDivElement, GlassSuperpos
         {visualizeWaveFunction && <EntanglementLines />}
 
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className={cn("glass-flex glass-items-center glass-justify-between")}>
           <div>
-            <h2 className="text-xl font-semibold text-white/90">
+            <h2 className={cn("glass-text-xl glass-font-semibold glass-text-primary")}>
               Quantum Menu
             </h2>
-            <p className="text-sm text-white/60">
+            <p className={cn("glass-text-sm glass-text-secondary")}>
               {collapsedState ? 'State Collapsed' : 
                `${superpositionStates.length} superposition${superpositionStates.length !== 1 ? 's' : ''}`}
             </p>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className={cn("glass-flex glass-items-center glass-space-x-4")}>
             {!collapsedState && (
               <>
                 <button
                   onClick={() => performMeasurement()}
-                  className={`
-                    px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200
-                    ${createGlassStyle({ variant: 'default' })}
-                    text-white/80 hover:text-white border border-white/20 hover:border-white/40
-                  `}
+                  className={cn(
+                    "glass-px-4 glass-py-2 glass-radius-lg glass-text-sm glass-font-medium glass-transition-colors glass-duration-200",
+                    createGlassStyle({ variant: 'default' }),
+                    "glass-text-primary hover:glass-text-white glass-border glass-border-primary hover:glass-border-white"
+                  )}
                 >
                   🔬 Measure
                 </button>
@@ -452,25 +452,25 @@ export const GlassSuperpositionalMenu = forwardRef<HTMLDivElement, GlassSuperpos
                       .map(s => s.id)
                     createEntanglement(randomStates)
                   }}
-                  className={`
-                    px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200
-                    ${createGlassStyle({ variant: 'default' })}
-                    text-pink-300 hover:text-pink-200 border border-pink-400/20 hover:border-pink-400/40
-                  `}
+                  className={cn(
+                    "glass-px-4 glass-py-2 glass-radius-lg glass-text-sm glass-font-medium glass-transition-colors glass-duration-200",
+                    createGlassStyle({ variant: 'default' }),
+                    "glass-text-accent hover:glass-text-accent-light glass-border glass-border-accent hover:glass-border-accent-light"
+                  )}
                 >
                   ⚛ Entangle
                 </button>
               </>
             )}
 
-            <div className="text-sm text-white/50">
+            <div className={cn("glass-text-sm glass-text-muted")}>
               t: {quantumTime.toFixed(1)}
             </div>
           </div>
         </div>
 
         {/* Quantum states */}
-        <div className="space-y-3">
+        <div className={cn("glass-space-y-3")}>
           <AnimatePresence>
             {superpositionStates.map((state, index) => (
               <QuantumState key={state.id} state={state} index={index} />
@@ -479,32 +479,32 @@ export const GlassSuperpositionalMenu = forwardRef<HTMLDivElement, GlassSuperpos
         </div>
 
         {/* Quantum information */}
-        <div className={`
-          p-4 rounded-lg border border-white/10
-          ${createGlassStyle({ variant: 'default' })}
-        `}>
-          <div className="grid grid-cols-2 gap-4 text-sm">
+        <div className={cn(
+          "glass-p-4 glass-radius-lg glass-border glass-border-subtle",
+          createGlassStyle({ variant: 'default' })
+        )}>
+          <div className={cn("glass-grid glass-grid-cols-2 glass-gap-4 glass-text-sm")}>
             <div>
-              <span className="text-white/60">Total Coherence:</span>
-              <span className="ml-2 text-white/90">
+              <span className={cn("glass-text-secondary")}>Total Coherence:</span>
+              <span className={cn("glass-ml-2 glass-text-primary")}>
                 {(currentStates.reduce((sum, s) => sum + s.coherence, 0) / currentStates.length * 100).toFixed(1)}%
               </span>
             </div>
             <div>
-              <span className="text-white/60">Entangled Pairs:</span>
-              <span className="ml-2 text-white/90">
+              <span className={cn("glass-text-secondary")}>Entangled Pairs:</span>
+              <span className={cn("glass-ml-2 glass-text-primary")}>
                 {currentStates.filter(s => s.entangled?.length).length / 2}
               </span>
             </div>
             <div>
-              <span className="text-white/60">Measurements:</span>
-              <span className="ml-2 text-white/90">
+              <span className={cn("glass-text-secondary")}>Measurements:</span>
+              <span className={cn("glass-ml-2 glass-text-primary")}>
                 {interactionHistory.filter(h => h.type === 'measurement').length}
               </span>
             </div>
             <div>
-              <span className="text-white/60">State:</span>
-              <span className="ml-2 text-white/90">
+              <span className={cn("glass-text-secondary")}>State:</span>
+              <span className={cn("glass-ml-2 glass-text-primary")}>
                 {collapsedState ? 'Collapsed' : 'Superposition'}
               </span>
             </div>
@@ -519,11 +519,11 @@ export const GlassSuperpositionalMenu = forwardRef<HTMLDivElement, GlassSuperpos
               setCurrentStates(menuStates)
               setMeasurementTime(null)
             }}
-            className={`
-              w-full p-3 rounded-lg text-sm font-medium transition-colors duration-200
-              ${createGlassStyle({ variant: 'default' })}
-              text-blue-300 hover:text-blue-200 border border-blue-400/20 hover:border-blue-400/40
-            `}
+            className={cn(
+              "glass-w-full glass-p-3 glass-radius-lg glass-text-sm glass-font-medium glass-transition-colors glass-duration-200",
+              createGlassStyle({ variant: 'default' }),
+              "glass-text-info hover:glass-text-info-light glass-border glass-border-info hover:glass-border-info-light"
+            )}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={respectMotionPreference({ delay: 0.5 })}

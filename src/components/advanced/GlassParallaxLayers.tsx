@@ -3,9 +3,9 @@
  * Multi-depth glass layers with mouse/scroll parallax effects
  */
 
-import React, { useRef, useEffect, useState, useCallback, forwardRef } from 'react';
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
 import { cn } from '@/lib/utilsComprehensive';
+import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { useA11yId } from '../../utils/a11y';
 
@@ -21,7 +21,7 @@ interface ParallaxLayer {
   offset?: { x: number; y: number };
 }
 
-interface GlassParallaxLayersProps {
+export interface GlassParallaxLayersProps {
   layers: ParallaxLayer[];
   className?: string;
   mouseIntensity?: number; // 0-1

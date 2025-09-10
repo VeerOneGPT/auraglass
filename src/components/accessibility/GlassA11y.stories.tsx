@@ -1,0 +1,211 @@
+import type { Meta, StoryObj } from '@storybook/react';
+import { GlassA11y } from './GlassA11y';
+
+const meta: Meta<typeof GlassA11y> = {
+  title: 'Accessibility/GlassA11y',
+  component: GlassA11y,
+  parameters: {
+    layout: 'fullscreen',
+    docs: {
+      description: {
+        component: 'A comprehensive accessibility control panel providing WCAG AAA compliance management with real-time testing and adaptive interfaces.'
+      }
+    }
+  },
+  argTypes: {
+    showDashboard: {
+      control: 'boolean',
+      description: 'Whether to show the accessibility dashboard'
+    },
+    enableTesting: {
+      control: 'boolean',
+      description: 'Enable accessibility testing features'
+    },
+    position: {
+      control: { type: 'select', options: ['fixed', 'relative'] },
+      description: 'Positioning mode for the panel'
+    },
+    className: {
+      control: 'text',
+      description: 'Additional CSS classes'
+    }
+  }
+};
+
+export default meta;
+type Story = StoryObj<typeof GlassA11y>;
+
+export const Default: Story = {
+  args: {
+    showDashboard: true,
+    enableTesting: true,
+    position: 'fixed'
+  },
+  render: (args) => (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+          Accessibility Control Panel Demo
+        </h1>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl border border-gray-200/50 dark:border-gray-700/50">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              Interactive Content
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              This content demonstrates how accessibility settings can adapt the user interface in real-time.
+              Try using the accessibility panel to see the changes.
+            </p>
+            <button className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors">
+              Interactive Button
+            </button>
+          </div>
+
+          <div className="p-6 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl border border-gray-200/50 dark:border-gray-700/50">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              Form Elements
+            </h3>
+            <div className="space-y-4">
+              <input
+                type="text"
+                placeholder="Enter text here"
+                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              />
+              <textarea
+                placeholder="Enter longer text here"
+                rows={3}
+                className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+              />
+            </div>
+          </div>
+        </div>
+
+        <GlassA11y {...args} />
+      </div>
+    </div>
+  )
+};
+
+export const TestingMode: Story = {
+  args: {
+    showDashboard: true,
+    enableTesting: true,
+    position: 'fixed'
+  },
+  render: (args) => (
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 dark:from-gray-900 dark:to-gray-800 p-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+          Accessibility Testing Demo
+        </h1>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl border border-gray-200/50 dark:border-gray-700/50">
+            <h4 className="font-semibold text-gray-900 dark:text-white mb-2">WCAG AA Compliance</h4>
+            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-2">
+              <div className="bg-green-500 h-2 rounded-full" style={{ width: '95%' }}></div>
+            </div>
+            <p className="text-sm text-gray-600 dark:text-gray-300">95% compliant</p>
+          </div>
+
+          <div className="p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl border border-gray-200/50 dark:border-gray-700/50">
+            <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Keyboard Navigation</h4>
+            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-2">
+              <div className="bg-blue-500 h-2 rounded-full" style={{ width: '100%' }}></div>
+            </div>
+            <p className="text-sm text-gray-600 dark:text-gray-300">Fully accessible</p>
+          </div>
+
+          <div className="p-4 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-xl border border-gray-200/50 dark:border-gray-700/50">
+            <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Screen Reader Support</h4>
+            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-2">
+              <div className="bg-purple-500 h-2 rounded-full" style={{ width: '90%' }}></div>
+            </div>
+            <p className="text-sm text-gray-600 dark:text-gray-300">90% supported</p>
+          </div>
+        </div>
+
+        <GlassA11y {...args} />
+      </div>
+    </div>
+  )
+};
+
+export const HighContrast: Story = {
+  args: {
+    showDashboard: true,
+    enableTesting: false,
+    position: 'relative',
+    className: 'custom-accessibility-theme'
+  },
+  render: (args) => (
+    <div className="min-h-screen bg-black p-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-white mb-8">
+          High Contrast Mode Demo
+        </h1>
+
+        <div className="p-6 bg-white border-2 border-black rounded-xl">
+          <h3 className="text-xl font-semibold text-black mb-4">
+            High Contrast Content
+          </h3>
+          <p className="text-black mb-4">
+            This content uses high contrast colors for better visibility.
+            The accessibility panel can automatically switch to high contrast mode.
+          </p>
+          <button className="px-4 py-2 bg-black text-white border-2 border-black rounded hover:bg-gray-800 transition-colors">
+            High Contrast Button
+          </button>
+        </div>
+
+        <div className="mt-8">
+          <GlassA11y {...args} />
+        </div>
+      </div>
+    </div>
+  )
+};
+
+export const Minimal: Story = {
+  args: {
+    showDashboard: true,
+    enableTesting: false,
+    position: 'relative'
+  },
+  render: (args) => (
+    <div className="min-h-screen bg-white p-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">
+          Minimal Accessibility Demo
+        </h1>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="p-6 bg-gray-50 rounded-xl border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Clean Interface
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Simple, clean design that works well with accessibility features.
+            </p>
+          </div>
+
+          <div className="p-6 bg-gray-50 rounded-xl border border-gray-200">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              Focus States
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Clear focus indicators for keyboard navigation.
+            </p>
+            <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-colors">
+              Focusable Button
+            </button>
+          </div>
+        </div>
+
+        <GlassA11y {...args} />
+      </div>
+    </div>
+  )
+};
+

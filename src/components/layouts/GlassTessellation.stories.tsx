@@ -1,29 +1,30 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { GlassTessellation, type TessellationTile } from './GlassTessellation';
-import { 
-  Home, 
-  Settings, 
-  User, 
-  Mail, 
-  Search, 
-  Bell, 
-  Heart, 
-  Share,
-  Star,
-  Circle,
-  Triangle,
-  Square,
-  Hexagon,
-  Diamond,
-  Zap,
-  Flame,
-  Droplets,
-  Wind,
-  Sun,
-  Moon,
-  Cloud,
-  Snowflake
+import { fn } from '@storybook/test';
+import {
+    Bell,
+    Circle,
+    Cloud,
+    Diamond,
+    Droplets,
+    Flame,
+    Heart,
+    Hexagon,
+    Home,
+    Mail,
+    Moon,
+    Search,
+    Settings,
+    Share,
+    Snowflake,
+    Square,
+    Star,
+    Sun,
+    Triangle,
+    User,
+    Wind,
+    Zap
 } from 'lucide-react';
+import { GlassTessellation, type TessellationTile } from './GlassTessellation';
 
 // Basic geometric tiles
 const basicTiles: TessellationTile[] = [
@@ -439,7 +440,7 @@ export const InteractiveDemo: Story = {
     containerHeight: 700,
     tileSize: 70,
     morphPattern: true,
-    onTileClick: (tile) => console.log('Clicked tile:', tile.id),
-    onTileHover: (tile) => console.log('Hovered tile:', tile?.id || 'none'),
+    onTileClick: fn(),
+    onTileHover: fn(),
   },
 };

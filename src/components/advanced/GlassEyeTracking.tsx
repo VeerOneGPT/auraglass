@@ -484,12 +484,12 @@ export function GlassEyeTrackingCalibration({
 
   if (!isCalibrating && !isCalibrationActive) {
     return (
-      <div className={cn("flex flex-col items-center glass-gap-4", className)}>
-        <div className="text-center">
-          <h3 className="glass-text-lg font-medium glass-text-primary glass-mb-2">
+      <div className={cn("glass-flex glass-flex-col glass-items-center glass-gap-4", className)}>
+        <div className={cn("glass-text-center")}>
+          <h3 className={cn("glass-text-lg glass-font-medium glass-text-primary glass-mb-2")}>
             Eye Tracking Calibration
           </h3>
-          <p className="glass-text-sm glass-text-secondary glass-mb-4">
+          <p className={cn("glass-text-sm glass-text-secondary glass-mb-4")}>
             Look at each dot and click to calibrate your gaze tracking
           </p>
           <motion.button
@@ -512,23 +512,23 @@ export function GlassEyeTrackingCalibration({
   if (isCalibrationActive) {
     return (
       <div className={cn("fixed inset-0 z-50 glass-surface-primary", className)}>
-        <div className="absolute inset-0">
-          <div className="relative w-full h-full">
+        <div className={cn("glass-absolute glass-inset-0")}>
+          <div className={cn("glass-relative glass-w-full glass-h-full")}>
             {/* Progress */}
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
-              <div className="glass-surface-secondary glass-radius-lg glass-px-4 glass-py-2">
-                <span className="glass-text-sm glass-text-primary">
+            <div className={cn("glass-absolute glass-top-4 glass-left-1/2 glass-transform glass-translate-x-1/2-neg")}>
+              <div className={cn("glass-surface-secondary glass-radius-lg glass-px-4 glass-py-2")}>
+                <span className={cn("glass-text-sm glass-text-primary")}>
                   Point {currentPoint + 1} of {calibrationPoints.length}
                 </span>
               </div>
             </div>
 
             {/* Instructions */}
-            <div className="absolute top-20 left-1/2 transform -translate-x-1/2 text-center">
-              <p className="glass-text-lg glass-text-primary glass-mb-2">
+            <div className={cn("glass-absolute glass-top-20 glass-left-1/2 glass-transform glass-translate-x-1/2-neg glass-text-center")}>
+              <p className={cn("glass-text-lg glass-text-primary glass-mb-2")}>
                 Look at the blue dot and click it
               </p>
-              <p className="glass-text-sm glass-text-secondary">
+              <p className={cn("glass-text-sm glass-text-secondary")}>
                 Keep your head still and follow the dot with your eyes
               </p>
             </div>
@@ -537,7 +537,7 @@ export function GlassEyeTrackingCalibration({
             {calibrationPoints.map((point, index) => (
               <motion.div
                 key={index}
-                className="absolute w-4 h-4 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+                className={cn("glass-absolute glass-w-4 glass-h-4 glass-transform glass-translate-x-1/2-neg glass-translate-y-1/2-neg glass-cursor-pointer")}
                 style={{
                   left: `${point.x}%`,
                   top: `${point.y}%`,
@@ -555,12 +555,12 @@ export function GlassEyeTrackingCalibration({
               >
                 <div
                   className={cn(
-                    "w-full h-full glass-radius-full",
+                    "glass-w-full glass-h-full glass-radius-full",
                     index === currentPoint
-                      ? "bg-blue-500 ring-4 ring-blue-500/30"
+                      ? "glass-surface-accent glass-ring-4 glass-ring-accent/30"
                       : index < currentPoint
-                      ? "bg-green-500"
-                      : "bg-gray-400"
+                      ? "glass-surface-success"
+                      : "glass-surface-muted"
                   )}
                 />
               </motion.div>
@@ -696,13 +696,13 @@ export function GlassGazeResponsive({
       <AnimatePresence>
         {isGazed && (
           <motion.div
-            className="absolute inset-0 pointer-events-none rounded-inherit"
+            className={cn("glass-absolute glass-inset-0 glass-pointer-events-none glass-radius-inherit")}
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.8 }}
             exit={{ opacity: 0 }}
           >
             <div 
-              className="absolute inset-0 rounded-inherit"
+              className={cn("glass-absolute glass-inset-0 glass-radius-inherit")}
               style={{
                 boxShadow: `inset 0 0 ${20 + gazeIntensity * 30}px rgba(59, 130, 246, ${0.2 + gazeIntensity * 0.3})`,
               }}
@@ -744,13 +744,13 @@ export function GlassGazeVisualization({
             exit={{ opacity: 0, scale: 0.9 }}
           >
             <div
-              className="w-full h-full border-2 glass-radius-md"
+              className={cn("glass-w-full glass-h-full glass-border-2 glass-radius-md")}
               style={{
                 borderColor: `rgba(59, 130, 246, ${interaction.intensity})`,
                 backgroundColor: `rgba(59, 130, 246, ${interaction.intensity * 0.1})`,
               }}
             />
-            <div className="absolute -top-6 left-0 glass-text-xs font-mono glass-text-primary">
+            <div className={cn("glass-absolute glass-top-6-neg glass-left-0 glass-text-xs glass-font-mono glass-text-primary")}>
               {interaction.type} ({(interaction.intensity * 100).toFixed(0)}%)
             </div>
           </motion.div>

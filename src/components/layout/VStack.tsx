@@ -1,9 +1,9 @@
 'use client';
 
-import React, { forwardRef } from 'react';
-import { GlassStack, type GlassStackProps } from './GlassStack';
-import { useA11yId } from '@/utils/a11y';
 import { useMotionPreferenceContext } from '@/contexts/MotionPreferenceContext';
+import { useA11yId } from '@/utils/a11y';
+import { forwardRef } from 'react';
+import { GlassStack, type GlassStackProps } from './GlassStack';
 
 export interface VStackProps extends Omit<GlassStackProps, 'direction'> {
   /**

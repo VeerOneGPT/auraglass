@@ -6,6 +6,7 @@ import { OptimizedGlass } from '../../primitives'
 import { useA11yId } from '../../utils/a11y'
 import { useMotionPreference } from '../../hooks/useMotionPreference'
 import { createGlassStyle } from '../../utils/createGlassStyle'
+import { cn } from '@/lib/utilsComprehensive'
 
 export interface CoherenceData {
   timestamp: number
@@ -158,7 +159,7 @@ export const GlassCoherenceIndicator = forwardRef<HTMLDivElement, GlassCoherence
       }, [currentCoherence, currentPhase, entanglementStrength, points])
 
       return (
-        <svg width="300" height="100" className="border border-white/20 rounded bg-black/20">
+        <svg width="300" height="100" className={cn("glass-border glass-border-primary glass-radius glass-surface-dark")}>
           {/* Grid lines */}
           <defs>
             <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
@@ -229,8 +230,8 @@ export const GlassCoherenceIndicator = forwardRef<HTMLDivElement, GlassCoherence
     }
 
     const PhaseIndicator = () => (
-      <div className="relative w-24 h-24">
-        <svg width="96" height="96" className="absolute inset-0">
+      <div className={cn("glass-relative glass-w-24 glass-h-24")}>
+        <svg width="96" height="96" className={cn("glass-absolute glass-inset-0")}>
           {/* Outer circle */}
           <circle
             cx="48"
@@ -289,9 +290,9 @@ export const GlassCoherenceIndicator = forwardRef<HTMLDivElement, GlassCoherence
           />
         </svg>
 
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-xs text-white/90 font-medium">
+        <div className={cn("glass-absolute glass-inset-0 glass-flex glass-items-center glass-justify-center")}>
+          <div className={cn("glass-text-center")}>
+            <div className={cn("glass-text-xs glass-text-primary glass-font-medium")}>
               {((currentPhase * 180) / Math.PI).toFixed(0)}°
             </div>
           </div>
@@ -303,55 +304,55 @@ export const GlassCoherenceIndicator = forwardRef<HTMLDivElement, GlassCoherence
       <OptimizedGlass
         ref={ref}
         variant="frosted"
-        className={`p-4 space-y-4 ${className}`}
+        className={cn("glass-p-4 glass-space-y-4", className)}
         {...props}
       >
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className={cn("glass-flex glass-items-center glass-justify-between")}>
           <div>
-            <h3 className="text-lg font-semibold text-white/90">
+            <h3 className={cn("glass-text-lg glass-font-semibold glass-text-primary")}>
               Quantum Coherence
             </h3>
-            <p className="text-sm text-white/60">
+            <p className={cn("glass-text-sm glass-text-secondary")}>
               {coherenceStatus.label}
             </p>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className={cn("glass-flex glass-items-center glass-space-x-4")}>
             {isDecohering && alertOnDecoherence && (
               <motion.div
-                className="flex items-center space-x-1 text-red-400"
+                className={cn("glass-flex glass-items-center glass-space-x-1 glass-text-danger")}
                 animate={{ opacity: [1, 0.5, 1] }}
                 transition={{ duration: 1, repeat: Infinity }}
               >
                 <span>⚠️</span>
-                <span className="text-xs font-medium">Decoherence</span>
+                <span className={cn("glass-text-xs glass-font-medium")}>Decoherence</span>
               </motion.div>
             )}
             
             {realTimeMode && (
-              <div className="flex items-center space-x-1 text-green-400">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                <span className="text-xs">Live</span>
+              <div className={cn("glass-flex glass-items-center glass-space-x-1 glass-text-success")}>
+                <div className={cn("glass-w-2 glass-h-2 glass-surface-success glass-radius-full glass-animate-pulse")} />
+                <span className={cn("glass-text-xs")}>Live</span>
               </div>
             )}
           </div>
         </div>
 
         {/* Main coherence display */}
-        <div className="flex items-center space-x-6">
+        <div className={cn("glass-flex glass-items-center glass-space-x-6")}>
           {/* Coherence level */}
-          <div className="flex-1">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-white/80">Coherence Level</span>
-              <span className="text-sm font-medium text-white/90">
+          <div className={cn("glass-flex-1")}>
+            <div className={cn("glass-flex glass-items-center glass-justify-between glass-mb-2")}>
+              <span className={cn("glass-text-sm glass-text-primary")}>Coherence Level</span>
+              <span className={cn("glass-text-sm glass-font-medium glass-text-primary")}>
                 {(currentCoherence * 100).toFixed(1)}%
               </span>
             </div>
             
-            <div className="relative h-4 bg-white/10 rounded-full overflow-hidden">
+            <div className={cn("glass-relative glass-h-4 glass-surface-subtle glass-radius-full glass-overflow-hidden")}>
               <motion.div
-                className="h-full rounded-full"
+                className={cn("glass-h-full glass-radius-full")}
                 style={{
                   background: `linear-gradient(90deg, ${coherenceStatus.color} 0%, ${coherenceStatus.color}80 100%)`
                 }}
@@ -363,12 +364,12 @@ export const GlassCoherenceIndicator = forwardRef<HTMLDivElement, GlassCoherence
               
               {/* Coherence threshold indicator */}
               <div
-                className="absolute top-0 h-full w-0.5 bg-white/50"
+                className={cn("glass-absolute glass-top-0 glass-h-full glass-w-0.5 glass-surface-muted")}
                 style={{ left: `${coherenceThreshold * 100}%` }}
               />
             </div>
 
-            <div className="flex justify-between mt-1 text-xs text-white/50">
+            <div className={cn("glass-flex glass-justify-between glass-mt-1 glass-text-xs glass-text-muted")}>
               <span>0%</span>
               <span>Threshold ({(coherenceThreshold * 100).toFixed(0)}%)</span>
               <span>100%</span>
@@ -382,28 +383,28 @@ export const GlassCoherenceIndicator = forwardRef<HTMLDivElement, GlassCoherence
         {/* Wave visualization */}
         {showWaveVisualization && (
           <div>
-            <h4 className="text-sm font-medium text-white/80 mb-2">Wave Function</h4>
+            <h4 className={cn("glass-text-sm glass-font-medium glass-text-primary glass-mb-2")}>Wave Function</h4>
             <WaveVisualization />
           </div>
         )}
 
         {/* Statistics */}
-        <div className={`
-          p-3 rounded-lg border border-white/10 space-y-2
-          ${createGlassStyle({ blur: 'sm', opacity: 0.6 }).background}
-        `}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+        <div className={cn(
+          "glass-p-3 glass-radius-lg glass-border glass-border-subtle glass-space-y-2",
+          createGlassStyle({ blur: 'sm', opacity: 0.6 }).background
+        )}>
+          <div className={cn("glass-grid glass-grid-cols-2 md:glass-grid-cols-4 glass-gap-4 glass-text-sm")}>
             <div>
-              <span className="text-white/60">Phase:</span>
-              <div className="text-white/90 font-medium">
+              <span className={cn("glass-text-secondary")}>Phase:</span>
+              <div className={cn("glass-text-primary glass-font-medium")}>
                 {((currentPhase * 180) / Math.PI).toFixed(1)}°
               </div>
             </div>
 
             {showDecoherenceRate && (
               <div>
-                <span className="text-white/60">Decoherence:</span>
-                <div className="text-white/90 font-medium">
+                <span className={cn("glass-text-secondary")}>Decoherence:</span>
+                <div className={cn("glass-text-primary glass-font-medium")}>
                   {(decoherenceRate * 100).toFixed(2)}%/s
                 </div>
               </div>
@@ -411,16 +412,16 @@ export const GlassCoherenceIndicator = forwardRef<HTMLDivElement, GlassCoherence
 
             {showEntanglement && entanglementStrength > 0 && (
               <div>
-                <span className="text-white/60">Entanglement:</span>
-                <div className="text-white/90 font-medium">
+                <span className={cn("glass-text-secondary")}>Entanglement:</span>
+                <div className={cn("glass-text-primary glass-font-medium")}>
                   {(entanglementStrength * 100).toFixed(0)}%
                 </div>
               </div>
             )}
 
             <div>
-              <span className="text-white/60">Status:</span>
-              <div className="font-medium" style={{ color: coherenceStatus.color }}>
+              <span className={cn("glass-text-secondary")}>Status:</span>
+              <div className={cn("glass-font-medium")} style={{ color: coherenceStatus.color }}>
                 {currentCoherence >= coherenceThreshold ? 'Stable' : 'Unstable'}
               </div>
             </div>
@@ -428,8 +429,8 @@ export const GlassCoherenceIndicator = forwardRef<HTMLDivElement, GlassCoherence
 
           {/* Historical data summary */}
           {coherenceHistory.length > 10 && (
-            <div className="pt-2 border-t border-white/10">
-              <div className="flex items-center justify-between text-xs text-white/60">
+            <div className={cn("glass-pt-2 glass-border-t glass-border-subtle")}>
+              <div className={cn("glass-flex glass-items-center glass-justify-between glass-text-xs glass-text-secondary")}>
                 <span>Avg Coherence (1m):</span>
                 <span>
                   {(coherenceHistory.slice(-10).reduce((sum, d) => sum + d.coherence, 0) / 10 * 100).toFixed(1)}%

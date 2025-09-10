@@ -187,30 +187,34 @@ export const EnhancedGlassButton = forwardRef<HTMLButtonElement, EnhancedGlassBu
       endInteraction 
     } = useInteractionRecording(componentId, userId);
 
-    // Base button styles with size variants
+    // Base button styles with glass design tokens
     const baseStyles = useMemo(() => {
       const sizeStyles = {
-        xs: 'h-6 px-2 text-xs',
-        sm: 'h-8 px-3 text-sm',
-        md: 'h-10 px-4 text-sm',
-        lg: 'h-12 px-6 text-base',
-        xl: 'h-14 px-8 text-lg',
+        xs: 'glass-h-xs glass-px-xs glass-text-xs',
+        sm: 'glass-h-sm glass-px-sm glass-text-sm',
+        md: 'glass-h-md glass-px-md glass-text-sm',
+        lg: 'glass-h-lg glass-px-lg glass-text-base',
+        xl: 'glass-h-xl glass-px-xl glass-text-lg',
       };
       
       const variantStyles = {
-        primary: 'bg-primary text-primary-foreground hover:bg-primary/90',
-        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+        primary: 'glass-surface-primary glass-text-primary hover:glass-surface-primary-hover',
+        secondary: 'glass-surface-secondary glass-text-secondary hover:glass-surface-secondary-hover',
+        destructive: 'glass-surface-danger glass-text-danger hover:glass-surface-danger-hover',
+        ghost: 'glass-surface-transparent hover:glass-surface-accent glass-text-secondary hover:glass-text-primary',
+        outline: 'glass-border-subtle glass-surface-background hover:glass-surface-accent glass-text-secondary hover:glass-text-primary',
       };
       
       return cn(
-        'inline-flex items-center justify-center whitespace-nowrap glass-radius-md',
-        'font-medium ring-offset-background transition-colors',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+        // Base glass foundation
+        'glass-foundation-complete',
+        'inline-flex items-center justify-center whitespace-nowrap',
+        'glass-radius-md glass-transition glass-focus',
+        'font-medium cursor-pointer select-none',
         'disabled:pointer-events-none disabled:opacity-50',
-        'cursor-pointer select-none',
+        // Glass-specific utilities
+        'glass-overlay-specular glass-parallax',
+        'glass-magnet glass-ripple glass-press',
         sizeStyles[size],
         variantStyles[variant]
       );

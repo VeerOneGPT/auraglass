@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { OptimizedGlass } from '../../primitives';
+import { cn } from '@/lib/utils';
 
 export type Language =
   | 'javascript'
@@ -171,16 +172,16 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
   // Get highlight color classes
   const getHighlightColor = (type: string) => {
     const colors = {
-      keywords: 'text-blue-400',
-      strings: 'text-green-400',
+      keywords: 'glass-text-blue-400',
+      strings: 'glass-text-green-400',
       comments: 'glass-text-secondary',
-      numbers: 'text-purple-400',
-      functions: 'text-yellow-400',
-      types: 'text-cyan-400',
-      properties: 'text-blue-300',
-      values: 'text-green-300',
-      selectors: 'text-orange-400',
-      keys: 'text-blue-300',
+      numbers: 'glass-text-purple-400',
+      functions: 'glass-text-yellow-400',
+      types: 'glass-text-cyan-400',
+      properties: 'glass-text-blue-300',
+      values: 'glass-text-green-300',
+      selectors: 'glass-text-orange-400',
+      keys: 'glass-text-blue-300',
     };
     return colors[type as keyof typeof colors] || 'glass-text-primary';
   };
@@ -258,29 +259,29 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
 
   return (
     <OptimizedGlass
-      className={`relative overflow-hidden ${className}`}
+      className={cn('glass-relative glass-overflow-hidden', className)}
       style={{ maxHeight, minHeight }}
       blur="medium"
       elevation={'level1'}
     >
       {/* Toolbar */}
-      <div className="flex items-center justify-between glass-p-3 border-b border-white/10">
-        <div className="flex items-center glass-gap-4">
-          <span className="glass-text-sm glass-text-primary/70 font-medium">
+      <div className={cn('glass-flex glass-items-center glass-justify-between glass-p-3 glass-border-b glass-border-white-10')}>
+        <div className={cn('glass-flex glass-items-center glass-gap-4')}>
+          <span className={cn('glass-text-sm glass-text-primary-70 glass-font-medium')}>
             {language.toUpperCase()}
           </span>
           {lineNumbers && (
-            <span className="glass-text-xs glass-text-primary/50">
+            <span className={cn('glass-text-xs glass-text-primary-50')}>
               Ln {cursorPosition.line}, Col {cursorPosition.column}
             </span>
           )}
         </div>
 
-        <div className="flex items-center glass-gap-2">
+        <div className={cn('glass-flex glass-items-center glass-gap-2')}>
           {!readOnly && (
             <>
               <button
-                className="glass-px-2 glass-py-1 glass-text-xs glass-text-primary/70 hover:glass-text-primary hover:bg-white/10 glass-radius-md transition-colors"
+                className={cn('glass-px-2 glass-py-1 glass-text-xs glass-text-primary-70 glass-hover-text-primary glass-hover-surface-subtle glass-radius-md glass-transition-colors')}
                 onClick={(e) => {
                   const textarea = textareaRef.current;
                   if (textarea) {
@@ -293,7 +294,7 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
                 Clear
               </button>
               <button
-                className="glass-px-2 glass-py-1 glass-text-xs glass-text-primary/70 hover:glass-text-primary hover:bg-white/10 glass-radius-md transition-colors"
+                className={cn('glass-px-2 glass-py-1 glass-text-xs glass-text-primary-70 glass-hover-text-primary glass-hover-surface-subtle glass-radius-md glass-transition-colors')}
                 onClick={(e) => {
                   navigator.clipboard?.writeText(currentValue);
                 }}
@@ -306,26 +307,27 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
       </div>
 
       {/* Editor Container */}
-      <div className="relative">
+      <div className={cn('glass-relative')}>
         {/* Syntax Highlighted Background */}
         <pre
           ref={preRef}
-          className={`absolute inset-0 glass-p-4 font-mono glass-text-sm overflow-auto pointer-events-none whitespace-pre-wrap break-words ${
-            wordWrap ? 'break-words' : 'whitespace-pre'
-          }`}
+          className={cn(
+            'glass-absolute glass-inset-0 glass-p-4 glass-font-mono glass-text-sm glass-overflow-auto glass-pointer-events-none glass-whitespace-pre-wrap glass-break-words',
+            wordWrap ? 'glass-break-words' : 'glass-whitespace-pre'
+          )}
           style={{ fontSize, lineHeight: '1.5' }}
         >
           <code
             dangerouslySetInnerHTML={{ __html: highlightedCode || placeholder }}
-            className={currentValue ? '' : 'glass-text-primary/30'}
+            className={cn(currentValue ? '' : 'glass-text-primary-30')}
           />
         </pre>
 
         {/* Line Numbers */}
         {lineNumbers && (
-          <div className="absolute left-0 top-0 bottom-0 w-12 bg-black/20 border-r border-white/10 glass-p-4 text-right glass-text-primary/50 glass-text-sm font-mono select-none">
+          <div className={cn('glass-absolute glass-left-0 glass-top-0 glass-bottom-0 glass-w-12 glass-surface-black-20 glass-border-r glass-border-white-10 glass-p-4 glass-text-right glass-text-primary-50 glass-text-sm glass-font-mono glass-select-none')}>
             {lines.map((_, index) => (
-              <div key={index} className="leading-6">
+              <div key={index} className={cn('glass-leading-6')}>
                 {index + 1}
               </div>
             ))}
@@ -344,9 +346,11 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
           onClick={updateCursorPosition}
           readOnly={readOnly}
           placeholder={placeholder}
-          className={`w-full glass-p-4 font-mono glass-text-sm bg-transparent text-transparent caret-white outline-none resize-none overflow-auto ${
-            wordWrap ? 'break-words' : 'whitespace-pre'
-          } ${lineNumbers ? 'pl-16' : ''}`}
+          className={cn(
+            'glass-w-full glass-p-4 glass-font-mono glass-text-sm glass-bg-transparent glass-text-transparent glass-caret-white glass-outline-none glass-resize-none glass-overflow-auto',
+            wordWrap ? 'glass-break-words' : 'glass-whitespace-pre',
+            lineNumbers ? 'glass-pl-16' : ''
+          )}
           style={{
             fontSize,
             lineHeight: '1.5',
@@ -374,24 +378,25 @@ export const GlassCodeEditorWithFiles: React.FC<{
   const currentFile = files.find(f => f.name === activeFile) || files[0];
 
   return (
-    <div className={`grid grid-cols-4 glass-gap-4 ${className}`}>
+    <div className={cn('glass-grid glass-grid-cols-4 glass-gap-4', className)}>
       {/* File Explorer */}
       <OptimizedGlass
-        className="col-span-1 glass-p-4"
+        className={cn('glass-col-span-1 glass-p-4')}
         blur="medium"
         elevation={'level1'}
       >
-        <h3 className="glass-text-sm font-semibold glass-text-primary glass-mb-4">Files</h3>
-        <div className="glass-gap-2">
+        <h3 className={cn('glass-text-sm glass-font-semibold glass-text-primary glass-mb-4')}>Files</h3>
+        <div className={cn('glass-gap-2')}>
           {files.map(file => (
             <button
               key={file.name}
               onClick={(e) => setActiveFile(file.name)}
-              className={`w-full text-left glass-px-3 glass-py-2 glass-radius-md glass-text-sm transition-colors ${
+              className={cn(
+                'glass-w-full glass-text-left glass-px-3 glass-py-2 glass-radius-md glass-text-sm glass-transition-colors',
                 activeFile === file.name
-                  ? 'bg-white/20 glass-text-primary'
-                  : 'glass-text-primary/70 hover:glass-text-primary hover:bg-white/10'
-              }`}
+                  ? 'glass-surface-elevated glass-text-primary'
+                  : 'glass-text-primary-70 glass-hover-text-primary glass-hover-surface-subtle'
+              )}
             >
               {file.name}
             </button>
@@ -400,7 +405,7 @@ export const GlassCodeEditorWithFiles: React.FC<{
       </OptimizedGlass>
 
       {/* Code Editor */}
-      <div className="col-span-3">
+      <div className={cn('glass-col-span-3')}>
         {currentFile && (
           <GlassCodeEditor
             value={currentFile.content}

@@ -4,7 +4,7 @@
  * FIX STORYBOOK 9.x ACTION ARGS
  * 
  * Automatically fixes "implicit action arg" warnings by:
- * 1. Adding `import { fn } from '@storybook/test'` to story files
+ * 1. Adding `import { fn } from '@storybook/jest'` to story files
  * 2. Converting implicit action props to explicit fn() calls
  */
 
@@ -48,15 +48,15 @@ storyFiles.forEach(filePath => {
     console.log(`🔍 Fixing ${path.basename(filePath)}...`);
 
     // 1. Add fn import if not already present
-    if (!content.includes('import { fn }') && !content.includes('from \'@storybook/test\'')) {
+    if (!content.includes('import { fn }') && !content.includes('from \'@storybook/jest\'')) {
       // Add import after existing imports
       const importRegex = /(import[^;]+;)\n(?!\s*import)/;
       if (content.match(importRegex)) {
-        content = content.replace(importRegex, '$1\nimport { fn } from \'@storybook/test\';\n');
+        content = content.replace(importRegex, '$1\nimport { fn } from \'@storybook/jest\';\n');
         hasChanges = true;
       } else {
         // Add at the top if no imports found
-        content = `import { fn } from '@storybook/test';\n${content}`;
+        content = `import { fn } from '@storybook/jest';\n${content}`;
         hasChanges = true;
       }
     }

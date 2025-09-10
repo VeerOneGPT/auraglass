@@ -1,5 +1,5 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { GlassVirtualList } from './GlassVirtualList';
 
 const meta: Meta<typeof GlassVirtualList> = {
@@ -54,7 +54,7 @@ export const Default: Story = {
       ),
       props: { index: i },
     })),
-    onEndReached: () => console.log('End reached'),
+    onEndReached: fn(),
   },
 };
 

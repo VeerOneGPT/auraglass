@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { OptimizedGlass } from '../../primitives';
+import { cn } from '@/lib/utils';
 
 export type DrawingTool = 'pen' | 'eraser' | 'rectangle' | 'circle' | 'line' | 'text' | 'select';
 
@@ -495,24 +496,25 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
 
   return (
     <OptimizedGlass
-      className={`relative ${className}`}
+      className={cn('glass-relative', className)}
       intent="neutral"
       elevation="level1"
     >
       {/* Toolbar */}
       {showToolbar && (
-        <div className="flex flex-wrap items-center glass-gap-2 glass-p-4 border-b border-white/10">
+        <div className={cn('glass-flex glass-flex-wrap glass-items-center glass-gap-2 glass-p-4 glass-border-b glass-border-white-10')}>
           {/* Tools */}
-          <div className="flex glass-gap-1">
+          <div className={cn('glass-flex glass-gap-1')}>
             {enabledTools.map(tool => (
               <button
                 key={tool}
                 onClick={(e) => handleToolChange(tool)}
-                className={`glass-px-3 glass-py-2 glass-radius-md glass-text-sm font-medium transition-colors ${
+                className={cn(
+                  'glass-px-3 glass-py-2 glass-radius-md glass-text-sm glass-font-medium glass-transition-colors',
                   currentTool === tool
-                    ? 'bg-white/20 glass-text-primary'
-                    : 'glass-text-primary/70 hover:glass-text-primary hover:bg-white/10'
-                }`}
+                    ? 'glass-surface-elevated glass-text-primary'
+                    : 'glass-text-primary-70 glass-hover-text-primary glass-hover-surface-subtle'
+                )}
               >
                 {tool.charAt(0).toUpperCase() + tool.slice(1)}
               </button>
@@ -520,38 +522,39 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
           </div>
 
           {/* Colors */}
-          <div className="flex glass-gap-1">
+          <div className={cn('glass-flex glass-gap-1')}>
             {availableColors.map(color => (
               <button
                 key={color}
                 onClick={(e) => handleColorChange(color)}
-                className={`w-8 h-8 glass-radius-md border-2 transition-all ${
+                className={cn(
+                  'glass-w-8 glass-h-8 glass-radius-md glass-border-2 glass-transition-all',
                   currentColor === color
-                    ? 'border-white scale-110'
-                    : 'border-white/30 hover:border-white/60'
-                }`}
+                    ? 'glass-border-white glass-scale-110'
+                    : 'glass-border-white-30 glass-hover-border-white-60'
+                )}
                 style={{ backgroundColor: color }}
               />
             ))}
           </div>
 
           {/* Brush Size */}
-          <div className="flex items-center glass-gap-2">
-            <span className="glass-text-sm glass-text-primary/70">Size:</span>
+          <div className={cn('glass-flex glass-items-center glass-gap-2')}>
+            <span className={cn('glass-text-sm glass-text-primary-70')}>Size:</span>
             <input
               type="range"
               min="1"
               max="20"
               value={brushSize}
               onChange={(e) => setBrushSize(Number(e.target.value))}
-              className="w-16"
+              className={cn('glass-w-16')}
             />
-            <span className="glass-text-sm glass-text-primary/70 w-6">{brushSize}</span>
+            <span className={cn('glass-text-sm glass-text-primary-70 glass-w-6')}>{brushSize}</span>
           </div>
 
           {/* Opacity */}
-          <div className="flex items-center glass-gap-2">
-            <span className="glass-text-sm glass-text-primary/70">Opacity:</span>
+          <div className={cn('glass-flex glass-items-center glass-gap-2')}>
+            <span className={cn('glass-text-sm glass-text-primary-70')}>Opacity:</span>
             <input
               type="range"
               min="0.1"
@@ -559,30 +562,30 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
               step="0.1"
               value={opacity}
               onChange={(e) => setOpacity(Number(e.target.value))}
-              className="w-16"
+              className={cn('glass-w-16')}
             />
-            <span className="glass-text-sm glass-text-primary/70 w-8">{(opacity * 100).toFixed(0)}%</span>
+            <span className={cn('glass-text-sm glass-text-primary-70 glass-w-8')}>{(opacity * 100).toFixed(0)}%</span>
           </div>
 
           {/* Actions */}
-          <div className="flex glass-gap-1 glass-ml-4">
+          <div className={cn('glass-flex glass-gap-1 glass-ml-4')}>
             <button
               onClick={clearCanvas}
-              className="glass-px-3 glass-py-2 glass-text-sm glass-text-primary/70 hover:glass-text-primary hover:bg-white/10 glass-radius-md transition-colors"
+              className={cn('glass-px-3 glass-py-2 glass-text-sm glass-text-primary-70 glass-hover-text-primary glass-hover-surface-subtle glass-radius-md glass-transition-colors')}
             >
               Clear
             </button>
             {selectedElements.size > 0 && (
               <button
                 onClick={deleteSelected}
-                className="glass-px-3 glass-py-2 glass-text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 glass-radius-md transition-colors"
+                className={cn('glass-px-3 glass-py-2 glass-text-sm glass-text-red-400 glass-hover-text-red-300 glass-hover-surface-red-10 glass-radius-md glass-transition-colors')}
               >
                 Delete Selected
               </button>
             )}
             <button
               onClick={exportAsImage}
-              className="glass-px-3 glass-py-2 glass-text-sm glass-text-primary/70 hover:glass-text-primary hover:bg-white/10 glass-radius-md transition-colors"
+              className={cn('glass-px-3 glass-py-2 glass-text-sm glass-text-primary-70 glass-hover-text-primary glass-hover-surface-subtle glass-radius-md glass-transition-colors')}
             >
               Export
             </button>
@@ -592,16 +595,16 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
 
       {/* Text Input Modal */}
       {currentShape && currentShape.type === 'text' && (
-        <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-20">
+        <div className={cn('glass-absolute glass-inset-0 glass-surface-black-50 glass-flex glass-items-center glass-justify-center glass-z-20')}>
           <OptimizedGlass
-            className="glass-p-6 max-w-sm w-full glass-mx-4"
+            className={cn('glass-p-6 glass-max-w-sm glass-w-full glass-mx-4')}
             blur="medium"
             elevation={'level2'}
           >
             <input
               autoFocus
               placeholder="Enter text..."
-              className="w-full glass-px-3 glass-py-2 bg-white/10 border border-white/20 glass-radius-md glass-text-primary placeholder-white/50 focus:outline-none focus:border-white/40"
+              className={cn('glass-w-full glass-px-3 glass-py-2 glass-surface-white-10 glass-border glass-border-white-20 glass-radius-md glass-text-primary glass-placeholder-white-50 glass-focus-outline-none glass-focus-border-white-40')}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   handleTextInput((e.target as HTMLInputElement).value);
@@ -617,14 +620,14 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
       {/* Canvas Container */}
       <div
         ref={containerRef}
-        className="relative overflow-hidden bg-black/20"
+        className={cn('glass-relative glass-overflow-hidden glass-surface-black-20')}
         style={{ width, height }}
       >
         <canvas
           ref={canvasRef}
           width={width}
           height={height}
-          className="absolute inset-0 cursor-crosshair"
+          className={cn('glass-absolute glass-inset-0 glass-cursor-crosshair')}
           onMouseDown={handleMouseDown}
           onMouseMove={handleMouseMove}
           onMouseUp={handleMouseUp}
@@ -635,7 +638,7 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
           ref={overlayCanvasRef}
           width={width}
           height={height}
-          className="absolute inset-0 pointer-events-none"
+          className={cn('glass-absolute glass-inset-0 glass-pointer-events-none')}
         />
       </div>
     </OptimizedGlass>

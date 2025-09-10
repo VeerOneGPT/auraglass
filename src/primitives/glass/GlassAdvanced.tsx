@@ -190,26 +190,23 @@ export const GlassAdvanced = forwardRef<HTMLDivElement, GlassProps>(
     // Ensure minimum touch target for interactive elements
     const touchTargetClasses = (isClickable || interactive) ? 'glass-touch-target' : '';
     
-    return (
-      <Component
-        ref={ref}
-        className={cn(classes, touchTargetClasses)}
-        role={computedRole}
-        tabIndex={computedTabIndex}
-        aria-disabled={disabled || undefined}
-        aria-label={ariaLabel}
-        aria-labelledby={ariaLabelledBy}
-        aria-describedby={ariaDescribedBy}
-        onClick={disabled ? undefined : onClick}
-        onKeyDown={handleKeyDown}
-        {...props}
-      >
-        {/* Slot layering: background → frost → content → chrome */}
-        <div className="glass-layer-frost" />
-        <div className="glass-layer-ink">
-          {children}
-        </div>
-      </Component>
+    return React.createElement(
+      Component,
+      {
+        ref,
+        className: cn(classes, touchTargetClasses),
+        role: computedRole,
+        tabIndex: computedTabIndex,
+        'aria-disabled': disabled || undefined,
+        'aria-label': ariaLabel,
+        'aria-labelledby': ariaLabelledBy,
+        'aria-describedby': ariaDescribedBy,
+        onClick: disabled ? undefined : onClick,
+        onKeyDown: handleKeyDown,
+        ...(props as any)
+      } as any,
+      React.createElement('div', { className: 'glass-layer-frost' }),
+      React.createElement('div', { className: 'glass-layer-ink' }, children)
     );
   }
 );

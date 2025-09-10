@@ -1,6 +1,6 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import ClearIcon from './ClearIcon';
+import { fn } from '@storybook/test';
 
 const meta: Meta<typeof ClearIcon> = {
   title: 'Components/Icons/ClearIcon',
@@ -26,15 +26,12 @@ const meta: Meta<typeof ClearIcon> = {
       control: 'color',
       description: 'Icon color',
     },
-    onClick: {
-      action: 'clicked',
-      description: 'Click handler',
-    },
   },
   args: {
     className: '',
     size: 24,
     color: '#ffffff',
+    onClick: fn(),
   },
 };
 

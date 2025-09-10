@@ -4,13 +4,13 @@
  */
 
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import React, { useState } from 'react';
 import {
-  GlassPredictiveEngineProvider,
-  GlassPredictionIndicator,
-  usePredictiveEngine,
-  useInteractionRecorder,
-  predictiveEnginePresets,
+    GlassPredictionIndicator,
+    GlassPredictiveEngineProvider,
+    useInteractionRecorder,
+    usePredictiveEngine
 } from './GlassPredictiveEngine';
 
 const meta: Meta<typeof GlassPredictiveEngineProvider> = {
@@ -45,9 +45,10 @@ The Predictive Engine observes user interactions and builds behavioral models to
       },
     },
   },
-  argTypes: {
-    onPrediction: { action: 'prediction generated' },
-    onInsight: { action: 'insight generated' },
+  argTypes: {},
+  args: {
+    onPrediction: fn(),
+    onInsight: fn(),
   },
   tags: ['autodocs'],
 };
@@ -262,14 +263,6 @@ export const Interactive: Story = {
       <GlassPredictionIndicator showInsights={true} maxPredictions={5} />
     </GlassPredictiveEngineProvider>
   ),
-  args: {
-    onPrediction: (prediction) => {
-      console.log('🔮 AI Prediction:', prediction);
-    },
-    onInsight: (insight) => {
-      console.log('💡 AI Insight:', insight);
-    },
-  },
 };
 
 export const Conservative: Story = {

@@ -1,6 +1,7 @@
 import React, { useRef, useMemo } from 'react';
 import { useGlassFocus } from '../../hooks/extended/useGlassFocus';
 import type { GlassFocusRingProps } from '../interactive/types';
+import { cn } from '@/lib/utils';
 // No longer need mergeRefs if attaching ref to wrapper div
 // import { mergeRefs } from '../../utils/refUtils'; 
 
@@ -38,10 +39,8 @@ export const GlassFocusRing: React.FC<GlassFocusRingProps> = ({
     // Wrapper div to capture focus and position the ring
     <div
       ref={wrapperRef}
+      className={cn('glass-relative glass-inline-block glass-outline-none')}
       style={{
-        position: 'relative' as const, // Needed for absolute positioning of the ring
-        display: 'inline-block', // Or 'block' depending on desired layout
-        outline: 'none', // Hide potential default outline on the wrapper
         ...focusRingStyles,
       } as React.CSSProperties}
       // Important: Make the wrapper div focusable

@@ -1,0 +1,68 @@
+/* Glass Focus Indicators Styles */
+
+.skip-links {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip-link:focus {
+  position: fixed !important;
+  left: 1rem !important;
+  top: 1rem !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  z-index: 999999 !important;
+}
+
+/* Focus ring styles */
+.glass-focus-ring {
+  position: absolute;
+  pointer-events: none;
+  border-radius: inherit;
+  transition: all 0.2s ease-out;
+  z-index: 999;
+}
+
+.glass-focus-ring.visible {
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+}
+
+.glass-focus-ring.glass {
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.2),
+    0 0 0 4px rgba(59, 130, 246, 0.3),
+    0 4px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(8px);
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .glass-focus-ring.visible {
+    box-shadow: 0 0 0 3px #000;
+  }
+
+  .glass-focus-ring.glass {
+    box-shadow:
+      0 0 0 2px #fff,
+      0 0 0 4px #000,
+      0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .glass-focus-ring {
+    transition: none;
+  }
+}

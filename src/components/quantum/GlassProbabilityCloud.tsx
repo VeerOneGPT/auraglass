@@ -6,6 +6,7 @@ import { OptimizedGlass } from '../../primitives'
 import { useA11yId } from '../../utils/a11y'
 import { useMotionPreference } from '../../hooks/useMotionPreference'
 import { createGlassStyle } from '../../utils/createGlassStyle'
+import { cn } from '@/lib/utilsComprehensive'
 
 export interface ProbabilityPoint {
   id: string
@@ -371,10 +372,10 @@ export const GlassProbabilityCloud = forwardRef<HTMLDivElement, GlassProbability
           {/* Header */}
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-semibold text-white/90">
+              <h2 className={cn("glass-text-xl glass-font-semibold glass-text-primary")}>
                 Probability Cloud
               </h2>
-              <p className="text-sm text-white/60">
+              <p className={cn("glass-text-sm glass-text-secondary")}>
                 {particles.length} quantum states
               </p>
             </div>
@@ -385,17 +386,17 @@ export const GlassProbabilityCloud = forwardRef<HTMLDivElement, GlassProbability
                 className={`
                   px-3 py-1 rounded text-sm font-medium transition-colors duration-200
                   ${createGlassStyle({ variant: 'default' })}
-                  border border-white/20
+                  glass-border-subtle
                   ${isObserved 
-                    ? 'text-red-300 border-red-400/30' 
-                    : 'text-white/70 hover:text-white'
+                    ? 'glass-text-danger glass-border-danger' 
+                    : 'glass-text-secondary hover:glass-text-primary'
                   }
                 `}
               >
                 {isObserved ? '👁️ Observing' : '👁️‍🗨️ Observe'}
               </button>
               
-              <div className="text-sm text-white/50">
+              <div className={cn("glass-text-sm glass-text-muted")}>
                 t: {quantumTime.toFixed(1)}
               </div>
             </div>
@@ -407,7 +408,7 @@ export const GlassProbabilityCloud = forwardRef<HTMLDivElement, GlassProbability
               ref={canvasRef}
               width={width}
               height={height}
-              className="border border-white/20 rounded-lg cursor-crosshair bg-black/20"
+              className={cn("glass-border-subtle glass-radius-lg glass-cursor-crosshair glass-surface-overlay")}
               onClick={handleCanvasClick}
               onMouseEnter={() => setIsObserved(true)}
               onMouseLeave={() => setIsObserved(false)}
@@ -429,51 +430,51 @@ export const GlassProbabilityCloud = forwardRef<HTMLDivElement, GlassProbability
                   exit={{ opacity: 0 }}
                   transition={{ duration: 1 }}
                 >
-                  <div className="w-4 h-4 border-2 border-red-400 rounded-full" />
+                  <div className={cn("glass-w-4 glass-h-4 glass-border-2 glass-border-danger glass-radius-full")} />
                 </motion.div>
               ))}
             </AnimatePresence>
           </div>
 
           {/* Quantum statistics */}
-          <div className={`
-            p-4 rounded-lg border border-white/10 space-y-3
-            ${createGlassStyle({ variant: 'default' })}
-          `}>
+          <div className={cn(
+            "glass-p-4 glass-radius-lg glass-border-subtle glass-space-y-3",
+            createGlassStyle({ variant: 'default' })
+          )}>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <span className="text-white/60">Uncertainty:</span>
-                <div className="flex items-center space-x-2 mt-1">
-                  <div className="flex-1 h-2 bg-white/20 rounded-full overflow-hidden">
+                <span className={cn("glass-text-secondary")}>Uncertainty:</span>
+                <div className={cn("glass-flex glass-items-center glass-space-x-2 glass-mt-1")}>
+                  <div className={cn("glass-flex-1 glass-h-2 glass-surface-muted glass-radius-full glass-overflow-hidden")}>
                     <motion.div
-                      className="h-full bg-gradient-to-r from-blue-400 to-red-400 rounded-full"
+                      className={cn("glass-h-full glass-gradient-primary glass-radius-full")}
                       animate={{ width: `${Math.min(100, totalUncertainty * 100)}%` }}
                       transition={{ duration: 0.3 }}
                     />
                   </div>
-                  <span className="text-white/90 text-xs">
+                  <span className={cn("glass-text-primary glass-text-xs")}>
                     {(totalUncertainty * 100).toFixed(1)}%
                   </span>
                 </div>
               </div>
 
               <div>
-                <span className="text-white/60">Avg Probability:</span>
-                <div className="text-white/90 font-medium">
+                <span className={cn("glass-text-secondary")}>Avg Probability:</span>
+                <div className={cn("glass-text-primary glass-font-medium")}>
                   {(averageProbability * 100).toFixed(1)}%
                 </div>
               </div>
 
               <div>
-                <span className="text-white/60">Coherence:</span>
-                <div className="text-white/90 font-medium">
+                <span className={cn("glass-text-secondary")}>Coherence:</span>
+                <div className={cn("glass-text-primary glass-font-medium")}>
                   {Math.max(0, Math.min(100, quantumCoherence * 100)).toFixed(1)}%
                 </div>
               </div>
 
               <div>
-                <span className="text-white/60">Measurements:</span>
-                <div className="text-white/90 font-medium">
+                <span className={cn("glass-text-secondary")}>Measurements:</span>
+                <div className={cn("glass-text-primary glass-font-medium")}>
                   {measurements.length}
                 </div>
               </div>
@@ -482,12 +483,12 @@ export const GlassProbabilityCloud = forwardRef<HTMLDivElement, GlassProbability
             {/* Recent measurements */}
             {measurements.length > 0 && (
               <div className="space-y-1">
-                <span className="text-white/60 text-sm">Recent Measurements:</span>
+                <span className={cn("glass-text-secondary glass-text-sm")}>Recent Measurements:</span>
                 <div className="flex flex-wrap gap-1">
                   {measurements.slice(-5).map(measurement => (
                     <div
                       key={measurement.timestamp}
-                      className="px-2 py-1 text-xs bg-white/10 rounded border border-white/20"
+                      className={cn("glass-px-2 glass-py-1 glass-text-xs glass-surface-muted glass-radius glass-border-subtle")}
                     >
                       P: {(measurement.point.probability * 100).toFixed(0)}%
                       {measurement.uncertainty > 0.5 && (
@@ -501,7 +502,7 @@ export const GlassProbabilityCloud = forwardRef<HTMLDivElement, GlassProbability
           </div>
 
           {/* Controls */}
-          <div className="flex items-center justify-between text-sm text-white/50">
+          <div className={cn("glass-flex glass-items-center glass-justify-between glass-text-sm glass-text-muted")}>
             <span>Click particles to measure • Hover to observe</span>
             <div className="flex items-center space-x-4">
               {uncertaintyPrinciple && (
@@ -518,7 +519,7 @@ export const GlassProbabilityCloud = forwardRef<HTMLDivElement, GlassProbability
               )}
               {realTimeMode && (
                 <span className="flex items-center space-x-1 text-green-400">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                  <div className={cn("glass-w-2 glass-h-2 glass-surface-success glass-radius-full glass-animate-pulse")} />
                   <span>Live</span>
                 </span>
               )}

@@ -362,20 +362,20 @@ export const Box = forwardRef<HTMLDivElement, BoxProps>((props, ref) => {
     );
   }
 
-  return (
-    <Component
-      ref={ref}
-      className={cn(
+  return React.createElement(
+    Component,
+    {
+      ref,
+      className: cn(
         combinedClassName,
         // Motion preferences - temporarily disabled
         // shouldRespectMotion && 'motion-safe:transition-all motion-reduce:transition-none'
-      )}
-      style={combinedStyle}
-      onClick={onClick}
-      {...rest}
-    >
-      {children}
-    </Component>
+      ),
+      style: combinedStyle,
+      onClick,
+      ...(rest as any)
+    } as any,
+    children
   );
 });
 

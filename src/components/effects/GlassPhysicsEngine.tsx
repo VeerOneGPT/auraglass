@@ -4,6 +4,7 @@
  */
 
 import React, { useRef, useEffect, useCallback, useState } from 'react';
+import { cn } from '@/lib/utilsComprehensive';
 import { motion, useAnimation, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 // Physics simulation parameters
@@ -400,7 +401,7 @@ export const GlassPhysicsEngine: React.FC<GlassPhysicsEngineProps> = ({
   return (
     <motion.div
       ref={containerRef}
-      className={`relative overflow-hidden ${className}`}
+      className={cn("glass-relative glass-overflow-hidden", className)}
       style={{
         perspective: '1000px',
         transformStyle: 'preserve-3d',
@@ -414,7 +415,7 @@ export const GlassPhysicsEngine: React.FC<GlassPhysicsEngineProps> = ({
       {/* Particle canvas */}
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 pointer-events-none z-10"
+        className={cn("glass-absolute glass-inset-0 glass-pointer-events-none glass-z-10")}
         style={{ mixBlendMode: 'screen' }}
       />
       
@@ -425,15 +426,15 @@ export const GlassPhysicsEngine: React.FC<GlassPhysicsEngineProps> = ({
           rotateY,
           transformStyle: 'preserve-3d',
         }}
-        className="relative z-0"
+        className={cn("glass-relative glass-z-0")}
       >
         {children}
       </motion.div>
       
       {/* Interaction indicators */}
       {isAnimating && (
-        <div className="absolute inset-0 pointer-events-none z-20">
-          <div className="absolute inset-0 bg-gradient-radial from-white/10 via-transparent to-transparent opacity-50 animate-pulse" />
+        <div className={cn("glass-absolute glass-inset-0 glass-pointer-events-none glass-z-20")}>
+          <div className={cn("glass-absolute glass-inset-0 glass-bg-gradient-radial glass-from-white/10 glass-via-transparent glass-to-transparent glass-opacity-50 glass-animate-pulse")} />
         </div>
       )}
     </motion.div>

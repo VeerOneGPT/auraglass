@@ -288,13 +288,56 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
   // Determine if we're using physics-based animations
   const enablePhysicsAnimation = animation.physicsEnabled && !isReducedMotion;
 
-  // Simple animation state (placeholder for physics animation)
+  // Animation state management with physics support
+  const [animationValues, setAnimationValues] = useState<Record<string, number>>({});
   const [isAnimating, setIsAnimating] = useState(false);
-  const animate = (key: string, from: number, to: number, duration?: number) => {
+  
+  const animate = (key: string, from: number, to: number, duration: number = 500) => {
     setIsAnimating(true);
-    setTimeout(() => setIsAnimating(false), duration || 500);
+    setAnimationValues(prev => ({ ...prev, [key]: from }));
+    
+    if (enablePhysicsAnimation) {
+      // Use spring physics animation
+      const startTime = Date.now();
+      const animateFrame = () => {
+        const elapsed = Date.now() - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // Spring easing function
+        const easeSpring = (t: number) => {
+          return 1 - Math.pow(1 - t, 3) * Math.cos(t * Math.PI * 2);
+        };
+        
+        const currentValue = from + (to - from) * easeSpring(progress);
+        setAnimationValues(prev => ({ ...prev, [key]: currentValue }));
+        
+        if (progress < 1) {
+          requestAnimationFrame(animateFrame);
+        } else {
+          setIsAnimating(false);
+        }
+      };
+      requestAnimationFrame(animateFrame);
+    } else {
+      // Simple linear animation
+      const steps = 60;
+      const stepValue = (to - from) / steps;
+      let currentStep = 0;
+      
+      const interval = setInterval(() => {
+        currentStep++;
+        const currentValue = from + stepValue * currentStep;
+        setAnimationValues(prev => ({ ...prev, [key]: currentValue }));
+        
+        if (currentStep >= steps) {
+          clearInterval(interval);
+          setIsAnimating(false);
+        }
+      }, duration / steps);
+    }
   };
-  const getValue = (key: string) => 1;
+  
+  const getValue = (key: string) => animationValues[key] ?? 1;
   
   // Chart insights and pattern analysis
   useEffect(() => {

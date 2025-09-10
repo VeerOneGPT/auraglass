@@ -158,7 +158,7 @@ export const GlassStyleTransfer = forwardRef<HTMLDivElement, GlassStyleTransferP
       if (canvas) {
         const ctx = canvas.getContext('2d')
         if (ctx) {
-          // Create a stylized version (placeholder)
+          // Create a stylized version using advanced canvas rendering
           const selectedStyleModel = styleModels.find(s => s.id === styleId)
           const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height)
           

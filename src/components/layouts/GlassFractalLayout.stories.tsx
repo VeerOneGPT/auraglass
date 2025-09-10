@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import {
     Bell,
     Code,
@@ -501,7 +502,7 @@ export const InteractiveDemo: Story = {
     branchAngle: 30,
     animateGrowth: true,
     interactiveZoom: true,
-    onNodeClick: (node) => console.log('Clicked:', node.id),
-    onNodeHover: (node) => console.log('Hovered:', node?.id || 'none'),
+    onNodeClick: fn(),
+    onNodeHover: fn(),
   },
 };

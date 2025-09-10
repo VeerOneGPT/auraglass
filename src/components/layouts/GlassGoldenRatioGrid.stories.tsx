@@ -1,25 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { GlassGoldenRatioGrid, type GoldenRatioItem } from './GlassGoldenRatioGrid';
-import { 
-  Home, 
-  Settings, 
-  User, 
-  Mail, 
-  Search, 
-  Bell, 
-  Heart, 
-  Share,
-  Camera,
-  Music,
-  Video,
-  Image,
-  FileText,
-  Calendar,
-  Clock,
-  Star,
-  Trophy,
-  Gift
+import { fn } from '@storybook/test';
+import {
+    Bell,
+    Calendar,
+    Camera,
+    Clock,
+    FileText,
+    Gift,
+    Home,
+    Image,
+    Mail,
+    Music,
+    Search,
+    Settings,
+    Star,
+    Trophy,
+    User,
+    Video
 } from 'lucide-react';
+import { GlassGoldenRatioGrid, type GoldenRatioItem } from './GlassGoldenRatioGrid';
 
 // Basic content items
 const basicItems: GoldenRatioItem[] = [
@@ -620,8 +619,8 @@ export const InteractiveDemo: Story = {
     containerHeight: 700,
     showRatioLines: true,
     showGrid: true,
-    onItemClick: (item) => console.log('Clicked:', item.id),
-    onItemHover: (item) => console.log('Hovered:', item?.id || 'none'),
-    onLayoutChange: (sections) => console.log('Layout changed:', sections.length, 'sections'),
+    onItemClick: fn(),
+    onItemHover: fn(),
+    onLayoutChange: fn(),
   },
 };

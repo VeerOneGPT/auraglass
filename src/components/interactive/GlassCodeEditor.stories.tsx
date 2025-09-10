@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassCodeEditor, GlassCodeEditorWithFiles } from './GlassCodeEditor';
-import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassCodeEditor> = {
   title: 'Components/Interactive/GlassCodeEditor',
@@ -93,7 +92,7 @@ export const WithFiles: Story = {
           language: 'typescript'
         }
       ]}
-      onFileChange={fn()}
+      onFileChange={(...args) => console.log('Mock function called', ...args)}
     />
   ),
   args: {},
@@ -124,7 +123,7 @@ export const MultiFileProject: Story = {
           language: 'markdown'
         }
       ]}
-      onFileChange={fn()}
+      onFileChange={(...args) => console.log('Mock function called', ...args)}
     />
   ),
   args: {},

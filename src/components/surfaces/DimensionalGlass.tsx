@@ -91,7 +91,13 @@ export const DimensionalGlass = forwardRef<HTMLDivElement, DimensionalGlassProps
             ior={materialProps?.ior || 1.52}
             thickness={materialProps?.thickness || (depth * 20 + 8)}
             tint={materialProps?.tint || { r: 0, g: 0, b: 0, a: depth * 0.05 + 0.03 }}
-            variant={(materialProps?.variant === 'clear' ? 'clear' : 'regular') as 'regular' | 'clear'}
+            variant={
+              materialProps?.variant === 'clear'
+                ? 'clear' as const
+                : materialProps?.variant === 'regular'
+                ? 'regular' as const
+                : 'regular' as const
+            }
             quality={materialProps?.quality || 'ultra'}
             environmentAdaptation
             motionResponsive
@@ -129,7 +135,7 @@ export const DimensionalGlass = forwardRef<HTMLDivElement, DimensionalGlassProps
             data-liquid-glass-dimensional="true"
             data-dimensional-depth={depth}
             data-dimensional-elevation={elevation}
-            {...rest}
+            {...Object.fromEntries(Object.entries(rest).filter(([key]) => key !== 'variant'))}
           >
             {children}
           </LiquidGlassMaterial>

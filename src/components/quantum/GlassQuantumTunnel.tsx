@@ -6,6 +6,7 @@ import { OptimizedGlass } from '../../primitives'
 import { useA11yId } from '../../utils/a11y'
 import { useMotionPreference } from '../../hooks/useMotionPreference'
 import { createGlassStyle } from '../../utils/createGlassStyle'
+import { cn } from '@/lib/utilsComprehensive'
 
 export interface QuantumState {
   id: string

@@ -5,11 +5,15 @@ import React, { forwardRef } from 'react';
 import { OptimizedGlassCore as OptimizedGlass, type OptimizedGlassProps } from '../../primitives';
 import { LiquidGlassMaterial } from '../../primitives/LiquidGlassMaterial';
 
-export interface GlassCardProps extends Omit<OptimizedGlassProps, 'variant'> {
+export interface GlassCardProps extends Omit<OptimizedGlassProps, 'variant' | 'tint'> {
   /**
    * Card variant style
    */
   variant?: 'default' | 'outlined' | 'elevated' | 'interactive' | 'feature' | 'minimal' | 'primary' | 'outline';
+  /**
+   * Tint color (for liquid glass material)
+   */
+  tint?: string | { r: number; g: number; b: number; a: number };
   /**
    * Card size
    */
@@ -62,6 +66,7 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
       disabled = false,
       material = 'glass',
       materialProps,
+      tint,
       interactive,
       className,
       children,
@@ -102,7 +107,13 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
         ior={materialProps?.ior || (variant === 'elevated' ? 1.48 : variant === 'feature' ? 1.50 : 1.45)}
         thickness={materialProps?.thickness || (size === 'sm' ? 8 : size === 'md' ? 12 : size === 'lg' ? 16 : 20)}
         tint={
-          materialProps?.tint || (variant === 'primary' ? { r: 59, g: 130, b: 246, a: 0.08 } : { r: 0, g: 0, b: 0, a: 0.06 })
+          materialProps?.tint && typeof materialProps.tint === 'object' && 'r' in materialProps.tint
+            ? materialProps.tint as { r: number; g: number; b: number; a: number }
+            : tint && typeof tint === 'object' && 'r' in tint
+            ? tint as { r: number; g: number; b: number; a: number }
+            : variant === 'primary'
+            ? { r: 59, g: 130, b: 246, a: 0.08 }
+            : { r: 0, g: 0, b: 0, a: 0.06 }
         }
         variant={materialProps?.variant || 'regular'}
         quality={materialProps?.quality || (variant === 'feature' ? 'ultra' : 'high')}

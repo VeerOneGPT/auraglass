@@ -1,7 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassCommand } from './GlassCommand';
-import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassCommand> = {
   title: 'Components/Interactive/GlassCommand',
@@ -50,28 +49,28 @@ export const Default: Story = {
         id: '1',
         label: 'Create new file',
         description: 'Create a new file in the current directory',
-        action: fn(),
+        action: (...args) => console.log('Mock function called', ...args),
         group: 'File',
       },
       {
         id: '2',
         label: 'Open file',
         description: 'Open an existing file',
-        action: fn(),
+        action: (...args) => console.log('Mock function called', ...args),
         group: 'File',
       },
       {
         id: '3',
         label: 'Search',
         description: 'Search for files and content',
-        action: fn(),
+        action: (...args) => console.log('Mock function called', ...args),
         group: 'Navigation',
       },
       {
         id: '4',
         label: 'Settings',
         description: 'Open application settings',
-        action: fn(),
+        action: (...args) => console.log('Mock function called', ...args),
         group: 'Application',
       },
     ],
@@ -84,37 +83,37 @@ export const WithGroups: Story = {
       {
         id: '1',
         label: 'New Document',
-        action: fn(),
+        action: (...args) => console.log('Mock function called', ...args),
         group: 'File Operations',
       },
       {
         id: '2',
         label: 'Open Recent',
-        action: fn(),
+        action: (...args) => console.log('Mock function called', ...args),
         group: 'File Operations',
       },
       {
         id: '3',
         label: 'Save',
-        action: fn(),
+        action: (...args) => console.log('Mock function called', ...args),
         group: 'File Operations',
       },
       {
         id: '4',
         label: 'Cut',
-        action: fn(),
+        action: (...args) => console.log('Mock function called', ...args),
         group: 'Edit',
       },
       {
         id: '5',
         label: 'Copy',
-        action: fn(),
+        action: (...args) => console.log('Mock function called', ...args),
         group: 'Edit',
       },
       {
         id: '6',
         label: 'Paste',
-        action: fn(),
+        action: (...args) => console.log('Mock function called', ...args),
         group: 'Edit',
       },
     ],

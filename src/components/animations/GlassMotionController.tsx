@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, createContext, useContext, forwardRef, ReactNode } from 'react';
+import { cn } from '@/lib/utilsComprehensive';
 import { OptimizedGlass } from '../../primitives';
 import { useA11yId, prefersReducedMotion, announceToScreenReader } from '../../utils/a11y';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
@@ -456,7 +457,7 @@ export const GlassAnimated = forwardRef<HTMLDivElement, GlassAnimatedProps>((
     >
       {children}
       {shouldReduceMotion && (
-        <div id={`${animatedId}-motion-notice`} className="sr-only">
+        <div id={`${animatedId}-motion-notice`} className={cn("glass-sr-only")}>
           Motion animations are disabled due to accessibility preferences
         </div>
       )}
@@ -542,7 +543,7 @@ export const GlassAnimationSequence = forwardRef<HTMLDivElement, GlassAnimationS
     >
       {children}
       {shouldReduceMotion && (
-        <div id={`${sequenceId}-motion-notice`} className="sr-only">
+        <div id={`${sequenceId}-motion-notice`} className={cn("glass-sr-only")}>
           Sequential animations are disabled due to accessibility preferences
         </div>
       )}
@@ -685,7 +686,7 @@ export const GlassAnimationTimeline = forwardRef<HTMLDivElement, GlassAnimationT
     >
       {children}
       {shouldReduceMotion && (
-        <div id={`${timelineId}-motion-notice`} className="sr-only">
+        <div id={`${timelineId}-motion-notice`} className={cn("glass-sr-only")}>
           Timeline animations are disabled due to accessibility preferences
         </div>
       )}

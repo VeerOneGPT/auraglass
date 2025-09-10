@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect, useCallback, useMemo, useState } from 'react';
+import { cn } from '../../lib/utilsComprehensive';
 import { LIQUID_GLASS, type LiquidGlassMaterial, type MaterialVariant } from '../../tokens/glass';
 
 // WebGL shader sources for Liquid Glass effects
@@ -662,14 +663,12 @@ export const LiquidGlassGPURenderer: React.FC<LiquidGlassGPUProps> = ({
     return (
       <div
         ref={containerRef}
-        className={`liquid-glass-cpu-fallback ${className || ''}`}
+        className={cn('glass-surface-primary glass-blur-backdrop glass-relative glass-overflow-hidden', className)}
         style={{
           backdropFilter: `blur(${thickness * 2}px) saturate(${1.8 + (ior - 1) * 0.5}) brightness(${1.15 + thickness * 0.01})`,
           WebkitBackdropFilter: `blur(${thickness * 2}px) saturate(${1.8 + (ior - 1) * 0.5}) brightness(${1.15 + thickness * 0.01})`,
           background: `linear-gradient(135deg, rgba(255,255,255,${0.15 + sheen * 0.05}) 0%, rgba(255,255,255,${0.05 + sheen * 0.02}) 100%)`,
           border: `1px solid rgba(255,255,255,${0.3 + sheen * 0.1})`,
-          position: 'relative',
-          overflow: 'hidden',
         }}
       >
         {children}
@@ -680,15 +679,14 @@ export const LiquidGlassGPURenderer: React.FC<LiquidGlassGPUProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`liquid-glass-gpu relative ${className || ''}`}
-      style={{ position: 'relative', overflow: 'hidden' }}
+      className={cn('glass-surface-primary glass-relative glass-overflow-hidden', className)}
     >
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none"
+        className={cn('glass-absolute glass-inset-0 glass-w-full glass-h-full glass-pointer-events-none')}
         style={{ zIndex: 1 }}
       />
-      <div className="relative z-10">
+      <div className={cn('glass-relative glass-z-10')}>
         {children}
       </div>
     </div>

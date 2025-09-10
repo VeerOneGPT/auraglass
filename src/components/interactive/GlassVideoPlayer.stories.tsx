@@ -1,7 +1,6 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { GlassVideoPlayer } from './GlassVideoPlayer';
 import { fn } from '@storybook/test';
+import { GlassVideoPlayer } from './GlassVideoPlayer';
 
 const meta: Meta<typeof GlassVideoPlayer> = {
   title: 'Components/Interactive/GlassVideoPlayer',

@@ -24,11 +24,13 @@
   --typography-caption-line-height: 1.4;
   --typography-caption-opacity: 0.88;
 
-  /* Enhanced text colors for glass backgrounds */
-  --typography-text-primary: rgba(255,255,255,0.98);
-  --typography-text-secondary: rgba(255,255,255,0.88);
-  --typography-text-tertiary: rgba(255,255,255,0.75);
-  --typography-text-disabled: rgba(255,255,255,0.5);
+  /* Enhanced text colors for glass backgrounds
+     IMPORTANT: These now mirror the theme-aware glass text tokens so
+     contrast adapts correctly in light/dark and per-surface overrides. */
+  --typography-text-primary: var(--glass-text-primary);
+  --typography-text-secondary: var(--glass-text-secondary);
+  --typography-text-tertiary: var(--glass-text-tertiary);
+  --typography-text-disabled: var(--glass-text-disabled);
   
   /* Interactive text colors */
   --typography-text-link: rgba(59,130,246,0.9);
@@ -81,34 +83,5 @@
 .glass-text-success { color: var(--typography-text-success) !important; }
 .glass-text-warning { color: var(--typography-text-warning) !important; }
 
-/* Override common text color issues */
-.glass-surface,
-.glass-surface * {
-  color: var(--typography-text-primary) !important;
-}
-
-.glass-surface .secondary {
-  color: var(--typography-text-secondary) !important;
-}
-
-.glass-surface .caption {
-  color: var(--typography-text-secondary) !important;
-  opacity: var(--typography-caption-opacity) !important;
-}
-
-/* Ensure high contrast on glass backgrounds */
-*[class*="glass"] {
-  color: var(--typography-text-primary);
-}
-
-*[class*="glass"] .secondary,
-*[class*="glass"] [class*="secondary"] {
-  color: var(--typography-text-secondary);
-}
-
-/* Override any remaining black text issues */
-*[class*="glass"] *[style*="color: black"],
-*[class*="glass"] *[style*="color: #000"],
-*[class*="glass"] *[style*="color: rgba(0,0,0"] {
-  color: var(--typography-text-primary) !important;
-}
+/* Keep utilities minimal and theme-aware. Components should rely on
+   --glass-text-* variables which can be overridden per-surface. */

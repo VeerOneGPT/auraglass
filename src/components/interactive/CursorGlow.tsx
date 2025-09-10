@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, forwardRef } from 'react';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useA11yId } from '../../utils/a11y';
+import { cn } from '@/lib/utils';
 
 export interface CursorGlowProps {
   size?: number; // diameter in px
@@ -93,17 +94,17 @@ export const CursorGlow = forwardRef<HTMLDivElement, CursorGlowProps>((
     <div
       ref={combinedRef}
       id={componentId}
-      className={className}
+      className={cn(
+        global ? 'glass-fixed' : 'glass-absolute',
+        'glass-inset-0 glass-pointer-events-none glass-z-2',
+        className
+      )}
       aria-hidden={!ariaLabel}
       aria-label={ariaLabel}
       role={ariaLabel ? "img" : undefined}
       style={{
-        position: global ? 'fixed' : 'absolute',
-        inset: 0,
-        pointerEvents: 'none',
         mixBlendMode: 'screen',
         filter: `blur(${Math.round(size / 16)}px) saturate(${100 + intensity * 60}%)`,
-        zIndex: 2,
       }}
       {...props}
     />

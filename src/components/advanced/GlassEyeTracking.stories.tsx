@@ -4,14 +4,14 @@
  */
 
 import type { Meta, StoryObj } from '@storybook/react';
-import React, { useState } from 'react';
+import { fn } from '@storybook/test';
+import { useState } from 'react';
 import {
-  GlassEyeTrackingProvider,
-  GlassEyeTrackingCalibration,
-  GlassGazeResponsive,
-  GlassGazeVisualization,
-  useEyeTracking,
-  eyeTrackingPresets,
+    GlassEyeTrackingCalibration,
+    GlassEyeTrackingProvider,
+    GlassGazeResponsive,
+    GlassGazeVisualization,
+    useEyeTracking
 } from './GlassEyeTracking';
 
 const meta: Meta<typeof GlassEyeTrackingProvider> = {
@@ -59,7 +59,9 @@ Gaze-responsive glass effects using WebGazer.js for camera-based eye tracking.
       control: 'boolean',
       description: 'Automatically initialize eye tracking on load',
     },
-    onGazeInteraction: { action: 'gaze interaction detected' },
+  },
+  args: {
+    onGazeInteraction: fn(),
   },
   tags: ['autodocs'],
 };
@@ -237,9 +239,7 @@ export const Interactive: Story = {
   ),
   args: {
     autoInitialize: false,
-    onGazeInteraction: (interaction) => {
-      console.log('👁️ Gaze Interaction:', interaction);
-    },
+    onGazeInteraction: fn(),
   },
 };
 
@@ -267,9 +267,7 @@ export const WithCalibration: Story = {
   ),
   args: {
     autoInitialize: true,
-    onGazeInteraction: (interaction) => {
-      console.log('👁️ Gaze Interaction:', interaction);
-    },
+    onGazeInteraction: fn(),
   },
   parameters: {
     docs: {

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, forwardRef, useImperativeHandle } f
 import { OptimizedGlass } from '../../primitives';
 import { useA11yId } from '../../utils/a11y';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
+import { cn } from '@/lib/utils';
 
 export interface GlassAnimatedNumberProps {
   /** The target number to animate to */
@@ -72,8 +73,8 @@ export const GlassAnimatedNumber = forwardRef<HTMLDivElement, GlassAnimatedNumbe
   const sizeClasses = {
     sm: 'glass-text-lg',
     md: 'glass-text-2xl',
-    lg: 'text-4xl',
-    xl: 'text-6xl',
+    lg: 'glass-text-4xl',
+    xl: 'glass-text-6xl',
   };
 
   // Format number with separators and decimals
@@ -172,12 +173,12 @@ export const GlassAnimatedNumber = forwardRef<HTMLDivElement, GlassAnimatedNumbe
   return (
     <OptimizedGlass
       ref={elementRef}
-      className={`inline-flex items-center justify-center font-mono font-bold glass-text-primary ${sizeClasses[size]} ${className}`}
+      className={cn('glass-inline-flex glass-items-center glass-justify-center glass-font-mono glass-font-bold glass-text-primary', sizeClasses[size], className)}
       style={getVariantStyles()}
       elevation="level1"
       interactive={false}
     >
-      <span className="tabular-nums">
+      <span className={cn('glass-tabular-nums')}>
         {formatNumber(displayValue)}
       </span>
     </OptimizedGlass>
@@ -203,7 +204,7 @@ export const GlassAnimatedCounter: React.FC<{
   className = '',
 }) => {
   return (
-    <div className={`flex flex-col items-center glass-gap-2 ${className}`}>
+    <div className={cn('glass-flex glass-flex-col glass-items-center glass-gap-2', className)}>
       <GlassAnimatedNumber
         value={value}
         from={from}
@@ -214,7 +215,7 @@ export const GlassAnimatedCounter: React.FC<{
       />
       {label && (
         <OptimizedGlass
-          className="glass-text-sm glass-text-primary/70 font-medium"
+          className={cn('glass-text-sm glass-text-primary-70 glass-font-medium')}
           elevation="level1"
         >
           {label}
@@ -243,8 +244,8 @@ export const GlassAnimatedStat: React.FC<{
   const percentage = total ? (value / total) * 100 : value;
 
   return (
-    <div className={`flex flex-col glass-gap-2 ${className}`}>
-      <div className="flex items-baseline glass-gap-2">
+    <div className={cn('glass-flex glass-flex-col glass-gap-2', className)}>
+      <div className={cn('glass-flex glass-items-baseline glass-gap-2')}>
         <GlassAnimatedNumber
           value={value}
           duration={duration}
@@ -258,14 +259,14 @@ export const GlassAnimatedStat: React.FC<{
             decimals={1}
             suffix="%"
             size="md"
-            className="glass-text-primary/80"
+            className={cn('glass-text-primary-80')}
           />
         )}
       </div>
 
       {label && (
         <OptimizedGlass
-          className="glass-text-sm glass-text-primary/70"
+          className={cn('glass-text-sm glass-text-primary-70')}
           elevation="level1"
         >
           {label}
@@ -275,11 +276,11 @@ export const GlassAnimatedStat: React.FC<{
       {/* Progress bar */}
       {total && (
         <OptimizedGlass
-          className="h-2 w-full glass-radius-full overflow-hidden"
+          className={cn('glass-h-2 glass-w-full glass-radius-full glass-overflow-hidden')}
           elevation="level1"
         >
           <div
-            className="h-full bg-gradient-to-r from-blue-500 to-purple-500 glass-radius-full transition-all duration-1000 ease-out"
+            className={cn('glass-h-full glass-bg-gradient-to-r glass-from-blue-500 glass-to-purple-500 glass-radius-full glass-transition-all glass-duration-1000 glass-ease-out')}
             style={{ width: `${percentage}%` }}
           />
         </OptimizedGlass>

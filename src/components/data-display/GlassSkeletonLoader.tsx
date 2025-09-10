@@ -2,6 +2,7 @@ import React, { useEffect, useState, memo, useCallback } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { useAccessibleAnimation } from '../../hooks/useAccessibilitySettings';
 import { GlassComponentErrorBoundary } from '../../utils/errorBoundary';
+import { cn } from '@/lib/utils';
 
 export interface GlassSkeletonLoaderProps {
   /** Whether the loader is active */
@@ -86,10 +87,10 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
     }
 
     const sizeClasses = {
-      sm: 'w-6 h-6',
-      md: 'w-8 h-8',
-      lg: 'w-12 h-12',
-      xl: 'w-16 h-16',
+      sm: 'glass-w-6 glass-h-6',
+      md: 'glass-w-8 glass-h-8',
+      lg: 'glass-w-12 glass-h-12',
+      xl: 'glass-w-16 glass-h-16',
     };
 
     const getAnimationStyle = (): React.CSSProperties => {
@@ -128,10 +129,10 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
     };
 
     return (
-      <div className={`flex flex-col items-center justify-center glass-gap-4 ${className}`}>
+      <div className={cn('glass-flex glass-flex-col glass-items-center glass-justify-center glass-gap-4', className)}>
         <div style={{ position: 'relative' }}>
           <OptimizedGlass
-            className={`glass-radius-full ${sizeClasses[size]}`}
+            className={cn('glass-radius-full', sizeClasses[size])}
             style={getAnimationStyle()}
             intensity="medium"
             elevation="level1"
@@ -160,7 +161,7 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
             intensity="subtle"
             elevation="level1"
           >
-            <span className="glass-text-sm glass-text-primary/70 font-medium">
+            <span className={cn('glass-text-sm glass-text-primary-70 glass-font-medium')}>
               {text}
             </span>
           </OptimizedGlass>
@@ -206,11 +207,11 @@ export const GlassSkeletonText: React.FC<GlassSkeletonTextProps> = ({
   };
 
   return (
-    <div className={`glass-gap-2 ${className}`}>
+    <div className={cn('glass-gap-2', className)}>
       {Array.from({ length: lines }, (_, i) => (
         <OptimizedGlass
           key={i}
-          className="h-4 glass-radius-md"
+          className={cn('glass-h-4 glass-radius-md')}
           style={{
             width: widths[i % widths.length],
             animation: 'glass-pulse 2s ease-in-out infinite',
@@ -231,21 +232,21 @@ export const GlassSkeletonCard: React.FC<{
 }> = ({ className = '' }) => {
   return (
     <OptimizedGlass
-      className={`glass-p-6 glass-gap-4 ${className}`}
+      className={cn('glass-p-6 glass-gap-4', className)}
       intensity="medium"
       elevation="level1"
     >
       <GlassSkeletonText lines={1} width="60%" />
       <GlassSkeletonText lines={2} width={['100%', '80%']} />
-      <div className="flex glass-gap-2">
+      <div className={cn('glass-flex glass-gap-2')}>
         <OptimizedGlass
-          className="h-8 w-16 glass-radius-md"
+          className={cn('glass-h-8 glass-w-16 glass-radius-md')}
           style={{ animation: 'glass-pulse 2s ease-in-out infinite' }}
           intensity="subtle"
           elevation="level1"
         />
         <OptimizedGlass
-          className="h-8 w-16 glass-radius-md"
+          className={cn('glass-h-8 glass-w-16 glass-radius-md')}
           style={{
             animation: 'glass-pulse 2s ease-in-out infinite',
             animationDelay: '0.2s'

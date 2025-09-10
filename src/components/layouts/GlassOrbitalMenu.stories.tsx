@@ -1,24 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { GlassOrbitalMenu, type OrbitalMenuItem } from './GlassOrbitalMenu';
-import { 
-  Home, 
-  Settings, 
-  User, 
-  Mail, 
-  Search, 
-  Bell, 
-  Heart, 
-  Share, 
-  Download, 
-  Edit,
-  Trash2,
-  Plus,
-  Minus,
-  Play,
-  Pause,
-  Camera,
-  Mic
+import { fn } from '@storybook/test';
+import {
+    Bell,
+    Camera,
+    Download,
+    Edit,
+    Heart,
+    Home,
+    Mail,
+    Mic,
+    Minus,
+    Pause,
+    Play,
+    Plus,
+    Search,
+    Settings,
+    Share,
+    Trash2,
+    User
 } from 'lucide-react';
+import { GlassOrbitalMenu, type OrbitalMenuItem } from './GlassOrbitalMenu';
 
 // Mock menu items with icons
 const createMenuItem = (id: string, label: string, icon: React.ReactNode, shortcut?: string): OrbitalMenuItem => ({
@@ -26,7 +27,7 @@ const createMenuItem = (id: string, label: string, icon: React.ReactNode, shortc
   label,
   icon,
   shortcut,
-  onClick: () => console.log(`Clicked ${label}`),
+  onClick: fn(),
   category: 'action',
   priority: Math.floor(Math.random() * 5),
   metadata: {
@@ -412,6 +413,6 @@ export const Interactive: Story = {
     isOpen: false,
     radius: 120,
     itemSize: 48,
-    onOpenChange: (open: boolean) => console.log('Menu is now', open ? 'open' : 'closed'),
+    onOpenChange: fn(),
   },
 };

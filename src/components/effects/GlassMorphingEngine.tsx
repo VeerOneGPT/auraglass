@@ -5,6 +5,7 @@
 
 import { motion, useAnimation, useSpring, useTransform } from 'framer-motion';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { cn } from '@/lib/utilsComprehensive';
 
 // Environmental adaptation types
 type EnvironmentalContext = {
@@ -493,7 +494,7 @@ export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
   return (
     <motion.div
       ref={containerRef}
-      className={`glass-morphing-container ${className}`}
+      className={cn("glass-morphing-container", className)}
       style={{
         ...glassStyleProps,
         position: 'relative',
@@ -502,10 +503,10 @@ export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
       animate={controls}
     >
       {/* Dynamic glass layers */}
-      <div className="glass-morphing-effects">
+      <div className={cn("glass-morphing-effects")}>
         {/* Base glass layer */}
         <motion.div
-          className="glass-layer glass-base"
+          className={cn("glass-layer glass-base")}
           style={{
             position: 'absolute',
             inset: 0,
@@ -529,7 +530,7 @@ export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
 
         {/* Refraction layer */}
         <motion.div
-          className="glass-layer glass-refraction"
+          className={cn("glass-layer glass-refraction")}
           style={{
             position: 'absolute',
             inset: 0,
@@ -546,7 +547,7 @@ export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
 
         {/* Reflection layer */}
         <motion.div
-          className="glass-layer glass-reflection"
+          className={cn("glass-layer glass-reflection")}
           style={{
             position: 'absolute',
             inset: 0,
@@ -564,7 +565,7 @@ export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
 
         {/* Chromatic aberration layer */}
         <motion.div
-          className="glass-layer glass-chromatic"
+          className={cn("glass-layer glass-chromatic")}
           style={{
             position: 'absolute',
             inset: 0,
@@ -586,7 +587,7 @@ export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
 
         {/* Caustic pattern layer */}
         <motion.div
-          className="glass-layer glass-caustic"
+          className={cn("glass-layer glass-caustic")}
           style={{
             position: 'absolute',
             inset: 0,
@@ -607,7 +608,7 @@ export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
 
         {/* Crystalline structure layer */}
         <motion.div
-          className="glass-layer glass-crystalline"
+          className={cn("glass-layer glass-crystalline")}
           style={{
             position: 'absolute',
             inset: 0,
@@ -639,7 +640,7 @@ export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
 
         {/* Viscosity flow layer */}
         <motion.div
-          className="glass-layer glass-viscosity"
+          className={cn("glass-layer glass-viscosity")}
           style={{
             position: 'absolute',
             inset: 0,
@@ -659,14 +660,14 @@ export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
       </div>
 
       {/* Content */}
-      <div className="glass-morphing-content" style={{ position: 'relative', zIndex: 1 }}>
+      <div className={cn("glass-morphing-content")} style={{ position: 'relative', zIndex: 1 }}>
         {children}
       </div>
 
       {/* Transition indicators */}
       {isTransitioning && (
-        <div className="glass-morphing-transition-indicator">
-          <div className="transition-shimmer" />
+        <div className={cn("glass-morphing-transition-indicator")}>
+          <div className={cn("transition-shimmer")} />
         </div>
       )}
 

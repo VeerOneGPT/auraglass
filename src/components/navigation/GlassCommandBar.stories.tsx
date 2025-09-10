@@ -1,5 +1,5 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { GlassCommandBar } from './GlassCommandBar';
 
 const meta: Meta<typeof GlassCommandBar> = {
@@ -35,21 +35,21 @@ export const Default: Story = {
         label: 'Save',
         icon: '💾',
         shortcut: 'Ctrl+S',
-        onSelect: () => console.log('Save clicked'),
+        onSelect: fn(),
       },
       {
         id: 'copy',
         label: 'Copy',
         icon: '📋',
         shortcut: 'Ctrl+C',
-        onSelect: () => console.log('Copy clicked'),
+        onSelect: fn(),
       },
       {
         id: 'paste',
         label: 'Paste',
         icon: '📄',
         shortcut: 'Ctrl+V',
-        onSelect: () => console.log('Paste clicked'),
+        onSelect: fn(),
       },
     ],
   },
@@ -63,21 +63,21 @@ export const WithDisabledItem: Story = {
         label: 'Bold',
         icon: '𝐁',
         shortcut: 'Ctrl+B',
-        onSelect: () => console.log('Bold clicked'),
+        onSelect: fn(),
       },
       {
         id: 'italic',
         label: 'Italic',
         icon: '𝐼',
         shortcut: 'Ctrl+I',
-        onSelect: () => console.log('Italic clicked'),
+        onSelect: fn(),
       },
       {
         id: 'underline',
         label: 'Underline',
         icon: 'U̲',
         shortcut: 'Ctrl+U',
-        onSelect: () => console.log('Underline clicked'),
+        onSelect: fn(),
         disabled: true,
       },
     ],
@@ -93,14 +93,14 @@ export const TopPosition: Story = {
         label: 'Undo',
         icon: '↶',
         shortcut: 'Ctrl+Z',
-        onSelect: () => console.log('Undo clicked'),
+        onSelect: fn(),
       },
       {
         id: 'redo',
         label: 'Redo',
         icon: '↷',
         shortcut: 'Ctrl+Y',
-        onSelect: () => console.log('Redo clicked'),
+        onSelect: fn(),
       },
     ],
   },

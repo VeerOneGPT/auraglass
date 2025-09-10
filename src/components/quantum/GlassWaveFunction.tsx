@@ -6,6 +6,7 @@ import { OptimizedGlass } from '../../primitives'
 import { useA11yId } from '../../utils/a11y'
 import { useMotionPreference } from '../../hooks/useMotionPreference'
 import { createGlassStyle } from '../../utils/createGlassStyle'
+import { cn } from '@/lib/utilsComprehensive'
 
 export interface WaveEquation {
   id: string
@@ -361,121 +362,120 @@ export const GlassWaveFunction = forwardRef<HTMLDivElement, GlassWaveFunctionPro
       <OptimizedGlass
         ref={ref}
         variant="frosted"
-        className={`p-4 space-y-4 ${className}`}
+        className={cn("glass-p-4 glass-space-y-4", className)}
         {...props}
       >
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-lg font-semibold text-white/90">
+            <h3 className={cn("glass-text-lg glass-font-semibold glass-text-primary")}>
               Wave Function Visualization
             </h3>
-            <p className="text-sm text-white/60">
+            <p className={cn("glass-text-sm glass-text-secondary")}>
               {waveEquations.length} wave{waveEquations.length !== 1 ? 's' : ''}
               {selectedWave && ` • Selected: ${waveEquations.find(w => w.id === selectedWave)?.name}`}
             </p>
           </div>
 
-          <div className="flex items-center space-x-4">
+          <div className={cn("glass-flex glass-items-center glass-space-x-4")}>
             {realTimeMode && (
-              <div className="flex items-center space-x-1 text-green-400">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                <span className="text-xs">Live</span>
+              <div className={cn("glass-flex glass-items-center glass-space-x-1 glass-text-success")}>
+                <div className={cn("glass-w-2 glass-h-2 glass-surface-success glass-radius-full glass-animate-pulse")} />
+                <span className={cn("glass-text-xs")}>Live</span>
               </div>
             )}
-            <div className="text-sm text-white/60">
+            <div className={cn("glass-text-sm glass-text-secondary")}>
               t = {currentTime.toFixed(1)}
             </div>
           </div>
         </div>
 
         {/* Main wave canvas */}
-        <div className="relative">
+        <div className={cn("glass-relative")}>
           <canvas
             ref={canvasRef}
             width={width}
             height={height}
-            className="border border-white/20 rounded-lg bg-black/20 cursor-crosshair"
+            className={cn("glass-border glass-border-primary glass-radius-lg glass-surface-dark glass-cursor-crosshair")}
             onClick={handleCanvasClick}
           />
           
           {/* Amplitude indicators */}
           {showAmplitude && (
-            <div className="absolute left-2 top-2 space-y-1">
-              <div className="text-xs text-white/60">Amplitude</div>
-              <div className="text-xs text-green-400">+2</div>
-              <div className="text-xs text-white/40" style={{ marginTop: height/4 - 20 }}>0</div>
-              <div className="text-xs text-red-400" style={{ marginTop: height/2 - 40 }}>-2</div>
+            <div className={cn("glass-absolute glass-left-2 glass-top-2 glass-space-y-1")}>
+              <div className={cn("glass-text-xs glass-text-secondary")}>Amplitude</div>
+              <div className={cn("glass-text-xs glass-text-success")}>+2</div>
+              <div className={cn("glass-text-xs glass-text-muted")} style={{ marginTop: height/4 - 20 }}>0</div>
+              <div className={cn("glass-text-xs glass-text-danger")} style={{ marginTop: height/2 - 40 }}>-2</div>
             </div>
           )}
         </div>
 
-        <div className="flex space-x-4">
+        <div className={cn("glass-flex glass-space-x-4")}>
           {/* Phase space */}
           {showPhaseSpace && (
             <div>
-              <h4 className="text-sm font-medium text-white/80 mb-2">Phase Space</h4>
+              <h4 className={cn("glass-text-sm glass-font-medium glass-text-primary glass-mb-2")}>Phase Space</h4>
               <canvas
                 ref={phaseCanvasRef}
                 width={200}
                 height={200}
-                className="border border-white/20 rounded bg-black/20"
+                className={cn("glass-border glass-border-primary glass-radius glass-surface-dark")}
               />
-              <div className="text-xs text-white/50 mt-1">Position vs Velocity</div>
+              <div className={cn("glass-text-xs glass-text-muted glass-mt-1")}>Position vs Velocity</div>
             </div>
           )}
 
           {/* Frequency spectrum */}
           {showFrequencySpectrum && (
             <div>
-              <h4 className="text-sm font-medium text-white/80 mb-2">Frequency Spectrum</h4>
+              <h4 className={cn("glass-text-sm glass-font-medium glass-text-primary glass-mb-2")}>Frequency Spectrum</h4>
               <canvas
                 ref={spectrumCanvasRef}
                 width={300}
                 height={150}
-                className="border border-white/20 rounded bg-black/20"
+                className={cn("glass-border glass-border-primary glass-radius glass-surface-dark")}
               />
             </div>
           )}
         </div>
 
         {/* Wave parameters */}
-        <div className={`
-          p-3 rounded-lg border border-white/10 space-y-3
-          ${createGlassStyle({ blur: 'sm', opacity: 0.6 }).background}
-        `}>
-          <h4 className="text-sm font-semibold text-white/90">Wave Parameters</h4>
+        <div className={cn(
+          "glass-p-3 glass-radius-lg glass-border glass-border-subtle glass-space-y-3",
+          createGlassStyle({ blur: 'sm', opacity: 0.6 }).background
+        )}>
+          <h4 className={cn("glass-text-sm glass-font-semibold glass-text-primary")}>Wave Parameters</h4>
           
-          <div className="grid gap-2">
+          <div className={cn("glass-grid glass-gap-2")}>
             {waveEquations.map(wave => (
               <motion.div
                 key={wave.id}
-                className={`
-                  p-2 rounded border transition-colors duration-200 cursor-pointer
-                  ${selectedWave === wave.id 
-                    ? 'border-white/40 bg-white/10' 
-                    : 'border-white/20 hover:border-white/30'
-                  }
-                `}
+                className={cn(
+                  "glass-p-2 glass-radius glass-border glass-transition-colors glass-duration-200 glass-cursor-pointer",
+                  selectedWave === wave.id 
+                    ? "glass-border-primary glass-surface-subtle" 
+                    : "glass-border-muted hover:glass-border-primary"
+                )}
                 onClick={() => setSelectedWave(prev => prev === wave.id ? null : wave.id)}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
+                <div className={cn("glass-flex glass-items-center glass-justify-between")}>
+                  <div className={cn("glass-flex glass-items-center glass-space-x-2")}>
                     <div
-                      className="w-3 h-3 rounded-full"
+                      className={cn("glass-w-3 glass-h-3 glass-radius-full")}
                       style={{ backgroundColor: wave.color }}
                     />
-                    <span className="text-sm font-medium text-white/90">
+                    <span className={cn("glass-text-sm glass-font-medium glass-text-primary")}>
                       {wave.name}
                     </span>
-                    <span className="text-xs text-white/50 capitalize">
+                    <span className={cn("glass-text-xs glass-text-muted glass-capitalize")}>
                       ({wave.type})
                     </span>
                   </div>
                   
-                  <div className="flex items-center space-x-4 text-xs text-white/70">
+                  <div className={cn("glass-flex glass-items-center glass-space-x-4 glass-text-xs glass-text-secondary")}>
                     <span>A: {wave.amplitude.toFixed(1)}</span>
                     <span>f: {wave.frequency.toFixed(1)}Hz</span>
                     <span>λ: {wave.wavelength.toFixed(0)}</span>
@@ -488,9 +488,9 @@ export const GlassWaveFunction = forwardRef<HTMLDivElement, GlassWaveFunctionPro
         </div>
 
         {/* Controls */}
-        <div className="flex items-center justify-between text-sm text-white/60">
+        <div className={cn("glass-flex glass-items-center glass-justify-between glass-text-sm glass-text-secondary")}>
           <span>Click waves to select • Time: {timeScale}x speed</span>
-          <div className="flex items-center space-x-4">
+          <div className={cn("glass-flex glass-items-center glass-space-x-4")}>
             <span>Resolution: {resolution}px</span>
             <span>Animation: {animationSpeed}x</span>
           </div>
