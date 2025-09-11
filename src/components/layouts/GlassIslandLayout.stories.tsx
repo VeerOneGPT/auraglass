@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassIslandLayout, type Island, type IslandConnection } from './GlassIslandLayout';
 
+import { cn } from '@/lib/utils';
 // Generate mock islands with different content types
 const mockIslands: Island[] = [
   {

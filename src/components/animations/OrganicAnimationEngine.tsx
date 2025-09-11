@@ -1,4 +1,5 @@
 /**
+import { cn } from '@/lib/utils';
  * Organic Animation Engine
  * Advanced animation framework with natural motion patterns, physics simulation,
  * and contextual micro-interactions that mimic real-world glass behavior

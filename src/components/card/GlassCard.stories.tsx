@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useRef } from 'react';
 import { GlassCard } from './GlassCard';
+import { cn } from '@/lib/utils';
 import { GlassButton } from '../button/GlassButton';
 import { useGlassParallax } from '../../hooks/useGlassParallax';
 

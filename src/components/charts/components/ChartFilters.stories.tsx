@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ChartFilters } from './ChartFilters';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof ChartFilters> = {
   title: 'Components/Components/ChartFilters',

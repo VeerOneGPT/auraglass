@@ -1,0 +1,47 @@
+import React from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
+import { GlassMasonry } from './GlassMasonry';
+
+const meta: Meta<typeof GlassMasonry> = {
+  title: 'Components/Layout/GlassMasonry',
+  component: GlassMasonry,
+  parameters: {
+    layout: 'centered',
+    docs: {
+      description: {
+        component: 'A glass morphism glassmasonry component.',
+      },
+    },
+  },
+  argTypes: {
+    className: {
+      control: 'text',
+      description: 'className prop',
+    },
+  },
+  args: {
+    className: ''
+  },
+};
+
+export default meta;
+type Story = StoryObj<typeof GlassMasonry>;
+
+export const Default: Story = {
+  args: {
+    
+  },
+};
+
+export const Variants: Story = {
+  render: (args: any) => (
+    <div className="flex flex-wrap glass-gap-4">
+      <GlassMasonry {...args}>
+        Default
+      </GlassMasonry>
+    </div>
+  ),
+  args: {
+    
+  },
+};

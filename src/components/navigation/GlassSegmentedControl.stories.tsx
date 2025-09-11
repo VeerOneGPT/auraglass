@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassSegmentedControl } from './GlassSegmentedControl';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassSegmentedControl> = {
   title: 'Components/Navigation/GlassSegmentedControl',

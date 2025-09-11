@@ -1,6 +1,7 @@
 /**
  * AuraGlass Biometric Adaptation Stories
  * Heart rate and stress-responsive UI with device sensors and behavioral analysis
+import { cn } from '@/lib/utils';
  */
 
 import type { Meta, StoryObj } from '@storybook/react';

@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { MotionAwareGlass } from './MotionAwareGlass';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof MotionAwareGlass> = {
   title: 'Components/Website-components/MotionAwareGlass',

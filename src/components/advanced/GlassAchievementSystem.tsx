@@ -5,7 +5,7 @@
 
 import React, { useEffect, useRef, useState, useCallback, createContext, useContext, forwardRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 import { OptimizedGlass } from '../../primitives';
 import { createButtonA11y, useA11yId, announceToScreenReader } from '../../utils/a11y';
 

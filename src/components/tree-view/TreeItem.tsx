@@ -4,6 +4,7 @@
  * A item component for the TreeView.
  */
 import React, { forwardRef, useContext, useRef, useMemo, useState, useEffect, useLayoutEffect } from 'react';
+import { cn } from '@/lib/utils';
 import { AURA_GLASS } from '../../tokens/glass';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import styled from 'styled-components';

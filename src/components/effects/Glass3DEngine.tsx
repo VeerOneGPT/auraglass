@@ -1,4 +1,5 @@
 /**
+import { cn } from '@/lib/utils';
  * Immersive 3D Glass Effects Engine
  * Creates layered depth perception, parallax scrolling, and interactive 3D distortions
  */

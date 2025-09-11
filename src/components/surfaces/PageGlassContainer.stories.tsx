@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import PageGlassContainer from './PageGlassContainer';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof PageGlassContainer> = {
   title: 'Components/Surfaces/PageGlassContainer',

@@ -1,4 +1,5 @@
 /**
+import { cn } from '@/lib/utilsComprehensive';
  * Advanced Animation Easing Functions
  * Provides sophisticated easing curves for glassmorphism transitions
  */

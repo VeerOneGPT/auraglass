@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassPrismComparison } from './GlassPrismComparison';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassPrismComparison> = {
   title: 'Components/Website-components/GlassPrismComparison',

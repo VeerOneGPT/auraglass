@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassResponsiveNav } from './GlassResponsiveNav';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassResponsiveNav> = {
   title: 'Components/Navigation/GlassResponsiveNav',

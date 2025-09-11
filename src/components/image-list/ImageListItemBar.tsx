@@ -6,6 +6,7 @@
 // Typography tokens available via typography.css (imported in index.css)
 import React, { forwardRef, useState } from 'react';
 import styled from 'styled-components';
+import { cn } from '@/lib/utils';
 
 import { createThemeContext } from '../../core/themeContext';
 import { createGlassStyle } from '../../core/mixins/glassMixins';

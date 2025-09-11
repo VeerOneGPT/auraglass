@@ -1,13 +1,12 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import {
-  GlassAnimatedNumber,
-  GlassAnimatedCounter,
-  GlassAnimatedStat,
-  useAnimatedNumber
-} from './GlassAnimatedNumber';
-import { GlassCard } from '../card/GlassCard';
+import React from 'react';
 import { GlassButton } from '../button/GlassButton';
+import { GlassCard } from '../card/GlassCard';
+import {
+    GlassAnimatedCounter,
+    GlassAnimatedNumber,
+    GlassAnimatedStat
+} from './GlassAnimatedNumber';
 
 const meta: Meta<typeof GlassAnimatedNumber> = {
   title: 'Components/Data-Display/GlassAnimatedNumber',

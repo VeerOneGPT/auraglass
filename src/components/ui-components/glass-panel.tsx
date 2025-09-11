@@ -3,7 +3,7 @@
 import React from 'react';
 // PerformantGlass removed - using OptimizedGlass
 import { OptimizedGlassCore as OptimizedGlass, OptimizedGlassProps } from '../../primitives/OptimizedGlassCore';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 
 export interface GlassPanelProps extends Omit<OptimizedGlassProps, 'variant' | 'elevation'> {
   /**

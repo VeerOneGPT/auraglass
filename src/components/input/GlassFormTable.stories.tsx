@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassFormTable } from './GlassFormTable';
+import { cn } from '@/lib/utils';
 import { fn } from '@storybook/test';
 
 interface User {

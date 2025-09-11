@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CleanGlassContainer } from './GlassPresets';
 
+import { cn } from '@/lib/utils';
 const meta: Meta<typeof CleanGlassContainer> = {
   title: 'Components/Interactive/GlassPresets',
   component: CleanGlassContainer,

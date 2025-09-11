@@ -6,7 +6,7 @@
 
 import React, { useEffect, useRef, useState, useCallback, createContext, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 
 // Neural signal types
 interface EEGSignal {

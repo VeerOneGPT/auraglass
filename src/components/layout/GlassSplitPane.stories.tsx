@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassSplitPane } from './GlassSplitPane';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassSplitPane> = {
   title: 'Components/Layout/GlassSplitPane',

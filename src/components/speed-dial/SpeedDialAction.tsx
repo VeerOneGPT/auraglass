@@ -5,6 +5,7 @@
  */
 import React, { forwardRef, useCallback, useState, useMemo } from 'react';
 import styled, { css, useTheme } from 'styled-components';
+import { cn } from '@/lib/utils';
 
 import { AURA_GLASS } from '../../tokens/glass';
 import { createThemeContext } from '../../core/themeContext';
@@ -345,7 +346,7 @@ const SpeedDialActionComponent = (
   return (
     <ActionRoot
       ref={combinedRef}
-      className={className}
+      className={cn('glass-speed-dial-action', className)}
       style={style}
       onClick={handleClick}
       $position={position}

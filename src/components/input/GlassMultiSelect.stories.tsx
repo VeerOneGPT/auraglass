@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassMultiSelect } from './GlassMultiSelect';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassMultiSelect> = {
   title: 'Components/Input/GlassMultiSelect',

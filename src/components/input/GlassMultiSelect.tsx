@@ -9,6 +9,7 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo, forwardRef, memo } from 'react';
 import { createPortal } from 'react-dom';
 import styled, { css, keyframes } from 'styled-components';
+import { cn } from '@/lib/utils';
 
 // Physics-related imports
 import { useGalileoStateSpring } from '../../hooks/useGalileoStateSpring';
@@ -534,7 +535,7 @@ const AnimatedTokenWrapper = memo(<T extends string | number = string | number>(
   if (renderToken) {
       const handleRemove = useCallback(() => onRemove(option.value), [onRemove, option.value]);
       return (
-          <div style={animatedStyle} className="galileo-multiselect-token-wrapper">
+          <div style={animatedStyle} className={cn('galileo-multiselect-token-wrapper')}>
               {renderToken(option, handleRemove)}
           </div>
       );
@@ -542,9 +543,9 @@ const AnimatedTokenWrapper = memo(<T extends string | number = string | number>(
 
   // Default rendering using original Token component
   return (
-    <div style={animatedStyle} className="galileo-multiselect-token-wrapper">
+    <div style={animatedStyle} className={cn('galileo-multiselect-token-wrapper')}>
       <Token
-        className="galileo-multiselect-token" // Keep class for entrance animation targetting
+        className={cn('galileo-multiselect-token')} // Keep class for entrance animation targetting
         $isDisabled={!!isDisabled} // Pass disabled state
         // Static transform props, animation is handled by wrapper style
         $translateX={0}
@@ -556,7 +557,7 @@ const AnimatedTokenWrapper = memo(<T extends string | number = string | number>(
         <TokenLabel>{option.label}</TokenLabel>
         {!(isDisabled) && (
           <RemoveButton
-            className="remove-button"
+            className={cn('remove-button')}
             onClick={triggerExit} // Call triggerExit here
             aria-label={`Remove ${option.label}`}
           >

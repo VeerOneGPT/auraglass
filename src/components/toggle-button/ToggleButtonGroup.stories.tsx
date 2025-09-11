@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import ToggleButtonGroup from './ToggleButtonGroup';
+import { cn } from '@/lib/utils';
 import ToggleButton from './ToggleButton';
 
 const meta: Meta<typeof ToggleButtonGroup> = {

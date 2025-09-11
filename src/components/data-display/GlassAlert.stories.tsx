@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassAlert } from './GlassAlert';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassAlert> = {
   title: 'Components/Data-display/GlassAlert',

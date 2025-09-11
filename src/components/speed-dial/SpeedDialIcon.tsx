@@ -5,6 +5,7 @@
  */
 import React, { forwardRef } from 'react';
 import styled from 'styled-components';
+import { cn } from '@/lib/utils';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
@@ -88,7 +89,7 @@ function SpeedDialIconComponent(
     return (
       <IconRoot
         ref={ref}
-        className={className}
+        className={cn('glass-speed-dial-icon', className)}
         style={style}
         $open={open}
         $reducedMotion={prefersReducedMotion}

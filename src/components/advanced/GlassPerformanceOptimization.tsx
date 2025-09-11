@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { cn } from '../../lib/utilsComprehensive'
+import { cn } from '@/lib/utils'
 import './GlassPerformanceOptimization.css'
 
 // Performance Context

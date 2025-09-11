@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassCardLink } from './GlassCardLink';
+import { cn } from '@/lib/utils';
 import { Zap, Star, Heart } from 'lucide-react';
 
 const meta: Meta<typeof GlassCardLink> = {

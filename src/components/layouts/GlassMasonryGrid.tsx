@@ -2,6 +2,7 @@
 
 import { motion, PanInfo } from 'framer-motion'
 import { forwardRef, useCallback, useEffect, useRef, useState } from 'react'
+import { cn } from '@/lib/utils'
 import { useMotionPreference } from '../../hooks/useMotionPreference'
 import { OptimizedGlass } from '../../primitives'
 import { useA11yId } from '../../utils/a11y'

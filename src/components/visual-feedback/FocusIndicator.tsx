@@ -5,6 +5,7 @@
  */
 import React, { forwardRef, useMemo } from 'react';
 import styled from 'styled-components';
+import { cn } from '@/lib/utils';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useAnimationContext } from '../../contexts/AnimationContext';
@@ -177,7 +178,7 @@ function FocusIndicatorComponent(
   return (
     <FocusWrapper
       ref={ref}
-      className={className}
+      className={cn('glass-focus-indicator', className)}
       style={animatedStyle}
       $glass={glass}
       $highContrast={finalHighContrast}

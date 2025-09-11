@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassInfiniteScroll } from './GlassInfiniteScroll';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassInfiniteScroll> = {
   title: 'Components/Interactive/GlassInfiniteScroll',

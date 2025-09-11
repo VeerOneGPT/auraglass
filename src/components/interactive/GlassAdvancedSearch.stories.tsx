@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassAdvancedSearch } from './GlassAdvancedSearch';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassAdvancedSearch> = {
   title: 'Components/Interactive/GlassAdvancedSearch',

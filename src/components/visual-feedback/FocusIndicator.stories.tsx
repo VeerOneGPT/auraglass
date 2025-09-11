@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import FocusIndicator from './FocusIndicator';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof FocusIndicator> = {
   title: 'Components/Visual-feedback/FocusIndicator',

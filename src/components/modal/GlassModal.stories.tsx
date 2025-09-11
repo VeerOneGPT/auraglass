@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useRef } from 'react';
 import { GlassModal } from './GlassModal';
+import { cn } from '@/lib/utils';
 import { useGlassParallax } from '../../hooks/useGlassParallax';
 
 const meta: Meta<typeof GlassModal> = {

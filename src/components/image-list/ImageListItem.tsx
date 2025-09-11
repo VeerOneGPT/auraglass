@@ -7,6 +7,7 @@
  */
 import React, { forwardRef, useContext, useState, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
+import { cn } from '@/lib/utils';
 
 import { createThemeContext } from '../../core/themeContext';
 import { glassTokenUtils } from '../../tokens/glass';

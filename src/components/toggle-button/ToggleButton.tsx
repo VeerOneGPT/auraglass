@@ -6,7 +6,7 @@
  * A button that can be toggled on/off, with glass morphism styling.
  */
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 import { Motion, OptimizedGlass } from '../../primitives';
 import { createButtonA11y, useA11yId } from '../../utils/a11y';
 import { useAchievements } from '../advanced/GlassAchievementSystem';

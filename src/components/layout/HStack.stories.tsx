@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { HStack } from './HStack';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof HStack> = {
   title: 'Components/Layout/HStack',

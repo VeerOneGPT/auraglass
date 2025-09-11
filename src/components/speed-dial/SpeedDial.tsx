@@ -5,6 +5,7 @@
  */
 import React, { forwardRef, useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import styled, { css } from 'styled-components';
+import { cn } from '@/lib/utils';
 
 import { AURA_GLASS } from '../../tokens/glass';
 import { createThemeContext } from '../../core/themeContext';
@@ -385,7 +386,7 @@ function SpeedDialComponent(props: SpeedDialProps, ref: React.ForwardedRef<HTMLD
       {/* SpeedDial */}
       <SpeedDialRoot
         ref={rootRef}
-        className={className}
+        className={cn('glass-speed-dial', className)}
         style={{
           ...style,
           ...(!visible ? { transform: 'scale(0)', opacity: 0 } : {}),

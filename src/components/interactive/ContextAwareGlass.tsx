@@ -8,7 +8,7 @@
  */
 import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 import { OptimizedGlass } from '../../primitives';
 
 import { useGlassTheme } from '../../hooks/useGlassTheme';

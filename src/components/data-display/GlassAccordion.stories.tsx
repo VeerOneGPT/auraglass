@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassAccordion } from './GlassAccordion';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassAccordion> = {
   title: 'Components/Data-display/GlassAccordion',

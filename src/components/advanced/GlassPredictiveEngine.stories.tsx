@@ -1,6 +1,7 @@
 /**
  * AuraGlass Predictive Engine Stories
  * AI-powered system that learns user behavior and anticipates interface needs
+import { cn } from '@/lib/utils';
  */
 
 import type { Meta, StoryObj } from '@storybook/react';

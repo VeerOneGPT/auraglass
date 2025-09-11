@@ -5,6 +5,7 @@
  */
 import React, { forwardRef, useState, useEffect, useRef } from 'react';
 import styled, { keyframes, css } from 'styled-components';
+import { cn } from '@/lib/utils';
 
 import { OptimizedGlass } from '../../primitives';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -234,7 +235,7 @@ const AtmosphericBackgroundComponent = (
   return (
     <BackgroundContainer 
       ref={setRefs} 
-      className={className} 
+      className={cn('glass-atmospheric-background', className)} 
       style={style}
       $intent={intent}
       $elevation={elevation}

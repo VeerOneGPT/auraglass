@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ChartTooltip } from './ChartTooltip';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof ChartTooltip> = {
   title: 'Components/Components/ChartTooltip',

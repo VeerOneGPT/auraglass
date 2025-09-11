@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassVirtualTable } from './GlassVirtualTable';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassVirtualTable> = {
   title: 'Components/Data-display/GlassVirtualTable',

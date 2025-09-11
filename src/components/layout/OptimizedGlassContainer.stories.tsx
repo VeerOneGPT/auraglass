@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { OptimizedGlassContainer } from './OptimizedGlassContainer';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof OptimizedGlassContainer> = {
   title: 'Components/Layout/OptimizedGlassContainer',

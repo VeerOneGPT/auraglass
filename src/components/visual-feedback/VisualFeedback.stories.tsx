@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import VisualFeedback from './VisualFeedback';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof VisualFeedback> = {
   title: 'Components/Visual-feedback/VisualFeedback',

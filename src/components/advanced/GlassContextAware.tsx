@@ -5,7 +5,7 @@
 
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 
 interface EnvironmentContext {
   lightLevel: number; // 0-1 (dark to bright)

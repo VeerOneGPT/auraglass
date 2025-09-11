@@ -6,6 +6,7 @@
  */
 // Typography tokens available via typography.css (imported in index.css)
 import React, { useState, useRef, useEffect, useCallback, useMemo, memo } from 'react';
+import { cn } from '@/lib/utils';
 // import styled from 'styled-components'; // unused
 import { 
   Chart as ChartJS, 
@@ -1408,7 +1409,7 @@ const GlassDataChartComponent = React.forwardRef<GlassDataChartRef, GlassDataCha
   return (
     <ChartContainer
       ref={containerRef}
-      className={`glass-data-chart ${className || ''}`}
+      className={cn('glass-data-chart', className)}
       style={{
         width,
         height,

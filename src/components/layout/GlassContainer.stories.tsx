@@ -1,12 +1,10 @@
-import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { 
-  GlassContainer, 
-  ConsciousGlassContainer, 
-  ConsciousnessPresets,
-  type ConsciousnessFeatures 
-} from './GlassContainer';
 import { GlassPredictiveEngineProvider } from '../advanced/GlassPredictiveEngine';
+import {
+    ConsciousGlassContainer,
+    ConsciousnessPresets,
+    GlassContainer
+} from './GlassContainer';
 
 const meta: Meta<typeof GlassContainer> = {
   title: 'Components/Layout/GlassContainer',

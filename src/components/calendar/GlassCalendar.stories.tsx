@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassCalendar } from './GlassCalendar';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassCalendar> = {
   title: 'Components/Calendar/GlassCalendar',

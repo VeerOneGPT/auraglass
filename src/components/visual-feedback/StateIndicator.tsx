@@ -5,6 +5,7 @@
  */
 import React, { forwardRef } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { cn } from '@/lib/utils';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { createGlassStyle } from '../../utils/createGlassStyle';
@@ -147,7 +148,7 @@ function StateIndicatorComponent(
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <IndicatorContainer ref={ref} className={className} style={style} {...rest}>
+    <IndicatorContainer ref={ref} className={cn('glass-state-indicator', className)} style={style} {...rest}>
       {children}
 
       {state !== 'default' && (

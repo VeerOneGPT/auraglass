@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { GlassTagInput } from './GlassTagInput';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassTagInput> = {
   title: 'Components/Interactive/GlassTagInput',

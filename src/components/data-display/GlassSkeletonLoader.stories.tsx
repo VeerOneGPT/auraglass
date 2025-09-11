@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassSkeletonLoader, GlassSkeletonText } from './GlassSkeletonLoader';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassSkeletonLoader> = {
   title: 'Components/Data-display/GlassSkeletonLoader',

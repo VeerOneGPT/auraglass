@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { SeasonalParticles } from './SeasonalParticles';
 
+import { cn } from '@/lib/utils';
 const meta: Meta<typeof SeasonalParticles> = {
   title: 'Effects/SeasonalParticles',
   component: SeasonalParticles,

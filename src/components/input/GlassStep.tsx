@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 import { Motion, OptimizedGlass } from '../../primitives';
 import { GlassStepInternalProps, Step } from './types';
 // Import the new sub-components

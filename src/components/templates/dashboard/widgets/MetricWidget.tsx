@@ -1,11 +1,11 @@
 'use client';
 
+import { cn } from '@/lib/utils';
 import React, { forwardRef } from 'react';
-import GlassCore from '../../../../primitives/GlassCore';
 import { Motion } from '../../../../primitives';
+import GlassCore from '../../../../primitives/GlassCore';
 import { GlassBadge } from '../../../data-display/GlassBadge';
-import { VStack, HStack } from '../../../layout/GlassStack';
-import { cn } from '../../../../lib/utilsComprehensive';
+import { HStack, VStack } from '../../../layout/GlassStack';
 
 export interface MetricData {
   value: string | number;

@@ -1,7 +1,7 @@
-import React, { useRef, useMemo } from 'react';
+import { cn } from '@/lib/utils';
+import React, { useRef } from 'react';
 import { useGlassFocus } from '../../hooks/extended/useGlassFocus';
 import type { GlassFocusRingProps } from '../interactive/types';
-import { cn } from '@/lib/utils';
 // No longer need mergeRefs if attaching ref to wrapper div
 // import { mergeRefs } from '../../utils/refUtils'; 
 

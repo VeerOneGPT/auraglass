@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassCheckbox } from './GlassCheckbox';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassCheckbox> = {
   title: 'Components/Input/GlassCheckbox',

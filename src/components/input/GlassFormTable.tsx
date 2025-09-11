@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { GlassButton } from '../button/GlassButton';
 import { cn } from '@/lib/utils';
+import { GlassButton } from '../button/GlassButton';
 
 export interface ColumnDef<T=any> { key: keyof T; header: string }
 export interface GlassFormTableProps<T=any> { columns: ColumnDef<T>[]; rows: T[]; onChange: (rows:T[])=>void }

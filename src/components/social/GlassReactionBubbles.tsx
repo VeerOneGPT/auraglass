@@ -2,6 +2,7 @@
 
 import React, { forwardRef, useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { cn } from '@/lib/utils'
 import { OptimizedGlass } from '../../primitives'
 import { useGlassSound } from '../../utils/soundDesign'
 import { useA11yId } from '../../utils/a11y'
@@ -215,7 +216,7 @@ export const GlassReactionBubbles = forwardRef<HTMLDivElement, GlassReactionBubb
 
     const ReactionBubbleComponent = ({ bubble }: { bubble: ReactionBubble }) => (
       <motion.div
-        className="absolute cursor-pointer select-none z-10"
+        className={cn('glass-absolute glass-cursor-pointer glass-select-none glass-z-10')}
         style={{
           left: bubble.x,
           top: bubble.y,
@@ -246,11 +247,11 @@ export const GlassReactionBubbles = forwardRef<HTMLDivElement, GlassReactionBubb
           ${createGlassStyle({ blur: 'sm', opacity: 0.8 }).background}
           border border-white/20
         `}>
-          <span className="text-2xl">{bubble.emoji}</span>
+          <span className={cn('glass-text-2xl')}>{bubble.emoji}</span>
           
           {showUserNames && (
             <motion.div
-              className="absolute -bottom-8 left-1/2 transform -translate-x-1/2"
+              className={cn('glass-absolute glass-bottom-8-neg glass-left-1/2 glass-transform glass-translate-x-1/2-neg')}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 0.8, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
@@ -268,7 +269,7 @@ export const GlassReactionBubbles = forwardRef<HTMLDivElement, GlassReactionBubb
 
           {/* Particle trail effect */}
           <motion.div
-            className="absolute inset-0 rounded-full"
+            className={cn('glass-absolute glass-inset-0 glass-radius-full')}
             style={{
               background: `radial-gradient(circle, ${bubble.userColor || '#FF6B6B'}40 0%, transparent 70%)`
             }}
@@ -331,13 +332,13 @@ export const GlassReactionBubbles = forwardRef<HTMLDivElement, GlassReactionBubb
       <OptimizedGlass
         ref={ref}
         intensity="subtle"
-        className={`relative overflow-hidden ${className}`}
+        className={cn('glass-relative glass-overflow-hidden', className)}
         style={{ width, height }}
         {...props}
       >
         {/* Main reaction area */}
         <div
-          className="absolute inset-0 cursor-crosshair"
+          className={cn('glass-absolute glass-inset-0 glass-cursor-crosshair')}
           onClick={handleCanvasClick}
           style={{ width, height }}
         >
@@ -351,7 +352,7 @@ export const GlassReactionBubbles = forwardRef<HTMLDivElement, GlassReactionBubb
           {[...Array(5)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-2 h-2 bg-white/10 rounded-full"
+              className={cn('glass-absolute glass-w-2 glass-h-2 glass-surface-muted glass-radius-full')}
               style={{
                 left: Math.random() * width,
                 top: Math.random() * height
@@ -373,7 +374,7 @@ export const GlassReactionBubbles = forwardRef<HTMLDivElement, GlassReactionBubb
 
         {/* Controls */}
         {showControls && (
-          <div className="absolute top-4 left-4 z-20">
+          <div className={cn('glass-absolute glass-top-4 glass-left-4 glass-z-20')}>
             <EmojiSelector />
           </div>
         )}
@@ -388,19 +389,19 @@ export const GlassReactionBubbles = forwardRef<HTMLDivElement, GlassReactionBubb
           animate={{ opacity: 1, x: 0 }}
           transition={shouldAnimate ? { delay: 0.5 } : { duration: 0 }}
         >
-          <div className="text-sm text-white/80 space-y-1">
-            <div className="flex items-center space-x-2">
+          <div className={cn('glass-text-sm glass-text-secondary glass-space-y-1')}>
+            <div className={cn('glass-flex glass-items-center glass-space-x-2')}>
               <span>{stats.totalReactions}</span>
-              <span className="text-white/50">total</span>
+              <span className={cn('glass-text-muted')}>total</span>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className={cn('glass-flex glass-items-center glass-space-x-2')}>
               <span>{stats.recentReactions}</span>
-              <span className="text-white/50">recent</span>
+              <span className={cn('glass-text-muted')}>recent</span>
             </div>
             {mostUsed && (
-              <div className="flex items-center space-x-2">
+              <div className={cn('glass-flex glass-items-center glass-space-x-2')}>
                 <span>{mostUsed[0]}</span>
-                <span className="text-white/50">{mostUsed[1]}x</span>
+                <span className={cn('glass-text-muted')}>{mostUsed[1]}x</span>
               </div>
             )}
           </div>
@@ -424,8 +425,8 @@ export const GlassReactionBubbles = forwardRef<HTMLDivElement, GlassReactionBubb
 
         {/* Real-time indicator */}
         {realTimeMode && (
-          <div className="absolute bottom-4 right-4 z-20 flex items-center space-x-2 text-sm text-white/60">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+          <div className={cn('glass-absolute glass-bottom-4 glass-right-4 glass-z-20 glass-flex glass-items-center glass-space-x-2 glass-text-sm glass-text-muted')}>
+            <div className={cn('glass-w-2 glass-h-2 glass-surface-success glass-radius-full glass-animate-pulse')} />
             <span>Live reactions</span>
           </div>
         )}

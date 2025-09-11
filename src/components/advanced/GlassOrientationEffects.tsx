@@ -5,7 +5,7 @@
 
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 
 interface OrientationData {
   alpha: number; // Z-axis rotation (0-360)

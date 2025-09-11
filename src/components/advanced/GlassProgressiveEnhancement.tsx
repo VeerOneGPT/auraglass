@@ -5,7 +5,7 @@
 
 import React, { useRef, useEffect, useState, useCallback, createContext, useContext } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 
 interface DeviceCapabilities {
   gpu: {

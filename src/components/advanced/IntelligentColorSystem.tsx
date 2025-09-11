@@ -1,8 +1,8 @@
 'use client';
 
+import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { cn } from '../../lib/utilsComprehensive';
 
 interface ColorPalette {
   primary: string;
@@ -62,6 +62,20 @@ const defaultPalette: ColorPalette = {
   glassTint: 'rgba(255, 255, 255, 0.05)'
 };
 
+// Dark theme palette with high contrast text colors
+const darkThemePalette: ColorPalette = {
+  primary: '#3b82f6',
+  secondary: '#8b5cf6',
+  accent: '#06b6d4',
+  background: '#020617',
+  surface: '#1e293b',
+  text: 'rgba(255, 255, 255, 0.95)',
+  textSecondary: 'rgba(255, 255, 255, 0.80)',
+  border: 'rgba(255, 255, 255, 0.15)',
+  glassBase: 'rgba(255, 255, 255, 0.15)',
+  glassTint: 'rgba(255, 255, 255, 0.08)'
+};
+
 const IntelligentColorContext = createContext<IntelligentColorContextType | null>(null);
 
 export const useIntelligentColor = () => {
@@ -72,22 +86,37 @@ export const useIntelligentColor = () => {
   return context;
 };
 
+// Memoized color conversion functions for better performance
+const hexToRgbCache = new Map<string, [number, number, number] | null>();
 const hexToRgb = (hex: string): [number, number, number] | null => {
+  if (hexToRgbCache.has(hex)) {
+    return hexToRgbCache.get(hex)!;
+  }
+
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  return result ? [
+  const rgb = result ? [
     parseInt(result[1], 16),
     parseInt(result[2], 16),
     parseInt(result[3], 16)
   ] : null;
+
+  hexToRgbCache.set(hex, rgb);
+  return rgb;
 };
 
+const rgbToHslCache = new Map<string, [number, number, number]>();
 const rgbToHsl = (r: number, g: number, b: number): [number, number, number] => {
-  r /= 255;
-  g /= 255;
-  b /= 255;
+  const key = `${r},${g},${b}`;
+  if (rgbToHslCache.has(key)) {
+    return rgbToHslCache.get(key)!;
+  }
 
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
+  let rNorm = r / 255;
+  let gNorm = g / 255;
+  let bNorm = b / 255;
+
+  const max = Math.max(rNorm, gNorm, bNorm);
+  const min = Math.min(rNorm, gNorm, bNorm);
   let h = 0, s = 0, l = (max + min) / 2;
 
   if (max !== min) {
@@ -95,20 +124,28 @@ const rgbToHsl = (r: number, g: number, b: number): [number, number, number] => 
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
 
     switch (max) {
-      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-      case g: h = (b - r) / d + 2; break;
-      case b: h = (r - g) / d + 4; break;
+      case rNorm: h = (gNorm - bNorm) / d + (gNorm < bNorm ? 6 : 0); break;
+      case gNorm: h = (bNorm - rNorm) / d + 2; break;
+      case bNorm: h = (rNorm - gNorm) / d + 4; break;
     }
     h /= 6;
   }
 
-  return [h * 360, s * 100, l * 100];
+  const hsl: [number, number, number] = [h * 360, s * 100, l * 100];
+  rgbToHslCache.set(key, hsl);
+  return hsl;
 };
 
+const hslToHexCache = new Map<string, string>();
 const hslToHex = (h: number, s: number, l: number): string => {
-  h /= 360;
-  s /= 100;
-  l /= 100;
+  const key = `${Math.round(h)},${Math.round(s)},${Math.round(l)}`;
+  if (hslToHexCache.has(key)) {
+    return hslToHexCache.get(key)!;
+  }
+
+  let hNorm = h / 360;
+  let sNorm = s / 100;
+  let lNorm = l / 100;
 
   const hue2rgb = (p: number, q: number, t: number) => {
     if (t < 0) t += 1;
@@ -119,19 +156,21 @@ const hslToHex = (h: number, s: number, l: number): string => {
     return p;
   };
 
-  const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-  const p = 2 * l - q;
+  const q = lNorm < 0.5 ? lNorm * (1 + sNorm) : lNorm + sNorm - lNorm * sNorm;
+  const p = 2 * lNorm - q;
 
-  const r = hue2rgb(p, q, h + 1/3);
-  const g = hue2rgb(p, q, h);
-  const b = hue2rgb(p, q, h - 1/3);
+  const r = hue2rgb(p, q, hNorm + 1/3);
+  const g = hue2rgb(p, q, hNorm);
+  const b = hue2rgb(p, q, hNorm - 1/3);
 
   const toHex = (c: number) => {
     const hex = Math.round(c * 255).toString(16);
     return hex.length === 1 ? '0' + hex : hex;
   };
 
-  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  const hex = `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  hslToHexCache.set(key, hex);
+  return hex;
 };
 
 const calculateLuminance = (hex: string): number => {
@@ -189,7 +228,14 @@ const adjustColorForAccessibility = (
 };
 
 export const IntelligentColorProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentPalette, setCurrentPalette] = useState<ColorPalette>(defaultPalette);
+  // Detect if we're in a dark theme context
+  const isDarkTheme = typeof document !== 'undefined' &&
+    (document.documentElement.classList.contains('dark') ||
+     document.documentElement.getAttribute('data-theme') === 'dark');
+
+  const [currentPalette, setCurrentPalette] = useState<ColorPalette>(
+    isDarkTheme ? darkThemePalette : defaultPalette
+  );
   const [config, setConfig] = useState<ColorAdaptationConfig>({
     enabled: true,
     sensitivity: 0.7,
@@ -447,7 +493,56 @@ export const IntelligentColorProvider: React.FC<{ children: React.ReactNode }> =
     setConfig(prev => ({ ...prev, ...newConfig }));
   }, []);
 
-  // Auto-adapt to time of day
+  // Auto-adapt to theme changes - optimized
+  useEffect(() => {
+    let lastThemeCheck = 0;
+    const THEME_CHECK_DEBOUNCE = 100; // Only check theme every 100ms
+
+    const checkThemeAndUpdate = () => {
+      const now = Date.now();
+      if (now - lastThemeCheck < THEME_CHECK_DEBOUNCE) return;
+
+      lastThemeCheck = now;
+
+      const isDarkTheme = document.documentElement.classList.contains('dark') ||
+                         document.documentElement.getAttribute('data-theme') === 'dark';
+
+      // Only update if the theme state actually changed
+      const shouldBeDarkPalette = isDarkTheme;
+      const isCurrentlyDarkPalette = currentPalette.text === darkThemePalette.text;
+
+      if (shouldBeDarkPalette !== isCurrentlyDarkPalette) {
+        setCurrentPalette(shouldBeDarkPalette ? darkThemePalette : defaultPalette);
+      }
+    };
+
+    // Check theme on mount
+    checkThemeAndUpdate();
+
+    // Set up a mutation observer to watch for theme changes - less aggressive
+    const observer = new MutationObserver((mutations) => {
+      let hasRelevantChange = false;
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          hasRelevantChange = true;
+        }
+      });
+
+      if (hasRelevantChange) {
+        // Debounce the theme check
+        setTimeout(checkThemeAndUpdate, 50);
+      }
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => observer.disconnect();
+  }, [currentPalette.text]); // Add currentPalette.text to dependencies
+
+  // Auto-adapt to time of day - optimized for performance
   useEffect(() => {
     if (config.timeBasedShifts) {
       const updateTime = () => {
@@ -456,7 +551,8 @@ export const IntelligentColorProvider: React.FC<{ children: React.ReactNode }> =
       };
 
       updateTime();
-      const interval = setInterval(updateTime, 60000); // Update every minute
+      // Reduce frequency to every 5 minutes for better performance
+      const interval = setInterval(updateTime, 300000);
 
       return () => clearInterval(interval);
     }
@@ -478,12 +574,53 @@ export const IntelligentColorProvider: React.FC<{ children: React.ReactNode }> =
     }
   }, [config.seasonalAdaptation, adaptToSeason]);
 
-  // Apply CSS custom properties for the current palette
+  // Apply CSS custom properties for the current palette - optimized
   useEffect(() => {
     const root = document.documentElement;
-    Object.entries(currentPalette).forEach(([key, value]) => {
-      root.style.setProperty(`--glass-${key}`, value);
+
+    // Batch all CSS updates to minimize DOM manipulations
+    const updates: Record<string, string> = {};
+
+    // Check and queue text property updates
+    const currentTextPrimary = root.style.getPropertyValue('--glass-text-primary');
+    if (currentTextPrimary !== currentPalette.text) {
+      updates['--glass-text-primary'] = currentPalette.text;
+    }
+
+    const currentTextSecondary = root.style.getPropertyValue('--glass-text-secondary');
+    if (currentTextSecondary !== currentPalette.textSecondary) {
+      updates['--glass-text-secondary'] = currentPalette.textSecondary;
+      updates['--glass-text-tertiary'] = currentPalette.textSecondary;
+      updates['--glass-text-disabled'] = currentPalette.textSecondary;
+    }
+
+    // Check and queue background/border updates
+    const currentSurface = root.style.getPropertyValue('--glass-bg-default');
+    if (currentSurface !== currentPalette.surface) {
+      updates['--glass-bg-default'] = currentPalette.surface;
+      updates['--glass-border-default'] = currentPalette.border;
+      updates['--glass-border-subtle'] = currentPalette.border;
+      updates['--glass-gradient-default'] = `linear-gradient(135deg, ${currentPalette.surface}, ${currentPalette.glassTint})`;
+    }
+
+    // Check and queue essential palette properties
+    const essentialProps = ['primary', 'secondary', 'accent', 'background'];
+    essentialProps.forEach(key => {
+      const currentValue = root.style.getPropertyValue(`--glass-${key}`);
+      const newValue = currentPalette[key as keyof ColorPalette] as string;
+      if (currentValue !== newValue) {
+        updates[`--glass-${key}`] = newValue;
+      }
     });
+
+    // Apply all updates in a single batch
+    if (Object.keys(updates).length > 0) {
+      requestAnimationFrame(() => {
+        Object.entries(updates).forEach(([property, value]) => {
+          root.style.setProperty(property, value);
+        });
+      });
+    }
   }, [currentPalette]);
 
   const contextValue: IntelligentColorContextType = {

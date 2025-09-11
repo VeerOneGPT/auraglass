@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '@/lib/utils';
 
 export interface ChartContainerProps {
   children?: React.ReactNode;
@@ -48,7 +49,7 @@ export const ChartContainer: React.FC<ChartContainerProps> = ({
   };
 
   return (
-    <div className={className} style={containerStyle}>
+    <div className={cn('glass-chart-container', className)} style={containerStyle}>
       {children}
     </div>
   );

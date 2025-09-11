@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassAvatar } from './GlassAvatar';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassAvatar> = {
   title: 'Components/Data-display/GlassAvatar',

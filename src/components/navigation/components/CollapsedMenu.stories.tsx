@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import CollapsedMenu from './CollapsedMenu';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof CollapsedMenu> = {
   title: 'Components/Components/CollapsedMenu',

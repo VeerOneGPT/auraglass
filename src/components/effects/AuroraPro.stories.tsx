@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { AuroraPro } from './AuroraPro';
 
+import { cn } from '@/lib/utils';
 const meta: Meta<typeof AuroraPro> = {
   title: 'Effects/AuroraPro',
   component: AuroraPro,

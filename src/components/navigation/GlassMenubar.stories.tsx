@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassMenubar } from './GlassMenubar';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassMenubar> = {
   title: 'Components/Navigation/GlassMenubar',

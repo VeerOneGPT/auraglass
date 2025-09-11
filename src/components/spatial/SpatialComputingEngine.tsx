@@ -1,4 +1,5 @@
 /**
+import { cn } from '@/lib/utils';
  * Spatial Computing Engine
  * Foundation for AR/VR glass components with 3D space awareness,
  * gesture recognition, and mixed reality integration

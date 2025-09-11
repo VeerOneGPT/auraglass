@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ChartGrid } from './ChartGrid';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof ChartGrid> = {
   title: 'Components/Components/ChartGrid',

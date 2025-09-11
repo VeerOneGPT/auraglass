@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import { GlassModal } from './GlassModal';
+import { cn } from '@/lib/utils';
 import { GlassButton } from '../button/GlassButton';
 
 const meta: Meta<typeof GlassModal> = {

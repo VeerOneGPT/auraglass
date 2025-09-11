@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, forwardRef } from 'react';
+import { cn } from '@/lib/utils';
 import { OptimizedGlass, Motion } from '../../primitives';
 import { useA11yId } from '../../utils/a11y';
 import { useReducedMotion } from '../../hooks/useReducedMotion';

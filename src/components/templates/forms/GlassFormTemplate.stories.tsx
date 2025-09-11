@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassFormTemplate } from './GlassFormTemplate';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassFormTemplate> = {
   title: 'Components/Forms/GlassFormTemplate',

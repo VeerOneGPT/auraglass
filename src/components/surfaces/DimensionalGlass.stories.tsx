@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import DimensionalGlass from './DimensionalGlass';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof DimensionalGlass> = {
   title: 'Components/Surfaces/DimensionalGlass',

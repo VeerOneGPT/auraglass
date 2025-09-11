@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { cn } from '@/lib/utilsComprehensive';
 
 export interface AtmosphericEffectsProps {
   qualityTier?: 'low' | 'medium' | 'high' | 'ultra';

@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassFileUpload } from './GlassFileUpload';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassFileUpload> = {
   title: 'Components/Interactive/GlassFileUpload',

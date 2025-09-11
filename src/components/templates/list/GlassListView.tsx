@@ -10,7 +10,7 @@ import { VStack, HStack } from '../../../components/layout/GlassStack';
 import { GlassGrid, GlassGridItem } from '../../../components/layout/GlassGrid';
 import { GlassCard } from '../../../components/card/GlassCard';
 import { GlassInput } from '../../../components/input/GlassInput';
-import { cn } from '../../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 
 export interface ListItem {
   id: string;

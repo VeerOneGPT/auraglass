@@ -1,8 +1,8 @@
-import React, { useEffect, useState, memo, useCallback } from 'react';
-import { OptimizedGlass } from '../../primitives';
-import { useAccessibleAnimation } from '../../hooks/useAccessibilitySettings';
-import { GlassComponentErrorBoundary } from '../../utils/errorBoundary';
 import { cn } from '@/lib/utils';
+import React, { memo, useCallback, useEffect, useState } from 'react';
+import { useAccessibleAnimation } from '../../hooks/useAccessibilitySettings';
+import { OptimizedGlass } from '../../primitives';
+import { GlassComponentErrorBoundary } from '../../utils/errorBoundary';
 
 export interface GlassSkeletonLoaderProps {
   /** Whether the loader is active */

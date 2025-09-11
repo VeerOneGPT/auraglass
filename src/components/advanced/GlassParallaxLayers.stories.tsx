@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassParallaxLayers, parallaxPresets } from './GlassParallaxLayers';
 
+import { cn } from '@/lib/utils';
 const meta = {
   title: 'Advanced/GlassParallaxLayers',
   component: GlassParallaxLayers,

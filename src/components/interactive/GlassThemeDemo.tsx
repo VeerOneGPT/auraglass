@@ -7,7 +7,7 @@
  * Migrated to use OptimizedGlass architecture.
  */
 import React, { forwardRef, useState } from 'react';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 import { OptimizedGlass, Motion } from '../../primitives';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 

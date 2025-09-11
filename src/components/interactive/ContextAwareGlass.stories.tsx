@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ContextAwareGlass } from './ContextAwareGlass';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof ContextAwareGlass> = {
   title: 'Components/Interactive/ContextAwareGlass',

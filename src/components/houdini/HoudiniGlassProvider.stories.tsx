@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { HoudiniGlassCard, HoudiniGlassShowcase } from './HoudiniGlassCard';
 import { HoudiniGlassProvider } from './HoudiniGlassProvider';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof HoudiniGlassProvider> = {
   title: 'Houdini/HoudiniGlassProvider',

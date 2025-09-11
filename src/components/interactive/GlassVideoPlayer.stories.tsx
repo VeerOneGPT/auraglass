@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { GlassVideoPlayer } from './GlassVideoPlayer';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassVideoPlayer> = {
   title: 'Components/Interactive/GlassVideoPlayer',

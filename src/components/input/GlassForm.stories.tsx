@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useForm } from 'react-hook-form';
+import { cn } from '@/lib/utils';
 import {
   GlassForm,
   GlassFormField,

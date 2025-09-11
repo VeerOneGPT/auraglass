@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassShatterEffects } from './GlassShatterEffects';
 
+import { cn } from '@/lib/utils';
 const meta: Meta<typeof GlassShatterEffects> = {
   title: 'Effects/GlassShatterEffects',
   component: GlassShatterEffects,

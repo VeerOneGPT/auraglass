@@ -3,7 +3,7 @@
 import React, { forwardRef, useState, useEffect, useMemo, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { OptimizedGlass } from '../../primitives'
-import { cn } from '../../lib/utilsComprehensive'
+import { cn } from '@/lib/utils'
 import { createGlassStyle } from '../../utils/createGlassStyle'
 import { useGlassSound } from '../../utils/soundDesign'
 import { useA11yId } from '../../utils/a11y'
@@ -176,7 +176,7 @@ export const GlassCollaborativeCursor = forwardRef<HTMLDivElement, GlassCollabor
 
     const CursorIcon = ({ user, size }: { user: CursorUser; size: number }) => (
       <motion.div
-        className="absolute pointer-events-none z-50"
+        className={cn('glass-absolute glass-pointer-events-none glass-z-50')}
         style={{
           left: user.x,
           top: user.y,
@@ -212,7 +212,7 @@ export const GlassCollaborativeCursor = forwardRef<HTMLDivElement, GlassCollabor
 
     const CursorLabel = ({ user }: { user: CursorUser }) => (
       <motion.div
-        className="absolute pointer-events-none z-40"
+        className={cn('glass-absolute glass-pointer-events-none glass-z-40')}
         style={{
           left: user.x + 15,
           top: user.y - 5
@@ -225,20 +225,20 @@ export const GlassCollaborativeCursor = forwardRef<HTMLDivElement, GlassCollabor
         transition={{ duration: 0.2 }}
       >
         <div
-          className="px-2 py-1 rounded text-xs font-medium text-white border border-white/20"
+          className={cn('glass-px-2 glass-py-1 glass-radius-md glass-text-xs glass-font-medium glass-text-primary glass-border glass-border-white/20')}
           style={createGlassStyle({ opacity: 0.8, blur: 'sm' })}
         >
-          <div className="flex items-center space-x-1">
+          <div className={cn('glass-flex glass-items-center glass-space-x-1')}>
             {showAvatars && user.avatar && (
               <img 
                 src={user.avatar} 
                 alt={user.name}
-                className="w-4 h-4 rounded-full"
+                className={cn('glass-w-4 glass-h-4 glass-radius-full')}
               />
             )}
             <span>{user.name}</span>
             {showActions && user.action !== 'idle' && (
-              <span className="text-xs opacity-75">
+              <span className={cn('glass-text-xs glass-opacity-75')}>
                 {user.action === 'typing' && '✏️'}
                 {user.action === 'selecting' && '🔍'}
                 {user.action === 'drawing' && '✨'}
@@ -286,7 +286,7 @@ export const GlassCollaborativeCursor = forwardRef<HTMLDivElement, GlassCollabor
 
       return (
         <motion.div
-          className="absolute pointer-events-none border-2 border-dashed"
+          className={cn('glass-absolute glass-pointer-events-none glass-border-2 glass-border-dashed')}
           style={{
             left: x,
             top: y,
@@ -316,13 +316,13 @@ export const GlassCollaborativeCursor = forwardRef<HTMLDivElement, GlassCollabor
         ref={ref}
         id={id}
         intensity="subtle"
-        className={`relative overflow-hidden min-h-96 ${className}`}
+        className={cn('glass-relative glass-overflow-hidden glass-min-h-96', className)}
         {...props}
       >
-        <div className="absolute inset-0">
+        <div className={cn('glass-absolute glass-inset-0')}>
           {/* Cursor trails */}
           {showCursorTails && (
-            <svg className="absolute inset-0 pointer-events-none" style={{ zIndex: 10 }}>
+            <svg className={cn('glass-absolute glass-inset-0 glass-pointer-events-none')} style={{ zIndex: 10 }}>
               {activeCursors.map(user => (
                 <CursorTrail key={user.id} userId={user.id} />
               ))}
@@ -358,44 +358,44 @@ export const GlassCollaborativeCursor = forwardRef<HTMLDivElement, GlassCollabor
         </div>
 
         {/* Demo content */}
-        <div className="relative z-0 p-8 space-y-4 text-white/80">
-          <h2 className="text-2xl font-bold">Collaborative Workspace</h2>
+        <div className={cn('glass-relative glass-z-0 glass-p-8 glass-space-y-4 glass-text-secondary')}>
+          <h2 className={cn('glass-text-2xl glass-font-bold')}>Collaborative Workspace</h2>
           <p>This is a collaborative document where multiple users can work together.</p>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 bg-white/5 rounded-lg">
-              <h3 className="font-semibold mb-2">Section A</h3>
+          <div className={cn('glass-grid glass-grid-cols-2 glass-gap-4')}>
+            <div className={cn('glass-p-4 glass-surface-secondary glass-radius-lg')}>
+              <h3 className={cn('glass-font-semibold glass-mb-2')}>Section A</h3>
               <p>Content that users can interact with...</p>
             </div>
-            <div className="p-4 bg-white/5 rounded-lg">
-              <h3 className="font-semibold mb-2">Section B</h3>
+            <div className={cn('glass-p-4 glass-surface-secondary glass-radius-lg')}>
+              <h3 className={cn('glass-font-semibold glass-mb-2')}>Section B</h3>
               <p>More interactive content here...</p>
             </div>
           </div>
         </div>
 
         {/* Status bar */}
-        <div className="absolute bottom-0 left-0 right-0 p-3 bg-black/20 backdrop-blur-sm border-t border-white/10">
-          <div className="flex items-center justify-between text-xs text-white/60">
-            <div className="flex items-center space-x-4">
+        <div className={cn('glass-absolute glass-bottom-0 glass-left-0 glass-right-0 glass-p-3 glass-surface-overlay glass-blur-backdrop glass-border-t glass-border-white/10')}>
+          <div className={cn('glass-flex glass-items-center glass-justify-between glass-text-xs glass-text-muted')}>
+            <div className={cn('glass-flex glass-items-center glass-space-x-4')}>
               <span>{activeCursors.length} active users</span>
               {realTimeMode && (
-                <span className="flex items-center space-x-1">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                <span className={cn('glass-flex glass-items-center glass-space-x-1')}>
+                  <div className={cn('glass-w-2 glass-h-2 glass-surface-success glass-radius-full glass-animate-pulse')} />
                   <span>Real-time</span>
                 </span>
               )}
             </div>
-            <div className="flex items-center space-x-2">
+            <div className={cn('glass-flex glass-items-center glass-space-x-2')}>
               {activeCursors.slice(0, 5).map(user => (
                 <div
                   key={user.id}
-                  className="w-3 h-3 rounded-full border border-white/30"
+                  className={cn('glass-w-3 glass-h-3 glass-radius-full glass-border glass-border-white/30')}
                   style={{ backgroundColor: getUserColor(user.id) }}
                   title={user.name}
                 />
               ))}
               {activeCursors.length > 5 && (
-                <span className="text-xs">+{activeCursors.length - 5}</span>
+                <span className={cn('glass-text-xs')}>+{activeCursors.length - 5}</span>
               )}
             </div>
           </div>

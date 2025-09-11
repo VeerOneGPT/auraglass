@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassSparkline } from './GlassSparkline';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassSparkline> = {
   title: 'Components/Data-display/GlassSparkline',

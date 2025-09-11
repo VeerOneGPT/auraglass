@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ModularGlassDataChart } from './ModularGlassDataChart';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof ModularGlassDataChart> = {
   title: 'Components/Charts/ModularGlassDataChart',

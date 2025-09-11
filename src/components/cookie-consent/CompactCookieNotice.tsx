@@ -1,5 +1,6 @@
 import React, { forwardRef, useEffect, useState, useMemo, useCallback } from 'react';
 import styled, { css } from 'styled-components';
+import { cn } from '@/lib/utils';
 
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { createThemeContext } from '../../core/themeContext';

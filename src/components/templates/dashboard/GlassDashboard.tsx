@@ -8,7 +8,7 @@ import { GlassCard } from '../../card/GlassCard';
 import { GlassButton, IconButton } from '../../button/GlassButton';
 import { PageHeader } from '../../layout/GlassAppShell';
 import { VStack, HStack } from '../../layout/GlassStack';
-import { cn } from '../../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 
 export interface DashboardWidget {
   id: string;

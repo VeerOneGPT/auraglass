@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassLoadingSkeleton } from './GlassLoadingSkeleton';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassLoadingSkeleton> = {
   title: 'Components/Data-display/GlassLoadingSkeleton',

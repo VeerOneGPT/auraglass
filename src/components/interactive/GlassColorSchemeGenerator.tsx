@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
+import { cn } from '@/lib/utils';
 import { OptimizedGlass } from '../../primitives';
 
 export interface ColorScheme {

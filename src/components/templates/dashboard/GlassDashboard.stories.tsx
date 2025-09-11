@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassDashboard } from './GlassDashboard';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassDashboard> = {
   title: 'Components/Dashboard/GlassDashboard',

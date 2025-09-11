@@ -5,7 +5,7 @@
 
 import React, { useEffect, useRef, useState, useCallback, createContext, useContext, forwardRef } from 'react';
 import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 import { OptimizedGlass } from '../../primitives';
 import { useA11yId } from '@/utils/a11y';
 import { useMotionPreferenceContext } from '@/contexts/MotionPreferenceContext';

@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassToggle } from './GlassToggle';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassToggle> = {
   title: 'Components/Input/GlassToggle',

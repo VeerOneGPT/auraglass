@@ -16,7 +16,7 @@ import {
     Wifi
 } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 
 interface CollaborativeGlassWorkspaceProps {
   workspaceId: string;

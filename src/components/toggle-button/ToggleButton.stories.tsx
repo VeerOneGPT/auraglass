@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ToggleButton } from './ToggleButton';
+import { cn } from '@/lib/utils';
 import { Star, Heart, ThumbsUp } from 'lucide-react';
 
 const meta: Meta<typeof ToggleButton> = {

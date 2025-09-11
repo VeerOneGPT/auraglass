@@ -1,6 +1,7 @@
 'use client';
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { cn } from '@/lib/utilsComprehensive';
 
 
 interface HoudiniGlassContextType {

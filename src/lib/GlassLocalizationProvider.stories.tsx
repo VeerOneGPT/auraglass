@@ -36,7 +36,7 @@ const DateDisplayComponent = () => {
         <p className="glass-text-sm opacity-80">Using the Glass Localization Provider for date operations.</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 glass-gaglass-p-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 glass-gap-4 glass-p-4">
         <GlassCard>
           <div className="glass-p-4">
             <h4 className="font-medium mb-2">Current Date</h4>

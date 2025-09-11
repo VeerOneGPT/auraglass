@@ -7,6 +7,7 @@
 // Typography tokens available via typography.css (imported in index.css)
 import React, { useMemo, useState, useRef, useCallback, useEffect, forwardRef, useImperativeHandle, memo } from 'react';
 import styled, { DefaultTheme } from 'styled-components';
+import { cn } from '@/lib/utils';
 
 import { usePhysicsInteraction } from '../../hooks/usePhysicsInteraction';
 import { zSpaceLayers } from '../../core/zspace';
@@ -1057,7 +1058,13 @@ const GlassChartComponent = forwardRef<GlassChartRef, GlassChartProps>(({
         ...(magneticProps ? magneticProps.style : {}),
         ...(isFocused && depthAnimation ? depthStyles : {}),
       }}
-      className={`${className || ''} ${gazeResponsive && currentDataFocus ? 'chart-gaze-focused' : ''} ${isPreloading ? 'chart-preloading' : ''} ${adaptiveComplexity === 'low' ? 'chart-simplified' : adaptiveComplexity === 'high' ? 'chart-enhanced' : ''}`}
+      className={cn(
+        className,
+        gazeResponsive && currentDataFocus && 'glass-chart-gaze-focused',
+        isPreloading && 'glass-chart-preloading',
+        adaptiveComplexity === 'low' && 'glass-chart-simplified',
+        adaptiveComplexity === 'high' && 'glass-chart-enhanced'
+      )}
       onClick={handleFocusToggle}
       data-chart-type={currentType}
       data-usage-context={usageContext}

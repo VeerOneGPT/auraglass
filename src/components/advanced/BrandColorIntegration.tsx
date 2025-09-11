@@ -1,10 +1,10 @@
 'use client'
 
+import { cn } from '@/lib/utilsComprehensive'
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 import './BrandColorIntegration.css'
 import { useIntelligentColor } from './IntelligentColorSystem'
-import { cn } from '@/lib/utilsComprehensive'
 
 interface EntityBrandColors {
   entityId: string
@@ -37,7 +37,7 @@ export default function BrandColorIntegration({
     primary: '#3b82f6',
     secondary: '#1e40af'
   },
-  animationDuration = 1000,
+  animationDuration = 600,
   className = '',
   children
 }: BrandColorIntegrationProps) {
@@ -48,8 +48,8 @@ export default function BrandColorIntegration({
 
   // Mock brand color API - replace with actual API call
   const fetchEntityBrandColors = async (id: string): Promise<EntityBrandColors> => {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500))
+    // Simulate API delay - reduced for better performance
+    await new Promise(resolve => setTimeout(resolve, 50))
 
     // Mock data - replace with actual API response
     const mockColors: Record<string, EntityBrandColors> = {
@@ -100,25 +100,48 @@ export default function BrandColorIntegration({
       return
     }
 
+    let isMounted = true;
+    let timeoutId: NodeJS.Timeout;
+
     setIsLoading(true)
+
     fetchEntityBrandColors(entityId)
       .then(colors => {
-        setEntityColors(colors)
-        setColorTransition(true)
-        // Reset transition state after animation
-        setTimeout(() => setColorTransition(false), animationDuration)
+        if (isMounted) {
+          setEntityColors(colors)
+          setColorTransition(true)
+          // Reset transition state after animation
+          timeoutId = setTimeout(() => {
+            if (isMounted) {
+              setColorTransition(false)
+            }
+          }, animationDuration)
+        }
       })
       .catch(error => {
         console.error('Failed to fetch brand colors:', error)
-        setEntityColors({
-          entityId,
-          primaryColor: fallbackColors.primary,
-          secondaryColor: fallbackColors.secondary,
-          colorHistory: []
-        })
+        if (isMounted) {
+          setEntityColors({
+            entityId,
+            primaryColor: fallbackColors.primary,
+            secondaryColor: fallbackColors.secondary,
+            colorHistory: []
+          })
+        }
       })
-      .finally(() => setIsLoading(false))
-  }, [entityId, fallbackColors, animationDuration])
+      .finally(() => {
+        if (isMounted) {
+          setIsLoading(false)
+        }
+      })
+
+    return () => {
+      isMounted = false
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+    }
+  }, [entityId, fallbackColors.primary, fallbackColors.secondary]) // Remove animationDuration from deps
 
   // Adapt to brand colors when they change
   useEffect(() => {
@@ -163,7 +186,7 @@ export default function BrandColorIntegration({
       animate={colorTransition ? {
         background: [
           'transparent',
-          `${entityColors?.primaryColor}08`,
+          `${entityColors?.primaryColor}04`,
           'transparent'
         ]
       } : {}}
@@ -191,7 +214,7 @@ export default function BrandColorIntegration({
               <motion.div
                 className={cn("glass-w-5 glass-h-5 glass-border-2 glass-border-primary glass-border-t-transparent glass-radius-full")}
                 animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
               />
               <span className="text-sm">Loading brand colors...</span>
             </motion.div>
@@ -237,8 +260,8 @@ export default function BrandColorIntegration({
               borderRadius: 'inherit'
             }}
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1.1 }}
-            exit={{ opacity: 0, scale: 1.2 }}
+            animate={{ opacity: 1, scale: 1.02 }}
+            exit={{ opacity: 0, scale: 1.05 }}
             transition={{ duration: animationDuration / 1000, ease: 'easeOut' }}
           />
         )}
@@ -309,13 +332,13 @@ export function BrandGlassButton({
       onMouseUp={() => setIsPressed(false)}
       onMouseLeave={() => setIsPressed(false)}
       whileHover={!disabled ? {
-        scale: 1.02,
-        y: -1,
+        scale: 1.01,
+        y: -0.5,
         boxShadow: variant === 'primary'
-          ? 'var(--brand-shadow-primary, 0 12px 40px rgba(59, 130, 246, 0.3))'
-          : 'var(--brand-shadow-secondary, 0 12px 40px rgba(30, 64, 175, 0.3))'
+          ? 'var(--brand-shadow-primary, 0 8px 24px rgba(59, 130, 246, 0.2))'
+          : 'var(--brand-shadow-secondary, 0 8px 24px rgba(30, 64, 175, 0.2))'
       } : {}}
-      whileTap={!disabled ? { scale: 0.98, y: 0 } : {}}
+      whileTap={!disabled ? { scale: 0.99, y: 0 } : {}}
       animate={{
         opacity: disabled ? 0.5 : 1,
         filter: disabled ? 'grayscale(1)' : 'grayscale(0)'
@@ -331,10 +354,10 @@ export function BrandGlassButton({
           background: `radial-gradient(circle at center, var(--brand-${variant}, rgba(59, 130, 246, 0.2)) 0%, transparent 70%)`
         }}
         animate={isPressed ? {
-          scale: [1, 1.2, 1],
-          opacity: [0, 0.3, 0]
+          scale: [1, 1.1, 1],
+          opacity: [0, 0.2, 0]
         } : {}}
-        transition={{ duration: 0.3, ease: 'easeOut' }}
+        transition={{ duration: 0.2, ease: 'easeOut' }}
       />
     </motion.button>
   )

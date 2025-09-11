@@ -5,6 +5,7 @@
  */
 import React, { forwardRef, useRef, useEffect, useState, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
+import { cn } from '@/lib/utils';
 
 import { OptimizedGlass } from '../../primitives';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -326,7 +327,7 @@ const ParticleBackgroundComponent = (
   return (
     <CanvasContainer 
       ref={setRefs} 
-      className={className} 
+      className={cn('glass-particle-background', className)} 
       style={style}
       $intent={intent}
       $elevation={elevation}

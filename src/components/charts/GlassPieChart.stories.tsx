@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassPieChart } from './GlassPieChart';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassPieChart> = {
   title: 'Components/Charts/GlassPieChart',

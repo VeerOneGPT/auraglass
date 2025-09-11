@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassHoverCard } from './GlassHoverCard';
+import { cn } from '@/lib/utils';
 import { Info, User, Settings } from 'lucide-react';
 
 const meta: Meta<typeof GlassHoverCard> = {

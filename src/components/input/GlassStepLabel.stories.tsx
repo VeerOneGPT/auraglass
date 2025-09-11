@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassStepLabel } from './GlassStepLabel';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassStepLabel> = {
   title: 'Components/Input/GlassStepLabel',

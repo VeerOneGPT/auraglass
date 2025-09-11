@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ImageListItem } from './ImageListItem';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof ImageListItem> = {
   title: 'Components/Image-list/ImageListItem',

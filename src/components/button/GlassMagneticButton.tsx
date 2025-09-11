@@ -1,4 +1,5 @@
 import React, { useRef, useState, useCallback, useEffect, forwardRef, CSSProperties } from 'react';
+import { cn } from '@/lib/utils';
 import { GlassButton, GlassButtonProps } from './GlassButton';
 import { Slot } from '@radix-ui/react-slot';
 import { Motion } from '../../primitives';
@@ -236,7 +237,7 @@ export const MagneticButton = forwardRef<HTMLElement, MagneticButtonProps>(funct
   return (
     <Motion
       preset="none"
-      className="inline-block"
+      className={cn('glass-inline-block')}
     >
       <Comp
         ref={combinedRef}

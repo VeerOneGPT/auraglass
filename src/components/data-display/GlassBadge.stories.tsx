@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassBadge } from './GlassBadge';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassBadge> = {
   title: 'Components/Data-display/GlassBadge',

@@ -5,6 +5,7 @@
 
 import type { Meta, StoryObj } from '@storybook/react';
 import React, { useState } from 'react';
+import { cn } from '@/lib/utils';
 import {
   GlassAchievementProvider,
   GlassAchievementNotifications,

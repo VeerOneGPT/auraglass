@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassDiffViewer } from './GlassDiffViewer';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassDiffViewer> = {
   title: 'Components/Data-display/GlassDiffViewer',

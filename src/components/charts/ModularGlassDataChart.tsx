@@ -5,6 +5,7 @@
  * components for chart rendering, tooltips, filters, and KPI display.
  */
 import React, { useState, useRef, useEffect, useCallback, useImperativeHandle } from 'react';
+import { cn } from '@/lib/utils';
 
 // Consciousness interface imports
 import { usePredictiveEngine, useInteractionRecorder } from '../advanced/GlassPredictiveEngine';
@@ -738,7 +739,13 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
   if (chartType === ('kpi' as ChartVariant) && kpi) {
     return (
       <ChartContainer
-        className={`${className || ''} ${gazeResponsive && currentDataFocus ? 'chart-gaze-focused' : ''} ${isPreloading ? 'chart-preloading' : ''} ${adaptiveComplexity === 'low' ? 'chart-simplified' : adaptiveComplexity === 'high' ? 'chart-enhanced' : ''}`}
+        className={cn(
+          className,
+          gazeResponsive && currentDataFocus && 'glass-chart-gaze-focused',
+          isPreloading && 'glass-chart-preloading',
+          adaptiveComplexity === 'low' && 'glass-chart-simplified',
+          adaptiveComplexity === 'high' && 'glass-chart-enhanced'
+        )}
         style={{
           ...style,
           width,
@@ -816,7 +823,13 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
   // Render standard chart with consciousness enhancements
   return (
     <ChartContainer
-      className={`${className || ''} ${gazeResponsive && currentDataFocus ? 'chart-gaze-focused' : ''} ${isPreloading ? 'chart-preloading' : ''} ${adaptiveComplexity === 'low' ? 'chart-simplified' : adaptiveComplexity === 'high' ? 'chart-enhanced' : ''}`}
+      className={cn(
+        className,
+        gazeResponsive && currentDataFocus && 'glass-chart-gaze-focused',
+        isPreloading && 'glass-chart-preloading',
+        adaptiveComplexity === 'low' && 'glass-chart-simplified',
+        adaptiveComplexity === 'high' && 'glass-chart-enhanced'
+      )}
       style={{
         ...style,
         width,

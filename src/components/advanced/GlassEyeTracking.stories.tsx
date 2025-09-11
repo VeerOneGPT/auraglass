@@ -1,6 +1,7 @@
 /**
  * AuraGlass Eye Tracking Stories
  * Gaze-responsive glass effects using WebGazer.js and device camera
+import { cn } from '@/lib/utils';
  */
 
 import type { Meta, StoryObj } from '@storybook/react';

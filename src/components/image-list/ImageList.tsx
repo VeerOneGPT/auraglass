@@ -5,6 +5,7 @@
  */
 import React, { forwardRef, createContext, useMemo, useRef, useEffect } from 'react';
 import styled from 'styled-components';
+import { cn } from '@/lib/utils';
 
 // Animation sequence hook removed for simplicity
 

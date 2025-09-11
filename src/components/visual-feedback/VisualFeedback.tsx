@@ -5,6 +5,7 @@
  */
 import React, { forwardRef, useState, useRef, useEffect } from 'react';
 import styled, { keyframes, css } from 'styled-components';
+import { cn } from '@/lib/utils';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
@@ -223,7 +224,7 @@ function VisualFeedbackComponent(
   return (
     <FeedbackContainer
       ref={setRefs}
-      className={className}
+      className={cn('glass-visual-feedback', className)}
       style={style}
       onClick={effect === 'ripple' ? handleRipple : undefined}
       $effect={effect}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { cn } from '@/lib/utils';
 import { OptimizedGlass } from '../../primitives';
 
 export interface ComponentExample {

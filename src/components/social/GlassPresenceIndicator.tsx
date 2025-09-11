@@ -2,6 +2,7 @@
 
 import React, { forwardRef, useState, useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
+import { cn } from '@/lib/utils'
 import { OptimizedGlass } from '../../primitives'
 import { useGlassSound } from '../../utils/soundDesign'
 import { useA11yId } from '../../utils/a11y'

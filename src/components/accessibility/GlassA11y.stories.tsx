@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { GlassA11y } from './GlassA11y';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassA11y> = {
   title: 'Accessibility/GlassA11y',
@@ -28,6 +30,10 @@ const meta: Meta<typeof GlassA11y> = {
     className: {
       control: 'text',
       description: 'Additional CSS classes'
+    },
+    onConfigChange: {
+      action: 'config changed',
+      description: 'Called when accessibility configuration changes'
     }
   }
 };
@@ -39,7 +45,8 @@ export const Default: Story = {
   args: {
     showDashboard: true,
     enableTesting: true,
-    position: 'fixed'
+    position: 'fixed',
+    onConfigChange: fn()
   },
   render: (args) => (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 p-8">
@@ -91,7 +98,8 @@ export const TestingMode: Story = {
   args: {
     showDashboard: true,
     enableTesting: true,
-    position: 'fixed'
+    position: 'fixed',
+    onConfigChange: fn()
   },
   render: (args) => (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100 dark:from-gray-900 dark:to-gray-800 p-8">
@@ -137,7 +145,8 @@ export const HighContrast: Story = {
     showDashboard: true,
     enableTesting: false,
     position: 'relative',
-    className: 'custom-accessibility-theme'
+    className: 'custom-accessibility-theme',
+    onConfigChange: fn()
   },
   render: (args) => (
     <div className="min-h-screen bg-black p-8">
@@ -171,7 +180,8 @@ export const Minimal: Story = {
   args: {
     showDashboard: true,
     enableTesting: false,
-    position: 'relative'
+    position: 'relative',
+    onConfigChange: fn()
   },
   render: (args) => (
     <div className="min-h-screen bg-white p-8">

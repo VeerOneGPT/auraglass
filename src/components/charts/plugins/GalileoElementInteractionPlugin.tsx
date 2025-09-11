@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '@/lib/utils';
 import { ChartPlugin, ChartEvent, ChartDataPoint, ChartSeries, ChartEventType } from '../types';
 import { createGlassStyle } from '../../../core/mixins/glassMixins';
 
@@ -102,7 +103,7 @@ export class GalileoElementInteractionPlugin implements ChartPlugin {
     // Return overlay elements for interactions
     return (
       <div
-        className="galileo-interaction-overlay"
+        className={cn('galileo-interaction-overlay')}
         style={{
           position: 'absolute',
           top: 0,
@@ -116,7 +117,7 @@ export class GalileoElementInteractionPlugin implements ChartPlugin {
         {Array.from(this.elements.entries()).map(([id, element]) => (
           <div
             key={id}
-            className={`galileo-element-${id}`}
+            className={cn(`galileo-element-${id}`)}
             style={{
               position: 'absolute',
               borderRadius: '50%',

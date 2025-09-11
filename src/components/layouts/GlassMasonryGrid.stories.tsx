@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassMasonryGrid, type MasonryItem } from './GlassMasonryGrid';
 
+import { cn } from '@/lib/utils';
 // Generate mock items with varying heights and content
 const generateMockItems = (count: number): MasonryItem[] => {
   const categories = ['photos', 'quotes', 'articles', 'videos', 'recipes'];

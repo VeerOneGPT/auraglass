@@ -1,5 +1,6 @@
 import React, { forwardRef, useState, useRef, useEffect, useCallback } from 'react';
 import styled, { css, keyframes } from 'styled-components';
+import { cn } from '@/lib/utils';
 
 import { createThemeContext } from '../../core/themeContext';
 import { ZLayer } from '../../core/zspace';
@@ -542,7 +543,7 @@ export const DynamicAtmosphere = forwardRef<HTMLDivElement, DynamicAtmospherePro
             (ref as React.MutableRefObject<HTMLDivElement | null>).current = node!;
           }
         }}
-        className={className}
+        className={cn('glass-dynamic-atmosphere', className)}
         $width={widthValue}
         $height={heightValue}
         $fullSize={fullSize}

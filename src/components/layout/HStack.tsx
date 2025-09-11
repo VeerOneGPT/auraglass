@@ -1,4 +1,5 @@
 'use client';
+import { cn } from '@/lib/utilsComprehensive';
 
 import { useMotionPreferenceContext } from '@/contexts/MotionPreferenceContext';
 import { useA11yId } from '@/utils/a11y';

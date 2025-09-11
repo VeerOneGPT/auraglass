@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { GlassFab } from './GlassFab';
+import { cn } from '@/lib/utils';
 import { useParallax } from '../../hooks/useParallax';
 
 const meta: Meta<typeof GlassFab> = {

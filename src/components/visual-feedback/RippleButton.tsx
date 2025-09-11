@@ -5,6 +5,7 @@
  */
 import React, { forwardRef, useState, useRef, useCallback } from 'react';
 import styled, { css } from 'styled-components';
+import { cn } from '@/lib/utils';
 
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { GlassButton as Button } from '../button';
@@ -195,7 +196,7 @@ function RippleButtonComponent(
     <RippleWrapper 
         ref={wrapperRef} 
         style={{ "--ripple-color-rgb": rippleColorRgb } as React.CSSProperties}
-        className={className} // Pass className to wrapper for styling
+        className={cn('glass-ripple-button', className)} // Pass className to wrapper for styling
     >
       <Button
         ref={ref} // Forward the ref to the underlying Button

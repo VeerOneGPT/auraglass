@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { GlassCommandBar } from './GlassCommandBar';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassCommandBar> = {
   title: 'Components/Navigation/GlassCommandBar',

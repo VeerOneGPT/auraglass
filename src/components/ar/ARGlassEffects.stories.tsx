@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ARGlassEffects } from './ARGlassEffects';
 
+import { cn } from '@/lib/utils';
 const meta: Meta<typeof ARGlassEffects> = {
   title: 'AR/ARGlassEffects',
   component: ARGlassEffects,

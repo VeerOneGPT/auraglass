@@ -2,7 +2,7 @@ import React from 'react';
 "use client";
 
 import { useAnimationDuration, useMotionAwareAnimation } from '../../hooks/useMotionPreference';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState, memo } from 'react';
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '@/lib/utils';
 
 // Localized semantic colors to avoid cross-package imports
 const semanticColors = {

@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { TreeItem } from './TreeItem';
+import { cn } from '@/lib/utils';
 import { TreeView } from './TreeView';
 
 const meta: Meta<typeof TreeItem> = {

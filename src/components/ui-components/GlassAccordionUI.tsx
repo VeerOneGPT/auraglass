@@ -7,6 +7,8 @@
  * @deprecated Use GlassAccordion from @/design-system/components/data-display instead
  */
 
+import { cn } from '@/lib/utilsComprehensive';
+
 // Re-export Glass components with legacy names
 export {
   GlassAccordion as Accordion,

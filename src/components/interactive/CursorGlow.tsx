@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, forwardRef } from 'react';
+import { cn } from '@/lib/utils';
+import { forwardRef, useEffect, useRef } from 'react';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useA11yId } from '../../utils/a11y';
-import { cn } from '@/lib/utils';
 
 export interface CursorGlowProps {
   size?: number; // diameter in px

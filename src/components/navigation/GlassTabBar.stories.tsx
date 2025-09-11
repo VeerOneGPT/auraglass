@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { GlassTabBar } from './GlassTabBar';
+import { cn } from '@/lib/utils';
 import { useParallax } from '../../hooks/useParallax';
 import { fn } from '@storybook/test';
 

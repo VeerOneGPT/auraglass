@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 import { Motion } from '../../primitives';
 
 interface GlassCardLinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {

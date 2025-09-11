@@ -1,4 +1,5 @@
 import React from 'react';
+import { cn } from '@/lib/utils';
 "use client";
 
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";

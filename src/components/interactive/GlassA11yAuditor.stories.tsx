@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassA11yAuditor } from './GlassA11yAuditor';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassA11yAuditor> = {
   title: 'Components/Interactive/GlassA11yAuditor',

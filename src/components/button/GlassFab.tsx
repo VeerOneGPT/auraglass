@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef, useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { createButtonA11y, useA11yId, announceToScreenReader } from '../../utils/a11y';

@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useRef, forwardRef, useImperativeHandle } from 'react';
-import { OptimizedGlass } from '../../primitives';
-import { useA11yId } from '../../utils/a11y';
-import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 import { cn } from '@/lib/utils';
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { OptimizedGlass } from '../../primitives';
 
 export interface GlassAnimatedNumberProps {
   /** The target number to animate to */

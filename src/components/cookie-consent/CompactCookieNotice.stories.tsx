@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CompactCookieNotice } from './CompactCookieNotice';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof CompactCookieNotice> = {
   title: 'Components/Cookie-consent/CompactCookieNotice',

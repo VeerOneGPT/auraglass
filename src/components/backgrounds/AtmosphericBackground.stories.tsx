@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import AtmosphericBackground from './AtmosphericBackground';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof AtmosphericBackground> = {
   title: 'Components/Backgrounds/AtmosphericBackground',

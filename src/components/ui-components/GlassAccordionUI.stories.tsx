@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassAccordion as GlassAccordionUI } from '../data-display/GlassAccordion';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof GlassAccordionUI> = {
   title: 'Components/Ui-components/GlassAccordionUI',

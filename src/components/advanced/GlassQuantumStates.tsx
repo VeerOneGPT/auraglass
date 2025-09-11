@@ -6,7 +6,7 @@
 
 import React, { useEffect, useRef, useState, useCallback, createContext, useContext } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
-import { cn } from '../../lib/utilsComprehensive';
+import { cn } from '@/lib/utils';
 
 // Quantum state types
 interface QuantumState<T = any> {

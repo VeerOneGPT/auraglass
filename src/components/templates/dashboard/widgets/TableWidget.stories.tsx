@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { TableWidget } from './TableWidget';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof TableWidget> = {
   title: 'Components/Widgets/TableWidget',

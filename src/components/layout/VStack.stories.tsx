@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { VStack } from './VStack';
+import { cn } from '@/lib/utils';
 
 const meta: Meta<typeof VStack> = {
   title: 'Components/Layout/VStack',
