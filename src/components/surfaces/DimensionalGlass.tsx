@@ -6,7 +6,7 @@
  * A modern glass surface with enhanced depth and dimensional effects.
  * Migrated to use OptimizedGlass architecture.
  */
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { forwardRef } from 'react';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { Motion, OptimizedGlass } from '../../primitives';

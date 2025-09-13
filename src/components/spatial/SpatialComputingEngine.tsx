@@ -141,7 +141,7 @@ const detectSpatialContext = (): SpatialContext => {
 
 export const SpatialComputingEngine: React.FC<SpatialComputingEngineProps> = ({
   children,
-  className = '',
+  className='',
   position = {},
   bounds,
   enableGestures = true,
@@ -485,7 +485,7 @@ export const SpatialComputingEngine: React.FC<SpatialComputingEngineProps> = ({
           left: '10px',
           width: '8px',
           height: '8px',
-          backgroundColor: 'rgba(0, 255, 0, 0.8)',
+          backgroundColor: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
           borderRadius: '50%',
           pointerEvents: 'none',
         }} />
@@ -498,7 +498,7 @@ export const SpatialComputingEngine: React.FC<SpatialComputingEngineProps> = ({
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          background: 'rgba(255, 255, 255, 0.2)',
+          background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
           borderRadius: '50%',
           width: '60px',
           height: '60px',
@@ -512,7 +512,7 @@ export const SpatialComputingEngine: React.FC<SpatialComputingEngineProps> = ({
         <div className="occlusion-layer" style={{
           position: 'absolute',
           inset: 0,
-          background: 'radial-gradient(circle, transparent 40%, rgba(0,0,0,0.3) 70%)',
+          background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
           pointerEvents: 'none',
           mixBlendMode: 'multiply',
         }} />
@@ -526,7 +526,7 @@ export const SpatialComputingEngine: React.FC<SpatialComputingEngineProps> = ({
           position: 'absolute',
           bottom: '10px',
           right: '10px',
-          background: 'rgba(0, 0, 0, 0.8)',
+          background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
           color: 'white',
           padding: '8px',
           fontSize: '12px',

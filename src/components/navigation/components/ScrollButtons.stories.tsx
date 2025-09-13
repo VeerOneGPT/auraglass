@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import ScrollButtons from './ScrollButtons';
-import { cn } from '@/lib/utils';
+import { cn } from '../../../lib/utils';
 
 const meta: Meta<typeof ScrollButtons> = {
   title: 'Components/Components/ScrollButtons',
@@ -31,7 +31,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args: any) => (
-    <div className="flex flex-wrap glass-gap-4">
+    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4">
       <ScrollButtons key="primary" {...args} variant="primary">
         primary
       </ScrollButtons>

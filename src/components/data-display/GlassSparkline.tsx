@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 
 export interface GlassSparklineProps {
   data: number[];

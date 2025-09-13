@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
+import { cn } from '../../lib/utilsComprehensive';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const PageTransitionDemo: React.FC = () => {
@@ -34,14 +35,7 @@ export const PageTransitionDemo: React.FC = () => {
 
 const Section: React.FC<{ title: string; color: string }> = ({ title, color }) => (
   <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>
-    <div style={{
-      width: '90%', height: '75%', borderRadius: 16, padding: 24,
-      background: `rgba(255,255,255,0.06)`,
-      backdropFilter: 'blur(10px) saturate(120%)', WebkitBackdropFilter: 'blur(10px) saturate(120%)',
-      border: '1px solid rgba(255,255,255,0.15)',
-      boxShadow: '0 10px 30px rgba(0,0,0,0.22)',
-      position: 'relative'
-    }}>
+    <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
       <div style={{ position: 'absolute', inset: 0, background: color, pointerEvents: 'none' }} />
       <h3 style={{ position: 'relative', margin: 0, zIndex: 1 }}>{title}</h3>
       <p style={{ position: 'relative', zIndex: 1, opacity: 0.8 }}>Glass page transition demo</p>
@@ -63,4 +57,3 @@ const btnStyle = (active: boolean): React.CSSProperties => ({
 });
 
 export default PageTransitionDemo;
-

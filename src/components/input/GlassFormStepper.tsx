@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import {
     AlertCircle,
     Check,
@@ -179,10 +179,10 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
                 return (
                     <React.Fragment key={step.id}>
                         {/* Step */}
-                        <div className="flex flex-col items-center group">
+                        <div className="glass-glass-flex glass-glass-flex-col glass-glass-items-center group">
                             <Motion
                                 preset={state === 'active' ? 'scaleIn' : 'fadeIn'}
-                                className="flex flex-col items-center cursor-pointer"
+                                className="glass-glass-flex glass-glass-flex-col glass-glass-items-center glass-glass-cursor-pointer"
                                 onClick={(e) => handleStepClick(index, step)}
                             >
                                 {/* Step Circle */}
@@ -210,12 +210,12 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
 
                                     {/* Optional indicator */}
                                     {step.optional && (
-                                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 glass-radius-full" />
+                                        <div className="glass-glass-absolute -glass--glass-top-1 -right-1 w-2 h-2 glass-surface-yellow glass-radius-full" />
                                     )}
                                 </div>
 
                                 {/* Step Label */}
-                                <div className="mt-3 text-center max-w-24">
+                                <div className="mt-3 glass-glass-text-center max-w-24">
                                     <h3 className={cn(
                                         'font-medium leading-tight',
                                         config.fontSize,
@@ -259,10 +259,10 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
 
                 return (
                     <React.Fragment key={step.id}>
-                        <div className="flex items-start group">
+                        <div className="glass-glass-flex glass-glass-items-start group">
                             <Motion
                                 preset={state === 'active' ? 'slideRight' : 'fadeIn'}
-                                className="flex items-start cursor-pointer"
+                                className="glass-glass-flex glass-glass-items-start glass-glass-cursor-pointer"
                                 onClick={(e) => handleStepClick(index, step)}
                             >
                                 {/* Step Circle */}
@@ -290,12 +290,12 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
 
                                     {/* Optional indicator */}
                                     {step.optional && (
-                                        <div className="absolute -top-1 -right-1 w-2 h-2 bg-yellow-400 glass-radius-full" />
+                                        <div className="glass-glass-absolute -glass--glass-top-1 -right-1 w-2 h-2 glass-surface-yellow glass-radius-full" />
                                     )}
                                 </div>
 
                                 {/* Step Content */}
-                                <div className="flex-1 pt-1">
+                                <div className="glass-glass-flex-1 pt-1">
                                     <h3 className={cn(
                                         'font-medium leading-tight',
                                         config.fontSize,
@@ -317,7 +317,7 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
 
                         {/* Connection Line */}
                         {!isLast && showProgressLine && (
-                            <div className="flex justify-center glass-py-2">
+                            <div className="glass-glass-flex glass-glass-justify-center glass-glass-py-2">
                                 <div className={cn(
                                     'w-px h-8 transition-all duration-300',
                                     index < currentStep ? styles.line : 'bg-white/20'
@@ -331,7 +331,7 @@ export const GlassFormStepper: React.FC<GlassFormStepperProps> = ({
     );
 
     return (
-        <Motion preset="fadeIn" className="w-full">
+        <Motion preset="fadeIn" className="glass-glass-w-full">
             {orientation === 'horizontal' ? renderHorizontalStepper() : renderVerticalStepper()}
         </Motion>
     );
@@ -401,7 +401,7 @@ export const GlassCompactStepper: React.FC<GlassCompactStepperProps> = ({
 
                 return (
                     <React.Fragment key={step.id}>
-                        <div className="flex items-center">
+                        <div className="glass-glass-flex glass-glass-items-center">
                             <button
                                 onClick={(e) => onStepClick?.(index)}
                                 className={cn(

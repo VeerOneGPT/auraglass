@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { GlassButton } from '../button/GlassButton';
 import { OptimizedGlass } from '../../primitives';
 import { useA11yId } from '@/utils/a11y';
@@ -75,7 +75,7 @@ export const GlassSegmentedControl = forwardRef<HTMLDivElement, GlassSegmentedCo
           onClick={(e) => !it.disabled && onChange(it.id)}
           aria-pressed={it.id === value}
         >
-          {it.icon && <span className="glass-mr-2 inline-flex">{it.icon}</span>}
+          {it.icon && <span className="glass-mr-2 glass-inline-glass-glass-flex">{it.icon}</span>}
           {!condensed && it.label}
         </GlassButton>
       ))}

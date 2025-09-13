@@ -48,40 +48,40 @@ const TouchDemo = () => {
 
   return (
     <div className="space-y-6">
-      <div className="text-center">
-        <h2 className="text-3xl font-bold text-white mb-4">Touch Glass Interactions</h2>
-        <p className="text-white/80">
+      <div className="glass-glass-text-center">
+        <h2 className="glass-glass-text-3xl font-bold glass-glass-text-primary glass-glass-mb-4">Touch Glass Interactions</h2>
+        <p className="glass-glass-text-primary/80">
           Try tapping, long pressing, and swiping on the glass below
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center">
-          <div className="text-3xl font-bold text-white mb-2">{tapCount}</div>
-          <div className="text-white/80">Taps</div>
+      <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-3 glass-glass-gap-6">
+        <div className="glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl glass-glass-p-6 glass-glass-text-center">
+          <div className="glass-glass-text-3xl font-bold glass-glass-text-primary glass-glass-mb-2">{tapCount}</div>
+          <div className="glass-glass-text-primary/80">Taps</div>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center">
-          <div className="text-3xl font-bold text-white mb-2">{longPressCount}</div>
-          <div className="text-white/80">Long Presses</div>
+        <div className="glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl glass-glass-p-6 glass-glass-text-center">
+          <div className="glass-glass-text-3xl font-bold glass-glass-text-primary glass-glass-mb-2">{longPressCount}</div>
+          <div className="glass-glass-text-primary/80">Long Presses</div>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 text-center">
-          <div className="text-2xl font-bold text-white mb-2">
+        <div className="glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl glass-glass-p-6 glass-glass-text-center">
+          <div className="glass-glass-text-2xl font-bold glass-glass-text-primary glass-glass-mb-2">
             {swipeDirection ? swipeDirection.toUpperCase() : '—'}
           </div>
-          <div className="text-white/80">Last Swipe</div>
+          <div className="glass-glass-text-primary/80">Last Swipe</div>
         </div>
       </div>
 
-      <div className="text-center">
-        <div className="inline-block bg-white/10 backdrop-blur-lg rounded-2xl px-6 py-3">
-          <div className="text-white/60 text-sm">Last Action:</div>
-          <div className="text-white font-medium">{lastAction || 'None'}</div>
+      <div className="glass-glass-text-center">
+        <div className="inline-glass-glass-block glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl glass-glass-px-6 glass-glass-py-3">
+          <div className="glass-glass-text-primary/60 glass-glass-text-sm">Last Action:</div>
+          <div className="glass-glass-text-primary glass-glass-font-medium">{lastAction || 'None'}</div>
         </div>
       </div>
 
-      <div className="text-center">
+      <div className="glass-glass-text-center">
         <TouchOptimizedGlass
           onTap={handleTap}
           onLongPress={handleLongPress}
@@ -92,36 +92,36 @@ const TouchDemo = () => {
           glassIntensity="medium"
           className="mx-auto"
         >
-          <div className="p-8 min-h-[200px] flex flex-col items-center justify-center">
-            <div className="text-4xl mb-4">👆</div>
-            <div className="text-xl font-semibold text-white mb-2">Touch Glass</div>
-            <div className="text-white/70 text-sm text-center max-w-xs">
+          <div className="glass-glass-p-8 min-h-[200px] glass-glass-flex glass-glass-flex-col glass-glass-items-center glass-glass-justify-center">
+            <div className="glass-glass-text-4xl glass-glass-mb-4">👆</div>
+            <div className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Touch Glass</div>
+            <div className="glass-glass-text-primary/70 glass-glass-text-sm glass-glass-text-center max-w-xs">
               Tap, long press, or swipe this glass surface to see different interactions
             </div>
           </div>
         </TouchOptimizedGlass>
       </div>
 
-      <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6">
-        <h3 className="text-xl font-semibold text-white mb-4">Touch Instructions</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-white/80">
-          <div className="space-y-2">
-            <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-blue-400" />
+      <div className="glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl glass-glass-p-6">
+        <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-4">Touch Instructions</h3>
+        <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 glass-glass-gap-4 glass-glass-text-primary/80">
+          <div className="glass-glass-space-y-2">
+            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3">
+              <div className="w-2 h-2 glass-radius-full glass-surface-blue" />
               <span><strong>Tap:</strong> Quick touch for immediate action</span>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-green-400" />
+            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3">
+              <div className="w-2 h-2 glass-radius-full glass-surface-green" />
               <span><strong>Long Press:</strong> Hold for 500ms for context menu</span>
             </div>
           </div>
-          <div className="space-y-2">
-            <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-purple-400" />
+          <div className="glass-glass-space-y-2">
+            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3">
+              <div className="w-2 h-2 glass-radius-full bg-purple-400" />
               <span><strong>Swipe Left/Right:</strong> Navigate between content</span>
             </div>
-            <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-orange-400" />
+            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3">
+              <div className="w-2 h-2 glass-radius-full bg-orange-400" />
               <span><strong>Swipe Up/Down:</strong> Scroll or dismiss</span>
             </div>
           </div>
@@ -134,7 +134,7 @@ const TouchDemo = () => {
 export const InteractiveTouch: Story = {
   args: {},
   render: () => (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8">
+    <div className="min-h-screen glass-gradient-primary from-slate-900 via-purple-900 to-slate-900 glass-glass-p-8">
       <div className="max-w-4xl mx-auto">
         <TouchDemo />
       </div>
@@ -148,26 +148,26 @@ export const TouchFeedback: Story = {
     rippleEffect: true,
     hapticsEnabled: true,
     children: (
-      <div className="p-6 text-center">
-        <div className="text-4xl mb-3">📱</div>
-        <div className="text-white font-medium">Touch Feedback</div>
-        <div className="text-white/70 text-sm">Visual, haptic, and ripple effects</div>
+      <div className="glass-glass-p-6 glass-glass-text-center">
+        <div className="glass-glass-text-4xl glass-glass-mb-3">📱</div>
+        <div className="glass-glass-text-primary glass-glass-font-medium">Touch Feedback</div>
+        <div className="glass-glass-text-primary/70 glass-glass-text-sm">Visual, haptic, and ripple effects</div>
       </div>
     )
   },
   render: (args) => (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8">
+    <div className="min-h-screen glass-gradient-primary from-slate-900 via-purple-900 to-slate-900 glass-glass-p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold text-white mb-4">
+        <div className="glass-glass-text-center mb-12">
+          <h1 className="glass-glass-text-3xl font-bold glass-glass-text-primary glass-glass-mb-4">
             🎯 Touch Feedback Demo
           </h1>
-          <p className="text-xl text-white/80">
+          <p className="glass-glass-text-xl glass-glass-text-primary/80">
             Experience visual feedback, haptic responses, and ripple effects
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-3 glass-glass-gap-8 mb-12">
           <TouchOptimizedGlass
             {...args}
             onTap={() => console.log('Light feedback')}
@@ -187,25 +187,25 @@ export const TouchFeedback: Story = {
           />
         </div>
 
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6">
-          <h3 className="text-xl font-semibold text-white mb-4">Feedback Types</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="text-center">
-              <div className="text-3xl mb-3">👆</div>
-              <h4 className="font-medium text-white mb-2">Visual Feedback</h4>
-              <p className="text-white/70 text-sm">Scale and opacity changes on touch</p>
+        <div className="glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl glass-glass-p-6">
+          <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-4">Feedback Types</h3>
+          <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-3 glass-glass-gap-6">
+            <div className="glass-glass-text-center">
+              <div className="glass-glass-text-3xl glass-glass-mb-3">👆</div>
+              <h4 className="glass-glass-font-medium glass-glass-text-primary glass-glass-mb-2">Visual Feedback</h4>
+              <p className="glass-glass-text-primary/70 glass-glass-text-sm">Scale and opacity changes on touch</p>
             </div>
 
-            <div className="text-center">
-              <div className="text-3xl mb-3">📳</div>
-              <h4 className="font-medium text-white mb-2">Haptic Feedback</h4>
-              <p className="text-white/70 text-sm">Vibration patterns for touch confirmation</p>
+            <div className="glass-glass-text-center">
+              <div className="glass-glass-text-3xl glass-glass-mb-3">📳</div>
+              <h4 className="glass-glass-font-medium glass-glass-text-primary glass-glass-mb-2">Haptic Feedback</h4>
+              <p className="glass-glass-text-primary/70 glass-glass-text-sm">Vibration patterns for touch confirmation</p>
             </div>
 
-            <div className="text-center">
-              <div className="text-3xl mb-3">💫</div>
-              <h4 className="font-medium text-white mb-2">Ripple Effects</h4>
-              <p className="text-white/70 text-sm">Material Design-inspired touch ripples</p>
+            <div className="glass-glass-text-center">
+              <div className="glass-glass-text-3xl glass-glass-mb-3">💫</div>
+              <h4 className="glass-glass-font-medium glass-glass-text-primary glass-glass-mb-2">Ripple Effects</h4>
+              <p className="glass-glass-text-primary/70 glass-glass-text-sm">Material Design-inspired touch ripples</p>
             </div>
           </div>
         </div>
@@ -238,19 +238,19 @@ export const MobileNavigation: Story = {
     };
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8">
+      <div className="min-h-screen glass-gradient-primary from-slate-900 via-purple-900 to-slate-900 glass-glass-p-8">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-3xl font-bold text-white mb-4">
+          <div className="glass-glass-text-center mb-12">
+            <h1 className="glass-glass-text-3xl font-bold glass-glass-text-primary glass-glass-mb-4">
               📱 Mobile Glass Navigation
             </h1>
-            <p className="text-xl text-white/80">
+            <p className="glass-glass-text-xl glass-glass-text-primary/80">
               Swipe left/right to navigate between pages
             </p>
           </div>
 
           <div className="mb-8">
-            <div className="flex justify-center gap-2 mb-4">
+            <div className="glass-glass-flex glass-glass-justify-center glass-glass-gap-2 glass-glass-mb-4">
               {pages.map((_, index) => (
                 <div
                   key={index}
@@ -261,10 +261,10 @@ export const MobileNavigation: Story = {
               ))}
             </div>
 
-            <div className="text-center mb-6">
-              <div className="inline-block bg-white/10 backdrop-blur-lg rounded-2xl px-6 py-3">
-                <div className="text-white/60 text-sm">Current Page</div>
-                <div className="text-white font-medium">{pages[currentPage].title}</div>
+            <div className="glass-glass-text-center mb-6">
+              <div className="inline-glass-glass-block glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl glass-glass-px-6 glass-glass-py-3">
+                <div className="glass-glass-text-primary/60 glass-glass-text-sm">Current Page</div>
+                <div className="glass-glass-text-primary glass-glass-font-medium">{pages[currentPage].title}</div>
               </div>
             </div>
           </div>
@@ -275,27 +275,27 @@ export const MobileNavigation: Story = {
             onSwipeUp={() => handleSwipe('up')}
             onSwipeDown={() => handleSwipe('down')}
           >
-            <div className="p-8 text-center">
+            <div className="glass-glass-p-8 glass-glass-text-center">
               <div className={`inline-block p-8 rounded-3xl bg-gradient-to-br ${pages[currentPage].color} mb-6`}>
-                <div className="text-6xl">{pages[currentPage].icon}</div>
+                <div className="glass-glass-text-6xl">{pages[currentPage].icon}</div>
               </div>
-              <h2 className="text-3xl font-bold text-white mb-4">{pages[currentPage].title}</h2>
-              <p className="text-white/70 text-lg">
+              <h2 className="glass-glass-text-3xl font-bold glass-glass-text-primary glass-glass-mb-4">{pages[currentPage].title}</h2>
+              <p className="glass-glass-text-primary/70 glass-glass-text-lg">
                 Swipe left or right to navigate between different sections
               </p>
             </div>
           </MobileGlassNavigation>
 
-          <div className="mt-8 bg-white/10 backdrop-blur-lg rounded-2xl p-6">
-            <h3 className="text-xl font-semibold text-white mb-4">Swipe History</h3>
-            <div className="flex flex-wrap gap-2">
+          <div className="mt-8 glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl glass-glass-p-6">
+            <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-4">Swipe History</h3>
+            <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-2">
               {swipeHistory.length === 0 ? (
-                <div className="text-white/60">No swipes yet</div>
+                <div className="glass-glass-text-primary/60">No swipes yet</div>
               ) : (
                 swipeHistory.map((swipe, index) => (
                   <div
                     key={index}
-                    className="px-3 py-1 bg-white/20 rounded-lg text-white text-sm"
+                    className="glass-glass-px-3 glass-glass-py-1 glass-surface-subtle/20 glass-radius-lg glass-glass-text-primary glass-glass-text-sm"
                   >
                     {swipe} →
                   </div>
@@ -304,12 +304,12 @@ export const MobileNavigation: Story = {
             </div>
           </div>
 
-          <div className="mt-8 bg-white/10 backdrop-blur-lg rounded-2xl p-6">
-            <h3 className="text-xl font-semibold text-white mb-4">Navigation Controls</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="mt-8 glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl glass-glass-p-6">
+            <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-4">Navigation Controls</h3>
+            <div className="glass-glass-grid glass-glass-glass-grid-cols-2 md:glass-glass-glass-grid-cols-4 glass-glass-gap-4">
               <button
                 onClick={() => handleSwipe('left')}
-                className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg font-medium transition-colors"
+                className="glass-glass-px-4 glass-glass-py-2 glass-surface-blue/20 hover:glass-surface-blue/30 glass-glass-text-primary glass-radius-lg glass-glass-font-medium transition-colors"
                 disabled={currentPage >= pages.length - 1}
               >
                 ← Left
@@ -317,7 +317,7 @@ export const MobileNavigation: Story = {
 
               <button
                 onClick={() => handleSwipe('right')}
-                className="px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg font-medium transition-colors"
+                className="glass-glass-px-4 glass-glass-py-2 glass-surface-blue/20 hover:glass-surface-blue/30 glass-glass-text-primary glass-radius-lg glass-glass-font-medium transition-colors"
                 disabled={currentPage <= 0}
               >
                 Right →
@@ -325,14 +325,14 @@ export const MobileNavigation: Story = {
 
               <button
                 onClick={() => handleSwipe('up')}
-                className="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-lg font-medium transition-colors"
+                className="glass-glass-px-4 glass-glass-py-2 glass-surface-green/20 hover:glass-surface-green/30 glass-glass-text-primary glass-radius-lg glass-glass-font-medium transition-colors"
               >
                 ↑ Up
               </button>
 
               <button
                 onClick={() => handleSwipe('down')}
-                className="px-4 py-2 bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-lg font-medium transition-colors"
+                className="glass-glass-px-4 glass-glass-py-2 glass-surface-green/20 hover:glass-surface-green/30 glass-glass-text-primary glass-radius-lg glass-glass-font-medium transition-colors"
               >
                 Down ↓
               </button>
@@ -347,26 +347,26 @@ export const MobileNavigation: Story = {
 export const AdaptiveDensity: Story = {
   args: {},
   render: () => (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8">
+    <div className="min-h-screen glass-gradient-primary from-slate-900 via-purple-900 to-slate-900 glass-glass-p-8">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold text-white mb-4">
+        <div className="glass-glass-text-center mb-12">
+          <h1 className="glass-glass-text-3xl font-bold glass-glass-text-primary glass-glass-mb-4">
             📐 Adaptive Glass Density
           </h1>
-          <p className="text-xl text-white/80">
+          <p className="glass-glass-text-xl glass-glass-text-primary/80">
             Glass effects that automatically adapt to screen size and device capabilities
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+        <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 lg:glass-glass-glass-grid-cols-3 glass-glass-gap-8 mb-12">
           <AdaptiveGlassDensity screenSize="small" devicePixelRatio={1} autoAdapt={true}>
-            <div className="p-6 text-center">
-              <div className="text-4xl mb-3">📱</div>
-              <h3 className="text-xl font-semibold text-white mb-2">Mobile (Small)</h3>
-              <p className="text-white/70 text-sm">
+            <div className="glass-glass-p-6 glass-glass-text-center">
+              <div className="glass-glass-text-4xl glass-glass-mb-3">📱</div>
+              <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Mobile (Small)</h3>
+              <p className="glass-glass-text-primary/70 glass-glass-text-sm">
                 Optimized for small screens with reduced effects for better performance
               </p>
-              <div className="mt-4 text-white/60 text-xs">
+              <div className="mt-4 glass-glass-text-primary/60 glass-glass-text-xs">
                 • Lower density effects<br/>
                 • Reduced blur intensity<br/>
                 • Minimal animations<br/>
@@ -376,13 +376,13 @@ export const AdaptiveDensity: Story = {
           </AdaptiveGlassDensity>
 
           <AdaptiveGlassDensity screenSize="medium" devicePixelRatio={1.5} autoAdapt={true}>
-            <div className="p-6 text-center">
-              <div className="text-4xl mb-3">💻</div>
-              <h3 className="text-xl font-semibold text-white mb-2">Tablet (Medium)</h3>
-              <p className="text-white/70 text-sm">
+            <div className="glass-glass-p-6 glass-glass-text-center">
+              <div className="glass-glass-text-4xl glass-glass-mb-3">💻</div>
+              <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Tablet (Medium)</h3>
+              <p className="glass-glass-text-primary/70 glass-glass-text-sm">
                 Balanced effects for medium screens with moderate performance impact
               </p>
-              <div className="mt-4 text-white/60 text-xs">
+              <div className="mt-4 glass-glass-text-primary/60 glass-glass-text-xs">
                 • Medium density effects<br/>
                 • Standard blur intensity<br/>
                 • Balanced animations<br/>
@@ -392,13 +392,13 @@ export const AdaptiveDensity: Story = {
           </AdaptiveGlassDensity>
 
           <AdaptiveGlassDensity screenSize="large" devicePixelRatio={2} autoAdapt={true}>
-            <div className="p-6 text-center">
-              <div className="text-4xl mb-3">🖥️</div>
-              <h3 className="text-xl font-semibold text-white mb-2">Desktop (Large)</h3>
-              <p className="text-white/70 text-sm">
+            <div className="glass-glass-p-6 glass-glass-text-center">
+              <div className="glass-glass-text-4xl glass-glass-mb-3">🖥️</div>
+              <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Desktop (Large)</h3>
+              <p className="glass-glass-text-primary/70 glass-glass-text-sm">
                 Full effects for large screens with high-performance capabilities
               </p>
-              <div className="mt-4 text-white/60 text-xs">
+              <div className="mt-4 glass-glass-text-primary/60 glass-glass-text-xs">
                 • High density effects<br/>
                 • Maximum blur intensity<br/>
                 • Complex animations<br/>
@@ -408,31 +408,31 @@ export const AdaptiveDensity: Story = {
           </AdaptiveGlassDensity>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6">
-          <h3 className="text-xl font-semibold text-white mb-6 text-center">Adaptive Features</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="text-center">
-              <div className="text-3xl mb-3">📏</div>
-              <h4 className="font-semibold text-white mb-2">Screen Size</h4>
-              <p className="text-white/70 text-sm">Adapts to viewport dimensions</p>
+        <div className="glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl glass-glass-p-6">
+          <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary mb-6 glass-glass-text-center">Adaptive Features</h3>
+          <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 lg:glass-glass-glass-grid-cols-4 glass-glass-gap-6">
+            <div className="glass-glass-text-center">
+              <div className="glass-glass-text-3xl glass-glass-mb-3">📏</div>
+              <h4 className="glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Screen Size</h4>
+              <p className="glass-glass-text-primary/70 glass-glass-text-sm">Adapts to viewport dimensions</p>
             </div>
 
-            <div className="text-center">
-              <div className="text-3xl mb-3">🔍</div>
-              <h4 className="font-semibold text-white mb-2">Pixel Ratio</h4>
-              <p className="text-white/70 text-sm">Considers device pixel density</p>
+            <div className="glass-glass-text-center">
+              <div className="glass-glass-text-3xl glass-glass-mb-3">🔍</div>
+              <h4 className="glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Pixel Ratio</h4>
+              <p className="glass-glass-text-primary/70 glass-glass-text-sm">Considers device pixel density</p>
             </div>
 
-            <div className="text-center">
-              <div className="text-3xl mb-3">⚡</div>
-              <h4 className="font-semibold text-white mb-2">Performance</h4>
-              <p className="text-white/70 text-sm">Auto-adjusts based on capabilities</p>
+            <div className="glass-glass-text-center">
+              <div className="glass-glass-text-3xl glass-glass-mb-3">⚡</div>
+              <h4 className="glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Performance</h4>
+              <p className="glass-glass-text-primary/70 glass-glass-text-sm">Auto-adjusts based on capabilities</p>
             </div>
 
-            <div className="text-center">
-              <div className="text-3xl mb-3">♿</div>
-              <h4 className="font-semibold text-white mb-2">Accessibility</h4>
-              <p className="text-white/70 text-sm">Maintains usability across devices</p>
+            <div className="glass-glass-text-center">
+              <div className="glass-glass-text-3xl glass-glass-mb-3">♿</div>
+              <h4 className="glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Accessibility</h4>
+              <p className="glass-glass-text-primary/70 glass-glass-text-sm">Maintains usability across devices</p>
             </div>
           </div>
         </div>
@@ -444,27 +444,27 @@ export const AdaptiveDensity: Story = {
 export const RippleEffects: Story = {
   args: {},
   render: () => (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8">
+    <div className="min-h-screen glass-gradient-primary from-slate-900 via-purple-900 to-slate-900 glass-glass-p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl font-bold text-white mb-4">
+        <div className="glass-glass-text-center mb-12">
+          <h1 className="glass-glass-text-3xl font-bold glass-glass-text-primary glass-glass-mb-4">
             💫 Touch Ripple Effects
           </h1>
-          <p className="text-xl text-white/80">
+          <p className="glass-glass-text-xl glass-glass-text-primary/80">
             Material Design-inspired ripple effects with customizable colors and timing
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 glass-glass-gap-8 mb-12">
           <TouchRippleEffects
             color="rgba(255, 255, 255, 0.4)"
             maxRipples={3}
             rippleDuration={600}
           >
-            <div className="p-8 text-center bg-white/10 backdrop-blur-lg rounded-2xl">
-              <div className="text-4xl mb-3">🌊</div>
-              <h3 className="text-xl font-semibold text-white mb-2">Default Ripple</h3>
-              <p className="text-white/70 text-sm">
+            <div className="glass-glass-p-8 glass-glass-text-center glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl">
+              <div className="glass-glass-text-4xl glass-glass-mb-3">🌊</div>
+              <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Default Ripple</h3>
+              <p className="glass-glass-text-primary/70 glass-glass-text-sm">
                 Standard white ripple with medium duration and up to 3 simultaneous ripples
               </p>
             </div>
@@ -475,10 +475,10 @@ export const RippleEffects: Story = {
             maxRipples={5}
             rippleDuration={800}
           >
-            <div className="p-8 text-center bg-white/10 backdrop-blur-lg rounded-2xl">
-              <div className="text-4xl mb-3">💙</div>
-              <h3 className="text-xl font-semibold text-white mb-2">Blue Ripple</h3>
-              <p className="text-white/70 text-sm">
+            <div className="glass-glass-p-8 glass-glass-text-center glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl">
+              <div className="glass-glass-text-4xl glass-glass-mb-3">💙</div>
+              <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Blue Ripple</h3>
+              <p className="glass-glass-text-primary/70 glass-glass-text-sm">
                 Custom blue color with longer duration and more simultaneous ripples
               </p>
             </div>
@@ -489,10 +489,10 @@ export const RippleEffects: Story = {
             maxRipples={2}
             rippleDuration={400}
           >
-            <div className="p-8 text-center bg-white/10 backdrop-blur-lg rounded-2xl">
-              <div className="text-4xl mb-3">💚</div>
-              <h3 className="text-xl font-semibold text-white mb-2">Green Ripple</h3>
-              <p className="text-white/70 text-sm">
+            <div className="glass-glass-p-8 glass-glass-text-center glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl">
+              <div className="glass-glass-text-4xl glass-glass-mb-3">💚</div>
+              <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Green Ripple</h3>
+              <p className="glass-glass-text-primary/70 glass-glass-text-sm">
                 Fast green ripple with limited simultaneous effects for subtle feedback
               </p>
             </div>
@@ -503,22 +503,22 @@ export const RippleEffects: Story = {
             maxRipples={4}
             rippleDuration={1000}
           >
-            <div className="p-8 text-center bg-white/10 backdrop-blur-lg rounded-2xl">
-              <div className="text-4xl mb-3">🧡</div>
-              <h3 className="text-xl font-semibold text-white mb-2">Orange Ripple</h3>
-              <p className="text-white/70 text-sm">
+            <div className="glass-glass-p-8 glass-glass-text-center glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl">
+              <div className="glass-glass-text-4xl glass-glass-mb-3">🧡</div>
+              <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Orange Ripple</h3>
+              <p className="glass-glass-text-primary/70 glass-glass-text-sm">
                 Bold orange ripple with slow, dramatic animation and multiple effects
               </p>
             </div>
           </TouchRippleEffects>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6">
-          <h3 className="text-xl font-semibold text-white mb-6 text-center">Ripple Effect Features</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl glass-glass-p-6">
+          <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary mb-6 glass-glass-text-center">Ripple Effect Features</h3>
+          <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 glass-glass-gap-8">
             <div>
-              <h4 className="font-medium text-white mb-3">Customization Options</h4>
-              <div className="space-y-2 text-white/80">
+              <h4 className="glass-glass-font-medium glass-glass-text-primary glass-glass-mb-3">Customization Options</h4>
+              <div className="glass-glass-space-y-2 glass-glass-text-primary/80">
                 <div>• Custom colors and opacity</div>
                 <div>• Adjustable animation duration</div>
                 <div>• Configurable ripple limits</div>
@@ -526,8 +526,8 @@ export const RippleEffects: Story = {
               </div>
             </div>
             <div>
-              <h4 className="font-medium text-white mb-3">Performance Features</h4>
-              <div className="space-y-2 text-white/80">
+              <h4 className="glass-glass-font-medium glass-glass-text-primary glass-glass-mb-3">Performance Features</h4>
+              <div className="glass-glass-space-y-2 glass-glass-text-primary/80">
                 <div>• Efficient DOM manipulation</div>
                 <div>• Automatic cleanup</div>
                 <div>• GPU-accelerated animations</div>
@@ -559,60 +559,60 @@ export const BottomSheet: Story = {
     };
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-8">
+      <div className="min-h-screen glass-gradient-primary from-slate-900 via-purple-900 to-slate-900 glass-glass-p-8">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-3xl font-bold text-white mb-4">
+          <div className="glass-glass-text-center mb-12">
+            <h1 className="glass-glass-text-3xl font-bold glass-glass-text-primary glass-glass-mb-4">
               📄 Mobile Glass Bottom Sheet
             </h1>
-            <p className="text-xl text-white/80">
+            <p className="glass-glass-text-xl glass-glass-text-primary/80">
               Touch-optimized bottom sheets with snap points and smooth animations
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div className="text-center">
-              <div className="p-6 bg-white/10 backdrop-blur-lg rounded-2xl mb-4">
-                <div className="text-4xl mb-3">🍽️</div>
-                <h3 className="text-xl font-semibold text-white mb-2">Menu Sheet</h3>
-                <p className="text-white/70 text-sm mb-4">
+          <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-3 glass-glass-gap-6 mb-12">
+            <div className="glass-glass-text-center">
+              <div className="glass-glass-p-6 glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl glass-glass-mb-4">
+                <div className="glass-glass-text-4xl glass-glass-mb-3">🍽️</div>
+                <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Menu Sheet</h3>
+                <p className="glass-glass-text-primary/70 glass-glass-text-sm glass-glass-mb-4">
                   Navigation menu with quick actions and shortcuts
                 </p>
                 <button
                   onClick={() => openSheet('menu')}
-                  className="px-6 py-2 bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 rounded-lg font-medium transition-colors"
+                  className="glass-glass-px-6 glass-glass-py-2 glass-surface-blue/20 hover:glass-surface-blue/30 glass-glass-text-primary glass-radius-lg glass-glass-font-medium transition-colors"
                 >
                   Open Menu
                 </button>
               </div>
             </div>
 
-            <div className="text-center">
-              <div className="p-6 bg-white/10 backdrop-blur-lg rounded-2xl mb-4">
-                <div className="text-4xl mb-3">⚙️</div>
-                <h3 className="text-xl font-semibold text-white mb-2">Settings Sheet</h3>
-                <p className="text-white/70 text-sm mb-4">
+            <div className="glass-glass-text-center">
+              <div className="glass-glass-p-6 glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl glass-glass-mb-4">
+                <div className="glass-glass-text-4xl glass-glass-mb-3">⚙️</div>
+                <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Settings Sheet</h3>
+                <p className="glass-glass-text-primary/70 glass-glass-text-sm glass-glass-mb-4">
                   Configuration options and preferences panel
                 </p>
                 <button
                   onClick={() => openSheet('settings')}
-                  className="px-6 py-2 bg-green-500/20 hover:bg-green-500/30 text-green-400 rounded-lg font-medium transition-colors"
+                  className="glass-glass-px-6 glass-glass-py-2 glass-surface-green/20 hover:glass-surface-green/30 glass-glass-text-primary glass-radius-lg glass-glass-font-medium transition-colors"
                 >
                   Open Settings
                 </button>
               </div>
             </div>
 
-            <div className="text-center">
-              <div className="p-6 bg-white/10 backdrop-blur-lg rounded-2xl mb-4">
-                <div className="text-4xl mb-3">👤</div>
-                <h3 className="text-xl font-semibold text-white mb-2">Profile Sheet</h3>
-                <p className="text-white/70 text-sm mb-4">
+            <div className="glass-glass-text-center">
+              <div className="glass-glass-p-6 glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl glass-glass-mb-4">
+                <div className="glass-glass-text-4xl glass-glass-mb-3">👤</div>
+                <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Profile Sheet</h3>
+                <p className="glass-glass-text-primary/70 glass-glass-text-sm glass-glass-mb-4">
                   User profile information and account settings
                 </p>
                 <button
                   onClick={() => openSheet('profile')}
-                  className="px-6 py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 rounded-lg font-medium transition-colors"
+                  className="glass-glass-px-6 glass-glass-py-2 bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 glass-radius-lg glass-glass-font-medium transition-colors"
                 >
                   Open Profile
                 </button>
@@ -627,22 +627,22 @@ export const BottomSheet: Story = {
             height="60vh"
             snapPoints={['30vh', '60vh', '80vh']}
           >
-            <div className="p-6">
-              <h2 className="text-2xl font-bold text-white mb-6">Navigation Menu</h2>
-              <div className="space-y-4">
-                <button className="w-full p-4 bg-white/10 hover:bg-white/20 rounded-lg text-white font-medium transition-colors text-left">
+            <div className="glass-glass-p-6">
+              <h2 className="glass-glass-text-2xl font-bold glass-glass-text-primary mb-6">Navigation Menu</h2>
+              <div className="glass-glass-space-y-4">
+                <button className="glass-glass-w-full glass-glass-p-4 glass-surface-subtle/10 hover:glass-surface-subtle/20 glass-radius-lg glass-glass-text-primary glass-glass-font-medium transition-colors glass-glass-text-left">
                   🏠 Home
                 </button>
-                <button className="w-full p-4 bg-white/10 hover:bg-white/20 rounded-lg text-white font-medium transition-colors text-left">
+                <button className="glass-glass-w-full glass-glass-p-4 glass-surface-subtle/10 hover:glass-surface-subtle/20 glass-radius-lg glass-glass-text-primary glass-glass-font-medium transition-colors glass-glass-text-left">
                   🔍 Search
                 </button>
-                <button className="w-full p-4 bg-white/10 hover:bg-white/20 rounded-lg text-white font-medium transition-colors text-left">
+                <button className="glass-glass-w-full glass-glass-p-4 glass-surface-subtle/10 hover:glass-surface-subtle/20 glass-radius-lg glass-glass-text-primary glass-glass-font-medium transition-colors glass-glass-text-left">
                   ❤️ Favorites
                 </button>
-                <button className="w-full p-4 bg-white/10 hover:bg-white/20 rounded-lg text-white font-medium transition-colors text-left">
+                <button className="glass-glass-w-full glass-glass-p-4 glass-surface-subtle/10 hover:glass-surface-subtle/20 glass-radius-lg glass-glass-text-primary glass-glass-font-medium transition-colors glass-glass-text-left">
                   📱 Downloads
                 </button>
-                <button className="w-full p-4 bg-white/10 hover:bg-white/20 rounded-lg text-white font-medium transition-colors text-left">
+                <button className="glass-glass-w-full glass-glass-p-4 glass-surface-subtle/10 hover:glass-surface-subtle/20 glass-radius-lg glass-glass-text-primary glass-glass-font-medium transition-colors glass-glass-text-left">
                   ⚙️ Settings
                 </button>
               </div>
@@ -656,32 +656,32 @@ export const BottomSheet: Story = {
             height="70vh"
             snapPoints={['40vh', '70vh']}
           >
-            <div className="p-6">
-              <h2 className="text-2xl font-bold text-white mb-6">Settings</h2>
+            <div className="glass-glass-p-6">
+              <h2 className="glass-glass-text-2xl font-bold glass-glass-text-primary mb-6">Settings</h2>
               <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <span className="text-white font-medium">Notifications</span>
-                  <div className="w-12 h-6 bg-white/20 rounded-full p-1">
-                    <div className="w-4 h-4 bg-white rounded-full transform translate-x-6"></div>
+                <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
+                  <span className="glass-glass-text-primary glass-glass-font-medium">Notifications</span>
+                  <div className="glass-glass-w-12 glass-glass-h-6 glass-surface-subtle/20 glass-radius-full glass-glass-p-1">
+                    <div className="glass-glass-w-4 glass-glass-h-4 glass-surface-subtle glass-radius-full transform translate-x-6"></div>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <span className="text-white font-medium">Dark Mode</span>
-                  <div className="w-12 h-6 bg-blue-500 rounded-full p-1">
-                    <div className="w-4 h-4 bg-white rounded-full"></div>
+                <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
+                  <span className="glass-glass-text-primary glass-glass-font-medium">Dark Mode</span>
+                  <div className="glass-glass-w-12 glass-glass-h-6 glass-surface-blue glass-radius-full glass-glass-p-1">
+                    <div className="glass-glass-w-4 glass-glass-h-4 glass-surface-subtle glass-radius-full"></div>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <span className="text-white font-medium">Auto-play</span>
-                  <div className="w-12 h-6 bg-white/20 rounded-full p-1">
-                    <div className="w-4 h-4 bg-white rounded-full"></div>
+                <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
+                  <span className="glass-glass-text-primary glass-glass-font-medium">Auto-play</span>
+                  <div className="glass-glass-w-12 glass-glass-h-6 glass-surface-subtle/20 glass-radius-full glass-glass-p-1">
+                    <div className="glass-glass-w-4 glass-glass-h-4 glass-surface-subtle glass-radius-full"></div>
                   </div>
                 </div>
 
-                <div className="pt-4 border-t border-white/20">
-                  <button className="w-full p-3 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg font-medium transition-colors">
+                <div className="pt-4 glass-glass-border-t glass-glass-border-white/20">
+                  <button className="glass-glass-w-full glass-glass-p-3 glass-surface-red/20 hover:glass-surface-red/30 glass-glass-text-primary glass-radius-lg glass-glass-font-medium transition-colors">
                     Clear Cache
                   </button>
                 </div>
@@ -696,31 +696,31 @@ export const BottomSheet: Story = {
             height="75vh"
             snapPoints={['50vh', '75vh']}
           >
-            <div className="p-6">
-              <div className="text-center mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-3xl">👤</span>
+            <div className="glass-glass-p-6">
+              <div className="glass-glass-text-center mb-6">
+                <div className="w-20 h-20 glass-gradient-primary from-blue-400 to-purple-500 glass-radius-full mx-auto glass-glass-mb-4 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+                  <span className="glass-glass-text-3xl">👤</span>
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-2">John Doe</h2>
-                <p className="text-white/70">john.doe@example.com</p>
+                <h2 className="glass-glass-text-2xl font-bold glass-glass-text-primary glass-glass-mb-2">John Doe</h2>
+                <p className="glass-glass-text-primary/70">john.doe@example.com</p>
               </div>
 
-              <div className="space-y-4">
-                <button className="w-full p-4 bg-white/10 hover:bg-white/20 rounded-lg text-white font-medium transition-colors text-left">
+              <div className="glass-glass-space-y-4">
+                <button className="glass-glass-w-full glass-glass-p-4 glass-surface-subtle/10 hover:glass-surface-subtle/20 glass-radius-lg glass-glass-text-primary glass-glass-font-medium transition-colors glass-glass-text-left">
                   ✏️ Edit Profile
                 </button>
-                <button className="w-full p-4 bg-white/10 hover:bg-white/20 rounded-lg text-white font-medium transition-colors text-left">
+                <button className="glass-glass-w-full glass-glass-p-4 glass-surface-subtle/10 hover:glass-surface-subtle/20 glass-radius-lg glass-glass-text-primary glass-glass-font-medium transition-colors glass-glass-text-left">
                   🔒 Privacy Settings
                 </button>
-                <button className="w-full p-4 bg-white/10 hover:bg-white/20 rounded-lg text-white font-medium transition-colors text-left">
+                <button className="glass-glass-w-full glass-glass-p-4 glass-surface-subtle/10 hover:glass-surface-subtle/20 glass-radius-lg glass-glass-text-primary glass-glass-font-medium transition-colors glass-glass-text-left">
                   🔔 Notification Preferences
                 </button>
-                <button className="w-full p-4 bg-white/10 hover:bg-white/20 rounded-lg text-white font-medium transition-colors text-left">
+                <button className="glass-glass-w-full glass-glass-p-4 glass-surface-subtle/10 hover:glass-surface-subtle/20 glass-radius-lg glass-glass-text-primary glass-glass-font-medium transition-colors glass-glass-text-left">
                   💳 Subscription
                 </button>
 
-                <div className="pt-4 border-t border-white/20">
-                  <button className="w-full p-3 bg-red-500/20 hover:bg-red-500/30 text-red-400 rounded-lg font-medium transition-colors">
+                <div className="pt-4 glass-glass-border-t glass-glass-border-white/20">
+                  <button className="glass-glass-w-full glass-glass-p-3 glass-surface-red/20 hover:glass-surface-red/30 glass-glass-text-primary glass-radius-lg glass-glass-font-medium transition-colors">
                     Sign Out
                   </button>
                 </div>
@@ -728,31 +728,31 @@ export const BottomSheet: Story = {
             </div>
           </MobileGlassBottomSheet>
 
-          <div className="bg-white/10 backdrop-blur-lg rounded-2xl p-6">
-            <h3 className="text-xl font-semibold text-white mb-6 text-center">Bottom Sheet Features</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="text-center">
-                <div className="text-3xl mb-3">📏</div>
-                <h4 className="font-semibold text-white mb-2">Snap Points</h4>
-                <p className="text-white/70 text-sm">Multiple height positions</p>
+          <div className="glass-surface-subtle/10 backdrop-blur-lg glass-radius-2xl glass-glass-p-6">
+            <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary mb-6 glass-glass-text-center">Bottom Sheet Features</h3>
+            <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 lg:glass-glass-glass-grid-cols-4 glass-glass-gap-6">
+              <div className="glass-glass-text-center">
+                <div className="glass-glass-text-3xl glass-glass-mb-3">📏</div>
+                <h4 className="glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Snap Points</h4>
+                <p className="glass-glass-text-primary/70 glass-glass-text-sm">Multiple height positions</p>
               </div>
 
-              <div className="text-center">
-                <div className="text-3xl mb-3">👆</div>
-                <h4 className="font-semibold text-white mb-2">Touch Drag</h4>
-                <p className="text-white/70 text-sm">Smooth drag interactions</p>
+              <div className="glass-glass-text-center">
+                <div className="glass-glass-text-3xl glass-glass-mb-3">👆</div>
+                <h4 className="glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Touch Drag</h4>
+                <p className="glass-glass-text-primary/70 glass-glass-text-sm">Smooth drag interactions</p>
               </div>
 
-              <div className="text-center">
-                <div className="text-3xl mb-3">🎯</div>
-                <h4 className="font-semibold text-white mb-2">Backdrop</h4>
-                <p className="text-white/70 text-sm">Modal backdrop with blur</p>
+              <div className="glass-glass-text-center">
+                <div className="glass-glass-text-3xl glass-glass-mb-3">🎯</div>
+                <h4 className="glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Backdrop</h4>
+                <p className="glass-glass-text-primary/70 glass-glass-text-sm">Modal backdrop with blur</p>
               </div>
 
-              <div className="text-center">
-                <div className="text-3xl mb-3">📱</div>
-                <h4 className="font-semibold text-white mb-2">Mobile First</h4>
-                <p className="text-white/70 text-sm">Optimized for mobile UX</p>
+              <div className="glass-glass-text-center">
+                <div className="glass-glass-text-3xl glass-glass-mb-3">📱</div>
+                <h4 className="glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-2">Mobile First</h4>
+                <p className="glass-glass-text-primary/70 glass-glass-text-sm">Optimized for mobile UX</p>
               </div>
             </div>
           </div>

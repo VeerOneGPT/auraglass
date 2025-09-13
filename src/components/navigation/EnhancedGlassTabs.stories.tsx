@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { EnhancedGlassTabs } from './EnhancedGlassTabs';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof EnhancedGlassTabs> = {
   title: 'Components/Navigation/EnhancedGlassTabs',
@@ -92,19 +92,19 @@ export const Variants: Story = {
   render: (args) => (
     <div className="space-y-8">
       <div>
-        <h3 className="glass-text-lg font-semibold glass-mb-4">Default Variant</h3>
+        <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-mb-4">Default Variant</h3>
         <EnhancedGlassTabs {...args} />
       </div>
       <div>
-        <h3 className="glass-text-lg font-semibold glass-mb-4">Elevated Variant</h3>
+        <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-mb-4">Elevated Variant</h3>
         <EnhancedGlassTabs {...args} variant="elevated" />
       </div>
       <div>
-        <h3 className="glass-text-lg font-semibold glass-mb-4">Outlined Variant</h3>
+        <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-mb-4">Outlined Variant</h3>
         <EnhancedGlassTabs {...args} variant="outlined" />
       </div>
       <div>
-        <h3 className="glass-text-lg font-semibold glass-mb-4">Text Variant</h3>
+        <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-mb-4">Text Variant</h3>
         <EnhancedGlassTabs {...args} variant="text" />
       </div>
     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect, useCallback, useMemo, useState } from 'react';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 import { LIQUID_GLASS, type LiquidGlassMaterial, type MaterialVariant } from '../../tokens/glass';
 
 // WebGL shader sources for Liquid Glass effects
@@ -665,8 +665,8 @@ export const LiquidGlassGPURenderer: React.FC<LiquidGlassGPUProps> = ({
         ref={containerRef}
         className={cn('glass-surface-primary glass-blur-backdrop glass-relative glass-overflow-hidden', className)}
         style={{
-          backdropFilter: `blur(${thickness * 2}px) saturate(${1.8 + (ior - 1) * 0.5}) brightness(${1.15 + thickness * 0.01})`,
-          WebkitBackdropFilter: `blur(${thickness * 2}px) saturate(${1.8 + (ior - 1) * 0.5}) brightness(${1.15 + thickness * 0.01})`,
+          // Use createGlassStyle() instead,
+          // Use createGlassStyle() instead,
           background: `linear-gradient(135deg, rgba(255,255,255,${0.15 + sheen * 0.05}) 0%, rgba(255,255,255,${0.05 + sheen * 0.02}) 100%)`,
           border: `1px solid rgba(255,255,255,${0.3 + sheen * 0.1})`,
         }}

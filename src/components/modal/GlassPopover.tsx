@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';
 import { OptimizedGlass } from '../../primitives';
@@ -435,7 +435,7 @@ export const GlassPopover = forwardRef<HTMLDivElement, GlassPopoverProps>(
         {triggerElement}
 
         {isOpen && (
-          <div className="fixed inset-0 pointer-events-none" style={{ zIndex }}>
+          <div className="glass-glass-fixed glass-glass-inset-0 glass-pointer-events-none" style={{ zIndex }}>
             <Motion
               preset={getAnimationPreset()}
               className="pointer-events-auto"
@@ -471,7 +471,7 @@ export const GlassPopover = forwardRef<HTMLDivElement, GlassPopoverProps>(
                     active={isOpen && (triggerType === 'focus' || triggerType === 'click')}
                     onEscape={closeOnEscape ? () => setOpen(false) : undefined}
                   >
-                    <div className="glass-p-4">
+                    <div className="glass-glass-p-4">
                       {content}
                     </div>
                   </FocusTrap>
@@ -505,10 +505,10 @@ export const GlassPopover = forwardRef<HTMLDivElement, GlassPopoverProps>(
                     active={isOpen && (triggerType === 'focus' || triggerType === 'click')}
                     onEscape={closeOnEscape ? () => setOpen(false) : undefined}
                   >
-                    <div className="glass-p-3">
-                      {title && <h3 className="font-medium text-foreground glass-mb-1">{title}</h3>}
+                    <div className="glass-glass-p-3">
+                      {title && <h3 className="glass-glass-font-medium glass-glass-text-primary glass-glass-mb-1">{title}</h3>}
                       {description && (
-                        <p className="glass-text-sm glass-text-secondary glass-mb-2">{description}</p>
+                        <p className="glass-glass-text-sm glass-text-secondary glass-glass-mb-2">{description}</p>
                       )}
                       {content}
                     </div>
@@ -533,9 +533,9 @@ export const GlassPopover = forwardRef<HTMLDivElement, GlassPopoverProps>(
                     active={isOpen && (triggerType === 'focus' || triggerType === 'click')}
                     onEscape={closeOnEscape ? () => setOpen(false) : undefined}
                   >
-                    <div className="glass-p-3">
-                      {title && <h3 className="font-medium glass-mb-1">{title}</h3>}
-                      {description && <p className="glass-text-sm glass-text-secondary glass-mb-2">{description}</p>}
+                    <div className="glass-glass-p-3">
+                      {title && <h3 className="glass-glass-font-medium glass-glass-mb-1">{title}</h3>}
+                      {description && <p className="glass-glass-text-sm glass-text-secondary glass-glass-mb-2">{description}</p>}
                       {content}
                     </div>
                   </FocusTrap>
@@ -591,7 +591,7 @@ export const GlassTooltip = forwardRef<HTMLDivElement, GlassTooltipProps>(
         placement="top"
         radialReveal={false}
         content={
-          <span className="glass-text-sm text-foreground">
+          <span className="glass-glass-text-sm glass-glass-text-primary">
             {content}
           </span>
         }

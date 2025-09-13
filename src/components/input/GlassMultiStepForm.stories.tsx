@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassMultiStepForm } from './GlassMultiStepForm';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassMultiStepForm> = {
   title: 'Components/Input/GlassMultiStepForm',
@@ -30,27 +30,27 @@ type Story = StoryObj<typeof GlassMultiStepForm>;
 
 // Simple form components for stories
 const PersonalInfoStep = () => (
-  <div className="glass-gap-4">
+  <div className="glass-glass-gap-4">
     <div>
-      <label className="block glass-text-sm font-medium glass-text-primary/80 glass-mb-1">First Name</label>
-      <input className="w-full glass-px-3 glass-py-2 bg-white/10 border border-white/20 glass-radius-lg glass-text-primary" />
+      <label className="glass-glass-block glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80 glass-glass-mb-1">First Name</label>
+      <input className="glass-glass-w-full glass-glass-px-3 glass-glass-py-2 glass-surface-subtle/10 glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-text-primary" />
     </div>
     <div>
-      <label className="block glass-text-sm font-medium glass-text-primary/80 glass-mb-1">Last Name</label>
-      <input className="w-full glass-px-3 glass-py-2 bg-white/10 border border-white/20 glass-radius-lg glass-text-primary" />
+      <label className="glass-glass-block glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80 glass-glass-mb-1">Last Name</label>
+      <input className="glass-glass-w-full glass-glass-px-3 glass-glass-py-2 glass-surface-subtle/10 glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-text-primary" />
     </div>
   </div>
 );
 
 const ContactDetailsStep = () => (
-  <div className="glass-gap-4">
+  <div className="glass-glass-gap-4">
     <div>
-      <label className="block glass-text-sm font-medium glass-text-primary/80 glass-mb-1">Email</label>
-      <input type="email" className="w-full glass-px-3 glass-py-2 bg-white/10 border border-white/20 glass-radius-lg glass-text-primary" />
+      <label className="glass-glass-block glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80 glass-glass-mb-1">Email</label>
+      <input type="email" className="glass-glass-w-full glass-glass-px-3 glass-glass-py-2 glass-surface-subtle/10 glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-text-primary" />
     </div>
     <div>
-      <label className="block glass-text-sm font-medium glass-text-primary/80 glass-mb-1">Phone</label>
-      <input type="tel" className="w-full glass-px-3 glass-py-2 bg-white/10 border border-white/20 glass-radius-lg glass-text-primary" />
+      <label className="glass-glass-block glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80 glass-glass-mb-1">Phone</label>
+      <input type="tel" className="glass-glass-w-full glass-glass-px-3 glass-glass-py-2 glass-surface-subtle/10 glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-text-primary" />
     </div>
   </div>
 );
@@ -73,26 +73,26 @@ export const Default: Story = {
 };
 
 const Step1Component = () => (
-  <div className="glass-gap-4">
+  <div className="glass-glass-gap-4">
     <div>
-      <label className="block glass-text-sm font-medium glass-text-primary/80 glass-mb-1">Name</label>
-      <input className="w-full glass-px-3 glass-py-2 bg-white/10 border border-white/20 glass-radius-lg glass-text-primary" />
+      <label className="glass-glass-block glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80 glass-glass-mb-1">Name</label>
+      <input className="glass-glass-w-full glass-glass-px-3 glass-glass-py-2 glass-surface-subtle/10 glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-text-primary" />
     </div>
   </div>
 );
 
 const Step2Component = () => (
-  <div className="glass-gap-4">
+  <div className="glass-glass-gap-4">
     <div>
-      <label className="block glass-text-sm font-medium glass-text-primary/80 glass-mb-1">Email</label>
-      <input type="email" className="w-full glass-px-3 glass-py-2 bg-white/10 border border-white/20 glass-radius-lg glass-text-primary" />
+      <label className="glass-glass-block glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80 glass-glass-mb-1">Email</label>
+      <input type="email" className="glass-glass-w-full glass-glass-px-3 glass-glass-py-2 glass-surface-subtle/10 glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-text-primary" />
     </div>
   </div>
 );
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-wrap glass-gap-4">
+    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4">
       <GlassMultiStepForm {...args} />
     </div>
   ),

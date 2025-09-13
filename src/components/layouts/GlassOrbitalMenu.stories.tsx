@@ -77,8 +77,8 @@ const mediaItems: OrbitalMenuItem[] = [
 ];
 
 const customCenterElement = (
-  <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full flex items-center justify-center">
-    <div className="w-3 h-3 bg-white rounded-full" />
+  <div className="glass-glass-w-8 glass-glass-h-8 glass-gradient-primary from-blue-400 to-purple-600 glass-radius-full glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+    <div className="w-3 h-3 glass-surface-subtle glass-radius-full" />
   </div>
 );
 
@@ -214,8 +214,8 @@ export const MediaControls: Story = {
     radius: 100,
     itemSize: 52,
     centerElement: (
-      <div className="w-8 h-8 bg-gradient-to-br from-red-400 to-pink-600 rounded-full flex items-center justify-center">
-        <Play size={16} className="text-white ml-0.5" />
+      <div className="glass-glass-w-8 glass-glass-h-8 glass-gradient-primary from-red-400 to-pink-600 glass-radius-full glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+        <Play size={16} className="glass-glass-text-primary ml-0.5" />
       </div>
     ),
   },

@@ -5,7 +5,7 @@
 
 import React, { useEffect, useRef, useState, useCallback, createContext, useContext, forwardRef } from 'react';
 import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 import { OptimizedGlassCore as OptimizedGlass } from '@/primitives/OptimizedGlassCore';
 import { useA11yId } from '@/utils/a11y';
 import { useMotionPreferenceContext } from '@/contexts/MotionPreferenceContext';
@@ -671,7 +671,7 @@ export function GlassGazeResponsive({
       animate={{
         scale: isGazed ? 1 + gazeIntensity * 0.02 : 1,
         ...(glassBlur && {
-          backdropFilter: `blur(${8 + gazeIntensity * 8}px)`,
+          // Use createGlassStyle() instead,
         }),
         ...(glassRadius && {
           borderRadius: `${8 + gazeIntensity * 4}px`,
@@ -732,7 +732,7 @@ export function GlassGazeVisualization({
         {activeInteractions.map(interaction => (
           <motion.div
             key={interaction.region.id}
-            className="absolute"
+            className="glass-glass-absolute"
             style={{
               left: interaction.region.x,
               top: interaction.region.y,

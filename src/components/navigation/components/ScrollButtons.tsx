@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../../lib/utilsComprehensive';
 
 export interface ScrollButtonsProps {
   onScrollLeft?: () => void;
@@ -24,7 +24,7 @@ const ScrollButtons: React.FC<ScrollButtonsProps> = ({
             top: 0,
             bottom: 0,
             width: '32px',
-            background: 'rgba(0, 0, 0, 0.5)',
+            background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
             border: 'none',
             color: 'white',
             cursor: 'pointer',
@@ -43,7 +43,7 @@ const ScrollButtons: React.FC<ScrollButtonsProps> = ({
             top: 0,
             bottom: 0,
             width: '32px',
-            background: 'rgba(0, 0, 0, 0.5)',
+            background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
             border: 'none',
             color: 'white',
             cursor: 'pointer',

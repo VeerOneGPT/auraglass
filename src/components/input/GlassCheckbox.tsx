@@ -2,7 +2,7 @@
 
 import { GlassInput } from './GlassInput';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { Check, Minus } from 'lucide-react';
 import React, { forwardRef } from 'react';
 import { Motion, OptimizedGlass } from '../../primitives';
@@ -173,7 +173,7 @@ export const GlassCheckbox = forwardRef<HTMLInputElement, GlassCheckboxProps>(
     const isCheckedOrIndeterminate = checked || indeterminate;
 
     const checkboxElement = (
-      <div className="relative inline-flex items-center">
+      <div className="glass-glass-relative glass-inline-glass-glass-flex glass-glass-items-center">
         {/* Hidden input */}
         <input
           ref={ref}
@@ -182,7 +182,7 @@ export const GlassCheckbox = forwardRef<HTMLInputElement, GlassCheckboxProps>(
           checked={checked}
           onChange={handleChange}
           disabled={disabled || loading}
-          className="sr-only"
+          className="glass-glass-sr-only"
           {...props}
         />
 
@@ -312,14 +312,14 @@ export const GlassCheckbox = forwardRef<HTMLInputElement, GlassCheckboxProps>(
     return (
       <div className={containerClass}>
         {(labelPosition === 'left' || labelPosition === 'right') && (
-          <div className="flex items-start pt-0.5">
+          <div className="glass-glass-flex glass-glass-items-start pt-0.5">
             {checkboxElement}
           </div>
         )}
 
         {(labelPosition === 'top' || labelPosition === 'bottom') && checkboxElement}
 
-        <div className="glass-gap-1 min-w-0 flex-1">
+        <div className="glass-glass-gap-1 glass-glass-min-w-0 glass-glass-flex-1">
           {labelElement}
           {descriptionElement}
           {errorElement}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, createContext, useContext, forwardRef, ReactNode } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { OptimizedGlass } from '../../primitives';
 import { useA11yId, prefersReducedMotion, announceToScreenReader } from '../../utils/a11y';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
@@ -364,7 +364,7 @@ export const GlassAnimated = forwardRef<HTMLDivElement, GlassAnimatedProps>((
   { 
     animation, 
     children, 
-    className = '', 
+    className='', 
     trigger = 'mount',
     respectMotionPreference = true,
     'aria-label': ariaLabel,
@@ -482,7 +482,7 @@ export const GlassAnimationSequence = forwardRef<HTMLDivElement, GlassAnimationS
   { 
     children, 
     staggerDelay = 100, 
-    className = '',
+    className='',
     respectMotionPreference = true,
     'aria-label': ariaLabel,
     ...props 
@@ -623,7 +623,7 @@ export const GlassAnimationTimeline = forwardRef<HTMLDivElement, GlassAnimationT
   { 
     timeline, 
     children, 
-    className = '',
+    className='',
     respectMotionPreference = true,
     'aria-label': ariaLabel,
     ...props 

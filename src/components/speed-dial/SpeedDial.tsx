@@ -134,30 +134,26 @@ const SpeedDialFab = styled.div<{
   height: ${props =>
     props.$size === 'small' ? '40px' : props.$size === 'large' ? '64px' : '56px'};
   border-radius: 50%;
-  background-color: ${props => (props.$glass ? 'rgba(36, 36, 36, 0.5)' : props.$colorValues.bg)};
+  background-color: ${props => (props.$glass ? 'var(--glass-bg-default)' : props.$colorValues.bg)};
   color: ${AURA_GLASS.surfaces.neutral.level2.text.primary};
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--glass-elev-2);
   cursor: ${props => (props.$disabled ? 'default' : 'pointer')};
   transition: ${props =>
     !props.$reducedMotion ? 'background-color 0.2s, box-shadow 0.2s, transform 0.2s' : 'none'};
 
   /* Glass styling */
   ${props =>
-    props.$glass && (() => {
-      const glassStyles = createGlassStyle({
-        elevation: 'level3',
-        intent: 'neutral',
-      });
-      return Object.entries(glassStyles)
-        .map(([key, value]) => `${key.replace(/([A-Z])/g, '-$1').toLowerCase()}:${value};`)
-        .join('');
-    })()}
+    props.$glass && `
+      backdrop-filter: var(--glass-backdrop-blur);
+      -webkit-backdrop-filter: var(--glass-backdrop-blur);
+      border: 1px solid var(--glass-border-default);
+    `}
 
   /* Open state */
   ${props =>
     props.$open &&
     `
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    box-shadow: var(--glass-elev-2);
   `}
   
   /* Disabled state */
@@ -166,7 +162,7 @@ const SpeedDialFab = styled.div<{
     `
     opacity: 0.6;
     pointer-events: none;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--glass-elev-2);
   `}
   
   /* Hover effects */
@@ -174,13 +170,13 @@ const SpeedDialFab = styled.div<{
     !props.$disabled &&
     `
     &:hover {
-      background-color: ${props.$glass ? 'rgba(48, 48, 48, 0.5)' : props.$colorValues.hover};
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      background-color: ${props.$glass ? 'var(--glass-bg-hover)' : props.$colorValues.hover};
+      box-shadow: var(--glass-elev-2);
     }
     
     &:active {
-      background-color: ${props.$glass ? 'rgba(60, 60, 60, 0.5)' : props.$colorValues.active};
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      background-color: ${props.$glass ? 'var(--glass-bg-active)' : props.$colorValues.active};
+      box-shadow: var(--glass-elev-2);
       transform: scale(0.98);
     }
   `}
@@ -206,7 +202,7 @@ const Backdrop = styled.div<{
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background: var(--glass-overlay-bg);
   pointer-events: ${props => (props.$open ? 'auto' : 'none')};
   opacity: ${props => (props.$open ? 1 : 0)};
   transition: ${props => (!props.$reducedMotion ? 'opacity 0.2s' : 'none')};

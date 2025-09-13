@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ChartTooltip } from './ChartTooltip';
-import { cn } from '@/lib/utils';
+import { cn } from '../../../lib/utils';
 
 const meta: Meta<typeof ChartTooltip> = {
   title: 'Components/Components/ChartTooltip',
@@ -59,7 +59,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-8">
+    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-8">
       <ChartTooltip {...args} tooltipStyle="frosted" />
       <ChartTooltip {...args} tooltipStyle="minimal" />
       <ChartTooltip {...args} tooltipStyle="detailed" />

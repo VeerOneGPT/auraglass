@@ -3,7 +3,7 @@
 import React, { forwardRef, useRef, useEffect, useState, useCallback } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { useA11yId } from '../../utils/a11y';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 import { useGlassSound } from '../../utils/soundDesign';
@@ -643,14 +643,14 @@ export const GlassNebulaClouds = forwardRef<HTMLDivElement, GlassNebulaCloudsPro
           depth={1}
           tint="neutral"
           border="subtle"
-          className="glass-nebula-controls flex flex-wrap items-center glass-gap-4 glass-p-4 glass-radius-lg backdrop-blur-md border border-border/20"
+          className="glass-nebula-controls glass-glass-flex glass-glass-flex-wrap glass-glass-items-center glass-glass-gap-4 glass-glass-p-4 glass-radius-lg backdrop-blur-md glass-glass-border glass-glass-border-glass-glass-border/20"
         >
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">Type:</label>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">Type:</label>
             <select
               value={nebulaType}
               onChange={(e) => {}}
-              className="glass-px-2 glass-py-1 glass-radius-md bg-background/20 border border-border/20"
+              className="glass-glass-px-2 glass-glass-py-1 glass-radius-md glass-surface-overlay glass-glass-border glass-glass-border-glass-glass-border/20"
             >
               <option value="emission">Emission</option>
               <option value="reflection">Reflection</option>
@@ -660,8 +660,8 @@ export const GlassNebulaClouds = forwardRef<HTMLDivElement, GlassNebulaCloudsPro
             </select>
           </div>
 
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">Density:</label>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">Density:</label>
             <input
               type="range"
               min="0.1"
@@ -673,8 +673,8 @@ export const GlassNebulaClouds = forwardRef<HTMLDivElement, GlassNebulaCloudsPro
             />
           </div>
 
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">Temperature:</label>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">Temperature:</label>
             <input
               type="range"
               min="10"
@@ -684,11 +684,11 @@ export const GlassNebulaClouds = forwardRef<HTMLDivElement, GlassNebulaCloudsPro
               onChange={(e) => {}}
               className="w-20"
             />
-            <span className="glass-text-xs">{(temperature / 1000).toFixed(1)}K K</span>
+            <span className="glass-glass-text-xs">{(temperature / 1000).toFixed(1)}K K</span>
           </div>
 
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">Time Scale:</label>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">Time Scale:</label>
             <input
               type="range"
               min="0.1"
@@ -700,8 +700,8 @@ export const GlassNebulaClouds = forwardRef<HTMLDivElement, GlassNebulaCloudsPro
             />
           </div>
 
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={showStarClusters}
@@ -710,7 +710,7 @@ export const GlassNebulaClouds = forwardRef<HTMLDivElement, GlassNebulaCloudsPro
               />
               Stars
             </label>
-            <label className="glass-text-sm">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={showCosmicDust}
@@ -719,7 +719,7 @@ export const GlassNebulaClouds = forwardRef<HTMLDivElement, GlassNebulaCloudsPro
               />
               Dust
             </label>
-            <label className="glass-text-sm">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={showEmissionLines}
@@ -728,7 +728,7 @@ export const GlassNebulaClouds = forwardRef<HTMLDivElement, GlassNebulaCloudsPro
               />
               Emission
             </label>
-            <label className="glass-text-sm">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={showMagneticField}
@@ -759,16 +759,16 @@ export const GlassNebulaClouds = forwardRef<HTMLDivElement, GlassNebulaCloudsPro
       >
         <Motion
           preset={isMotionSafe && respectMotionPreference ? "fadeIn" : "none"}
-          className="flex flex-col glass-gap-4 glass-p-4"
+          className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4 glass-glass-p-4"
         >
           {renderControls()}
           
-          <div className="relative">
+          <div className="glass-glass-relative">
             <canvas
               ref={canvasRef}
               width={width}
               height={height}
-              className="border border-border/20 glass-radius-md bg-black"
+              className="glass-glass-border glass-glass-border-glass-glass-border/20 glass-radius-md glass-surface-dark"
               style={{ width, height }}
             />
           </div>

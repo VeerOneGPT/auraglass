@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { GlassButton } from '../button/GlassButton';
 import { OptimizedGlass } from '../../primitives';
 
@@ -26,9 +26,9 @@ export function GlassTagInput({ value, onChange, placeholder = 'Add tag…', sug
   return (
     <OptimizedGlass elevation={'level1'} className={cn('glass-radius-xl glass-p-2 flex flex-wrap glass-gap-2', className)}>
       {value.map((t) => (
-        <span key={t} className="inline-flex items-center glass-gap-1 glass-px-2 glass-py-1 glass-text-sm glass-radius-lg bg-white/10 border border-white/20">
+        <span key={t} className="glass-inline-glass-glass-flex glass-glass-items-center glass-glass-gap-1 glass-glass-px-2 glass-glass-py-1 glass-glass-text-sm glass-radius-lg glass-surface-subtle/10 glass-glass-border glass-glass-border-white/20">
           {t}
-          <button onClick={(e) => remove(t)} className="glass-text-primary/60 hover:glass-text-primary">×</button>
+          <button onClick={(e) => remove(t)} className="glass-glass-text-primary/60 hover:glass-glass-text-primary">×</button>
         </span>
       ))}
       <input
@@ -43,13 +43,13 @@ export function GlassTagInput({ value, onChange, placeholder = 'Add tag…', sug
           }
         }}
         placeholder={placeholder}
-        className="flex-1 min-w-[120px] bg-transparent outline-none glass-text-sm placeholder:glass-text-primary/50"
+        className="glass-glass-flex-1 min-w-[120px] glass-glass-bg-transparent outline-none glass-glass-text-sm placeholder:glass-glass-text-primary/50"
       />
       {!!suggestions.length && input && (
-        <div className="w-full -glass-mb-1">
-          <div className="glass-mt-1 glass-radius-lg border border-white/15 bg-black/20 glass-p-1">
+        <div className="glass-glass-w-full -glass-glass-mb-1">
+          <div className="glass-mt-1 glass-radius-lg glass-glass-border glass-glass-border-white/15 glass-surface-dark/20 glass-glass-p-1">
             {suggestions.filter(s => s.toLowerCase().includes(input.toLowerCase())).slice(0,6).map(s => (
-              <GlassButton key={s} variant="ghost" size="sm" className="w-full justify-start" onClick={(e) => add(s)}>
+              <GlassButton key={s} variant="ghost" size="sm" className="glass-glass-w-full glass-glass-justify-start" onClick={(e) => add(s)}>
                 {s}
               </GlassButton>
             ))}

@@ -36,10 +36,6 @@ class ConsciousnessResourcePool {
       );
     }
     
-    // Pre-create spatial audio contexts
-    if (typeof AudioContext !== 'undefined') {
-      this.spatialAudioContexts.push(new AudioContext());
-    }
   }
   
   // Get eye tracking worker

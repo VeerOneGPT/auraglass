@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { useA11yId, createModalA11y, keyboardHandlers, announceToScreenReader } from '../../utils/a11y';
@@ -94,10 +94,10 @@ export const GlassBottomSheet = forwardRef<HTMLDivElement, GlassBottomSheetProps
           <Motion
             preset="fadeIn"
             duration={shouldAnimate ? 200 : 0}
-            className="fixed inset-0 z-[1100]"
+            className="glass-glass-fixed glass-glass-inset-0 z-[1100]"
             onClick={(e) => onOpenChange(false)}
           >
-            <div className="absolute inset-0 bg-black/50" />
+            <div className="glass-glass-absolute glass-glass-inset-0 glass-surface-dark/50" />
           </Motion>
         )}
         <Motion
@@ -123,20 +123,20 @@ export const GlassBottomSheet = forwardRef<HTMLDivElement, GlassBottomSheetProps
           >
             {/* Handle indicator */}
             <div 
-              className="mx-auto w-10 h-1.5 glass-radius-full bg-white/30 mb-3"
+              className="mx-auto glass-glass-w-10 h-1.5 glass-radius-full glass-surface-subtle/30 glass-glass-mb-3"
               aria-hidden="true"
             />
             
             {/* Header with title and description */}
             {(title || description) && (
-              <div className="glass-mb-4">
+              <div className="glass-glass-mb-4">
                 {title && (
-                  <h2 id={titleId} className="glass-text-lg font-semibold text-foreground">
+                  <h2 id={titleId} className="glass-glass-text-lg glass-glass-font-semibold glass-glass-text-primary">
                     {title}
                   </h2>
                 )}
                 {description && (
-                  <p id={descriptionId} className="glass-text-sm glass-text-secondary glass-mt-1">
+                  <p id={descriptionId} className="glass-glass-text-sm glass-text-secondary glass-mt-1">
                     {description}
                   </p>
                 )}

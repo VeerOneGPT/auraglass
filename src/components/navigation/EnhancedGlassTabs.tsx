@@ -7,7 +7,7 @@
  * with glass morphism styling.
  */
 import React, { useState, useEffect, useRef, useCallback, forwardRef, useImperativeHandle, useMemo } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { OptimizedGlass, Motion } from '../../primitives';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useA11yId } from '@/utils/a11y';
@@ -440,7 +440,7 @@ export const EnhancedGlassTabs = forwardRef<EnhancedGlassTabsRef, EnhancedGlassT
               <span>{tab.label}</span>
               {tab.badgeCount !== undefined && tab.badgeCount > 0 && (
                 <span
-                  className="inline-flex items-center justify-center min-w-[18px] h-[18px] glass-px-1.5 glass-text-xs font-semibold glass-text-primary glass-radius-full"
+                  className="glass-inline-glass-glass-flex glass-glass-items-center glass-glass-justify-center min-w-[18px] h-[18px] glass-glass-px-1.5 glass-glass-text-xs glass-glass-font-semibold glass-glass-text-primary glass-radius-full"
                   style={{ backgroundColor: colors.activeColor }}
                 >
                   {tab.badgeCount > 99 ? '99+' : tab.badgeCount}
@@ -468,7 +468,7 @@ export const EnhancedGlassTabs = forwardRef<EnhancedGlassTabsRef, EnhancedGlassT
             bottom: `${indicatorStyle.bottom}px`,
             backgroundColor: colors.activeColor,
             borderRadius: `${sizeConfig.indicatorHeight / 2}px`,
-            boxShadow: '0 0 8px rgba(255, 255, 255, 0.3)',
+            boxShadow: 'var(--glass-elev-2)',
           }}
         />
       )}

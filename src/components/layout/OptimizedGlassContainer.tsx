@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef, useState, useEffect, useRef, useCallback } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { OptimizedGlass } from '../../primitives';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useA11yId } from '@/utils/a11y';
@@ -210,9 +210,9 @@ export const OptimizedGlassContainer = forwardRef<HTMLDivElement, OptimizedGlass
       };
 
       return (
-        <div className="absolute top-2 right-2 z-50 bg-black/50 glass-text-primary glass-p-2 glass-radius-md glass-text-xs font-mono">
+        <div className="glass-glass-absolute glass--glass--glassglass--top-2 right-2 glass-z-50 glass-surface-dark/50 glass-glass-text-primary glass-glass-p-2 glass-radius-md glass-glass-text-xs font-mono">
           <div>FPS: <span className={getIndicatorColor()}>{Math.round(currentFps)}</span></div>
-          <div>Level: <span className="text-blue-400">{optimizationLevel}</span></div>
+          <div>Level: <span className="glass-glass-text-primary">{optimizationLevel}</span></div>
           <div>Score: <span className={getIndicatorColor()}>{(performanceScore * 100).toFixed(0)}%</span></div>
         </div>
       );

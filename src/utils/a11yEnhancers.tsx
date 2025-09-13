@@ -4,7 +4,7 @@
  */
 
 import React, { forwardRef, useEffect, useRef, useCallback, useState } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../lib/utilsComprehensive';
 import { useScreenReaderAnnouncement, useKeyboardNavigation, useFormFieldA11y, useLoadingA11y } from './a11yHooks';
 import { useA11yId, announceToScreenReader, keyboardHandlers, focusUtils } from './a11y';
 

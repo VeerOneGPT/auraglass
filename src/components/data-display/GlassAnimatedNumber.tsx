@@ -54,7 +54,7 @@ export const GlassAnimatedNumber = forwardRef<HTMLDivElement, GlassAnimatedNumbe
   suffix = '',
   formatter,
   animateOnChange = true,
-  className = '',
+  className='',
   size = 'md',
   variant = 'count',
 }, ref) => {
@@ -199,7 +199,7 @@ export const GlassAnimatedCounter: React.FC<{
   from = 0,
   duration = 1500,
   size = 'lg',
-  className = '',
+  className='',
 }) => {
   return (
     <div className={cn('glass-flex glass-flex-col glass-items-center glass-gap-2', className)}>
@@ -237,7 +237,7 @@ export const GlassAnimatedStat: React.FC<{
   label,
   showPercentage = false,
   duration = 1000,
-  className = '',
+  className='',
 }) => {
   const percentage = total ? (value / total) * 100 : value;
 

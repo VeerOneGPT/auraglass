@@ -6,7 +6,7 @@ import { OptimizedGlass } from '../../primitives'
 import { useA11yId } from '../../utils/a11y'
 import { useMotionPreference } from '../../hooks/useMotionPreference'
 import { createGlassStyle } from '../../utils/createGlassStyle'
-import { cn } from '@/lib/utilsComprehensive'
+import { cn } from '../../lib/utilsComprehensive'
 
 export interface CoherenceData {
   timestamp: number
@@ -70,7 +70,7 @@ export const GlassCoherenceIndicator = forwardRef<HTMLDivElement, GlassCoherence
     animationSpeed = 1,
     onCoherenceLoss,
     onPhaseChange,
-    className = '',
+    className='',
     ...props
   }, ref) => {
     const [currentCoherence, setCurrentCoherence] = useState(coherenceLevel)

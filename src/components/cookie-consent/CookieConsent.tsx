@@ -49,7 +49,7 @@ const StyledCookieConsent = styled.div<{
   width: 100%;
   max-width: 420px;
   box-sizing: border-box;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--glass-elev-2);
   will-change: transform, opacity;
 
   ${({ $position }) => {
@@ -92,20 +92,11 @@ const StyledCookieConsent = styled.div<{
     }
   }}
 
-  ${({ theme, $glassIntensity }) => `
-    background-color: ${glassTokenUtils.getSurface('neutral', 'level1').surface.base};
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid ${glassTokenUtils.getSurface('neutral', 'level1').border.color};
-  `}
-  
-  ${({ theme }) => `
-    border: 1px solid ${glassTokenUtils.getSurface('neutral', 'level1').border.color};
-  `}
-  
-  ${({ theme, $glassIntensity }) => `
-    box-shadow: 0 0 ${$glassIntensity * 10}px ${glassTokenUtils.getSurface('neutral', 'level1').surface.base};
-  `}
+  background: var(--glass-bg-default);
+  backdrop-filter: var(--glass-backdrop-blur);
+  -webkit-backdrop-filter: var(--glass-backdrop-blur);
+  border: 1px solid var(--glass-border-default);
+  box-shadow: var(--glass-elev-2);
   
   @media (max-width: 480px) {
     max-width: 100%;
@@ -269,7 +260,7 @@ export const CookieConsent = forwardRef<HTMLDivElement, CookieConsentProps>(
       >
         <Box>
           {title && (
-            <Typography variant="h6" style={{ marginBottom: '8px', fontWeight: 'var(--typography-heading-weight)' }}>
+            <Typography variant="h6" className="glass-glass-mb-2 glass-glass-font-semibold">
               {title}
             </Typography>
           )}

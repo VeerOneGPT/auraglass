@@ -9,7 +9,7 @@ import { GlassProgress } from '../../../components/data-display/GlassProgress';
 import { PageHeader } from '../../../components/layout/GlassAppShell';
 import { VStack, HStack } from '../../../components/layout/GlassStack';
 import { GlassCard } from '../../../components/card/GlassCard';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../../lib/utilsComprehensive';
 
 export interface FormStep {
   id: string;
@@ -242,10 +242,10 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
       return (
         <VStack space="md">
           <HStack space="sm" align="center" justify="between">
-            <span className="glass-text-sm font-medium text-foreground">
+            <span className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary">
               Step {currentStep + 1} of {totalSteps}
             </span>
-            <span className="glass-text-sm glass-text-secondary">
+            <span className="glass-glass-text-sm glass-text-secondary">
               {Math.round(getProgress())}% Complete
             </span>
           </HStack>
@@ -257,7 +257,7 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
             showValue={false}
           />
           
-          <div className="flex justify-between">
+          <div className="glass-glass-flex glass-glass-justify-between">
             {steps.map((step, index) => (
               <div
                 key={step.id}
@@ -278,7 +278,7 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
                 )}>
                   {index < currentStep ? '✓' : index + 1}
                 </div>
-                <span className="glass-text-xs text-center max-w-16 truncate">
+                <span className="glass-glass-text-xs glass-glass-text-center max-glass-glass-w-16 glass-glass-truncate">
                   {step.title}
                 </span>
               </div>
@@ -344,7 +344,7 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
         {/* Current step header */}
         {isMultiStep && currentStepData && (
           <VStack space="sm">
-            <h2 className="glass-text-xl font-semibold text-foreground">
+            <h2 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary">
               {currentStepData.title}
             </h2>
             {currentStepData.description && (
@@ -356,7 +356,7 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
         )}
 
         {/* Form */}
-        <div className="flex-1">
+        <div className="glass-glass-flex-1">
           <GlassFormBuilder
             schema={currentSchema || []}
             values={internalValues}
@@ -383,7 +383,7 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
         case 'centered':
           return (
             <div className="max-w-2xl mx-auto">
-              <GlassCard variant="default" className="p-8">
+              <GlassCard variant="default" className="glass-glass-p-8">
                 {renderFormContent()}
               </GlassCard>
             </div>
@@ -391,9 +391,9 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
 
         case 'sidebar':
           return (
-            <div className="grid grid-cols-12 gap-8">
+            <div className="glass-glass-grid glass-glass-glass-grid-cols-12 glass-glass-gap-8">
               <div className="col-span-8">
-                <GlassCard variant="default" className="glass-p-6">
+                <GlassCard variant="default" className="glass-glass-p-6">
                   {renderFormContent()}
                 </GlassCard>
               </div>
@@ -405,7 +405,7 @@ export const GlassFormTemplate = forwardRef<HTMLDivElement, GlassFormTemplatePro
 
         default:
           return (
-            <GlassCard variant="default" className="glass-p-6">
+            <GlassCard variant="default" className="glass-glass-p-6">
               {renderFormContent()}
             </GlassCard>
           );

@@ -3,7 +3,7 @@
 import React, { forwardRef, useRef, useEffect, useState, useCallback } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { useA11yId } from '../../utils/a11y';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 import { useGlassSound } from '../../utils/soundDesign';
@@ -601,9 +601,9 @@ export const GlassVoiceInput = forwardRef<HTMLDivElement, GlassVoiceInputProps>(
           depth={1}
           tint="neutral"
           border="subtle"
-          className="glass-voice-controls flex flex-wrap items-center glass-gap-4 glass-p-4 glass-radius-lg backdrop-blur-md border border-border/20"
+          className="glass-voice-controls glass-glass-flex glass-glass-flex-wrap glass-glass-items-center glass-glass-gap-4 glass-glass-p-4 glass-radius-lg backdrop-blur-md glass-glass-border glass-glass-border-glass-glass-border/20"
         >
-          <div className="flex items-center glass-gap-2">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
             <button
               onClick={toggleListening}
               disabled={!isSupported || permissionStatus === 'denied'}
@@ -620,18 +620,18 @@ export const GlassVoiceInput = forwardRef<HTMLDivElement, GlassVoiceInputProps>(
             
             <button
               onClick={clearTranscript}
-              className="glass-px-3 glass-py-2 glass-radius-md bg-secondary/20 hover:bg-secondary/30"
+              className="glass-glass-px-3 glass-glass-py-2 glass-radius-md bg-secondary/20 hover:bg-secondary/30"
             >
               Clear
             </button>
           </div>
           
-          <div className="flex items-center glass-gap-2">
-            <span className="glass-text-sm">Language:</span>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <span className="glass-glass-text-sm">Language:</span>
             <select
               value={language}
               onChange={(e) => {}}
-              className="glass-px-2 glass-py-1 glass-radius-md bg-background/20 border border-border/20"
+              className="glass-glass-px-2 glass-glass-py-1 glass-radius-md glass-surface-overlay glass-glass-border glass-glass-border-glass-glass-border/20"
             >
               <option value="en-US">English (US)</option>
               <option value="en-GB">English (UK)</option>
@@ -645,12 +645,12 @@ export const GlassVoiceInput = forwardRef<HTMLDivElement, GlassVoiceInputProps>(
             </select>
           </div>
           
-          <div className="flex items-center glass-gap-2">
-            <span className="glass-text-sm">Style:</span>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <span className="glass-glass-text-sm">Style:</span>
             <select
               value={visualizerStyle}
               onChange={(e) => {}}
-              className="glass-px-2 glass-py-1 glass-radius-md bg-background/20 border border-border/20"
+              className="glass-glass-px-2 glass-glass-py-1 glass-radius-md glass-surface-overlay glass-glass-border glass-glass-border-glass-glass-border/20"
             >
               <option value="waveform">Waveform</option>
               <option value="bars">Bars</option>
@@ -659,8 +659,8 @@ export const GlassVoiceInput = forwardRef<HTMLDivElement, GlassVoiceInputProps>(
             </select>
           </div>
           
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={continuous}
@@ -669,7 +669,7 @@ export const GlassVoiceInput = forwardRef<HTMLDivElement, GlassVoiceInputProps>(
               />
               Continuous
             </label>
-            <label className="glass-text-sm">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={showVisualizer}
@@ -680,11 +680,11 @@ export const GlassVoiceInput = forwardRef<HTMLDivElement, GlassVoiceInputProps>(
             </label>
           </div>
           
-          <div className="flex items-center glass-gap-2">
-            <span className="glass-text-sm">Audio Level:</span>
-            <div className="w-20 h-2 bg-background/20 glass-radius-full overflow-hidden">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <span className="glass-glass-text-sm">Audio Level:</span>
+            <div className="w-20 h-2 glass-surface-overlay glass-radius-full overflow-hidden">
               <div 
-                className="h-full bg-green-500/60 transition-all duration-100"
+                className="glass-glass-h-full glass-surface-green/60 transition-all duration-100"
                 style={{ width: `${audioLevel * 100}%` }}
               />
             </div>
@@ -710,28 +710,28 @@ export const GlassVoiceInput = forwardRef<HTMLDivElement, GlassVoiceInputProps>(
       >
         <Motion
           preset={isMotionSafe && respectMotionPreference ? "fadeIn" : "none"}
-          className="flex flex-col glass-gap-4 glass-p-4"
+          className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4 glass-glass-p-4"
         >
           {renderControls()}
           
           {/* Status indicators */}
-          <div className="flex items-center justify-between glass-p-3 bg-background/10 glass-radius-md">
-            <div className="flex items-center glass-gap-3">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-p-3 glass-surface-overlay glass-radius-md">
+            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3">
               <div className={cn(
                 'w-3 h-3 glass-radius-full',
                 isListening ? 'bg-green-500 animate-pulse' : 'bg-red-500'
               )} />
-              <span className="glass-text-sm font-medium">
+              <span className="glass-glass-text-sm glass-glass-font-medium">
                 {isListening ? 'Listening...' : 'Ready'}
               </span>
               {frequency > 0 && (
-                <span className="glass-text-xs glass-text-secondary">
+                <span className="glass-glass-text-xs glass-text-secondary">
                   {Math.round(frequency)}Hz
                 </span>
               )}
             </div>
             
-            <div className="glass-text-xs glass-text-secondary">
+            <div className="glass-glass-text-xs glass-text-secondary">
               {permissionStatus === 'denied' && 'Microphone access denied'}
               {!isSupported && 'Speech recognition not supported'}
               {recognizedCommands.length > 0 && `${recognizedCommands.length} commands recognized`}
@@ -740,10 +740,10 @@ export const GlassVoiceInput = forwardRef<HTMLDivElement, GlassVoiceInputProps>(
           
           {/* Voice visualizer */}
           {showVisualizer && (
-            <div className="glass-p-4 bg-background/5 glass-radius-md">
+            <div className="glass-glass-p-4 glass-surface-overlay glass-radius-md">
               <canvas
                 ref={canvasRef}
-                className="w-full"
+                className="glass-glass-w-full"
                 style={{ height: '100px' }}
               />
             </div>
@@ -751,9 +751,9 @@ export const GlassVoiceInput = forwardRef<HTMLDivElement, GlassVoiceInputProps>(
           
           {/* Transcript */}
           {showTranscript && (transcript || interimTranscript) && (
-            <div className="glass-p-4 bg-background/10 glass-radius-md">
-              <div className="glass-text-sm font-medium glass-mb-2">Transcript:</div>
-              <div className="glass-text-sm">
+            <div className="glass-glass-p-4 glass-surface-overlay glass-radius-md">
+              <div className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">Transcript:</div>
+              <div className="glass-glass-text-sm">
                 <span>{transcript}</span>
                 {interimTranscript && (
                   <span className="glass-text-secondary italic"> {interimTranscript}</span>
@@ -764,12 +764,12 @@ export const GlassVoiceInput = forwardRef<HTMLDivElement, GlassVoiceInputProps>(
           
           {/* Recent commands */}
           {recognizedCommands.length > 0 && (
-            <div className="glass-p-4 bg-background/5 glass-radius-md">
-              <div className="glass-text-sm font-medium glass-mb-2">Recent Commands:</div>
+            <div className="glass-glass-p-4 glass-surface-overlay glass-radius-md">
+              <div className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">Recent Commands:</div>
               <div className="space-y-1">
                 {recognizedCommands.slice(-5).map(command => (
-                  <div key={command.id} className="glass-text-xs glass-p-2 bg-primary/10 glass-radius-sm">
-                    <span className="font-medium">{command.phrase}</span>
+                  <div key={command.id} className="glass-glass-text-xs glass-glass-p-2 glass-surface-primary/10 glass-radius-sm">
+                    <span className="glass-glass-font-medium">{command.phrase}</span>
                     <span className="glass-text-secondary glass-ml-2">
                       ({Math.round(command.confidence * 100)}% confidence)
                     </span>

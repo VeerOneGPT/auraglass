@@ -78,7 +78,7 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
   backgroundPattern = 'grid',
   showToolbar = true,
   showMinimap = false,
-  className = '',
+  className='',
   onDrawingChange,
   onToolChange,
   onColorChange,

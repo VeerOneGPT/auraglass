@@ -13,7 +13,7 @@ import {
     Wind
 } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import * as THREE from 'three';
 
 // Seasonal particle systems
@@ -238,7 +238,7 @@ export function SeasonalParticles({
   particleCount = 30,
   windStrength = 1,
   animationSpeed = 1,
-  className = '',
+  className='',
   showControls = false,
   autoSeason = true,
   seasonDuration = 10000, // 10 seconds per season
@@ -349,10 +349,10 @@ export function SeasonalParticles({
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="absolute bottom-4 right-4 flex flex-col gap-2"
+          className="glass-glass-absolute bottom-4 right-4 glass-glass-flex glass-glass-flex-col glass-glass-gap-2"
         >
           {/* Season selector */}
-          <div className="flex gap-2 p-2 bg-black/20 backdrop-blur-lg rounded-lg border border-white/10">
+          <div className="glass-glass-flex glass-glass-gap-2 glass-glass-p-2 glass-surface-dark/20 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/10">
             {seasons.map(seasonName => (
               <button
                 key={seasonName}
@@ -370,16 +370,16 @@ export function SeasonalParticles({
           </div>
 
           {/* Playback controls */}
-          <div className="flex gap-2 p-2 bg-black/20 backdrop-blur-lg rounded-lg border border-white/10">
+          <div className="glass-glass-flex glass-glass-gap-2 glass-glass-p-2 glass-surface-dark/20 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/10">
             <button
               onClick={togglePlay}
-              className="p-2 rounded-lg text-white hover:bg-white/10 transition-colors"
+              className="glass-glass-p-2 glass-radius-lg glass-glass-text-primary hover:glass-surface-subtle/10 transition-colors"
               title={isPlaying ? 'Pause' : 'Play'}
             >
-              {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+              {isPlaying ? <Pause className="glass-glass-w-4 glass-glass-h-4" /> : <Play className="glass-glass-w-4 glass-glass-h-4" />}
             </button>
 
-            <div className="flex items-center gap-2 text-white/60 text-sm">
+            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-text-primary/60 glass-glass-text-sm">
               <Wind className="w-3 h-3" />
               <span>{windStrength.toFixed(1)}</span>
             </div>
@@ -392,9 +392,9 @@ export function SeasonalParticles({
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="absolute top-4 right-4 px-3 py-2 bg-black/20 backdrop-blur-lg rounded-lg border border-white/10"
+          className="glass-glass-absolute top-4 right-4 glass-glass-px-3 glass-glass-py-2 glass-surface-dark/20 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/10"
         >
-          <div className="flex items-center gap-2 text-white/60 text-sm">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-text-primary/60 glass-glass-text-sm">
             <motion.div
               animate={{
                 x: windStrength > 0 ? [0, 5, 0] : 0

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassSidebar } from './GlassSidebar';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassSidebar> = {
   title: 'Components/Navigation/GlassSidebar',
@@ -67,13 +67,13 @@ export const Default: Story = {
       { id: 'settings', label: 'Settings', icon: '⚙️' },
     ],
     activeId: 'dashboard',
-    header: <div className="glass-text-lg font-bold">My App</div>,
+    header: <div className="glass-glass-text-lg font-bold">My App</div>,
   },
 };
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex h-96">
+    <div className="glass-glass-flex h-96">
       <div className="w-64">
         <GlassSidebar {...args} variant="default" />
       </div>
@@ -147,18 +147,18 @@ export const WithHeaderAndFooter: Story = {
     ],
     activeId: 'dashboard',
     header: (
-      <div className="flex items-center glass-gap-2">
-        <div className="w-8 h-8 bg-primary glass-radius-lg flex items-center justify-center">
-          <span className="glass-text-primary font-bold">A</span>
+      <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+        <div className="glass-glass-w-8 glass-glass-h-8 glass-surface-primary glass-radius-lg glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+          <span className="glass-glass-text-primary font-bold">A</span>
         </div>
         <div>
-          <h3 className="font-semibold">Aura Glass</h3>
-          <p className="glass-text-xs glass-text-secondary">v1.0.0</p>
+          <h3 className="glass-glass-font-semibold">Aura Glass</h3>
+          <p className="glass-glass-text-xs glass-text-secondary">v1.0.0</p>
         </div>
       </div>
     ),
     footer: (
-      <div className="glass-text-xs glass-text-secondary">
+      <div className="glass-glass-text-xs glass-text-secondary">
         © 2024 Aura Glass
       </div>
     ),

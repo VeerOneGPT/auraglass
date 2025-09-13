@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CompactCookieNotice } from './CompactCookieNotice';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof CompactCookieNotice> = {
   title: 'Components/Cookie-consent/CompactCookieNotice',
@@ -60,7 +60,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-col glass-gap-4">
+    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4">
       <CompactCookieNotice {...args} position="bottom" />
       <CompactCookieNotice {...args} position="top" />
       <CompactCookieNotice {...args} position="bottom-left" />

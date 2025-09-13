@@ -3,7 +3,7 @@
 import React from 'react';
 
 import { OptimizedGlass } from '../../primitives';
-import { cn } from "@/lib/utilsComprehensive";
+import { cn } from "../../lib/utilsComprehensive";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import { AlertCircle } from "lucide-react";

@@ -25,9 +25,9 @@ const basicItems: GoldenRatioItem[] = [
   {
     id: 'home',
     content: (
-      <div className="flex flex-col items-center gap-2">
+      <div className="glass-glass-flex glass-glass-flex-col glass-glass-items-center glass-glass-gap-2">
         <Home size={24} />
-        <span className="text-sm">Home</span>
+        <span className="glass-glass-text-sm">Home</span>
       </div>
     ),
     priority: 10,
@@ -36,9 +36,9 @@ const basicItems: GoldenRatioItem[] = [
   {
     id: 'profile',
     content: (
-      <div className="flex flex-col items-center gap-2">
+      <div className="glass-glass-flex glass-glass-flex-col glass-glass-items-center glass-glass-gap-2">
         <User size={20} />
-        <span className="text-xs">Profile</span>
+        <span className="glass-glass-text-xs">Profile</span>
       </div>
     ),
     priority: 8,
@@ -47,9 +47,9 @@ const basicItems: GoldenRatioItem[] = [
   {
     id: 'settings',
     content: (
-      <div className="flex flex-col items-center gap-2">
+      <div className="glass-glass-flex glass-glass-flex-col glass-glass-items-center glass-glass-gap-2">
         <Settings size={20} />
-        <span className="text-xs">Settings</span>
+        <span className="glass-glass-text-xs">Settings</span>
       </div>
     ),
     priority: 6,
@@ -58,9 +58,9 @@ const basicItems: GoldenRatioItem[] = [
   {
     id: 'messages',
     content: (
-      <div className="flex flex-col items-center gap-2">
+      <div className="glass-glass-flex glass-glass-flex-col glass-glass-items-center glass-glass-gap-2">
         <Mail size={18} />
-        <span className="text-xs">Messages</span>
+        <span className="glass-glass-text-xs">Messages</span>
       </div>
     ),
     priority: 7,
@@ -73,10 +73,10 @@ const mediaItems: GoldenRatioItem[] = [
   {
     id: 'featured-image',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-purple-500 to-pink-600 rounded-lg flex items-center justify-center">
-        <div className="text-center">
-          <Image size={32} className="mx-auto mb-2" />
-          <span className="text-sm font-semibold">Featured Photo</span>
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-purple-500 to-pink-600 glass-radius-lg glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+        <div className="glass-glass-text-center">
+          <Image size={32} className="mx-auto glass-glass-mb-2" />
+          <span className="glass-glass-text-sm glass-glass-font-semibold">Featured Photo</span>
         </div>
       </div>
     ),
@@ -86,10 +86,10 @@ const mediaItems: GoldenRatioItem[] = [
   {
     id: 'video-1',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-blue-500 to-cyan-600 rounded-lg flex items-center justify-center">
-        <div className="text-center">
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-blue-500 to-cyan-600 glass-radius-lg glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+        <div className="glass-glass-text-center">
           <Video size={24} />
-          <span className="text-xs">Video</span>
+          <span className="glass-glass-text-xs">Video</span>
         </div>
       </div>
     ),
@@ -99,10 +99,10 @@ const mediaItems: GoldenRatioItem[] = [
   {
     id: 'music-1',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-green-500 to-teal-600 rounded-lg flex items-center justify-center">
-        <div className="text-center">
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-green-500 to-teal-600 glass-radius-lg glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+        <div className="glass-glass-text-center">
           <Music size={24} />
-          <span className="text-xs">Music</span>
+          <span className="glass-glass-text-xs">Music</span>
         </div>
       </div>
     ),
@@ -112,7 +112,7 @@ const mediaItems: GoldenRatioItem[] = [
   {
     id: 'gallery-1',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-orange-500 to-red-600 rounded-lg flex items-center justify-center">
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-orange-500 to-red-600 glass-radius-lg glass-glass-flex glass-glass-items-center glass-glass-justify-center">
         <Camera size={20} />
       </div>
     ),
@@ -122,7 +122,7 @@ const mediaItems: GoldenRatioItem[] = [
   {
     id: 'gallery-2',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-yellow-500 to-orange-600 rounded-lg flex items-center justify-center">
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-yellow-500 to-orange-600 glass-radius-lg glass-glass-flex glass-glass-items-center glass-glass-justify-center">
         <Image size={20} />
       </div>
     ),
@@ -132,7 +132,7 @@ const mediaItems: GoldenRatioItem[] = [
   {
     id: 'gallery-3',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg flex items-center justify-center">
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-pink-500 to-purple-600 glass-radius-lg glass-glass-flex glass-glass-items-center glass-glass-justify-center">
         <Video size={20} />
       </div>
     ),
@@ -146,13 +146,13 @@ const dashboardItems: GoldenRatioItem[] = [
   {
     id: 'main-chart',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg p-4">
-        <h3 className="text-lg font-bold mb-2">Analytics</h3>
-        <div className="w-full h-12 bg-white/20 rounded flex items-end justify-around">
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-indigo-500 to-purple-600 glass-radius-lg glass-glass-p-4">
+        <h3 className="glass-glass-text-lg font-bold glass-glass-mb-2">Analytics</h3>
+        <div className="glass-glass-w-full glass-glass-h-12 glass-surface-subtle/20 glass-radius glass-glass-flex glass-glass-items-end justify-around">
           {[...Array(8)].map((_, i) => (
             <div
               key={i}
-              className="w-2 bg-white/60 rounded-t"
+              className="w-2 glass-surface-subtle/60 glass-radius-t"
               style={{ height: `${20 + Math.random() * 60}%` }}
             />
           ))}
@@ -165,9 +165,9 @@ const dashboardItems: GoldenRatioItem[] = [
   {
     id: 'stats-1',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg p-3 text-center">
-        <div className="text-2xl font-bold">1,234</div>
-        <div className="text-xs opacity-80">Total Users</div>
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-emerald-500 to-teal-600 glass-radius-lg glass-glass-p-3 glass-glass-text-center">
+        <div className="glass-glass-text-2xl font-bold">1,234</div>
+        <div className="glass-glass-text-xs opacity-80">Total Users</div>
       </div>
     ),
     priority: 15,
@@ -176,9 +176,9 @@ const dashboardItems: GoldenRatioItem[] = [
   {
     id: 'stats-2',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-orange-500 to-red-600 rounded-lg p-3 text-center">
-        <div className="text-2xl font-bold">89%</div>
-        <div className="text-xs opacity-80">Conversion</div>
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-orange-500 to-red-600 glass-radius-lg glass-glass-p-3 glass-glass-text-center">
+        <div className="glass-glass-text-2xl font-bold">89%</div>
+        <div className="glass-glass-text-xs opacity-80">Conversion</div>
       </div>
     ),
     priority: 12,
@@ -187,10 +187,10 @@ const dashboardItems: GoldenRatioItem[] = [
   {
     id: 'calendar',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg p-3 flex items-center justify-center">
-        <div className="text-center">
-          <Calendar size={24} className="mx-auto mb-1" />
-          <div className="text-xs">Calendar</div>
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-blue-500 to-indigo-600 glass-radius-lg glass-glass-p-3 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+        <div className="glass-glass-text-center">
+          <Calendar size={24} className="mx-auto glass-glass-mb-1" />
+          <div className="glass-glass-text-xs">Calendar</div>
         </div>
       </div>
     ),
@@ -200,10 +200,10 @@ const dashboardItems: GoldenRatioItem[] = [
   {
     id: 'notifications',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-red-500 to-pink-600 rounded-lg p-3 flex items-center justify-center">
-        <div className="text-center">
-          <Bell size={20} className="mx-auto mb-1" />
-          <div className="text-xs">3 New</div>
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-red-500 to-pink-600 glass-radius-lg glass-glass-p-3 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+        <div className="glass-glass-text-center">
+          <Bell size={20} className="mx-auto glass-glass-mb-1" />
+          <div className="glass-glass-text-xs">3 New</div>
         </div>
       </div>
     ),
@@ -213,10 +213,10 @@ const dashboardItems: GoldenRatioItem[] = [
   {
     id: 'clock',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-gray-500 to-gray-700 rounded-lg p-3 flex items-center justify-center">
-        <div className="text-center">
-          <Clock size={20} className="mx-auto mb-1" />
-          <div className="text-xs">{new Date().toLocaleTimeString()}</div>
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-gray-500 to-gray-700 glass-radius-lg glass-glass-p-3 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+        <div className="glass-glass-text-center">
+          <Clock size={20} className="mx-auto glass-glass-mb-1" />
+          <div className="glass-glass-text-xs">{new Date().toLocaleTimeString()}</div>
         </div>
       </div>
     ),
@@ -230,15 +230,15 @@ const contentCards: GoldenRatioItem[] = [
   {
     id: 'hero-content',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-violet-600 to-purple-700 rounded-lg p-4">
-        <div className="flex items-center gap-2 mb-3">
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-violet-600 to-purple-700 glass-radius-lg glass-glass-p-4">
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-mb-3">
           <Star size={20} className="text-yellow-300" />
-          <h2 className="text-lg font-bold">Featured Article</h2>
+          <h2 className="glass-glass-text-lg font-bold">Featured Article</h2>
         </div>
-        <p className="text-sm opacity-90 mb-3">
+        <p className="glass-glass-text-sm glass-glass-opacity-90 glass-glass-mb-3">
           Discover the mathematical beauty of the golden ratio in modern design systems.
         </p>
-        <button className="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-sm transition-colors">
+        <button className="glass-surface-subtle/20 hover:glass-surface-subtle/30 glass-glass-px-3 glass-glass-py-1 glass-radius glass-glass-text-sm transition-colors">
           Read More
         </button>
       </div>
@@ -249,10 +249,10 @@ const contentCards: GoldenRatioItem[] = [
   {
     id: 'article-1',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-cyan-500 to-blue-600 rounded-lg p-3">
-        <FileText size={20} className="mb-2" />
-        <h3 className="text-sm font-semibold mb-1">Design Principles</h3>
-        <p className="text-xs opacity-80">Essential guidelines for creating harmonious layouts...</p>
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-cyan-500 to-blue-600 glass-radius-lg glass-glass-p-3">
+        <FileText size={20} className="glass-glass-mb-2" />
+        <h3 className="glass-glass-text-sm glass-glass-font-semibold glass-glass-mb-1">Design Principles</h3>
+        <p className="glass-glass-text-xs opacity-80">Essential guidelines for creating harmonious layouts...</p>
       </div>
     ),
     priority: 12,
@@ -261,10 +261,10 @@ const contentCards: GoldenRatioItem[] = [
   {
     id: 'article-2',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-emerald-500 to-green-600 rounded-lg p-3">
-        <Trophy size={20} className="mb-2" />
-        <h3 className="text-sm font-semibold mb-1">Best Practices</h3>
-        <p className="text-xs opacity-80">Learn from award-winning designs...</p>
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-emerald-500 to-green-600 glass-radius-lg glass-glass-p-3">
+        <Trophy size={20} className="glass-glass-mb-2" />
+        <h3 className="glass-glass-text-sm glass-glass-font-semibold glass-glass-mb-1">Best Practices</h3>
+        <p className="glass-glass-text-xs opacity-80">Learn from award-winning designs...</p>
       </div>
     ),
     priority: 10,
@@ -273,11 +273,11 @@ const contentCards: GoldenRatioItem[] = [
   {
     id: 'promotion',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-pink-500 to-rose-600 rounded-lg p-3 flex items-center justify-center">
-        <div className="text-center">
-          <Gift size={24} className="mx-auto mb-2" />
-          <div className="text-sm font-semibold">Special Offer</div>
-          <div className="text-xs opacity-90">50% Off</div>
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-pink-500 to-rose-600 glass-radius-lg glass-glass-p-3 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+        <div className="glass-glass-text-center">
+          <Gift size={24} className="mx-auto glass-glass-mb-2" />
+          <div className="glass-glass-text-sm glass-glass-font-semibold">Special Offer</div>
+          <div className="glass-glass-text-xs glass-glass-opacity-90">50% Off</div>
         </div>
       </div>
     ),
@@ -287,10 +287,10 @@ const contentCards: GoldenRatioItem[] = [
   {
     id: 'search',
     content: (
-      <div className="w-full h-full bg-gradient-to-br from-gray-600 to-gray-700 rounded-lg p-3 flex items-center justify-center">
-        <div className="text-center">
-          <Search size={20} className="mx-auto mb-2" />
-          <div className="text-xs">Quick Search</div>
+      <div className="glass-glass-w-full glass-glass-h-full glass-gradient-primary from-gray-600 to-gray-700 glass-radius-lg glass-glass-p-3 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+        <div className="glass-glass-text-center">
+          <Search size={20} className="mx-auto glass-glass-mb-2" />
+          <div className="glass-glass-text-xs">Quick Search</div>
         </div>
       </div>
     ),

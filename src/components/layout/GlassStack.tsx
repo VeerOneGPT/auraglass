@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { useA11yId } from '@/utils/a11y';
 import { useMotionPreferenceContext } from '@/contexts/MotionPreferenceContext';
 
@@ -185,7 +185,7 @@ export const GlassStack = forwardRef<HTMLDivElement, GlassStackProps>(
           const dividerElement = renderDivider ? renderDivider(index) : divider;
           if (dividerElement) {
             acc.push(
-              <div key={`divider-${index}`} className="flex-shrink-0">
+              <div key={`divider-${index}`} className="glass-glass-flex-shrink-0">
                 {dividerElement}
               </div>
             );

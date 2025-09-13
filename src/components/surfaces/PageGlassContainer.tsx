@@ -7,7 +7,7 @@
  * Migrated to use OptimizedGlass architecture.
  */
 import React, { forwardRef, useState, useEffect } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { OptimizedGlass, Motion } from '../../primitives';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
@@ -96,7 +96,7 @@ export const PageGlassContainer = React.memo(forwardRef<HTMLDivElement, PageGlas
     return (
       <Motion
         preset={shouldAnimate ? "fadeIn" : "none"}
-        className="relative"
+        className="glass-glass-relative"
       >
         <OptimizedGlass
           ref={ref}

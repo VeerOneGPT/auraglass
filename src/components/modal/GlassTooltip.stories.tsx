@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassTooltip, GlassTooltipTrigger, GlassTooltipContent } from './GlassTooltip';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassTooltip> = {
   title: 'Components/Modal/GlassTooltip',
@@ -42,7 +42,7 @@ type Story = StoryObj<typeof GlassTooltip>;
 export const Default: Story = {
   render: (args) => (
     <GlassTooltip {...args}>
-      <button className="glass-px-4 glass-py-2 glass-surface-primary glass-radius-lg hover:bg-blue-500/30 transition-colors">
+      <button className="glass-glass-px-4 glass-glass-py-2 glass-surface-primary glass-radius-lg hover:glass-surface-blue/30 transition-colors">
         Hover me
       </button>
     </GlassTooltip>
@@ -54,21 +54,21 @@ export const Default: Story = {
 
 export const Positions: Story = {
   render: (args) => (
-    <div className="grid grid-cols-2 gap-8 max-w-2xl">
+    <div className="glass-glass-grid glass-glass-glass-grid-cols-2 glass-glass-gap-8 max-w-2xl">
       <GlassTooltip position="top" content="Tooltip on top" showDelay={args.showDelay} hideDelay={args.hideDelay}>
-        <button className="glass-px-4 glass-py-2 glass-surface-danger glass-radius-lg">Top</button>
+        <button className="glass-glass-px-4 glass-glass-py-2 glass-surface-danger glass-radius-lg">Top</button>
       </GlassTooltip>
 
       <GlassTooltip position="right" content="Tooltip on right" showDelay={args.showDelay} hideDelay={args.hideDelay}>
-        <button className="glass-px-4 glass-py-2 glass-surface-success glass-radius-lg">Right</button>
+        <button className="glass-glass-px-4 glass-glass-py-2 glass-surface-success glass-radius-lg">Right</button>
       </GlassTooltip>
 
       <GlassTooltip position="bottom" content="Tooltip on bottom" showDelay={args.showDelay} hideDelay={args.hideDelay}>
-        <button className="glass-px-4 glass-py-2 glass-surface-primary glass-radius-lg">Bottom</button>
+        <button className="glass-glass-px-4 glass-glass-py-2 glass-surface-primary glass-radius-lg">Bottom</button>
       </GlassTooltip>
 
       <GlassTooltip position="left" content="Tooltip on left" showDelay={args.showDelay} hideDelay={args.hideDelay}>
-        <button className="glass-px-4 glass-py-2 glass-surface-info glass-radius-lg">Left</button>
+        <button className="glass-glass-px-4 glass-glass-py-2 glass-surface-info glass-radius-lg">Left</button>
       </GlassTooltip>
     </div>
   ),
@@ -77,22 +77,22 @@ export const Positions: Story = {
 export const RichContent: Story = {
   render: (args) => (
     <GlassTooltip {...args}>
-      <button className="glass-px-6 glass-py-3 bg-gradient-to-r from-sky-200/20 to-blue-200/20 dark:from-slate-700/20 dark:to-slate-600/20 glass-radius-lg font-medium">
+      <button className="glass-glass-px-6 glass-glass-py-3 glass-gradient-primary from-sky-200/20 to-blue-200/20 dark:from-slate-700/20 dark:to-slate-600/20 glass-radius-lg glass-glass-font-medium">
         Rich Tooltip
       </button>
     </GlassTooltip>
   ),
   args: {
     content: (
-      <div className="glass-gap-2 max-w-xs">
-        <div className="font-semibold">Advanced Tooltip</div>
-        <p className="glass-text-sm opacity-90">
+      <div className="glass-glass-gap-2 max-w-xs">
+        <div className="glass-glass-font-semibold">Advanced Tooltip</div>
+        <p className="glass-glass-text-sm glass-glass-opacity-90">
           This tooltip supports rich content including multiple paragraphs,
           formatting, and even interactive elements.
         </p>
-        <div className="flex glass-gap-2 pt-2">
-          <span className="glass-px-2 glass-py-1 bg-white/20 glass-radius-md glass-text-xs">Feature</span>
-          <span className="glass-px-2 glass-py-1 bg-white/20 glass-radius-md glass-text-xs">Interactive</span>
+        <div className="glass-glass-flex glass-glass-gap-2 pt-2">
+          <span className="glass-glass-px-2 glass-glass-py-1 glass-surface-subtle/20 glass-radius-md glass-glass-text-xs">Feature</span>
+          <span className="glass-glass-px-2 glass-glass-py-1 glass-surface-subtle/20 glass-radius-md glass-glass-text-xs">Interactive</span>
         </div>
       </div>
     )
@@ -103,15 +103,15 @@ export const RichContent: Story = {
 export const TooltipComponents: Story = {
   render: (args) => (
     <div className="space-y-6">
-      <div className="text-center">
-        <h3 className="glass-text-lg font-semibold glass-mb-2">Tooltip Component Examples</h3>
-        <p className="glass-text-sm opacity-80">Using GlassTooltipTrigger and GlassTooltipContent explicitly</p>
+      <div className="glass-glass-text-center">
+        <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-mb-2">Tooltip Component Examples</h3>
+        <p className="glass-glass-text-sm opacity-80">Using GlassTooltipTrigger and GlassTooltipContent explicitly</p>
       </div>
 
-      <div className="flex justify-center glass-gap-4">
+      <div className="glass-glass-flex glass-glass-justify-center glass-glass-gap-4">
         <GlassTooltip content={<p>This tooltip uses explicit GlassTooltipTrigger and GlassTooltipContent components</p>} showDelay={args.showDelay} hideDelay={args.hideDelay}>
           <GlassTooltipTrigger asChild>
-            <button className="glass-px-4 glass-py-2 glass-surface-primary glass-radius-lg hover:bg-blue-500/30 transition-colors">
+            <button className="glass-glass-px-4 glass-glass-py-2 glass-surface-primary glass-radius-lg hover:glass-surface-blue/30 transition-colors">
               Trigger Button
             </button>
           </GlassTooltipTrigger>
@@ -122,7 +122,7 @@ export const TooltipComponents: Story = {
 
         <GlassTooltip content={<p>Tooltip positioned to the right</p>} position="right" showDelay={args.showDelay} hideDelay={args.hideDelay}>
           <GlassTooltipTrigger asChild>
-            <button className="glass-px-4 glass-py-2 glass-surface-success glass-radius-lg hover:bg-green-500/30 transition-colors">
+            <button className="glass-glass-px-4 glass-glass-py-2 glass-surface-success glass-radius-lg hover:glass-surface-green/30 transition-colors">
               Right Side
             </button>
           </GlassTooltipTrigger>
@@ -140,24 +140,24 @@ export const TooltipComponents: Story = {
 
 export const CustomTriggerContent: Story = {
   render: (args) => (
-    <div className="glass-gap-4">
+    <div className="glass-glass-gap-4">
       <GlassTooltip content={
-        <div className="glass-gap-2">
-          <div className="font-semibold">Custom Trigger</div>
-          <p className="glass-text-sm opacity-90">
+        <div className="glass-glass-gap-2">
+          <div className="glass-glass-font-semibold">Custom Trigger</div>
+          <p className="glass-glass-text-sm glass-glass-opacity-90">
             This tooltip uses a custom div element as the trigger instead of a button.
           </p>
         </div>
       } showDelay={args.showDelay} hideDelay={args.hideDelay}>
         <GlassTooltipTrigger asChild>
-          <div className="glass-p-3 glass-surface-info glass-radius-lg cursor-pointer hover:bg-purple-500/30 transition-colors">
-            <span className="glass-text-sm font-medium">Custom Trigger Element</span>
+          <div className="glass-glass-p-3 glass-surface-info glass-radius-lg glass-glass-cursor-pointer hover:bg-purple-500/30 transition-colors">
+            <span className="glass-glass-text-sm glass-glass-font-medium">Custom Trigger Element</span>
           </div>
         </GlassTooltipTrigger>
         <GlassTooltipContent>
-          <div className="glass-gap-2">
-            <div className="font-semibold">Custom Trigger</div>
-            <p className="glass-text-sm opacity-90">
+          <div className="glass-glass-gap-2">
+            <div className="glass-glass-font-semibold">Custom Trigger</div>
+            <p className="glass-glass-text-sm glass-glass-opacity-90">
               This tooltip uses a custom div element as the trigger instead of a button.
             </p>
           </div>
@@ -166,7 +166,7 @@ export const CustomTriggerContent: Story = {
 
       <GlassTooltip content={<p>Inline span element as tooltip trigger</p>} position="bottom" showDelay={args.showDelay} hideDelay={args.hideDelay}>
         <GlassTooltipTrigger asChild>
-          <span className="inline-block glass-px-2 glass-py-1 bg-orange-500/20 glass-radius-md cursor-pointer hover:bg-orange-500/30 transition-colors glass-text-sm">
+          <span className="inline-glass-glass-block glass-glass-px-2 glass-glass-py-1 bg-orange-500/20 glass-radius-md glass-glass-cursor-pointer hover:bg-orange-500/30 transition-colors glass-glass-text-sm">
             Hover me
           </span>
         </GlassTooltipTrigger>

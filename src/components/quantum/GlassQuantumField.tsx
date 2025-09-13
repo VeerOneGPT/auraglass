@@ -3,7 +3,7 @@
 import React, { forwardRef, useRef, useEffect, useState, useCallback } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { useA11yId } from '../../utils/a11y';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 import { useGlassSound } from '../../utils/soundDesign';
@@ -685,14 +685,14 @@ export const GlassQuantumField = forwardRef<HTMLDivElement, GlassQuantumFieldPro
           depth={1}
           tint="neutral"
           border="subtle"
-          className="glass-quantum-controls flex flex-wrap items-center glass-gap-4 glass-p-4 glass-radius-lg backdrop-blur-md border border-border/20"
+          className="glass-quantum-controls glass-glass-flex glass-glass-flex-wrap glass-glass-items-center glass-glass-gap-4 glass-glass-p-4 glass-radius-lg backdrop-blur-md glass-glass-border glass-glass-border-glass-glass-border/20"
         >
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">Type:</label>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">Type:</label>
             <select
               value={simulationType}
               onChange={(e) => {}}
-              className="glass-px-2 glass-py-1 glass-radius-md bg-background/20 border border-border/20"
+              className="glass-glass-px-2 glass-glass-py-1 glass-radius-md glass-surface-overlay glass-glass-border glass-glass-border-glass-glass-border/20"
             >
               <option value="particle">Particle</option>
               <option value="wave">Wave</option>
@@ -701,8 +701,8 @@ export const GlassQuantumField = forwardRef<HTMLDivElement, GlassQuantumFieldPro
             </select>
           </div>
 
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">Coherence:</label>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">Coherence:</label>
             <input
               type="range"
               min="0"
@@ -714,8 +714,8 @@ export const GlassQuantumField = forwardRef<HTMLDivElement, GlassQuantumFieldPro
             />
           </div>
 
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">Entanglement:</label>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">Entanglement:</label>
             <input
               type="range"
               min="0"
@@ -727,8 +727,8 @@ export const GlassQuantumField = forwardRef<HTMLDivElement, GlassQuantumFieldPro
             />
           </div>
 
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">Temperature:</label>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">Temperature:</label>
             <input
               type="range"
               min="0"
@@ -740,8 +740,8 @@ export const GlassQuantumField = forwardRef<HTMLDivElement, GlassQuantumFieldPro
             />
           </div>
 
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={showWaveFunctions}
@@ -750,7 +750,7 @@ export const GlassQuantumField = forwardRef<HTMLDivElement, GlassQuantumFieldPro
               />
               Waves
             </label>
-            <label className="glass-text-sm">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={showProbabilityClouds}
@@ -759,7 +759,7 @@ export const GlassQuantumField = forwardRef<HTMLDivElement, GlassQuantumFieldPro
               />
               Probability
             </label>
-            <label className="glass-text-sm">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={showEntanglement}
@@ -768,7 +768,7 @@ export const GlassQuantumField = forwardRef<HTMLDivElement, GlassQuantumFieldPro
               />
               Entanglement
             </label>
-            <label className="glass-text-sm">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={timeEvolution}
@@ -781,7 +781,7 @@ export const GlassQuantumField = forwardRef<HTMLDivElement, GlassQuantumFieldPro
 
           <button
             onClick={() => initializeParticles()}
-            className="glass-px-3 glass-py-1 glass-radius-md bg-primary/20 hover:bg-primary/30 text-primary"
+            className="glass-glass-px-3 glass-glass-py-1 glass-radius-md glass-surface-primary/20 hover:glass-surface-primary/30 glass-glass-text-primary"
           >
             Reset
           </button>
@@ -806,11 +806,11 @@ export const GlassQuantumField = forwardRef<HTMLDivElement, GlassQuantumFieldPro
       >
         <Motion
           preset={isMotionSafe && respectMotionPreference ? "fadeIn" : "none"}
-          className="flex flex-col glass-gap-4 glass-p-4"
+          className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4 glass-glass-p-4"
         >
           {renderControls()}
           
-          <div className="relative">
+          <div className="glass-glass-relative">
             <canvas
               ref={canvasRef}
               width={width}

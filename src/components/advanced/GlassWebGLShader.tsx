@@ -4,7 +4,7 @@
  */
 
 import React, { useRef, useEffect, useState } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 
 interface ShaderProps {
   className?: string;
@@ -450,7 +450,7 @@ export function GlassWebGLShader({
   
   if (!isSupported) {
     return (
-      <div className={cn("OptimizedGlass intensity={0.2} blur={6} glass-glass-p-4", className)}>
+      <div className={cn("OptimizedGlass intensity={0.2} blur={6} glass-p-4", className)}>
         <p className="glass-text-secondary">WebGL not supported</p>
       </div>
     );
@@ -460,7 +460,7 @@ export function GlassWebGLShader({
     <div className={cn("relative overflow-hidden", className)} style={{ backgroundColor }}>
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
+        className="glass-glass-absolute glass-glass-inset-0 glass-glass-w-full glass-glass-h-full"
         width={800}
         height={600}
       />

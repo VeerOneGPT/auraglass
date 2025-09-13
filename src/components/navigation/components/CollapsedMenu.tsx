@@ -1,6 +1,6 @@
 // Typography tokens available via typography.css (imported in index.css)
 import React, { forwardRef } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../../lib/utilsComprehensive';
 import { OptimizedGlass } from '../../../primitives';
 import { useA11yId } from '@/utils/a11y';
 import { useReducedMotion } from '../../../hooks/useReducedMotion';

@@ -3,7 +3,7 @@
 import React, { forwardRef, useState, useCallback, createContext, useContext } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { useA11yId } from '../../utils/a11y';
 import { useMotionPreference } from '../../hooks/useMotionPreference';
 import { useGlassSound } from '../../utils/soundDesign';
@@ -251,13 +251,13 @@ const GlassTreeNodeComponent = ({ node, level }: GlassTreeNodeProps) => {
   };
 
   const defaultExpandIcon = (
-    <svg className="w-full h-full transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className="glass-glass-w-full glass-glass-h-full transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
     </svg>
   );
 
   const defaultCollapseIcon = (
-    <svg className="w-full h-full transition-transform duration-200 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className="glass-glass-w-full glass-glass-h-full transition-transform duration-200 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
     </svg>
   );
@@ -269,7 +269,7 @@ const GlassTreeNodeComponent = ({ node, level }: GlassTreeNodeProps) => {
         {hasChildren && isExpanded && (
           <Motion
             preset={shouldAnimate && respectMotionPreference ? "slideDown" : "none"}
-            className="relative"
+            className="glass-glass-relative"
           >
             {node.children?.map((child) => (
               <GlassTreeNodeComponent key={child.id} node={child} level={level + 1} />
@@ -317,13 +317,13 @@ const GlassTreeNodeComponent = ({ node, level }: GlassTreeNodeProps) => {
       >
         {/* Connecting lines */}
         {showLines && level > 0 && (
-          <div className="absolute left-0 top-0 h-full flex items-center">
+          <div className="glass-glass-absolute left-0 top-0 glass-glass-h-full glass-glass-flex glass-glass-items-center">
             <div 
-              className="border-l border-border/20 h-full"
+              className="glass-glass-border-l glass-glass-border-glass-glass-border/20 glass-glass-h-full"
               style={{ left: `${(level - 1) * indentation + indentation / 2}px` }}
             />
             <div 
-              className="border-t border-border/20 w-2"
+              className="glass-glass-border-t glass-glass-border-glass-glass-border/20 w-2"
               style={{ left: `${(level - 1) * indentation + indentation / 2}px` }}
             />
           </div>
@@ -334,7 +334,7 @@ const GlassTreeNodeComponent = ({ node, level }: GlassTreeNodeProps) => {
           {hasChildren ? (
             <button
               onClick={handleToggle}
-              className="glass-p-1 glass-radius-md hover:bg-background/20 transition-colors"
+              className="glass-glass-p-1 glass-radius-md hover:glass-surface-overlay transition-colors"
               aria-label={isExpanded ? 'Collapse' : 'Expand'}
             >
               {isExpanded ? (collapseIcon || defaultCollapseIcon) : (expandIcon || defaultExpandIcon)}
@@ -364,7 +364,7 @@ const GlassTreeNodeComponent = ({ node, level }: GlassTreeNodeProps) => {
         )}
 
         {/* Label */}
-        <span className="flex-1 truncate">
+        <span className="glass-glass-flex-1 glass-glass-truncate">
           {node.label}
         </span>
 
@@ -382,7 +382,7 @@ const GlassTreeNodeComponent = ({ node, level }: GlassTreeNodeProps) => {
         {hasChildren && isExpanded && (
           <Motion
             preset={shouldAnimate && respectMotionPreference ? "slideDown" : "none"}
-            className="relative"
+            className="glass-glass-relative"
           >
             {node.children?.map((child) => (
               <GlassTreeNodeComponent key={child.id} node={child} level={level + 1} />

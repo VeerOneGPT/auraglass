@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ChartRenderer } from './ChartRenderer';
-import { cn } from '@/lib/utils';
+import { cn } from '../../../lib/utils';
 
 const meta: Meta<typeof ChartRenderer> = {
   title: 'Components/Components/ChartRenderer',
@@ -48,22 +48,22 @@ export const Default: Story = {
       label: 'Sample Data',
       data: [10, 20, 15, 25, 30, 20],
       borderColor: '#3b82f6',
-      backgroundColor: 'rgba(59, 130, 246, 0.1)',
+      backgroundColor: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
     }],
   },
 };
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-col glass-gap-4">
-      <div className="relative w-80 h-40 bg-gray-900/20 glass-radius-md border glass-p-4">
+    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4">
+      <div className="glass-glass-relative w-80 h-40 bg-gray-900/20 glass-radius-md glass-glass-border glass-glass-p-4">
         <ChartRenderer
           {...args}
           datasets={[{
             label: 'Sample Chart',
             data: [10, 20, 15, 25, 30, 20],
             borderColor: '#3b82f6',
-            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+            backgroundColor: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
           }]}
         />
       </div>

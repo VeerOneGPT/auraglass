@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { ARGlassEffects } from './ARGlassEffects';
 
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 const meta: Meta<typeof ARGlassEffects> = {
   title: 'AR/ARGlassEffects',
   component: ARGlassEffects,
@@ -115,13 +115,13 @@ export const InteractiveDemo: Story = {
     }
   },
   render: (args) => (
-    <div className="relative">
+    <div className="glass-glass-relative">
       <ARGlassEffects {...args} />
 
       {/* Demo instructions overlay */}
-      <div className="absolute top-4 left-4 bg-black/80 text-white p-4 rounded-lg max-w-xs">
-        <h3 className="font-semibold mb-2">AR Demo Instructions</h3>
-        <ul className="text-sm space-y-1">
+      <div className="glass-glass-absolute top-4 left-4 glass-surface-dark/80 glass-glass-text-primary glass-glass-p-4 glass-radius-lg max-w-xs">
+        <h3 className="glass-glass-font-semibold glass-glass-mb-2">AR Demo Instructions</h3>
+        <ul className="glass-glass-text-sm space-y-1">
           <li>• Use mouse to orbit camera</li>
           <li>• Scroll to zoom in/out</li>
           <li>• Click on AR elements to interact</li>
@@ -148,19 +148,19 @@ export const HandTracking: Story = {
     }
   },
   render: (args) => (
-    <div className="relative">
+    <div className="glass-glass-relative">
       <ARGlassEffects {...args} />
 
       {/* Hand tracking info */}
-      <div className="absolute bottom-4 right-4 bg-black/80 text-white p-4 rounded-lg">
-        <h3 className="font-semibold mb-2">Hand Tracking</h3>
-        <div className="text-sm space-y-1">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+      <div className="glass-glass-absolute bottom-4 right-4 glass-surface-dark/80 glass-glass-text-primary glass-glass-p-4 glass-radius-lg">
+        <h3 className="glass-glass-font-semibold glass-glass-mb-2">Hand Tracking</h3>
+        <div className="glass-glass-text-sm space-y-1">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <div className="w-2 h-2 glass-surface-green glass-radius-full"></div>
             <span>Left Hand: Active</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <div className="w-2 h-2 glass-surface-green glass-radius-full"></div>
             <span>Right Hand: Active</span>
           </div>
         </div>
@@ -201,27 +201,27 @@ export const FullFeatured: Story = {
     }
   },
   render: (args) => (
-    <div className="relative">
+    <div className="glass-glass-relative">
       <ARGlassEffects {...args} />
 
       {/* Feature showcase */}
-      <div className="absolute top-4 right-4 bg-black/80 text-white p-4 rounded-lg max-w-sm">
-        <h3 className="font-semibold mb-3">Active Features</h3>
-        <div className="grid grid-cols-2 gap-2 text-sm">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+      <div className="glass-glass-absolute top-4 right-4 glass-surface-dark/80 glass-glass-text-primary glass-glass-p-4 glass-radius-lg max-w-sm">
+        <h3 className="glass-glass-font-semibold glass-glass-mb-3">Active Features</h3>
+        <div className="glass-glass-grid glass-glass-glass-grid-cols-2 glass-glass-gap-2 glass-glass-text-sm">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <div className="w-2 h-2 glass-surface-blue glass-radius-full"></div>
             <span>Physics</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <div className="w-2 h-2 glass-surface-green glass-radius-full"></div>
             <span>Hand Tracking</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <div className="w-2 h-2 bg-purple-400 glass-radius-full"></div>
             <span>Voice Control</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <div className="w-2 h-2 glass-surface-yellow glass-radius-full"></div>
             <span>Adaptive UI</span>
           </div>
         </div>

@@ -5,7 +5,7 @@
 
 import React, { useRef, useEffect, useMemo, forwardRef } from 'react';
 import { motion, useAnimationFrame } from 'framer-motion';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { OptimizedGlass } from '../../primitives';
 import { useA11yId } from '../../utils/a11y';
 
@@ -192,7 +192,7 @@ export function GlassMeshGradient({
     <div className={cn("relative overflow-hidden", className)}>
       <canvas
         ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
+        className="glass-glass-absolute glass-glass-inset-0 glass-glass-w-full glass-glass-h-full"
         style={{
           filter: `blur(${blur}px) ${filterStyle}`,
           opacity,
@@ -223,10 +223,10 @@ export const GlassMeshBackground = forwardRef<HTMLDivElement, GlassMeshGradientP
       aria-hidden="true"
     >
       <GlassMeshGradient
-        className="absolute inset-0"
+        className="glass-glass-absolute glass-glass-inset-0"
         {...meshProps}
       />
-      <div className="relative z-10">
+      <div className="glass-glass-relative glass-z-10">
         {children}
       </div>
     </OptimizedGlass>

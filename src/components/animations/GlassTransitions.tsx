@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import {
     AnimatePresence,
     motion,
@@ -499,9 +499,9 @@ export function GlassModal({
         >
           {/* Backdrop */}
           <motion.div
-            initial={{ backdropFilter: 'blur(0px)' }}
-            animate={{ backdropFilter: 'blur(8px)' }}
-            exit={{ backdropFilter: 'blur(0px)' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className={cn("glass-absolute glass-inset-0 glass-surface-overlay")}
           />
 

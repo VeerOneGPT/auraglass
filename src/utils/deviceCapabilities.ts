@@ -62,7 +62,80 @@ export interface InputCapabilities {
 }
 
 // Device detection
+let __cachedDeviceInfo: DeviceInfo | null = null;
+let __lastDetectTs = 0;
+const DETECT_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+// Safely probe WebGL support with minimal overhead and explicit cleanup
+const probeWebGLSupport = (): { webgl: boolean; webgl2: boolean; gpu: boolean } => {
+  if (typeof document === 'undefined') {
+    return { webgl: false, webgl2: false, gpu: false };
+  }
+
+  const canvas = document.createElement('canvas');
+  // Keep it tiny and hint low-power
+  canvas.width = 1;
+  canvas.height = 1;
+
+  const attrs: WebGLContextAttributes & { powerPreference?: any } = {
+    alpha: false,
+    antialias: false,
+    depth: false,
+    stencil: false,
+    preserveDrawingBuffer: false,
+    desynchronized: true as any,
+    failIfMajorPerformanceCaveat: true,
+    powerPreference: 'low-power',
+  };
+
+  let gl: WebGLRenderingContext | null = null;
+  let gl2: WebGL2RenderingContext | null = null;
+  try {
+    gl2 = (canvas.getContext('webgl2', attrs) as WebGL2RenderingContext | null) || null;
+  } catch {
+    gl2 = null;
+  }
+  if (!gl2) {
+    try {
+      gl = (canvas.getContext('webgl', attrs) as WebGLRenderingContext | null) ||
+           (canvas.getContext('experimental-webgl', attrs) as WebGLRenderingContext | null) ||
+           null;
+    } catch {
+      gl = null;
+    }
+  }
+
+  const webgl2 = !!gl2;
+  const webgl = webgl2 || !!gl;
+  const gpu = webgl; // If we can get a GL context, assume GPU available
+
+  // Explicitly release the context if possible
+  try {
+    const ctx: any = gl2 || gl;
+    const lose = ctx && typeof ctx.getExtension === 'function' && ctx.getExtension('WEBGL_lose_context');
+    if (lose && typeof lose.loseContext === 'function') {
+      lose.loseContext();
+    }
+  } catch {}
+  try {
+    canvas.width = 0;
+    canvas.height = 0;
+    if (canvas.parentNode) {
+      canvas.parentNode.removeChild(canvas);
+    }
+  } catch {}
+
+  gl = null as any;
+  gl2 = null as any;
+  return { webgl, webgl2, gpu };
+};
+
 export const detectDevice = (): DeviceInfo => {
+  // Basic caching to avoid repeatedly creating GL contexts across mounts
+  const now = Date.now();
+  if (__cachedDeviceInfo && now - __lastDetectTs < DETECT_CACHE_TTL_MS) {
+    return __cachedDeviceInfo;
+  }
   const ua = navigator.userAgent;
   const platform = navigator.platform;
 
@@ -87,7 +160,7 @@ export const detectDevice = (): DeviceInfo => {
   // Detect input capabilities
   const input = detectInputCapabilities();
 
-  return {
+  const info: DeviceInfo = {
     type,
     os,
     browser,
@@ -96,6 +169,9 @@ export const detectDevice = (): DeviceInfo => {
     screen,
     input,
   };
+  __cachedDeviceInfo = info;
+  __lastDetectTs = now;
+  return info;
 };
 
 const detectDeviceType = (ua: string, platform: string): DeviceInfo['type'] => {
@@ -165,35 +241,16 @@ const detectBrowser = (ua: string): string => {
 };
 
 const detectDeviceCapabilities = (): DeviceCapabilities => {
-  const canvas = document.createElement('canvas');
+  const { webgl, webgl2, gpu } = probeWebGLSupport();
 
   return {
     touch: 'ontouchstart' in window,
     multiTouch: navigator.maxTouchPoints > 1,
     hover: window.matchMedia('(hover: hover)').matches,
     pointer: 'PointerEvent' in window,
-    gpu: (() => {
-      try {
-        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-        return !!gl;
-      } catch {
-        return false;
-      }
-    })(),
-    webgl: (() => {
-      try {
-        return !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
-      } catch {
-        return false;
-      }
-    })(),
-    webgl2: (() => {
-      try {
-        return !!canvas.getContext('webgl2');
-      } catch {
-        return false;
-      }
-    })(),
+    gpu,
+    webgl,
+    webgl2,
     hardwareAcceleration: (() => {
       const testElement = document.createElement('div');
       testElement.style.setProperty('transform', 'translateZ(0)');
@@ -208,6 +265,12 @@ const detectDeviceCapabilities = (): DeviceCapabilities => {
     bluetooth: 'bluetooth' in navigator,
     usb: 'usb' in navigator,
   };
+};
+
+// Allow manual refresh of cached device info if needed
+export const refreshDeviceDetection = (): DeviceInfo => {
+  __cachedDeviceInfo = null;
+  return detectDevice();
 };
 
 const detectDevicePerformance = (): DevicePerformance => {

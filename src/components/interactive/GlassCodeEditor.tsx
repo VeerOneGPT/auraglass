@@ -117,7 +117,7 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
   theme = 'dark',
   maxHeight = '400px',
   minHeight = '200px',
-  className = '',
+  className='',
   onChange,
   onFocus,
   onBlur,
@@ -372,7 +372,7 @@ export const GlassCodeEditorWithFiles: React.FC<{
   files: { name: string; content: string; language: Language }[];
   onFileChange?: (filename: string, content: string) => void;
   className?: string;
-}> = ({ files, onFileChange, className = '' }) => {
+}> = ({ files, onFileChange, className='' }) => {
   const [activeFile, setActiveFile] = useState(files[0]?.name || '');
 
   const currentFile = files.find(f => f.name === activeFile) || files[0];

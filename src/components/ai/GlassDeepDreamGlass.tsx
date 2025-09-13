@@ -136,7 +136,7 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
     onDreamGenerated,
     onLayerActivation,
     onProgress,
-    className = '',
+    className='',
     ...props
   }, ref) => {
     const [isGenerating, setIsGenerating] = useState(false)
@@ -145,7 +145,7 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
     const [originalImage, setOriginalImage] = useState<string>(imageSource || '')
     const [dreamedImage, setDreamedImage] = useState<string>('')
     const [layerActivations, setLayerActivations] = useState<{ [key: string]: number[] }>({})
-    const [animationFrame, setAnimationFrame] = useState(0)
+    const animationFrameRef = useRef(0)
     const [enableTilingState, setEnableTilingState] = useState(enableTiling)
     const [enableAnimationState, setEnableAnimationState] = useState(enableAnimation)
     
@@ -308,8 +308,9 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
           for (let iteration = 0; iteration < Math.floor(settings.iterations / settings.octaves); iteration++) {
             const totalIteration = octave * Math.floor(settings.iterations / settings.octaves) + iteration
             setCurrentIteration(totalIteration)
-            setProgress((totalIteration / settings.iterations) * 100)
-            onProgress?.(progress, totalIteration)
+            const pct = (totalIteration / settings.iterations) * 100
+            setProgress(pct)
+            onProgress?.(pct, totalIteration)
             
             // Apply deep dream to selected layers
             for (const layerId of settings.layers) {
@@ -343,13 +344,13 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
       }
       
       img.src = originalImage
-    }, [originalImage, settings, availableLayers, simulateLayerActivation, applyDeepDream, animationSpeed, onProgress, onLayerActivation, onDreamGenerated, play, progress])
+    }, [originalImage, settings, availableLayers, simulateLayerActivation, applyDeepDream, animationSpeed, onProgress, onLayerActivation, onDreamGenerated, play])
 
     // Animation loop
     const animateDeepDream = useCallback(() => {
       if (!enableAnimation || isGenerating) return
 
-      setAnimationFrame(prev => prev + 1)
+      animationFrameRef.current += 1
       
       const canvas = dreamCanvasRef.current
       if (canvas && dreamedImage) {
@@ -361,7 +362,7 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
             ctx.save()
             ctx.globalAlpha = 0.1
             ctx.translate(canvas.width / 2, canvas.height / 2)
-            ctx.rotate(animationFrame * 0.01)
+            ctx.rotate(animationFrameRef.current * 0.01)
             ctx.drawImage(img, -canvas.width / 2, -canvas.height / 2)
             ctx.restore()
           }
@@ -370,7 +371,7 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
       }
 
       animationRef.current = requestAnimationFrame(animateDeepDream)
-    }, [enableAnimation, isGenerating, dreamedImage, animationFrame])
+    }, [enableAnimation, isGenerating, dreamedImage])
 
     // Handle layer selection
     const toggleLayer = useCallback((layerId: string) => {
@@ -385,16 +386,16 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
 
     // Initialize
     useEffect(() => {
-      if (enableAnimation) {
-        animateDeepDream()
-      }
-      
+      if (!enableAnimation || isGenerating) return
+
+      animationRef.current = requestAnimationFrame(animateDeepDream)
+
       return () => {
         if (animationRef.current) {
           cancelAnimationFrame(animationRef.current)
         }
       }
-    }, [enableAnimation, animateDeepDream])
+    }, [enableAnimation, isGenerating, animateDeepDream])
 
     useEffect(() => {
       if (enableRealTime && originalImage) {
@@ -406,10 +407,10 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
     }, [settings, enableRealTime, originalImage, generateDeepDream])
 
     const LayerSelector = () => (
-      <div className="space-y-4">
-        <h4 className="text-sm font-medium text-white/80">Neural Layers</h4>
+      <div className="glass-glass-space-y-4">
+        <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80">Neural Layers</h4>
         
-        <div className="space-y-2">
+        <div className="glass-glass-space-y-2">
           {availableLayers.map((layer) => (
             <motion.div
               key={layer.id}
@@ -424,10 +425,10 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
               whileTap={shouldAnimate ? { scale: 0.99 } : {}}
               onClick={() => toggleLayer(layer.id)}
             >
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center space-x-2 mb-1">
-                    <h5 className="text-sm font-medium text-white/90">{layer.name}</h5>
+              <div className="glass-glass-flex glass-glass-items-start glass-glass-justify-between">
+                <div className="glass-glass-flex-1">
+                  <div className="glass-glass-flex glass-glass-items-center space-x-2 glass-glass-mb-1">
+                    <h5 className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/90">{layer.name}</h5>
                     <span className={`
                       px-2 py-0.5 rounded text-xs font-medium
                       ${layer.type === 'conv' ? 'bg-green-500/20 text-green-300' :
@@ -440,18 +441,18 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
                     </span>
                   </div>
                   
-                  <p className="text-xs text-white/60 mb-2">{layer.description}</p>
+                  <p className="glass-glass-text-xs glass-glass-text-primary/60 glass-glass-mb-2">{layer.description}</p>
                   
-                  <div className="flex items-center space-x-4 text-xs text-white/50">
+                  <div className="glass-glass-flex glass-glass-items-center space-x-4 glass-glass-text-xs glass-glass-text-primary/50">
                     <span>Depth: {layer.depth}</span>
                     <span>Strength: {layer.strength.toFixed(1)}</span>
                   </div>
                   
-                  <div className="flex flex-wrap gap-1 mt-2">
+                  <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-1 mt-2">
                     {layer.features.slice(0, 3).map(feature => (
                       <span
                         key={feature}
-                        className="px-1.5 py-0.5 bg-white/10 text-white/60 rounded text-xs"
+                        className="glass-glass-px-1.5 glass-glass-py-0.5 glass-surface-subtle/10 glass-glass-text-primary/60 glass-radius glass-glass-text-xs"
                       >
                         {feature.replace('_', ' ')}
                       </span>
@@ -460,18 +461,18 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
                 </div>
                 
                 {settings.layers.includes(layer.id) && (
-                  <div className="text-blue-400 ml-2">✓</div>
+                  <div className="glass-glass-text-primary ml-2">✓</div>
                 )}
               </div>
               
               {/* Layer activation visualization */}
               {layerActivations[layer.id] && (
-                <div className="mt-2 pt-2 border-t border-white/10">
-                  <div className="flex items-center space-x-1">
+                <div className="mt-2 pt-2 glass-glass-border-t glass-glass-border-white/10">
+                  <div className="glass-glass-flex glass-glass-items-center space-x-1">
                     {layerActivations[layer.id].slice(0, 20).map((activation, i) => (
                       <div
                         key={i}
-                        className="w-1 bg-blue-400 rounded"
+                        className="w-1 glass-surface-blue glass-radius"
                         style={{ 
                           height: `${Math.abs(activation) * 10 + 2}px`,
                           opacity: Math.abs(activation)
@@ -488,12 +489,12 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
     )
 
     const SettingsPanel = () => (
-      <div className="space-y-4">
-        <h4 className="text-sm font-medium text-white/80">Dream Settings</h4>
+      <div className="glass-glass-space-y-4">
+        <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80">Dream Settings</h4>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 glass-glass-gap-4">
           <div>
-            <label className="block text-xs text-white/70 mb-1">
+            <label className="glass-glass-block glass-glass-text-xs glass-glass-text-primary/70 glass-glass-mb-1">
               Iterations: {settings.iterations}
             </label>
             <input
@@ -505,12 +506,12 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
                 ...prev, 
                 iterations: parseInt(e.target.value) 
               }))}
-              className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer"
+              className="glass-glass-w-full h-2 glass-surface-subtle/20 glass-radius-lg appearance-none glass-glass-cursor-pointer"
             />
           </div>
 
           <div>
-            <label className="block text-xs text-white/70 mb-1">
+            <label className="glass-glass-block glass-glass-text-xs glass-glass-text-primary/70 glass-glass-mb-1">
               Learning Rate: {settings.learningRate.toFixed(3)}
             </label>
             <input
@@ -523,12 +524,12 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
                 ...prev, 
                 learningRate: parseFloat(e.target.value) 
               }))}
-              className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer"
+              className="glass-glass-w-full h-2 glass-surface-subtle/20 glass-radius-lg appearance-none glass-glass-cursor-pointer"
             />
           </div>
 
           <div>
-            <label className="block text-xs text-white/70 mb-1">
+            <label className="glass-glass-block glass-glass-text-xs glass-glass-text-primary/70 glass-glass-mb-1">
               Octaves: {settings.octaves}
             </label>
             <input
@@ -540,12 +541,12 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
                 ...prev, 
                 octaves: parseInt(e.target.value) 
               }))}
-              className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer"
+              className="glass-glass-w-full h-2 glass-surface-subtle/20 glass-radius-lg appearance-none glass-glass-cursor-pointer"
             />
           </div>
 
           <div>
-            <label className="block text-xs text-white/70 mb-1">
+            <label className="glass-glass-block glass-glass-text-xs glass-glass-text-primary/70 glass-glass-mb-1">
               Octave Scale: {settings.octaveScale.toFixed(1)}
             </label>
             <input
@@ -558,12 +559,12 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
                 ...prev, 
                 octaveScale: parseFloat(e.target.value) 
               }))}
-              className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer"
+              className="glass-glass-w-full h-2 glass-surface-subtle/20 glass-radius-lg appearance-none glass-glass-cursor-pointer"
             />
           </div>
 
           <div>
-            <label className="block text-xs text-white/70 mb-1">
+            <label className="glass-glass-block glass-glass-text-xs glass-glass-text-primary/70 glass-glass-mb-1">
               Step Size: {settings.stepSize.toFixed(1)}
             </label>
             <input
@@ -576,12 +577,12 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
                 ...prev, 
                 stepSize: parseFloat(e.target.value) 
               }))}
-              className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer"
+              className="glass-glass-w-full h-2 glass-surface-subtle/20 glass-radius-lg appearance-none glass-glass-cursor-pointer"
             />
           </div>
 
           <div>
-            <label className="block text-xs text-white/70 mb-1">
+            <label className="glass-glass-block glass-glass-text-xs glass-glass-text-primary/70 glass-glass-mb-1">
               Max Loss: {settings.maxLoss.toFixed(1)}
             </label>
             <input
@@ -594,30 +595,30 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
                 ...prev, 
                 maxLoss: parseFloat(e.target.value) 
               }))}
-              className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer"
+              className="glass-glass-w-full h-2 glass-surface-subtle/20 glass-radius-lg appearance-none glass-glass-cursor-pointer"
             />
           </div>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <label className="flex items-center space-x-2 cursor-pointer">
+        <div className="glass-glass-flex glass-glass-items-center space-x-4">
+          <label className="glass-glass-flex glass-glass-items-center space-x-2 glass-glass-cursor-pointer">
             <input
               type="checkbox"
               checked={enableTilingState}
               onChange={(e) => setEnableTilingState(e.target.checked)}
-              className="w-4 h-4 rounded border-white/30"
+              className="glass-glass-w-4 glass-glass-h-4 glass-radius glass-glass-border-white/30"
             />
-            <span className="text-sm text-white/80">Enable Tiling</span>
+            <span className="glass-glass-text-sm glass-glass-text-primary/80">Enable Tiling</span>
           </label>
 
-          <label className="flex items-center space-x-2 cursor-pointer">
+          <label className="glass-glass-flex glass-glass-items-center space-x-2 glass-glass-cursor-pointer">
             <input
               type="checkbox"
               checked={enableAnimationState}
               onChange={(e) => setEnableAnimationState(e.target.checked)}
-              className="w-4 h-4 rounded border-white/30"
+              className="glass-glass-w-4 glass-glass-h-4 glass-radius glass-glass-border-white/30"
             />
-            <span className="text-sm text-white/80">Animate Result</span>
+            <span className="glass-glass-text-sm glass-glass-text-primary/80">Animate Result</span>
           </label>
         </div>
       </div>
@@ -631,27 +632,27 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
         {...props}
       >
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
           <div>
-            <h3 className="text-xl font-semibold text-white/90">
+            <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary/90">
               DeepDream Glass
             </h3>
-            <p className="text-sm text-white/60">
+            <p className="glass-glass-text-sm glass-glass-text-primary/60">
               Neural network-powered surreal image generation
             </p>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="glass-glass-flex glass-glass-items-center space-x-2">
             {enableRealTime && (
-              <div className="flex items-center space-x-1 text-green-400">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                <span className="text-xs">Real-time</span>
+              <div className="glass-glass-flex glass-glass-items-center space-x-1 glass-glass-text-primary">
+                <div className="w-2 h-2 glass-surface-green glass-radius-full animate-pulse" />
+                <span className="glass-glass-text-xs">Real-time</span>
               </div>
             )}
             {isGenerating && (
-              <div className="flex items-center space-x-1 text-blue-400">
-                <div className="w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
-                <span className="text-xs">Dreaming...</span>
+              <div className="glass-glass-flex glass-glass-items-center space-x-1 glass-glass-text-primary">
+                <div className="glass-glass-w-4 glass-glass-h-4 glass-glass-border-2 glass-glass-border-blue glass-glass-border-t-transparent glass-radius-full animate-spin" />
+                <span className="glass-glass-text-xs">Dreaming...</span>
               </div>
             )}
           </div>
@@ -659,21 +660,21 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
 
         {/* Preview area */}
         {showPreview && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="glass-glass-grid glass-glass-glass-grid-cols-1 lg:glass-glass-glass-grid-cols-2 glass-glass-gap-4">
             {/* Original */}
-            <div className="space-y-2">
-              <h4 className="text-sm font-medium text-white/80">Original</h4>
-              <div className="relative aspect-video bg-white/5 border border-white/20 rounded-lg overflow-hidden">
+            <div className="glass-glass-space-y-2">
+              <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80">Original</h4>
+              <div className="glass-glass-relative aspect-video glass-surface-subtle/5 glass-glass-border glass-glass-border-white/20 glass-radius-lg overflow-hidden">
                 <canvas
                   ref={canvasRef}
                   width={canvasWidth}
                   height={canvasHeight}
-                  className="w-full h-full object-cover"
+                  className="glass-glass-w-full glass-glass-h-full object-cover"
                 />
                 {!originalImage && (
-                  <div className="absolute inset-0 flex items-center justify-center text-white/50">
-                    <div className="text-center">
-                      <div className="text-4xl mb-2">🖼️</div>
+                  <div className="glass-glass-absolute glass-glass-inset-0 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-text-primary/50">
+                    <div className="glass-glass-text-center">
+                      <div className="glass-glass-text-4xl glass-glass-mb-2">🖼️</div>
                       <p>No image loaded</p>
                     </div>
                   </div>
@@ -682,21 +683,21 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
             </div>
 
             {/* DeepDream result */}
-            <div className="space-y-2">
-              <h4 className="text-sm font-medium text-white/80">DeepDream</h4>
-              <div className="relative aspect-video bg-white/5 border border-white/20 rounded-lg overflow-hidden">
+            <div className="glass-glass-space-y-2">
+              <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80">DeepDream</h4>
+              <div className="glass-glass-relative aspect-video glass-surface-subtle/5 glass-glass-border glass-glass-border-white/20 glass-radius-lg overflow-hidden">
                 <canvas
                   ref={dreamCanvasRef}
                   width={canvasWidth}
                   height={canvasHeight}
-                  className="w-full h-full object-cover"
+                  className="glass-glass-w-full glass-glass-h-full object-cover"
                 />
                 {isGenerating && (
-                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                    <div className="text-center text-white">
-                      <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                      <div className="text-sm">Iteration {currentIteration}</div>
-                      <div className="text-xs mt-1">{Math.round(progress)}% complete</div>
+                  <div className="glass-glass-absolute glass-glass-inset-0 glass-surface-dark/50 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+                    <div className="glass-glass-text-center glass-glass-text-primary">
+                      <div className="glass-glass-w-8 glass-glass-h-8 glass-glass-border-2 glass-glass-border-white glass-glass-border-t-transparent glass-radius-full animate-spin mx-auto glass-glass-mb-2" />
+                      <div className="glass-glass-text-sm">Iteration {currentIteration}</div>
+                      <div className="glass-glass-text-xs mt-1">{Math.round(progress)}% complete</div>
                     </div>
                   </div>
                 )}
@@ -711,27 +712,27 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
             p-3 rounded-lg border border-blue-400/30
             ${createGlassStyle({ blur: 'sm', opacity: 0.8 }).background}
           `}>
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm text-white/80">Generating Deep Dream...</span>
-              <span className="text-sm font-medium text-blue-400">
+            <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-mb-2">
+              <span className="glass-glass-text-sm glass-glass-text-primary/80">Generating Deep Dream...</span>
+              <span className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary">
                 {Math.round(progress)}%
               </span>
             </div>
-            <div className="w-full bg-white/20 rounded-full h-2">
+            <div className="glass-glass-w-full glass-surface-subtle/20 glass-radius-full h-2">
               <motion.div
-                className="bg-blue-400 h-2 rounded-full"
+                className="glass-surface-blue h-2 glass-radius-full"
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.3 }}
               />
             </div>
-            <div className="flex items-center justify-between mt-1 text-xs text-white/60">
+            <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between mt-1 glass-glass-text-xs glass-glass-text-primary/60">
               <span>Iteration: {currentIteration} / {settings.iterations}</span>
               <span>Layers: {settings.layers.length}</span>
             </div>
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="glass-glass-grid glass-glass-glass-grid-cols-1 lg:glass-glass-glass-grid-cols-2 glass-glass-gap-6">
           {/* Layer selector */}
           {showLayerSelector && <LayerSelector />}
 
@@ -740,8 +741,8 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
         </div>
 
         {/* Action buttons */}
-        <div className="flex items-center justify-between pt-4 border-t border-white/10">
-          <div className="flex items-center space-x-4">
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between pt-4 glass-glass-border-t glass-glass-border-white/10">
+          <div className="glass-glass-flex glass-glass-items-center space-x-4">
             <input
               type="file"
               accept="image/*"
@@ -771,7 +772,7 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
             />
             <motion.label
               htmlFor="dream-image-upload"
-              className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-medium cursor-pointer transition-colors"
+              className="glass-glass-px-4 glass-glass-py-2 glass-surface-blue hover:glass-surface-blue glass-glass-text-primary glass-radius-lg glass-glass-text-sm glass-glass-font-medium glass-glass-cursor-pointer transition-colors"
               whileHover={shouldAnimate ? { scale: 1.02 } : {}}
               whileTap={shouldAnimate ? { scale: 0.98 } : {}}
             >
@@ -779,7 +780,7 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
             </motion.label>
 
             <motion.button
-              className="px-4 py-2 border border-white/30 hover:border-white/50 text-white/80 rounded-lg text-sm transition-colors disabled:opacity-50"
+              className="glass-glass-px-4 glass-glass-py-2 glass-glass-border glass-glass-border-white/30 hover:glass-glass-border-white/50 glass-glass-text-primary/80 glass-radius-lg glass-glass-text-sm transition-colors disabled:opacity-50"
               whileHover={shouldAnimate ? { scale: 1.02 } : {}}
               whileTap={shouldAnimate ? { scale: 0.98 } : {}}
               onClick={generateDeepDream}
@@ -793,7 +794,7 @@ export const GlassDeepDreamGlass = forwardRef<HTMLDivElement, GlassDeepDreamGlas
             <motion.a
               href={dreamedImage}
               download="deep-dream.png"
-              className="px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-medium transition-colors"
+              className="glass-glass-px-4 glass-glass-py-2 glass-surface-green hover:glass-surface-green glass-glass-text-primary glass-radius-lg glass-glass-text-sm glass-glass-font-medium transition-colors"
               whileHover={shouldAnimate ? { scale: 1.02 } : {}}
               whileTap={shouldAnimate ? { scale: 0.98 } : {}}
             >

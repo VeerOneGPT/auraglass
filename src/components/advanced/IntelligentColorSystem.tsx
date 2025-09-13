@@ -94,7 +94,7 @@ const hexToRgb = (hex: string): [number, number, number] | null => {
   }
 
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  const rgb = result ? [
+  const rgb: [number, number, number] | null = result ? [
     parseInt(result[1], 16),
     parseInt(result[2], 16),
     parseInt(result[3], 16)
@@ -329,146 +329,125 @@ export const IntelligentColorProvider: React.FC<{ children: React.ReactNode }> =
   const adaptToPalette = useCallback((analysis: ColorAnalysis) => {
     if (!config.enabled) return;
 
-    const { dominantColors, brightness, temperature, mood, saturation } = analysis;
+    setCurrentPalette(prev => {
+      const { dominantColors, brightness, saturation } = analysis;
+      let newPalette = { ...prev };
 
-    // Generate adaptive palette based on analysis
-    let newPalette = { ...currentPalette };
-
-    if (dominantColors.length > 0) {
-      const primaryColor = dominantColors[0];
-      const rgb = hexToRgb(primaryColor);
-
-      if (rgb) {
-        const [h, s, l] = rgbToHsl(rgb[0], rgb[1], rgb[2]);
-
-        // Adjust colors based on analysis
-        const brightnessMultiplier = brightness > 0.6 ? 0.8 : 1.2;
-        const saturationMultiplier = saturation > 0.7 ? 0.9 : 1.1;
-
-        newPalette.primary = hslToHex(h, s * saturationMultiplier, l * brightnessMultiplier);
-        newPalette.secondary = hslToHex((h + 30) % 360, s * 0.8, l * 0.9);
-        newPalette.accent = hslToHex((h + 120) % 360, s * 1.1, l * 0.85);
-
-        // Adapt glass colors
-        newPalette.glassBase = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.1)`;
-        newPalette.glassTint = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.05)`;
+      if (dominantColors.length > 0) {
+        const primaryColor = dominantColors[0];
+        const rgb = hexToRgb(primaryColor);
+        if (rgb) {
+          const [h, s, l] = rgbToHsl(rgb[0], rgb[1], rgb[2]);
+          const brightnessMultiplier = brightness > 0.6 ? 0.8 : 1.2;
+          const saturationMultiplier = saturation > 0.7 ? 0.9 : 1.1;
+          newPalette.primary = hslToHex(h, s * saturationMultiplier, l * brightnessMultiplier);
+          newPalette.secondary = hslToHex((h + 30) % 360, s * 0.8, l * 0.9);
+          newPalette.accent = hslToHex((h + 120) % 360, s * 1.1, l * 0.85);
+          newPalette.glassBase = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.1)`;
+          newPalette.glassTint = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.05)`;
+        }
       }
-    }
 
-    // Apply accessibility adjustments if enabled
-    if (config.preserveAccessibility) {
-      newPalette = getAccessiblePalette(newPalette);
-    }
-
-    setCurrentPalette(newPalette);
-  }, [config, currentPalette]);
+      if (config.preserveAccessibility) {
+        newPalette = computeAccessiblePalette(newPalette);
+      }
+      return newPalette;
+    });
+  }, [config.enabled, config.preserveAccessibility]);
 
   const adaptToTime = useCallback((timeOfDay: number) => {
     if (!config.timeBasedShifts) return;
-
     const hour = timeOfDay;
-    let timeBasePalette = { ...currentPalette };
-
-    // Early morning (5-9)
-    if (hour >= 5 && hour < 9) {
-      timeBasePalette.primary = '#f59e0b'; // Warm amber
-      timeBasePalette.glassBase = 'rgba(245, 158, 11, 0.1)';
-    }
-    // Daytime (9-17)
-    else if (hour >= 9 && hour < 17) {
-      timeBasePalette.primary = '#3b82f6'; // Bright blue
-      timeBasePalette.glassBase = 'rgba(59, 130, 246, 0.1)';
-    }
-    // Evening (17-21)
-    else if (hour >= 17 && hour < 21) {
-      timeBasePalette.primary = '#f97316'; // Orange
-      timeBasePalette.glassBase = 'rgba(249, 115, 22, 0.1)';
-    }
-    // Night (21-5)
-    else {
-      timeBasePalette.primary = '#6366f1'; // Indigo
-      timeBasePalette.background = '#020617'; // Darker background
-      timeBasePalette.glassBase = 'rgba(99, 102, 241, 0.08)';
-    }
-
-    setCurrentPalette(timeBasePalette);
-  }, [config.timeBasedShifts, currentPalette]);
+    setCurrentPalette(prev => {
+      const timeBasePalette = { ...prev };
+      if (hour >= 5 && hour < 9) {
+        timeBasePalette.primary = '#f59e0b';
+        timeBasePalette.glassBase = 'rgba(245, 158, 11, 0.1)';
+      } else if (hour >= 9 && hour < 17) {
+        timeBasePalette.primary = '#3b82f6';
+        timeBasePalette.glassBase = 'rgba(59, 130, 246, 0.1)';
+      } else if (hour >= 17 && hour < 21) {
+        timeBasePalette.primary = '#f97316';
+        timeBasePalette.glassBase = 'rgba(249, 115, 22, 0.1)';
+      } else {
+        timeBasePalette.primary = '#6366f1';
+        timeBasePalette.background = '#020617';
+        timeBasePalette.glassBase = 'rgba(99, 102, 241, 0.08)';
+      }
+      return timeBasePalette;
+    });
+  }, [config.timeBasedShifts]);
 
   const adaptToSeason = useCallback((season: 'spring' | 'summer' | 'autumn' | 'winter') => {
     if (!config.seasonalAdaptation) return;
-
-    let seasonPalette = { ...currentPalette };
-
-    switch (season) {
-      case 'spring':
-        seasonPalette.primary = '#10b981'; // Green
-        seasonPalette.secondary = '#f59e0b'; // Yellow
-        seasonPalette.accent = '#ec4899'; // Pink
-        seasonPalette.glassBase = 'rgba(16, 185, 129, 0.1)';
-        break;
-      case 'summer':
-        seasonPalette.primary = '#06b6d4'; // Cyan
-        seasonPalette.secondary = '#f59e0b'; // Amber
-        seasonPalette.accent = '#ef4444'; // Red
-        seasonPalette.glassBase = 'rgba(6, 182, 212, 0.1)';
-        break;
-      case 'autumn':
-        seasonPalette.primary = '#f97316'; // Orange
-        seasonPalette.secondary = '#eab308'; // Yellow
-        seasonPalette.accent = '#dc2626'; // Red
-        seasonPalette.glassBase = 'rgba(249, 115, 22, 0.1)';
-        break;
-      case 'winter':
-        seasonPalette.primary = '#6366f1'; // Indigo
-        seasonPalette.secondary = '#06b6d4'; // Cyan
-        seasonPalette.accent = '#8b5cf6'; // Purple
-        seasonPalette.background = '#020617';
-        seasonPalette.glassBase = 'rgba(99, 102, 241, 0.08)';
-        break;
-    }
-
-    setCurrentPalette(seasonPalette);
-  }, [config.seasonalAdaptation, currentPalette]);
+    setCurrentPalette(prev => {
+      const seasonPalette = { ...prev };
+      switch (season) {
+        case 'spring':
+          seasonPalette.primary = '#10b981';
+          seasonPalette.secondary = '#f59e0b';
+          seasonPalette.accent = '#ec4899';
+          seasonPalette.glassBase = 'rgba(16, 185, 129, 0.1)';
+          break;
+        case 'summer':
+          seasonPalette.primary = '#06b6d4';
+          seasonPalette.secondary = '#f59e0b';
+          seasonPalette.accent = '#ef4444';
+          seasonPalette.glassBase = 'rgba(6, 182, 212, 0.1)';
+          break;
+        case 'autumn':
+          seasonPalette.primary = '#f97316';
+          seasonPalette.secondary = '#eab308';
+          seasonPalette.accent = '#dc2626';
+          seasonPalette.glassBase = 'rgba(249, 115, 22, 0.1)';
+          break;
+        case 'winter':
+          seasonPalette.primary = '#6366f1';
+          seasonPalette.secondary = '#06b6d4';
+          seasonPalette.accent = '#8b5cf6';
+          seasonPalette.background = '#020617';
+          seasonPalette.glassBase = 'rgba(99, 102, 241, 0.08)';
+          break;
+      }
+      return seasonPalette;
+    });
+  }, [config.seasonalAdaptation]);
 
   const adaptToBrand = useCallback((brandColors: string[]) => {
     if (brandColors.length === 0) return;
-
-    let brandPalette = { ...currentPalette };
     const influence = config.brandColorInfluence;
-
-    brandColors.forEach((color, index) => {
-      const rgb = hexToRgb(color);
-      if (rgb) {
-        const [h, s, l] = rgbToHsl(rgb[0], rgb[1], rgb[2]);
-
-        switch (index) {
-          case 0:
-            // Primary brand color influences primary palette color
-            const currentRgb = hexToRgb(brandPalette.primary);
-            if (currentRgb) {
-              const [currentH, currentS, currentL] = rgbToHsl(currentRgb[0], currentRgb[1], currentRgb[2]);
-              const newH = currentH + (h - currentH) * influence;
-              const newS = currentS + (s - currentS) * influence;
-              const newL = currentL + (l - currentL) * influence;
-              brandPalette.primary = hslToHex(newH, newS, newL);
+    setCurrentPalette(prev => {
+      const brandPalette = { ...prev };
+      brandColors.forEach((color, index) => {
+        const rgb = hexToRgb(color);
+        if (rgb) {
+          const [h, s, l] = rgbToHsl(rgb[0], rgb[1], rgb[2]);
+          switch (index) {
+            case 0: {
+              const currentRgb = hexToRgb(brandPalette.primary);
+              if (currentRgb) {
+                const [currentH, currentS, currentL] = rgbToHsl(currentRgb[0], currentRgb[1], currentRgb[2]);
+                const newH = currentH + (h - currentH) * influence;
+                const newS = currentS + (s - currentS) * influence;
+                const newL = currentL + (l - currentL) * influence;
+                brandPalette.primary = hslToHex(newH, newS, newL);
+              }
+              break;
             }
-            break;
-          case 1:
-            brandPalette.secondary = color;
-            break;
-          case 2:
-            brandPalette.accent = color;
-            break;
+            case 1:
+              brandPalette.secondary = color;
+              break;
+            case 2:
+              brandPalette.accent = color;
+              break;
+          }
+          brandPalette.glassBase = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.1)`;
+          brandPalette.glassTint = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.05)`;
         }
-
-        // Adapt glass colors to brand
-        brandPalette.glassBase = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.1)`;
-        brandPalette.glassTint = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 0.05)`;
-      }
+      });
+      return brandPalette;
     });
-
-    setCurrentPalette(brandPalette);
-  }, [config.brandColorInfluence, currentPalette]);
+  }, [config.brandColorInfluence]);
 
   const getAccessiblePalette = useCallback((basePalette: ColorPalette): ColorPalette => {
     const accessiblePalette = { ...basePalette };
@@ -492,6 +471,22 @@ export const IntelligentColorProvider: React.FC<{ children: React.ReactNode }> =
   const updateConfig = useCallback((newConfig: Partial<ColorAdaptationConfig>) => {
     setConfig(prev => ({ ...prev, ...newConfig }));
   }, []);
+
+  // Pure helper to compute accessible palette without relying on hooks ordering
+  const computeAccessiblePalette = (basePalette: ColorPalette): ColorPalette => {
+    const accessiblePalette = { ...basePalette };
+    accessiblePalette.text = adjustColorForAccessibility(
+      accessiblePalette.text,
+      accessiblePalette.background,
+      4.5
+    );
+    accessiblePalette.textSecondary = adjustColorForAccessibility(
+      accessiblePalette.textSecondary,
+      accessiblePalette.background,
+      3.0
+    );
+    return accessiblePalette;
+  };
 
   // Auto-adapt to theme changes - optimized
   useEffect(() => {
@@ -540,7 +535,7 @@ export const IntelligentColorProvider: React.FC<{ children: React.ReactNode }> =
     });
 
     return () => observer.disconnect();
-  }, [currentPalette.text]); // Add currentPalette.text to dependencies
+  }, [currentPalette.text]);
 
   // Auto-adapt to time of day - optimized for performance
   useEffect(() => {
@@ -556,7 +551,7 @@ export const IntelligentColorProvider: React.FC<{ children: React.ReactNode }> =
 
       return () => clearInterval(interval);
     }
-  }, [config.timeBasedShifts, adaptToTime]);
+  }, [config.timeBasedShifts]);
 
   // Auto-adapt to seasons
   useEffect(() => {
@@ -572,7 +567,7 @@ export const IntelligentColorProvider: React.FC<{ children: React.ReactNode }> =
 
       adaptToSeason(season);
     }
-  }, [config.seasonalAdaptation, adaptToSeason]);
+  }, [config.seasonalAdaptation]);
 
   // Apply CSS custom properties for the current palette - optimized
   useEffect(() => {

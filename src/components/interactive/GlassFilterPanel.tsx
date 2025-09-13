@@ -170,26 +170,26 @@ const GlassFilterPanel = React.forwardRef<HTMLDivElement, GlassFilterPanelProps>
                 {...props}
             >
                 {/* Header */}
-                <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center glass-gap-2">
-                        <Filter className="w-5 h-5 glass-text-primary/70" />
-                        <h3 className="font-semibold glass-text-primary">{title}</h3>
+                <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between mb-6">
+                    <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+                        <Filter className="glass-glass-w-5 glass-glass-h-5 glass-glass-text-primary/70" />
+                        <h3 className="glass-glass-font-semibold glass-glass-text-primary">{title}</h3>
                         {hasActiveFilters && (
-                            <span className="glass-px-2 glass-py-1 glass-text-xs bg-blue-500/20 text-blue-300 glass-radius-full">
+                            <span className="glass-glass-px-2 glass-glass-py-1 glass-glass-text-xs glass-surface-blue/20 text-blue-300 glass-radius-full">
                                 Active
                             </span>
                         )}
                     </div>
 
-                    <div className="flex items-center glass-gap-2">
+                    <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
                         {showClearButton && hasActiveFilters && (
                             <GlassButton
                                 variant="ghost"
                                 size="sm"
                                 onClick={handleClearAll}
-                                className="glass-text-primary/70 hover:glass-text-primary"
+                                className="glass-glass-text-primary/70 hover:glass-glass-text-primary"
                             >
-                                <RotateCcw className="w-4 h-4 glass-mr-1" />
+                                <RotateCcw className="glass-glass-w-4 glass-glass-h-4 glass-mr-1" />
                                 Clear
                             </GlassButton>
                         )}
@@ -209,13 +209,13 @@ const GlassFilterPanel = React.forwardRef<HTMLDivElement, GlassFilterPanelProps>
 
                 {/* Search */}
                 {showSearch && (
-                    <div className="glass-mb-4">
+                    <div className="glass-glass-mb-4">
                         <GlassInput
                             placeholder="Search filters..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full"
-                            leftIcon={<Search className="w-4 h-4" />}
+                            className="glass-glass-w-full"
+                            leftIcon={<Search className="glass-glass-w-4 glass-glass-h-4" />}
                         />
                     </div>
                 )}
@@ -223,29 +223,29 @@ const GlassFilterPanel = React.forwardRef<HTMLDivElement, GlassFilterPanelProps>
                 {/* Presets */}
                 {showPresets && presets.length > 0 && (
                     <div className="mb-6">
-                        <div className="flex items-center justify-between glass-mb-2">
-                            <span className="glass-text-sm font-medium glass-text-primary/70">Presets</span>
+                        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-mb-2">
+                            <span className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/70">Presets</span>
                             {onSavePreset && (
                                 <GlassButton
                                     variant="ghost"
                                     size="sm"
                                     onClick={(e) => setShowPresetDialog(true)}
-                                    className="glass-text-primary/70 hover:glass-text-primary"
+                                    className="glass-glass-text-primary/70 hover:glass-glass-text-primary"
                                 >
-                                    <Save className="w-4 h-4 glass-mr-1" />
+                                    <Save className="glass-glass-w-4 glass-glass-h-4 glass-mr-1" />
                                     Save
                                 </GlassButton>
                             )}
                         </div>
 
-                        <div className="flex flex-wrap glass-gap-2">
+                        <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-2">
                             {presets.map((preset) => (
                                 <GlassButton
                                     key={preset.id}
                                     variant="outline"
                                     size="sm"
                                     onClick={(e) => handlePresetSelect(preset)}
-                                    className="glass-text-xs"
+                                    className="glass-glass-text-xs"
                                 >
                                     {preset.name}
                                 </GlassButton>
@@ -255,7 +255,7 @@ const GlassFilterPanel = React.forwardRef<HTMLDivElement, GlassFilterPanelProps>
                 )}
 
                 {/* Filter Groups */}
-                <div className="glass-gap-4">
+                <div className="glass-glass-gap-4">
                     <AnimatePresence>
                         {filteredGroups.map((group) => (
                             <motion.div
@@ -269,18 +269,18 @@ const GlassFilterPanel = React.forwardRef<HTMLDivElement, GlassFilterPanelProps>
                                 {collapsible && (
                                     <button
                                         onClick={(e) => toggleGroup(group.id)}
-                                        className="w-full flex items-center justify-between glass-p-3 text-left hover:bg-white/5 transition-colors"
+                                        className="glass-glass-w-full glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-p-3 glass-glass-text-left hover:glass-surface-subtle/5 transition-colors"
                                     >
-                                        <div className="flex items-center glass-gap-2">
-                                            <span className="font-medium glass-text-primary">{group.label}</span>
+                                        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+                                            <span className="glass-glass-font-medium glass-glass-text-primary">{group.label}</span>
                                             {group.required && (
-                                                <span className="glass-text-xs text-red-400">*</span>
+                                                <span className="glass-glass-text-xs glass-glass-text-primary">*</span>
                                             )}
                                         </div>
                                         {expandedGroups[group.id] ? (
-                                            <ChevronDown className="w-4 h-4 glass-text-primary/70" />
+                                            <ChevronDown className="glass-glass-w-4 glass-glass-h-4 glass-glass-text-primary/70" />
                                         ) : (
-                                            <ChevronRight className="w-4 h-4 glass-text-primary/70" />
+                                            <ChevronRight className="glass-glass-w-4 glass-glass-h-4 glass-glass-text-primary/70" />
                                         )}
                                     </button>
                                 )}
@@ -292,7 +292,7 @@ const GlassFilterPanel = React.forwardRef<HTMLDivElement, GlassFilterPanelProps>
                                             initial={{ opacity: 0 }}
                                             animate={{ opacity: 1 }}
                                             exit={{ opacity: 0 }}
-                                            className="glass-p-3 border-t border-white/10"
+                                            className="glass-glass-p-3 glass-glass-border-t glass-glass-border-white/10"
                                         >
                                             <FilterGroupContent
                                                 group={group}
@@ -309,20 +309,20 @@ const GlassFilterPanel = React.forwardRef<HTMLDivElement, GlassFilterPanelProps>
 
                 {/* Save Preset Dialog */}
                 {showPresetDialog && (
-                    <div className="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center">
-                        <div className="glass-radius-lg glass-p-6 max-w-md w-full glass-mx-4 bg-white/5 ring-1 ring-white/10">
-                            <h3 className="glass-text-lg font-semibold glass-text-primary glass-mb-4">Save Filter Preset</h3>
+                    <div className="glass-glass-fixed glass-glass-inset-0 glass-surface-dark/50 backdrop-blur-md glass-z-50 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+                        <div className="glass-radius-lg glass-glass-p-6 max-w-md glass-glass-w-full glass-glass-mx-4 glass-surface-subtle/5 ring-1 ring-white/10">
+                            <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-4">Save Filter Preset</h3>
                             <GlassInput
                                 placeholder="Preset name..."
                                 value={newPresetName}
                                 onChange={(e) => setNewPresetName(e.target.value)}
-                                className="glass-mb-4"
+                                className="glass-glass-mb-4"
                             />
-                            <div className="flex glass-gap-2">
+                            <div className="glass-glass-flex glass-glass-gap-2">
                                 <GlassButton
                                     variant="ghost"
                                     onClick={(e) => setShowPresetDialog(false)}
-                                    className="flex-1"
+                                    className="glass-glass-flex-1"
                                 >
                                     Cancel
                                 </GlassButton>
@@ -330,7 +330,7 @@ const GlassFilterPanel = React.forwardRef<HTMLDivElement, GlassFilterPanelProps>
                                     variant="primary"
                                     onClick={handleSavePreset}
                                     disabled={!newPresetName.trim()}
-                                    className="flex-1"
+                                    className="glass-glass-flex-1"
                                 >
                                     Save
                                 </GlassButton>
@@ -360,9 +360,9 @@ const FilterGroupContent: React.FC<FilterGroupContentProps> = ({
     switch (group.type) {
         case 'checkbox':
             return (
-                <div className="glass-gap-2">
+                <div className="glass-glass-gap-2">
                     {group.options?.map((option) => (
-                        <div key={option.id} className="flex items-center justify-between">
+                        <div key={option.id} className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
                             <GlassCheckbox
                                 id={option.id}
                                 checked={Array.isArray(value) && value.includes(option.value)}
@@ -377,7 +377,7 @@ const FilterGroupContent: React.FC<FilterGroupContentProps> = ({
                                 label={option.label}
                             />
                             {option.count != null && (
-                                <span className="glass-text-xs glass-text-primary/50">({option.count})</span>
+                                <span className="glass-glass-text-xs glass-glass-text-primary/50">({option.count})</span>
                             )}
                         </div>
                     ))}
@@ -400,10 +400,10 @@ const FilterGroupContent: React.FC<FilterGroupContentProps> = ({
                                 value={option.value}
                                 disabled={option.disabled}
                             >
-                                <div className="flex items-center justify-between w-full">
+                                <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-w-full">
                                     <span>{option.label}</span>
                                     {option.count != null && (
-                                        <span className="glass-text-xs glass-text-primary/50 glass-ml-2">({option.count})</span>
+                                        <span className="glass-glass-text-xs glass-glass-text-primary/50 glass-ml-2">({option.count})</span>
                                     )}
                                 </div>
                             </GlassSelectItem>
@@ -414,16 +414,16 @@ const FilterGroupContent: React.FC<FilterGroupContentProps> = ({
 
         case 'slider':
             return (
-                <div className="glass-gap-3">
+                <div className="glass-glass-gap-3">
                     <GlassSlider
                         min={group.min || 0}
                         max={group.max || 100}
                         step={group.step || 1}
                         value={Array.isArray(value) ? value : [group.min || 0]}
                         onValueChange={(newValue) => onChange(newValue)}
-                        className="w-full"
+                        className="glass-glass-w-full"
                     />
-                    <div className="flex justify-between glass-text-sm glass-text-primary/70">
+                    <div className="glass-glass-flex glass-glass-justify-between glass-glass-text-sm glass-glass-text-primary/70">
                         <span>{group.min || 0}</span>
                         <span>{group.max || 100}</span>
                     </div>
@@ -445,7 +445,7 @@ const FilterGroupContent: React.FC<FilterGroupContentProps> = ({
                     placeholder={group.placeholder || 'Search...'}
                     value={value || ''}
                     onChange={(e) => onChange(e.target.value)}
-                    leftIcon={<Search className="w-4 h-4" />}
+                    leftIcon={<Search className="glass-glass-w-4 glass-glass-h-4" />}
                 />
             );
 

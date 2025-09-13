@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassNavigationMenu } from './GlassNavigationMenu';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassNavigationMenu> = {
   title: 'Components/Navigation/GlassNavigationMenu',
@@ -104,15 +104,15 @@ export const Variants: Story = {
   render: (args) => (
     <div className="space-y-8">
       <div>
-        <h3 className="glass-text-lg font-semibold glass-mb-4">Default Variant</h3>
+        <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-mb-4">Default Variant</h3>
         <GlassNavigationMenu {...args} />
       </div>
       <div>
-        <h3 className="glass-text-lg font-semibold glass-mb-4">Sidebar Variant</h3>
+        <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-mb-4">Sidebar Variant</h3>
         <GlassNavigationMenu {...args} variant="sidebar" />
       </div>
       <div>
-        <h3 className="glass-text-lg font-semibold glass-mb-4">Header Variant</h3>
+        <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-mb-4">Header Variant</h3>
         <GlassNavigationMenu {...args} variant="header" orientation="horizontal" />
       </div>
     </div>

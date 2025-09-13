@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 
 export interface Step { id: string; label: string; optional?: boolean }
 export interface GlassStepperProps { steps: Step[]; active: string; onChange?: (id:string)=>void; className?: string }
@@ -19,7 +19,7 @@ export function GlassStepper({ steps, active, onChange, className }: GlassSteppe
         const isActive = s.id === active;
         const wasJustActivated = isActive && lastActiveRef.current !== active;
         return (
-          <div key={s.id} className="flex items-center glass-gap-3">
+          <div key={s.id} className="glass-glass-flex glass-glass-items-center glass-glass-gap-3">
             <button
               type="button"
               aria-current={isActive ? 'step' : undefined}
@@ -34,7 +34,7 @@ export function GlassStepper({ steps, active, onChange, className }: GlassSteppe
                 {s.label}
               </span>
             </button>
-            {i < steps.length - 1 && <div className="w-8 h-px bg-white/15" />}
+            {i < steps.length - 1 && <div className="glass-glass-w-8 h-px glass-surface-subtle/15" />}
           </div>
         );
       })}

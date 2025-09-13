@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { Slot } from '@radix-ui/react-slot';
 import React, { forwardRef, useCallback, useEffect, useRef, useState, useImperativeHandle } from 'react';
 import { OptimizedGlass, type OptimizedGlassProps } from '../../primitives';
@@ -563,7 +563,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
         return (
           <>
             {loadingSpinner || (
-              <div className="w-4 h-4 border-2 border-current border-t-transparent glass-radius-full animate-spin" />
+              <div className="glass-glass-w-4 glass-glass-h-4 glass-glass-border-2 glass-glass-border-current glass-glass-border-t-transparent glass-radius-full animate-spin" />
             )}
             {!iconOnly && <span className="ml-2">{loadingText}</span>}
           </>
@@ -589,7 +589,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
         <Motion
           preset={getAnimationPreset()}
           animateOnHover={animation !== 'none'}
-          className="inline-block"
+          className="inline-glass-glass-block"
         >
           <Comp
             className={cn(
@@ -634,7 +634,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
           >
             {renderContent()}
             {description && (
-              <span id={descriptionId} className="sr-only">
+              <span id={descriptionId} className="glass-glass-sr-only">
                 {description}
               </span>
             )}
@@ -647,7 +647,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
       <Motion
         preset={getAnimationPreset()}
         animateOnHover={animation !== 'none'}
-        className="inline-block"
+        className="inline-glass-glass-block"
       >
         {material === 'liquid' ? (
           <LiquidGlassMaterial
@@ -714,13 +714,13 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
           ) : (
             <>
             {resolvedVariant === 'gradient' && (
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 glass-radius-md" />
+              <div className="glass-glass-absolute glass-glass-inset-0 glass-gradient-primary from-primary/20 via-secondary/20 to-accent/20 glass-radius-md" />
             )}
-              <span className="relative z-10">
+              <span className="glass-glass-relative glass-z-10">
                 {renderContent()}
               </span>
               {description && (
-                <span id={descriptionId} className="sr-only">
+                <span id={descriptionId} className="glass-glass-sr-only">
                   {description}
                 </span>
               )}
@@ -794,13 +794,13 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
           ) : (
             <>
             {resolvedVariant === 'gradient' && (
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 glass-radius-md" />
+              <div className="glass-glass-absolute glass-glass-inset-0 glass-gradient-primary from-primary/20 via-secondary/20 to-accent/20 glass-radius-md" />
             )}
-              <span className="relative z-10">
+              <span className="glass-glass-relative glass-z-10">
                 {renderContent()}
               </span>
               {description && (
-                <span id={descriptionId} className="sr-only">
+                <span id={descriptionId} className="glass-glass-sr-only">
                   {description}
                 </span>
               )}

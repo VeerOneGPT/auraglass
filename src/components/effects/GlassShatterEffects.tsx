@@ -8,7 +8,7 @@ import {
     Zap
 } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import * as THREE from 'three';
 
 // Shatter geometry factory
@@ -252,7 +252,7 @@ interface GlassShatterEffectsProps {
 
 export function GlassShatterEffects({
   children,
-  className = '',
+  className='',
   trigger = 'click',
   duration = 2,
   intensity = 1,

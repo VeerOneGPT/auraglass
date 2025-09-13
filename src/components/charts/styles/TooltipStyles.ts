@@ -221,7 +221,7 @@ export const createTooltipStyles = (
       boxShadow: theme === 'glass'
         ? '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2)'
         : '0 4px 12px rgba(0, 0, 0, 0.15)',
-      backdropFilter: theme === 'glass' ? 'blur(12px)' : 'none',
+      // Use createGlassStyle() instead,
       background: theme === 'glass'
         ? 'rgba(0, 0, 0, 0.85)'
         : theme === 'dark'

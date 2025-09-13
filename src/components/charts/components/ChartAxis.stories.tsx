@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ChartAxis } from './ChartAxis';
-import { cn } from '@/lib/utils';
+import { cn } from '../../../lib/utils';
 
 const meta: Meta<typeof ChartAxis> = {
   title: 'Components/Charts/ChartAxis',
@@ -56,7 +56,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-8">
+    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-8">
       <div style={{ position: 'relative', width: '400px', height: '100px' }}>
         <ChartAxis {...args} orientation="horizontal" label="Horizontal Axis" />
       </div>

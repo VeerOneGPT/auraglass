@@ -6,6 +6,7 @@
  */
 // Typography tokens available via typography.css (imported in index.css)
 import React, { useState, useRef, useEffect, useCallback, useMemo, memo } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '@/lib/utils';
 // import styled from 'styled-components'; // unused
 import { 
@@ -242,12 +243,12 @@ const ChartContainer = styled.div<{
   position: relative;
   width: 100%;
   height: 100%;
-  background: ${glassTokenUtils.getSurface('neutral', 'level1').surface.base};
-  backdrop-filter: blur(10px);
+  background: var(--glass-bg-default);
+  backdrop-filter: var(--glass-backdrop-blur);
   border-radius: ${props => props.$borderRadius || 12}px;
-  border: 1px solid ${glassTokenUtils.getSurface('neutral', 'level1').border.color};
+  border: 1px solid var(--glass-border-default);
   padding: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--glass-elev-2);
 `;
 
 const ChartHeader = styled.div`
@@ -258,13 +259,13 @@ const ChartTitle = styled.h3`
   margin: 0;
   font-size: var(--typography-subheading-size);
   font-weight: var(--typography-heading-weight);
-  color: ${glassTokenUtils.getSurface('neutral', 'level1').text.primary};
+  color: var(--glass-text-primary);
 `;
 
 const ChartSubtitle = styled.p`
   margin: 4px 0 0 0;
   font-size: var(--typography-body-size);
-  color: ${glassTokenUtils.getSurface('neutral', 'level1').text.secondary};
+  color: var(--glass-text-secondary);
 `;
 
 const ChartWrapper = styled.div`
@@ -283,8 +284,8 @@ const ChartLegend = styled.div<{
   flex-wrap: wrap;
   margin-top: 16px;
   padding: 12px;
-  background: ${props => props.$glassEffect ? '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}' : 'transparent'};
-  backdrop-filter: ${props => props.$glassEffect ? 'blur(8px)' : 'none'};
+  background: ${props => (props.$glassEffect ? 'var(--glass-bg-default)' : 'transparent')};
+  backdrop-filter: ${props => (props.$glassEffect ? 'var(--glass-backdrop-blur)' : 'none')};
   border-radius: 8px;
   justify-content: ${props => props.$position === 'top' ? 'center' : 'flex-start'};
 `;
@@ -317,7 +318,7 @@ const LegendLabel = styled.span<{
   $active?: boolean;
 }>`
   font-size: var(--typography-body-size);
-  color: ${props => props.$active ? '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}' : 'rgba(255, 255, 255, 0.5)'};
+  color: ${props => (props.$active ? 'var(--glass-text-primary)' : 'var(--glass-text-secondary)')};
 `;
 
 const DynamicTooltip = styled.div<{
@@ -325,14 +326,14 @@ const DynamicTooltip = styled.div<{
   $quality?: QualityTier;
 }>`
   position: absolute;
-  background: rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(10px);
+  background: var(--glass-overlay-bg);
+  backdrop-filter: var(--glass-backdrop-blur);
   border-radius: 6px;
   padding: 12px;
   pointer-events: none;
   z-index: 1000;
-  border: 1px solid ${glassTokenUtils.getSurface('neutral', 'level1').border.color};
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--glass-border-default);
+  box-shadow: var(--glass-elev-2);
 `;
 
 const TooltipHeader = styled.div<{
@@ -351,7 +352,7 @@ const TooltipRow = styled.div`
 `;
 
 const TooltipLabel = styled.span`
-  color: ${glassTokenUtils.getSurface('neutral', 'level1').text.secondary};
+  color: var(--glass-text-secondary);
   font-size: var(--typography-body-size);
 `;
 
@@ -498,18 +499,7 @@ const RefreshIcon = memo(({ size = 24 }: { size?: number }) => (
 
 // Memoized button component with stable styles
 const buttonStyles = {
-  base: {
-    background: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
-    border: 'none',
-    borderRadius: '4px',
-    color: 'white',
-    cursor: 'pointer',
-    backdropFilter: 'blur(8px)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    transition: 'all 0.2s',
-  },
+  base: createGlassStyle({ intent: "neutral", elevation: "level2" }),
   sm: { padding: '4px' },
   default: { padding: '8px' }
 };
@@ -555,19 +545,7 @@ interface ZoomControlsProps {
 }
 
 // Stable styles for zoom controls container
-const zoomControlsStyle = {
-  position: 'absolute' as const,
-  right: '10px',
-  top: '10px',
-  display: 'flex',
-  gap: '5px',
-  alignItems: 'center',
-  padding: '4px',
-  borderRadius: '4px',
-  backgroundColor: 'rgba(0, 0, 0, 0.2)',
-  backdropFilter: 'blur(8px)',
-  zIndex: 5,
-};
+const zoomControlsStyle = createGlassStyle({ intent: "neutral", elevation: "level2" });
 
 const zoomLevelStyle = {
   color: '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}',

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassCodeEditor, GlassCodeEditorWithFiles } from './GlassCodeEditor';
 
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 const meta: Meta<typeof GlassCodeEditor> = {
   title: 'Components/Interactive/GlassCodeEditor',
   component: GlassCodeEditor,

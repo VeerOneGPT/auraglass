@@ -1,5 +1,6 @@
 import React from 'react';
 import { CSSProperties } from 'react';
+import { detectDevice } from '../../utils/deviceCapabilities';
 
 export type PerformanceMode = 'high' | 'balanced' | 'low';
 export type RenderingOptimization = 'gpu' | 'cpu' | 'auto';
@@ -49,8 +50,8 @@ export const createPerformanceMixin = (options: PerformanceOptions = {}): CSSPro
         willChange: 'auto',
         transform: 'none',
         filter: 'none',
-        backdropFilter: 'none',
-        WebkitBackdropFilter: 'none',
+        // Use createGlassStyle() instead,
+        // Use createGlassStyle() instead,
       };
       break;
   }
@@ -252,11 +253,10 @@ export const detectDeviceCapabilities = () => {
     };
   }
 
-  const canvas = document.createElement('canvas');
-  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  const device = detectDevice();
   
   return {
-    supportsGPU: !!gl,
+    supportsGPU: device.capabilities.webgl,
     supportsBackdropFilter: CSS.supports('backdrop-filter', 'blur(1px)') || 
                            CSS.supports('-webkit-backdrop-filter', 'blur(1px)'),
     prefersReducedMotion: window.matchMedia('(prefers-reduced-motion: reduce)').matches,

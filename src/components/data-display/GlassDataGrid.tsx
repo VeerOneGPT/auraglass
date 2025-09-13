@@ -22,7 +22,7 @@ const useVectorSpring = (options: any) => ({
   setValue: () => {},
 });
 import { OptimizedGlass, Motion } from '../../primitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 
 // --- Styled Components using Theme --- 
 
@@ -93,7 +93,7 @@ const DragHandle = styled.span<{ $isKeyboardDraggingActive?: boolean }>`
   outline: none;
 
   &:focus {
-    box-shadow: 0 0 0 2px ${props => (props?.theme as any).colors?.primary?.main + '80'}; 
+    box-shadow: var(--glass-elev-2); 
     border-radius: 3px;
   }
 
@@ -104,7 +104,7 @@ const DragHandle = styled.span<{ $isKeyboardDraggingActive?: boolean }>`
   /* Style for when actively dragging via keyboard */
   ${props => props.$isKeyboardDraggingActive && css`
     background-color: ${(props?.theme as any).colors?.primary?.light + '40'};
-    box-shadow: 0 0 0 2px ${(props?.theme as any).colors?.primary?.main}; 
+    box-shadow: var(--glass-elev-2); 
   `}
 `;
 
@@ -219,11 +219,7 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
         border="subtle"
         animation="none"
         performanceMode="medium"
-        className={cn(
-          'w-full overflow-hidden',
-          height && 'overflow-y-auto',
-          className
-        )}
+        className={cn('glass-w-full glass-overflow-hidden', height && 'glass-overflow-y-auto', className)}
         style={{
             ...style,
             ...(height && { height: typeof height === 'number' ? `${height}px` : height }),

@@ -1,5 +1,5 @@
 'use client';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 
 import React from 'react';
 
@@ -11,7 +11,7 @@ export function GlassSpotlight({ targetRect, onClose }: GlassSpotlightProps) {
   const style: React.CSSProperties = {
     position: 'fixed',
     inset: 0,
-    background: 'rgba(0,0,0,0.6)'
+    background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */'
   };
   const hole: React.CSSProperties = {
     position: 'absolute',

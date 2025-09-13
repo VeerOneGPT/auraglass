@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 import { GlassVirtualList } from './GlassVirtualList';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassVirtualList> = {
   title: 'Components/Interactive/GlassVirtualList',
@@ -49,7 +49,7 @@ export const Default: Story = {
       id: `item-${i}`,
       height: 50,
       component: ({ index }: { index: number }) => (
-        <div className="glass-p-3 border-b border-white/10">
+        <div className="glass-glass-p-3 glass-glass-border-b glass-glass-border-white/10">
           Item {index + 1}
         </div>
       ),
@@ -65,7 +65,7 @@ export const DynamicHeight: Story = {
       id: `dynamic-${i}`,
       height: 30 + Math.random() * 50, // Random height between 30-80px
       component: ({ index }: { index: number }) => (
-        <div className="glass-p-3 border-b border-white/10">
+        <div className="glass-glass-p-3 glass-glass-border-b glass-glass-border-white/10">
           Dynamic Item {index + 1} - Height: {30 + Math.random() * 50}px
         </div>
       ),

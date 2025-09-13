@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { GlassButton } from '../button/GlassButton';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import {
   Select as GlassSelect,
   SelectTrigger as GlassSelectTrigger,
@@ -30,9 +30,9 @@ export function GlassQueryBuilder({ fields, value, onChange, className }: GlassQ
   const renderRule = (rule: Rule, idx: number, parent: RuleGroup) => {
     const field = fields.find(f => f.id === rule.field) || fields[0];
     return (
-      <div key={idx} className="flex items-center glass-gap-2">
+      <div key={idx} className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
         <GlassSelect value={rule.field} onValueChange={(v) => { rule.field = v; update(value); }}>
-          <GlassSelectTrigger className="w-40 h-8 glass-text-sm">
+          <GlassSelectTrigger className="w-40 glass-glass-h-8 glass-glass-text-sm">
             <GlassSelectValue placeholder="Field" />
           </GlassSelectTrigger>
           <GlassSelectContent>
@@ -40,7 +40,7 @@ export function GlassQueryBuilder({ fields, value, onChange, className }: GlassQ
           </GlassSelectContent>
         </GlassSelect>
         <GlassSelect value={rule.op} onValueChange={(v) => { rule.op = v; update(value); }}>
-          <GlassSelectTrigger className="w-28 h-8 glass-text-sm">
+          <GlassSelectTrigger className="w-28 glass-glass-h-8 glass-glass-text-sm">
             <GlassSelectValue placeholder="Op" />
           </GlassSelectTrigger>
           <GlassSelectContent>
@@ -51,7 +51,7 @@ export function GlassQueryBuilder({ fields, value, onChange, className }: GlassQ
         </GlassSelect>
         {field.type === 'select' ? (
           <GlassSelect value={rule.value ?? ''} onValueChange={(v) => { rule.value = v; update(value); }}>
-            <GlassSelectTrigger className="w-48 h-8 glass-text-sm">
+            <GlassSelectTrigger className="w-48 glass-glass-h-8 glass-glass-text-sm">
               <GlassSelectValue placeholder="Value" />
             </GlassSelectTrigger>
             <GlassSelectContent>
@@ -60,7 +60,7 @@ export function GlassQueryBuilder({ fields, value, onChange, className }: GlassQ
             </GlassSelectContent>
           </GlassSelect>
         ) : (
-          <input value={rule.value ?? ''} onChange={(e) => { rule.value = e.target.value; update(value); }} className="bg-transparent border border-white/20 glass-radius-md glass-px-2 glass-py-1 glass-text-sm" />
+          <input value={rule.value ?? ''} onChange={(e) => { rule.value = e.target.value; update(value); }} className="glass-glass-bg-transparent glass-glass-border glass-glass-border-white/20 glass-radius-md glass-glass-px-2 glass-glass-py-1 glass-glass-text-sm" />
         )}
         <GlassButton size="sm" variant="ghost" onClick={(e) => { parent.rules.splice(idx, 1); update(value); }}>Remove</GlassButton>
       </div>
@@ -68,10 +68,10 @@ export function GlassQueryBuilder({ fields, value, onChange, className }: GlassQ
   };
 
   const renderGroup = (group: RuleGroup, parent?: RuleGroup) => (
-    <div className="glass-radius-xl border border-white/20 glass-p-3 glass-gap-2">
-      <div className="flex items-center glass-gap-2">
+    <div className="glass-radius-xl glass-glass-border glass-glass-border-white/20 glass-glass-p-3 glass-glass-gap-2">
+      <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
         <GlassSelect value={group.combinator} onValueChange={(v) => { group.combinator = v as any; update(value); }}>
-          <GlassSelectTrigger className="w-24 h-8 glass-text-sm">
+          <GlassSelectTrigger className="w-24 glass-glass-h-8 glass-glass-text-sm">
             <GlassSelectValue />
           </GlassSelectTrigger>
           <GlassSelectContent>
@@ -83,7 +83,7 @@ export function GlassQueryBuilder({ fields, value, onChange, className }: GlassQ
         <GlassButton size="sm" variant="ghost" onClick={(e) => { group.rules.push({ combinator: 'AND', rules: [] }); update(value); }}>+ Group</GlassButton>
         {parent && <GlassButton size="sm" variant="ghost" onClick={(e) => { parent.rules.splice(parent.rules.indexOf(group), 1); update(value); }}>Remove</GlassButton>}
       </div>
-      <div className="glass-gap-2">
+      <div className="glass-glass-gap-2">
         {group.rules.map((r, i) => isGroup(r) ? (
           <div key={i}>{renderGroup(r, group)}</div>
         ) : renderRule(r as Rule, i, group))}

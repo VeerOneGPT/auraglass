@@ -282,6 +282,143 @@ module.exports = {
           }
         };
       }
+    },
+
+    // Disallow raw Tailwind-like utility classes; enforce glass tokens or cn() with tokens
+    'no-raw-tailwind': {
+      meta: {
+        type: 'problem',
+        docs: {
+          description: 'Disallow raw utility classes (e.g., tailwind) in className. Use glass-* utilities or tokenized helpers.',
+          category: 'Design System',
+          recommended: true
+        },
+        fixable: 'code',
+        schema: [
+          {
+            type: 'object',
+            properties: {
+              allow: { type: 'array', items: { type: 'string' } },
+              map: { type: 'object' }
+            },
+            additionalProperties: true
+          }
+        ],
+        messages: {
+          noRawTailwind: 'Raw utility class "{{klass}}" detected. Replace with glass-* utility or design token.',
+        }
+      },
+      create(context) {
+        const options = context.options[0] || {};
+        const allowList = new Set(options.allow || ['glass-', 'sb-', 'storybook-']);
+        const replaceMap = Object.assign({
+          // spacing
+          'p-': 'glass-p-', 'px-': 'glass-px-', 'py-': 'glass-py-',
+          'm-': 'glass-m-', 'mx-': 'glass-mx-', 'my-': 'glass-my-',
+          'gap-': 'glass-gap-',
+          // radius
+          'rounded-full': 'glass-radius-full',
+          'rounded-xl': 'glass-radius-xl',
+          'rounded-lg': 'glass-radius-lg',
+          'rounded-md': 'glass-radius-md',
+          'rounded-sm': 'glass-radius-sm',
+          'rounded': 'glass-radius',
+          // text sizes/colors
+          'text-xs': 'glass-text-xs', 'text-sm': 'glass-text-sm', 'text-base': 'glass-text-base',
+          'text-lg': 'glass-text-lg', 'text-xl': 'glass-text-xl', 'text-2xl': 'glass-text-2xl', 'text-3xl': 'glass-text-3xl',
+          'text-4xl': 'glass-text-4xl', 'text-5xl': 'glass-text-5xl',
+          'text-white': 'glass-text-primary', 'text-black': 'glass-text-inverse',
+          'text-gray-500': 'glass-text-secondary', 'text-gray-600': 'glass-text-secondary', 'text-gray-700': 'glass-text-secondary',
+          // bg & border
+          'bg-white': 'glass-surface-subtle', 'bg-black': 'glass-surface-dark',
+          'bg-gray-50': 'glass-surface-subtle', 'bg-gray-100': 'glass-surface-muted',
+          'bg-blue-500': 'glass-surface-primary', 'bg-green-500': 'glass-surface-success', 'bg-yellow-500': 'glass-surface-warning', 'bg-red-500': 'glass-surface-danger',
+          'border-gray-200': 'glass-border-subtle', 'border-gray-300': 'glass-border-subtle', 'border': 'glass-border',
+          // shadow
+          'shadow': 'glass-shadow', 'shadow-sm': 'glass-shadow-sm', 'shadow-md': 'glass-shadow-md', 'shadow-lg': 'glass-shadow-lg', 'shadow-xl': 'glass-shadow-xl',
+          // layout & display
+          'flex': 'glass-flex', 'inline-flex': 'glass-inline-flex', 'grid': 'glass-grid', 'inline-grid': 'glass-inline-grid',
+          'items-center': 'glass-items-center', 'items-start': 'glass-items-start', 'items-end': 'glass-items-end',
+          'justify-center': 'glass-justify-center', 'justify-between': 'glass-justify-between', 'justify-start': 'glass-justify-start', 'justify-end': 'glass-justify-end',
+          'w-full': 'glass-w-full', 'h-full': 'glass-h-full', 'min-w-0': 'glass-min-w-0', 'min-h-0': 'glass-min-h-0',
+        }, options.map || {});
+
+        function isAllowed(klass) {
+          for (const prefix of allowList) {
+            if (klass.startsWith(prefix)) return true;
+          }
+          return false;
+        }
+
+        function transformClasses(text) {
+          const parts = text.split(/\s+/).filter(Boolean);
+          const transformed = parts.map(k => {
+            if (isAllowed(k)) return k;
+            // grid-cols-N
+            const gridColsMatch = k.match(/^grid-cols-(\d{1,2})$/);
+            if (gridColsMatch) return `glass-grid-cols-${gridColsMatch[1]}`;
+            // simple replacements
+            for (const [from, to] of Object.entries(replaceMap)) {
+              if (k === from || k.startsWith(from)) {
+                return k.replace(from, to);
+              }
+            }
+            return k; // return as-is; linter will still report
+          });
+          return transformed.join(' ');
+        }
+
+        return {
+          JSXAttribute(node) {
+            if (!node.name || node.name.name !== 'className') return;
+            if (!node.value) return;
+            if (node.value.type === 'Literal' && typeof node.value.value === 'string') {
+              const classText = node.value.value;
+              const classes = classText.split(/\s+/).filter(Boolean);
+              for (const klass of classes) {
+                if (!isAllowed(klass) && !klass.startsWith('glass-')) {
+                  context.report({
+                    node: node.value,
+                    messageId: 'noRawTailwind',
+                    data: { klass },
+                    fix(fixer) {
+                      const replaced = transformClasses(classText);
+                      return fixer.replaceText(node.value, `'${replaced}'`);
+                    }
+                  });
+                  break;
+                }
+              }
+            }
+          }
+        };
+      }
+    },
+
+    // Disallow inline style attribute in JSX for design-system-governed props
+    'no-inline-style-attr': {
+      meta: {
+        type: 'problem',
+        docs: {
+          description: 'Disallow inline style attribute; use tokens, glass utilities, or mixins.',
+          category: 'Design System',
+          recommended: true
+        },
+        fixable: null,
+        schema: [],
+        messages: {
+          noInlineStyle: 'Inline style attribute is prohibited. Use tokens or glass utilities.'
+        }
+      },
+      create(context) {
+        return {
+          JSXAttribute(node) {
+            if (node.name && node.name.name === 'style') {
+              context.report({ node, messageId: 'noInlineStyle' });
+            }
+          }
+        };
+      }
     }
   }
 };

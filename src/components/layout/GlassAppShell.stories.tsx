@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassAppShell } from './GlassAppShell';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassAppShell> = {
   title: 'Components/Layout/GlassAppShell',
@@ -36,7 +36,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args: any) => (
-    <div className="flex flex-wrap glass-gap-4">
+    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4">
       <GlassAppShell {...args}>
         Default
       </GlassAppShell>

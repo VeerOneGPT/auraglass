@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { forwardRef, useEffect, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -189,11 +189,11 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
 
       const itemContent = (
         <>
-          <div className="flex items-center glass-gap-3 flex-1 min-w-0">
-            <div className="flex-shrink-0 glass-text-lg">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3 glass-glass-flex-1 glass-glass-min-w-0">
+            <div className="glass-glass-flex-shrink-0 glass-glass-text-lg">
               {item?.icon}
             </div>
-            <span className="font-medium truncate">
+            <span className="glass-glass-font-medium glass-glass-truncate">
               {item?.label}
             </span>
             {item?.badge && (
@@ -207,7 +207,7 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
             )}
           </div>
           {hasChildren && (
-            <div className="flex-shrink-0 glass-ml-2">
+            <div className="glass-glass-flex-shrink-0 glass-ml-2">
               <div className={cn(
                 'transition-transform duration-200',
                 isExpanded && 'rotate-90'
@@ -254,8 +254,8 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
         <div key={section.id}>
           {/* Section header */}
           {section.label && (
-            <div className="glass-px-4 glass-py-2">
-              <h3 className="glass-text-xs font-medium glass-text-secondary uppercase tracking-wide">
+            <div className="glass-glass-px-4 glass-glass-py-2">
+              <h3 className="glass-glass-text-xs glass-glass-font-medium glass-text-secondary glass-glass-uppercase tracking-wide">
                 {section.label}
               </h3>
             </div>
@@ -293,7 +293,7 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
         {showBackdrop && open && (
           <Motion
             preset="fadeIn"
-            className="fixed inset-0 bg-black/50 backdrop-blur-md z-[100]"
+            className="glass-glass-fixed glass-glass-inset-0 glass-surface-dark/50 backdrop-blur-md z-[100]"
             onClick={handleBackdropClick}
           />
         )}
@@ -318,15 +318,15 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
           {...props}
         >
           {/* Header */}
-          <div className="flex items-center justify-between glass-p-4 border-b border-border/20">
-            <HStack space="sm" align="center" className="flex-1 min-w-0">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-p-4 glass-glass-border-b glass-glass-border-glass-glass-border/20">
+            <HStack space="sm" align="center" className="glass-glass-flex-1 glass-glass-min-w-0">
               {logo && (
-                <div className="flex-shrink-0">
+                <div className="glass-glass-flex-shrink-0">
                   {logo}
                 </div>
               )}
               {title && (
-                <h1 className="font-bold glass-text-lg text-foreground truncate">
+                <h1 className="font-bold glass-glass-text-lg glass-glass-text-primary glass-glass-truncate">
                   {title}
                 </h1>
               )}
@@ -342,7 +342,7 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
           </div>
 
           {/* Navigation content */}
-          <nav className="flex-1 glass-p-4 overflow-y-auto">
+          <nav className="glass-glass-flex-1 glass-glass-p-4 glass-glass-overflow-y-auto">
             <VStack space="lg">
               {navigation.map(section => renderSection(section))}
               {children}
@@ -351,7 +351,7 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
 
           {/* Footer */}
           {footer && (
-            <div className="glass-p-4 border-t border-border/20">
+            <div className="glass-glass-p-4 glass-glass-border-t glass-glass-border-glass-glass-border/20">
               {footer}
             </div>
           )}

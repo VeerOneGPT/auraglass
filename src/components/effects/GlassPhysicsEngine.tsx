@@ -4,7 +4,7 @@
  */
 
 import React, { useRef, useEffect, useCallback, useState } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { motion, useAnimation, useMotionValue, useSpring, useTransform } from 'framer-motion';
 
 // Physics simulation parameters
@@ -59,7 +59,7 @@ const defaultPhysics: PhysicsConfig = {
 
 export const GlassPhysicsEngine: React.FC<GlassPhysicsEngineProps> = ({
   children,
-  className = '',
+  className='',
   interaction = 'ripple',
   physics = {},
   enabled = true,

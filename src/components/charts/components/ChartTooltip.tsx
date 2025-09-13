@@ -1,5 +1,5 @@
 // Typography tokens available via typography.css (imported in index.css)
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../../lib/utilsComprehensive';
 import React from 'react';
 
 export interface TooltipData {
@@ -45,7 +45,7 @@ export const ChartTooltip: React.FC<ChartTooltipProps> = ({
       : tooltipStyle === 'minimal'
         ? 'rgba(255, 255, 255, 0.95)'
         : '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}',
-    backdropFilter: tooltipStyle === 'frosted' ? 'blur(8px)' : 'none',
+    // Use createGlassStyle() instead,
     border: tooltipStyle === 'frosted'
       ? '1px solid ${glassStyles.borderColor || "rgba(255, 255, 255, 0.2)"}'
       : '1px solid rgba(0, 0, 0, 0.1)',

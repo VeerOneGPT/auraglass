@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { OptimizedGlass } from '../../primitives';
 import { useA11yId } from '@/utils/a11y';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -70,11 +70,11 @@ export const GlassCommandBar = forwardRef<HTMLDivElement, GlassCommandBarProps>(
               it.disabled && 'opacity-50 cursor-not-allowed'
             )}
           >
-            <span className="inline-flex items-center glass-gap-2">
+            <span className="glass-inline-glass-glass-flex glass-glass-items-center glass-glass-gap-2">
               {it.icon}
               {it.label}
               {it.shortcut && (
-                <kbd className="glass-ml-1 glass-text-xs glass-px-1 glass-py-0.5 glass-radius-md bg-white/10 border border-white/15">{it.shortcut}</kbd>
+                <kbd className="glass-ml-1 glass-glass-text-xs glass-glass-px-1 glass-glass-py-0.5 glass-radius-md glass-surface-subtle/10 glass-glass-border glass-glass-border-white/15">{it.shortcut}</kbd>
               )}
             </span>
           </button>

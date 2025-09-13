@@ -1,4 +1,5 @@
 import React from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '@/lib/utils';
 
 // Localized semantic colors to avoid cross-package imports
@@ -59,12 +60,7 @@ export const chartGlass = {
   label: (text: string) => ({ value: text, fill: 'rgba(255,255,255,0.8)', fontSize: 14 }),
   tooltip: {
     cursor: { stroke: 'rgba(255,255,255,0.12)' },
-    contentStyle: {
-      background: 'rgba(14,17,24,0.95)',
-      border: '1px solid ${glassStyles.borderColor || "rgba(255, 255, 255, 0.15)"}',
-      borderRadius: 10,
-      color: '#fff',
-    } as React.CSSProperties,
+    contentStyle: createGlassStyle({ intent: "neutral", elevation: "level2" }) as React.CSSProperties,
     itemStyle: { color: '#fff' } as React.CSSProperties,
     labelStyle: { color: 'rgba(255,255,255,0.85)' } as React.CSSProperties,
   },

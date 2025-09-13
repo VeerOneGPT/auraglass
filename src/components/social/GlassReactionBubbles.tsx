@@ -74,7 +74,7 @@ export const GlassReactionBubbles = forwardRef<HTMLDivElement, GlassReactionBubb
     interactive = true,
     onReactionAdd,
     onReactionClick,
-    className = '',
+    className='',
     ...props
   }, ref) => {
     const [bubbles, setBubbles] = useState<ReactionBubble[]>(reactions)

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassUserPresence } from './GlassUserPresence';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 import { fn } from '@storybook/test';
 
 const meta: Meta<typeof GlassUserPresence> = {

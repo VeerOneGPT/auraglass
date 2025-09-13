@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { forwardRef, useMemo, useState, useCallback, useEffect, useRef } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { IconButton } from '../button/GlassButton';
@@ -478,15 +478,15 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
       <div ref={ref} className={cn('w-full', className)}>
         {/* Table header with search and actions */}
         {(searchable || actions || filterable) && (
-          <div className="flex items-center justify-between glass-gap-4 glass-mb-4">
-            <div className="flex items-center glass-gap-4">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-gap-4 glass-glass-mb-4">
+            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
               {searchable && (
                 <GlassInput
                   placeholder={searchPlaceholder}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   leftIcon={
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="glass-glass-w-4 glass-glass-h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                     </svg>
                   }
@@ -497,7 +497,7 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
             </div>
 
             {actions && (
-              <div className="flex items-center glass-gap-2">
+              <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
                 {actions}
               </div>
             )}
@@ -518,8 +518,8 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
             variant === 'bordered' && 'border border-border/20'
           )}
         >
-          <div className="overflow-x-auto">
-            <table className="w-full">
+          <div className="glass-overflow-x-auto">
+            <table className="glass-glass-w-full">
               {/* Table header */}
               <thead
                 className={cn(
@@ -533,7 +533,7 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
                       <GlassInput type="checkbox"
                         checked={isAllSelected}
                         onChange={(e) => handleSelectAll(e.target.checked)}
-                        className="glass-radius-md border-border focus:ring-primary"
+                        className="glass-radius-md glass-glass-border-glass-glass-border focus:ring-primary"
                       />
                     </th>
                   )}
@@ -558,11 +558,11 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
                         style={{ width: column.width }}
                         onClick={(e) => handleSort(columnId)}
                       >
-                        <div className="flex items-center glass-gap-2">
+                        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
                           <span>{headerContent}</span>
 
                           {(column.sortable || sortable) && (
-                            <div className="flex flex-col">
+                            <div className="glass-glass-flex glass-glass-flex-col">
                               <svg
                                 className={cn(
                                   'w-3 h-3 -glass-mb-1 transition-colors',
@@ -604,8 +604,8 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
                       colSpan={columns.length + (selectable ? 1 : 0)}
                       className={cn('text-center', cellPaddingClasses[validSize])}
                     >
-                      <div className="flex items-center justify-center glass-gap-2 py-8">
-                        <div className="w-4 h-4 border-2 border-primary border-t-transparent glass-radius-full animate-spin" />
+                      <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-gap-2 glass-glass-py-8">
+                        <div className="glass-glass-w-4 glass-glass-h-4 glass-glass-border-2 glass-glass-border-primary glass-glass-border-t-transparent glass-radius-full animate-spin" />
                         <span className="glass-text-secondary">Loading...</span>
                       </div>
                     </td>
@@ -617,11 +617,11 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
                       className={cn('text-center glass-text-secondary py-8', cellPaddingClasses[validSize])}
                     >
                       {emptyState ? (
-                        <div className="flex flex-col items-center glass-gap-2">
+                        <div className="glass-glass-flex glass-glass-flex-col glass-glass-items-center glass-glass-gap-2">
                           {emptyState.icon}
-                          <div className="font-medium">{emptyState.message || emptyMessage}</div>
+                          <div className="glass-glass-font-medium">{emptyState.message || emptyMessage}</div>
                           {emptyState.description && (
-                            <div className="glass-text-sm glass-text-secondary">{emptyState.description}</div>
+                            <div className="glass-glass-text-sm glass-text-secondary">{emptyState.description}</div>
                           )}
                         </div>
                       ) : (
@@ -658,7 +658,7 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
                             <GlassInput type="checkbox"
                               checked={isSelected}
                               onChange={(e) => handleRowSelection(rowId, e.target.checked)}
-                              className="glass-radius-md border-border focus:ring-primary"
+                              className="glass-radius-md glass-glass-border-glass-glass-border focus:ring-primary"
                               onClick={(e) => e.stopPropagation()}
                             />
                           </td>
@@ -703,18 +703,18 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
 
           {/* Pagination */}
           {pagination && !loading && (paginatedData || []).length > 0 && (
-            <div className="flex items-center justify-between glass-px-4 glass-py-3 border-t border-border/10 bg-muted/5">
-              <div className="flex items-center glass-gap-2">
-                <span className="glass-text-sm glass-text-secondary">
+            <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-px-4 glass-glass-py-3 glass-glass-border-t glass-glass-border-glass-glass-border/10 bg-muted/5">
+              <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+                <span className="glass-glass-text-sm glass-text-secondary">
                   Showing {(currentPage - 1) * pageSize + 1} to{' '}
                   {Math.min(currentPage * pageSize, (sortedData || []).length)} of{' '}
                   {(sortedData || []).length} results
                 </span>
               </div>
 
-              <div className="flex items-center glass-gap-4">
-                <div className="flex items-center glass-gap-2">
-                  <span className="glass-text-sm glass-text-secondary">Rows per page:</span>
+              <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
+                <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+                  <span className="glass-glass-text-sm glass-text-secondary">Rows per page:</span>
                   <GlassSelect
                     value={pageSize}
                     onChange={(e) => {
@@ -729,7 +729,7 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
                   />
                 </div>
 
-                <div className="flex items-center glass-gap-1">
+                <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
                   <IconButton
                     icon="←"
                     variant="ghost"
@@ -747,7 +747,7 @@ const GlassDataTableInner = forwardRef<HTMLDivElement, GlassDataTableProps>(
                     aria-label="Previous page"
                   />
 
-                  <span className="glass-px-3 glass-py-1 glass-text-sm">
+                  <span className="glass-glass-px-3 glass-glass-py-1 glass-glass-text-sm">
                     {currentPage} of {totalPages}
                   </span>
 

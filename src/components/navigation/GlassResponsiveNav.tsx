@@ -3,7 +3,7 @@
 import React, { forwardRef, useState, useEffect } from 'react';
 import { GlassMobileNav, MobileNavItem, MobileNavSection } from './GlassMobileNav';
 import { GlassBottomNav, BottomNavItem } from './GlassBottomNav';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { useA11yId } from '@/utils/a11y';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 

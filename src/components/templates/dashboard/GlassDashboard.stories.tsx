@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassDashboard } from './GlassDashboard';
-import { cn } from '@/lib/utils';
+import { cn } from '../../../lib/utils';
 
 const meta: Meta<typeof GlassDashboard> = {
   title: 'Components/Dashboard/GlassDashboard',
@@ -103,7 +103,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args: any) => (
-    <div className="w-full h-screen">
+    <div className="glass-glass-w-full h-screen">
       <GlassDashboard {...args} />
     </div>
   ),

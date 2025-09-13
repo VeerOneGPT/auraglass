@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassBadge } from './GlassBadge';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassBadge> = {
   title: 'Components/Data-display/GlassBadge',
@@ -51,7 +51,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-wrap glass-gap-4 items-center">
+    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4 glass-glass-items-center">
       <GlassBadge {...args} variant="primary">Primary</GlassBadge>
       <GlassBadge {...args} variant="secondary">Secondary</GlassBadge>
       <GlassBadge {...args} variant="success">Success</GlassBadge>

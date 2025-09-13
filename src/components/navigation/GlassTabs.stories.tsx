@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassTabs } from './GlassTabs';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassTabs> = {
   title: 'Components/Navigation/GlassTabs',
@@ -36,7 +36,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args: any) => (
-    <div className="flex flex-wrap glass-gap-4">
+    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4">
       <GlassTabs {...args}>
         Default
       </GlassTabs>

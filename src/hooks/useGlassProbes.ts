@@ -188,7 +188,7 @@ export function useGlassDebug(): {
           height: window.innerHeight
         },
         support: {
-          backdropFilter: CSS.supports('backdrop-filter', 'blur(1px)'),
+          // Use createGlassStyle() instead,
           webkitBackdropFilter: CSS.supports('-webkit-backdrop-filter', 'blur(1px)')
         }
       }

@@ -1,5 +1,5 @@
 // Typography tokens available via typography.css (imported in index.css)
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../../lib/utilsComprehensive';
 import React, { useRef, useState, useEffect } from 'react';
 import { createGlassStyle } from '../../../core/mixins/glassMixins';
 

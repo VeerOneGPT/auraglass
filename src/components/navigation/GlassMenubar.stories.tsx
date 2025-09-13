@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassMenubar } from './GlassMenubar';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassMenubar> = {
   title: 'Components/Navigation/GlassMenubar',
@@ -100,17 +100,17 @@ export const Vertical: Story = {
 
 export const DifferentSizes: Story = {
   render: (args) => (
-    <div className="glass-gap-4">
+    <div className="glass-glass-gap-4">
       <div>
-        <h3 className="glass-text-sm font-semibold glass-mb-2">Small</h3>
+        <h3 className="glass-glass-text-sm glass-glass-font-semibold glass-glass-mb-2">Small</h3>
         <GlassMenubar {...args} size="sm" />
       </div>
       <div>
-        <h3 className="glass-text-sm font-semibold glass-mb-2">Medium</h3>
+        <h3 className="glass-glass-text-sm glass-glass-font-semibold glass-glass-mb-2">Medium</h3>
         <GlassMenubar {...args} size="md" />
       </div>
       <div>
-        <h3 className="glass-text-sm font-semibold glass-mb-2">Large</h3>
+        <h3 className="glass-glass-text-sm glass-glass-font-semibold glass-glass-mb-2">Large</h3>
         <GlassMenubar {...args} size="lg" />
       </div>
     </div>

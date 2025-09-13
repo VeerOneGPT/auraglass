@@ -73,9 +73,9 @@ const ActionRoot = styled.div<{
   height: ${props =>
     props.$size === 'small' ? '32px' : props.$size === 'large' ? '48px' : '40px'};
   border-radius: 50%;
-  background-color: ${props => (props.$glass ? 'rgba(36, 36, 36, 0.5)' : 'rgba(36, 36, 36, 0.85)')};
+  background-color: ${props => (props.$glass ? 'var(--glass-bg-default)' : 'rgba(36, 36, 36, 0.85)')};
   color: ${AURA_GLASS.surfaces.neutral.level2.text.primary};
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--glass-elev-2);
   cursor: ${props => (props.$disabled ? 'default' : 'pointer')};
   opacity: ${props => (props.$visible ? 1 : 0)};
   transform: ${props => { if (props.$visible) return 'translate3d(0,0,0) scale(1)'; const d = 10; switch (props.$direction) { case 'up': return `translate3d(0, ${d}px, 0) scale(0.6)`; case 'down': return `translate3d(0, -${d}px, 0) scale(0.6)`; case 'left': return `translate3d(${d}px, 0, 0) scale(0.6)`; case 'right': return `translate3d(-${d}px, 0, 0) scale(0.6)`; default: return 'scale(0.6)'; } }};
@@ -88,10 +88,9 @@ const ActionRoot = styled.div<{
   ${props =>
     props.$glass &&
     css`
-      background-color: ${AURA_GLASS.surfaces.neutral.level2.surface.base};
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid ${AURA_GLASS.surfaces.neutral.level2.border.color};
+      backdrop-filter: var(--glass-backdrop-blur);
+      -webkit-backdrop-filter: var(--glass-backdrop-blur);
+      border: 1px solid var(--glass-border-default);
     `}
   
   /* Transitions */
@@ -118,13 +117,13 @@ const ActionRoot = styled.div<{
     !props.$disabled &&
     `
     &:hover {
-      background-color: ${props.$glass ? 'rgba(48, 48, 48, 0.5)' : 'rgba(48, 48, 48, 0.85)'};
+      background-color: ${props.$glass ? 'var(--glass-bg-hover)' : 'rgba(48, 48, 48, 0.85)'};
       transform: translate3d(0,0,0) scale(1.02);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.26), inset 0 1px 0 ${AURA_GLASS.surfaces.neutral.level2.border.color};
+      box-shadow: var(--glass-elev-2);
     }
     &:active {
       transform: translate3d(0,0,0) scale(0.96);
-      box-shadow: inset 0 6px 12px rgba(0,0,0,0.25);
+      box-shadow: var(--glass-elev-2);
     }
   `}
 `;
@@ -137,13 +136,13 @@ const TooltipWrapper = styled.div<{
 }>`
   position: absolute;
   pointer-events: none;
-  background-color: rgba(36, 36, 36, 0.85);
+  background: var(--glass-overlay-bg);
   color: ${AURA_GLASS.surfaces.neutral.level2.text.primary};
   font-size: 0.75rem;
   padding: 4px 8px;
   border-radius: 4px;
   white-space: nowrap;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--glass-elev-2);
   transition: ${props => (!props.$reducedMotion ? 'opacity 0.2s, transform 0.2s' : 'none')};
   opacity: ${props => (props.$visible && props.$showTooltip ? 1 : 0)};
 
@@ -206,28 +205,28 @@ const TooltipWrapper = styled.div<{
             top: 100%;
             left: 50%;
             margin-left: -4px;
-            border-top-color: rgba(36, 36, 36, 0.85);
+            border-top-color: var(--glass-overlay-bg);
           `;
         case 'down':
           return `
             bottom: 100%;
             left: 50%;
             margin-left: -4px;
-            border-bottom-color: rgba(36, 36, 36, 0.85);
+            border-bottom-color: var(--glass-overlay-bg);
           `;
         case 'left':
           return `
             left: 100%;
             top: 50%;
             margin-top: -4px;
-            border-left-color: rgba(36, 36, 36, 0.85);
+            border-left-color: var(--glass-overlay-bg);
           `;
         case 'right':
           return `
             right: 100%;
             top: 50%;
             margin-top: -4px;
-            border-right-color: rgba(36, 36, 36, 0.85);
+            border-right-color: var(--glass-overlay-bg);
           `;
         default:
           return '';

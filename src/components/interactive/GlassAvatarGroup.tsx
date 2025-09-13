@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { useA11yId } from '../../utils/a11y';
 
 export interface AvatarItem { 
@@ -49,16 +49,16 @@ export const GlassAvatarGroup = forwardRef<HTMLDivElement, GlassAvatarGroupProps
       {shown.map((u, i) => (
         <div 
           key={u.name+i} 
-          className="relative" 
+          className="glass-glass-relative" 
           style={{ marginLeft: i===0?0:overlap }}
           role="img"
           aria-label={`${u.name}${u.status ? ` (${u.status})` : ''}`}
         >
           {u.avatar ? (
-            <img src={u.avatar} alt={u.name} width={s} height={s} className="glass-radius-full object-cover border border-white/20" />
+            <img src={u.avatar} alt={u.name} width={s} height={s} className="glass-radius-full object-cover glass-glass-border glass-glass-border-white/20" />
           ) : (
-            <div className="glass-radius-full bg-white/10 border border-white/20 flex items-center justify-center" style={{ width: s, height: s }}>
-              <span className="glass-text-xs glass-text-primary/80" aria-hidden="true">{u.name.charAt(0)}</span>
+            <div className="glass-radius-full glass-surface-subtle/10 glass-glass-border glass-glass-border-white/20 glass-glass-flex glass-glass-items-center glass-glass-justify-center" style={{ width: s, height: s }}>
+              <span className="glass-glass-text-xs glass-glass-text-primary/80" aria-hidden="true">{u.name.charAt(0)}</span>
             </div>
           )}
           {u.status && (
@@ -77,12 +77,12 @@ export const GlassAvatarGroup = forwardRef<HTMLDivElement, GlassAvatarGroupProps
       ))}
       {rest>0 && (
         <div 
-          className="glass-radius-full bg-white/10 border border-white/20 flex items-center justify-center ml-[-10px]" 
+          className="glass-radius-full glass-surface-subtle/10 glass-glass-border glass-glass-border-white/20 glass-glass-flex glass-glass-items-center glass-glass-justify-center ml-[-10px]" 
           style={{ width: s, height: s }}
           role="img"
           aria-label={`${rest} more users`}
         >
-          <span className="glass-text-xs glass-text-primary/80" aria-hidden="true">+{rest}</span>
+          <span className="glass-glass-text-xs glass-glass-text-primary/80" aria-hidden="true">+{rest}</span>
         </div>
       )}
     </div>

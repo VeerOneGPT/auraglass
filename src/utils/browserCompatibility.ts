@@ -1,4 +1,5 @@
 import React from 'react';
+import { createGlassStyle } from '../core/mixins/glassMixins';
 // Browser compatibility detection and fallbacks
 
 export interface BrowserInfo {
@@ -37,7 +38,51 @@ export interface BrowserCapabilities {
 }
 
 // Browser detection
+let __cachedBrowserInfo: BrowserInfo | null = null;
+let __cachedBrowserCapabilities: BrowserCapabilities | null = null;
+let __lastBrowserDetectTs = 0;
+const BROWSER_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
+const probeGL = (): { webgl: boolean; webgl2: boolean } => {
+  if (typeof document === 'undefined') return { webgl: false, webgl2: false };
+  const canvas = document.createElement('canvas');
+  canvas.width = 1;
+  canvas.height = 1;
+  const attrs: WebGLContextAttributes & { powerPreference?: any } = {
+    alpha: false,
+    antialias: false,
+    depth: false,
+    stencil: false,
+    preserveDrawingBuffer: false,
+    desynchronized: true as any,
+    failIfMajorPerformanceCaveat: true,
+    powerPreference: 'low-power',
+  };
+  let gl: WebGLRenderingContext | null = null;
+  let gl2: WebGL2RenderingContext | null = null;
+  try { gl2 = canvas.getContext('webgl2', attrs) as WebGL2RenderingContext | null; } catch { gl2 = null; }
+  if (!gl2) {
+    try {
+      gl = (canvas.getContext('webgl', attrs) as WebGLRenderingContext | null) ||
+           (canvas.getContext('experimental-webgl', attrs) as WebGLRenderingContext | null) || null;
+    } catch { gl = null; }
+  }
+  const webgl2 = !!gl2;
+  const webgl = webgl2 || !!gl;
+  try {
+    const ctx: any = gl2 || gl;
+    const lose = ctx && typeof ctx.getExtension === 'function' && ctx.getExtension('WEBGL_lose_context');
+    if (lose && typeof lose.loseContext === 'function') lose.loseContext();
+  } catch {}
+  try { canvas.width = canvas.height = 0; canvas.remove(); } catch {}
+  return { webgl, webgl2 };
+};
+
 export const detectBrowser = (): BrowserInfo => {
+  const now = Date.now();
+  if (__cachedBrowserInfo && now - __lastBrowserDetectTs < BROWSER_CACHE_TTL_MS) {
+    return __cachedBrowserInfo;
+  }
   const ua = navigator.userAgent;
   const platform = navigator.platform;
 
@@ -82,7 +127,7 @@ export const detectBrowser = (): BrowserInfo => {
   // Detect capabilities
   const supports = detectCapabilities();
 
-  return {
+  const info: BrowserInfo = {
     name,
     version,
     engine,
@@ -90,17 +135,26 @@ export const detectBrowser = (): BrowserInfo => {
     touch,
     supports,
   };
+  __cachedBrowserInfo = info;
+  __lastBrowserDetectTs = now;
+  return info;
 };
 
 // Capability detection
 export const detectCapabilities = (): BrowserCapabilities => {
+  const now = Date.now();
+  if (__cachedBrowserCapabilities && now - __lastBrowserDetectTs < BROWSER_CACHE_TTL_MS) {
+    return __cachedBrowserCapabilities;
+  }
   const testElement = document.createElement('div');
   const canvas = document.createElement('canvas');
   const video = document.createElement('video');
   const audio = document.createElement('audio');
 
-  return {
-    backdropFilter: 'backdropFilter' in testElement.style || 'webkitBackdropFilter' in testElement.style,
+  const { webgl, webgl2 } = probeGL();
+
+  const caps: BrowserCapabilities = {
+    backdropFilter: 'backdropFilter' in (testElement.style as any) || 'webkitBackdropFilter' in (testElement.style as any),
     cssGrid: 'grid' in testElement.style,
     flexbox: 'flex' in testElement.style,
     cssVariables: 'CSS' in window && 'supports' in window.CSS && window.CSS.supports('--test', 'value'),
@@ -112,20 +166,8 @@ export const detectCapabilities = (): BrowserCapabilities => {
         return false;
       }
     })(),
-    webgl: (() => {
-      try {
-        return !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
-      } catch {
-        return false;
-      }
-    })(),
-    webgl2: (() => {
-      try {
-        return !!canvas.getContext('webgl2');
-      } catch {
-        return false;
-      }
-    })(),
+    webgl,
+    webgl2,
     webAnimations: 'animate' in testElement,
     intersectionObserver: 'IntersectionObserver' in window,
     resizeObserver: 'ResizeObserver' in window,
@@ -161,6 +203,10 @@ export const detectCapabilities = (): BrowserCapabilities => {
     video: !!video.canPlayType,
     audio: !!audio.canPlayType,
   };
+
+  __cachedBrowserCapabilities = caps;
+  __lastBrowserDetectTs = now;
+  return caps;
 };
 
 // Compatibility helpers
@@ -173,7 +219,7 @@ export const compatibilityHelpers = {
       case 'backdropFilter':
         if (!browser.supports.backdropFilter) {
           return {
-            background: 'rgba(255, 255, 255, 0.9)',
+            background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
             border: '1px solid rgba(0, 0, 0, 0.1)',
           };
         }
@@ -448,10 +494,7 @@ export const browserOptimizations = {
     optimizeBackdropFilter: () => {
       const browser = detectBrowser();
       if (browser.name === 'Firefox' && browser.version < 70) {
-        return {
-          background: 'rgba(255, 255, 255, 0.9)',
-          backdropFilter: 'none',
-        };
+        return createGlassStyle({ intent: "neutral", elevation: "level2" });
       }
       return {};
     },

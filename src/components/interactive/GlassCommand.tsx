@@ -2,7 +2,7 @@
 
 import { GlassInput } from '../input/GlassInput';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { Search } from 'lucide-react';
 import React, { createContext, useContext, useEffect, useRef, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
@@ -229,7 +229,7 @@ export const GlassCommand: React.FC<GlassCommandProps> = ({
                 performanceMode="high"
                 className="glass-radius-lg"
             >
-                <div className="glass-p-4">
+                <div className="glass-glass-p-4">
                     {/* Search Input */}
                     <GlassCommandInput
                         placeholder={placeholder}
@@ -242,14 +242,14 @@ export const GlassCommand: React.FC<GlassCommandProps> = ({
                     {/* Command List */}
                     <GlassCommandList maxHeight={maxHeight}>
                         {loading ? (
-                            <div className="flex items-center justify-center py-8">
-                                <div className="w-6 h-6 border-2 border-white/30 border-t-white/60 glass-radius-full animate-spin" />
+                            <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-py-8">
+                                <div className="glass-glass-w-6 glass-glass-h-6 glass-glass-border-2 glass-glass-border-white/30 glass-glass-border-t-white/60 glass-radius-full animate-spin" />
                             </div>
                         ) : (filteredItems?.length || 0) === 0 ? (
                             renderEmpty ? (
                                 renderEmpty()
                             ) : (
-                                <div className="text-center py-8 glass-text-primary/50">
+                                <div className="glass-glass-text-center glass-glass-py-8 glass-glass-text-primary/50">
                                     {emptyMessage}
                                 </div>
                             )
@@ -257,7 +257,7 @@ export const GlassCommand: React.FC<GlassCommandProps> = ({
                             Object.entries(groupedItems).map(([groupName, groupItems]) => (
                                 <div key={groupName}>
                                     {groupName && (
-                                        <div className="glass-px-3 glass-py-2 glass-text-xs font-medium glass-text-primary/60 border-b border-white/10">
+                                        <div className="glass-glass-px-3 glass-glass-py-2 glass-glass-text-xs glass-glass-font-medium glass-glass-text-primary/60 glass-glass-border-b glass-glass-border-white/10">
                                             {groupName}
                                         </div>
                                     )}
@@ -283,16 +283,16 @@ export const GlassCommand: React.FC<GlassCommandProps> = ({
                                                 ) : (
                                                     <>
                                                         {item?.icon && (
-                                                            <div className="flex items-center justify-center w-5 h-5 mr-3 glass-text-primary/70">
+                                                            <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-w-5 glass-glass-h-5 mr-3 glass-glass-text-primary/70">
                                                                 {item?.icon}
                                                             </div>
                                                         )}
-                                                        <div className="flex-1 min-w-0">
-                                                            <div className="glass-text-primary/90 font-medium truncate">
+                                                        <div className="glass-glass-flex-1 glass-glass-min-w-0">
+                                                            <div className="glass-glass-text-primary/90 glass-glass-font-medium glass-glass-truncate">
                                                                 {item?.label}
                                                             </div>
                                                             {item?.description && (
-                                                                <div className="glass-text-primary/60 glass-text-sm truncate">
+                                                                <div className="glass-glass-text-primary/60 glass-glass-text-sm glass-glass-truncate">
                                                                     {item?.description}
                                                                 </div>
                                                             )}
@@ -352,10 +352,10 @@ export const GlassCommandDialog: React.FC<GlassCommandDialogProps> = ({
     if (!open) return null;
 
     return (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center glass-p-4 bg-black/50 backdrop-blur-md">
+        <div className="glass-glass-fixed glass-glass-inset-0 z-[9999] glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-p-4 glass-surface-dark/50 backdrop-blur-md">
             <Motion
                 preset="scaleIn"
-                className="w-full max-w-lg"
+                className="glass-glass-w-full max-w-lg"
                 onAnimationEnd={() => {
                     // Focus first input when animation completes
                     const input = dialogRef.current?.querySelector('input');
@@ -388,8 +388,8 @@ export const GlassCommandInput: React.FC<GlassCommandInputProps> = ({
     };
 
     return (
-        <div className="relative glass-mb-4">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 glass-text-primary/50" />
+        <div className="glass-glass-relative glass-glass-mb-4">
+            <Search className="glass-glass-absolute left-3 glass--glass-top-1/2 transform -translate-y-1/2 glass-glass-w-4 glass-glass-h-4 glass-glass-text-primary/50" />
             <OptimizedGlass
                 variant="clear"
                 elevation={'level1'}

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { forwardRef, useCallback, useRef, useState } from 'react';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 import { OptimizedGlass } from '../../primitives';
@@ -472,7 +472,7 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
           >
             {/* Tick marks */}
             {showTicks && (
-              <div className="absolute inset-0">
+              <div className="glass-glass-absolute glass-glass-inset-0">
                 {tickMarks.map((tick, index) => {
                   const percentage = getPercentage(tick);
                   const position = orientation === 'horizontal'
@@ -505,11 +505,11 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
               style={getFillStyle()}
             >
               {/* Sheen sweep */}
-              <div className="absolute inset-0 glass-sheen" />
+              <div className="glass-glass-absolute glass-glass-inset-0 glass-sheen" />
             </div>
             
             {/* Background gradient */}
-            <div className="absolute inset-0 glass-radius-full bg-gradient-to-r from-transparent via-white/5 to-transparent" />
+            <div className="glass-glass-absolute glass-glass-inset-0 glass-radius-full glass-gradient-primary from-transparent via-white/5 to-transparent" />
           </div>
           
           {/* Thumbs */}

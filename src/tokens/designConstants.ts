@@ -1,4 +1,5 @@
 // Design system constants and configuration
+import { createGlassStyle } from '../core/mixins/glassMixins';
 
 export const DESIGN_SYSTEM = {
   name: 'AuraGlass',
@@ -311,11 +312,7 @@ export const GLASS = {
   variants: {
     frosted: {},
     dynamic: {},
-    clear: {
-      background: 'transparent',
-      backdropFilter: 'none',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-    },
+    clear: createGlassStyle({ intent: "neutral", elevation: "level2" }),
   },
 } as const;
 

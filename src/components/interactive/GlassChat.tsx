@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import {
     File,
     Hash,
@@ -512,62 +512,62 @@ export const GlassChat: React.FC<GlassChatProps> = ({
     }, [newMessage]);
 
     return (
-        <Motion preset="fadeIn" className="w-full h-full">
+        <Motion preset="fadeIn" className="glass-glass-w-full glass-glass-h-full">
             <GlassCard className={cn('flex flex-col h-full overflow-hidden', className)} {...props}>
                 {/* Header */}
-                <CardHeader className="pb-3 border-b border-white/10">
-                    <div className="flex items-center justify-between">
+                <CardHeader className="pb-3 glass-glass-border-b glass-glass-border-white/10">
+                    <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
                         <div>
-                            <CardTitle className="glass-text-primary glass-text-lg font-semibold flex items-center glass-gap-2">
-                                <Hash className="w-5 h-5" />
+                            <CardTitle className="glass-glass-text-primary glass-glass-text-lg glass-glass-font-semibold glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+                                <Hash className="glass-glass-w-5 glass-glass-h-5" />
                                 {title}
                             </CardTitle>
                             {subtitle && (
-                                <p className="glass-text-primary/60 glass-text-sm glass-mt-1">{subtitle}</p>
+                                <p className="glass-glass-text-primary/60 glass-glass-text-sm glass-mt-1">{subtitle}</p>
                             )}
                         </div>
 
-                        <div className="flex items-center glass-gap-2">
-                            <GlassButton variant="ghost" size="sm" className="glass-p-2">
-                                <Search className="w-4 h-4" />
+                        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+                            <GlassButton variant="ghost" size="sm" className="glass-glass-p-2">
+                                <Search className="glass-glass-w-4 glass-glass-h-4" />
                             </GlassButton>
 
-                            <GlassButton variant="ghost" size="sm" className="glass-p-2">
-                                <Phone className="w-4 h-4" />
+                            <GlassButton variant="ghost" size="sm" className="glass-glass-p-2">
+                                <Phone className="glass-glass-w-4 glass-glass-h-4" />
                             </GlassButton>
 
-                            <GlassButton variant="ghost" size="sm" className="glass-p-2">
-                                <Video className="w-4 h-4" />
+                            <GlassButton variant="ghost" size="sm" className="glass-glass-p-2">
+                                <Video className="glass-glass-w-4 glass-glass-h-4" />
                             </GlassButton>
 
-                            <GlassButton variant="ghost" size="sm" className="glass-p-2">
-                                <MoreVertical className="w-4 h-4" />
+                            <GlassButton variant="ghost" size="sm" className="glass-glass-p-2">
+                                <MoreVertical className="glass-glass-w-4 glass-glass-h-4" />
                             </GlassButton>
                         </div>
                     </div>
 
                     {/* Participant count */}
                     {participants.length > 0 && (
-                        <div className="flex items-center glass-gap-2 glass-mt-2">
-                            <Users className="w-4 h-4 glass-text-primary/60" />
-                            <span className="glass-text-primary/60 glass-text-sm">
+                        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-mt-2">
+                            <Users className="glass-glass-w-4 glass-glass-h-4 glass-glass-text-primary/60" />
+                            <span className="glass-glass-text-primary/60 glass-glass-text-sm">
                                 {participants.filter(p => p.status === 'online').length} online • {participants.length} total
                             </span>
                         </div>
                     )}
                 </CardHeader>
 
-                <div className="flex flex-1 overflow-hidden">
+                <div className="glass-glass-flex glass-glass-flex-1 overflow-hidden">
                     {/* Messages Area */}
-                    <div className="flex-1 flex flex-col overflow-hidden">
+                    <div className="glass-glass-flex-1 glass-glass-flex glass-glass-flex-col overflow-hidden">
                         {/* Messages */}
-                        <CardContent className="flex-1 overflow-y-auto glass-p-4 glass-gap-4">
+                        <CardContent className="glass-glass-flex-1 glass-glass-overflow-y-auto glass-glass-p-4 glass-glass-gap-4">
                             {Object.entries(groupedMessages).map(([date, dateMessages]) => (
                                 <div key={date}>
                                     {/* Date separator */}
-                                    <div className="flex items-center justify-center my-6">
-                                        <div className="glass-px-3 glass-py-1 bg-white/10 glass-radius-full">
-                                            <span className="glass-text-primary/60 glass-text-xs">
+                                    <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-my-6">
+                                        <div className="glass-glass-px-3 glass-glass-py-1 glass-surface-subtle/10 glass-radius-full">
+                                            <span className="glass-glass-text-primary/60 glass-glass-text-xs">
                                                 {new Date(date).toLocaleDateString(undefined, {
                                                     weekday: 'long',
                                                     year: 'numeric',
@@ -579,7 +579,7 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                                     </div>
 
                                     {/* Messages for this date */}
-                                    <div className="glass-gap-3">
+                                    <div className="glass-glass-gap-3">
                                         {dateMessages.map((message, index) => {
                                             const isCurrentUser = message.sender.id === currentUser?.id;
                                             const prevMessage = dateMessages[index - 1];
@@ -610,16 +610,16 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                                                 >
                                                     {/* Avatar */}
                                                     {showAvatar && showAvatars && (
-                                                        <div className="flex-shrink-0">
-                                                            <div className="w-8 h-8 glass-radius-full bg-white/20 flex items-center justify-center">
+                                                        <div className="glass-glass-flex-shrink-0">
+                                                            <div className="glass-glass-w-8 glass-glass-h-8 glass-radius-full glass-surface-subtle/20 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
                                                                 {message.sender.avatar ? (
                                                                     <img
                                                                         src={message.sender.avatar}
                                                                         alt={message.sender.name}
-                                                                        className="w-full h-full glass-radius-full object-cover"
+                                                                        className="glass-glass-w-full glass-glass-h-full glass-radius-full object-cover"
                                                                     />
                                                                 ) : (
-                                                                    <span className="glass-text-primary/80 glass-text-sm font-medium">
+                                                                    <span className="glass-glass-text-primary/80 glass-glass-text-sm glass-glass-font-medium">
                                                                         {message.sender.name.charAt(0).toUpperCase()}
                                                                     </span>
                                                                 )}
@@ -638,7 +638,7 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                                                                 'flex items-center glass-gap-2 glass-mb-1',
                                                                 isCurrentUser ? 'justify-end' : 'justify-start'
                                                             )}>
-                                                                <span className="glass-text-primary/80 glass-text-sm font-medium">
+                                                                <span className="glass-glass-text-primary/80 glass-glass-text-sm glass-glass-font-medium">
                                                                     {message.sender.name}
                                                                 </span>
                                                                 {message.sender.status && (
@@ -661,24 +661,24 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                                                         )}>
                                                             {/* Reply indicator */}
                                                             {message.replyTo && (
-                                                                <div className="glass-text-xs opacity-70 glass-mb-2 pb-2 border-b border-current border-opacity-20">
+                                                                <div className="glass-glass-text-xs opacity-70 glass-glass-mb-2 pb-2 glass-glass-border-b glass-glass-border-current glass-glass-border-opacity-20">
                                                                     Replying to message
                                                                 </div>
                                                             )}
 
                                                             {/* Message content */}
-                                                            <div className="glass-text-sm">
+                                                            <div className="glass-glass-text-sm">
                                                                 {message.content}
                                                             </div>
 
                                                             {/* Attachments */}
                                                             {message.attachments && message.attachments.length > 0 && (
-                                                                <div className="glass-mt-2 glass-gap-2">
+                                                                <div className="glass-mt-2 glass-glass-gap-2">
                                                                     {message.attachments.map((attachment, attIndex) => (
-                                                                        <div key={attIndex} className="flex items-center glass-gap-2 glass-p-2 bg-black/20 glass-radius-md">
-                                                                            {attachment.type === 'image' && <ImageIcon className="w-4 h-4" />}
-                                                                            {attachment.type === 'file' && <File className="w-4 h-4" />}
-                                                                            <span className="glass-text-xs truncate">{attachment.name}</span>
+                                                                        <div key={attIndex} className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-p-2 glass-surface-dark/20 glass-radius-md">
+                                                                            {attachment.type === 'image' && <ImageIcon className="glass-glass-w-4 glass-glass-h-4" />}
+                                                                            {attachment.type === 'file' && <File className="glass-glass-w-4 glass-glass-h-4" />}
+                                                                            <span className="glass-glass-text-xs glass-glass-truncate">{attachment.name}</span>
                                                                         </div>
                                                                     ))}
                                                                 </div>
@@ -686,14 +686,14 @@ export const GlassChat: React.FC<GlassChatProps> = ({
 
                                                             {/* Reactions */}
                                                             {message.reactions && message.reactions.length > 0 && (
-                                                                <div className="flex glass-gap-1 glass-mt-2">
+                                                                <div className="glass-glass-flex glass-glass-gap-1 glass-mt-2">
                                                                     {message.reactions.map((reaction, reactionIndex) => (
                                                                         <GlassButton
                                                                             key={reactionIndex}
                                                                             variant="ghost"
                                                                             size="sm"
                                                                             onClick={(e) => onMessageReaction?.(message.id, reaction.emoji)}
-                                                                            className="h-6 glass-px-2 glass-text-xs"
+                                                                            className="glass-glass-h-6 glass-glass-px-2 glass-glass-text-xs"
                                                                         >
                                                                             {reaction.emoji} {reaction.count}
                                                                         </GlassButton>
@@ -726,7 +726,7 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                                                                 variant="ghost"
                                                                 size="sm"
                                                                 onClick={(e) => setShowEmojiPicker(!showEmojiPicker)}
-                                                                className="glass-p-1"
+                                                                className="glass-glass-p-1"
                                                             >
                                                                 <Smile className="w-3 h-3" />
                                                             </GlassButton>
@@ -757,8 +757,8 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                         >
                             {/* Predictive Response Suggestions */}
                             {predictive && suggestedResponses.length > 0 && (
-                                <div className="mb-3" data-consciousness-suggestions="true">
-                                    <div className="glass-text-xs glass-text-primary/60 glass-mb-2 flex items-center glass-gap-1">
+                                <div className="glass-glass-mb-3" data-consciousness-suggestions="true">
+                                    <div className="glass-glass-text-xs glass-glass-text-primary/60 glass-glass-mb-2 glass-glass-flex glass-glass-items-center glass-glass-gap-1">
                                         <span>Suggested responses</span>
                                         {conversationInsights?.sentiment && (
                                             <span className={cn(
@@ -771,19 +771,19 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                                             </span>
                                         )}
                                         {conversationInsights?.urgency === 'high' && (
-                                            <span className="glass-px-2 glass-py-0.5 glass-radius-md glass-text-xs bg-orange-500/20 text-orange-300">
+                                            <span className="glass-glass-px-2 glass-glass-py-0.5 glass-radius-md glass-glass-text-xs bg-orange-500/20 text-orange-300">
                                                 urgent
                                             </span>
                                         )}
                                     </div>
-                                    <div className="flex glass-gap-2 flex-wrap">
+                                    <div className="glass-glass-flex glass-glass-gap-2 glass-glass-flex-wrap">
                                         {suggestedResponses.map((suggestion, index) => (
                                             <GlassButton
                                                 key={index}
                                                 variant="ghost"
                                                 size="sm"
                                                 onClick={() => setNewMessage(suggestion)}
-                                                className="glass-text-xs glass-px-3 glass-py-1 h-auto consciousness-suggestion-button"
+                                                className="glass-glass-text-xs glass-glass-px-3 glass-glass-py-1 h-auto consciousness-suggestion-button"
                                                 data-suggestion-index={index}
                                             >
                                                 {suggestion}
@@ -795,11 +795,11 @@ export const GlassChat: React.FC<GlassChatProps> = ({
 
                             {/* Conversation Insights */}
                             {predictive && conversationInsights?.topics && conversationInsights.topics.length > 0 && (
-                                <div className="mb-3" data-consciousness-insights="true">
-                                    <div className="glass-text-xs glass-text-primary/60 glass-mb-2">Conversation topics:</div>
-                                    <div className="flex glass-gap-1 flex-wrap">
+                                <div className="glass-glass-mb-3" data-consciousness-insights="true">
+                                    <div className="glass-glass-text-xs glass-glass-text-primary/60 glass-glass-mb-2">Conversation topics:</div>
+                                    <div className="glass-glass-flex glass-glass-gap-1 glass-glass-flex-wrap">
                                         {conversationInsights.topics.map((topic, index) => (
-                                            <span key={index} className="glass-px-2 glass-py-0.5 glass-radius-md glass-text-xs bg-primary/20 text-primary">
+                                            <span key={index} className="glass-glass-px-2 glass-glass-py-0.5 glass-radius-md glass-glass-text-xs glass-surface-primary/20 glass-glass-text-primary">
                                                 {topic}
                                             </span>
                                         ))}
@@ -809,18 +809,18 @@ export const GlassChat: React.FC<GlassChatProps> = ({
 
                             {/* Attachments preview */}
                             {attachments.length > 0 && (
-                                <div className="flex glass-gap-2 mb-3 overflow-x-auto">
+                                <div className="glass-glass-flex glass-glass-gap-2 glass-glass-mb-3 glass-overflow-x-auto">
                                     {attachments.map((file, index) => (
-                                        <div key={index} className="flex items-center glass-gap-2 bg-white/10 glass-radius-md glass-px-3 glass-py-2">
-                                            <File className="w-4 h-4" />
-                                            <span className="glass-text-sm glass-text-primary truncate max-w-32">
+                                        <div key={index} className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-surface-subtle/10 glass-radius-md glass-glass-px-3 glass-glass-py-2">
+                                            <File className="glass-glass-w-4 glass-glass-h-4" />
+                                            <span className="glass-glass-text-sm glass-glass-text-primary glass-glass-truncate max-w-32">
                                                 {file.name}
                                             </span>
                                             <GlassButton
                                                 variant="ghost"
                                                 size="sm"
                                                 onClick={(e) => removeAttachment(index)}
-                                                className="glass-p-1 h-auto"
+                                                className="glass-glass-p-1 h-auto"
                                             >
                                                 <X className="w-3 h-3" />
                                             </GlassButton>
@@ -830,16 +830,16 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                             )}
 
                             {/* Input area */}
-                            <div className="flex items-end glass-gap-2">
+                            <div className="glass-glass-flex glass-glass-items-end glass-glass-gap-2">
                                 {/* File attachment */}
                                 {enableAttachments && (
                                     <GlassButton
                                         variant="ghost"
                                         size="sm"
                                         onClick={handleFileAttachment}
-                                        className="glass-p-2"
+                                        className="glass-glass-p-2"
                                     >
-                                        <Paperclip className="w-4 h-4" />
+                                        <Paperclip className="glass-glass-w-4 glass-glass-h-4" />
                                     </GlassButton>
                                 )}
 
@@ -849,14 +849,14 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                                         variant={isRecording ? "destructive" : "ghost"}
                                         size="sm"
                                         onClick={handleVoiceToggle}
-                                        className="glass-p-2"
+                                        className="glass-glass-p-2"
                                     >
-                                        {isRecording ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+                                        {isRecording ? <MicOff className="glass-glass-w-4 glass-glass-h-4" /> : <Mic className="glass-glass-w-4 glass-glass-h-4" />}
                                     </GlassButton>
                                 )}
 
                                 {/* Text input */}
-                                <div className="flex-1 relative">
+                                <div className="glass-glass-flex-1 glass-glass-relative">
                                     <textarea
                                         ref={inputRef}
                                         value={newMessage}
@@ -888,9 +888,9 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                                         variant="ghost"
                                         size="sm"
                                         onClick={(e) => setShowEmojiPicker(!showEmojiPicker)}
-                                        className="absolute right-2 top-1/2 transform -translate-y-1/2 glass-p-1"
+                                        className="glass-glass-absolute right-2 glass--glass-top-1/2 transform -translate-y-1/2 glass-glass-p-1"
                                     >
-                                        <Smile className="w-4 h-4" />
+                                        <Smile className="glass-glass-w-4 glass-glass-h-4" />
                                     </GlassButton>
                                 </div>
 
@@ -916,7 +916,7 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                                     data-has-attachments={attachments.length > 0}
                                     data-message-length={newMessage.trim().length}
                                 >
-                                    <Send className="w-4 h-4" />
+                                    <Send className="glass-glass-w-4 glass-glass-h-4" />
                                 </GlassButton>
                             </div>
 
@@ -934,27 +934,27 @@ export const GlassChat: React.FC<GlassChatProps> = ({
 
                     {/* Participants sidebar */}
                     {showParticipants && participants.length > 0 && (
-                        <div className="w-64 border-l border-white/10 flex flex-col">
-                            <div className="glass-p-4 border-b border-white/10">
-                                <h3 className="glass-text-primary font-medium flex items-center glass-gap-2">
-                                    <Users className="w-4 h-4" />
+                        <div className="w-64 glass-glass-border-l glass-glass-border-white/10 glass-glass-flex glass-glass-flex-col">
+                            <div className="glass-glass-p-4 glass-glass-border-b glass-glass-border-white/10">
+                                <h3 className="glass-glass-text-primary glass-glass-font-medium glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+                                    <Users className="glass-glass-w-4 glass-glass-h-4" />
                                     Participants ({participants.length})
                                 </h3>
                             </div>
 
-                            <div className="flex-1 overflow-y-auto glass-p-2">
+                            <div className="glass-glass-flex-1 glass-glass-overflow-y-auto glass-glass-p-2">
                                 {participants.map((participant) => (
-                                    <div key={participant.id} className="flex items-center glass-gap-3 glass-p-2 glass-radius-lg hover:bg-white/5">
-                                        <div className="relative">
-                                            <div className="w-8 h-8 glass-radius-full bg-white/20 flex items-center justify-center">
+                                    <div key={participant.id} className="glass-glass-flex glass-glass-items-center glass-glass-gap-3 glass-glass-p-2 glass-radius-lg hover:glass-surface-subtle/5">
+                                        <div className="glass-glass-relative">
+                                            <div className="glass-glass-w-8 glass-glass-h-8 glass-radius-full glass-surface-subtle/20 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
                                                 {participant.avatar ? (
                                                     <img
                                                         src={participant.avatar}
                                                         alt={participant.name}
-                                                        className="w-full h-full glass-radius-full object-cover"
+                                                        className="glass-glass-w-full glass-glass-h-full glass-radius-full object-cover"
                                                     />
                                                 ) : (
-                                                    <span className="glass-text-primary/80 glass-text-sm font-medium">
+                                                    <span className="glass-glass-text-primary/80 glass-glass-text-sm glass-glass-font-medium">
                                                         {participant.name.charAt(0).toUpperCase()}
                                                     </span>
                                                 )}
@@ -967,11 +967,11 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                                             )} />
                                         </div>
 
-                                        <div className="flex-1 min-w-0">
-                                            <p className="glass-text-primary glass-text-sm font-medium truncate">
+                                        <div className="glass-glass-flex-1 glass-glass-min-w-0">
+                                            <p className="glass-glass-text-primary glass-glass-text-sm glass-glass-font-medium glass-glass-truncate">
                                                 {participant.name}
                                             </p>
-                                            <p className="glass-text-primary/60 glass-text-xs">
+                                            <p className="glass-glass-text-primary/60 glass-glass-text-xs">
                                                 {participant.status === 'online' ? 'Online' :
                                                     participant.status === 'away' ? 'Away' :
                                                         participant.status === 'busy' ? 'Busy' :

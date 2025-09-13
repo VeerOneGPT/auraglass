@@ -2,7 +2,7 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { createContext, forwardRef, useContext, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -217,9 +217,9 @@ export const GlassTabsList = forwardRef<HTMLDivElement, GlassTabsListProps>(
         {...props}
       >
         {(variant === 'underline' as typeof variant) && orientation === 'horizontal' && (
-          <div className="absolute bottom-0 left-0 right-0 h-0.5">
+          <div className="glass-glass-absolute bottom-0 left-0 right-0 h-0.5">
             <div
-              className="absolute h-full bg-primary transition-all duration-200"
+              className="glass-glass-absolute glass-glass-h-full glass-surface-primary transition-all duration-200"
               style={{ left: ink.left, width: ink.width }}
             />
           </div>
@@ -242,7 +242,7 @@ export const GlassTabsList = forwardRef<HTMLDivElement, GlassTabsListProps>(
         {...(commonA11y as any)}
         {...props}
       >
-        <div className="relative w-full" />
+        <div className="glass-glass-relative glass-glass-w-full" />
         {children}
       </div>
     );
@@ -355,7 +355,7 @@ export const GlassTabsTrigger = forwardRef<HTMLButtonElement, GlassTabsTriggerPr
     return (
       <Motion
         preset="scaleIn"
-        className="relative"
+        className="glass-glass-relative"
       >
         <GlassButton
           ref={(node: any) => {
@@ -386,7 +386,7 @@ export const GlassTabsTrigger = forwardRef<HTMLButtonElement, GlassTabsTriggerPr
           )}
 
           {children && (
-            <span className="truncate">
+            <span className="glass-glass-truncate">
               {children}
             </span>
           )}
@@ -406,7 +406,7 @@ export const GlassTabsTrigger = forwardRef<HTMLButtonElement, GlassTabsTriggerPr
           {(variant === 'underline' as typeof variant) && isSelected && (
             <Motion
               preset="slideUp"
-              className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+              className="glass-glass-absolute bottom-0 left-0 right-0 h-0.5 glass-surface-primary"
             />
           )}
         </GlassButton>

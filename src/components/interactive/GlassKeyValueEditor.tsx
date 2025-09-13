@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { GlassButton } from '../button/GlassButton';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 
 export interface Pair { key: string; value: string }
 export interface GlassKeyValueEditorProps {
@@ -23,9 +23,9 @@ export function GlassKeyValueEditor({ value, onChange, className }: GlassKeyValu
   return (
     <div className={cn('glass-gap-2', className)}>
       {value.map((p, i) => (
-        <div key={i} className="flex glass-gap-2">
-          <input value={p.key} onChange={(e) => update(i, { key: e.target.value })} placeholder="Key" className="flex-1 bg-transparent border border-white/20 glass-radius-lg glass-px-2 glass-py-1 glass-text-sm outline-none" />
-          <input value={p.value} onChange={(e) => update(i, { value: e.target.value })} placeholder="Value" className="flex-1 bg-transparent border border-white/20 glass-radius-lg glass-px-2 glass-py-1 glass-text-sm outline-none" />
+        <div key={i} className="glass-glass-flex glass-glass-gap-2">
+          <input value={p.key} onChange={(e) => update(i, { key: e.target.value })} placeholder="Key" className="glass-glass-flex-1 glass-glass-bg-transparent glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-px-2 glass-glass-py-1 glass-glass-text-sm outline-none" />
+          <input value={p.value} onChange={(e) => update(i, { value: e.target.value })} placeholder="Value" className="glass-glass-flex-1 glass-glass-bg-transparent glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-px-2 glass-glass-py-1 glass-glass-text-sm outline-none" />
           <GlassButton size="sm" variant="ghost" onClick={(e) => remove(i)}>Remove</GlassButton>
         </div>
       ))}

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassLoadingSkeleton } from './GlassLoadingSkeleton';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassLoadingSkeleton> = {
   title: 'Components/Data-display/GlassLoadingSkeleton',
@@ -70,17 +70,17 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-8">
+    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-8">
       <div>
-        <h4 className="glass-text-sm font-medium glass-mb-2">Default</h4>
+        <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">Default</h4>
         <GlassLoadingSkeleton {...args} />
       </div>
       <div>
-        <h4 className="glass-text-sm font-medium glass-mb-2">With Avatar</h4>
+        <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">With Avatar</h4>
         <GlassLoadingSkeleton {...args} avatar={true} />
       </div>
       <div>
-        <h4 className="glass-text-sm font-medium glass-mb-2">Card Layout</h4>
+        <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">Card Layout</h4>
         <GlassLoadingSkeleton {...args} variant="card" />
       </div>
     </div>

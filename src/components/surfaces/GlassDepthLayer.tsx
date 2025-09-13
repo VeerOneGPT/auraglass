@@ -3,6 +3,7 @@
 import { HTMLMotionProps, motion } from 'framer-motion';
 import React, { forwardRef, useMemo } from 'react';
 import { cn } from '@/lib/utils';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 export type DepthLayer =
   | 'background'
@@ -118,7 +119,7 @@ export const GlassDepthLayer = forwardRef<HTMLDivElement, DepthLayerProps>(({
   parallaxStrength = 0.5,
   enableHover = true,
   hoverLift = 10,
-  className = '',
+  className='',
   ...props
 }, ref) => {
   const config = useMemo(() => ({
@@ -126,18 +127,7 @@ export const GlassDepthLayer = forwardRef<HTMLDivElement, DepthLayerProps>(({
     ...customConfig
   }), [layer, customConfig]);
 
-  const glassStyle = useMemo(() => ({
-    position: 'relative' as const,
-    zIndex: config.zIndex,
-    background: `rgba(255, 255, 255, ${config.opacity})`,
-    backdropFilter: `blur(${config.blur}px) brightness(${config.brightness})`,
-    WebkitBackdropFilter: `blur(${config.blur}px) brightness(${config.brightness})`,
-    border: '1px solid rgba(255, 255, 255, 0.18)',
-    borderRadius: '16px',
-    boxShadow: config.shadow,
-    transform: config.transform,
-    transformStyle: 'preserve-3d' as const,
-  }), [config]);
+  const glassStyle = useMemo(() => (createGlassStyle({ intent: "neutral", elevation: "level2" })), [config]);
 
   const motionProps = {
     style: glassStyle,
@@ -190,7 +180,7 @@ interface DepthSceneProps {
 export const GlassDepthScene: React.FC<DepthSceneProps> = ({
   children,
   perspective = 1000,
-  className = ''
+  className=''
 }) => {
   return (
     <div
@@ -221,7 +211,7 @@ export const LayeredGlassStack: React.FC<LayeredGlassStackProps> = ({
   layers,
   enableParallax = true,
   enableHover = true,
-  className = ''
+  className=''
 }) => {
   const sortedLayers = useMemo(() =>
     [...layers].sort((a, b) =>
@@ -237,7 +227,7 @@ export const LayeredGlassStack: React.FC<LayeredGlassStackProps> = ({
           customConfig={layerData.config}
           enableParallax={enableParallax}
           enableHover={enableHover}
-          className="absolute inset-0"
+          className="glass-glass-absolute glass-glass-inset-0"
         >
           {layerData.content}
         </GlassDepthLayer>

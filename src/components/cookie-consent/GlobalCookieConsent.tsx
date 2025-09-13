@@ -49,7 +49,7 @@ const StyledGlobalCookieConsent = styled.div<{
   width: 100%;
   max-width: 500px;
   box-sizing: border-box;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--glass-elev-2);
   will-change: transform, opacity;
 
   ${({ $position }) => {
@@ -95,17 +95,17 @@ const StyledGlobalCookieConsent = styled.div<{
     }
   }}
 
-  background-color: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid ${glassTokenUtils.getSurface('neutral', 'level1').border.color};
+  background: var(--glass-bg-default);
+  backdrop-filter: var(--glass-backdrop-blur);
+  -webkit-backdrop-filter: var(--glass-backdrop-blur);
+  border: 1px solid var(--glass-border-default);
   
   ${({ theme }) => `
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    border: 1px solid var(--glass-border-hover);
   `}
   
   ${({ theme, $glassIntensity }) => `
-    box-shadow: 0 0 ${$glassIntensity * 12}px ${glassTokenUtils.getSurface('neutral', 'level1').surface.base};
+    box-shadow: var(--glass-elev-2);
   `}
   
   @media (max-width: 540px) {
@@ -163,7 +163,7 @@ const CategoryContainer = styled.div`
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.4);
+    background: var(--glass-bg-default);
   }
 `;
 
@@ -171,7 +171,7 @@ const CategoryItem = styled.div`
   padding: 0.75rem;
   border-radius: 8px;
   margin-bottom: 0.75rem;
-  background: rgba(255, 255, 255, 0.07);
+  background: var(--glass-bg-active);
 
   &:last-child {
     margin-bottom: 0;

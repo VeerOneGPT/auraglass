@@ -3,7 +3,7 @@
 // Avoid importing DS aggregator within DS; keep relative
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { forwardRef } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';

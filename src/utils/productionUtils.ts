@@ -1,4 +1,5 @@
 import React from 'react';
+import { detectDevice } from './deviceCapabilities';
 /**
  * Production utilities for AuraGlass components
  * These utilities are optimized for production environments
@@ -128,11 +129,9 @@ export const features = {
   },
 
   supportsWebGL: (): boolean => {
-    if (typeof document === 'undefined') return false;
-    
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    return !!gl;
+    if (typeof window === 'undefined') return false;
+    // Use cached device detection to avoid creating contexts repeatedly
+    return detectDevice().capabilities.webgl;
   },
 
   supportsWebP: (): boolean => {

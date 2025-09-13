@@ -2,7 +2,7 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { ChevronRight } from 'lucide-react';
 import React, { useEffect, useRef, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
@@ -329,7 +329,7 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
 
     if (item?.separator) {
         return (
-            <div className="h-px bg-white/20 glass-mx-2 glass-my-1" />
+            <div className="h-px glass-surface-subtle/20 glass-glass-mx-2 glass-glass-my-1" />
         );
     }
 
@@ -382,10 +382,10 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
             role="menuitem"
             onKeyDown={handleKeyDown}
         >
-            <div className="flex items-center glass-gap-3">
+            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3">
                 {/* Icon */}
                 {item?.icon && (
-                    <div className="flex items-center justify-center w-4 h-4">
+                    <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-w-4 glass-glass-h-4">
                         {item?.icon}
                     </div>
                 )}
@@ -397,8 +397,8 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
                         item?.checked && 'bg-white border-white'
                     )}>
                         {item?.checked && (
-                            <div className="w-full h-full flex items-center justify-center">
-                                <div className="w-2 h-2 bg-black glass-radius-sm" />
+                            <div className="glass-glass-w-full glass-glass-h-full glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+                                <div className="w-2 h-2 glass-surface-dark glass-radius-sm" />
                             </div>
                         )}
                     </div>
@@ -410,30 +410,30 @@ export const GlassMenubarItem: React.FC<GlassMenubarItemProps> = ({
                         item?.checked && 'border-white'
                     )}>
                         {item?.checked && (
-                            <div className="w-full h-full flex items-center justify-center">
-                                <div className="w-2 h-2 bg-white glass-radius-full" />
+                            <div className="glass-glass-w-full glass-glass-h-full glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+                                <div className="w-2 h-2 glass-surface-subtle glass-radius-full" />
                             </div>
                         )}
                     </div>
                 )}
 
                 {/* Label */}
-                <span className="flex-1 text-left truncate">
+                <span className="glass-glass-flex-1 glass-glass-text-left glass-glass-truncate">
                     {item?.label}
                 </span>
             </div>
 
-            <div className="flex items-center glass-gap-2">
+            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
                 {/* Shortcut */}
                 {item?.shortcut && (
-                    <span className="glass-text-primary/50 glass-text-xs font-mono">
+                    <span className="glass-glass-text-primary/50 glass-glass-text-xs font-mono">
                         {item?.shortcut}
                     </span>
                 )}
 
                 {/* Submenu indicator */}
                 {item?.children && item?.children.length > 0 && (
-                    <ChevronRight className="w-4 h-4 glass-text-primary/50" />
+                    <ChevronRight className="glass-glass-w-4 glass-glass-h-4 glass-glass-text-primary/50" />
                 )}
             </div>
         </GlassButton>

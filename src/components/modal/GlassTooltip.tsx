@@ -3,7 +3,7 @@ import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
 import { useA11yId, announceToScreenReader } from '../../utils/a11y';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 
 export type TooltipPosition = 'top' | 'bottom' | 'left' | 'right' | 'auto';
 
@@ -46,7 +46,7 @@ export const GlassTooltip = forwardRef<HTMLDivElement, GlassTooltipProps>(({
   showDelay = 300,
   hideDelay = 150,
   disabled = false,
-  className = '',
+  className='',
   triggerClassName = '',
   maxWidth = '200px',
   showArrow = true,
@@ -229,7 +229,7 @@ export const GlassTooltip = forwardRef<HTMLDivElement, GlassTooltipProps>(({
         <Motion
           preset={getAnimationPreset()}
           duration={shouldAnimate ? 200 : 0}
-          className="fixed z-[9999] pointer-events-none"
+          className="glass-glass-fixed z-[9999] glass-pointer-events-none"
           style={{
             ...getPositionStyles(),
             maxWidth,
@@ -252,13 +252,13 @@ export const GlassTooltip = forwardRef<HTMLDivElement, GlassTooltipProps>(({
               border="subtle"
               animation="none"
               performanceMode="medium"
-              className="glass-px-3 glass-py-2 glass-radius-lg glass-text-sm glass-text-primary shadow-lg"
+              className="glass-glass-px-3 glass-glass-py-2 glass-radius-lg glass-glass-text-sm glass-glass-text-primary glass-glass-shadow-lg"
             >
               {content}
 
               {showArrow && (
                 <div
-                  className="absolute w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-white/20"
+                  className="glass-glass-absolute w-0 h-0 glass-glass-border-l-4 glass-glass-border-r-4 glass-glass-border-b-4 glass-glass-border-transparent glass-glass-border-b-white/20"
                   style={getArrowStyles()}
                   aria-hidden="true"
                 />

@@ -2,9 +2,10 @@
 
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 import { createMotionAwareInteractive, createMotionAwareVariants } from '../../lib/motionPrimitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { motion } from 'framer-motion';
 import React, { forwardRef } from 'react';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 interface MotionAwareGlassProps extends Omit<React.ComponentProps<typeof motion.div>, 'variants' | 'initial' | 'animate' | 'whileHover' | 'whileTap'> {
   variant?: 'base' | 'subtle' | 'strong' | 'card' | 'button' | 'input';
@@ -83,7 +84,7 @@ export const MotionAwareGlass = forwardRef<HTMLDivElement, MotionAwareGlassProps
       if (prefersReducedMotion) {
         return {
           hover: {
-            backgroundColor: 'rgba(255, 255, 255, 0.12)',
+            backgroundColor: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
             borderColor: 'rgba(255, 255, 255, 0.25)',
             transition: { duration: 0.001 }
           }
@@ -92,7 +93,7 @@ export const MotionAwareGlass = forwardRef<HTMLDivElement, MotionAwareGlassProps
 
       return {
         hover: {
-          backgroundColor: 'rgba(255, 255, 255, 0.12)',
+          backgroundColor: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
           borderColor: 'rgba(255, 255, 255, 0.25)',
           y: -2,
           transition: { duration: 0.2 }
@@ -160,7 +161,7 @@ export const MotionAwareGlass = forwardRef<HTMLDivElement, MotionAwareGlassProps
 
         {/* Screen reader information for motion preference */}
         {prefersReducedMotion && (
-          <span className="sr-only">
+          <span className="glass-glass-sr-only">
             Motion reduced for accessibility
           </span>
         )}
@@ -199,27 +200,22 @@ export const useMotionAwareGlassStyles = () => {
 
   return {
     getGlassStyle: (variant: MotionAwareGlassProps['variant'] = 'base') => {
-      const baseStyle = {
-        backdropFilter: 'blur(16px)',
-        borderRadius: '12px',
-        border: '1px solid ${glassStyles.borderColor || "rgba(255, 255, 255, 0.15)"}',
-        transition: prefersReducedMotion ? 'none' : 'all 0.2s ease-out'
-      };
+      const baseStyle = createGlassStyle({ intent: "neutral", elevation: "level2" });
 
       switch (variant) {
         case 'subtle':
-          return { ...baseStyle, background: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.05)"}' };
+          return { ...baseStyle, background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */' };
         case 'strong':
-          return { ...baseStyle, background: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}' };
+          return { ...baseStyle, background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */' };
         case 'card':
           return {
             ...baseStyle,
-            background: 'rgba(255, 255, 255, 0.08)',
+            background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
             padding: '24px',
-            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)'
+            boxShadow: 'var(--glass-elev-2)'
           };
         default:
-          return { ...baseStyle, background: 'rgba(255, 255, 255, 0.08)' };
+          return { ...baseStyle, background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */' };
       }
     },
     prefersReducedMotion

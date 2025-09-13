@@ -2,7 +2,7 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { AlertCircle, AlertTriangle, CheckCircle, Info, X } from 'lucide-react';
 import React, { createContext, useContext, useEffect, useState, forwardRef } from 'react';
 import { OptimizedGlass } from '../../primitives';
@@ -140,25 +140,25 @@ export const GlassToast: React.FC<GlassToastProps> = ({
         switch (type) {
             case 'success':
                 return {
-                    icon: <CheckCircle className="w-5 h-5 text-green-400" />,
+                    icon: <CheckCircle className="glass-glass-w-5 glass-glass-h-5 glass-glass-text-primary" />,
                     borderColor: 'border-green-400/30',
                     bgColor: 'bg-green-500/10',
                 };
             case 'error':
                 return {
-                    icon: <AlertCircle className="w-5 h-5 text-red-400" />,
+                    icon: <AlertCircle className="glass-glass-w-5 glass-glass-h-5 glass-glass-text-primary" />,
                     borderColor: 'border-red-400/30',
                     bgColor: 'bg-red-500/10',
                 };
             case 'warning':
                 return {
-                    icon: <AlertTriangle className="w-5 h-5 text-yellow-400" />,
+                    icon: <AlertTriangle className="glass-glass-w-5 glass-glass-h-5 glass-glass-text-primary" />,
                     borderColor: 'border-yellow-400/30',
                     bgColor: 'bg-yellow-500/10',
                 };
             default:
                 return {
-                    icon: <Info className="w-5 h-5 text-blue-400" />,
+                    icon: <Info className="glass-glass-w-5 glass-glass-h-5 glass-glass-text-primary" />,
                     borderColor: 'border-blue-400/30',
                     bgColor: 'bg-blue-500/10',
                 };
@@ -195,7 +195,7 @@ export const GlassToast: React.FC<GlassToastProps> = ({
             >
                 {/* Progress bar */}
                 {duration > 0 && (
-                    <div className="absolute top-0 left-0 right-0 h-1 bg-white/20 rounded-t-lg overflow-hidden">
+                    <div className="glass-glass-absolute top-0 left-0 right-0 h-1 glass-surface-subtle/20 glass-radius-t-lg overflow-hidden">
                         <div
                             className={cn(
                                 'h-full transition-all duration-100 ease-linear',
@@ -206,22 +206,22 @@ export const GlassToast: React.FC<GlassToastProps> = ({
                     </div>
                 )}
 
-                <div className="flex items-start glass-gap-3">
+                <div className="glass-glass-flex glass-glass-items-start glass-glass-gap-3">
                     {/* Icon */}
-                    <div className="flex-shrink-0 mt-0.5">
+                    <div className="glass-glass-flex-shrink-0 glass-mt-0-5">
                         {icon}
                     </div>
 
                     {/* Content */}
-                    <div className="flex-1 min-w-0">
+                    <div className="glass-glass-flex-1 glass-glass-min-w-0">
                         {title && (
-                            <h4 className="glass-text-primary font-medium glass-text-sm leading-tight glass-mb-1">
+                            <h4 className="glass-glass-text-primary glass-glass-font-medium glass-glass-text-sm leading-tight glass-glass-mb-1">
                                 {title}
                             </h4>
                         )}
 
                         {description && (
-                            <p className="glass-text-primary/80 glass-text-sm leading-relaxed">
+                            <p className="glass-glass-text-primary/80 glass-glass-text-sm leading-relaxed">
                                 {description}
                             </p>
                         )}
@@ -240,10 +240,10 @@ export const GlassToast: React.FC<GlassToastProps> = ({
                     {/* Close button */}
                     <GlassButton
                         onClick={handleDismiss}
-                        className="flex-shrink-0 glass-p-1 glass-radius-md hover:bg-white/10 transition-colors duration-200"
+                        className="glass-glass-flex-shrink-0 glass-glass-p-1 glass-radius-md hover:glass-surface-subtle/10 transition-colors duration-200"
                         aria-label="Close toast"
                     >
-                        <X className="w-4 h-4 glass-text-primary/60 hover:glass-text-primary" />
+                        <X className="glass-glass-w-4 glass-glass-h-4 glass-glass-text-primary/60 hover:glass-glass-text-primary" />
                     </GlassButton>
                 </div>
             </OptimizedGlass>

@@ -81,6 +81,15 @@ export interface OptimizedGlassProps extends React.HTMLAttributes<HTMLDivElement
   /** Lighting effect */
   lighting?: 'ambient' | 'directional' | 'point' | 'spot' | 'none' | 'iridescent' | 'volumetric' | 'caustic' | 'natural' | 'studio';
 
+  /** Advanced visual flags (filtered from DOM) */
+  caustics?: boolean;
+  chromatic?: boolean;
+  parallax?: boolean;
+  refraction?: boolean;
+  adaptive?: boolean;
+  magnet?: boolean;
+  cursorHighlight?: boolean;
+
   /** Custom CSS classes */
   className?: string;
 
@@ -105,6 +114,26 @@ const OptimizedGlassCore = forwardRef<
     interactive = false,
     press = false,
     animation = 'none',
+    // Prevent forwarding custom props to DOM
+    performanceMode: _performanceMode,
+    // Also intercept additional non-DOM props so they don't leak
+    optimization,
+    hardwareAcceleration,
+    intensity,
+    depth,
+    tint,
+    border,
+    blur,
+    variant,
+    lighting,
+    // Advanced visual flags (do not forward to DOM)
+    caustics,
+    chromatic,
+    parallax,
+    refraction,
+    adaptive,
+    magnet,
+    cursorHighlight,
     liftOnHover = false,
     hoverSheen = false,
     className,
@@ -163,6 +192,28 @@ const OptimizedGlassCore = forwardRef<
       ...style,
     };
 
+    // Ensure no custom props leak into the DOM element
+    const {
+      performanceMode: __ignorePerformanceMode,
+      optimization: __ignoreOptimization,
+      hardwareAcceleration: __ignoreHardwareAcceleration,
+      intensity: __ignoreIntensity,
+      depth: __ignoreDepth,
+      tint: __ignoreTint,
+      border: __ignoreBorder,
+      blur: __ignoreBlur,
+      variant: __ignoreVariant,
+      lighting: __ignoreLighting,
+      caustics: __ignoreCaustics,
+      chromatic: __ignoreChromatic,
+      parallax: __ignoreParallax,
+      refraction: __ignoreRefraction,
+      adaptive: __ignoreAdaptive,
+      magnet: __ignoreMagnet,
+      cursorHighlight: __ignoreCursorHighlight,
+      ...domProps
+    } = (restProps as any) || {};
+
     return (
       <Component
         ref={ref}
@@ -182,7 +233,15 @@ const OptimizedGlassCore = forwardRef<
           className
         )}
         style={combinedStyles}
-        {...restProps}
+        data-performance-mode={_performanceMode}
+        data-caustics={caustics || undefined}
+        data-chromatic={chromatic || undefined}
+        data-parallax={parallax || undefined}
+        data-refraction={refraction || undefined}
+        data-adaptive={adaptive || undefined}
+        data-magnet={magnet || undefined}
+        data-cursor-highlight={cursorHighlight || undefined}
+        {...domProps}
       >
         {children}
       </Component>

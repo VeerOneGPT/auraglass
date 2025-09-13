@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { forwardRef, useState } from 'react';
 import { useMotionPreference } from '../../hooks/useMotionPreference';
 import { Motion, OptimizedGlass } from '../../primitives';
@@ -175,7 +175,7 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
 
     const defaultRemoveIcon = (
       <svg
-        className="w-full h-full"
+        className="glass-glass-w-full glass-glass-h-full"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -202,7 +202,7 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
         )}
 
         {/* Content */}
-        <span className="flex-1 min-w-0 truncate font-medium">
+        <span className="glass-glass-flex-1 glass-glass-min-w-0 glass-glass-truncate glass-glass-font-medium">
           {children}
         </span>
 
@@ -226,7 +226,7 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
         )}
 
         {/* Glass overlay effect */}
-        <div className="absolute inset-0 glass-radius-full bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none" />
+        <div className="glass-glass-absolute glass-glass-inset-0 glass-radius-full glass-gradient-primary from-white/10 via-transparent to-transparent glass-pointer-events-none" />
       </>
     );
 

@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 interface CollaborativeGlassWorkspaceProps {
   workspaceId: string;
@@ -80,7 +81,7 @@ export function CollaborativeGlassWorkspace(props: CollaborativeGlassWorkspacePr
 }
 
 function WorkspaceContent({
-  className = '',
+  className='',
   layout = 'split',
   theme = 'dark',
   showMiniMap = true,
@@ -291,7 +292,7 @@ function WorkspaceContent({
                 showComments={enableComments}
                 enableRealTimeSync={enableRealTimeSync}
                 layout="vertical"
-                className="h-full"
+                className="glass-glass-h-full"
               />
             </div>
 
@@ -418,45 +419,41 @@ function WorkspaceHeader({
 
   return (
     <div
-      className="workspace-header flex items-center justify-between px-4 py-3 border-b border-white/10"
-      style={{
-        background: 'rgba(15, 23, 42, 0.8)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)'
-      }}
+      className="workspace-header glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-px-4 glass-glass-py-3 glass-glass-border-b glass-glass-border-white/10"
+      style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
     >
       {/* Left Section */}
-      <div className="flex items-center gap-4">
-        <h1 className="text-xl font-bold text-white">{workspace.name}</h1>
-        <div className="text-sm text-white/60">
+      <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
+        <h1 className="glass-glass-text-xl font-bold glass-glass-text-primary">{workspace.name}</h1>
+        <div className="glass-glass-text-sm glass-glass-text-primary/60">
           {canEdit ? '✏️ Editing' : '👁️ Viewing'}
         </div>
       </div>
 
       {/* Center Section - Tools */}
-      <div className="flex items-center gap-2">
+      <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
         {/* Undo/Redo */}
         {enableVersionControl && (
           <>
             <button
               onClick={onUndo}
               disabled={!canUndo}
-              className="p-2 rounded hover:bg-white/10 disabled:opacity-50 text-white"
+              className="glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 disabled:opacity-50 glass-glass-text-primary"
               title="Undo"
             >
-              <Undo className="w-4 h-4" />
+              <Undo className="glass-glass-w-4 glass-glass-h-4" />
             </button>
             <button
               onClick={onRedo}
               disabled={!canRedo}
-              className="p-2 rounded hover:bg-white/10 disabled:opacity-50 text-white"
+              className="glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 disabled:opacity-50 glass-glass-text-primary"
               title="Redo"
             >
-              <Redo className="w-4 h-4" />
+              <Redo className="glass-glass-w-4 glass-glass-h-4" />
             </button>
             <button
               onClick={() => onCreateSnapshot(`Snapshot ${Date.now()}`)}
-              className="px-3 py-2 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="glass-glass-px-3 glass-glass-py-2 glass-glass-text-sm glass-surface-blue glass-glass-text-primary glass-radius hover:glass-surface-blue"
               title="Create Snapshot"
             >
               📷 Snapshot
@@ -465,16 +462,16 @@ function WorkspaceHeader({
         )}
 
         {/* Layout Switcher */}
-        <div className="relative">
+        <div className="glass-glass-relative">
           <button
             onClick={() => setShowLayoutMenu(!showLayoutMenu)}
-            className="p-2 rounded hover:bg-white/10 text-white"
+            className="glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 glass-glass-text-primary"
             title="Change Layout"
           >
             🔀
           </button>
           {showLayoutMenu && (
-            <div className="absolute top-full left-0 mt-2 p-2 bg-slate-800 border border-white/20 rounded shadow-lg z-50">
+            <div className="glass-glass-absolute top-full left-0 mt-2 glass-glass-p-2 bg-slate-800 glass-glass-border glass-glass-border-white/20 glass-radius glass-glass-shadow-lg glass-z-50">
               {['split', 'tabs', 'canvas-focused', 'editor-focused'].map(layout => (
                 <button
                   key={layout}
@@ -502,22 +499,22 @@ function WorkspaceHeader({
             }`}
             title={isVoiceActive ? 'Leave Voice Chat' : 'Join Voice Chat'}
           >
-            {isVoiceActive ? <Mic className="w-4 h-4" /> : <MicOff className="w-4 h-4" />}
+            {isVoiceActive ? <Mic className="glass-glass-w-4 glass-glass-h-4" /> : <MicOff className="glass-glass-w-4 glass-glass-h-4" />}
             {voiceUsers.length > 0 && ` (${voiceUsers.length})`}
           </button>
         )}
       </div>
 
       {/* Right Section */}
-      <div className="flex items-center gap-2">
+      <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
         {/* Online Users */}
         {showOnlineUsers && (
-          <div className="flex items-center gap-2">
-            <div className="flex -space-x-2">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <div className="glass-glass-flex -space-x-2">
               {onlineUsers.slice(0, 5).map((user: any) => (
                 <div
                   key={user.id}
-                  className="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center text-xs font-bold text-white"
+                  className="glass-glass-w-8 glass-glass-h-8 glass-radius-full glass-glass-border-2 glass-glass-border-white glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-text-xs font-bold glass-glass-text-primary"
                   style={{ backgroundColor: user.color }}
                   title={user.name}
                 >
@@ -525,12 +522,12 @@ function WorkspaceHeader({
                 </div>
               ))}
               {onlineUsers.length > 5 && (
-                <div className="w-8 h-8 rounded-full bg-gray-600 border-2 border-white flex items-center justify-center text-xs text-white">
+                <div className="glass-glass-w-8 glass-glass-h-8 glass-radius-full bg-gray-600 glass-glass-border-2 glass-glass-border-white glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-text-xs glass-glass-text-primary">
                   +{onlineUsers.length - 5}
                 </div>
               )}
             </div>
-            <span className="text-sm text-white/60">
+            <span className="glass-glass-text-sm glass-glass-text-primary/60">
               {onlineUsers.length} online
             </span>
           </div>
@@ -539,17 +536,17 @@ function WorkspaceHeader({
         {/* Controls */}
         <button
           onClick={onToggleSidebar}
-          className="p-2 rounded hover:bg-white/10 text-white"
+          className="glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 glass-glass-text-primary"
           title="Toggle Sidebar"
         >
-          <Layers className="w-4 h-4" />
+          <Layers className="glass-glass-w-4 glass-glass-h-4" />
         </button>
         <button
           onClick={onToggleFullscreen}
-          className="p-2 rounded hover:bg-white/10 text-white"
+          className="glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 glass-glass-text-primary"
           title="Toggle Fullscreen"
         >
-          {isFullscreen ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+          {isFullscreen ? <Minimize className="glass-glass-w-4 glass-glass-h-4" /> : <Maximize className="glass-glass-w-4 glass-glass-h-4" />}
         </button>
       </div>
     </div>
@@ -561,9 +558,9 @@ function WorkspaceTabs({ selectedElementId, onElementSelect, ...props }: any) {
   const [activeTab, setActiveTab] = useState<'canvas' | 'editor'>('canvas');
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="glass-glass-flex glass-glass-flex-col glass-glass-h-full">
       {/* Tab Navigation */}
-      <div className="flex border-b border-white/20 bg-slate-800">
+      <div className="glass-glass-flex glass-glass-border-b glass-glass-border-white/20 bg-slate-800">
         <button
           onClick={() => setActiveTab('canvas')}
           className={`px-6 py-3 font-medium ${
@@ -587,11 +584,11 @@ function WorkspaceTabs({ selectedElementId, onElementSelect, ...props }: any) {
       </div>
 
       {/* Tab Content */}
-      <div className="flex-1 p-4">
+      <div className="glass-glass-flex-1 glass-glass-p-4">
         {activeTab === 'canvas' ? (
-          <CollaborativeGlassCanvas {...props} onElementSelect={onElementSelect} className="h-full" />
+          <CollaborativeGlassCanvas {...props} onElementSelect={onElementSelect} className="glass-glass-h-full" />
         ) : (
-          <MultiUserGlassEditor {...props} className="h-full" />
+          <MultiUserGlassEditor {...props} className="glass-glass-h-full" />
         )}
       </div>
     </div>
@@ -602,18 +599,11 @@ function CollaborativeGlassCanvas({ width, height, gridSize, showGrid, showRuler
   return (
     <div
       className={`collaborative-canvas relative ${className}`}
-      style={{
-        width: width,
-        height: height,
-        background: 'rgba(30, 41, 59, 0.8)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        borderRadius: '8px'
-      }}
+      style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
     >
       {showGrid && (
         <div
-          className="absolute inset-0 opacity-20"
+          className="glass-glass-absolute glass-glass-inset-0 opacity-20"
           style={{
             backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
             backgroundSize: `${gridSize}px ${gridSize}px`
@@ -621,11 +611,11 @@ function CollaborativeGlassCanvas({ width, height, gridSize, showGrid, showRuler
         />
       )}
 
-      <div className="flex items-center justify-center h-full text-white/60">
-        <div className="text-center">
-          <div className="text-4xl mb-4">🎨</div>
-          <p className="text-lg">Collaborative Canvas</p>
-          <p className="text-sm">Click to start designing together</p>
+      <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-h-full glass-glass-text-primary/60">
+        <div className="glass-glass-text-center">
+          <div className="glass-glass-text-4xl glass-glass-mb-4">🎨</div>
+          <p className="glass-glass-text-lg">Collaborative Canvas</p>
+          <p className="glass-glass-text-sm">Click to start designing together</p>
         </div>
       </div>
     </div>
@@ -636,43 +626,38 @@ function MultiUserGlassEditor({ target, showPreview, showHistory, showComments, 
   return (
     <div
       className={`multi-user-editor ${className}`}
-      style={{
-        background: 'rgba(30, 41, 59, 0.8)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        borderRadius: '8px'
-      }}
+      style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
     >
-      <div className="p-4">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-white font-semibold">Properties Editor</h3>
-          <div className="flex gap-2">
-            {showHistory && <button className="p-2 rounded hover:bg-white/10 text-white">📜</button>}
-            {showComments && <button className="p-2 rounded hover:bg-white/10 text-white">💬</button>}
-            {enableRealTimeSync && <div className="flex items-center gap-1 text-green-400 text-sm"><Wifi className="w-3 h-3" /> Live</div>}
+      <div className="glass-glass-p-4">
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-mb-4">
+          <h3 className="glass-glass-text-primary glass-glass-font-semibold">Properties Editor</h3>
+          <div className="glass-glass-flex glass-glass-gap-2">
+            {showHistory && <button className="glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 glass-glass-text-primary">📜</button>}
+            {showComments && <button className="glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 glass-glass-text-primary">💬</button>}
+            {enableRealTimeSync && <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1 glass-glass-text-primary glass-glass-text-sm"><Wifi className="w-3 h-3" /> Live</div>}
           </div>
         </div>
 
-        <div className="space-y-4">
+        <div className="glass-glass-space-y-4">
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">Target Element</label>
-            <div className="p-2 bg-white/5 rounded text-white text-sm">{target}</div>
+            <label className="glass-glass-block glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80 glass-glass-mb-2">Target Element</label>
+            <div className="glass-glass-p-2 glass-surface-subtle/5 glass-radius glass-glass-text-primary glass-glass-text-sm">{target}</div>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-white/80 mb-2">Properties</label>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <span className="text-white/60 text-sm w-20">Width:</span>
-                <input type="number" className="flex-1 p-2 bg-white/10 rounded text-white text-sm" placeholder="Auto" />
+            <label className="glass-glass-block glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80 glass-glass-mb-2">Properties</label>
+            <div className="glass-glass-space-y-2">
+              <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+                <span className="glass-glass-text-primary/60 glass-glass-text-sm w-20">Width:</span>
+                <input type="number" className="glass-glass-flex-1 glass-glass-p-2 glass-surface-subtle/10 glass-radius glass-glass-text-primary glass-glass-text-sm" placeholder="Auto" />
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-white/60 text-sm w-20">Height:</span>
-                <input type="number" className="flex-1 p-2 bg-white/10 rounded text-white text-sm" placeholder="Auto" />
+              <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+                <span className="glass-glass-text-primary/60 glass-glass-text-sm w-20">Height:</span>
+                <input type="number" className="glass-glass-flex-1 glass-glass-p-2 glass-surface-subtle/10 glass-radius glass-glass-text-primary glass-glass-text-sm" placeholder="Auto" />
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-white/60 text-sm w-20">Opacity:</span>
-                <input type="range" min="0" max="1" step="0.1" className="flex-1" />
+              <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+                <span className="glass-glass-text-primary/60 glass-glass-text-sm w-20">Opacity:</span>
+                <input type="range" min="0" max="1" step="0.1" className="glass-glass-flex-1" />
               </div>
             </div>
           </div>
@@ -685,19 +670,15 @@ function MultiUserGlassEditor({ target, showPreview, showHistory, showComments, 
 function WorkspaceSidebar({ selectedElementId, onElementSelect, showMiniMap, showOnlineUsers, onlineUsers, currentUser, isVoiceActive, voiceUsers, enableComments }: any) {
   return (
     <div
-      className="workspace-sidebar w-80 border-l border-white/20 p-4 space-y-4"
-      style={{
-        background: 'rgba(30, 41, 59, 0.8)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)'
-      }}
+      className="workspace-sidebar w-80 glass-glass-border-l glass-glass-border-white/20 glass-glass-p-4 glass-glass-space-y-4"
+      style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
     >
       {/* Mini Map */}
       {showMiniMap && (
-        <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-white/80 uppercase">Mini Map</h3>
-          <div className="aspect-video bg-slate-800 border border-white/20 rounded p-2">
-            <div className="text-xs text-white/50 text-center mt-8">
+        <div className="glass-glass-space-y-2">
+          <h3 className="glass-glass-text-sm glass-glass-font-semibold glass-glass-text-primary/80 glass-glass-uppercase">Mini Map</h3>
+          <div className="aspect-video bg-slate-800 glass-glass-border glass-glass-border-white/20 glass-radius glass-glass-p-2">
+            <div className="glass-glass-text-xs glass-glass-text-primary/50 glass-glass-text-center mt-8">
               Canvas overview
             </div>
           </div>
@@ -706,26 +687,26 @@ function WorkspaceSidebar({ selectedElementId, onElementSelect, showMiniMap, sho
 
       {/* Online Users */}
       {showOnlineUsers && (
-        <div className="space-y-2">
-          <h3 className="text-sm font-semibold text-white/80 uppercase">Online Users</h3>
-          <div className="space-y-2">
+        <div className="glass-glass-space-y-2">
+          <h3 className="glass-glass-text-sm glass-glass-font-semibold glass-glass-text-primary/80 glass-glass-uppercase">Online Users</h3>
+          <div className="glass-glass-space-y-2">
             {onlineUsers.map((user: any) => (
               <div
                 key={user.id}
-                className="flex items-center gap-3 p-2 rounded hover:bg-white/5"
+                className="glass-glass-flex glass-glass-items-center glass-glass-gap-3 glass-glass-p-2 glass-radius hover:glass-surface-subtle/5"
               >
                 <div
-                  className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white"
+                  className="glass-glass-w-6 glass-glass-h-6 glass-radius-full glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-text-xs font-bold glass-glass-text-primary"
                   style={{ backgroundColor: user.color }}
                 >
                   {user.name[0]}
                 </div>
-                <div className="flex-1">
-                  <div className="text-sm text-white">{user.name}</div>
-                  <div className="text-xs text-white/50">{user.role}</div>
+                <div className="glass-glass-flex-1">
+                  <div className="glass-glass-text-sm glass-glass-text-primary">{user.name}</div>
+                  <div className="glass-glass-text-xs glass-glass-text-primary/50">{user.role}</div>
                 </div>
                 {voiceUsers.includes(user.id) && (
-                  <div className="text-green-400 text-xs">🎤</div>
+                  <div className="glass-glass-text-primary glass-glass-text-xs">🎤</div>
                 )}
               </div>
             ))}
@@ -734,19 +715,19 @@ function WorkspaceSidebar({ selectedElementId, onElementSelect, showMiniMap, sho
       )}
 
       {/* Quick Actions */}
-      <div className="space-y-2">
-        <h3 className="text-sm font-semibold text-white/80 uppercase">Quick Actions</h3>
-        <div className="space-y-2">
-          <button className="w-full text-left px-3 py-2 text-sm bg-white/5 hover:bg-white/10 rounded text-white">
-            <Copy className="w-4 h-4 inline mr-2" />
+      <div className="glass-glass-space-y-2">
+        <h3 className="glass-glass-text-sm glass-glass-font-semibold glass-glass-text-primary/80 glass-glass-uppercase">Quick Actions</h3>
+        <div className="glass-glass-space-y-2">
+          <button className="glass-glass-w-full glass-glass-text-left glass-glass-px-3 glass-glass-py-2 glass-glass-text-sm glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-radius glass-glass-text-primary">
+            <Copy className="glass-glass-w-4 glass-glass-h-4 inline mr-2" />
             Copy Selected
           </button>
-          <button className="w-full text-left px-3 py-2 text-sm bg-white/5 hover:bg-white/10 rounded text-white">
-            <ClipboardPaste className="w-4 h-4 inline mr-2" />
+          <button className="glass-glass-w-full glass-glass-text-left glass-glass-px-3 glass-glass-py-2 glass-glass-text-sm glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-radius glass-glass-text-primary">
+            <ClipboardPaste className="glass-glass-w-4 glass-glass-h-4 inline mr-2" />
             Paste
           </button>
-          <button className="w-full text-left px-3 py-2 text-sm bg-white/5 hover:bg-white/10 rounded text-white">
-            <Trash2 className="w-4 h-4 inline mr-2" />
+          <button className="glass-glass-w-full glass-glass-text-left glass-glass-px-3 glass-glass-py-2 glass-glass-text-sm glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-radius glass-glass-text-primary">
+            <Trash2 className="glass-glass-w-4 glass-glass-h-4 inline mr-2" />
             Delete Selected
           </button>
         </div>
@@ -766,24 +747,20 @@ function GlassTeamCursorsWithEffects({ showNames, showVoiceIndicators, cursorSiz
 function VoiceChatPanel({ isActive, voiceUsers, onClose, onToggleVoice }: any) {
   return (
     <div
-      className="fixed bottom-4 right-4 w-80 p-4 rounded-lg border border-white/20"
-      style={{
-        background: 'rgba(30, 41, 59, 0.9)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)'
-      }}
+      className="glass-glass-fixed bottom-4 right-4 w-80 glass-glass-p-4 glass-radius-lg glass-glass-border glass-glass-border-white/20"
+      style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
     >
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-white font-semibold">Voice Chat</h3>
-        <button onClick={onClose} className="text-white/70 hover:text-white">
+      <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-mb-4">
+        <h3 className="glass-glass-text-primary glass-glass-font-semibold">Voice Chat</h3>
+        <button onClick={onClose} className="glass-glass-text-primary/70 hover:glass-glass-text-primary">
           ✕
         </button>
       </div>
 
-      <div className="space-y-2 mb-4">
+      <div className="glass-glass-space-y-2 glass-glass-mb-4">
         {voiceUsers.map((userId: string) => (
-          <div key={userId} className="flex items-center gap-2 text-white text-sm">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+          <div key={userId} className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-text-primary glass-glass-text-sm">
+            <div className="w-2 h-2 glass-surface-green glass-radius-full animate-pulse" />
             User {userId}
           </div>
         ))}
@@ -804,45 +781,41 @@ function VoiceChatPanel({ isActive, voiceUsers, onClose, onToggleVoice }: any) {
 function VersionControlPanel({ onClose, onCreateSnapshot, canUndo, canRedo, onUndo, onRedo }: any) {
   return (
     <div
-      className="fixed bottom-4 left-4 w-80 p-4 rounded-lg border border-white/20"
-      style={{
-        background: 'rgba(30, 41, 59, 0.9)',
-        backdropFilter: 'blur(20px)',
-        border: '1px solid rgba(255, 255, 255, 0.1)'
-      }}
+      className="glass-glass-fixed bottom-4 left-4 w-80 glass-glass-p-4 glass-radius-lg glass-glass-border glass-glass-border-white/20"
+      style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
     >
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-white font-semibold">Version Control</h3>
-        <button onClick={onClose} className="text-white/70 hover:text-white">
+      <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-mb-4">
+        <h3 className="glass-glass-text-primary glass-glass-font-semibold">Version Control</h3>
+        <button onClick={onClose} className="glass-glass-text-primary/70 hover:glass-glass-text-primary">
           ✕
         </button>
       </div>
 
-      <div className="space-y-2">
-        <div className="flex gap-2">
+      <div className="glass-glass-space-y-2">
+        <div className="glass-glass-flex glass-glass-gap-2">
           <button
             onClick={onUndo}
             disabled={!canUndo}
-            className="flex-1 py-2 px-3 rounded bg-white/10 text-white disabled:opacity-50"
+            className="glass-glass-flex-1 glass-glass-py-2 glass-glass-px-3 glass-radius glass-surface-subtle/10 glass-glass-text-primary disabled:opacity-50"
           >
-            <Undo className="w-4 h-4 inline mr-1" />
+            <Undo className="glass-glass-w-4 glass-glass-h-4 inline mr-1" />
             Undo
           </button>
           <button
             onClick={onRedo}
             disabled={!canRedo}
-            className="flex-1 py-2 px-3 rounded bg-white/10 text-white disabled:opacity-50"
+            className="glass-glass-flex-1 glass-glass-py-2 glass-glass-px-3 glass-radius glass-surface-subtle/10 glass-glass-text-primary disabled:opacity-50"
           >
-            <Redo className="w-4 h-4 inline mr-1" />
+            <Redo className="glass-glass-w-4 glass-glass-h-4 inline mr-1" />
             Redo
           </button>
         </div>
 
         <button
           onClick={() => onCreateSnapshot(`Manual snapshot ${Date.now()}`)}
-          className="w-full py-2 px-3 rounded bg-blue-600 text-white hover:bg-blue-700"
+          className="glass-glass-w-full glass-glass-py-2 glass-glass-px-3 glass-radius glass-surface-blue glass-glass-text-primary hover:glass-surface-blue"
         >
-          <Save className="w-4 h-4 inline mr-1" />
+          <Save className="glass-glass-w-4 glass-glass-h-4 inline mr-1" />
           Create Snapshot
         </button>
       </div>
@@ -854,48 +827,44 @@ function WorkspaceFloatingActions({ isVoiceActive, onToggleVoice, onShowVoicePan
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="fixed bottom-6 right-6">
+    <div className="glass-glass-fixed bottom-6 right-6">
       <div
         className={`flex flex-col gap-2 ${isExpanded ? 'opacity-100' : 'opacity-0 pointer-events-none'} transition-opacity`}
       >
         {enableVoiceChat && (
           <button
             onClick={onShowVoicePanel}
-            className="w-12 h-12 rounded-full bg-green-600 text-white flex items-center justify-center shadow-lg hover:bg-green-700"
+            className="glass-glass-w-12 glass-glass-h-12 glass-radius-full glass-surface-green glass-glass-text-primary glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-shadow-lg hover:glass-surface-green"
             title="Voice Chat"
           >
-            <Mic className="w-4 h-4" />
+            <Mic className="glass-glass-w-4 glass-glass-h-4" />
           </button>
         )}
 
         {enableVersionControl && (
           <button
             onClick={onShowVersionPanel}
-            className="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-lg hover:bg-blue-700"
+            className="glass-glass-w-12 glass-glass-h-12 glass-radius-full glass-surface-blue glass-glass-text-primary glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-shadow-lg hover:glass-surface-blue"
             title="Version Control"
           >
-            <Settings className="w-4 h-4" />
+            <Settings className="glass-glass-w-4 glass-glass-h-4" />
           </button>
         )}
 
         <button
           onClick={onToggleFullscreen}
-          className="w-12 h-12 rounded-full bg-purple-600 text-white flex items-center justify-center shadow-lg hover:bg-purple-700"
+          className="glass-glass-w-12 glass-glass-h-12 glass-radius-full bg-purple-600 glass-glass-text-primary glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-shadow-lg hover:bg-purple-700"
           title="Fullscreen"
         >
-          <Maximize className="w-4 h-4" />
+          <Maximize className="glass-glass-w-4 glass-glass-h-4" />
         </button>
       </div>
 
       {/* Main FAB */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-14 h-14 rounded-full bg-slate-700 text-white flex items-center justify-center shadow-lg hover:bg-slate-600 mt-2"
-        style={{
-          background: 'rgba(30, 41, 59, 0.9)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.1)'
-        }}
+        className="w-14 h-14 glass-radius-full bg-slate-700 glass-glass-text-primary glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-shadow-lg hover:bg-slate-600 mt-2"
+        style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
       >
         {isExpanded ? '✕' : '⚡'}
       </button>
@@ -906,13 +875,13 @@ function WorkspaceFloatingActions({ isVoiceActive, onToggleVoice, onShowVoicePan
 // Loading and Error Components
 function WorkspaceLoadingState({ message = "Connecting to workspace..." }: { message?: string }) {
   return (
-    <div className="h-screen flex items-center justify-center bg-slate-900">
-      <div className="text-center space-y-4">
+    <div className="h-screen glass-glass-flex glass-glass-items-center glass-glass-justify-center bg-slate-900">
+      <div className="glass-glass-text-center glass-glass-space-y-4">
         <div
-          className="w-16 h-16 border-4 border-blue-400 border-t-transparent rounded-full animate-spin mx-auto"
+          className="glass-glass-w-16 glass-glass-h-16 glass-glass-border-4 glass-glass-border-blue glass-glass-border-t-transparent glass-radius-full animate-spin mx-auto"
         />
-        <div className="text-white text-lg">{message}</div>
-        <div className="text-white/60 text-sm">Please wait...</div>
+        <div className="glass-glass-text-primary glass-glass-text-lg">{message}</div>
+        <div className="glass-glass-text-primary/60 glass-glass-text-sm">Please wait...</div>
       </div>
     </div>
   );
@@ -920,14 +889,14 @@ function WorkspaceLoadingState({ message = "Connecting to workspace..." }: { mes
 
 function WorkspaceConnectionError({ onRetry, error }: { onRetry: () => void; error: string }) {
   return (
-    <div className="h-screen flex items-center justify-center bg-slate-900">
-      <div className="text-center space-y-4 max-w-md">
-        <div className="text-red-400 text-6xl mb-4">⚠️</div>
-        <div className="text-white text-xl font-semibold">Connection Error</div>
-        <div className="text-white/70">{error}</div>
+    <div className="h-screen glass-glass-flex glass-glass-items-center glass-glass-justify-center bg-slate-900">
+      <div className="glass-glass-text-center glass-glass-space-y-4 max-w-md">
+        <div className="glass-glass-text-primary glass-glass-text-6xl glass-glass-mb-4">⚠️</div>
+        <div className="glass-glass-text-primary glass-glass-text-xl glass-glass-font-semibold">Connection Error</div>
+        <div className="glass-glass-text-primary/70">{error}</div>
         <button
           onClick={onRetry}
-          className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+          className="glass-glass-px-6 glass-glass-py-3 glass-surface-blue glass-glass-text-primary glass-radius hover:glass-surface-blue transition-colors"
         >
           Retry Connection
         </button>

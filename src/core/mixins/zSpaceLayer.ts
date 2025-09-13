@@ -39,8 +39,8 @@ export const zSpaceLayer = (config: ZSpaceLayerConfig = {}): CSSProperties => {
     transform: `translateZ(${baseElevation}px)`,
     opacity,
     ...(backdrop && {
-      backdropFilter,
-      WebkitBackdropFilter: backdropFilter, // Safari support
+      // Use createGlassStyle() instead,
+      // Use createGlassStyle() instead, // Safari support
     }),
   };
 };

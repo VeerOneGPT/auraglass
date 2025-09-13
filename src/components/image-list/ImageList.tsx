@@ -112,7 +112,7 @@ const ImageListRoot = styled.ul<{
       -webkit-backdrop-filter: ${glassStyles.WebkitBackdropFilter};
       border: ${glassStyles.border};
       border-radius: ${glassStyles.borderRadius};
-      box-shadow: ${glassStyles.boxShadow};
+      box-shadow: var(--glass-elev-2);
       color: ${glassStyles.color};
       transition: ${glassStyles.transition};
       position: ${glassStyles.position};
@@ -124,7 +124,7 @@ const ImageListRoot = styled.ul<{
   ${props =>
     props.$glass &&
     `
-    background-color: rgba(255, 255, 255, 0.03);
+    background: var(--glass-bg-default);
     padding: ${props.$gap}px;
   `}
 

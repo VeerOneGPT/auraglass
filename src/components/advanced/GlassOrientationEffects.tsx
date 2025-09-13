@@ -5,7 +5,7 @@
 
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 interface OrientationData {
   alpha: number; // Z-axis rotation (0-360)
@@ -247,12 +247,12 @@ export function GlassOrientationEffects({
   // Permission request component
   if (isSupported && !permissionGranted) {
     return (
-      <div className={cn("relative OptimizedGlass intensity={0.2} blur={6} glass-glass-p-6", className)}>
-        <div className="text-center">
-          <h3 className="glass-glass-text-lg glass-font-semibold glass-mb-2">
+      <div className={cn("relative OptimizedGlass intensity={0.2} blur={6} glass-p-6", className)}>
+        <div className="glass-glass-text-center">
+          <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-mb-2">
             Enable Device Orientation
           </h3>
-          <p className="glass-text-secondary glass-mb-4">
+          <p className="glass-text-secondary glass-glass-mb-4">
             Allow orientation access for interactive glass effects
           </p>
           <button
@@ -290,7 +290,7 @@ export function GlassOrientationEffects({
       {/* Tilt effect layer */}
       {effectTypes.includes('tilt') && (
         <motion.div
-          className="absolute inset-0"
+          className="glass-glass-absolute glass-glass-inset-0"
           style={{
             rotateX: perspectiveX,
             rotateY: perspectiveY,
@@ -300,7 +300,7 @@ export function GlassOrientationEffects({
           {/* Background parallax layer */}
           {effectTypes.includes('parallax') && (
             <motion.div
-              className="absolute inset-0 OptimizedGlass intensity={0.2} blur={6} opacity-30"
+              className="glass-glass-absolute glass-glass-inset-0 OptimizedGlass intensity={0.2} blur={6} opacity-30"
               style={{
                 x: backgroundX,
                 y: backgroundY,
@@ -312,7 +312,7 @@ export function GlassOrientationEffects({
           {/* Refraction overlay */}
           {effectTypes.includes('refraction') && (
             <motion.div
-              className="absolute inset-0 pointer-events-none"
+              className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none"
               style={{
                 background: `radial-gradient(
                   circle at ${50 + smoothRefractionX.get() * 50}% ${50 + smoothRefractionY.get() * 50}%,
@@ -326,7 +326,7 @@ export function GlassOrientationEffects({
           {/* Shimmer effect */}
           {effectTypes.includes('shimmer') && (
             <motion.div
-              className="absolute inset-0 pointer-events-none opacity-20"
+              className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none opacity-20"
               style={{
                 background: `linear-gradient(
                   ${smoothShimmerAngle}deg,
@@ -339,7 +339,7 @@ export function GlassOrientationEffects({
           )}
           
           {/* Content */}
-          <div className="relative z-10">
+          <div className="glass-glass-relative glass-z-10">
             {children}
           </div>
         </motion.div>
@@ -347,10 +347,10 @@ export function GlassOrientationEffects({
       
       {/* Fallback for non-tilt effects */}
       {!effectTypes.includes('tilt') && (
-        <div className="relative">
+        <div className="glass-glass-relative">
           {effectTypes.includes('parallax') && (
             <motion.div
-              className="absolute inset-0 OptimizedGlass intensity={0.2} blur={6} opacity-30"
+              className="glass-glass-absolute glass-glass-inset-0 OptimizedGlass intensity={0.2} blur={6} opacity-30"
               style={{
                 x: backgroundX,
                 y: backgroundY,
@@ -361,7 +361,7 @@ export function GlassOrientationEffects({
           
           {effectTypes.includes('refraction') && (
             <motion.div
-              className="absolute inset-0 pointer-events-none"
+              className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none"
               style={{
                 background: `radial-gradient(
                   circle at ${50 + smoothRefractionX.get() * 50}% ${50 + smoothRefractionY.get() * 50}%,
@@ -374,7 +374,7 @@ export function GlassOrientationEffects({
           
           {effectTypes.includes('shimmer') && (
             <motion.div
-              className="absolute inset-0 pointer-events-none opacity-20"
+              className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none opacity-20"
               style={{
                 background: `linear-gradient(
                   ${smoothShimmerAngle}deg,
@@ -386,7 +386,7 @@ export function GlassOrientationEffects({
             />
           )}
           
-          <div className="relative z-10">
+          <div className="glass-glass-relative glass-z-10">
             {children}
           </div>
         </div>
@@ -394,7 +394,7 @@ export function GlassOrientationEffects({
       
       {/* Debug info */}
       {process.env.NODE_ENV === 'development' && (
-        <div className="absolute bottom-2 left-2 glass-text-xs glass-surface-primary glass-glass-p-2 glass-radius-sm opacity-50">
+        <div className="glass-glass-absolute bottom-2 left-2 glass-glass-text-xs glass-surface-primary glass-glass-p-2 glass-radius-sm opacity-50">
           <div>α: {orientation.alpha.toFixed(1)}°</div>
           <div>β: {orientation.beta.toFixed(1)}°</div>
           <div>γ: {orientation.gamma.toFixed(1)}°</div>

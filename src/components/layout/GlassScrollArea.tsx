@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { useA11yId } from '@/utils/a11y';
@@ -235,7 +235,7 @@ export const GlassScrollArea = forwardRef<HTMLDivElement, GlassScrollAreaProps>(
                     {/* Content */}
                     <div
                         ref={contentRef}
-                        className="relative"
+                        className="glass-glass-relative"
                         style={getOverflowStyle()}
                         onScroll={handleScroll}
                     >

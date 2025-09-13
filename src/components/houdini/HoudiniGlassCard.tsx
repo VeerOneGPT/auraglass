@@ -12,7 +12,7 @@ import {
     Zap
 } from 'lucide-react';
 import React, { useRef, useState } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { useGlassEffect, useHoudiniGlass } from './HoudiniGlassProvider';
 
 interface HoudiniGlassCardProps {
@@ -30,7 +30,7 @@ interface HoudiniGlassCardProps {
 
 export function HoudiniGlassCard({
   children,
-  className = '',
+  className='',
   preset = 'standard',
   effects = ['frost'],
   enableWorklets = true,
@@ -66,11 +66,11 @@ export function HoudiniGlassCard({
 
   const getEffectIcon = (effect: string) => {
     switch (effect) {
-      case 'frost': return <Sparkles className="w-4 h-4" />;
-      case 'caustics': return <Sun className="w-4 h-4" />;
-      case 'border': return <Layers className="w-4 h-4" />;
-      case 'refraction': return <Droplets className="w-4 h-4" />;
-      default: return <Zap className="w-4 h-4" />;
+      case 'frost': return <Sparkles className="glass-glass-w-4 glass-glass-h-4" />;
+      case 'caustics': return <Sun className="glass-glass-w-4 glass-glass-h-4" />;
+      case 'border': return <Layers className="glass-glass-w-4 glass-glass-h-4" />;
+      case 'refraction': return <Droplets className="glass-glass-w-4 glass-glass-h-4" />;
+      default: return <Zap className="glass-glass-w-4 glass-glass-h-4" />;
     }
   };
 
@@ -78,13 +78,13 @@ export function HoudiniGlassCard({
     if (performanceMode) {
       return (
         <span title="Performance mode active">
-          <Gauge className="w-4 h-4 text-yellow-400" />
+          <Gauge className="glass-glass-w-4 glass-glass-h-4 glass-glass-text-primary" />
         </span>
       );
     }
     return (
       <span title="Full effects active">
-        <Zap className="w-4 h-4 text-green-400" />
+        <Zap className="glass-glass-w-4 glass-glass-h-4 glass-glass-text-primary" />
       </span>
     );
   };
@@ -119,16 +119,16 @@ export function HoudiniGlassCard({
     >
       {/* Header */}
       {(title || description || showControls) && (
-        <div className="mb-4">
-          <div className="flex items-start justify-between">
-            <div className="flex-1">
+        <div className="glass-glass-mb-4">
+          <div className="glass-glass-flex glass-glass-items-start glass-glass-justify-between">
+            <div className="glass-glass-flex-1">
               {title && (
-                <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-1">
+                <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-text-secondary dark:glass-glass-text-primary glass-glass-mb-1">
                   {title}
                 </h3>
               )}
               {description && (
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <p className="glass-glass-text-sm glass-text-secondary dark:text-gray-300">
                   {description}
                 </p>
               )}
@@ -136,17 +136,17 @@ export function HoudiniGlassCard({
 
             {/* Controls */}
             {showControls && (
-              <div className="flex items-center gap-2 ml-4">
+              <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 ml-4">
                 {/* Performance indicator */}
                 {getPerformanceIndicator()}
 
                 {/* Effect controls toggle */}
                 <button
                   onClick={() => setShowEffectControls(!showEffectControls)}
-                  className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+                  className="glass-glass-p-2 glass-radius-lg hover:glass-surface-subtle/10 transition-colors"
                   title="Toggle effect controls"
                 >
-                  <Settings className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+                  <Settings className="glass-glass-w-4 glass-glass-h-4 glass-text-secondary dark:glass-text-secondary" />
                 </button>
               </div>
             )}
@@ -160,18 +160,18 @@ export function HoudiniGlassCard({
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: 'auto' }}
           exit={{ opacity: 0, height: 0 }}
-          className="mb-4 p-3 rounded-lg bg-black/5 dark:bg-white/5"
+          className="glass-glass-mb-4 glass-glass-p-3 glass-radius-lg glass-surface-dark/5 dark:glass-surface-subtle/5"
         >
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-mb-2">
+            <span className="glass-glass-text-sm glass-glass-font-medium glass-text-secondary dark:text-gray-300">
               Glass Effects
             </span>
-            <span className="text-xs text-gray-500 dark:text-gray-400">
+            <span className="glass-glass-text-xs glass-text-secondary dark:glass-text-secondary">
               {appliedEffects.length} active
             </span>
           </div>
 
-          <div className="grid grid-cols-2 gap-2">
+          <div className="glass-glass-grid glass-glass-glass-grid-cols-2 glass-glass-gap-2">
             {['frost', 'caustics', 'border', 'refraction'].map(effect => (
               <button
                 key={effect}
@@ -186,7 +186,7 @@ export function HoudiniGlassCard({
                 title={`${enabledEffects.includes(effect) ? 'Disable' : 'Enable'} ${effect} effect`}
               >
                 {getEffectIcon(effect)}
-                <span className="capitalize">{effect}</span>
+                <span className="glass-glass-capitalize">{effect}</span>
                 {enabledEffects.includes(effect) && (
                   <Eye className="w-3 h-3 ml-auto" />
                 )}
@@ -195,21 +195,21 @@ export function HoudiniGlassCard({
           </div>
 
           {/* Worklet status */}
-          <div className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+          <div className="mt-2 glass-glass-text-xs glass-text-secondary dark:glass-text-secondary">
             Worklets: {canUseWorklets ? '✅ Supported' : '❌ Fallback'}
           </div>
         </motion.div>
       )}
 
       {/* Main Content */}
-      <div className="relative z-10">
+      <div className="glass-glass-relative glass-z-10">
         {children}
       </div>
 
       {/* Hover effect overlay */}
       {interactive && (
         <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"
+          className="glass-glass-absolute glass-glass-inset-0 glass-gradient-primary from-white/5 to-transparent glass-pointer-events-none"
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 1 : 0 }}
           transition={{ duration: performanceMode ? 0.1 : 0.2 }}
@@ -218,11 +218,11 @@ export function HoudiniGlassCard({
 
       {/* Status indicators */}
       {showControls && (
-        <div className="absolute top-2 right-2 flex gap-1">
+        <div className="glass-glass-absolute glass--glass--glassglass--top-2 right-2 glass-glass-flex glass-glass-gap-1">
           {appliedEffects.map(effect => (
             <div
               key={effect}
-              className="w-2 h-2 rounded-full bg-blue-400 opacity-60"
+              className="w-2 h-2 glass-radius-full glass-surface-blue opacity-60"
               title={`Active: ${effect}`}
             />
           ))}
@@ -231,9 +231,9 @@ export function HoudiniGlassCard({
 
       {/* Browser support indicator */}
       {!isSupported && (
-        <div className="absolute bottom-2 right-2">
+        <div className="glass-glass-absolute bottom-2 right-2">
           <div
-            className="w-2 h-2 rounded-full bg-amber-400"
+            className="w-2 h-2 glass-radius-full bg-amber-400"
             title="Houdini not supported - using fallback styles"
           />
         </div>
@@ -279,33 +279,33 @@ export function HoudiniGlassShowcase() {
         description="Check browser compatibility for CSS Houdini features"
         showControls={true}
       >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="text-center p-3 rounded-lg bg-gray-50 dark:bg-gray-800">
+        <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-3 glass-glass-gap-4">
+          <div className="glass-glass-text-center glass-glass-p-3 glass-radius-lg glass-surface-subtle dark:bg-gray-800">
             <div className={`text-2xl mb-2 ${isSupported ? 'text-green-500' : 'text-red-500'}`}>
               {isSupported ? '✅' : '❌'}
             </div>
-            <div className="font-medium">Overall Support</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">
+            <div className="glass-glass-font-medium">Overall Support</div>
+            <div className="glass-glass-text-sm glass-text-secondary dark:glass-text-secondary">
               Houdini APIs available
             </div>
           </div>
 
-          <div className="text-center p-3 rounded-lg bg-gray-50 dark:bg-gray-800">
+          <div className="glass-glass-text-center glass-glass-p-3 glass-radius-lg glass-surface-subtle dark:bg-gray-800">
             <div className={`text-2xl mb-2 ${hasPropertyAPI ? 'text-green-500' : 'text-red-500'}`}>
               {hasPropertyAPI ? '✅' : '❌'}
             </div>
-            <div className="font-medium">Properties API</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">
+            <div className="glass-glass-font-medium">Properties API</div>
+            <div className="glass-glass-text-sm glass-text-secondary dark:glass-text-secondary">
               Custom properties support
             </div>
           </div>
 
-          <div className="text-center p-3 rounded-lg bg-gray-50 dark:bg-gray-800">
+          <div className="glass-glass-text-center glass-glass-p-3 glass-radius-lg glass-surface-subtle dark:bg-gray-800">
             <div className={`text-2xl mb-2 ${hasPaintAPI ? 'text-green-500' : 'text-red-500'}`}>
               {hasPaintAPI ? '✅' : '❌'}
             </div>
-            <div className="font-medium">Paint API</div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">
+            <div className="glass-glass-font-medium">Paint API</div>
+            <div className="glass-glass-text-sm glass-text-secondary dark:glass-text-secondary">
               Paint worklets support
             </div>
           </div>
@@ -318,7 +318,7 @@ export function HoudiniGlassShowcase() {
         description="Choose from predefined glass effect configurations"
         showControls={true}
       >
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+        <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-5 glass-glass-gap-3">
           {presets.map(preset => (
             <button
               key={preset.id}
@@ -331,8 +331,8 @@ export function HoudiniGlassShowcase() {
                 }
               `}
             >
-              <div className="font-medium text-sm">{preset.name}</div>
-              <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              <div className="glass-glass-font-medium glass-glass-text-sm">{preset.name}</div>
+              <div className="glass-glass-text-xs glass-text-secondary dark:glass-text-secondary mt-1">
                 {preset.description}
               </div>
             </button>
@@ -346,7 +346,7 @@ export function HoudiniGlassShowcase() {
         description="Enable/disable individual glass effect layers"
         showControls={true}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 lg:glass-glass-glass-grid-cols-4 glass-glass-gap-3">
           {availableEffects.map(effect => (
             <button
               key={effect.id}
@@ -359,11 +359,11 @@ export function HoudiniGlassShowcase() {
                 }
               `}
             >
-              <div className="font-medium text-sm flex items-center gap-2">
+              <div className="glass-glass-font-medium glass-glass-text-sm glass-glass-flex glass-glass-items-center glass-glass-gap-2">
                 {getEffectIcon(effect.id)}
                 {effect.name}
               </div>
-              <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
+              <div className="glass-glass-text-xs glass-text-secondary dark:glass-text-secondary mt-1">
                 {effect.description}
               </div>
             </button>
@@ -380,31 +380,31 @@ export function HoudiniGlassShowcase() {
         showControls={true}
         interactive={true}
       >
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-4 rounded-lg bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
-              <h4 className="font-medium text-gray-800 dark:text-white mb-2">Content Area 1</h4>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
+        <div className="glass-glass-space-y-4">
+          <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 glass-glass-gap-4">
+            <div className="glass-glass-p-4 glass-radius-lg glass-gradient-primary from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20">
+              <h4 className="glass-glass-font-medium glass-text-secondary dark:glass-glass-text-primary glass-glass-mb-2">Content Area 1</h4>
+              <p className="glass-glass-text-sm glass-text-secondary dark:text-gray-300">
                 This is a preview of how the selected glass effects appear with your content.
                 The effects are applied using CSS Houdini for maximum performance.
               </p>
             </div>
 
-            <div className="p-4 rounded-lg bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20">
-              <h4 className="font-medium text-gray-800 dark:text-white mb-2">Content Area 2</h4>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
+            <div className="glass-glass-p-4 glass-radius-lg glass-gradient-primary from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20">
+              <h4 className="glass-glass-font-medium glass-text-secondary dark:glass-glass-text-primary glass-glass-mb-2">Content Area 2</h4>
+              <p className="glass-glass-text-sm glass-text-secondary dark:text-gray-300">
                 Experiment with different presets and effects to find the perfect glass
                 aesthetic for your application.
               </p>
             </div>
           </div>
 
-          <div className="p-4 rounded-lg bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20">
-            <h4 className="font-medium text-gray-800 dark:text-white mb-2">Interactive Element</h4>
-            <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">
+          <div className="glass-glass-p-4 glass-radius-lg glass-gradient-primary from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20">
+            <h4 className="glass-glass-font-medium glass-text-secondary dark:glass-glass-text-primary glass-glass-mb-2">Interactive Element</h4>
+            <p className="glass-glass-text-sm glass-text-secondary dark:text-gray-300 glass-glass-mb-3">
               Hover over this card to see the interactive effects in action.
             </p>
-            <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
+            <button className="glass-glass-px-4 glass-glass-py-2 glass-surface-blue glass-glass-text-primary glass-radius-lg hover:glass-surface-blue transition-colors">
               Interactive Button
             </button>
           </div>
@@ -417,11 +417,11 @@ export function HoudiniGlassShowcase() {
 // Helper function for effect icons (used in showcase)
 function getEffectIcon(effect: string) {
   switch (effect) {
-    case 'frost': return <Sparkles className="w-4 h-4" />;
-    case 'caustics': return <Sun className="w-4 h-4" />;
-    case 'border': return <Layers className="w-4 h-4" />;
-    case 'refraction': return <Droplets className="w-4 h-4" />;
-    default: return <Zap className="w-4 h-4" />;
+    case 'frost': return <Sparkles className="glass-glass-w-4 glass-glass-h-4" />;
+    case 'caustics': return <Sun className="glass-glass-w-4 glass-glass-h-4" />;
+    case 'border': return <Layers className="glass-glass-w-4 glass-glass-h-4" />;
+    case 'refraction': return <Droplets className="glass-glass-w-4 glass-glass-h-4" />;
+    default: return <Zap className="glass-glass-w-4 glass-glass-h-4" />;
   }
 }
 

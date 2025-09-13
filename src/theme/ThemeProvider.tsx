@@ -582,11 +582,9 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
   const createSurface = useCallback(
     (props: GlassSurfaceProps) => {
       const {
-        /* eslint-disable react/prop-types */
         variant = 'standard',
         elevation: rawElevation = 1,
         interactive = false,
-        /* eslint-enable react/prop-types */
       } = props;
 
       // Ensure elevation is a number

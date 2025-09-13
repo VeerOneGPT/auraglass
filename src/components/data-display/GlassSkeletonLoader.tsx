@@ -61,8 +61,8 @@ const sheenKeyframes = `
     100% { transform: translateX(150%) rotate(15deg); }
   }
   @keyframes glass-depth-pulse {
-    0%, 100% { box-shadow: 0 6px 14px rgba(0,0,0,0.15); }
-    50% { box-shadow: 0 10px 24px rgba(0,0,0,0.22); }
+    0%, 100% { box-shadow: var(--glass-elev-2); }
+    50% { box-shadow: var(--glass-elev-2); }
   }
 `;
 
@@ -71,7 +71,7 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
   text = "Loading...",
   size = 'md',
   variant = 'pulse',
-  className = '',
+  className='',
   children,
 }) => {
   const [mounted, setMounted] = useState(false);
@@ -101,7 +101,7 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
           return {
             position: 'relative' as const,
             overflow: 'hidden',
-            background: 'linear-gradient(90deg, transparent, ${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}, transparent)',
+            background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
             backgroundSize: '200px 100%',
             animation: `glass-wave ${animationDuration * 5}ms infinite`,
           };
@@ -109,7 +109,7 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
           return {
             position: 'relative' as const,
             overflow: 'hidden',
-            background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent)',
+            background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
             backgroundSize: '200px 100%',
             animation: `glass-shimmer ${animationDuration * 7}ms infinite, glass-depth-pulse ${animationDuration * 14}ms ease-in-out infinite`,
           };
@@ -117,7 +117,7 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
           return {
             position: 'relative' as const,
             overflow: 'hidden',
-            background: 'radial-gradient(120% 80% at 20% 0%, ${glassStyles.surface?.base || "rgba(255, 255, 255, 0.05)"} 0%, rgba(255,255,255,0) 40%)',
+            background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
             // sheen drawn by a before-like overlay via extra element below
           };
         case 'pulse':
@@ -145,7 +145,7 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
                 position: 'absolute',
                 inset: 0,
                 borderRadius: '9999px',
-                background: 'conic-gradient(from 0deg, rgba(255,255,255,0.0), rgba(255,255,255,0.18), rgba(255,255,255,0.0))',
+                background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
                 filter: 'blur(6px) saturate(120%)',
                 transform: 'translateX(-150%) rotate(15deg)',
                 animation: `glass-sheen-move ${animationDuration * 6}ms ease-in-out infinite`,
@@ -157,7 +157,7 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(({
 
         {text && (
           <OptimizedGlass
-            className="glass-px-4 glass-py-2 glass-radius-lg"
+            className="glass-glass-px-4 glass-glass-py-2 glass-radius-lg"
             intensity="subtle"
             elevation="level1"
           >
@@ -195,7 +195,7 @@ interface GlassSkeletonTextProps {
 export const GlassSkeletonText: React.FC<GlassSkeletonTextProps> = ({
   lines = 1,
   width = '100%',
-  className = ''
+  className=''
 }) => {
   const { shouldAnimate } = useAccessibleAnimation();
   const widths = Array.isArray(width) ? width : [width];
@@ -229,7 +229,7 @@ export const GlassSkeletonText: React.FC<GlassSkeletonTextProps> = ({
 // Compound component for skeleton card
 export const GlassSkeletonCard: React.FC<{
   className?: string;
-}> = ({ className = '' }) => {
+}> = ({ className='' }) => {
   return (
     <OptimizedGlass
       className={cn('glass-p-6 glass-gap-4', className)}

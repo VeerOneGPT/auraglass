@@ -122,7 +122,7 @@ export function GlassPrismComparison() {
   const currentData = COMPARISON_DATA[currentComparison];
 
   return (
-    <section className="relative glass-py-32 overflow-hidden bg-gradient-to-br from-black via-gray-900 to-black cv-auto">
+    <section className="glass-glass-relative glass-glass-py-32 overflow-hidden glass-gradient-primary from-black via-gray-900 to-black cv-auto">
       <div className="container-responsive">
         {/* Section Header */}
         <motion.div
@@ -130,11 +130,11 @@ export function GlassPrismComparison() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1 }}
-          className="text-center glass-mb-20"
+          className="glass-glass-text-center glass-mb-20"
         >
-          <h2 className="text-5xl md:text-7xl font-black mb-8">
+          <h2 className="glass-glass-text-5xl md:text-7xl font-black mb-8">
             <motion.span
-              className="inline-block relative"
+              className="inline-glass-glass-block glass-glass-relative"
               style={{
                 background: "linear-gradient(45deg, #00f5ff, #ff00f5, #f5ff00, #00f5ff)",
                 backgroundSize: "400% 400%",
@@ -155,21 +155,21 @@ export function GlassPrismComparison() {
             >
               THE IMPOSSIBLE
               {/* Backup text for better visibility */}
-              <span className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent opacity-90">
+              <span className="glass-glass-absolute glass-glass-inset-0 glass-gradient-primary from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent glass-glass-opacity-90">
                 THE IMPOSSIBLE
               </span>
             </motion.span>
             <br />
-            <span className="glass-text-primary">DIFFERENCE</span>
+            <span className="glass-glass-text-primary">DIFFERENCE</span>
           </h2>
           
           <motion.p
-            className="glass-text-2xl glass-text-primary/70 max-w-3xl mx-auto leading-relaxed"
+            className="glass-glass-text-2xl glass-glass-text-primary/70 max-w-3xl mx-auto leading-relaxed"
             animate={{ opacity: [0.7, 1, 0.7] }}
             transition={{ duration: 3, repeat: Infinity }}
           >
             Move the prism to reveal how{" "}
-            <span className="glass-text-primary font-bold">AuraOne transcends</span>{" "}
+            <span className="glass-glass-text-primary font-bold">AuraOne transcends</span>{" "}
             traditional limitations
           </motion.p>
         </motion.div>
@@ -177,7 +177,7 @@ export function GlassPrismComparison() {
         {/* Interactive Prism Comparison */}
         <motion.div
           ref={containerRef}
-          className="relative max-w-7xl mx-auto h-96 glass-foundation-complete backdrop-blur-md2xl rounded-3xl border border-white/20 overflow-hidden cursor-none"
+          className="glass-glass-relative max-w-7xl mx-auto h-96 glass-foundation-complete backdrop-blur-md2xl glass-radius-3xl glass-glass-border glass-glass-border-white/20 overflow-hidden cursor-none"
           onMouseMove={handleMouseMove}
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
@@ -187,9 +187,9 @@ export function GlassPrismComparison() {
           }}
         >
           {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-10">
+          <div className="glass-glass-absolute glass-glass-inset-0 opacity-10">
             <div 
-              className="absolute inset-0"
+              className="glass-glass-absolute glass-glass-inset-0"
               style={{
                 backgroundImage: `
                   linear-gradient(rgba(0, 245, 255, 0.1) 1px, transparent 1px),
@@ -202,15 +202,15 @@ export function GlassPrismComparison() {
           
           {/* Competitor Side (Left) */}
           <motion.div
-            className="absolute inset-0 flex items-center justify-center"
+            className="glass-glass-absolute glass-glass-inset-0 glass-glass-flex glass-glass-items-center glass-glass-justify-center"
             style={{
               clipPath: `polygon(0% 0%, ${prismPosition}% 0%, ${prismPosition}% 100%, 0% 100%)`,
             }}
           >
-            <div className="text-center p-8">
+            <div className="glass-glass-text-center glass-glass-p-8">
               <div className="mb-6">
                 <motion.div
-                  className="text-6xl md:text-8xl font-black glass-mb-4"
+                  className="glass-glass-text-6xl md:text-8xl font-black glass-glass-mb-4"
                   animate={{ opacity: [0.6, 0.8, 0.6] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
@@ -218,28 +218,28 @@ export function GlassPrismComparison() {
                     {currentData.competitor.value}
                   </span>
                 </motion.div>
-                <p className="glass-text-primary/60 glass-text-xl glass-mb-2">Competitors</p>
-                <p className="glass-text-primary/40 glass-text-sm">{currentData.competitor.description}</p>
+                <p className="glass-glass-text-primary/60 glass-glass-text-xl glass-glass-mb-2">Competitors</p>
+                <p className="glass-glass-text-primary/40 glass-glass-text-sm">{currentData.competitor.description}</p>
               </div>
               
-              <div className="flex items-center justify-center glass-gap-4 glass-text-primary/30">
-                <Target className="w-6 h-6" />
-                <span className="glass-text-lg">Limited Capabilities</span>
+              <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-gap-4 glass-glass-text-primary/30">
+                <Target className="glass-glass-w-6 glass-glass-h-6" />
+                <span className="glass-glass-text-lg">Limited Capabilities</span>
               </div>
             </div>
           </motion.div>
           
           {/* AuraOne Side (Right) */}
           <motion.div
-            className="absolute inset-0 flex items-center justify-center"
+            className="glass-glass-absolute glass-glass-inset-0 glass-glass-flex glass-glass-items-center glass-glass-justify-center"
             style={{
               clipPath: `polygon(${prismPosition}% 0%, 100% 0%, 100% 100%, ${prismPosition}% 100%)`,
             }}
           >
-            <div className="text-center p-8">
+            <div className="glass-glass-text-center glass-glass-p-8">
               <div className="mb-6">
                 <motion.div
-                  className="text-6xl md:text-8xl font-black glass-mb-4 relative"
+                  className="glass-glass-text-6xl md:text-8xl font-black glass-glass-mb-4 glass-glass-relative"
                   animate={{ 
                     scale: [1, 1.05, 1],
                     textShadow: [
@@ -256,7 +256,7 @@ export function GlassPrismComparison() {
                   
                   {/* Sparkle effects */}
                   <motion.div
-                    className="absolute -top-4 -right-4"
+                    className="glass-glass-absolute -top-4 -right-4"
                     animate={{
                       rotate: 360,
                       scale: [0, 1, 0],
@@ -268,27 +268,27 @@ export function GlassPrismComparison() {
               repeatType: "loop", repeatDelay: 1 },
                     }}
                   >
-                    <Sparkles className="w-8 h-8 glass-text-primary" />
+                    <Sparkles className="glass-glass-w-8 glass-glass-h-8 glass-glass-text-primary" />
                   </motion.div>
                 </motion.div>
-                <p className="glass-text-primary glass-text-xl glass-mb-2 font-bold">AuraOne</p>
-                <p className="glass-text-primary/80 glass-text-sm">{currentData.auraone.description}</p>
+                <p className="glass-glass-text-primary glass-glass-text-xl glass-glass-mb-2 font-bold">AuraOne</p>
+                <p className="glass-glass-text-primary/80 glass-glass-text-sm">{currentData.auraone.description}</p>
               </div>
               
               <motion.div 
-                className="flex items-center justify-center glass-gap-4 glass-text-primary"
+                className="glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-gap-4 glass-glass-text-primary"
                 animate={{ opacity: [0.8, 1, 0.8] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
               >
-                <Zap className="w-6 h-6" />
-                <span className="glass-text-lg font-bold">Beyond Possible</span>
+                <Zap className="glass-glass-w-6 glass-glass-h-6" />
+                <span className="glass-glass-text-lg font-bold">Beyond Possible</span>
               </motion.div>
             </div>
           </motion.div>
           
           {/* Glass Prism */}
           <motion.div
-            className="absolute top-0 bottom-0 w-1 pointer-events-none"
+            className="glass-glass-absolute top-0 bottom-0 w-1 glass-pointer-events-none"
             style={{
               left: `${prismPosition}%`,
               transform: "translateX(-50%)",
@@ -297,9 +297,9 @@ export function GlassPrismComparison() {
             }}
           >
             {/* Prism body */}
-            <div className="relative w-full h-full">
+            <div className="glass-glass-relative glass-glass-w-full glass-glass-h-full">
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent backdrop-blur-md border-l border-r border-white/60"
+                className="glass-glass-absolute glass-glass-inset-0 glass-gradient-primary from-transparent via-white/40 to-transparent backdrop-blur-md glass-glass-border-l glass-glass-border-r glass-glass-border-white/60"
                 animate={{
                   background: [
                     "linear-gradient(90deg, transparent, rgba(0,245,255,0.4), transparent)",
@@ -315,7 +315,7 @@ export function GlassPrismComparison() {
               {Array.from({ length: 5 }).map((_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute w-20 h-0.5 bg-gradient-to-r from-transparent via-white/60 to-transparent"
+                  className="glass-glass-absolute w-20 h-0.5 glass-gradient-primary from-transparent via-white/60 to-transparent"
                   style={{
                     top: `${20 + i * 15}%`,
                     left: `-${40 + i * 5}px`,
@@ -336,7 +336,7 @@ export function GlassPrismComparison() {
               
               {/* Rainbow spectrum effect */}
               <motion.div
-                className="absolute top-1/2 -right-20 w-32 h-1 bg-gradient-to-r from-red-400 via-yellow-400 via-green-400 via-blue-400 to-purple-400"
+                className="glass-glass-absolute glass--glass-top-1/2 -right-20 w-32 h-1 glass-gradient-primary from-red-400 via-yellow-400 via-green-400 via-blue-400 to-purple-400"
                 style={{
                   transform: "translateY(-50%) rotate(-15deg)",
                 }}
@@ -351,7 +351,7 @@ export function GlassPrismComparison() {
           
           {/* Custom cursor */}
           <motion.div
-            className="absolute pointer-events-none z-50"
+            className="glass-glass-absolute glass-pointer-events-none glass-z-50"
             style={{
               x: mouseX,
               y: mouseY,
@@ -368,15 +368,15 @@ export function GlassPrismComparison() {
               repeatType: "loop", ease: "linear" },
             }}
           >
-            <div className="w-8 h-8 glass-radius-full bg-white/30 backdrop-blur-md border border-white/50 flex items-center justify-center">
-              <ArrowRight className="w-4 h-4 glass-text-primary" />
+            <div className="glass-glass-w-8 glass-glass-h-8 glass-radius-full glass-surface-subtle/30 backdrop-blur-md glass-glass-border glass-glass-border-white/50 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+              <ArrowRight className="glass-glass-w-4 glass-glass-h-4 glass-glass-text-primary" />
             </div>
           </motion.div>
         </motion.div>
         
         {/* Category Indicators */}
         <motion.div
-          className="flex justify-center glass-gap-6 glass-mt-12"
+          className="glass-glass-flex glass-glass-justify-center glass-glass-gap-6 glass-mt-12"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -394,18 +394,18 @@ export function GlassPrismComparison() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span className="font-medium">{data?.category}</span>
+              <span className="glass-glass-font-medium">{data?.category}</span>
             </motion.button>
           ))}
         </motion.div>
         
         {/* Instruction Text */}
         <motion.div
-          className="text-center glass-mt-12"
+          className="glass-glass-text-center glass-mt-12"
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <p className="glass-text-primary/50 glass-text-lg">
+          <p className="glass-glass-text-primary/50 glass-glass-text-lg">
             <motion.span
               animate={{ color: ["#ffffff", "#00f5ff", "#ffffff"] }}
               transition={{ duration: 2, repeat: Infinity }}
@@ -418,12 +418,12 @@ export function GlassPrismComparison() {
       </div>
       
       {/* Background Effects */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none overflow-hidden">
         {/* Floating particles */}
         {Array.from({ length: 20 }).map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 glass-surface-primary/30 glass-radius-full"
+            className="glass-glass-absolute w-2 h-2 glass-surface-primary/30 glass-radius-full"
             style={{
               left: `${seededRandom(i * 19000) * 100}%`,
               top: `${seededRandom(i * 20000) * 100}%`,

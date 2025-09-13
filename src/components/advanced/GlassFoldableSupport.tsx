@@ -5,7 +5,7 @@
 
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 interface FoldableInfo {
   isFoldable: boolean;
@@ -204,7 +204,7 @@ export function GlassFoldableSupport({
   const generateLayout = () => {
     if (!adaptiveLayout || !foldableInfo.isFoldable) {
       return (
-        <div className="relative w-full h-full">
+        <div className="glass-glass-relative glass-glass-w-full glass-glass-h-full">
           {children}
         </div>
       );
@@ -215,11 +215,11 @@ export function GlassFoldableSupport({
     if (independentSegments && segments.length > 1) {
       // Render independent content for each segment
       return (
-        <div className="relative w-full h-full flex">
+        <div className="glass-glass-relative glass-glass-w-full glass-glass-h-full glass-glass-flex">
           {segments.map((segment, index) => (
             <motion.div
               key={`segment-${index}`}
-              className="relative"
+              className="glass-glass-relative"
               style={{
                 width: `${(segment.width / window.innerWidth) * 100}%`,
                 height: `${(segment.height / window.innerHeight) * 100}%`,
@@ -228,7 +228,7 @@ export function GlassFoldableSupport({
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 }}
             >
-              <div className="OptimizedGlass intensity={0.2} blur={6} w-full h-full">
+              <div className="OptimizedGlass intensity={0.2} blur={6} glass-glass-w-full glass-glass-h-full">
                 {React.Children.toArray(children)[index] || children}
               </div>
             </motion.div>
@@ -239,7 +239,7 @@ export function GlassFoldableSupport({
     
     // Adaptive single layout with hinge awareness
     return (
-      <div className="relative w-full h-full">
+      <div className="glass-glass-relative glass-glass-w-full glass-glass-h-full">
         {bridgeHinge && hinge && (
           <HingeBridge hinge={hinge} continuousGlass={continuousGlass} />
         )}
@@ -290,8 +290,8 @@ export function GlassFoldableSupport({
       
       {/* Fold state indicator */}
       {foldableInfo.isFoldable && (
-        <div className="absolute top-2 right-2 glass-surface-primary glass-glass-p-1 glass-radius-sm glass-text-xs opacity-50">
-          <div className="flex items-center glass-gap-1">
+        <div className="glass-glass-absolute glass--glass--glassglass--top-2 right-2 glass-surface-primary glass-glass-p-1 glass-radius-sm glass-glass-text-xs opacity-50">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
             <div 
               className={cn(
                 "w-2 h-2 glass-radius-full",

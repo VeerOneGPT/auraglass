@@ -2,7 +2,7 @@
 
 import React, { forwardRef, useRef, useEffect } from 'react';
 import { OptimizedGlass } from '../../primitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { AlertCircle } from 'lucide-react';
 
 export interface GlassTextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
@@ -152,13 +152,13 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
           >
             {label}
             {props?.required && (
-              <span className="text-red-400 glass-ml-1" aria-label="required">*</span>
+              <span className="glass-glass-text-primary glass-ml-1" aria-label="required">*</span>
             )}
           </label>
         )}
 
         {/* Textarea Container */}
-        <div className="relative">
+        <div className="glass-glass-relative">
           <textarea
             ref={combinedRef}
             id={textareaId}
@@ -215,8 +215,8 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
 
           {/* Error Icon */}
           {hasError && (
-            <div className="absolute top-3 right-3 text-red-400">
-              <AlertCircle className="h-5 w-5" />
+            <div className="glass-glass-absolute top-3 right-3 glass-glass-text-primary">
+              <AlertCircle className="glass-glass-h-5 glass-glass-w-5" />
             </div>
           )}
         </div>
@@ -249,7 +249,7 @@ export const GlassTextarea = forwardRef<HTMLTextAreaElement, GlassTextareaProps>
         {errorText && (
           <p
             id={`${textareaId}-error`}
-            className="glass-mt-2 glass-text-xs text-red-400 flex items-center glass-gap-1"
+            className="glass-mt-2 glass-glass-text-xs glass-glass-text-primary glass-glass-flex glass-glass-items-center glass-glass-gap-1"
           >
             <AlertCircle className="h-3 w-3" />
             {errorText}

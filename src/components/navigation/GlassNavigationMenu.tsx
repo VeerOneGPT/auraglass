@@ -2,7 +2,7 @@
 
 // Removed circular import - using regular button element
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { ChevronRight } from 'lucide-react';
 import React, { useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
@@ -320,7 +320,7 @@ export const GlassNavigationMenuItem: React.FC<GlassNavigationMenuItemProps> = (
 
     if (item?.separator) {
         return (
-            <div className="h-px bg-white/20 glass-mx-4 glass-my-2" />
+            <div className="h-px glass-surface-subtle/20 glass-glass-mx-4 glass-glass-my-2" />
         );
     }
 
@@ -349,13 +349,13 @@ export const GlassNavigationMenuItem: React.FC<GlassNavigationMenuItemProps> = (
                     type="button"
                 >
                     {item?.icon && (
-                        <div className="flex items-center justify-center">
+                        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center">
                             {item?.icon}
                         </div>
                     )}
 
                     {item?.badge && (
-                        <div className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 glass-radius-full flex items-center justify-center glass-text-xs font-bold glass-text-primary">
+                        <div className="glass-glass-absolute -glass--glass-top-1 -right-1 glass-glass-w-5 glass-glass-h-5 glass-surface-red glass-radius-full glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-text-xs font-bold glass-glass-text-primary">
                             {typeof item?.badge === 'number' && item?.badge > 99 ? '99+' : item?.badge}
                         </div>
                     )}
@@ -388,30 +388,30 @@ export const GlassNavigationMenuItem: React.FC<GlassNavigationMenuItemProps> = (
                 disabled={item?.disabled}
                 type="button"
             >
-                <div className="flex items-center glass-gap-3 flex-1 min-w-0">
+                <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3 glass-glass-flex-1 glass-glass-min-w-0">
                     {/* Icon */}
                     {item?.icon && (
-                        <div className="flex items-center justify-center flex-shrink-0">
+                        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-flex-shrink-0">
                             {item?.icon}
                         </div>
                     )}
 
                     {/* Content */}
-                    <div className="flex-1 min-w-0 text-left">
-                        <div className="flex items-center glass-gap-2">
-                            <span className="truncate font-medium">
+                    <div className="glass-glass-flex-1 glass-glass-min-w-0 glass-glass-text-left">
+                        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+                            <span className="glass-glass-truncate glass-glass-font-medium">
                                 {item?.label}
                             </span>
 
                             {item?.badge && (
-                                <span className="flex-shrink-0 glass-px-2 glass-py-0.5 bg-red-500/20 text-red-300 glass-radius-full glass-text-xs font-medium">
+                                <span className="glass-glass-flex-shrink-0 glass-glass-px-2 glass-glass-py-0.5 glass-surface-red/20 text-red-300 glass-radius-full glass-glass-text-xs glass-glass-font-medium">
                                     {typeof item?.badge === 'number' && item?.badge > 99 ? '99+' : item?.badge}
                                 </span>
                             )}
                         </div>
 
                         {item?.description && (
-                            <p className="glass-text-primary/50 glass-text-sm truncate mt-0.5">
+                            <p className="glass-glass-text-primary/50 glass-glass-text-sm glass-glass-truncate glass-mt-0-5">
                                 {item?.description}
                             </p>
                         )}
@@ -419,31 +419,31 @@ export const GlassNavigationMenuItem: React.FC<GlassNavigationMenuItemProps> = (
                 </div>
 
                 {/* Right side actions */}
-                <div className="flex items-center glass-gap-2 flex-shrink-0">
+                <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-flex-shrink-0">
                     {/* External link indicator */}
                     {item?.external && (
-                        <div className="w-3 h-3 glass-text-primary/50">
+                        <div className="w-3 h-3 glass-glass-text-primary/50">
                             ↗
                         </div>
                     )}
 
                     {/* Featured indicator */}
                     {item?.featured && (
-                        <div className="w-2 h-2 bg-yellow-400 glass-radius-full animate-pulse" />
+                        <div className="w-2 h-2 glass-surface-yellow glass-radius-full animate-pulse" />
                     )}
 
                     {/* Submenu toggle */}
                     {item?.children && item?.children.length > 0 && (
                         <button
                             onClick={handleSubmenuToggle}
-                            className="glass-p-1 hover:bg-white/10 glass-radius-md transition-colors duration-200"
+                            className="glass-glass-p-1 hover:glass-surface-subtle/10 glass-radius-md transition-colors duration-200"
                             aria-label="Toggle submenu"
                         >
                             <Motion
                                 preset="rotateIn"
                                 duration={200}
                             >
-                                <ChevronRight className="w-4 h-4 glass-text-primary/50" />
+                                <ChevronRight className="glass-glass-w-4 glass-glass-h-4 glass-glass-text-primary/50" />
                             </Motion>
                         </button>
                     )}

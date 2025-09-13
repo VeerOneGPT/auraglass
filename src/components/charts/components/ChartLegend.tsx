@@ -1,5 +1,5 @@
 // Typography tokens available via typography.css (imported in index.css)
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../../lib/utilsComprehensive';
 import React from 'react';
 
 export interface ChartLegendProps {
@@ -27,7 +27,7 @@ export const ChartLegend: React.FC<ChartLegendProps> = ({
     gap: style === 'compact' ? '8px' : '12px',
     padding: '8px',
     background: glassEffect ? '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.05)"}' : 'transparent',
-    backdropFilter: glassEffect ? 'blur(4px)' : 'none',
+    // Use createGlassStyle() instead,
     borderRadius: glassEffect ? '8px' : '0',
     border: glassEffect ? '1px solid ${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}' : 'none',
     marginBottom: position === 'top' ? '16px' : '0',

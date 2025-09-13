@@ -3,7 +3,7 @@
 import React, { forwardRef, useRef, useEffect, useState, useCallback } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { useA11yId } from '../../utils/a11y';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 import { useGlassSound } from '../../utils/soundDesign';
@@ -131,6 +131,21 @@ export const GlassFluidSimulation = forwardRef<HTMLDivElement, GlassFluidSimulat
     const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
     const [isMouseDown, setIsMouseDown] = useState(false);
 
+    // Stable refs to avoid re-creating callbacks on each render
+    const onChangeRef = useRef(onChange);
+    useEffect(() => {
+      onChangeRef.current = onChange;
+    }, [onChange]);
+    const onForceChangeRef = useRef(onForceChange);
+    useEffect(() => {
+      onForceChangeRef.current = onForceChange;
+    }, [onForceChange]);
+    const particlesRef = useRef<FluidParticle[]>(particles);
+    useEffect(() => {
+      particlesRef.current = particles;
+    }, [particles]);
+
+
     // Fluid presets
     const fluidPresets = {
       water: {
@@ -189,8 +204,8 @@ export const GlassFluidSimulation = forwardRef<HTMLDivElement, GlassFluidSimulat
       
       setParticles(newParticles);
       setParticleHistory([newParticles]);
-      onChange?.(newParticles);
-    }, [particleCount, width, height, restDensity, fluidColor, onChange]);
+      onChangeRef.current?.(newParticles);
+    }, [particleCount, width, height, restDensity, fluidColor]);
 
     // Initialize on mount
     useEffect(() => {
@@ -467,13 +482,15 @@ export const GlassFluidSimulation = forwardRef<HTMLDivElement, GlassFluidSimulat
           });
         }
         
-        onChange?.(newParticles);
+        onChangeRef.current?.(newParticles);
+        // keep ref in sync for rendering
+        particlesRef.current = newParticles;
         return newParticles;
       });
       
-      render(particles);
+      render(particlesRef.current);
       animationRef.current = requestAnimationFrame(animate);
-    }, [prefersReducedMotion, respectMotionPreference, isRunning, maxFPS, calculateDensity, calculateForces, updatePositions, showTrails, trailLength, onChange, render, particles]);
+    }, [prefersReducedMotion, respectMotionPreference, isRunning, maxFPS, calculateDensity, calculateForces, updatePositions, showTrails, trailLength, render]);
 
     // Start animation
     useEffect(() => {
@@ -530,17 +547,23 @@ export const GlassFluidSimulation = forwardRef<HTMLDivElement, GlassFluidSimulat
         id: `force-${Date.now()}-${Math.random()}`
       };
       
-      setCurrentForces(prev => [...prev, newForce]);
-      onForceChange?.([...currentForces, newForce]);
+      setCurrentForces(prev => {
+        const updated = [...prev, newForce];
+        onForceChangeRef.current?.(updated);
+        return updated;
+      });
       play('success');
-    }, [currentForces, onForceChange, play]);
+    }, [play]);
 
     // Remove force
     const removeForce = useCallback((forceId: string) => {
-      setCurrentForces(prev => prev.filter(f => f.id !== forceId));
-      onForceChange?.(currentForces.filter(f => f.id !== forceId));
+      setCurrentForces(prev => {
+        const updated = prev.filter(f => f.id !== forceId);
+        onForceChangeRef.current?.(updated);
+        return updated;
+      });
       play('error');
-    }, [currentForces, onForceChange, play]);
+    }, [play]);
 
     // Control panel
     const renderControls = () => {
@@ -553,29 +576,29 @@ export const GlassFluidSimulation = forwardRef<HTMLDivElement, GlassFluidSimulat
           depth={1}
           tint="neutral"
           border="subtle"
-          className="glass-fluid-controls flex flex-wrap items-center glass-gap-4 glass-p-4 glass-radius-lg backdrop-blur-md border border-border/20"
+          className="glass-fluid-controls glass-glass-flex glass-glass-flex-wrap glass-glass-items-center glass-glass-gap-4 glass-glass-p-4 glass-radius-lg backdrop-blur-md glass-glass-border glass-glass-border-glass-glass-border/20"
         >
-          <div className="flex items-center glass-gap-2">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
             <button
               onClick={() => setIsRunning(!isRunning)}
-              className="glass-px-3 glass-py-1 glass-radius-md bg-primary/20 hover:bg-primary/30 text-primary"
+              className="glass-glass-px-3 glass-glass-py-1 glass-radius-md glass-surface-primary/20 hover:glass-surface-primary/30 glass-glass-text-primary"
             >
               {isRunning ? 'Pause' : 'Play'}
             </button>
             <button
               onClick={initializeParticles}
-              className="glass-px-3 glass-py-1 glass-radius-md bg-secondary/20 hover:bg-secondary/30"
+              className="glass-glass-px-3 glass-glass-py-1 glass-radius-md bg-secondary/20 hover:bg-secondary/30"
             >
               Reset
             </button>
           </div>
           
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">Preset:</label>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">Preset:</label>
             <select
               value={currentPreset}
               onChange={(e) => setCurrentPreset(e.target.value as any)}
-              className="glass-px-2 glass-py-1 glass-radius-md bg-background/20 border border-border/20"
+              className="glass-glass-px-2 glass-glass-py-1 glass-radius-md glass-surface-overlay glass-glass-border glass-glass-border-glass-glass-border/20"
             >
               {Object.keys(fluidPresets).map(preset => (
                 <option key={preset} value={preset}>
@@ -585,29 +608,29 @@ export const GlassFluidSimulation = forwardRef<HTMLDivElement, GlassFluidSimulat
             </select>
           </div>
           
-          <div className="flex items-center glass-gap-2">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
             <button
               onClick={() => addForce({ x: width/2, y: height/2, strength: 10, type: 'push', radius: 50 })}
-              className="glass-px-2 glass-py-1 glass-radius-md bg-red-500/20 hover:bg-red-500/30 text-red-400 glass-text-sm"
+              className="glass-glass-px-2 glass-glass-py-1 glass-radius-md glass-surface-red/20 hover:glass-surface-red/30 glass-glass-text-primary glass-glass-text-sm"
             >
               Add Push
             </button>
             <button
               onClick={() => addForce({ x: width/2, y: height/2, strength: 10, type: 'pull', radius: 50 })}
-              className="glass-px-2 glass-py-1 glass-radius-md bg-blue-500/20 hover:bg-blue-500/30 text-blue-400 glass-text-sm"
+              className="glass-glass-px-2 glass-glass-py-1 glass-radius-md glass-surface-blue/20 hover:glass-surface-blue/30 glass-glass-text-primary glass-glass-text-sm"
             >
               Add Pull
             </button>
             <button
               onClick={() => addForce({ x: width/2, y: height/2, strength: 10, type: 'vortex', radius: 100 })}
-              className="glass-px-2 glass-py-1 glass-radius-md bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 glass-text-sm"
+              className="glass-glass-px-2 glass-glass-py-1 glass-radius-md bg-purple-500/20 hover:bg-purple-500/30 text-purple-400 glass-glass-text-sm"
             >
               Add Vortex
             </button>
           </div>
           
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={showTrails}
@@ -616,7 +639,7 @@ export const GlassFluidSimulation = forwardRef<HTMLDivElement, GlassFluidSimulat
               />
               Trails
             </label>
-            <label className="glass-text-sm">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={debug}
@@ -647,11 +670,11 @@ export const GlassFluidSimulation = forwardRef<HTMLDivElement, GlassFluidSimulat
       >
         <Motion
           preset={isMotionSafe && respectMotionPreference ? "fadeIn" : "none"}
-          className="flex flex-col glass-gap-4 glass-p-4"
+          className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4 glass-glass-p-4"
         >
           {renderControls()}
           
-          <div className="relative">
+          <div className="glass-glass-relative">
             <canvas
               ref={canvasRef}
               width={width}

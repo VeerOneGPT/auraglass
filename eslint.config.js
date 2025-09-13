@@ -26,7 +26,9 @@ module.exports = [
     rules: {
       // AuraGlass Design System Rules - CRITICAL FOR UNIFIED GLASS
       'auraglass/no-inline-glass': 'error',
-      'auraglass/require-glass-tokens': 'warn'
+      'auraglass/require-glass-tokens': 'warn',
+      'auraglass/no-raw-tailwind': ['warn', { allow: ['glass-', 'sb-', 'storybook-'] }],
+      'auraglass/no-inline-style-attr': 'warn'
     }
   },
 
@@ -38,7 +40,9 @@ module.exports = [
     },
     rules: {
       'auraglass/no-inline-glass': 'warn',
-      'auraglass/require-glass-tokens': 'off'
+      'auraglass/require-glass-tokens': 'off',
+      'auraglass/no-raw-tailwind': 'off',
+      'auraglass/no-inline-style-attr': 'off'
     }
   },
 
@@ -50,7 +54,31 @@ module.exports = [
     },
     rules: {
       'auraglass/no-inline-glass': 'off',
-      'auraglass/require-glass-tokens': 'off'
+      'auraglass/require-glass-tokens': 'off',
+      'auraglass/no-raw-tailwind': 'off',
+      'auraglass/no-inline-style-attr': 'off'
+    }
+  },
+
+  // Low-level utils and compatibility probes - skip inline glass rule
+  {
+    files: ['src/utils/**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      'auraglass': auraglassPlugin
+    },
+    rules: {
+      'auraglass/no-inline-glass': 'off'
+    }
+  },
+
+  // Advanced progressive enhancement config objects – allow capability keys named backdropFilter
+  {
+    files: ['src/components/advanced/GlassProgressiveEnhancement.tsx'],
+    plugins: {
+      'auraglass': auraglassPlugin
+    },
+    rules: {
+      'auraglass/no-inline-glass': 'off'
     }
   },
 

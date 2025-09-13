@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { GlassFab } from './GlassFab';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { useParallax } from '../../hooks/useParallax';
 
 const meta: Meta<typeof GlassFab> = {
@@ -42,9 +43,9 @@ type Story = StoryObj<typeof GlassFab>;
 export const Default: Story = {
   args: {
     children: (
-      <div className="glass-p-4 text-center">
-        <h3 className="glass-text-lg font-semibold glass-mb-2">GlassFab</h3>
-        <p className="glass-text-sm opacity-80">This is the default glassfab component.</p>
+      <div className="glass-glass-p-4 glass-glass-text-center">
+        <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-mb-2">GlassFab</h3>
+        <p className="glass-glass-text-sm opacity-80">This is the default glassfab component.</p>
       </div>
     ),
   },
@@ -52,7 +53,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-wrap glass-gap-4">
+    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4">
       <GlassFab {...args}>
         Default
       </GlassFab>
@@ -71,15 +72,7 @@ export const ParallaxFab: Story = {
         ref={ref}
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
-        style={{
-          perspective: 800,
-          padding: 24,
-          borderRadius: 16,
-          backdropFilter: 'blur(8px)',
-          WebkitBackdropFilter: 'blur(8px)',
-          background: 'rgba(255,255,255,0.06)',
-          border: '1px solid rgba(255,255,255,0.15)'
-        }}
+        style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
       >
         <GlassFab {...args}>Parallax</GlassFab>
       </div>

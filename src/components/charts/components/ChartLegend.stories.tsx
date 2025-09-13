@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ChartLegend } from './ChartLegend';
-import { cn } from '@/lib/utils';
+import { cn } from '../../../lib/utils';
 
 const meta: Meta<typeof ChartLegend> = {
   title: 'Components/Components/ChartLegend',
@@ -57,7 +57,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-8">
+    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-8">
       <ChartLegend {...args} position="top" style="default" />
       <ChartLegend {...args} position="bottom" style="compact" />
       <ChartLegend {...args} position="left" style="minimal" />

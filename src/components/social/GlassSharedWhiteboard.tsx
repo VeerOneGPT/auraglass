@@ -97,7 +97,7 @@ export const GlassSharedWhiteboard = forwardRef<HTMLDivElement, GlassSharedWhite
     onUndo,
     onRedo,
     onUserCursorMove,
-    className = '',
+    className='',
     ...props
   }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -356,7 +356,7 @@ export const GlassSharedWhiteboard = forwardRef<HTMLDivElement, GlassSharedWhite
 
     const UserCursor = ({ user }: { user: WhiteboardUser }) => (
       <motion.div
-        className="absolute pointer-events-none z-20"
+        className="glass-glass-absolute glass-pointer-events-none z-20"
         style={{
           left: user.cursorX,
           top: user.cursorY,
@@ -396,16 +396,16 @@ export const GlassSharedWhiteboard = forwardRef<HTMLDivElement, GlassSharedWhite
         className={`relative ${className}`}
         {...props}
       >
-        <div className="flex flex-col space-y-4">
+        <div className="glass-glass-flex glass-glass-flex-col glass-glass-space-y-4">
           {/* Toolbar */}
           {showToolbar && !readOnly && (
             <div className={`
               flex items-center justify-between p-3 rounded-lg
               ${createGlassStyle({ variant: 'default' })}
             `}>
-              <div className="flex items-center space-x-4">
+              <div className="glass-glass-flex glass-glass-items-center space-x-4">
                 {/* Tools */}
-                <div className="flex space-x-2">
+                <div className="glass-glass-flex space-x-2">
                   {tools.map(tool => (
                     <button
                       key={tool.id}
@@ -425,7 +425,7 @@ export const GlassSharedWhiteboard = forwardRef<HTMLDivElement, GlassSharedWhite
                 </div>
 
                 {/* Colors */}
-                <div className="flex space-x-1">
+                <div className="glass-glass-flex space-x-1">
                   {colors.map(color => (
                     <button
                       key={color}
@@ -443,7 +443,7 @@ export const GlassSharedWhiteboard = forwardRef<HTMLDivElement, GlassSharedWhite
                 </div>
 
                 {/* Sizes */}
-                <div className="flex space-x-1">
+                <div className="glass-glass-flex space-x-1">
                   {sizes.map(size => (
                     <button
                       key={size}
@@ -457,7 +457,7 @@ export const GlassSharedWhiteboard = forwardRef<HTMLDivElement, GlassSharedWhite
                       `}
                     >
                       <div
-                        className="bg-current rounded-full"
+                        className="bg-current glass-radius-full"
                         style={{ 
                           width: Math.min(size, 16), 
                           height: Math.min(size, 16) 
@@ -469,20 +469,20 @@ export const GlassSharedWhiteboard = forwardRef<HTMLDivElement, GlassSharedWhite
               </div>
 
               {/* Actions */}
-              <div className="flex items-center space-x-2">
+              <div className="glass-glass-flex glass-glass-items-center space-x-2">
                 {showUndoRedo && (
                   <>
                     <button
                       onClick={handleUndo}
                       disabled={undoStack.length === 0}
-                      className="px-3 py-1 text-sm font-medium text-white/70 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="glass-glass-px-3 glass-glass-py-1 glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/70 hover:glass-glass-text-primary disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       ↶ Undo
                     </button>
                     <button
                       onClick={handleRedo}
                       disabled={redoStack.length === 0}
-                      className="px-3 py-1 text-sm font-medium text-white/70 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="glass-glass-px-3 glass-glass-py-1 glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/70 hover:glass-glass-text-primary disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       ↷ Redo
                     </button>
@@ -490,7 +490,7 @@ export const GlassSharedWhiteboard = forwardRef<HTMLDivElement, GlassSharedWhite
                 )}
                 <button
                   onClick={handleClear}
-                  className="px-3 py-1 text-sm font-medium text-red-400 hover:text-red-300"
+                  className="glass-glass-px-3 glass-glass-py-1 glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary hover:text-red-300"
                 >
                   Clear
                 </button>
@@ -498,9 +498,9 @@ export const GlassSharedWhiteboard = forwardRef<HTMLDivElement, GlassSharedWhite
             </div>
           )}
 
-          <div className="flex space-x-4">
+          <div className="glass-glass-flex space-x-4">
             {/* Whiteboard Canvas */}
-            <div className="relative flex-1">
+            <div className="glass-glass-relative glass-glass-flex-1">
               <canvas
                 ref={canvasRef}
                 width={width}
@@ -530,7 +530,7 @@ export const GlassSharedWhiteboard = forwardRef<HTMLDivElement, GlassSharedWhite
               {!readOnly && (
                 <button
                   onClick={() => setGridVisible(!gridVisible)}
-                  className="absolute top-2 right-2 p-2 text-white/60 hover:text-white"
+                  className="glass-glass-absolute glass--glass--glassglass--top-2 right-2 glass-glass-p-2 glass-glass-text-primary/60 hover:glass-glass-text-primary"
                   title="Toggle Grid"
                 >
                   #
@@ -544,24 +544,24 @@ export const GlassSharedWhiteboard = forwardRef<HTMLDivElement, GlassSharedWhite
                 w-48 p-3 rounded-lg space-y-2
                 ${createGlassStyle({ variant: 'default' })}
               `}>
-                <h3 className="text-sm font-medium text-white/90 mb-3">
+                <h3 className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/90 glass-glass-mb-3">
                   Active Users ({simulatedUsers.length})
                 </h3>
                 {simulatedUsers.map(user => (
                   <div
                     key={user.id}
-                    className="flex items-center space-x-2 p-2 rounded hover:bg-white/5"
+                    className="glass-glass-flex glass-glass-items-center space-x-2 glass-glass-p-2 glass-radius hover:glass-surface-subtle/5"
                   >
                     <div
-                      className="w-3 h-3 rounded-full border border-white/30"
+                      className="w-3 h-3 glass-radius-full glass-glass-border glass-glass-border-white/30"
                       style={{ backgroundColor: user.color }}
                     />
-                    <span className="text-sm text-white/80 truncate">
+                    <span className="glass-glass-text-sm glass-glass-text-primary/80 glass-glass-truncate">
                       {user.name}
                       {user.id === currentUserId && ' (You)'}
                     </span>
                     {user.isDrawing && (
-                      <span className="text-xs text-green-400">✏️</span>
+                      <span className="glass-glass-text-xs glass-glass-text-primary">✏️</span>
                     )}
                   </div>
                 ))}
@@ -570,16 +570,16 @@ export const GlassSharedWhiteboard = forwardRef<HTMLDivElement, GlassSharedWhite
           </div>
 
           {/* Status */}
-          <div className="flex items-center justify-between text-xs text-white/50">
-            <div className="flex items-center space-x-4">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-text-xs glass-glass-text-primary/50">
+            <div className="glass-glass-flex glass-glass-items-center space-x-4">
               <span>{localStrokes.length} strokes</span>
               {realTimeSync && (
-                <span className="flex items-center space-x-1">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                <span className="glass-glass-flex glass-glass-items-center space-x-1">
+                  <div className="w-2 h-2 glass-surface-green glass-radius-full animate-pulse" />
                   <span>Synced</span>
                 </span>
               )}
-              {readOnly && <span className="text-yellow-400">Read Only</span>}
+              {readOnly && <span className="glass-glass-text-primary">Read Only</span>}
             </div>
             <div>
               Canvas: {width}×{height}

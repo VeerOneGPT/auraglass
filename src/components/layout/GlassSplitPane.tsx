@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { useA11yId } from '@/utils/a11y';
 import { useMotionPreferenceContext } from '@/contexts/MotionPreferenceContext';
 
@@ -147,7 +147,7 @@ export const GlassSplitPane = forwardRef<HTMLDivElement, GlassSplitPaneProps>(
       >
         {/* Left/Top Pane */}
         <div 
-          className="min-w-0 min-h-0 overflow-auto"
+          className="glass-glass-min-w-0 glass-glass-min-h-0 glass-glass-overflow-auto"
           aria-label={direction === 'horizontal' ? 'Left pane' : 'Top pane'}
         >
           {left}
@@ -178,7 +178,7 @@ export const GlassSplitPane = forwardRef<HTMLDivElement, GlassSplitPaneProps>(
         
         {/* Right/Bottom Pane */}
         <div 
-          className="min-w-0 min-h-0 overflow-auto"
+          className="glass-glass-min-w-0 glass-glass-min-h-0 glass-glass-overflow-auto"
           aria-label={direction === 'horizontal' ? 'Right pane' : 'Bottom pane'}
         >
           {right}

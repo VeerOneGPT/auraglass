@@ -3,7 +3,7 @@
  * Multi-depth glass layers with mouse/scroll parallax effects
  */
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion';
 import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
@@ -232,7 +232,7 @@ export const GlassParallaxLayers = forwardRef<HTMLDivElement, GlassParallaxLayer
             {layer.content}
             
             {debug && (
-              <div className="absolute top-2 left-2 bg-black/20 backdrop-blur-sm glass-p-2 glass-radius-sm glass-text-xs glass-text-primary/90">
+              <div className="glass-glass-absolute glass--glass--glassglass--top-2 left-2 glass-surface-dark/20 glass-glass-backdrop-blur-sm glass-glass-p-2 glass-radius-sm glass-glass-text-xs glass-glass-text-primary/90">
                 Layer {index + 1} | Depth: {layer.depth}
               </div>
             )}
@@ -244,7 +244,7 @@ export const GlassParallaxLayers = forwardRef<HTMLDivElement, GlassParallaxLayer
       {/* Interactive indicator */}
       {interactive && !prefersReducedMotion && (
         <motion.div
-          className="absolute bottom-4 right-4 glass-text-primary/60 glass-text-xs bg-black/20 backdrop-blur-sm glass-p-2 glass-radius-md"
+          className="glass-glass-absolute bottom-4 right-4 glass-glass-text-primary/60 glass-glass-text-xs glass-surface-dark/20 glass-glass-backdrop-blur-sm glass-glass-p-2 glass-radius-md"
           initial={{ opacity: 0 }}
           animate={{ opacity: isHovered ? 1 : 0.5 }}
           role="status"

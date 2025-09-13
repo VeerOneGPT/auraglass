@@ -126,10 +126,10 @@ const InputContainer = styled.div<{
   }}
   
   /* Enhanced glass styling */
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--glass-bg-default);
+  backdrop-filter: var(--glass-backdrop-blur);
+  -webkit-backdrop-filter: var(--glass-backdrop-blur);
+  border: 1px solid var(--glass-border-default);
   
   border-radius: 8px;
   border: 1px solid ${props => 
@@ -139,26 +139,26 @@ const InputContainer = styled.div<{
         ? 'rgba(99, 102, 241, 0.8)' 
         : 'rgba(255, 255, 255, 0.12)'
   };
-  background-color: rgba(255, 255, 255, 0.03);
+  background: var(--glass-bg-default);
   transition: all 0.2s ease;
   
   /* Focused state */
   ${props => props.$focused && css`
     border-color: rgba(99, 102, 241, 0.8);
-    box-shadow: 0 0 0 1px rgba(99, 102, 241, 0.3);
+    box-shadow: var(--glass-elev-2);
   `}
   
   /* Error state */
   ${props => props.$hasError && css`
     border-color: rgba(240, 82, 82, 0.8);
-    box-shadow: 0 0 0 1px rgba(240, 82, 82, 0.3);
+    box-shadow: var(--glass-elev-2);
   `}
   
   /* Disabled state */
   ${props => props.$disabled && css`
     opacity: 0.6;
     cursor: not-allowed;
-    background-color: rgba(255, 255, 255, 0.01);
+    background: var(--glass-bg-default);
   `}
 `;
 
@@ -186,8 +186,8 @@ const Token = styled.div<{
   gap: 6px;
   max-width: 200px;
   background: rgba(99, 102, 241, 0.2);
-  backdrop-filter: blur(4px);
-  border: 1px solid rgba(99, 102, 241, 0.3);
+  backdrop-filter: var(--glass-backdrop-blur);
+  border: 1px solid var(--glass-border-default);
   color: rgba(255, 255, 255, 0.95);
   transition: background-color 0.2s ease;
   user-select: none;
@@ -210,10 +210,10 @@ const Token = styled.div<{
     /* Only show the remove button hover effect when not disabled */
     ${props => !props.$isDisabled && css`
       .remove-button {
-        background-color: rgba(255, 255, 255, 0.2);
+        background: var(--glass-bg-default);
         
         &:hover {
-          background-color: rgba(255, 255, 255, 0.3);
+          background: var(--glass-bg-default);
         }
       }
     `}
@@ -248,7 +248,7 @@ const RemoveButton = styled.button`
   
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5);
+    box-shadow: var(--glass-elev-2);
   }
   
   /* Icon sizing */
@@ -305,13 +305,13 @@ const DropdownContainer = styled.div<{
   margin-bottom: ${props => props.$openUp ? '4px' : '0'};
   
   /* Enhanced glass styling */
-  background-color: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--glass-bg-default);
+  backdrop-filter: var(--glass-backdrop-blur);
+  -webkit-backdrop-filter: var(--glass-backdrop-blur);
+  border: 1px solid var(--glass-border-default);
   
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border-default);
   will-change: transform, opacity;
   transform-origin: ${props => props.$openUp ? 'bottom center' : 'top center'};
 `;
@@ -363,13 +363,13 @@ const OptionItem = styled.li<{
   
   /* Focus state */
   ${props => props.$isFocused && !props.$isDisabled && css`
-    background-color: rgba(255, 255, 255, 0.08);
+    background: var(--glass-bg-default);
   `}
   
   /* Hover state - only when not disabled */
   ${props => !props.$isDisabled && css`
     &:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background: var(--glass-bg-default);
     }
   `}
   

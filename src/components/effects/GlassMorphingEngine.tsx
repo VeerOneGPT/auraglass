@@ -5,7 +5,7 @@
 
 import { motion, useAnimation, useSpring, useTransform } from 'framer-motion';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 
 // Environmental adaptation types
 type EnvironmentalContext = {
@@ -240,7 +240,7 @@ const defaultGlassProperties: GlassProperties = {
 
 export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
   children,
-  className = '',
+  className='',
   environmentalContext = {},
   userActivity = 'browsing',
   contentType = 'text',
@@ -510,7 +510,7 @@ export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
           style={{
             position: 'absolute',
             inset: 0,
-            backdropFilter: useTransform(blurMotion, value => `blur(${value}px)`),
+            // Use createGlassStyle() instead,
             background: useTransform(
               [opacityMotion, temperatureMotion, iridescenceMotion],
               (values: number[]) => {

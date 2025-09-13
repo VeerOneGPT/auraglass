@@ -2,7 +2,8 @@
 
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 export interface GlassEngineConfig {
   opacity: {
@@ -130,7 +131,7 @@ export const GlassEngineProvider: React.FC<{
     }));
   }, []);
 
-  const createGlassStyle = useCallback((
+  const buildGlassEngineStyle = useCallback((
     variant: string = 'base',
     customProps?: Partial<GlassEngineConfig>
   ): React.CSSProperties => {
@@ -141,15 +142,7 @@ export const GlassEngineProvider: React.FC<{
     const blurValue = blur[variant as keyof typeof blur] || blur.base;
     const brightnessValue = brightness[variant as keyof typeof brightness] || brightness.base;
 
-    return {
-      background: texture.type !== 'smooth'
-        ? generateTextureCSS(texture.type, texture.intensity)
-        : `rgba(255, 255, 255, ${opacityValue})`,
-      backdropFilter: `blur(${blurValue}px) brightness(${brightnessValue})`,
-      WebkitBackdropFilter: `blur(${blurValue}px) brightness(${brightnessValue})`,
-      border: '1px solid rgba(255, 255, 255, 0.18)',
-      borderRadius: '16px'
-    };
+    return createGlassStyle({ intent: "neutral", elevation: "level2" });
   }, [config]);
 
   const getTexturePattern = useCallback((type: string): string => {
@@ -157,62 +150,76 @@ export const GlassEngineProvider: React.FC<{
   }, [config.texture.intensity]);
 
   const adaptToEnvironment = useCallback((conditions: EnvironmentalConditions) => {
-    if (!config.environment.weatherReactive && !config.environment.timeReactive) return;
-
-    let adaptedConfig = { ...config };
-
-    // Weather adaptations
-    if (config.environment.weatherReactive) {
-      switch (conditions.weather) {
-        case 'rainy':
-          adaptedConfig.texture = { ...adaptedConfig.texture, type: 'rippled', animated: true };
-          adaptedConfig.opacity.base = Math.min(0.25, adaptedConfig.opacity.base + 0.05);
-          adaptedConfig.blur.base = Math.max(10, adaptedConfig.blur.base - 5);
-          break;
-        case 'foggy':
-          adaptedConfig.opacity.base = Math.max(0.05, adaptedConfig.opacity.base - 0.03);
-          adaptedConfig.blur.base = Math.min(30, adaptedConfig.blur.base + 8);
-          break;
-        case 'snowy':
-          adaptedConfig.texture = { ...adaptedConfig.texture, type: 'crystalline' };
-          adaptedConfig.brightness.base = Math.min(1.3, adaptedConfig.brightness.base + 0.1);
-          break;
-        case 'sunny':
-          adaptedConfig.brightness.base = Math.min(1.4, adaptedConfig.brightness.base + 0.15);
-          adaptedConfig.opacity.base = Math.min(0.18, adaptedConfig.opacity.base + 0.02);
-          break;
+    // Use functional update to avoid closing over `config` and to keep
+    // this callback stable. Also avoid mutating nested state.
+    setConfig(prev => {
+      // If none of the environment reactions are enabled, no change.
+      if (!prev.environment.weatherReactive && !prev.environment.timeReactive && !prev.environment.temperatureReactive) {
+        return prev;
       }
-    }
 
-    // Time adaptations
-    if (config.environment.timeReactive) {
-      const hour = conditions.timeOfDay;
-      if (hour >= 20 || hour <= 6) {
-        // Night time - more subtle effects
-        adaptedConfig.opacity.base = Math.max(0.05, adaptedConfig.opacity.base - 0.02);
-        adaptedConfig.blur.base = Math.min(25, adaptedConfig.blur.base + 3);
-      } else if (hour >= 12 && hour <= 16) {
-        // Midday - stronger effects
-        adaptedConfig.brightness.base = Math.min(1.2, adaptedConfig.brightness.base + 0.05);
+      // Start from clones of nested objects to avoid mutating previous state.
+      let next: GlassEngineConfig = {
+        ...prev,
+        opacity: { ...prev.opacity },
+        blur: { ...prev.blur },
+        brightness: { ...prev.brightness },
+        texture: { ...prev.texture },
+      };
+
+      // Weather adaptations
+      if (prev.environment.weatherReactive) {
+        switch (conditions.weather) {
+          case 'rainy':
+            next.texture = { ...next.texture, type: 'rippled', animated: true };
+            next.opacity.base = Math.min(0.25, next.opacity.base + 0.05);
+            next.blur.base = Math.max(10, next.blur.base - 5);
+            break;
+          case 'foggy':
+            next.opacity.base = Math.max(0.05, next.opacity.base - 0.03);
+            next.blur.base = Math.min(30, next.blur.base + 8);
+            break;
+          case 'snowy':
+            next.texture = { ...next.texture, type: 'crystalline' };
+            next.brightness.base = Math.min(1.3, next.brightness.base + 0.1);
+            break;
+          case 'sunny':
+            next.brightness.base = Math.min(1.4, next.brightness.base + 0.15);
+            next.opacity.base = Math.min(0.18, next.opacity.base + 0.02);
+            break;
+        }
       }
-    }
 
-    // Temperature adaptations
-    if (config.environment.temperatureReactive) {
-      if (conditions.temperature < 0) {
-        adaptedConfig.texture = { ...adaptedConfig.texture, type: 'frosted' };
-      } else if (conditions.temperature > 30) {
-        adaptedConfig.texture = { ...adaptedConfig.texture, type: 'liquid', animated: true };
+      // Time adaptations
+      if (prev.environment.timeReactive) {
+        const hour = conditions.timeOfDay;
+        if (hour >= 20 || hour <= 6) {
+          // Night time - more subtle effects
+          next.opacity.base = Math.max(0.05, next.opacity.base - 0.02);
+          next.blur.base = Math.min(25, next.blur.base + 3);
+        } else if (hour >= 12 && hour <= 16) {
+          // Midday - stronger effects
+          next.brightness.base = Math.min(1.2, next.brightness.base + 0.05);
+        }
       }
-    }
 
-    setConfig(adaptedConfig);
-  }, [config]);
+      // Temperature adaptations
+      if (prev.environment.temperatureReactive) {
+        if (conditions.temperature < 0) {
+          next.texture = { ...next.texture, type: 'frosted' };
+        } else if (conditions.temperature > 30) {
+          next.texture = { ...next.texture, type: 'liquid', animated: true };
+        }
+      }
+
+      return next;
+    });
+  }, []);
 
   const contextValue: GlassEngineContextType = {
     config,
     updateConfig,
-    createGlassStyle,
+    createGlassStyle: buildGlassEngineStyle,
     getTexturePattern,
     adaptToEnvironment
   };
@@ -239,7 +246,7 @@ export const AdaptiveGlass: React.FC<AdaptiveGlassProps> = ({
   variant = 'base',
   textureOverride,
   environmentalAware = true,
-  className = '',
+  className='',
   as: Component = 'div',
   ...props
 }) => {
@@ -296,7 +303,7 @@ export const GlassOpacityEngine: React.FC<{
   dynamicOpacity = true,
   opacityRange = [0.05, 0.3],
   trigger = 'hover',
-  className = ''
+  className=''
 }) => {
   const { createGlassStyle, updateConfig } = useGlassEngine();
   const [opacity, setOpacity] = useState(opacityRange[0]);
@@ -357,7 +364,7 @@ export const GlassColorTinting: React.FC<{
   contentAware = true,
   tintColor,
   intensity = 0.3,
-  className = ''
+  className=''
 }) => {
   const { createGlassStyle } = useGlassEngine();
   const [adaptiveTint, setAdaptiveTint] = useState(tintColor || 'rgba(255, 255, 255, 0.1)');
@@ -407,7 +414,7 @@ export const GlassTextureVariations: React.FC<{
   children,
   contentType = 'text',
   autoAdapt = true,
-  className = ''
+  className=''
 }) => {
   const { createGlassStyle, updateConfig } = useGlassEngine();
   const [currentTexture, setCurrentTexture] = useState<string>('smooth');
@@ -447,7 +454,7 @@ export const EnvironmentalGlass: React.FC<{
   children,
   weatherAPI = false,
   timeSync = true,
-  className = ''
+  className=''
 }) => {
   const { adaptToEnvironment, createGlassStyle } = useGlassEngine();
   const [conditions, setConditions] = useState<EnvironmentalConditions>({
@@ -509,14 +516,14 @@ export const GlassEngineDemo: React.FC = () => {
   const { config, updateConfig, createGlassStyle } = useGlassEngine();
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="space-y-6 glass-glass-p-6">
+      <div className="glass-glass-grid glass-glass-glass-grid-cols-2 md:glass-glass-glass-grid-cols-4 glass-glass-gap-4">
         {/* Different texture types */}
         {(['smooth', 'frosted', 'rippled', 'crystalline'] as const).map((texture) => (
           <AdaptiveGlass
             key={texture}
             textureOverride={texture}
-            className="p-4 text-center"
+            className="glass-glass-p-4 glass-glass-text-center"
           >
             <h3 className={cn("glass-text-primary glass-font-medium glass-capitalize glass-mb-2")}>{texture}</h3>
             <p className={cn("glass-text-secondary glass-text-sm")}>Glass texture variation</p>
@@ -524,31 +531,31 @@ export const GlassEngineDemo: React.FC = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-3 glass-glass-gap-4">
         {/* Opacity Engine */}
-        <GlassOpacityEngine trigger="hover" className="p-4">
+        <GlassOpacityEngine trigger="hover" className="glass-glass-p-4">
           <h3 className={cn("glass-text-primary glass-font-medium glass-mb-2")}>Dynamic Opacity</h3>
           <p className={cn("glass-text-secondary glass-text-sm")}>Hover to see opacity change</p>
         </GlassOpacityEngine>
 
         {/* Color Tinting */}
-        <GlassColorTinting contentAware className="p-4">
+        <GlassColorTinting contentAware className="glass-glass-p-4">
           <h3 className={cn("glass-text-primary glass-font-medium glass-mb-2")}>Content-Aware Tinting</h3>
           <p className={cn("glass-text-secondary glass-text-sm")}>Adapts to content colors</p>
         </GlassColorTinting>
 
         {/* Environmental */}
-        <EnvironmentalGlass timeSync className="p-4">
+        <EnvironmentalGlass timeSync className="glass-glass-p-4">
           <h3 className={cn("glass-text-primary glass-font-medium glass-mb-2")}>Environmental</h3>
           <p className={cn("glass-text-secondary glass-text-sm")}>Reacts to time and weather</p>
         </EnvironmentalGlass>
       </div>
 
       {/* Controls */}
-      <div className="p-4" style={createGlassStyle('base')}>
+      <div className="glass-glass-p-4" style={createGlassStyle('base')}>
         <h3 className={cn("glass-text-primary glass-font-medium glass-mb-4")}>Glass Engine Controls</h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 glass-glass-gap-4">
           <div>
             <label className={cn("glass-display-block glass-text-secondary glass-text-sm glass-mb-2")}>Base Opacity</label>
             <input
@@ -560,7 +567,7 @@ export const GlassEngineDemo: React.FC = () => {
               onChange={(e) => updateConfig({
                 opacity: { ...config.opacity, base: parseFloat(e.target.value) }
               })}
-              className="w-full"
+              className="glass-glass-w-full"
             />
           </div>
 
@@ -574,14 +581,14 @@ export const GlassEngineDemo: React.FC = () => {
               onChange={(e) => updateConfig({
                 blur: { ...config.blur, base: parseInt(e.target.value) }
               })}
-              className="w-full"
+              className="glass-glass-w-full"
             />
           </div>
         </div>
 
-        <div className="flex items-center justify-between mt-4">
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between mt-4">
           <span className={cn("glass-text-secondary")}>Environmental Reactions</span>
-          <label className="flex items-center space-x-2">
+          <label className="glass-glass-flex glass-glass-items-center space-x-2">
             <input
               type="checkbox"
               checked={config.environment.weatherReactive}

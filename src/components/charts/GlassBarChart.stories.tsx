@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassBarChart } from './GlassBarChart';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassBarChart> = {
   title: 'Components/Charts/GlassBarChart',
@@ -71,7 +71,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-8">
+    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-8">
       <GlassBarChart {...args} showGrid={true} showDataLabels={true} />
       <GlassBarChart {...args} showGrid={false} showDataLabels={false} showLegend={false} />
     </div>

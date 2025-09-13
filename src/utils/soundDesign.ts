@@ -55,9 +55,103 @@ export class GlassSoundDesign {
   };
   
   private constructor() {
-    this.initAudioContext();
+
+  
+    // Do NOT create AudioContext at import time.
+
+  
+    // Set up gesture listeners to initialize audio lazily on first user interaction.
+
+  
+    this.setupGestureListeners();
+
+  
     this.checkHapticSupport();
+
+  
   }
+
+
+  
+  /**
+
+  
+   * Attach one-time listeners to create/resume AudioContext after a user gesture
+
+  
+   */
+
+  
+  private setupGestureListeners() {
+
+  
+    if (typeof window === 'undefined') return;
+
+
+  
+    const enable = async () => {
+
+  
+      try {
+
+  
+        if (!this.audioContext) {
+
+  
+          this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+
+  
+        }
+
+  
+        if (this.audioContext?.state === 'suspended') {
+
+  
+          await this.audioContext.resume();
+
+  
+        }
+
+  
+      } catch (e) {
+
+  
+        console.warn('Failed to initialize audio after gesture:', e);
+
+  
+      } finally {
+
+  
+        document.removeEventListener('click', enable, true);
+
+  
+        document.removeEventListener('touchstart', enable, true);
+
+  
+        document.removeEventListener('keydown', enable, true);
+
+  
+      }
+
+  
+    };
+
+
+  
+    // Capture phase to run before most bubbling handlers, and once
+
+  
+    document.addEventListener('click', enable, { capture: true, once: true, passive: true } as any);
+
+  
+    document.addEventListener('touchstart', enable, { capture: true, once: true, passive: true } as any);
+
+  
+    document.addEventListener('keydown', enable, { capture: true, once: true, passive: true } as any);
+
+  
+  }
+
   
   static getInstance(): GlassSoundDesign {
     if (!GlassSoundDesign.instance) {
@@ -85,26 +179,33 @@ export class GlassSoundDesign {
    */
   private initAudioContext() {
     if (typeof window === 'undefined') return;
-    
     try {
-      this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
-      
-      // Resume context on user interaction (for browser autoplay policies)
-      const resumeContext = () => {
-        if (this.audioContext?.state === 'suspended') {
-          this.audioContext.resume();
-        }
-        document.removeEventListener('click', resumeContext);
-        document.removeEventListener('touchstart', resumeContext);
-      };
-      
-      document.addEventListener('click', resumeContext);
-      document.addEventListener('touchstart', resumeContext);
+      if (!this.audioContext) {
+        this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      }
     } catch (error) {
       console.warn('Web Audio API not supported:', error);
       this.enabled = false;
     }
   }
+
+  /**
+   * Allow callers to explicitly request audio enablement (e.g., from a button onClick)
+   */
+  async requestEnableAudio() {
+    if (typeof window === 'undefined') return false;
+    try {
+      this.initAudioContext();
+      if (this.audioContext?.state === 'suspended') {
+        await this.audioContext.resume();
+      }
+      return !!this.audioContext && this.audioContext.state !== 'suspended';
+    } catch (e) {
+      console.warn('Could not enable audio:', e);
+      return false;
+    }
+  }
+
   
   /**
    * Check if haptic feedback is supported

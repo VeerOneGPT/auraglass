@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { GripVertical, Move } from 'lucide-react';
 import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Motion } from '../../primitives';
@@ -155,8 +155,8 @@ export const GlassDraggable: React.FC<GlassDraggableProps> = ({
 
     // Default drag handle
     const defaultHandle = handle || (
-        <div className="flex items-center justify-center w-6 h-6 glass-text-primary/60 hover:glass-text-primary cursor-grab active:cursor-grabbing">
-            <GripVertical className="w-4 h-4" />
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-w-6 glass-glass-h-6 glass-glass-text-primary/60 hover:glass-glass-text-primary cursor-grab active:cursor-grabbing">
+            <GripVertical className="glass-glass-w-4 glass-glass-h-4" />
         </div>
     );
 
@@ -182,7 +182,7 @@ export const GlassDraggable: React.FC<GlassDraggableProps> = ({
             {...props}
         >
             {/* Drag Handle */}
-            <div className="absolute top-2 right-2 z-10">
+            <div className="glass-glass-absolute glass--glass--glassglass--top-2 right-2 glass-z-10">
                 {defaultHandle}
             </div>
 
@@ -197,7 +197,7 @@ export const GlassDraggable: React.FC<GlassDraggableProps> = ({
             {/* Drag Preview (ghost image) */}
             {isDragging && (
                 <div
-                    className="fixed pointer-events-none z-40 opacity-50"
+                    className="glass-glass-fixed glass-pointer-events-none z-40 opacity-50"
                     style={{
                         left: elementStartPos.current.x,
                         top: elementStartPos.current.y,
@@ -340,7 +340,7 @@ export const GlassDroppable: React.FC<GlassDroppableProps> = ({
                     'absolute inset-0 border-2 border-dashed glass-radius-lg flex items-center justify-center',
                     isValidDrop ? 'border-primary bg-primary/10' : 'border-red-500 bg-red-500/10'
                 )}>
-                    <div className="text-center">
+                    <div className="glass-glass-text-center">
                         <Move className={cn(
                             'w-8 h-8 mx-auto glass-mb-2',
                             isValidDrop ? 'text-primary' : 'text-red-500'
@@ -459,9 +459,9 @@ export const GlassSortable: React.FC<GlassSortableProps> = ({
                     )}
                 >
                     {/* Drag Handle */}
-                    <div className="absolute top-2 right-2 z-10">
-                        <div className="flex items-center justify-center w-6 h-6 glass-text-primary/60 hover:glass-text-primary cursor-grab active:cursor-grabbing bg-black/20 glass-radius-md">
-                            <Move className="w-4 h-4" />
+                    <div className="glass-glass-absolute glass--glass--glassglass--top-2 right-2 glass-z-10">
+                        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-w-6 glass-glass-h-6 glass-glass-text-primary/60 hover:glass-glass-text-primary cursor-grab active:cursor-grabbing glass-surface-dark/20 glass-radius-md">
+                            <Move className="glass-glass-w-4 glass-glass-h-4" />
                         </div>
                     </div>
 

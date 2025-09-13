@@ -5,7 +5,7 @@
 
 import React, { useEffect, useRef, useState, useCallback, createContext, useContext, forwardRef } from 'react';
 import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 import { OptimizedGlass } from '../../primitives';
 import { useA11yId } from '@/utils/a11y';
 import { useMotionPreferenceContext } from '@/contexts/MotionPreferenceContext';
@@ -705,14 +705,14 @@ export const GlassStressResponsive = forwardRef<HTMLDivElement, {
     >
       <OptimizedGlass>
         {/* Screen reader description */}
-      <span id={descriptionId} className="sr-only">
+      <span id={descriptionId} className="glass-glass-sr-only">
         Biometric adaptation interface responding to stress level {Math.round(currentStressLevel * 100)}%.
         {adaptationType !== 'all' ? ` Adaptation type: ${adaptationType}` : ' All adaptations active.'}
       </span>
       {children}
 
       {/* Stress level indicator */}
-      <div className="absolute top-2 right-2 opacity-30">
+      <div className="glass-glass-absolute glass--glass--glassglass--top-2 right-2 opacity-30">
         <div 
           className="w-2 h-2 glass-radius-full transition-colors duration-1000"
           style={{
@@ -777,11 +777,11 @@ export const GlassBiometricDashboard = forwardRef<HTMLDivElement, {
       aria-label={ariaLabel || 'Biometric monitoring dashboard'}
       {...restProps}
     >
-      <div className="flex items-center justify-between mb-3">
-        <h3 className="glass-text-sm font-medium glass-text-secondary dark:glass-text-secondary">Biometrics</h3>
+      <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-mb-3">
+        <h3 className="glass-glass-text-sm glass-glass-font-medium glass-text-secondary dark:glass-text-secondary">Biometrics</h3>
         <button
           onClick={() => setShowDetails(!showDetails)}
-          className="glass-text-xs glass-text-secondary dark:glass-text-secondary hover:glass-text-secondary dark:hover:glass-text-secondary"
+          className="glass-glass-text-xs glass-text-secondary dark:glass-text-secondary hover:glass-text-secondary dark:hover:glass-text-secondary"
           aria-expanded={showDetails}
           aria-controls={`${dashboardId}-details`}
         >
@@ -790,13 +790,13 @@ export const GlassBiometricDashboard = forwardRef<HTMLDivElement, {
       </div>
 
       {/* Current status */}
-      <div className="glass-gap-2">
-        <div className="flex items-center justify-between">
-          <span className="glass-text-xs glass-text-secondary dark:glass-text-secondary">Stress Level</span>
-          <div className="flex items-center glass-gap-2">
-            <div className="w-16 h-2 bg-gray-700 glass-radius-full overflow-hidden">
+      <div className="glass-glass-gap-2">
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
+          <span className="glass-glass-text-xs glass-text-secondary dark:glass-text-secondary">Stress Level</span>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <div className="glass-glass-w-16 h-2 bg-gray-700 glass-radius-full overflow-hidden">
               <motion.div
-                className="h-full glass-radius-full transition-colors duration-1000"
+                className="glass-glass-h-full glass-radius-full transition-colors duration-1000"
                 style={{
                   backgroundColor: currentStressLevel > 0.7 ? '#ef4444' :
                                    currentStressLevel > 0.4 ? '#f59e0b' :
@@ -806,16 +806,16 @@ export const GlassBiometricDashboard = forwardRef<HTMLDivElement, {
                 transition={{ duration: 0.5 }}
               />
             </div>
-            <span className="glass-text-xs glass-text-secondary dark:glass-text-secondary">
+            <span className="glass-glass-text-xs glass-text-secondary dark:glass-text-secondary">
               {(currentStressLevel * 100).toFixed(0)}%
             </span>
           </div>
         </div>
 
         {latestReading?.heartRate && (
-          <div className="flex items-center justify-between">
-            <span className="glass-text-xs glass-text-secondary dark:glass-text-secondary">Heart Rate</span>
-            <span className="glass-text-xs glass-text-secondary dark:glass-text-secondary">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
+            <span className="glass-glass-text-xs glass-text-secondary dark:glass-text-secondary">Heart Rate</span>
+            <span className="glass-glass-text-xs glass-text-secondary dark:glass-text-secondary">
               {latestReading.heartRate} bpm
             </span>
           </div>
@@ -827,7 +827,7 @@ export const GlassBiometricDashboard = forwardRef<HTMLDivElement, {
         {showDetails && (
           <motion.div
             id={`${dashboardId}-details`}
-            className="glass-mt-4 pt-4 border-t border-white/10 glass-gap-3"
+            className="glass-mt-4 pt-4 glass-glass-border-t glass-glass-border-white/10 glass-glass-gap-3"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -835,12 +835,12 @@ export const GlassBiometricDashboard = forwardRef<HTMLDivElement, {
           >
             {/* Stress history chart */}
             <div>
-              <div className="glass-text-xs glass-text-secondary dark:glass-text-secondary glass-mb-2">Stress History</div>
-              <div className="relative h-12 bg-gray-800/50 glass-radius-md">
+              <div className="glass-glass-text-xs glass-text-secondary dark:glass-text-secondary glass-glass-mb-2">Stress History</div>
+              <div className="glass-glass-relative glass-glass-h-12 bg-gray-800/50 glass-radius-md">
                 {history.map((reading, index) => (
                   <div
                     key={index}
-                    className="absolute bottom-0 w-1 bg-blue-500 rounded-t"
+                    className="glass-glass-absolute bottom-0 w-1 glass-surface-blue glass-radius-t"
                     style={{
                       left: `${(index / (history.length - 1)) * 100}%`,
                       height: `${(reading.stressLevel || 0) * 100}%`,
@@ -869,14 +869,14 @@ export const GlassBiometricDashboard = forwardRef<HTMLDivElement, {
             {/* Current adaptations */}
             {engine && (
               <div>
-                <div className="glass-text-xs glass-text-secondary dark:glass-text-secondary glass-mb-2">Active Adaptations</div>
-                <div className="glass-gap-1">
+                <div className="glass-glass-text-xs glass-text-secondary dark:glass-text-secondary glass-glass-mb-2">Active Adaptations</div>
+                <div className="glass-glass-gap-1">
                   {['color', 'motion', 'layout', 'audio'].map(type => {
                     const adaptation = engine.getCurrentAdaptation(type);
                     return adaptation ? (
-                      <div key={type} className="flex items-center justify-between glass-text-xs">
-                        <span className="glass-text-secondary dark:glass-text-secondary capitalize">{type}</span>
-                        <span className="glass-text-secondary dark:glass-text-secondary capitalize">{adaptation.type}</span>
+                      <div key={type} className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-text-xs">
+                        <span className="glass-text-secondary dark:glass-text-secondary glass-glass-capitalize">{type}</span>
+                        <span className="glass-text-secondary dark:glass-text-secondary glass-glass-capitalize">{adaptation.type}</span>
                       </div>
                     ) : null;
                   })}
@@ -887,11 +887,11 @@ export const GlassBiometricDashboard = forwardRef<HTMLDivElement, {
             {/* Readings info */}
             {latestReading && (
               <div>
-                <div className="glass-text-xs glass-text-secondary dark:glass-text-secondary glass-mb-1">Last Reading</div>
-                <div className="glass-text-xs glass-text-secondary dark:glass-text-secondary">
+                <div className="glass-glass-text-xs glass-text-secondary dark:glass-text-secondary glass-glass-mb-1">Last Reading</div>
+                <div className="glass-glass-text-xs glass-text-secondary dark:glass-text-secondary">
                   {new Date(latestReading.timestamp).toLocaleTimeString()}
                 </div>
-                <div className="glass-text-xs glass-text-secondary dark:glass-text-secondary">
+                <div className="glass-glass-text-xs glass-text-secondary dark:glass-text-secondary">
                   Confidence: {(latestReading.confidence * 100).toFixed(0)}%
                 </div>
               </div>

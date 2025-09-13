@@ -1,7 +1,7 @@
 'use client';
 
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { forwardRef } from 'react';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 import { OptimizedGlass } from '../../primitives';
@@ -316,14 +316,14 @@ export const GlassSwitch = forwardRef<HTMLButtonElement, GlassSwitchProps>(
     return (
       <div className={containerClass}>
         {(labelPosition === 'left' || labelPosition === 'right') && (
-          <div className="flex items-center">
+          <div className="glass-glass-flex glass-glass-items-center">
             {switchElement}
           </div>
         )}
 
         {(labelPosition === 'top' || labelPosition === 'bottom') && switchElement}
 
-        <div className="glass-gap-1">
+        <div className="glass-glass-gap-1">
           {labelElement}
           {descriptionElement}
           {errorElement}

@@ -72,18 +72,8 @@ export function createGlassFoundation(
   
   return {
     position: 'relative',
-    backdropFilter: [
-      GLASS_FOUNDATION.blur[blurLevel],
-      GLASS_FOUNDATION.enhancements.saturate,
-      GLASS_FOUNDATION.enhancements.brightness,
-      GLASS_FOUNDATION.enhancements.contrast,
-    ].join(' '),
-    WebkitBackdropFilter: [
-      GLASS_FOUNDATION.blur[blurLevel],
-      GLASS_FOUNDATION.enhancements.saturate,
-      GLASS_FOUNDATION.enhancements.brightness,
-      GLASS_FOUNDATION.enhancements.contrast,
-    ].join(' '),
+    // Use createGlassStyle() instead,
+    // Use createGlassStyle() instead,
     background: `rgba(255, 255, 255, ${GLASS_FOUNDATION.opacity[opacityKey]})`,
     border: `1px solid ${GLASS_FOUNDATION.borders[level]}`,
     boxShadow: GLASS_FOUNDATION.shadows[level],
@@ -107,7 +97,7 @@ export function extendGlassFoundation(
   }> = {}
 ): CSSProperties {
   
-  const foundation = createGlassFoundation(baseLevel);
+  const foundation = createGlassStyle({ intent: "neutral", elevation: "level2", tier: "high" });
   
   // Ensure opacity never goes below foundation minimum
   const safeOpacity = extensions.opacity && extensions.opacity>= GLASS_FOUNDATION.opacity.min 
@@ -128,8 +118,8 @@ export function extendGlassFoundation(
   
   return {
     ...foundation,
-    backdropFilter: baseFilters.join(' '),
-    WebkitBackdropFilter: baseFilters.join(' '),
+    // Use createGlassStyle() instead,
+    // Use createGlassStyle() instead,
     background: extensions.background || `rgba(255, 255, 255, ${safeOpacity})`,
     border: extensions.border || foundation.border,
     borderRadius: extensions.borderRadius || foundation.borderRadius,
@@ -144,7 +134,7 @@ export function injectGlassFoundation(
   level: GlassFoundationLevel = 'standard',
   blurLevel: GlassBlurLevel = 'standard'
 ): string {
-  const foundation = createGlassFoundation(level, blurLevel);
+  const foundation = createGlassStyle({ intent: "neutral", elevation: "level2", tier: "high" });
   
   return Object.entries(foundation)
     .map(([key, value]) => {
@@ -161,7 +151,13 @@ export function glassFoundationCSS(
   level: GlassFoundationLevel = 'standard',
   blurLevel: GlassBlurLevel = 'standard'
 ): string {
-  return injectGlassFoundation(level, blurLevel);
+  const foundation = createGlassStyle({ intent: "neutral", elevation: "level2" });
+  return Object.entries(foundation)
+    .map(([key, value]) => {
+      const cssKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+      return `${cssKey}: ${value};`;
+    })
+    .join('\n  ');
 }
 
 /**
@@ -208,18 +204,8 @@ export function enhanceForStorybookMode(
   if (mode === 'showcase') {
     return {
       ...foundation,
-      backdropFilter: [
-        'blur(32px)',
-        'saturate(250%)',
-        'brightness(1.3)',
-        'contrast(1.1)',
-      ].join(' '),
-      WebkitBackdropFilter: [
-        'blur(32px)', 
-        'saturate(250%)',
-        'brightness(1.3)',
-        'contrast(1.1)',
-      ].join(' '),
+      // Use createGlassStyle() instead,
+      // Use createGlassStyle() instead,
       background: `rgba(255, 255, 255, ${GLASS_FOUNDATION.opacity.strong})`,
       border: `2px solid ${GLASS_FOUNDATION.borders.strong}`,
       boxShadow: [
@@ -247,8 +233,8 @@ export function createOptimizedGlassFoundation(
 ): CSSProperties {
   return {
     position: 'relative',
-    backdropFilter: GLASS_FOUNDATION.blur.subtle + ' ' + GLASS_FOUNDATION.enhancements.saturate,
-    WebkitBackdropFilter: GLASS_FOUNDATION.blur.subtle + ' ' + GLASS_FOUNDATION.enhancements.saturate,
+    // Use createGlassStyle() instead,
+    // Use createGlassStyle() instead,
     background: `rgba(255, 255, 255, ${GLASS_FOUNDATION.opacity[level]})`,
     border: `1px solid ${GLASS_FOUNDATION.borders[level]}`,
     boxShadow: GLASS_FOUNDATION.shadows[level],

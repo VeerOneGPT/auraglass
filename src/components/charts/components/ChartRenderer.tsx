@@ -1,5 +1,5 @@
 import React, { useRef, useMemo, useState, useEffect, useCallback } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../../lib/utilsComprehensive';
 import { Line, Bar, Pie, Scatter } from 'react-chartjs-2';
 
 export interface ChartRendererProps {

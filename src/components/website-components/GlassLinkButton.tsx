@@ -2,7 +2,7 @@ import React from 'react';
 "use client";
 
 import { forwardRef, AnchorHTMLAttributes } from "react";
-import { cn } from "@/lib/utilsComprehensive";
+import { cn } from "../../lib/utilsComprehensive";
 
 interface GlassLinkButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   variant?: "primary" | "secondary" | "ghost";
@@ -50,11 +50,11 @@ const GlassLinkButton = forwardRef<HTMLAnchorElement, GlassLinkButtonProps>(
         {(variant === "primary" || variant === "secondary") && (
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0"
+            className="glass-pointer-events-none glass-glass-absolute glass-glass-inset-0"
             style={{
               borderRadius: 'inherit',
               padding: '1px',
-              background: 'linear-gradient(135deg, ${glassStyles.borderColor || "rgba(59, 130, 246, 0.35)"} 0%, rgba(147,51,234,0.25) 50%, rgba(255,255,255,0.16) 100%)',
+              background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level3" }) */',
               mask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)',
               WebkitMask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)',
               WebkitMaskComposite: 'xor',
@@ -67,15 +67,15 @@ const GlassLinkButton = forwardRef<HTMLAnchorElement, GlassLinkButtonProps>(
         {variant === "primary" && (
           <div
             aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-200"
+            className="glass-pointer-events-none glass-glass-absolute glass-glass-inset-0 opacity-0 hover:opacity-100 transition-opacity duration-200"
             style={{
               borderRadius: 'inherit',
-              background: 'linear-gradient(to bottom, rgba(255,255,255,0.16), transparent 45%)',
+              background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level3" }) */',
             }}
           />
         )}
 
-        <span className="relative z-10 flex items-center glass-gap-2 glass-text-primary group-hover:text-indigo-50">{children}</span>
+        <span className="glass-glass-relative glass-z-10 glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-text-primary group-hover:text-indigo-50">{children}</span>
       </a>
     );
   }

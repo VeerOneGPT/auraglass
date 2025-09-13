@@ -62,7 +62,7 @@ const ImageListItemRoot = styled.li<{
     props.$glass &&
     `
     background: ${glassTokenUtils.getSurface('neutral', 'level1').surface.base};
-    backdrop-filter: blur(10px);
+    backdrop-filter: var(--glass-backdrop-blur);
     border: 1px solid ${glassTokenUtils.getSurface('neutral', 'level1').border.color};
     `}
   
@@ -71,17 +71,7 @@ const ImageListItemRoot = styled.li<{
     props.$elevation > 0 &&
     !props.$glass &&
     `
-    box-shadow: ${
-      props.$elevation === 1
-        ? '0 2px 4px rgba(0, 0, 0, 0.1)'
-        : props.$elevation === 2
-        ? '0 3px 6px rgba(0, 0, 0, 0.15)'
-        : props.$elevation === 3
-        ? '0 5px 10px rgba(0, 0, 0, 0.2)'
-        : props.$elevation === 4
-        ? '0 8px 16px rgba(0, 0, 0, 0.25)'
-        : '0 12px 24px rgba(0, 0, 0, 0.3)'
-    };
+    box-shadow: var(--glass-elev-2);
   `}
   
   /* Rounded corners */

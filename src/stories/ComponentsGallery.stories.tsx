@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
+import { createGlassStyle } from '../core/mixins/glassMixins';
 
 const ComponentsGallery: React.FC = () => {
   return (
@@ -16,14 +17,7 @@ const ComponentsGallery: React.FC = () => {
         gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' 
       }}>
         
-          <div style={{
-            background: 'rgba(255,255,255,0.15)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.25)',
-            borderRadius: '16px',
-            padding: '1.5rem',
-            boxShadow: '0 8px 32px rgba(31, 38, 135, 0.37)'
-          }}>
+          <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
             <h3 style={{ margin: '0 0 1rem 0' }}>AtmosphericEffects</h3>
             <p style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', opacity: 0.8 }}>
               Components/Components/AtmosphericEffects
@@ -32,7 +26,7 @@ const ComponentsGallery: React.FC = () => {
               fontFamily: 'monospace', 
               fontSize: '0.75rem', 
               opacity: 0.6,
-              background: 'rgba(0,0,0,0.3)',
+              background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
               padding: '0.5rem',
               borderRadius: '4px'
             }}>
@@ -40,14 +34,7 @@ const ComponentsGallery: React.FC = () => {
             </div>
           </div>
         
-          <div style={{
-            background: 'rgba(255,255,255,0.15)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.25)',
-            borderRadius: '16px',
-            padding: '1.5rem',
-            boxShadow: '0 8px 32px rgba(31, 38, 135, 0.37)'
-          }}>
+          <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
             <h3 style={{ margin: '0 0 1rem 0' }}>ChartFilters</h3>
             <p style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', opacity: 0.8 }}>
               Components/Components/ChartFilters
@@ -56,7 +43,7 @@ const ComponentsGallery: React.FC = () => {
               fontFamily: 'monospace', 
               fontSize: '0.75rem', 
               opacity: 0.6,
-              background: 'rgba(0,0,0,0.3)',
+              background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
               padding: '0.5rem',
               borderRadius: '4px'
             }}>
@@ -64,14 +51,7 @@ const ComponentsGallery: React.FC = () => {
             </div>
           </div>
         
-          <div style={{
-            background: 'rgba(255,255,255,0.15)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.25)',
-            borderRadius: '16px',
-            padding: '1.5rem',
-            boxShadow: '0 8px 32px rgba(31, 38, 135, 0.37)'
-          }}>
+          <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
             <h3 style={{ margin: '0 0 1rem 0' }}>ChartLegend</h3>
             <p style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', opacity: 0.8 }}>
               Components/Components/ChartLegend
@@ -80,7 +60,7 @@ const ComponentsGallery: React.FC = () => {
               fontFamily: 'monospace', 
               fontSize: '0.75rem', 
               opacity: 0.6,
-              background: 'rgba(0,0,0,0.3)',
+              background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
               padding: '0.5rem',
               borderRadius: '4px'
             }}>
@@ -88,14 +68,7 @@ const ComponentsGallery: React.FC = () => {
             </div>
           </div>
         
-          <div style={{
-            background: 'rgba(255,255,255,0.15)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.25)',
-            borderRadius: '16px',
-            padding: '1.5rem',
-            boxShadow: '0 8px 32px rgba(31, 38, 135, 0.37)'
-          }}>
+          <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
             <h3 style={{ margin: '0 0 1rem 0' }}>ChartRenderer</h3>
             <p style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', opacity: 0.8 }}>
               Components/Components/ChartRenderer
@@ -104,7 +77,7 @@ const ComponentsGallery: React.FC = () => {
               fontFamily: 'monospace', 
               fontSize: '0.75rem', 
               opacity: 0.6,
-              background: 'rgba(0,0,0,0.3)',
+              background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
               padding: '0.5rem',
               borderRadius: '4px'
             }}>
@@ -112,14 +85,7 @@ const ComponentsGallery: React.FC = () => {
             </div>
           </div>
         
-          <div style={{
-            background: 'rgba(255,255,255,0.15)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.25)',
-            borderRadius: '16px',
-            padding: '1.5rem',
-            boxShadow: '0 8px 32px rgba(31, 38, 135, 0.37)'
-          }}>
+          <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
             <h3 style={{ margin: '0 0 1rem 0' }}>ChartTooltip</h3>
             <p style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', opacity: 0.8 }}>
               Components/Components/ChartTooltip
@@ -128,7 +94,7 @@ const ComponentsGallery: React.FC = () => {
               fontFamily: 'monospace', 
               fontSize: '0.75rem', 
               opacity: 0.6,
-              background: 'rgba(0,0,0,0.3)',
+              background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
               padding: '0.5rem',
               borderRadius: '4px'
             }}>
@@ -136,14 +102,7 @@ const ComponentsGallery: React.FC = () => {
             </div>
           </div>
         
-          <div style={{
-            background: 'rgba(255,255,255,0.15)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.25)',
-            borderRadius: '16px',
-            padding: '1.5rem',
-            boxShadow: '0 8px 32px rgba(31, 38, 135, 0.37)'
-          }}>
+          <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
             <h3 style={{ margin: '0 0 1rem 0' }}>KpiChart</h3>
             <p style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', opacity: 0.8 }}>
               Components/Components/KpiChart
@@ -152,7 +111,7 @@ const ComponentsGallery: React.FC = () => {
               fontFamily: 'monospace', 
               fontSize: '0.75rem', 
               opacity: 0.6,
-              background: 'rgba(0,0,0,0.3)',
+              background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
               padding: '0.5rem',
               borderRadius: '4px'
             }}>
@@ -160,14 +119,7 @@ const ComponentsGallery: React.FC = () => {
             </div>
           </div>
         
-          <div style={{
-            background: 'rgba(255,255,255,0.15)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.25)',
-            borderRadius: '16px',
-            padding: '1.5rem',
-            boxShadow: '0 8px 32px rgba(31, 38, 135, 0.37)'
-          }}>
+          <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
             <h3 style={{ margin: '0 0 1rem 0' }}>CollapsedMenu</h3>
             <p style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', opacity: 0.8 }}>
               Components/Components/CollapsedMenu
@@ -176,7 +128,7 @@ const ComponentsGallery: React.FC = () => {
               fontFamily: 'monospace', 
               fontSize: '0.75rem', 
               opacity: 0.6,
-              background: 'rgba(0,0,0,0.3)',
+              background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
               padding: '0.5rem',
               borderRadius: '4px'
             }}>
@@ -184,14 +136,7 @@ const ComponentsGallery: React.FC = () => {
             </div>
           </div>
         
-          <div style={{
-            background: 'rgba(255,255,255,0.15)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.25)',
-            borderRadius: '16px',
-            padding: '1.5rem',
-            boxShadow: '0 8px 32px rgba(31, 38, 135, 0.37)'
-          }}>
+          <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
             <h3 style={{ margin: '0 0 1rem 0' }}>ScrollButtons</h3>
             <p style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', opacity: 0.8 }}>
               Components/Components/ScrollButtons
@@ -200,7 +145,7 @@ const ComponentsGallery: React.FC = () => {
               fontFamily: 'monospace', 
               fontSize: '0.75rem', 
               opacity: 0.6,
-              background: 'rgba(0,0,0,0.3)',
+              background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
               padding: '0.5rem',
               borderRadius: '4px'
             }}>
@@ -208,14 +153,7 @@ const ComponentsGallery: React.FC = () => {
             </div>
           </div>
         
-          <div style={{
-            background: 'rgba(255,255,255,0.15)',
-            backdropFilter: 'blur(20px)',
-            border: '1px solid rgba(255,255,255,0.25)',
-            borderRadius: '16px',
-            padding: '1.5rem',
-            boxShadow: '0 8px 32px rgba(31, 38, 135, 0.37)'
-          }}>
+          <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
             <h3 style={{ margin: '0 0 1rem 0' }}>TabItem</h3>
             <p style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', opacity: 0.8 }}>
               Components/Components/TabItem
@@ -224,7 +162,7 @@ const ComponentsGallery: React.FC = () => {
               fontFamily: 'monospace', 
               fontSize: '0.75rem', 
               opacity: 0.6,
-              background: 'rgba(0,0,0,0.3)',
+              background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
               padding: '0.5rem',
               borderRadius: '4px'
             }}>

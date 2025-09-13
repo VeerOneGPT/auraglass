@@ -32,7 +32,9 @@ module.exports = {
     
     // AuraGlass Design System Rules
     "auraglass/no-inline-glass": "error",
-    "auraglass/require-glass-tokens": "warn"
+    "auraglass/require-glass-tokens": "warn",
+    "auraglass/no-raw-tailwind": ["warn", { "allow": ["glass-", "sb-", "storybook-"] }],
+    "auraglass/no-inline-style-attr": "warn"
   },
   settings: {
     react: {

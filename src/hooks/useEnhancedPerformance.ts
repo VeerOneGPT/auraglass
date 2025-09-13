@@ -6,6 +6,7 @@ import {
   createCleanupManager,
   type PerformanceOptions 
 } from '../core/mixins/performanceMixins';
+import { detectDevice } from '../utils/deviceCapabilities';
 
 export interface PerformanceMetrics {
   renderTime: number;
@@ -96,12 +97,10 @@ export function useEnhancedPerformance(options: {
       const connection = (navigator as any).connection;
       const networkSpeed = connection?.effectiveType || 'unknown';
 
-      // Device capabilities
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      
+      // Device capabilities (cached, avoids creating WebGL contexts repeatedly)
+      const deviceInfo = detectDevice();
       const deviceCapabilities = {
-        supportsGPU: !!gl,
+        supportsGPU: deviceInfo.capabilities.webgl,
         supportsBackdropFilter: CSS.supports('backdrop-filter', 'blur(1px)') || 
                                 CSS.supports('-webkit-backdrop-filter', 'blur(1px)'),
         devicePixelRatio: window.devicePixelRatio || 1,

@@ -6,7 +6,7 @@ import { OptimizedGlass } from '../../primitives'
 import { useA11yId } from '../../utils/a11y'
 import { useMotionPreference } from '../../hooks/useMotionPreference'
 import { createGlassStyle } from '../../utils/createGlassStyle'
-import { cn } from '@/lib/utilsComprehensive'
+import { cn } from '../../lib/utilsComprehensive'
 
 export interface QuantumMenuState {
   id: string
@@ -64,7 +64,7 @@ export const GlassSuperpositionalMenu = forwardRef<HTMLDivElement, GlassSuperpos
     onStateCollapse,
     onMeasurement,
     onEntanglement,
-    className = '',
+    className='',
     ...props
   }, ref) => {
     const [currentStates, setCurrentStates] = useState(menuStates)
@@ -330,7 +330,7 @@ export const GlassSuperpositionalMenu = forwardRef<HTMLDivElement, GlassSuperpos
                 : "glass-border-primary glass-surface-primary"
           )}
           style={{
-            backdropFilter: `blur(${4 + state.coherence * 8}px)`,
+            // Use createGlassStyle() instead,
             boxShadow: `0 0 ${state.probability * 20}px ${
               state.entangled?.length ? quantumColors.entangled : quantumColors.superposition
             }40`

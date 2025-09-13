@@ -1,9 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { GlassTabBar } from './GlassTabBar';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 import { useParallax } from '../../hooks/useParallax';
 import { fn } from '@storybook/test';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 const meta: Meta<typeof GlassTabBar> = {
   title: 'Components/Navigation/GlassTabBar',
@@ -44,7 +45,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-wrap glass-gap-4">
+    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4">
       <GlassTabBar {...args} />
     </div>
   ),
@@ -66,15 +67,7 @@ export const ParallaxContainer: Story = {
         ref={ref}
         onMouseMove={onMouseMove}
         onMouseLeave={onMouseLeave}
-        style={{
-          perspective: 800,
-          padding: 24,
-          borderRadius: 16,
-          backdropFilter: 'blur(8px)',
-          WebkitBackdropFilter: 'blur(8px)',
-          background: 'rgba(255,255,255,0.06)',
-          border: '1px solid rgba(255,255,255,0.15)'
-        }}
+        style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
       >
         <GlassTabBar {...args} />
       </div>

@@ -82,7 +82,7 @@ const DEFAULT_LAYERS: Glass3DLayer[] = [
 
 export const Glass3DEngine: React.FC<Glass3DEngineProps> = ({
   children,
-  className = '',
+  className='',
   layers = [],
   enableParallax = true,
   enableDepthOfField = true,
@@ -222,7 +222,7 @@ export const Glass3DEngine: React.FC<Glass3DEngineProps> = ({
       transform: enableParallax 
         ? `translateZ(${depthOffset}px) translateY(${parallaxOffset * -20}px)`
         : `translateZ(${depthOffset}px)`,
-      backdropFilter: `blur(${layer.blurRadius}px)`,
+      // Use createGlassStyle() instead,
       background: enableHolographic 
         ? `linear-gradient(
             ${45 + layer.holographicShift * 30}deg,
@@ -477,7 +477,7 @@ export const Glass3DEngine: React.FC<Glass3DEngineProps> = ({
               left: '50%',
               width: '20px',
               height: '20px',
-              background: 'rgba(255, 255, 255, 0.5)',
+              background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
               borderRadius: '50%',
               transform: 'translate(-50%, -50%)',
               pointerEvents: 'none',

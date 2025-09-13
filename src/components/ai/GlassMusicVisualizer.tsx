@@ -90,7 +90,7 @@ export const GlassMusicVisualizer = forwardRef<HTMLDivElement, GlassMusicVisuali
     onAudioLoad,
     onFrequencyData,
     onBeatDetected,
-    className = '',
+    className='',
     ...props
   }, ref) => {
     const [isPlaying, setIsPlaying] = useState(false)
@@ -517,9 +517,9 @@ export const GlassMusicVisualizer = forwardRef<HTMLDivElement, GlassMusicVisuali
     }, [canvasWidth, canvasHeight])
 
     const Controls = () => (
-      <div className="flex items-center space-x-4">
+      <div className="glass-glass-flex glass-glass-items-center space-x-4">
         <motion.button
-          className="p-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition-colors"
+          className="glass-glass-p-2 glass-surface-blue hover:glass-surface-blue glass-glass-text-primary glass-radius-lg transition-colors"
           whileHover={shouldAnimate ? { scale: 1.1 } : {}}
           whileTap={shouldAnimate ? { scale: 0.9 } : {}}
           onClick={isPlaying ? handlePause : handlePlay}
@@ -528,7 +528,7 @@ export const GlassMusicVisualizer = forwardRef<HTMLDivElement, GlassMusicVisuali
         </motion.button>
 
         <motion.button
-          className="p-2 bg-gray-500 hover:bg-gray-600 text-white rounded-lg transition-colors"
+          className="glass-glass-p-2 bg-gray-500 hover:bg-gray-600 glass-glass-text-primary glass-radius-lg transition-colors"
           whileHover={shouldAnimate ? { scale: 1.1 } : {}}
           whileTap={shouldAnimate ? { scale: 0.9 } : {}}
           onClick={handleStop}
@@ -536,18 +536,18 @@ export const GlassMusicVisualizer = forwardRef<HTMLDivElement, GlassMusicVisuali
           ⏹️
         </motion.button>
 
-        <div className="flex items-center space-x-2">
-          <span className="text-xs text-white/60">
+        <div className="glass-glass-flex glass-glass-items-center space-x-2">
+          <span className="glass-glass-text-xs glass-glass-text-primary/60">
             {Math.floor(currentTime / 60)}:{Math.floor(currentTime % 60).toString().padStart(2, '0')}
           </span>
-          <span className="text-white/40">/</span>
-          <span className="text-xs text-white/60">
+          <span className="glass-glass-text-primary/40">/</span>
+          <span className="glass-glass-text-xs glass-glass-text-primary/60">
             {Math.floor(duration / 60)}:{Math.floor(duration % 60).toString().padStart(2, '0')}
           </span>
         </div>
 
-        <div className="flex items-center space-x-2">
-          <span className="text-xs text-white/80">Volume:</span>
+        <div className="glass-glass-flex glass-glass-items-center space-x-2">
+          <span className="glass-glass-text-xs glass-glass-text-primary/80">Volume:</span>
           <input
             type="range"
             min="0"
@@ -561,7 +561,7 @@ export const GlassMusicVisualizer = forwardRef<HTMLDivElement, GlassMusicVisuali
                 audioRef.current.volume = volume
               }
             }}
-            className="w-16 h-2 bg-white/20 rounded-lg appearance-none cursor-pointer"
+            className="glass-glass-w-16 h-2 glass-surface-subtle/20 glass-radius-lg appearance-none glass-glass-cursor-pointer"
           />
         </div>
       </div>
@@ -575,27 +575,27 @@ export const GlassMusicVisualizer = forwardRef<HTMLDivElement, GlassMusicVisuali
         {...props}
       >
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
           <div>
-            <h3 className="text-xl font-semibold text-white/90">
+            <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary/90">
               Music Visualizer
             </h3>
-            <p className="text-sm text-white/60">
+            <p className="glass-glass-text-sm glass-glass-text-primary/60">
               Real-time audio visualization and analysis
             </p>
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="glass-glass-flex glass-glass-items-center space-x-2">
             {realTimeAnalysis && (
-              <div className="flex items-center space-x-1 text-green-400">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                <span className="text-xs">Live</span>
+              <div className="glass-glass-flex glass-glass-items-center space-x-1 glass-glass-text-primary">
+                <div className="w-2 h-2 glass-surface-green glass-radius-full animate-pulse" />
+                <span className="glass-glass-text-xs">Live</span>
               </div>
             )}
             {isRecording && (
-              <div className="flex items-center space-x-1 text-red-400">
-                <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse" />
-                <span className="text-xs">Recording</span>
+              <div className="glass-glass-flex glass-glass-items-center space-x-1 glass-glass-text-primary">
+                <div className="w-2 h-2 glass-surface-red glass-radius-full animate-pulse" />
+                <span className="glass-glass-text-xs">Recording</span>
               </div>
             )}
           </div>
@@ -624,7 +624,7 @@ export const GlassMusicVisualizer = forwardRef<HTMLDivElement, GlassMusicVisuali
         {showControls && <Controls />}
 
         {/* Main visualization canvas */}
-        <div className="relative">
+        <div className="glass-glass-relative">
           <canvas
             ref={canvasRef}
             width={canvasWidth}
@@ -637,9 +637,9 @@ export const GlassMusicVisualizer = forwardRef<HTMLDivElement, GlassMusicVisuali
           />
           
           {/* Beat intensity indicator */}
-          <div className="absolute top-2 right-2">
+          <div className="glass-glass-absolute glass--glass--glassglass--top-2 right-2">
             <div 
-              className="w-4 h-4 rounded-full bg-red-500"
+              className="glass-glass-w-4 glass-glass-h-4 glass-radius-full glass-surface-red"
               style={{ 
                 opacity: beatIntensity,
                 transform: `scale(${1 + beatIntensity})` 
@@ -649,20 +649,20 @@ export const GlassMusicVisualizer = forwardRef<HTMLDivElement, GlassMusicVisuali
         </div>
 
         {/* Visualization controls */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <h4 className="text-sm font-medium text-white/80">Visualization</h4>
+        <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 glass-glass-gap-6">
+          <div className="glass-glass-space-y-4">
+            <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80">Visualization</h4>
             
-            <div className="space-y-3">
+            <div className="glass-glass-space-y-3">
               <div>
-                <label className="block text-xs text-white/70 mb-1">Mode</label>
+                <label className="glass-glass-block glass-glass-text-xs glass-glass-text-primary/70 glass-glass-mb-1">Mode</label>
                 <select
                   value={visualConfig.mode}
                   onChange={(e) => setVisualConfig(prev => ({ 
                     ...prev, 
                     mode: e.target.value as any 
                   }))}
-                  className="w-full p-2 bg-white/10 border border-white/20 rounded-lg text-white/90 text-sm"
+                  className="glass-glass-w-full glass-glass-p-2 glass-surface-subtle/10 glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-text-primary/90 glass-glass-text-sm"
                 >
                   <option value="bars">Frequency Bars</option>
                   <option value="wave">Waveform</option>
@@ -674,14 +674,14 @@ export const GlassMusicVisualizer = forwardRef<HTMLDivElement, GlassMusicVisuali
               </div>
 
               <div>
-                <label className="block text-xs text-white/70 mb-1">Color Scheme</label>
+                <label className="glass-glass-block glass-glass-text-xs glass-glass-text-primary/70 glass-glass-mb-1">Color Scheme</label>
                 <select
                   value={visualConfig.colorScheme}
                   onChange={(e) => setVisualConfig(prev => ({ 
                     ...prev, 
                     colorScheme: e.target.value as any 
                   }))}
-                  className="w-full p-2 bg-white/10 border border-white/20 rounded-lg text-white/90 text-sm"
+                  className="glass-glass-w-full glass-glass-p-2 glass-surface-subtle/10 glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-text-primary/90 glass-glass-text-sm"
                 >
                   <option value="rainbow">Rainbow</option>
                   <option value="monochrome">Monochrome</option>
@@ -693,7 +693,7 @@ export const GlassMusicVisualizer = forwardRef<HTMLDivElement, GlassMusicVisuali
               </div>
 
               <div>
-                <label className="block text-xs text-white/70 mb-1">
+                <label className="glass-glass-block glass-glass-text-xs glass-glass-text-primary/70 glass-glass-mb-1">
                   Sensitivity: {visualConfig.sensitivity.toFixed(1)}
                 </label>
                 <input
@@ -706,18 +706,18 @@ export const GlassMusicVisualizer = forwardRef<HTMLDivElement, GlassMusicVisuali
                     ...prev, 
                     sensitivity: parseFloat(e.target.value) 
                   }))}
-                  className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer"
+                  className="glass-glass-w-full h-2 glass-surface-subtle/20 glass-radius-lg appearance-none glass-glass-cursor-pointer"
                 />
               </div>
             </div>
           </div>
 
-          <div className="space-y-4">
-            <h4 className="text-sm font-medium text-white/80">Audio Settings</h4>
+          <div className="glass-glass-space-y-4">
+            <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80">Audio Settings</h4>
             
-            <div className="space-y-3">
+            <div className="glass-glass-space-y-3">
               <div>
-                <label className="block text-xs text-white/70 mb-1">
+                <label className="glass-glass-block glass-glass-text-xs glass-glass-text-primary/70 glass-glass-mb-1">
                   Smoothing: {audioConfig.smoothing.toFixed(1)}
                 </label>
                 <input
@@ -733,19 +733,19 @@ export const GlassMusicVisualizer = forwardRef<HTMLDivElement, GlassMusicVisuali
                       analyserRef.current.smoothingTimeConstant = smoothing
                     }
                   }}
-                  className="w-full h-2 bg-white/20 rounded-lg appearance-none cursor-pointer"
+                  className="glass-glass-w-full h-2 glass-surface-subtle/20 glass-radius-lg appearance-none glass-glass-cursor-pointer"
                 />
               </div>
 
               <div>
-                <label className="block text-xs text-white/70 mb-1">FFT Size</label>
+                <label className="glass-glass-block glass-glass-text-xs glass-glass-text-primary/70 glass-glass-mb-1">FFT Size</label>
                 <select
                   value={audioConfig.fftSize}
                   onChange={(e) => setAudioConfig(prev => ({ 
                     ...prev, 
                     fftSize: parseInt(e.target.value) 
                   }))}
-                  className="w-full p-2 bg-white/10 border border-white/20 rounded-lg text-white/90 text-sm"
+                  className="glass-glass-w-full glass-glass-p-2 glass-surface-subtle/10 glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-text-primary/90 glass-glass-text-sm"
                 >
                   <option value="128">128</option>
                   <option value="256">256</option>
@@ -764,29 +764,29 @@ export const GlassMusicVisualizer = forwardRef<HTMLDivElement, GlassMusicVisuali
             p-3 rounded-lg border border-white/10
             ${createGlassStyle({ blur: 'sm', opacity: 0.6 }).background}
           `}>
-            <h4 className="text-sm font-medium text-white/80 mb-2">Frequency Analysis</h4>
-            <div className="grid grid-cols-4 gap-4 text-sm">
+            <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80 glass-glass-mb-2">Frequency Analysis</h4>
+            <div className="glass-glass-grid glass-glass-glass-grid-cols-4 glass-glass-gap-4 glass-glass-text-sm">
               <div>
-                <span className="text-white/60">Bass:</span>
-                <div className="text-white/90 font-medium">
+                <span className="glass-glass-text-primary/60">Bass:</span>
+                <div className="glass-glass-text-primary/90 glass-glass-font-medium">
                   {Math.round((frequencyData.slice(0, 8).reduce((a, b) => a + b, 0) / 8 / 255) * 100)}%
                 </div>
               </div>
               <div>
-                <span className="text-white/60">Mid:</span>
-                <div className="text-white/90 font-medium">
+                <span className="glass-glass-text-primary/60">Mid:</span>
+                <div className="glass-glass-text-primary/90 glass-glass-font-medium">
                   {Math.round((frequencyData.slice(8, 32).reduce((a, b) => a + b, 0) / 24 / 255) * 100)}%
                 </div>
               </div>
               <div>
-                <span className="text-white/60">Treble:</span>
-                <div className="text-white/90 font-medium">
+                <span className="glass-glass-text-primary/60">Treble:</span>
+                <div className="glass-glass-text-primary/90 glass-glass-font-medium">
                   {Math.round((frequencyData.slice(32).reduce((a, b) => a + b, 0) / (frequencyData.length - 32) / 255) * 100)}%
                 </div>
               </div>
               <div>
-                <span className="text-white/60">Beat:</span>
-                <div className="text-white/90 font-medium">
+                <span className="glass-glass-text-primary/60">Beat:</span>
+                <div className="glass-glass-text-primary/90 glass-glass-font-medium">
                   {Math.round(beatIntensity * 100)}%
                 </div>
               </div>

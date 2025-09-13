@@ -219,21 +219,16 @@ const ChartContainer = styled.div<{
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-  ${props => {
-    const glassStyles = createGlassStyle({ elevation: 'level2', intent: 'neutral' });
-    return `
-      background: ${glassStyles.background || '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}'};
-      backdrop-filter: ${glassStyles.backdropFilter || 'blur(12px)'};
-      border: ${glassStyles.border || '1px solid ${glassStyles.borderColor || "rgba(255, 255, 255, 0.2)"}'};
-      z-index: ${zSpaceLayers.content};
-    `;
-  }}
+  background: var(--glass-bg-default);
+  backdrop-filter: var(--glass-backdrop-blur);
+  border: 1px solid var(--glass-border-default);
+  z-index: ${zSpaceLayers.content};
   
   ${props =>
     props?.focused &&
     `
     transform: scale(1.02);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--glass-elev-2);
   `}
 `;
 
@@ -253,13 +248,13 @@ const ChartTitle = styled.h3`
   font-size: var(--typography-subheading-size);
   font-weight: var(--typography-heading-weight);
   margin: 0 0 8px 0;
-  color: ${props => ((props?.theme as any).isDarkMode ? '${glassStyles.text?.primary || "rgba(255, 255, 255, 0.9)"}' : 'rgba(0, 0, 0, 0.9)')};
+  color: var(--glass-text-primary);
 `;
 
 const ChartDescription = styled.p`
   font-size: var(--typography-body-size);
   margin: 0 0 16px 0;
-  color: ${props => ((props?.theme as any).isDarkMode ? '${glassStyles.text?.secondary || "rgba(255, 255, 255, 0.7)"}' : 'rgba(0, 0, 0, 0.7)')};
+  color: var(--glass-text-secondary);
 `;
 
 /**
@@ -288,12 +283,7 @@ const ToolbarContainer = styled.div`
  * Chart type selector button
  */
 const ChartTypeButton = styled.button<{ active: boolean; theme?: any }>`
-  background: ${props =>
-    props?.active
-      ? props?.theme?.isDarkMode ?? false
-        ? '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}'
-        : 'rgba(0, 0, 0, 0.05)'
-      : 'transparent'};
+  background: ${props => (props?.active ? 'var(--glass-bg-active)' : 'transparent')};
   border: none;
   border-radius: 4px;
   padding: 6px;
@@ -303,8 +293,7 @@ const ChartTypeButton = styled.button<{ active: boolean; theme?: any }>`
   justify-content: center;
 
   &:hover {
-    background: ${props =>
-      props?.theme?.isDarkMode ?? false ? '${glassStyles.borderColor || "rgba(255, 255, 255, 0.15)"}' : 'rgba(0, 0, 0, 0.08)'};
+    background: var(--glass-bg-hover);
   }
 `;
 
@@ -324,7 +313,7 @@ const ChartContent = styled.div<{ focused: boolean }>`
 const FooterContent = styled.div`
   padding: 8px 16px;
   font-size: var(--typography-caption-size);
-  color: ${props => ((props?.theme as any).isDarkMode ? '${glassStyles.text?.secondary || "rgba(255, 255, 255, 0.6)"}' : 'rgba(0, 0, 0, 0.6)')};
+  color: var(--glass-text-secondary);
   text-align: center;
 `;
 
@@ -413,20 +402,8 @@ const defaultTheme: DefaultTheme = {
       neutralSurface: '#FFFFFF'
     },
     glass: {
-      light: {
-        background: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
-        border: '${glassStyles.borderColor || "rgba(255, 255, 255, 0.2)"}',
-        highlight: '${glassStyles.borderColor || "rgba(255, 255, 255, 0.3)"}',
-        shadow: 'rgba(0, 0, 0, 0.1)',
-        glow: '${glassStyles.borderColor || "rgba(255, 255, 255, 0.2)"}'
-      },
-      dark: {
-        background: 'rgba(0, 0, 0, 0.2)',
-        border: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
-        highlight: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
-        shadow: 'rgba(0, 0, 0, 0.3)',
-        glow: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}'
-      },
+      light: createGlassStyle({ intent: "neutral", elevation: "level2" }),
+      dark: createGlassStyle({ intent: "neutral", elevation: "level2" }),
       tints: {
         primary: 'rgba(99, 102, 241, 0.1)',
         secondary: 'rgba(139, 92, 246, 0.1)'
@@ -1097,9 +1074,9 @@ const GlassChartComponent = forwardRef<GlassChartRef, GlassChartProps>(({
                 style={{
                   marginTop: '8px',
                   padding: '8px 12px',
-                  background: 'rgba(99, 102, 241, 0.1)',
+                  background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
                   borderRadius: '6px',
-                  border: '1px solid rgba(99, 102, 241, 0.2)',
+                  border: '1px solid var(--glass-border-default)',
                   fontSize: '12px',
                   color: 'rgba(99, 102, 241, 0.9)'
                 }}
@@ -1251,7 +1228,7 @@ const GlassChartComponent = forwardRef<GlassChartRef, GlassChartProps>(({
                 left: 0,
                 right: 0,
                 bottom: 0,
-                background: 'radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 30%)',
+                background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
                 pointerEvents: 'none',
                 zIndex: 1,
                 animation: 'pulse 2s infinite'
@@ -1268,7 +1245,7 @@ const GlassChartComponent = forwardRef<GlassChartRef, GlassChartProps>(({
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                background: 'rgba(0, 0, 0, 0.8)',
+                background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
                 color: 'white',
                 padding: '8px 12px',
                 borderRadius: '4px',

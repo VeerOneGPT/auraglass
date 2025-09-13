@@ -1,7 +1,8 @@
 'use client';
 
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
+import { cn } from '../../lib/utilsComprehensive';
 
 
 interface HoudiniGlassContextType {
@@ -298,20 +299,7 @@ export function HoudiniGlassProvider({
       {/* Debug overlay */}
       {debugModeState && (
         <div
-          style={{
-            position: 'fixed',
-            top: '10px',
-            right: '10px',
-            background: 'rgba(0, 0, 0, 0.8)',
-            color: 'white',
-            padding: '10px',
-            borderRadius: '8px',
-            fontSize: '12px',
-            fontFamily: 'monospace',
-            zIndex: 10000,
-            backdropFilter: 'blur(10px)',
-            border: '1px solid rgba(255, 255, 255, 0.2)'
-          }}
+          style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
         >
           <div><strong>Houdini Glass Debug</strong></div>
           <div>Support: {isSupported ? '✅' : '❌'}</div>
@@ -491,22 +479,22 @@ function registerGlassWorklets() {
 const houdiniGlassStyles = `
   .houdini-glass {
     background: var(--glass-background, rgba(255, 255, 255, 0.1));
-    backdrop-filter: blur(var(--glass-blur, 20px));
+    backdrop-filter: var(--glass-backdrop-blur););
     border: 1px solid var(--glass-border, rgba(255, 255, 255, 0.2));
-    box-shadow: var(--glass-shadow, 0 8px 32px rgba(0, 0, 0, 0.1));
+    box-shadow: var(--glass-elev-2);
     transition: all calc(0.3s * var(--glass-animation-speed, 1));
   }
 
   .houdini-glass:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--glass-bg-default);
     border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--glass-elev-2);
   }
 
-  @supports (backdrop-filter: blur(20px)) {
+  @supports (backdrop-filter: var(--glass-backdrop-blur);) {
     .houdini-glass-fallback {
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.5);
+      background: var(--glass-bg-default);
+      border: 1px solid var(--glass-border-default);
     }
   }
 
@@ -514,7 +502,7 @@ const houdiniGlassStyles = `
   .houdini-glass-performance {
     --glass-blur: 10px;
     --glass-animation-speed: 0.5;
-    backdrop-filter: blur(10px);
+    backdrop-filter: var(--glass-backdrop-blur);
     transition: all 0.15s;
   }
 

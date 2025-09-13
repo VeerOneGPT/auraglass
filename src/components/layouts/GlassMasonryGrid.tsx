@@ -94,7 +94,7 @@ export const GlassMasonryGrid = forwardRef<HTMLDivElement, GlassMasonryGridProps
     onItemsReorder,
     onLoadMore,
     onFilterChange,
-    className = '',
+    className='',
     ...props
   }, ref) => {
     const [layoutItems, setLayoutItems] = useState<LayoutItem[]>([])
@@ -322,7 +322,7 @@ export const GlassMasonryGrid = forwardRef<HTMLDivElement, GlassMasonryGridProps
 
       // Create sentinel element
       const sentinel = document.createElement('div')
-      sentinel.className = 'masonry-sentinel'
+      sentinel.className='masonry-sentinel'
       sentinel.style.height = '1px'
       containerRef.current.appendChild(sentinel)
       intersectionObserver.current.observe(sentinel)
@@ -368,29 +368,29 @@ export const GlassMasonryGrid = forwardRef<HTMLDivElement, GlassMasonryGridProps
     const categories = Array.from(new Set(items.map(item => item.category).filter(Boolean)))
 
     const FilterControls = () => (
-      <div className="flex flex-wrap items-center gap-4 mb-6">
+      <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-items-center glass-glass-gap-4 mb-6">
         {enableSearch && (
-          <div className="flex-1 min-w-48">
+          <div className="glass-glass-flex-1 min-w-48">
             <input
               type="text"
               placeholder="Search items..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full p-2 bg-white/10 border border-white/20 rounded-lg text-white/90 placeholder-white/50 text-sm"
+              className="glass-glass-w-full glass-glass-p-2 glass-surface-subtle/10 glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-text-primary/90 placeholder-white/50 glass-glass-text-sm"
             />
           </div>
         )}
         
         {showFilters && categories.length > 0 && (
-          <div className="flex items-center space-x-2">
-            <span className="text-sm text-white/70">Filter:</span>
+          <div className="glass-glass-flex glass-glass-items-center space-x-2">
+            <span className="glass-glass-text-sm glass-glass-text-primary/70">Filter:</span>
             <select
               value={activeFilter}
               onChange={(e) => {
                 setActiveFilter(e.target.value)
                 onFilterChange?.(e.target.value)
               }}
-              className="p-2 bg-white/10 border border-white/20 rounded text-white/90 text-sm"
+              className="glass-glass-p-2 glass-surface-subtle/10 glass-glass-border glass-glass-border-white/20 glass-radius glass-glass-text-primary/90 glass-glass-text-sm"
             >
               <option value="">All</option>
               {categories.map(category => (
@@ -402,12 +402,12 @@ export const GlassMasonryGrid = forwardRef<HTMLDivElement, GlassMasonryGridProps
           </div>
         )}
         
-        <div className="flex items-center space-x-2">
-          <span className="text-sm text-white/70">Sort:</span>
+        <div className="glass-glass-flex glass-glass-items-center space-x-2">
+          <span className="glass-glass-text-sm glass-glass-text-primary/70">Sort:</span>
           <select
             value={currentSort.by}
             onChange={(e) => setCurrentSort(prev => ({ ...prev, by: e.target.value as any }))}
-            className="p-2 bg-white/10 border border-white/20 rounded text-white/90 text-sm"
+            className="glass-glass-p-2 glass-surface-subtle/10 glass-glass-border glass-glass-border-white/20 glass-radius glass-glass-text-primary/90 glass-glass-text-sm"
           >
             <option value="id">ID</option>
             <option value="height">Height</option>
@@ -420,7 +420,7 @@ export const GlassMasonryGrid = forwardRef<HTMLDivElement, GlassMasonryGridProps
               ...prev, 
               order: prev.order === 'asc' ? 'desc' : 'asc' 
             }))}
-            className="p-2 bg-white/10 hover:bg-white/20 border border-white/20 rounded text-white/90 text-sm transition-colors"
+            className="glass-glass-p-2 glass-surface-subtle/10 hover:glass-surface-subtle/20 glass-glass-border glass-glass-border-white/20 glass-radius glass-glass-text-primary/90 glass-glass-text-sm transition-colors"
           >
             {currentSort.order === 'asc' ? '↑' : '↓'}
           </button>
@@ -438,24 +438,24 @@ export const GlassMasonryGrid = forwardRef<HTMLDivElement, GlassMasonryGridProps
           mb-4 p-3 rounded-lg border border-white/10
           ${createGlassStyle({ blur: 'sm', opacity: 0.6 }).background}
         `}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+          <div className="glass-glass-grid glass-glass-glass-grid-cols-2 md:glass-glass-glass-grid-cols-4 glass-glass-gap-4 glass-glass-text-sm">
             <div>
-              <span className="text-white/60">Total Items:</span>
-              <div className="text-white/90 font-medium">{items.length}</div>
+              <span className="glass-glass-text-primary/60">Total Items:</span>
+              <div className="glass-glass-text-primary/90 glass-glass-font-medium">{items.length}</div>
             </div>
             <div>
-              <span className="text-white/60">Visible:</span>
-              <div className="text-white/90 font-medium">{processedItems.length}</div>
+              <span className="glass-glass-text-primary/60">Visible:</span>
+              <div className="glass-glass-text-primary/90 glass-glass-font-medium">{processedItems.length}</div>
             </div>
             <div>
-              <span className="text-white/60">Columns:</span>
-              <div className="text-white/90 font-medium">
+              <span className="glass-glass-text-primary/60">Columns:</span>
+              <div className="glass-glass-text-primary/90 glass-glass-font-medium">
                 {containerDimensions.width ? calculateColumns(containerDimensions.width) : '-'}
               </div>
             </div>
             <div>
-              <span className="text-white/60">Avg Height:</span>
-              <div className="text-white/90 font-medium">{avgHeight.toFixed(0)}px</div>
+              <span className="glass-glass-text-primary/60">Avg Height:</span>
+              <div className="glass-glass-text-primary/90 glass-glass-font-medium">{avgHeight.toFixed(0)}px</div>
             </div>
           </div>
         </div>
@@ -470,20 +470,20 @@ export const GlassMasonryGrid = forwardRef<HTMLDivElement, GlassMasonryGridProps
         {...props}
       >
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between mb-6">
           <div>
-            <h3 className="text-xl font-semibold text-white/90">
+            <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary/90">
               Masonry Grid
             </h3>
-            <p className="text-sm text-white/60">
+            <p className="glass-glass-text-sm glass-glass-text-primary/60">
               Pinterest-style dynamic layout system
             </p>
           </div>
 
           {enableVirtualization && (
-            <div className="flex items-center space-x-1 text-blue-400">
-              <div className="w-2 h-2 bg-blue-400 rounded-full" />
-              <span className="text-xs">Virtualized</span>
+            <div className="glass-glass-flex glass-glass-items-center space-x-1 glass-glass-text-primary">
+              <div className="w-2 h-2 glass-surface-blue glass-radius-full" />
+              <span className="glass-glass-text-xs">Virtualized</span>
             </div>
           )}
         </div>
@@ -497,14 +497,14 @@ export const GlassMasonryGrid = forwardRef<HTMLDivElement, GlassMasonryGridProps
         {/* Masonry Container */}
         <div
           ref={containerRef}
-          className="relative overflow-auto"
+          className="glass-glass-relative glass-glass-overflow-auto"
           style={{
             height: enableVirtualization ? '600px' : 'auto',
             maxHeight: enableVirtualization ? '600px' : 'none'
           }}
         >
           <div
-            className="relative"
+            className="glass-glass-relative"
             style={{
               width: '100%',
               height: containerDimensions.height || 'auto',
@@ -545,7 +545,7 @@ export const GlassMasonryGrid = forwardRef<HTMLDivElement, GlassMasonryGridProps
               >
                 <OptimizedGlass
                   variant="frosted"
-                  className="w-full h-full hover:bg-white/10 transition-all duration-200"
+                  className="glass-glass-w-full glass-glass-h-full hover:glass-surface-subtle/10 transition-all duration-200"
                   style={{ padding: masonryConfig.itemPadding }}
                 >
                   {item.content}
@@ -559,7 +559,7 @@ export const GlassMasonryGrid = forwardRef<HTMLDivElement, GlassMasonryGridProps
                 {Array.from({ length: loadingItems }, (_, i) => (
                   <div
                     key={`loading-${i}`}
-                    className="absolute bg-white/5 border border-white/20 rounded-lg animate-pulse"
+                    className="glass-glass-absolute glass-surface-subtle/5 glass-glass-border glass-glass-border-white/20 glass-radius-lg animate-pulse"
                     style={{
                       left: (i % calculateColumns(containerDimensions.width)) * (300 + masonryConfig.gap) + masonryConfig.gap,
                       top: containerDimensions.height + masonryConfig.gap,
@@ -574,12 +574,12 @@ export const GlassMasonryGrid = forwardRef<HTMLDivElement, GlassMasonryGridProps
             {/* Infinite scroll loading indicator */}
             {loadingMore && enableInfiniteScroll && (
               <div 
-                className="absolute w-full flex items-center justify-center py-8"
+                className="glass-glass-absolute glass-glass-w-full glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-py-8"
                 style={{ top: containerDimensions.height + masonryConfig.gap }}
               >
-                <div className="flex items-center space-x-2 text-blue-400">
-                  <div className="w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full animate-spin" />
-                  <span className="text-sm">Loading more items...</span>
+                <div className="glass-glass-flex glass-glass-items-center space-x-2 glass-glass-text-primary">
+                  <div className="glass-glass-w-4 glass-glass-h-4 glass-glass-border-2 glass-glass-border-blue glass-glass-border-t-transparent glass-radius-full animate-spin" />
+                  <span className="glass-glass-text-sm">Loading more items...</span>
                 </div>
               </div>
             )}
@@ -587,8 +587,8 @@ export const GlassMasonryGrid = forwardRef<HTMLDivElement, GlassMasonryGridProps
         </div>
 
         {/* Footer info */}
-        <div className="flex items-center justify-between mt-6 pt-4 border-t border-white/10 text-xs text-white/60">
-          <div className="flex items-center space-x-4">
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between mt-6 pt-4 glass-glass-border-t glass-glass-border-white/10 glass-glass-text-xs glass-glass-text-primary/60">
+          <div className="glass-glass-flex glass-glass-items-center space-x-4">
             {enableDragReorder && <span>Drag items to reorder</span>}
             {enableInfiniteScroll && <span>Scroll to load more</span>}
             {enableVirtualization && <span>Virtualized for performance</span>}

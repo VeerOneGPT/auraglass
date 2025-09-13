@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ChartGrid } from './ChartGrid';
-import { cn } from '@/lib/utils';
+import { cn } from '../../../lib/utils';
 
 const meta: Meta<typeof ChartGrid> = {
   title: 'Components/Components/ChartGrid',
@@ -52,10 +52,10 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-col glass-gap-4">
-      <div className="relative w-80 h-40 bg-gray-900/20 glass-radius-md border">
+    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4">
+      <div className="glass-glass-relative w-80 h-40 bg-gray-900/20 glass-radius-md glass-glass-border">
         <ChartGrid {...args} />
-        <div className="absolute inset-0 flex items-center justify-center glass-text-primary/50">
+        <div className="glass-glass-absolute glass-glass-inset-0 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-text-primary/50">
           Grid Example
         </div>
       </div>

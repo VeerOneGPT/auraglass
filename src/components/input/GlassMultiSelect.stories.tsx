@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassMultiSelect } from './GlassMultiSelect';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassMultiSelect> = {
   title: 'Components/Input/GlassMultiSelect',
@@ -91,17 +91,17 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="grid grid-cols-1 md:grid-cols-2 glass-gap-6 max-w-2xl">
+    <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 glass-glass-gap-6 max-w-2xl">
       <div>
-        <h4 className="glass-text-sm font-medium glass-mb-2">Outlined</h4>
+        <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">Outlined</h4>
         <GlassMultiSelect {...args} variant="outlined" />
       </div>
       <div>
-        <h4 className="glass-text-sm font-medium glass-mb-2">Filled</h4>
+        <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">Filled</h4>
         <GlassMultiSelect {...args} variant="filled" />
       </div>
       <div>
-        <h4 className="glass-text-sm font-medium glass-mb-2">Standard</h4>
+        <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">Standard</h4>
         <GlassMultiSelect {...args} variant="standard" />
       </div>
     </div>
@@ -110,17 +110,17 @@ export const Variants: Story = {
 
 export const Sizes: Story = {
   render: (args) => (
-    <div className="glass-gap-4 max-w-md">
+    <div className="glass-glass-gap-4 max-w-md">
       <div>
-        <h4 className="glass-text-sm font-medium glass-mb-2">Small</h4>
+        <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">Small</h4>
         <GlassMultiSelect {...args} size="small" />
       </div>
       <div>
-        <h4 className="glass-text-sm font-medium glass-mb-2">Medium</h4>
+        <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">Medium</h4>
         <GlassMultiSelect {...args} size="medium" />
       </div>
       <div>
-        <h4 className="glass-text-sm font-medium glass-mb-2">Large</h4>
+        <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">Large</h4>
         <GlassMultiSelect {...args} size="large" />
       </div>
     </div>

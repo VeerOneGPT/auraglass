@@ -3,7 +3,7 @@
 import React, { forwardRef, useRef, useEffect, useState, useCallback } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { useA11yId } from '../../utils/a11y';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 import { useGlassSound } from '../../utils/soundDesign';
@@ -364,10 +364,10 @@ export const GlassDrawingCanvas = forwardRef<HTMLDivElement, GlassDrawingCanvasP
           depth={1}
           tint="neutral"
           border="subtle"
-          className="glass-tool-panel flex items-center glass-gap-2 glass-p-2 glass-radius-lg backdrop-blur-md border border-border/20"
+          className="glass-tool-panel glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-p-2 glass-radius-lg backdrop-blur-md glass-glass-border glass-glass-border-glass-glass-border/20"
         >
           {/* Tool selection */}
-          <div className="flex glass-gap-1">
+          <div className="glass-glass-flex glass-glass-gap-1">
             {availableTools.map((toolType) => (
               <button
                 key={toolType}
@@ -380,14 +380,14 @@ export const GlassDrawingCanvas = forwardRef<HTMLDivElement, GlassDrawingCanvasP
                 title={toolType.charAt(0).toUpperCase() + toolType.slice(1)}
               >
                 {/* Tool icons would go here */}
-                <span className="w-4 h-4 block">{toolType[0].toUpperCase()}</span>
+                <span className="glass-glass-w-4 glass-glass-h-4 glass-glass-block">{toolType[0].toUpperCase()}</span>
               </button>
             ))}
           </div>
 
           {/* Size control */}
-          <div className="flex items-center glass-gap-2">
-            <span className="glass-text-sm glass-text-secondary">Size:</span>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <span className="glass-glass-text-sm glass-text-secondary">Size:</span>
             <input
               type="range"
               min="1"
@@ -396,23 +396,23 @@ export const GlassDrawingCanvas = forwardRef<HTMLDivElement, GlassDrawingCanvasP
               onChange={(e) => setCurrentTool({ ...currentTool, size: parseInt(e.target.value) })}
               className="w-20"
             />
-            <span className="glass-text-sm min-w-[2ch]">{currentTool.size}</span>
+            <span className="glass-glass-text-sm min-w-[2ch]">{currentTool.size}</span>
           </div>
 
           {/* Color picker */}
-          <div className="flex items-center glass-gap-2">
-            <span className="glass-text-sm glass-text-secondary">Color:</span>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <span className="glass-glass-text-sm glass-text-secondary">Color:</span>
             <input
               type="color"
               value={currentTool.color}
               onChange={(e) => setCurrentTool({ ...currentTool, color: e.target.value })}
-              className="w-8 h-8 glass-radius-md border border-border/20"
+              className="glass-glass-w-8 glass-glass-h-8 glass-radius-md glass-glass-border glass-glass-border-glass-glass-border/20"
             />
           </div>
 
           {/* Opacity control */}
-          <div className="flex items-center glass-gap-2">
-            <span className="glass-text-sm glass-text-secondary">Opacity:</span>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <span className="glass-glass-text-sm glass-text-secondary">Opacity:</span>
             <input
               type="range"
               min="0.1"
@@ -425,11 +425,11 @@ export const GlassDrawingCanvas = forwardRef<HTMLDivElement, GlassDrawingCanvasP
           </div>
 
           {/* Actions */}
-          <div className="flex glass-gap-1 ml-auto">
+          <div className="glass-glass-flex glass-glass-gap-1 ml-auto">
             <button
               onClick={undo}
               disabled={historyIndex <= 0}
-              className="glass-p-2 glass-radius-md hover:bg-background/20 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="glass-glass-p-2 glass-radius-md hover:glass-surface-overlay disabled:opacity-50 disabled:cursor-not-allowed"
               title="Undo"
             >
               ↶
@@ -437,21 +437,21 @@ export const GlassDrawingCanvas = forwardRef<HTMLDivElement, GlassDrawingCanvasP
             <button
               onClick={redo}
               disabled={historyIndex >= history.length - 1}
-              className="glass-p-2 glass-radius-md hover:bg-background/20 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="glass-glass-p-2 glass-radius-md hover:glass-surface-overlay disabled:opacity-50 disabled:cursor-not-allowed"
               title="Redo"
             >
               ↷
             </button>
             <button
               onClick={clear}
-              className="glass-p-2 glass-radius-md hover:bg-background/20 text-red-500"
+              className="glass-glass-p-2 glass-radius-md hover:glass-surface-overlay glass-glass-text-primary"
               title="Clear"
             >
               🗑
             </button>
             <button
               onClick={() => exportCanvas('png')}
-              className="glass-p-2 glass-radius-md hover:bg-background/20"
+              className="glass-glass-p-2 glass-radius-md hover:glass-surface-overlay"
               title="Export"
             >
               💾
@@ -478,21 +478,21 @@ export const GlassDrawingCanvas = forwardRef<HTMLDivElement, GlassDrawingCanvasP
       >
         <Motion
           preset={isMotionSafe && respectMotionPreference ? "fadeIn" : "none"}
-          className="flex flex-col glass-gap-4 glass-p-4"
+          className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4 glass-glass-p-4"
         >
           {/* Tool panel - top/bottom */}
           {(toolPanelPosition === 'top' || toolPanelPosition === 'bottom') && renderToolPanel()}
 
-          <div className="flex glass-gap-4">
+          <div className="glass-glass-flex glass-glass-gap-4">
             {/* Tool panel - left */}
             {toolPanelPosition === 'left' && (
-              <div className="flex flex-col">
+              <div className="glass-glass-flex glass-glass-flex-col">
                 {renderToolPanel()}
               </div>
             )}
 
             {/* Canvas container */}
-            <div className="relative">
+            <div className="glass-glass-relative">
               <canvas
                 ref={canvasRef}
                 width={width}
@@ -511,7 +511,7 @@ export const GlassDrawingCanvas = forwardRef<HTMLDivElement, GlassDrawingCanvasP
               
               {/* Floating tool panel */}
               {toolPanelPosition === 'floating' && (
-                <div className="absolute top-4 right-4">
+                <div className="glass-glass-absolute top-4 right-4">
                   {renderToolPanel()}
                 </div>
               )}
@@ -519,7 +519,7 @@ export const GlassDrawingCanvas = forwardRef<HTMLDivElement, GlassDrawingCanvasP
 
             {/* Tool panel - right */}
             {toolPanelPosition === 'right' && (
-              <div className="flex flex-col">
+              <div className="glass-glass-flex glass-glass-flex-col">
                 {renderToolPanel()}
               </div>
             )}

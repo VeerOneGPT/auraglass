@@ -119,7 +119,7 @@ export const createChartContainerStyles = (
         : theme === 'dark'
           ? '#1a1a1a'
           : '#ffffff',
-      backdropFilter: theme === 'glass' ? 'blur(10px)' : 'none',
+      // Use createGlassStyle() instead,
       border: theme === 'glass' ? '1px solid rgba(255, 255, 255, 0.2)' : '1px solid #e0e0e0',
       boxShadow: theme === 'glass'
         ? '0 8px 32px rgba(0, 0, 0, 0.1)'

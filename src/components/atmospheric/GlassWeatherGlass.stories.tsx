@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassWeatherGlass } from './GlassWeatherGlass';
+import { fn } from 'storybook/test';
 
 const meta = {
   title: 'Glass UI/Atmospheric/GlassWeatherGlass',
@@ -8,6 +9,7 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  args: { onWeatherChange: fn(), onAtmosphericEvent: fn() },
   argTypes: {
     width: {
       control: { type: 'range', min: 300, max: 1000, step: 50 },

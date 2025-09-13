@@ -1,5 +1,5 @@
 'use client';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 
 import React from 'react';
 import { GlassDataTable } from './GlassDataTable';

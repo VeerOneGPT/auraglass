@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
 import { CursorGlow } from './CursorGlow';
+import { createGlassStyle } from '../../core/mixins/glassMixins';
 
 const meta: Meta<typeof CursorGlow> = {
   title: 'Components/Interactive/CursorGlow',
@@ -35,12 +36,7 @@ export const Default: Story = {
     <div style={{ position: 'relative', minHeight: '70vh', background: 'linear-gradient(120deg,#0f172a,#1e293b)', overflow: 'hidden' }}>
       <CursorGlow {...args} />
       <div style={{ position: 'absolute', inset: 0, display: 'grid', placeItems: 'center' }}>
-        <div style={{
-          width: 360, padding: 24, borderRadius: 16,
-          background: 'rgba(255,255,255,0.06)',
-          backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255,255,255,0.15)'
-        }}>
+        <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
           <h3 style={{ margin: 0, fontWeight: 600 }}>Cursor Glow</h3>
           <p style={{ opacity: 0.75 }}>Move your cursor around to see the glow.</p>
         </div>
@@ -48,4 +44,3 @@ export const Default: Story = {
     </div>
   ),
 };
-

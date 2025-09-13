@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import {
     ChevronLeft,
     ChevronRight,
@@ -463,7 +463,7 @@ export const GlassCarousel = forwardRef<HTMLDivElement, GlassCarouselProps>(
     if (totalItems === 0) {
         return (
             <GlassCard className={cn('p-8', className)}>
-                <div className="text-center glass-text-primary/60">
+                <div className="glass-glass-text-center glass-glass-text-primary/60">
                     No items to display
                 </div>
             </GlassCard>
@@ -471,7 +471,7 @@ export const GlassCarousel = forwardRef<HTMLDivElement, GlassCarouselProps>(
     }
 
     return (
-        <Motion preset="fadeIn" className="w-full">
+        <Motion preset="fadeIn" className="glass-glass-w-full">
             <GlassCard
                 ref={ref}
                 elevation="level2"
@@ -488,7 +488,7 @@ export const GlassCarousel = forwardRef<HTMLDivElement, GlassCarouselProps>(
                 )}
                 {...props}
             >
-                <CardContent className="glass-p-0">
+                <CardContent className="glass-glass-p-0">
                     {/* Main Carousel Container */}
                     <div
                         ref={carouselRef}
@@ -548,7 +548,7 @@ export const GlassCarousel = forwardRef<HTMLDivElement, GlassCarouselProps>(
                                     data-gaze-focused={gazeFocusedSlide === index}
                                     data-predicted={predictedNextSlide === index}
                                 >
-                                    <div className="h-full w-full relative">
+                                    <div className="glass-glass-h-full glass-glass-w-full glass-glass-relative">
                                         {item?.content}
                                     </div>
                                 </div>
@@ -559,7 +559,7 @@ export const GlassCarousel = forwardRef<HTMLDivElement, GlassCarouselProps>(
                         {showArrows && needsNavigation && (
                             <>
                                 {/* Previous Arrow */}
-                                <div className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10">
+                                <div className="glass-glass-absolute left-4 glass--glass-top-1/2 transform -translate-y-1/2 glass-z-10">
                                     {customPrevArrow ? (
                                         <div onClick={goToPrev}>{customPrevArrow}</div>
                                     ) : (
@@ -568,16 +568,16 @@ export const GlassCarousel = forwardRef<HTMLDivElement, GlassCarouselProps>(
                                             size="lg"
                                             onClick={goToPrev}
                                             disabled={!infinite && currentIndex === 0}
-                                            className="glass-p-3 shadow-lg hover:-translate-y-0.5 glass-ripple"
+                                            className="glass-glass-p-3 glass-glass-shadow-lg hover:-translate-y-0.5 glass-ripple"
                                             data-consciousness-nav="prev"
                                         >
-                                            <ChevronLeft className="w-6 h-6" />
+                                            <ChevronLeft className="glass-glass-w-6 glass-glass-h-6" />
                                         </GlassButton>
                                     )}
                                 </div>
 
                                 {/* Next Arrow */}
-                                <div className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10">
+                                <div className="glass-glass-absolute right-4 glass--glass-top-1/2 transform -translate-y-1/2 glass-z-10">
                                     {customNextArrow ? (
                                         <div onClick={goToNext}>{customNextArrow}</div>
                                     ) : (
@@ -586,10 +586,10 @@ export const GlassCarousel = forwardRef<HTMLDivElement, GlassCarouselProps>(
                                             size="lg"
                                             onClick={goToNext}
                                             disabled={!infinite && currentIndex >= maxIndex}
-                                            className="glass-p-3 shadow-lg hover:-translate-y-0.5 glass-ripple"
+                                            className="glass-glass-p-3 glass-glass-shadow-lg hover:-translate-y-0.5 glass-ripple"
                                             data-consciousness-nav="next"
                                         >
-                                            <ChevronRight className="w-6 h-6" />
+                                            <ChevronRight className="glass-glass-w-6 glass-glass-h-6" />
                                         </GlassButton>
                                     )}
                                 </div>
@@ -598,19 +598,19 @@ export const GlassCarousel = forwardRef<HTMLDivElement, GlassCarouselProps>(
 
                         {/* Play/Pause Controls */}
                         {autoPlay && needsNavigation && (
-                            <div className="absolute top-4 right-4 z-10">
+                            <div className="glass-glass-absolute top-4 right-4 glass-z-10">
                                 <GlassButton
                                     variant="secondary"
                                     size="sm"
                                     onClick={(e) => setIsPlaying(!isPlaying)}
-                                    className="glass-p-2"
+                                    className="glass-glass-p-2"
                                     data-consciousness-control="play-pause"
                                     data-adaptive-interval={adaptiveAutoPlayInterval}
                                 >
                                     {isPlaying ? (
-                                        <Pause className="w-4 h-4" />
+                                        <Pause className="glass-glass-w-4 glass-glass-h-4" />
                                     ) : (
-                                        <Play className="w-4 h-4" />
+                                        <Play className="glass-glass-w-4 glass-glass-h-4" />
                                     )}
                                 </GlassButton>
                             </div>
@@ -618,18 +618,18 @@ export const GlassCarousel = forwardRef<HTMLDivElement, GlassCarouselProps>(
 
                         {/* Fullscreen Toggle */}
                         {showFullscreen && (
-                            <div className="absolute top-4 left-4 z-10">
+                            <div className="glass-glass-absolute top-4 left-4 glass-z-10">
                                 <GlassButton
                                     variant="secondary"
                                     size="sm"
                                     onClick={(e) => setIsFullscreen(!isFullscreen)}
-                                    className="glass-p-2"
+                                    className="glass-glass-p-2"
                                     data-consciousness-control="fullscreen"
                                 >
                                     {isFullscreen ? (
-                                        <Minimize2 className="w-4 h-4" />
+                                        <Minimize2 className="glass-glass-w-4 glass-glass-h-4" />
                                     ) : (
-                                        <Maximize2 className="w-4 h-4" />
+                                        <Maximize2 className="glass-glass-w-4 glass-glass-h-4" />
                                     )}
                                 </GlassButton>
                             </div>
@@ -638,26 +638,26 @@ export const GlassCarousel = forwardRef<HTMLDivElement, GlassCarouselProps>(
 
                     {/* Indicators */}
                     {showIndicators && needsNavigation && (
-                        <div className="glass-px-6 glass-py-4" data-consciousness-indicators="true">
-                            <div className="flex items-center justify-between glass-text-sm glass-text-primary/80">
+                        <div className="glass-glass-px-6 glass-glass-py-4" data-consciousness-indicators="true">
+                            <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-text-sm glass-glass-text-primary/80">
                                 <span>
                                     {currentIndex + 1} / {Math.ceil(totalItems / slidesToScroll)}
                                     {predictive && predictedNextSlide !== null && (
-                                        <span className="glass-ml-2 glass-text-xs text-primary/80">
+                                        <span className="glass-ml-2 glass-glass-text-xs glass-glass-text-primary/80">
                                             Next: {predictedNextSlide + 1}
                                         </span>
                                     )}
                                 </span>
-                                <div className="flex items-center glass-gap-2">
+                                <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
                                     <span>
                                         Slide {currentIndex + 1}
                                         {adaptive && adaptiveAutoPlayInterval !== autoPlayInterval && (
-                                            <span className="glass-ml-1 glass-text-xs text-primary/80">
+                                            <span className="glass-ml-1 glass-glass-text-xs glass-glass-text-primary/80">
                                                 ({Math.round(adaptiveAutoPlayInterval / 1000)}s)
                                             </span>
                                         )}
                                     </span>
-                                    <div className="w-32 h-1 bg-white/20 glass-radius-full overflow-hidden">
+                                    <div className="w-32 h-1 glass-surface-subtle/20 glass-radius-full overflow-hidden">
                                         <div
                                             className={cn(
                                                 "h-full bg-primary transition-all duration-300",
@@ -676,8 +676,8 @@ export const GlassCarousel = forwardRef<HTMLDivElement, GlassCarouselProps>(
 
                     {/* Dots Navigation */}
                     {showDots && needsNavigation && (
-                        <div className="glass-px-6 glass-py-4" data-consciousness-dots="true">
-                            <div className="flex justify-center glass-gap-2">
+                        <div className="glass-glass-px-6 glass-glass-py-4" data-consciousness-dots="true">
+                            <div className="glass-glass-flex glass-glass-justify-center glass-glass-gap-2">
                                 {Array.from({ length: Math.ceil(totalItems / slidesToScroll) }).map((_, index) => {
                                     const slideIndex = index * slidesToScroll;
                                     const isActive = Math.floor(currentIndex / slidesToScroll) === index;
@@ -710,13 +710,13 @@ export const GlassCarousel = forwardRef<HTMLDivElement, GlassCarouselProps>(
 
                     {/* Item Info */}
                     {(carouselItems[currentIndex] as any)?.title && (
-                        <div className="glass-px-6 glass-py-4 border-t border-white/10">
-                            <div className="text-center">
-                                <h3 className="glass-text-lg font-semibold glass-text-primary glass-mb-1">
+                        <div className="glass-glass-px-6 glass-glass-py-4 glass-glass-border-t glass-glass-border-white/10">
+                            <div className="glass-glass-text-center">
+                                <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-1">
                                     {(carouselItems[currentIndex] as any).title}
                                 </h3>
                                 {(carouselItems[currentIndex] as any)?.description && (
-                                    <p className="glass-text-sm glass-text-primary/70">
+                                    <p className="glass-glass-text-sm glass-glass-text-primary/70">
                                         {(carouselItems[currentIndex] as any).description}
                                     </p>
                                 )}
@@ -815,7 +815,7 @@ export const GlassThumbnailCarousel: React.FC<GlassThumbnailCarouselProps> = ({
             thumbnailPosition === 'right' && 'flex-row'
         )}>
             {/* Main Carousel */}
-            <div className="flex-1">
+            <div className="glass-glass-flex-1">
                 <GlassCarousel
                     {...props}
                     items={thumbnailItems}
@@ -846,11 +846,11 @@ export const GlassThumbnailCarousel: React.FC<GlassThumbnailCarouselProps> = ({
                             <img
                                 src={(item as any).image}
                                 alt={(item as any).title || `Thumbnail ${index + 1}`}
-                                className="w-full h-full object-cover"
+                                className="glass-glass-w-full glass-glass-h-full object-cover"
                             />
                         ) : (
-                            <div className="w-full h-full bg-white/10 flex items-center justify-center">
-                                <span className="glass-text-xs glass-text-primary/60">{index + 1}</span>
+                            <div className="glass-glass-w-full glass-glass-h-full glass-surface-subtle/10 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+                                <span className="glass-glass-text-xs glass-glass-text-primary/60">{index + 1}</span>
                             </div>
                         )}
                     </button>

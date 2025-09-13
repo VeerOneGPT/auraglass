@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassProgress } from './GlassProgress';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassProgress> = {
   title: 'Components/Data-display/GlassProgress',
@@ -56,21 +56,21 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-col gap-8">
+    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-8">
       <div>
-        <h4 className="glass-text-sm font-medium glass-mb-2">Primary (65%)</h4>
+        <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">Primary (65%)</h4>
         <GlassProgress {...args} variant="primary" value={65} />
       </div>
       <div>
-        <h4 className="glass-text-sm font-medium glass-mb-2">Success (80%)</h4>
+        <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">Success (80%)</h4>
         <GlassProgress {...args} variant="success" value={80} />
       </div>
       <div>
-        <h4 className="glass-text-sm font-medium glass-mb-2">Warning (45%)</h4>
+        <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">Warning (45%)</h4>
         <GlassProgress {...args} variant="warning" value={45} />
       </div>
       <div>
-        <h4 className="glass-text-sm font-medium glass-mb-2">Error (25%)</h4>
+        <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">Error (25%)</h4>
         <GlassProgress {...args} variant="error" value={25} />
       </div>
     </div>

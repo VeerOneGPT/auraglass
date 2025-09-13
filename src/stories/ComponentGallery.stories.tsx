@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
+import { createGlassStyle } from '../core/mixins/glassMixins';
 
 // Component gallery for AuraGlass
 const ComponentGallery: React.FC = () => {
@@ -43,15 +44,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassMotionController</h4>
                 <p style={{ 
                   margin: '0', 
@@ -63,15 +56,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassButton</h4>
                 <p style={{ 
                   margin: '0', 
@@ -83,15 +68,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassFab</h4>
                 <p style={{ 
                   margin: '0', 
@@ -103,15 +80,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassCalendar</h4>
                 <p style={{ 
                   margin: '0', 
@@ -123,15 +92,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassCard</h4>
                 <p style={{ 
                   margin: '0', 
@@ -143,15 +104,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>div</h4>
                 <p style={{ 
                   margin: '0', 
@@ -163,15 +116,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>glass</h4>
                 <p style={{ 
                   margin: '0', 
@@ -183,15 +128,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassAreaChart</h4>
                 <p style={{ 
                   margin: '0', 
@@ -203,15 +140,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassBarChart</h4>
                 <p style={{ 
                   margin: '0', 
@@ -223,15 +152,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassChart</h4>
                 <p style={{ 
                   margin: '0', 
@@ -243,15 +164,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassDataChart</h4>
                 <p style={{ 
                   margin: '0', 
@@ -263,15 +176,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassLineChart</h4>
                 <p style={{ 
                   margin: '0', 
@@ -283,15 +188,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassPieChart</h4>
                 <p style={{ 
                   margin: '0', 
@@ -303,15 +200,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ModularGlassDataChart</h4>
                 <p style={{ 
                   margin: '0', 
@@ -323,15 +212,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassActivityFeed</h4>
                 <p style={{ 
                   margin: '0', 
@@ -343,15 +224,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassChartWidget</h4>
                 <p style={{ 
                   margin: '0', 
@@ -363,15 +236,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassKPICard</h4>
                 <p style={{ 
                   margin: '0', 
@@ -383,15 +248,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassMetricCard</h4>
                 <p style={{ 
                   margin: '0', 
@@ -403,15 +260,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassStatCard</h4>
                 <p style={{ 
                   margin: '0', 
@@ -423,15 +272,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassAccordion</h4>
                 <p style={{ 
                   margin: '0', 
@@ -443,15 +284,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassAlert</h4>
                 <p style={{ 
                   margin: '0', 
@@ -463,15 +296,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassAnimatedNumber</h4>
                 <p style={{ 
                   margin: '0', 
@@ -483,15 +308,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassAvatar</h4>
                 <p style={{ 
                   margin: '0', 
@@ -503,15 +320,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassBadge</h4>
                 <p style={{ 
                   margin: '0', 
@@ -523,15 +332,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassBadgeLine</h4>
                 <p style={{ 
                   margin: '0', 
@@ -543,15 +344,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassDataGrid</h4>
                 <p style={{ 
                   margin: '0', 
@@ -563,15 +356,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassDataGridPro</h4>
                 <p style={{ 
                   margin: '0', 
@@ -583,15 +368,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassDataTable</h4>
                 <p style={{ 
                   margin: '0', 
@@ -603,15 +380,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassDiffViewer</h4>
                 <p style={{ 
                   margin: '0', 
@@ -623,15 +392,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassHeatmap</h4>
                 <p style={{ 
                   margin: '0', 
@@ -643,15 +404,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassJSONViewer</h4>
                 <p style={{ 
                   margin: '0', 
@@ -663,15 +416,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassLoadingSkeleton</h4>
                 <p style={{ 
                   margin: '0', 
@@ -683,15 +428,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassMetricChip</h4>
                 <p style={{ 
                   margin: '0', 
@@ -703,15 +440,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassNotificationCenter</h4>
                 <p style={{ 
                   margin: '0', 
@@ -723,15 +452,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassProgress</h4>
                 <p style={{ 
                   margin: '0', 
@@ -743,15 +464,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassSchemaViewer</h4>
                 <p style={{ 
                   margin: '0', 
@@ -763,15 +476,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassSkeleton</h4>
                 <p style={{ 
                   margin: '0', 
@@ -783,15 +488,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassSkeletonLoader</h4>
                 <p style={{ 
                   margin: '0', 
@@ -803,15 +500,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassSparkline</h4>
                 <p style={{ 
                   margin: '0', 
@@ -823,15 +512,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassStatusDot</h4>
                 <p style={{ 
                   margin: '0', 
@@ -843,15 +524,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassTimeline</h4>
                 <p style={{ 
                   margin: '0', 
@@ -863,15 +536,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassToast</h4>
                 <p style={{ 
                   margin: '0', 
@@ -883,15 +548,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassVirtualTable</h4>
                 <p style={{ 
                   margin: '0', 
@@ -903,15 +560,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassCheckbox</h4>
                 <p style={{ 
                   margin: '0', 
@@ -923,15 +572,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassColorPicker</h4>
                 <p style={{ 
                   margin: '0', 
@@ -943,15 +584,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassDatePicker</h4>
                 <p style={{ 
                   margin: '0', 
@@ -963,15 +596,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassDateRangePicker</h4>
                 <p style={{ 
                   margin: '0', 
@@ -983,15 +608,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassForm</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1003,15 +620,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassFormStepper</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1023,15 +632,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassFormTable</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1043,15 +644,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassInput</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1063,15 +656,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassLabel</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1083,15 +668,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassMultiSelect</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1103,15 +680,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassMultiStepForm</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1123,15 +692,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassRadioGroup</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1143,15 +704,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassSelect</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1163,15 +716,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassSelectCompound</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1183,15 +728,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassSlider</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1203,15 +740,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassStep</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1223,15 +752,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassStepIcon</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1243,15 +764,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassStepLabel</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1263,15 +776,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassSwitch</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1283,15 +788,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassTextarea</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1303,15 +800,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassToggle</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1323,15 +812,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassWizard</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1343,15 +824,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ContextAwareGlass</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1363,15 +836,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassA11yAuditor</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1383,15 +848,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassAdvancedSearch</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1403,15 +860,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassAvatarGroup</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1423,15 +872,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassCardLink</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1443,15 +884,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassCarousel</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1463,15 +896,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassChat</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1483,15 +908,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassChatInput</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1503,15 +920,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassCoachmarks</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1523,15 +932,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassCodeEditor</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1543,15 +944,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassColorSchemeGenerator</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1563,15 +956,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassCommand</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1583,15 +968,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassCommandPalette</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1603,15 +980,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassCommentThread</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1623,15 +992,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassComponentPlayground</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1643,15 +1004,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassDraggable</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1663,15 +1016,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassFacetSearch</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1683,15 +1028,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassFileExplorer</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1703,15 +1040,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassFileTree</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1723,15 +1052,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassFileUpload</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1743,15 +1064,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassFilterPanel</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1763,15 +1076,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassFocusRing</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1783,15 +1088,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassFormBuilder</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1803,15 +1100,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassGallery</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1823,15 +1112,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassGradientPicker</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1843,15 +1124,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassImageViewer</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1863,15 +1136,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassInfiniteScroll</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1883,15 +1148,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassInlineEdit</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1903,15 +1160,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassKanban</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1923,15 +1172,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassKeyValueEditor</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1943,15 +1184,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassLazyImage</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1963,15 +1196,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassMentionList</h4>
                 <p style={{ 
                   margin: '0', 
@@ -1983,15 +1208,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassMessageList</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2003,15 +1220,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassMindMap</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2023,15 +1232,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>CleanGlassContainer</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2043,15 +1244,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassQueryBuilder</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2063,15 +1256,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassReactionBar</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2083,15 +1268,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassSearchInterface</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2103,15 +1280,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassSpotlight</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2123,15 +1292,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassStepper</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2143,15 +1304,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassTagInput</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2163,15 +1316,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassThemeDemo</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2183,15 +1328,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassThemeSwitcher</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2203,15 +1340,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassUserPresence</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2223,15 +1352,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassVideoPlayer</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2243,15 +1364,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassVirtualList</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2263,15 +1376,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassWhiteboard</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2283,15 +1388,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ThemedGlassComponents</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2303,15 +1400,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassAppShell</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2323,15 +1412,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassBox</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2343,15 +1424,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassContainer</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2363,15 +1436,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassFlex</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2383,15 +1448,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassGrid</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2403,15 +1460,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassMasonry</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2423,15 +1472,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassScrollArea</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2443,15 +1484,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassSeparator</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2463,15 +1496,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassSplitPane</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2483,15 +1508,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassStack</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2503,15 +1520,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>OptimizedGlassContainer</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2523,15 +1532,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassBottomSheet</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2543,15 +1544,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassDialog</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2563,15 +1556,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassDrawer</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2583,15 +1568,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassHoverCard</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2603,15 +1580,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassModal</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2623,15 +1592,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassPopover</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2643,15 +1604,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassTooltip</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2663,15 +1616,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>EnhancedGlassTabs</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2683,15 +1628,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassBottomNav</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2703,15 +1640,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassBreadcrumb</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2723,15 +1652,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassCommandBar</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2743,15 +1664,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassContextMenu</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2763,15 +1676,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassDropdownMenu</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2783,15 +1688,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassHeader</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2803,15 +1700,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassMenubar</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2823,15 +1712,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassMobileNav</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2843,15 +1724,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassNavigation</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2863,15 +1736,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassNavigationMenu</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2883,15 +1748,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassPagination</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2903,15 +1760,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassResponsiveNav</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2923,15 +1772,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassSegmentedControl</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2943,15 +1784,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassSidebar</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2963,15 +1796,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassTabBar</h4>
                 <p style={{ 
                   margin: '0', 
@@ -2983,15 +1808,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassTabs</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3003,15 +1820,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassToolbar</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3023,15 +1832,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>DimensionalGlass</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3043,15 +1844,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>FrostedGlass</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3063,15 +1856,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>HeatGlass</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3083,15 +1868,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>PageGlassContainer</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3103,15 +1880,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>WidgetGlass</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3123,15 +1892,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassDashboard</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3143,15 +1904,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassDetailView</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3163,15 +1916,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassFormTemplate</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3183,15 +1928,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassFormWizardSteps</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3203,15 +1940,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassWizardTemplate</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3223,15 +1952,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassListView</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3243,15 +1964,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassAccordionUI</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3263,15 +1976,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassCheckboxUI</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3283,15 +1988,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassPanel</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3303,15 +2000,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassChartsDemo</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3323,15 +2012,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassLinkButton</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3343,15 +2024,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassPrismComparison</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3363,15 +2036,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassWipeSlider</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3383,15 +2048,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassWipeSliderExamples</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3403,15 +2060,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>MotionAwareGlass</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3423,15 +2072,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassLocalizationProvider</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3443,15 +2084,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassCore</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3463,15 +2096,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>MotionNative</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3483,15 +2108,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>OptimizedGlassCore</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3503,15 +2120,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassAdvanced</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3523,15 +2132,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>OptimizedGlassAdvanced</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3543,15 +2144,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>MotionFramer</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3563,15 +2156,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ReducedMotionProvider</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3583,15 +2168,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlassErrorBoundary</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3620,15 +2197,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>AtmosphericBackground</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3640,15 +2209,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>DynamicAtmosphere</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3660,15 +2221,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ParticleBackground</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3697,15 +2250,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>MagneticButton</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3717,15 +2262,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ToggleButton</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3737,15 +2274,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ToggleButtonGroup</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3774,15 +2303,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>AtmosphericEffects</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3794,15 +2315,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ChartFilters</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3814,15 +2327,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ChartLegend</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3834,15 +2339,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ChartRenderer</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3854,15 +2351,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ChartTooltip</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3874,15 +2363,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>KpiChart</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3894,15 +2375,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>CollapsedMenu</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3914,15 +2387,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ScrollButtons</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3934,15 +2399,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>TabItem</h4>
                 <p style={{ 
                   margin: '0', 
@@ -3971,15 +2428,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ChartAxis</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4008,15 +2457,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ChartContainer</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4028,15 +2469,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ChartGrid</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4048,15 +2481,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>Box</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4068,15 +2493,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>HStack</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4088,15 +2505,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>VStack</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4125,15 +2534,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>CompactCookieNotice</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4145,15 +2546,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>CookieConsent</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4165,15 +2558,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>GlobalCookieConsent</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4202,15 +2587,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>Typography</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4239,15 +2616,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ClearIcon</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4276,15 +2645,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ImageList</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4296,15 +2657,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ImageListItem</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4316,15 +2669,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ImageListItemBar</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4353,15 +2698,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>CursorGlow</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4373,15 +2710,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>PageTransitionDemo</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4410,15 +2739,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>HeaderUserMenu</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4447,15 +2768,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>SpeedDial</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4467,15 +2780,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>SpeedDialAction</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4487,15 +2792,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>SpeedDialIcon</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4524,15 +2821,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ChartWidget</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4544,15 +2833,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>MetricWidget</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4564,15 +2845,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>TableWidget</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4601,15 +2874,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>TreeItem</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4621,15 +2886,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>TreeView</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4658,15 +2915,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>FocusIndicator</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4678,15 +2927,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>RippleButton</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4698,15 +2939,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>StateIndicator</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4718,15 +2951,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>VisualFeedback</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4755,15 +2980,7 @@ const ComponentGallery: React.FC = () => {
             gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))' 
           }}>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>FocusTrap</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4775,15 +2992,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>ScreenReader</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4795,15 +3004,7 @@ const ComponentGallery: React.FC = () => {
                 </p>
               </div>
             
-              <div style={{
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255,255,255,0.2)',
-                borderRadius: '12px',
-                padding: '1rem',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer'
-              }}>
+              <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
                 <h4 style={{ margin: '0 0 0.5rem 0', fontSize: '1rem' }}>SkipLinks</h4>
                 <p style={{ 
                   margin: '0', 
@@ -4854,43 +3055,19 @@ export const TokenSystem: Story = {
     }}>
       <h1 style={{ textAlign: 'center', marginBottom: '2rem' }}>Token System Overview</h1>
       <div style={{ display: 'grid', gap: '2rem', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))' }}>
-        <div style={{ 
-          background: 'rgba(255,255,255,0.1)', 
-          backdropFilter: 'blur(16px)',
-          padding: '1.5rem', 
-          borderRadius: '16px',
-          border: '1px solid rgba(255,255,255,0.2)'
-        }}>
+        <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
           <h3>Intent System</h3>
           <p>neutral • primary • success • warning • danger • info</p>
         </div>
-        <div style={{ 
-          background: 'rgba(255,255,255,0.1)', 
-          backdropFilter: 'blur(16px)',
-          padding: '1.5rem', 
-          borderRadius: '16px',
-          border: '1px solid rgba(255,255,255,0.2)'
-        }}>
+        <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
           <h3>Elevation System</h3>
           <p>level1 • level2 • level3 • level4</p>
         </div>
-        <div style={{ 
-          background: 'rgba(255,255,255,0.1)', 
-          backdropFilter: 'blur(16px)',
-          padding: '1.5rem', 
-          borderRadius: '16px',
-          border: '1px solid rgba(255,255,255,0.2)'
-        }}>
+        <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
           <h3>Performance Tiers</h3>
           <p>high • medium • low</p>
         </div>
-        <div style={{ 
-          background: 'rgba(255,255,255,0.1)', 
-          backdropFilter: 'blur(16px)',
-          padding: '1.5rem', 
-          borderRadius: '16px',
-          border: '1px solid rgba(255,255,255,0.2)'
-        }}>
+        <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
           <h3>Unified API</h3>
           <p>createGlassStyle(options)</p>
         </div>

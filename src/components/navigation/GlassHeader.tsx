@@ -2,7 +2,7 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { forwardRef, useRef, useState, useCallback, useEffect } from 'react';
 import { FocusTrap } from '../../primitives/focus/FocusTrap';
 import { OptimizedGlass } from '../../primitives';
@@ -342,12 +342,12 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
         >
         {/* Removed extra color overlay to follow global background */}
         {/* Left section */}
-        <div className="flex items-center glass-glass-gap-4">
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
           {/* Mobile menu toggle */}
           {onMobileMenuToggle && (
             <IconButton
               icon={
-                <div className="w-5 h-5 flex flex-col justify-center glass-glass-gap-1">
+                <div className="glass-glass-w-5 glass-glass-h-5 glass-glass-flex glass-glass-flex-col glass-glass-justify-center glass-glass-gap-1">
                   <div className={cn(
                     'h-0.5 bg-current transition-all duration-200',
                     mobileMenuOpen ? 'rotate-45 translate-y-1.5' : 'w-5'
@@ -372,23 +372,23 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
 
           {/* Logo */}
           {logo && (
-            <div className="flex-shrink-0">
+            <div className="glass-glass-flex-shrink-0">
               {logo}
             </div>
           )}
 
           {/* Navigation */}
           {navigation && (
-            <nav className="hidden md:block">
+            <nav className="hidden md:glass-glass-block">
               {navigation}
             </nav>
           )}
         </div>
 
         {/* Center section */}
-        <div className="flex-1 flex justify-center glass-glass-px-4">
+        <div className="glass-glass-flex-1 glass-glass-flex glass-glass-justify-center glass-glass-px-4">
           {search && (
-            <div className="relative w-full max-w-md">
+            <div className="glass-glass-relative glass-glass-w-full max-w-md">
               <GlassInput
                 placeholder={search.placeholder || 'Search...'}
                 value={searchQuery}
@@ -396,18 +396,18 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
                 leftIcon={
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="glass-glass-w-4 glass-glass-h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 }
                 clearable
                 onClear={() => setSearchQuery('')}
-                className="w-full"
+                className="glass-glass-w-full"
               />
 
               {/* Search suggestions - combine original and predictive suggestions */}
               {isSearchFocused && ((search.suggestions?.length ?? 0) > 0 || predictiveSearchSuggestions.length > 0) && (
-                <Motion preset="slideDown" className="absolute top-full left-0 right-0 glass-mt-1 z-[1000]">
+                <Motion preset="slideDown" className="glass-glass-absolute top-full left-0 right-0 glass-mt-1 z-[1000]">
                   <OptimizedGlass
                     intent="neutral"
                     elevation={'level4'}
@@ -417,12 +417,12 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
                     border="subtle"
                     animation="none"
                     performanceMode="high"
-                    className="max-h-60 overflow-y-auto"
+                    className="max-h-60 glass-glass-overflow-y-auto"
                     style={{
                       borderRadius: 'var(--popover-radius, 24px)',
                       background: 'linear-gradient(180deg, rgba(9,14,24, var(--popover-glass-opacity, 0.90)), rgba(11,18,30, var(--popover-glass-opacity-2, 0.94)))',
-                      backdropFilter: 'blur(var(--popover-blur, 20px)) saturate(var(--popover-saturate, 140%)) brightness(var(--popover-brightness, 1.05))',
-                      WebkitBackdropFilter: 'blur(var(--popover-blur, 20px)) saturate(var(--popover-saturate, 140%)) brightness(var(--popover-brightness, 1.05))',
+                      // Use createGlassStyle() instead,
+                      // Use createGlassStyle() instead,
                       borderColor: 'rgba(255, 255, 255, 0.10)'
                     }}
                   >
@@ -430,11 +430,11 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
                       {/* Predictive suggestions first */}
                       {predictiveSearchSuggestions.length > 0 && (
                         <>
-                          <div className="glass-text-xs glass-text-primary font-medium glass-mb-2 glass-px-2">🧠 Predicted</div>
+                          <div className="glass-glass-text-xs glass-glass-text-primary glass-glass-font-medium glass-glass-mb-2 glass-glass-px-2">🧠 Predicted</div>
                           {predictiveSearchSuggestions.map((suggestion, index) => (
                             <GlassButton
                               key={`predictive-${index}`}
-                              className="w-full text-left glass-px-4 glass-py-3 glass-radius-xl hover:glass-surface-primary/20 transition-colors glass-mb-2 border glass-border"
+                              className="glass-glass-w-full glass-glass-text-left glass-glass-px-4 glass-glass-py-3 glass-radius-xl hover:glass-surface-primary/20 transition-colors glass-glass-mb-2 glass-glass-border glass-glass-border"
                               onClick={(e) => {
                                 setSearchQuery(suggestion);
                                 search.onSearch?.(suggestion);
@@ -449,7 +449,7 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
                                 }
                               }}
                             >
-                              <span className="glass-text-primary">💡</span> {suggestion}
+                              <span className="glass-glass-text-primary">💡</span> {suggestion}
                             </GlassButton>
                           ))}
                         </>
@@ -459,13 +459,13 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
                       {search.suggestions && search.suggestions.length > 0 && (
                         <>
                           {predictiveSearchSuggestions.length > 0 && (
-                            <div className="border-t border-white/10 glass-glass-my-2"></div>
+                            <div className="glass-glass-border-t glass-glass-border-white/10 glass-glass-my-2"></div>
                           )}
-                          <div className="glass-glass-text-xs glass-text-primary/60 font-medium glass-glass-mb-2 glass-glass-px-2">Recent</div>
+                          <div className="glass-glass-text-xs glass-glass-text-primary/60 glass-glass-font-medium glass-glass-mb-2 glass-glass-px-2">Recent</div>
                           {search.suggestions.map((suggestion, index) => (
                             <GlassButton
                               key={`original-${index}`}
-                              className="w-full text-left glass-glass-px-4 glass-glass-py-3 glass-radius-xl hover:bg-muted/50 transition-colors glass-glass-mb-2 last:glass-mb-0"
+                              className="glass-glass-w-full glass-glass-text-left glass-glass-px-4 glass-glass-py-3 glass-radius-xl hover:bg-muted/50 transition-colors glass-glass-mb-2 last:glass-mb-0"
                               onClick={(e) => {
                                 setSearchQuery(suggestion);
                                 search.onSearch?.(suggestion);
@@ -494,21 +494,21 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
 
           {/* Breadcrumbs */}
           {breadcrumbs && !search && (
-            <div className="flex items-center">
+            <div className="glass-glass-flex glass-glass-items-center">
               {breadcrumbs}
             </div>
           )}
 
           {/* Custom content */}
           {children && !search && !breadcrumbs && (
-            <div className="flex items-center">
+            <div className="glass-glass-flex glass-glass-items-center">
               {children}
             </div>
           )}
         </div>
 
         {/* Right section */}
-        <div className="flex items-center glass-glass-gap-2">
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
           {/* Actions */}
           {(actions || []).map((action) => (
             <NotificationButton key={action.id} action={action} />
@@ -536,12 +536,12 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
       >
         {/* Removed extra color overlay to follow global background */}
         {/* Left section */}
-        <div className="flex items-center glass-glass-gap-4">
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
           {/* Mobile menu toggle */}
           {onMobileMenuToggle && (
             <IconButton
               icon={
-                <div className="w-5 h-5 flex flex-col justify-center glass-glass-gap-1">
+                <div className="glass-glass-w-5 glass-glass-h-5 glass-glass-flex glass-glass-flex-col glass-glass-justify-center glass-glass-gap-1">
                   <div className={cn(
                     'h-0.5 bg-current transition-all duration-200',
                     mobileMenuOpen ? 'rotate-45 translate-y-1.5' : 'w-5'
@@ -566,23 +566,23 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
 
           {/* Logo */}
           {logo && (
-            <div className="flex-shrink-0">
+            <div className="glass-glass-flex-shrink-0">
               {logo}
             </div>
           )}
 
           {/* Navigation */}
           {navigation && (
-            <nav className="hidden md:block">
+            <nav className="hidden md:glass-glass-block">
               {navigation}
             </nav>
           )}
         </div>
 
         {/* Center section */}
-        <div className="flex-1 flex justify-center glass-glass-px-4">
+        <div className="glass-glass-flex-1 glass-glass-flex glass-glass-justify-center glass-glass-px-4">
           {search && (
-            <div className="relative w-full max-w-md">
+            <div className="glass-glass-relative glass-glass-w-full max-w-md">
               <GlassInput
                 placeholder={search.placeholder || 'Search...'}
                 value={searchQuery}
@@ -590,18 +590,18 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
                 leftIcon={
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="glass-glass-w-4 glass-glass-h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 }
                 clearable
                 onClear={() => setSearchQuery('')}
-                className="w-full"
+                className="glass-glass-w-full"
               />
 
               {/* Search suggestions - combine original and predictive suggestions */}
               {isSearchFocused && ((search.suggestions?.length ?? 0) > 0 || predictiveSearchSuggestions.length > 0) && (
-                <Motion preset="slideDown" className="absolute top-full left-0 right-0 glass-mt-1 z-[1000]">
+                <Motion preset="slideDown" className="glass-glass-absolute top-full left-0 right-0 glass-mt-1 z-[1000]">
                   <OptimizedGlass
                     intent="neutral"
                     elevation={'level4'}
@@ -611,12 +611,12 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
                     border="subtle"
                     animation="none"
                     performanceMode="high"
-                    className="max-h-60 overflow-y-auto"
+                    className="max-h-60 glass-glass-overflow-y-auto"
                     style={{
                       borderRadius: 'var(--popover-radius, 24px)',
                       background: 'linear-gradient(180deg, rgba(9,14,24, var(--popover-glass-opacity, 0.90)), rgba(11,18,30, var(--popover-glass-opacity-2, 0.94)))',
-                      backdropFilter: 'blur(var(--popover-blur, 20px)) saturate(var(--popover-saturate, 140%)) brightness(var(--popover-brightness, 1.05))',
-                      WebkitBackdropFilter: 'blur(var(--popover-blur, 20px)) saturate(var(--popover-saturate, 140%)) brightness(var(--popover-brightness, 1.05))',
+                      // Use createGlassStyle() instead,
+                      // Use createGlassStyle() instead,
                       borderColor: 'rgba(255, 255, 255, 0.10)'
                     }}
                   >
@@ -624,11 +624,11 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
                       {/* Predictive suggestions first */}
                       {predictiveSearchSuggestions.length > 0 && (
                         <>
-                          <div className="glass-text-xs glass-text-primary font-medium glass-mb-2 glass-px-2">🧠 Predicted</div>
+                          <div className="glass-glass-text-xs glass-glass-text-primary glass-glass-font-medium glass-glass-mb-2 glass-glass-px-2">🧠 Predicted</div>
                           {predictiveSearchSuggestions.map((suggestion, index) => (
                             <GlassButton
                               key={`predictive-${index}`}
-                              className="w-full text-left glass-px-4 glass-py-3 glass-radius-xl hover:glass-surface-primary/20 transition-colors glass-mb-2 border glass-border"
+                              className="glass-glass-w-full glass-glass-text-left glass-glass-px-4 glass-glass-py-3 glass-radius-xl hover:glass-surface-primary/20 transition-colors glass-glass-mb-2 glass-glass-border glass-glass-border"
                               onClick={(e) => {
                                 setSearchQuery(suggestion);
                                 search.onSearch?.(suggestion);
@@ -643,7 +643,7 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
                                 }
                               }}
                             >
-                              <span className="glass-text-primary">💡</span> {suggestion}
+                              <span className="glass-glass-text-primary">💡</span> {suggestion}
                             </GlassButton>
                           ))}
                         </>
@@ -653,13 +653,13 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
                       {search.suggestions && search.suggestions.length > 0 && (
                         <>
                           {predictiveSearchSuggestions.length > 0 && (
-                            <div className="border-t border-white/10 glass-glass-my-2"></div>
+                            <div className="glass-glass-border-t glass-glass-border-white/10 glass-glass-my-2"></div>
                           )}
-                          <div className="glass-glass-text-xs glass-text-primary/60 font-medium glass-glass-mb-2 glass-glass-px-2">Recent</div>
+                          <div className="glass-glass-text-xs glass-glass-text-primary/60 glass-glass-font-medium glass-glass-mb-2 glass-glass-px-2">Recent</div>
                           {search.suggestions.map((suggestion, index) => (
                             <GlassButton
                               key={`original-${index}`}
-                              className="w-full text-left glass-glass-px-4 glass-glass-py-3 glass-radius-xl hover:bg-muted/50 transition-colors glass-glass-mb-2 last:glass-mb-0"
+                              className="glass-glass-w-full glass-glass-text-left glass-glass-px-4 glass-glass-py-3 glass-radius-xl hover:bg-muted/50 transition-colors glass-glass-mb-2 last:glass-mb-0"
                               onClick={(e) => {
                                 setSearchQuery(suggestion);
                                 search.onSearch?.(suggestion);
@@ -688,21 +688,21 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
 
           {/* Breadcrumbs */}
           {breadcrumbs && !search && (
-            <div className="flex items-center">
+            <div className="glass-glass-flex glass-glass-items-center">
               {breadcrumbs}
             </div>
           )}
 
           {/* Custom content */}
           {children && !search && !breadcrumbs && (
-            <div className="flex items-center">
+            <div className="glass-glass-flex glass-glass-items-center">
               {children}
             </div>
           )}
         </div>
 
         {/* Right section */}
-        <div className="flex items-center glass-glass-gap-2">
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
           {/* Actions */}
           {(actions || []).map((action) => (
             <NotificationButton key={action.id} action={action} />
@@ -739,7 +739,7 @@ function NotificationButton({ action }: NotificationButtonProps) {
   }, [isOpen]);
 
   return (
-    <div className="relative">
+    <div className="glass-glass-relative">
       <GlassButton
         variant="ghost"
         flat
@@ -755,11 +755,11 @@ function NotificationButton({ action }: NotificationButtonProps) {
         )}
         aria-label={action.label}
       >
-        <div className="w-5 h-5 flex items-center justify-center">
+        <div className="glass-glass-w-5 glass-glass-h-5 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
           {action.icon}
         </div>
         {action.badge && (
-          <span className="absolute top-0 right-0 z-20 pointer-events-none glass-surface-danger glass-text-primary glass-text-xs glass-radius-full min-w-4 h-4 flex items-center justify-center glass-px-1 font-semibold shadow-md">
+          <span className="glass-glass-absolute top-0 right-0 z-20 glass-pointer-events-none glass-surface-danger glass-glass-text-primary glass-glass-text-xs glass-radius-full glass-glass-min-glass-w-4 glass-glass-h-4 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-px-1 glass-glass-font-semibold glass-glass-shadow-md">
             {action.badge}
           </span>
         )}
@@ -767,7 +767,7 @@ function NotificationButton({ action }: NotificationButtonProps) {
 
       {/* Notification Dropdown */}
       {isOpen && action.id === 'notifications' && (
-        <Motion preset="slideDown" className="absolute top-full right-0 glass-mt-2 z-[1000]">
+        <Motion preset="slideDown" className="glass-glass-absolute top-full right-0 glass-mt-2 z-[1000]">
           <OptimizedGlass
           intent="neutral"
           elevation={'level4'}
@@ -777,7 +777,7 @@ function NotificationButton({ action }: NotificationButtonProps) {
           border="subtle"
           animation="none"
           performanceMode="medium"
-            className="w-80 ring-1 ring-white/10 shadow-[0_12px_40px_rgba(17,24,39,0.45)]"
+            className="w-80 ring-1 ring-white/10 glass-glass-shadow-[0_12px_40px_rgba(17,24,39,0.45)]"
             style={{
               // Increase opacity/darken for readability (blue-leaning neutral)
               borderRadius: 'var(--popover-radius, 24px)',
@@ -785,50 +785,50 @@ function NotificationButton({ action }: NotificationButtonProps) {
                 'linear-gradient(180deg, rgba(10,16,28, 0.88), rgba(10,16,28, 0.92)), ' +
                 'radial-gradient(72% 54% at 8% 0%, rgba(99,102,241, 0.04) 0%, rgba(99,102,241, 0) 60%), ' +
                 'radial-gradient(72% 54% at 92% 8%, rgba(167,139,250, 0.035) 0%, rgba(167,139,250, 0) 60%)',
-              backdropFilter: 'blur(var(--popover-blur, 18px)) saturate(var(--popover-saturate, 130%)) brightness(1.02)',
-              WebkitBackdropFilter: 'blur(var(--popover-blur, 18px)) saturate(var(--popover-saturate, 130%)) brightness(1.02)',
+              // Use createGlassStyle() instead,
+              // Use createGlassStyle() instead,
               borderColor: 'rgba(255, 255, 255, 0.12)'
             }}
           >
-            <div className="glass-p-4">
-              <h3 className="font-semibold glass-text-primary glass-mb-3 flex items-center justify-between">
+            <div className="glass-glass-p-4">
+              <h3 className="glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-3 glass-glass-flex glass-glass-items-center glass-glass-justify-between">
                 Notifications
-                <span className="glass-text-xs glass-text-primary glass-surface-primary/10 glass-px-2 glass-py-1 glass-radius-full">3</span>
+                <span className="glass-glass-text-xs glass-glass-text-primary glass-surface-primary/10 glass-glass-px-2 glass-glass-py-1 glass-radius-full">3</span>
               </h3>
-              <div className="glass-gap-3 max-h-64 overflow-y-auto">
-                <div className="glass-p-3 bg-white/8 border border-white/15 transition-colors cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]" style={{ borderRadius: 'var(--popover-item-radius, 18px)' }}>
-                  <div className="flex items-start justify-between">
+              <div className="glass-glass-gap-3 glass-glass-max-h-64 glass-glass-overflow-y-auto">
+                <div className="glass-glass-p-3 glass-surface-subtle/8 glass-glass-border glass-glass-border-white/15 transition-colors glass-glass-cursor-pointer glass-glass-shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]" style={{ borderRadius: 'var(--popover-item-radius, 18px)' }}>
+                  <div className="glass-glass-flex glass-glass-items-start glass-glass-justify-between">
                     <div>
-                      <p className="glass-text-sm glass-text-primary font-medium">New evaluation completed</p>
-                      <p className="glass-text-xs glass-text-primary glass-mt-1">Customer Support QA Template</p>
+                      <p className="glass-glass-text-sm glass-glass-text-primary glass-glass-font-medium">New evaluation completed</p>
+                      <p className="glass-glass-text-xs glass-glass-text-primary glass-mt-1">Customer Support QA Template</p>
                     </div>
                     <span className="w-2 h-2 glass-surface-primary glass-radius-full glass-mt-2"></span>
                   </div>
-                  <p className="glass-text-xs glass-text-primary/70 glass-mt-2">2 minutes ago</p>
+                  <p className="glass-glass-text-xs glass-glass-text-primary/70 glass-mt-2">2 minutes ago</p>
                 </div>
-                <div className="glass-p-3 bg-white/8 border border-white/15 transition-colors cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]" style={{ borderRadius: 'var(--popover-item-radius, 18px)' }}>
-                  <div className="flex items-start justify-between">
+                <div className="glass-glass-p-3 glass-surface-subtle/8 glass-glass-border glass-glass-border-white/15 transition-colors glass-glass-cursor-pointer glass-glass-shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]" style={{ borderRadius: 'var(--popover-item-radius, 18px)' }}>
+                  <div className="glass-glass-flex glass-glass-items-start glass-glass-justify-between">
                     <div>
-                      <p className="glass-text-sm glass-text-primary font-medium">Model comparison ready</p>
-                      <p className="glass-text-xs glass-text-success glass-mt-1">GPT-4 vs Claude-3.5 Sonnet</p>
+                      <p className="glass-glass-text-sm glass-glass-text-primary glass-glass-font-medium">Model comparison ready</p>
+                      <p className="glass-glass-text-xs glass-text-success glass-mt-1">GPT-4 vs Claude-3.5 Sonnet</p>
                     </div>
                     <span className="w-2 h-2 glass-surface-success glass-radius-full glass-mt-2"></span>
                   </div>
-                  <p className="glass-text-xs glass-text-primary/70 glass-mt-2">15 minutes ago</p>
+                  <p className="glass-glass-text-xs glass-glass-text-primary/70 glass-mt-2">15 minutes ago</p>
                 </div>
-                <div className="glass-p-3 bg-white/8 border border-white/15 transition-colors cursor-pointer shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]" style={{ borderRadius: 'var(--popover-item-radius, 18px)' }}>
-                  <div className="flex items-start justify-between">
+                <div className="glass-glass-p-3 glass-surface-subtle/8 glass-glass-border glass-glass-border-white/15 transition-colors glass-glass-cursor-pointer glass-glass-shadow-[inset_0_1px_0_rgba(255,255,255,0.06)]" style={{ borderRadius: 'var(--popover-item-radius, 18px)' }}>
+                  <div className="glass-glass-flex glass-glass-items-start glass-glass-justify-between">
                     <div>
-                      <p className="glass-text-sm glass-text-primary font-medium">Team member joined</p>
-                      <p className="glass-text-xs glass-text-primary glass-mt-1">Sarah Chen joined your organization</p>
+                      <p className="glass-glass-text-sm glass-glass-text-primary glass-glass-font-medium">Team member joined</p>
+                      <p className="glass-glass-text-xs glass-glass-text-primary glass-mt-1">Sarah Chen joined your organization</p>
                     </div>
                     <span className="w-2 h-2 glass-surface-primary glass-radius-full glass-mt-2"></span>
                   </div>
-                  <p className="glass-text-xs glass-text-primary/70 glass-mt-2">1 hour ago</p>
+                  <p className="glass-glass-text-xs glass-glass-text-primary/70 glass-mt-2">1 hour ago</p>
                 </div>
               </div>
-              <div className="glass-pt-3 glass-mt-3 border-t border-white/10">
-                <GlassButton className="w-full glass-text-sm glass-text-primary hover:glass-text-secondary font-medium transition-colors bg-gradient-to-r from-white/5 to-white/0 rounded-[14px]">
+              <div className="glass-pt-3 glass-mt-3 glass-glass-border-t glass-glass-border-white/10">
+                <GlassButton className="glass-glass-w-full glass-glass-text-sm glass-glass-text-primary hover:glass-text-secondary glass-glass-font-medium transition-colors glass-gradient-primary from-white/5 to-white/0 glass-radius-[14px]">
                   View all notifications
                 </GlassButton>
               </div>
@@ -840,7 +840,7 @@ function NotificationButton({ action }: NotificationButtonProps) {
       {/* Backdrop for closing */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40"
+          className="glass-glass-fixed glass-glass-inset-0 z-40"
           onClick={(e) => setIsOpen(false)}
         />
       )}
@@ -884,26 +884,26 @@ function UserMenu({ user, items }: UserMenuProps) {
   };
 
   return (
-    <div className="relative">
+    <div className="glass-glass-relative">
       <GlassButton
         variant="ghost"
         flat
         ref={triggerRef}
         onClick={(e) => setIsOpen(!isOpen)}
-        className="flex items-center glass-gap-2 glass-p-1 glass-radius-md hover:bg-white/5 active:bg-white/10 transition-colors"
+        className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-p-1 glass-radius-md hover:glass-surface-subtle/5 active:glass-surface-subtle/10 transition-colors"
         aria-expanded={isOpen}
         aria-haspopup="menu"
       >
-        <div className="relative">
+        <div className="glass-glass-relative">
           {user.avatar ? (
             <img
               src={user.avatar}
               alt={user.name}
-              className="w-8 h-8 glass-radius-full object-cover"
+              className="glass-glass-w-8 glass-glass-h-8 glass-radius-full object-cover"
             />
           ) : (
-            <div className="w-8 h-8 glass-radius-full bg-primary/20 flex items-center justify-center">
-              <span className="glass-text-sm font-medium" suppressHydrationWarning>
+            <div className="glass-glass-w-8 glass-glass-h-8 glass-radius-full glass-surface-primary/20 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+              <span className="glass-glass-text-sm glass-glass-font-medium" suppressHydrationWarning>
                 {user.name.charAt(0)}
               </span>
             </div>
@@ -917,12 +917,12 @@ function UserMenu({ user, items }: UserMenuProps) {
           )}
         </div>
 
-        <div className="hidden sm:block text-left">
-          <p className="glass-text-sm font-medium text-foreground" suppressHydrationWarning>
+        <div className="hidden sm:glass-glass-block glass-glass-text-left">
+          <p className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary" suppressHydrationWarning>
             {user.name}
           </p>
           {user.email && (
-            <p className="glass-text-xs text-foreground/70" suppressHydrationWarning>
+            <p className="glass-glass-text-xs glass-glass-text-primary/70" suppressHydrationWarning>
               {user.email}
             </p>
           )}
@@ -943,7 +943,7 @@ function UserMenu({ user, items }: UserMenuProps) {
 
       {/* Dropdown menu */}
       {isOpen && (
-        <Motion preset="slideDown" className="absolute top-full right-0 glass-mt-2 z-[1000]">
+        <Motion preset="slideDown" className="glass-glass-absolute top-full right-0 glass-mt-2 z-[1000]">
           <OptimizedGlass
           intent="neutral"
           elevation={'level4'}
@@ -953,7 +953,7 @@ function UserMenu({ user, items }: UserMenuProps) {
           border="subtle"
           animation="none"
           performanceMode="medium"
-            className="w-80 glass-p-1 ring-1 ring-white/10 shadow-[0_20px_60px_rgba(2,8,23,0.55)]"
+            className="w-80 glass-glass-p-1 ring-1 ring-white/10 glass-glass-shadow-[0_20px_60px_rgba(2,8,23,0.55)]"
             style={{
               borderRadius: '24px',
               // Subtle bluish–lavender glass, no heavy purple
@@ -961,45 +961,45 @@ function UserMenu({ user, items }: UserMenuProps) {
                 'linear-gradient(180deg, rgba(10,16,28,0.70), rgba(12,18,30,0.78)), ' +
                 'radial-gradient(60% 40% at 10% 0%, rgba(99,102,241,0.08) 0%, rgba(99,102,241,0) 80%), ' +
                 'radial-gradient(60% 40% at 90% 10%, rgba(167,139,250,0.06) 0%, rgba(167,139,250,0) 80%)',
-              backdropFilter: 'blur(18px) saturate(140%)',
-              WebkitBackdropFilter: 'blur(18px) saturate(140%)',
+              // Use createGlassStyle() instead,
+              // Use createGlassStyle() instead,
               borderColor: 'rgba(255,255,255,0.10)'
             }}
           >
             <FocusTrap active={isOpen} onEscape={() => setIsOpen(false)}>
-              <div className="glass-p-3">
+              <div className="glass-glass-p-3">
                 {/* User info header */}
-                <div className="glass-px-3 glass-py-3 bg-gradient-to-br from-white/6 via-white/3 to-transparent border border-white/12 rounded-[18px] glass-mb-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
-                  <div className="flex items-center glass-gap-3">
+                <div className="glass-glass-px-3 glass-glass-py-3 glass-gradient-primary from-white/6 via-white/3 to-transparent glass-glass-border glass-glass-border-white/12 glass-radius-[18px] glass-glass-mb-2 glass-glass-shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                  <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3">
                     {user.avatar ? (
                       <img
                         src={user.avatar}
                         alt={user.name}
-                        className="w-10 h-10 glass-radius-full object-cover border-2 border-white/20"
+                        className="glass-glass-w-10 glass-glass-h-10 glass-radius-full object-cover glass-glass-border-2 glass-glass-border-white/20"
                       />
                     ) : (
-                      <div className="w-10 h-10 glass-radius-full bg-gradient-to-br from-sky-500 to-indigo-400 flex items-center justify-center border-2 border-white/20">
-                        <span className="glass-text-primary font-semibold" suppressHydrationWarning>
+                      <div className="glass-glass-w-10 glass-glass-h-10 glass-radius-full glass-gradient-primary from-sky-500 to-indigo-400 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-border-2 glass-glass-border-white/20">
+                        <span className="glass-glass-text-primary glass-glass-font-semibold" suppressHydrationWarning>
                           {user.name.charAt(0)}
                         </span>
                       </div>
                     )}
                     <div>
-                      <p className="font-semibold glass-text-primary glass-text-sm" suppressHydrationWarning>
+                      <p className="glass-glass-font-semibold glass-glass-text-primary glass-glass-text-sm" suppressHydrationWarning>
                         {user.name}
                       </p>
                       {user.email && (
-                        <p className="glass-text-xs glass-text-primary" suppressHydrationWarning>
+                        <p className="glass-glass-text-xs glass-glass-text-primary" suppressHydrationWarning>
                           {user.email}
                         </p>
                       )}
                       {user.status && (
-                        <div className="flex items-center glass-gap-1 glass-mt-1">
+                        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1 glass-mt-1">
                           <span className={cn(
                             'w-2 h-2 glass-radius-full',
                             statusColors?.[user.status]
                           )} />
-                          <span className="glass-text-xs glass-text-primary/70 capitalize">{user.status}</span>
+                          <span className="glass-glass-text-xs glass-glass-text-primary/70 glass-glass-capitalize">{user.status}</span>
                         </div>
                       )}
                     </div>
@@ -1007,11 +1007,11 @@ function UserMenu({ user, items }: UserMenuProps) {
                 </div>
 
                 {/* Menu items */}
-                <div className="glass-gap-1">
+                <div className="glass-glass-gap-1">
                   {items.map((item) => (
                     <React.Fragment key={item?.id}>
                       {item?.divider ? (
-                        <div className="glass-my-2 border-t border-white/10" />
+                        <div className="glass-glass-my-2 glass-glass-border-t glass-glass-border-white/10" />
                       ) : (
                         <button
                           type="button"
@@ -1026,16 +1026,16 @@ function UserMenu({ user, items }: UserMenuProps) {
                             item?.disabled && 'opacity-50 cursor-not-allowed'
                           )}
                         >
-                          <span className="inline-flex items-center glass-gap-3 truncate">
+                          <span className="glass-inline-glass-glass-flex glass-glass-items-center glass-glass-gap-3 glass-glass-truncate">
                             {item?.icon && (
                               <span className={cn('w-4 h-4 flex items-center justify-center', item?.id === 'logout' ? 'glass-text-danger' : 'glass-text-primary/80')}>
                                 {item?.icon}
                               </span>
                             )}
-                            <span className="truncate font-medium">{item?.label}</span>
+                            <span className="glass-glass-truncate glass-glass-font-medium">{item?.label}</span>
                           </span>
                           {item?.id !== 'logout' && (
-                            <svg className="w-4 h-4 glass-text-primary/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="glass-glass-w-4 glass-glass-h-4 glass-glass-text-primary/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                           )}
@@ -1053,7 +1053,7 @@ function UserMenu({ user, items }: UserMenuProps) {
       {/* Backdrop */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40"
+          className="glass-glass-fixed glass-glass-inset-0 z-40"
           onClick={(e) => setIsOpen(false)}
         />
       )}
@@ -1083,26 +1083,26 @@ export function HeaderBreadcrumbs({
 }: HeaderBreadcrumbsProps) {
   return (
     <nav className={cn('flex items-center glass-gap-2 glass-text-sm', className)} aria-label="Breadcrumb">
-      <ol className="flex items-center glass-gap-2">
+      <ol className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
         {items.map((item, index) => (
-          <li key={index} className="flex items-center glass-gap-2">
+          <li key={index} className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
             {index > 0 && (
               <span className="glass-text-secondary">{separator}</span>
             )}
 
             {index === (items?.length || 0) - 1 ? (
-              <span className="font-medium text-foreground">{item?.label}</span>
+              <span className="glass-glass-font-medium glass-glass-text-primary">{item?.label}</span>
             ) : item?.href ? (
               <a
                 href={item?.href}
-                className="glass-text-secondary hover:text-foreground transition-colors"
+                className="glass-text-secondary hover:glass-glass-text-primary transition-colors"
               >
                 {item?.label}
               </a>
             ) : item?.onClick ? (
               <GlassButton
                 onClick={item?.onClick}
-                className="glass-text-secondary hover:text-foreground transition-colors"
+                className="glass-text-secondary hover:glass-glass-text-primary transition-colors"
               >
                 {item?.label}
               </GlassButton>
@@ -1135,7 +1135,7 @@ export interface HeaderNavigationProps {
 export function HeaderNavigation({ items, className }: HeaderNavigationProps) {
   return (
     <nav className={className}>
-      <ul className="flex items-center glass-gap-1">
+      <ul className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
         {items.map((item, index) => (
           <li key={index}>
             {item?.href ? (

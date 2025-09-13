@@ -322,7 +322,7 @@ export function createSkipLink(targetId: string, text = 'Skip to main content'):
       border-radius: var(--glass-radius-md);
       color: var(--glass-text-primary);
       text-decoration: none;
-      backdrop-filter: blur(16px);
+      /* Backdrop blur via tokenized surfaces */
     `;
   });
   

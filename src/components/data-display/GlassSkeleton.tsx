@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { OptimizedGlass } from '../../primitives';
 
 export type SkeletonVariant = 'text' | 'rectangular' | 'circular' | 'glass-radius-md';
@@ -104,7 +104,7 @@ export const GlassSkeleton = forwardRef<HTMLDivElement, GlassSkeletonProps>(
         return {
           position: 'relative',
           overflow: 'hidden',
-          background: 'linear-gradient(90deg, transparent, ${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}, transparent)',
+          background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
           backgroundSize: '200% 100%',
           animation: 'skeleton-wave 2s infinite',
         };
@@ -195,7 +195,7 @@ GlassSkeleton.displayName = 'GlassSkeleton';
 export const GlassSkeletonAvatar: React.FC<{
   size?: 'sm' | 'md' | 'lg' | 'xl';
   className?: string;
-}> = ({ size = 'md', className = '' }) => {
+}> = ({ size = 'md', className='' }) => {
   const sizeClasses = {
     sm: 'w-8 h-8',
     md: 'w-10 h-10',
@@ -215,7 +215,7 @@ export const GlassSkeletonAvatar: React.FC<{
 export const GlassSkeletonButton: React.FC<{
   width?: string;
   className?: string;
-}> = ({ width = '80px', className = '' }) => {
+}> = ({ width = '80px', className='' }) => {
   return (
     <GlassSkeleton
       variant="glass-radius-md"
@@ -229,7 +229,7 @@ export const GlassSkeletonButton: React.FC<{
 
 export const GlassSkeletonCard: React.FC<{
   className?: string;
-}> = ({ className = '' }) => {
+}> = ({ className='' }) => {
   return (
     <OptimizedGlass
       elevation="level1"
@@ -242,23 +242,23 @@ export const GlassSkeletonCard: React.FC<{
       className={cn('glass-p-6 glass-gap-4', className)}
     >
       {/* Header skeleton */}
-      <div className="flex items-center glass-gap-4">
+      <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
         <GlassSkeletonAvatar size="md" />
-        <div className="glass-gap-2 flex-1">
+        <div className="glass-glass-gap-2 glass-glass-flex-1">
           <GlassSkeleton width="60%" height="1rem" />
           <GlassSkeleton width="40%" height="0.75rem" />
         </div>
       </div>
 
       {/* Content skeleton */}
-      <div className="glass-gap-3">
+      <div className="glass-glass-gap-3">
         <GlassSkeleton height="1rem" />
         <GlassSkeleton height="1rem" width="80%" />
         <GlassSkeleton height="1rem" width="60%" />
       </div>
 
       {/* Actions skeleton */}
-      <div className="flex glass-gap-2 pt-2">
+      <div className="glass-glass-flex glass-glass-gap-2 pt-2">
         <GlassSkeleton width="60px" height="2rem" variant="glass-radius-md" />
         <GlassSkeleton width="60px" height="2rem" variant="glass-radius-md" />
       </div>
@@ -270,7 +270,7 @@ export const GlassSkeletonTable: React.FC<{
   rows?: number;
   columns?: number;
   className?: string;
-}> = ({ rows = 5, columns = 4, className = '' }) => {
+}> = ({ rows = 5, columns = 4, className='' }) => {
   return (
     <OptimizedGlass
       elevation="level1"
@@ -283,8 +283,8 @@ export const GlassSkeletonTable: React.FC<{
       className={cn('overflow-hidden', className)}
     >
       {/* Table header */}
-      <div className="glass-p-4 border-b border-white/10">
-        <div className="grid glass-gap-4" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
+      <div className="glass-glass-p-4 glass-glass-border-b glass-glass-border-white/10">
+        <div className="glass-glass-grid glass-glass-gap-4" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
           {Array.from({ length: columns }, (_, i) => (
             <GlassSkeleton key={`header-${i}`} height="1rem" width="80%" />
           ))}
@@ -294,8 +294,8 @@ export const GlassSkeletonTable: React.FC<{
       {/* Table rows */}
       <div className="divide-y divide-white/5">
         {Array.from({ length: rows }, (_, rowIndex) => (
-          <div key={`row-${rowIndex}`} className="glass-p-4">
-            <div className="grid glass-gap-4" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
+          <div key={`row-${rowIndex}`} className="glass-glass-p-4">
+            <div className="glass-glass-grid glass-glass-gap-4" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
               {Array.from({ length: columns }, (_, colIndex) => (
                 <GlassSkeleton
                   key={`cell-${rowIndex}-${colIndex}`}
@@ -314,13 +314,13 @@ export const GlassSkeletonTable: React.FC<{
 export const GlassSkeletonList: React.FC<{
   items?: number;
   className?: string;
-}> = ({ items = 3, className = '' }) => {
+}> = ({ items = 3, className='' }) => {
   return (
     <div className={`glass-gap-4 ${className}`}>
       {Array.from({ length: items }, (_, index) => (
-        <div key={index} className="flex items-center glass-gap-4">
+        <div key={index} className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
           <GlassSkeletonAvatar size="sm" />
-          <div className="flex-1 glass-gap-2">
+          <div className="glass-glass-flex-1 glass-glass-gap-2">
             <GlassSkeleton height="1rem" width="70%" />
             <GlassSkeleton height="0.75rem" width="50%" />
           </div>

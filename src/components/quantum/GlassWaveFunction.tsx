@@ -6,7 +6,7 @@ import { OptimizedGlass } from '../../primitives'
 import { useA11yId } from '../../utils/a11y'
 import { useMotionPreference } from '../../hooks/useMotionPreference'
 import { createGlassStyle } from '../../utils/createGlassStyle'
-import { cn } from '@/lib/utilsComprehensive'
+import { cn } from '../../lib/utilsComprehensive'
 
 export interface WaveEquation {
   id: string
@@ -78,7 +78,7 @@ export const GlassWaveFunction = forwardRef<HTMLDivElement, GlassWaveFunctionPro
     showLabels = true,
     realTimeMode = true,
     onWaveInteraction,
-    className = '',
+    className='',
     ...props
   }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -366,7 +366,7 @@ export const GlassWaveFunction = forwardRef<HTMLDivElement, GlassWaveFunctionPro
         {...props}
       >
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
           <div>
             <h3 className={cn("glass-text-lg glass-font-semibold glass-text-primary")}>
               Wave Function Visualization

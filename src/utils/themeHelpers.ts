@@ -61,22 +61,23 @@ export interface GlassTheme {
 
 // Theme helper functions
 export const createGlassTheme = (baseTheme: Partial<GlassTheme> = {}): GlassTheme => {
+  const defaultColors: ThemeColors = {
+    primary: '#3b82f6',
+    secondary: '#6b7280',
+    accent: '#8b5cf6',
+    background: '#0b1220',
+    surface: 'rgba(255,255,255,0.06)',
+    text: 'rgba(255,255,255,0.92)',
+    textSecondary: 'rgba(255,255,255,0.7)',
+    border: 'rgba(255,255,255,0.16)',
+    error: '#ef4444',
+    warning: '#f59e0b',
+    success: '#10b981',
+    info: '#0ea5e9',
+  };
+
   return {
-    colors: {
-      primary: '#3b82f6',
-      secondary: '#6b7280',
-      accent: '#8b5cf6',
-      background: 'rgba(255, 255, 255, 0.1)',
-      surface: 'rgba(255, 255, 255, 0.05)',
-      text: '#ffffff',
-      textSecondary: 'rgba(255, 255, 255, 0.7)',
-      border: 'rgba(255, 255, 255, 0.2)',
-      error: '#ef4444',
-      warning: '#f59e0b',
-      success: '#10b981',
-      info: '#3b82f6',
-      ...baseTheme.colors,
-    },
+    colors: { ...defaultColors, ...(baseTheme.colors || {}) },
     spacing: {
       xs: '0.25rem',
       sm: '0.5rem',
@@ -111,8 +112,9 @@ export const createGlassTheme = (baseTheme: Partial<GlassTheme> = {}): GlassThem
       ...baseTheme.typography,
     },
     borderRadius: '12px',
-    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-    backdropFilter: 'blur(10px)',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.18)',
+    // Use tokenized backdrop via CSS variables on surfaces
+    backdropFilter: 'var(--glass-backdrop-blur)',
     transition: 'all 0.2s ease',
     ...baseTheme,
   };
@@ -386,7 +388,7 @@ export const createDarkTheme = (): GlassTheme => {
       primary: '#60a5fa',
       secondary: '#9ca3af',
       accent: '#a78bfa',
-      background: 'rgba(17, 24, 39, 0.9)',
+      background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
       surface: 'rgba(31, 41, 55, 0.8)',
       text: '#f9fafb',
       textSecondary: 'rgba(156, 163, 175, 0.8)',
@@ -405,7 +407,7 @@ export const createLightTheme = (): GlassTheme => {
       primary: '#3b82f6',
       secondary: '#6b7280',
       accent: '#8b5cf6',
-      background: 'rgba(255, 255, 255, 0.9)',
+      background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
       surface: 'rgba(249, 250, 251, 0.8)',
       text: '#111827',
       textSecondary: 'rgba(75, 85, 99, 0.7)',

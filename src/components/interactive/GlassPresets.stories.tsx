@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CleanGlassContainer } from './GlassPresets';
 
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 const meta: Meta<typeof CleanGlassContainer> = {
   title: 'Components/Interactive/GlassPresets',
   component: CleanGlassContainer,
@@ -35,7 +35,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args: any) => (
-    <div className="flex flex-wrap glass-gap-4">
+    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4">
       <CleanGlassContainer {...args}>
         Default
       </CleanGlassContainer>

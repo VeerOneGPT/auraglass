@@ -2,8 +2,9 @@
 
 import { AnimatePresence, motion, useInView, useReducedMotion } from 'framer-motion'
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { cn } from '@/lib/utils'
+import { cn } from '../../lib/utils'
 import './GlassPerformanceOptimization.css'
+import { createGlassStyle } from '../../core/mixins/glassMixins'
 
 // Performance Context
 interface PerformanceContextType {
@@ -147,7 +148,7 @@ interface EfficientGlassRenderingProps {
 
 export function EfficientGlassRendering({
   children,
-  className = '',
+  className='',
   enableGPU = true,
   virtualizeContent = false,
   deferRender = false,
@@ -187,21 +188,7 @@ export function EfficientGlassRendering({
         backdropBlur = 12
     }
 
-    return {
-      background: baseBackground,
-      backdropFilter: enableGPU && gpuAcceleration
-        ? `blur(${backdropBlur}px)`
-        : 'none',
-      WebkitBackdropFilter: enableGPU && gpuAcceleration
-        ? `blur(${backdropBlur}px)`
-        : 'none',
-      border: '1px solid rgba(255, 255, 255, 0.18)',
-      borderRadius: '12px',
-      boxShadow: performanceMode === 'battery-saver' ? 'none' : shadow,
-      willChange: enableGPU && gpuAcceleration ? 'transform, opacity' : 'auto',
-      transform: enableGPU && gpuAcceleration ? 'translate3d(0, 0, 0)' : 'none',
-      ...style
-    }
+    return createGlassStyle({ intent: "neutral", elevation: "level2" })
   }, [performanceMode, enableGPU, gpuAcceleration, style])
 
   if (!isVisible && deferRender) {
@@ -250,7 +237,7 @@ export function LazyGlassLoading({
   placeholder,
   threshold = 0.1,
   rootMargin = '50px',
-  className = '',
+  className='',
   onLoad
 }: LazyGlassProps) {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -277,7 +264,7 @@ export function LazyGlassLoading({
     <div
       className={cn('glass-surface-placeholder glass-animate-pulse')}
       style={{
-        background: 'linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 75%)',
+        background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
         backgroundSize: '200% 100%',
         animation: 'shimmer 1.5s infinite',
         borderRadius: '12px',
@@ -325,7 +312,7 @@ interface ReducedMotionGlassProps {
 
 export function ReducedMotionGlass({
   children,
-  className = '',
+  className='',
   staticAlternative,
   respectUserPreference = true
 }: ReducedMotionGlassProps) {
@@ -358,13 +345,7 @@ export function ReducedMotionGlass({
   return (
     <motion.div
       className={cn('glass-surface-primary glass-reduced-motion', className)}
-      style={{
-        background: 'rgba(255, 255, 255, 0.1)',
-        backdropFilter: 'blur(12px)',
-        border: '1px solid rgba(255, 255, 255, 0.18)',
-        borderRadius: '12px',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
-      }}
+      style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
       {...motionProps}
     >
       {children}
@@ -385,7 +366,7 @@ interface BatteryAwareGlassProps {
 
 export function BatteryAwareGlass({
   children,
-  className = '',
+  className='',
   energyThresholds = { high: 50, medium: 25, low: 10 }
 }: BatteryAwareGlassProps) {
   const { batteryLevel, performanceMode } = useGlassPerformance()
@@ -395,28 +376,13 @@ export function BatteryAwareGlass({
 
     if (level > energyThresholds.high && performanceMode !== 'battery-saver') {
       // Full effects
-      return {
-        background: 'rgba(255, 255, 255, 0.15)',
-        backdropFilter: 'blur(20px)',
-        boxShadow: '0 16px 64px rgba(0, 0, 0, 0.15)',
-        border: '1px solid rgba(255, 255, 255, 0.25)'
-      }
+      return createGlassStyle({ intent: "neutral", elevation: "level2" })
     } else if (level > energyThresholds.medium) {
       // Reduced effects
-      return {
-        background: 'rgba(255, 255, 255, 0.1)',
-        backdropFilter: 'blur(12px)',
-        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-        border: '1px solid rgba(255, 255, 255, 0.18)'
-      }
+      return createGlassStyle({ intent: "neutral", elevation: "level2" })
     } else {
       // Minimal effects
-      return {
-        background: 'rgba(255, 255, 255, 0.05)',
-        backdropFilter: 'none', // Disable blur to save battery
-        boxShadow: 'none',
-        border: '1px solid rgba(255, 255, 255, 0.1)'
-      }
+      return createGlassStyle({ intent: "neutral", elevation: "level2" })
     }
   }
 
@@ -458,26 +424,14 @@ export function ProgressiveGlassEnhancement({
   children,
   tiers = {
     basic: {
-      background: 'rgba(255, 255, 255, 0.8)',
-      border: '1px solid rgba(0, 0, 0, 0.1)',
+      background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
+      border: '1px solid var(--glass-border-default)',
       borderRadius: '8px'
     },
-    enhanced: {
-      background: 'rgba(255, 255, 255, 0.1)',
-      backdropFilter: 'blur(12px)',
-      border: '1px solid rgba(255, 255, 255, 0.18)',
-      borderRadius: '12px',
-      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
-    },
-    premium: {
-      background: 'rgba(255, 255, 255, 0.15)',
-      backdropFilter: 'blur(20px)',
-      border: '1px solid rgba(255, 255, 255, 0.25)',
-      borderRadius: '16px',
-      boxShadow: '0 16px 64px rgba(0, 0, 0, 0.15)'
-    }
+    enhanced: createGlassStyle({ intent: "neutral", elevation: "level2" }),
+    premium: createGlassStyle({ intent: "neutral", elevation: "level2" })
   },
-  className = '',
+  className='',
   autoDetect = true
 }: ProgressiveGlassProps) {
   const { performanceMode, gpuAcceleration, cpuLoad } = useGlassPerformance()
@@ -546,25 +500,13 @@ function VirtualizedContent({ children }: { children: React.ReactNode }) {
 }
 
 // Performance Monitor Component
-export function GlassPerformanceMonitor({ className = '' }: { className?: string }) {
+export function GlassPerformanceMonitor({ className='' }: { className?: string }) {
   const { performanceMode, batteryLevel, cpuLoad, gpuAcceleration } = useGlassPerformance()
 
   return (
     <motion.div
       className={cn('glass-performance-monitor glass-fixed glass-top-10 glass-right-10 glass-z-max', className)}
-      style={{
-        position: 'fixed',
-        top: '10px',
-        right: '10px',
-        background: 'rgba(255, 255, 255, 0.1)',
-        backdropFilter: 'blur(12px)',
-        border: '1px solid rgba(255, 255, 255, 0.18)',
-        borderRadius: '8px',
-        padding: '8px 12px',
-        fontSize: '12px',
-        color: '#333',
-        zIndex: 9999
-      }}
+      style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
       initial={{ opacity: 0, x: 50 }}
       animate={{ opacity: 1, x: 0 }}
     >

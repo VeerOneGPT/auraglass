@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassSelect } from './GlassSelect';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassSelect> = {
   title: 'Components/Input/GlassSelect',
@@ -76,7 +76,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-col glass-gap-4 max-w-md">
+    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4 max-w-md">
       <GlassSelect {...args} variant="default" placeholder="Default variant" />
       <GlassSelect {...args} variant="filled" placeholder="Filled variant" />
       <GlassSelect {...args} variant="outlined" placeholder="Outlined variant" />
@@ -87,7 +87,7 @@ export const Variants: Story = {
 
 export const States: Story = {
   render: (args) => (
-    <div className="flex flex-col glass-gap-4 max-w-md">
+    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4 max-w-md">
       <GlassSelect {...args} state="default" placeholder="Default state" />
       <GlassSelect {...args} state="success" placeholder="Success state" />
       <GlassSelect {...args} state="warning" placeholder="Warning state" />
@@ -98,7 +98,7 @@ export const States: Story = {
 
 export const Sizes: Story = {
   render: (args) => (
-    <div className="flex flex-col glass-gap-4 max-w-md">
+    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4 max-w-md">
       <GlassSelect {...args} size="sm" placeholder="Small size" />
       <GlassSelect {...args} size="md" placeholder="Medium size" />
       <GlassSelect {...args} size="lg" placeholder="Large size" />

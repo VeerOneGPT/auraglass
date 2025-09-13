@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { OptimizedGlassContainer } from './OptimizedGlassContainer';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof OptimizedGlassContainer> = {
   title: 'Components/Layout/OptimizedGlassContainer',
@@ -36,7 +36,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args: any) => (
-    <div className="flex flex-wrap glass-gap-4">
+    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4">
       <OptimizedGlassContainer {...args}>
         Default
       </OptimizedGlassContainer>

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import {
     Calendar as CalendarIcon,
     ChevronLeft,
@@ -234,17 +234,17 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
     if (loading) {
         return (
             <GlassCard className={cn('glass-p-6', className)}>
-                <div className="animate-pulse glass-gap-4">
-                    <div className="flex items-center justify-between">
-                        <div className="h-8 bg-white/20 glass-radius-md w-32"></div>
-                        <div className="flex glass-gap-2">
-                            <div className="w-8 h-8 bg-white/20 glass-radius-md"></div>
-                            <div className="w-8 h-8 bg-white/20 glass-radius-md"></div>
+                <div className="animate-pulse glass-glass-gap-4">
+                    <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
+                        <div className="glass-glass-h-8 glass-surface-subtle/20 glass-radius-md w-32"></div>
+                        <div className="glass-glass-flex glass-glass-gap-2">
+                            <div className="glass-glass-w-8 glass-glass-h-8 glass-surface-subtle/20 glass-radius-md"></div>
+                            <div className="glass-glass-w-8 glass-glass-h-8 glass-surface-subtle/20 glass-radius-md"></div>
                         </div>
                     </div>
-                    <div className="grid grid-cols-7 glass-gap-2">
+                    <div className="glass-glass-grid glass-glass-glass-grid-cols-7 glass-glass-gap-2">
                         {Array.from({ length: 35 }).map((_, i) => (
-                            <div key={i} className="aspect-square bg-white/10 glass-radius-lg"></div>
+                            <div key={i} className="aspect-square glass-surface-subtle/10 glass-radius-lg"></div>
                         ))}
                     </div>
                 </div>
@@ -253,17 +253,17 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
     }
 
     return (
-        <div className="w-full glass-typography-reset">
+        <div className="glass-glass-w-full glass-typography-reset">
             <GlassCard variant="elevated" className={cn('overflow-hidden', className)} {...props}>
                 {/* Calendar Header */}
-                <CardHeader className="border-b border-white/10">
-                    <div className="flex items-center justify-between">
-                        <CardTitle className="glass-subheading font-semibold glass-text-primary flex items-center glass-gap-2">
-                            <CalendarIcon className="w-6 h-6" />
+                <CardHeader className="glass-glass-border-b glass-glass-border-white/10">
+                    <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
+                        <CardTitle className="glass-subheading glass-glass-font-semibold glass-glass-text-primary glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+                            <CalendarIcon className="glass-glass-w-6 glass-glass-h-6" />
                             {monthData.monthName} {monthData.year}
                         </CardTitle>
 
-                        <div className="flex items-center glass-gap-2">
+                        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
                             {/* Month navigation: glass morphism buttons */}
                             <GlassButton
                                 variant="tertiary"
@@ -275,7 +275,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                                 tint="neutral"
                                 border="subtle"
                             >
-                                <ChevronLeft className="w-4 h-4" />
+                                <ChevronLeft className="glass-glass-w-4 glass-glass-h-4" />
                             </GlassButton>
 
                             <GlassButton
@@ -301,17 +301,17 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                                 tint="neutral"
                                 border="subtle"
                             >
-                                <ChevronRight className="w-4 h-4" />
+                                <ChevronRight className="glass-glass-w-4 glass-glass-h-4" />
                             </GlassButton>
                         </div>
                     </div>
                 </CardHeader>
 
                 {/* Calendar Grid */}
-                <CardContent className="glass-p-4">
+                <CardContent className="glass-glass-p-4">
                     {/* Week day headers */}
                     <div
-                      className="grid glass-gap-2 glass-mb-4"
+                      className="glass-glass-grid glass-glass-gap-2 glass-glass-mb-4"
                       style={{ gridTemplateColumns: `repeat(${showWeekends ? 7 : 5}, minmax(0, 1fr))` }}
                     >
                         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => {
@@ -334,7 +334,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
 
                     {/* Calendar days */}
                     <div
-                      className="grid glass-gap-2"
+                      className="glass-glass-grid glass-glass-gap-2"
                       style={{ gridTemplateColumns: `repeat(${showWeekends ? 7 : 5}, minmax(0, 1fr))` }}
                     >
                         {monthData.weeks.flat().map((date, index) => {
@@ -365,13 +365,13 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                                             }
                                         )}
                                     >
-                                        <span className="glass-body font-medium leading-none">
+                                        <span className="glass-body glass-glass-font-medium leading-none">
                                             {date.getDate()}
                                         </span>
 
                                         {/* Events indicator */}
                                         {showEvents && hasEvents && (
-                                            <div className="flex flex-col glass-gap-0.5 glass-mt-1 w-full">
+                                            <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-0.5 glass-mt-1 glass-glass-w-full">
                                                 {dayEvents.slice(0, 2).map((event) => (
                                                     <div
                                                         key={event.id}
@@ -382,7 +382,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                                                     />
                                                 ))}
                                                 {dayEvents.length > 2 && (
-                                                    <div className="w-full glass-text-xs glass-text-primary/60 text-center">
+                                                    <div className="glass-glass-w-full glass-glass-text-xs glass-glass-text-primary/60 glass-glass-text-center">
                                                         +{dayEvents.length - 2}
                                                     </div>
                                                 )}
@@ -396,26 +396,26 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
 
                     {/* Selected date events */}
                     {selectedDateState && showEvents && (
-                        <div className="mt-6 pt-4 border-t border-white/10">
-                            <h3 className="glass-text-lg font-semibold glass-text-primary mb-3">
+                        <div className="mt-6 pt-4 glass-glass-border-t glass-glass-border-white/10">
+                            <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-3">
                                 Events for {selectedDateState.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric' })}
                             </h3>
 
-                            <div className="glass-gap-3">
+                            <div className="glass-glass-gap-3">
                                 {(eventsByDate.get(selectedDateState.toDateString()) || []).map((event) => (
-                                    <div key={event.id} className="w-full">
+                                    <div key={event.id} className="glass-glass-w-full">
                                         <GlassCard
-                                            className="glass-foundation-complete backdrop-blur-md bg-transparent border-white/40 shadow-2xl glass-p-4 hover:shadow-2xl hover:bg-transparent transition-all cursor-pointer"
+                                            className="glass-foundation-complete backdrop-blur-md glass-glass-bg-transparent glass-glass-border-white/40 glass-glass-shadow-2xl glass-glass-p-4 hover:glass-glass-shadow-2xl hover:glass-glass-bg-transparent transition-all glass-glass-cursor-pointer"
                                         >
-                                            <div className="flex items-start glass-gap-3">
+                                            <div className="glass-glass-flex glass-glass-items-start glass-glass-gap-3">
                                                 <div className={cn('w-3 h-3 glass-radius-full glass-mt-2 flex-shrink-0', getEventColor(event))} />
 
-                                                <div className="flex-1 min-w-0">
-                                                    <h4 className="font-medium glass-text-primary glass-text-sm">{event.title}</h4>
+                                                <div className="glass-glass-flex-1 glass-glass-min-w-0">
+                                                    <h4 className="glass-glass-font-medium glass-glass-text-primary glass-glass-text-sm">{event.title}</h4>
 
-                                                    <div className="flex items-center glass-gap-4 glass-mt-2 glass-text-xs glass-text-primary/70">
+                                                    <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4 glass-mt-2 glass-glass-text-xs glass-glass-text-primary/70">
                                                         {event.startTime && (
-                                                            <div className="flex items-center glass-gap-1">
+                                                            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
                                                                 <Clock className="w-3 h-3" />
                                                                 {event.startTime}
                                                                 {event.endTime && ` - ${event.endTime}`}
@@ -423,14 +423,14 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                                                         )}
 
                                                         {event.location && (
-                                                            <div className="flex items-center glass-gap-1">
+                                                            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
                                                                 <MapPin className="w-3 h-3" />
                                                                 {event.location}
                                                             </div>
                                                         )}
 
                                                         {event.attendees && event.attendees.length > 0 && (
-                                                            <div className="flex items-center glass-gap-1">
+                                                            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
                                                                 <Users className="w-3 h-3" />
                                                                 {event.attendees.length} attendee{event.attendees.length !== 1 ? 's' : ''}
                                                             </div>
@@ -438,7 +438,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                                                     </div>
 
                                                     {event.description && (
-                                                        <p className="glass-text-xs glass-text-primary/60 glass-mt-2 line-clamp-2">
+                                                        <p className="glass-glass-text-xs glass-glass-text-primary/60 glass-mt-2 line-clamp-2">
                                                             {event.description}
                                                         </p>
                                                     )}
@@ -449,7 +449,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                                 ))}
 
                                 {(eventsByDate.get(selectedDateState.toDateString()) || []).length === 0 && (
-                                    <div className="text-center glass-text-primary/50 py-8">
+                                    <div className="glass-glass-text-center glass-glass-text-primary/50 glass-glass-py-8">
                                         No events scheduled for this date
                                     </div>
                                 )}
@@ -478,10 +478,10 @@ export const GlassCalendarEventCard: React.FC<GlassCalendarEventCardProps> = ({
 }) => {
     const getEventTypeIcon = (type?: string) => {
         switch (type) {
-            case 'meeting': return <Users className="w-4 h-4" />;
-            case 'event': return <CalendarIcon className="w-4 h-4" />;
-            case 'reminder': return <Clock className="w-4 h-4" />;
-            default: return <CalendarIcon className="w-4 h-4" />;
+            case 'meeting': return <Users className="glass-glass-w-4 glass-glass-h-4" />;
+            case 'event': return <CalendarIcon className="glass-glass-w-4 glass-glass-h-4" />;
+            case 'reminder': return <Clock className="glass-glass-w-4 glass-glass-h-4" />;
+            default: return <CalendarIcon className="glass-glass-w-4 glass-glass-h-4" />;
         }
     };
 
@@ -509,10 +509,10 @@ export const GlassCalendarEventCard: React.FC<GlassCalendarEventCardProps> = ({
                 onClick={onClick}
             >
                 {getEventTypeIcon(event.type)}
-                <div className="flex-1 min-w-0">
-                    <p className="glass-text-sm font-medium glass-text-primary truncate">{event.title}</p>
+                <div className="glass-glass-flex-1 glass-glass-min-w-0">
+                    <p className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary glass-glass-truncate">{event.title}</p>
                     {event.startTime && (
-                        <p className="glass-text-xs glass-text-primary/60">{event.startTime}</p>
+                        <p className="glass-glass-text-xs glass-glass-text-primary/60">{event.startTime}</p>
                     )}
                 </div>
             </div>
@@ -529,44 +529,44 @@ export const GlassCalendarEventCard: React.FC<GlassCalendarEventCardProps> = ({
             )}
             onClick={onClick}
         >
-            <div className="flex items-start glass-gap-3">
+            <div className="glass-glass-flex glass-glass-items-start glass-glass-gap-3">
                 <div className={cn('glass-p-2 glass-radius-lg bg-white/10', getEventColor(event).replace('border-l-', 'text-'))}>
                     {getEventTypeIcon(event.type)}
                 </div>
 
-                <div className="flex-1 min-w-0">
-                    <h3 className="font-medium glass-text-primary">{event.title}</h3>
+                <div className="glass-glass-flex-1 glass-glass-min-w-0">
+                    <h3 className="glass-glass-font-medium glass-glass-text-primary">{event.title}</h3>
 
-                    <div className="flex items-center glass-gap-4 glass-mt-2 glass-text-sm glass-text-primary/70">
-                        <div className="flex items-center glass-gap-1">
-                            <CalendarIcon className="w-4 h-4" />
+                    <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4 glass-mt-2 glass-glass-text-sm glass-glass-text-primary/70">
+                        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
+                            <CalendarIcon className="glass-glass-w-4 glass-glass-h-4" />
                             {event.date.toLocaleDateString()}
                         </div>
 
                         {event.startTime && (
-                            <div className="flex items-center glass-gap-1">
-                                <Clock className="w-4 h-4" />
+                            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
+                                <Clock className="glass-glass-w-4 glass-glass-h-4" />
                                 {event.startTime}
                                 {event.endTime && ` - ${event.endTime}`}
                             </div>
                         )}
 
                         {event.location && (
-                            <div className="flex items-center glass-gap-1">
-                                <MapPin className="w-4 h-4" />
+                            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
+                                <MapPin className="glass-glass-w-4 glass-glass-h-4" />
                                 {event.location}
                             </div>
                         )}
                     </div>
 
                     {event.description && (
-                        <p className="glass-text-sm glass-text-primary/60 glass-mt-2">{event.description}</p>
+                        <p className="glass-glass-text-sm glass-glass-text-primary/60 glass-mt-2">{event.description}</p>
                     )}
 
                     {event.attendees && event.attendees.length > 0 && (
-                        <div className="flex items-center glass-gap-1 glass-mt-2">
-                            <Users className="w-4 h-4 glass-text-primary/60" />
-                            <span className="glass-text-sm glass-text-primary/60">
+                        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1 glass-mt-2">
+                            <Users className="glass-glass-w-4 glass-glass-h-4 glass-glass-text-primary/60" />
+                            <span className="glass-glass-text-sm glass-glass-text-primary/60">
                                 {event.attendees.join(', ')}
                             </span>
                         </div>

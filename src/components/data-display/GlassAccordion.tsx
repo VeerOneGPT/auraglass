@@ -2,7 +2,7 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { useA11yId } from '../../utils/a11y';
@@ -332,9 +332,9 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
                 data-accordion-trigger={item?.id}
                 role="tab"
               >
-                <div className="flex items-center glass-gap-3">
+                <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3">
                   {item?.icon && (
-                    <span className="flex-shrink-0 glass-text-secondary">
+                    <span className="glass-glass-flex-shrink-0 glass-text-secondary">
                       {item?.icon}
                     </span>
                   )}

@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { createContext, useContext, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -240,7 +240,7 @@ export const GlassToggle = React.forwardRef<HTMLButtonElement, GlassToggleProps>
         return (
             <Motion
                 {...getAnimationProps()}
-                className="inline-block"
+                className="inline-glass-glass-block"
             >
                 <OptimizedGlass
                     intent="neutral"
@@ -271,26 +271,26 @@ export const GlassToggle = React.forwardRef<HTMLButtonElement, GlassToggleProps>
                 >
                     {/* Content */}
                     {leftIcon && (
-                        <span className="flex items-center justify-center">
+                        <span className="glass-glass-flex glass-glass-items-center glass-glass-justify-center">
                             {leftIcon}
                         </span>
                     )}
 
                     {children && (
-                        <span className="flex items-center justify-center">
+                        <span className="glass-glass-flex glass-glass-items-center glass-glass-justify-center">
                             {children}
                         </span>
                     )}
 
                     {rightIcon && (
-                        <span className="flex items-center justify-center">
+                        <span className="glass-glass-flex glass-glass-items-center glass-glass-justify-center">
                             {rightIcon}
                         </span>
                     )}
 
                     {/* Active indicator for ghost variant */}
                     {variant === 'ghost' && pressed && (
-                        <div className="absolute inset-0 bg-white/10 glass-radius-lg animate-pulse" />
+                        <div className="glass-glass-absolute glass-glass-inset-0 glass-surface-subtle/10 glass-radius-lg animate-pulse" />
                     )}
                 </OptimizedGlass>
             </Motion>

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import React from 'react';
+import { createGlassStyle } from '../core/mixins/glassMixins';
 
 const DataDisplayGallery: React.FC = () => {
   return (
@@ -15,40 +16,19 @@ const DataDisplayGallery: React.FC = () => {
         gap: '1.5rem', 
         gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' 
       }}>
-        <div style={{
-          background: 'rgba(255,255,255,0.15)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255,255,255,0.25)',
-          borderRadius: '16px',
-          padding: '1.5rem',
-          boxShadow: '0 8px 32px rgba(31, 38, 135, 0.37)'
-        }}>
+        <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
           <h3 style={{ margin: '0 0 1rem 0' }}>GlassProgress</h3>
           <p style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', opacity: 0.8 }}>
             Progress indicators with glassmorphism styling
           </p>
         </div>
-        <div style={{
-          background: 'rgba(255,255,255,0.15)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255,255,255,0.25)',
-          borderRadius: '16px',
-          padding: '1.5rem',
-          boxShadow: '0 8px 32px rgba(31, 38, 135, 0.37)'
-        }}>
+        <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
           <h3 style={{ margin: '0 0 1rem 0' }}>GlassToast</h3>
           <p style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', opacity: 0.8 }}>
             Toast notifications with glass effects
           </p>
         </div>
-        <div style={{
-          background: 'rgba(255,255,255,0.15)',
-          backdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255,255,255,0.25)',
-          borderRadius: '16px',
-          padding: '1.5rem',
-          boxShadow: '0 8px 32px rgba(31, 38, 135, 0.37)'
-        }}>
+        <div style={createGlassStyle({ intent: "neutral", elevation: "level2" })}>
           <h3 style={{ margin: '0 0 1rem 0' }}>Typography</h3>
           <p style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', opacity: 0.8 }}>
             Text components with glass-aware styling

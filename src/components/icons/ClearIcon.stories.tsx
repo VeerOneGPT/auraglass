@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ClearIcon from './ClearIcon';
 import { fn } from '@storybook/test';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof ClearIcon> = {
   title: 'Components/Icons/ClearIcon',
@@ -45,7 +45,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args: any) => (
-    <div className="flex items-center glass-gap-4">
+    <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
       <ClearIcon {...args} size={16} />
       <ClearIcon {...args} size={24} />
       <ClearIcon {...args} size={32} />

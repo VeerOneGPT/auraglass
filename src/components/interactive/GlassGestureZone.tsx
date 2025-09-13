@@ -3,7 +3,7 @@
 import React, { forwardRef, useRef, useEffect, useState, useCallback } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { useA11yId } from '../../utils/a11y';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 import { useGlassSound } from '../../utils/soundDesign';
@@ -637,9 +637,9 @@ export const GlassGestureZone = forwardRef<HTMLDivElement, GlassGestureZoneProps
           depth={1}
           tint="neutral"
           border="subtle"
-          className="glass-gesture-controls flex flex-wrap items-center glass-gap-4 glass-p-4 glass-radius-lg backdrop-blur-md border border-border/20"
+          className="glass-gesture-controls glass-glass-flex glass-glass-flex-wrap glass-glass-items-center glass-glass-gap-4 glass-glass-p-4 glass-radius-lg backdrop-blur-md glass-glass-border glass-glass-border-glass-glass-border/20"
         >
-          <div className="flex items-center glass-gap-2">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
             <button
               onClick={() => {}}
               className={cn(
@@ -654,14 +654,14 @@ export const GlassGestureZone = forwardRef<HTMLDivElement, GlassGestureZoneProps
             
             <button
               onClick={clearAll}
-              className="glass-px-3 glass-py-1 glass-radius-md bg-secondary/20 hover:bg-secondary/30"
+              className="glass-glass-px-3 glass-glass-py-1 glass-radius-md bg-secondary/20 hover:bg-secondary/30"
             >
               Clear
             </button>
           </div>
           
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">Sensitivity:</label>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">Sensitivity:</label>
             <input
               type="range"
               min="0.1"
@@ -671,11 +671,11 @@ export const GlassGestureZone = forwardRef<HTMLDivElement, GlassGestureZoneProps
               onChange={(e) => {}}
               className="w-20"
             />
-            <span className="glass-text-sm min-w-[3ch]">{Math.round(sensitivity * 100)}%</span>
+            <span className="glass-glass-text-sm min-w-[3ch]">{Math.round(sensitivity * 100)}%</span>
           </div>
           
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={showTrail}
@@ -684,7 +684,7 @@ export const GlassGestureZone = forwardRef<HTMLDivElement, GlassGestureZoneProps
               />
               Trail
             </label>
-            <label className="glass-text-sm">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={multiTouch}
@@ -693,7 +693,7 @@ export const GlassGestureZone = forwardRef<HTMLDivElement, GlassGestureZoneProps
               />
               Multi-touch
             </label>
-            <label className="glass-text-sm">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={debug}
@@ -724,11 +724,11 @@ export const GlassGestureZone = forwardRef<HTMLDivElement, GlassGestureZoneProps
       >
         <Motion
           preset={isMotionSafe && respectMotionPreference ? "fadeIn" : "none"}
-          className="flex flex-col glass-gap-4 glass-p-4"
+          className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4 glass-glass-p-4"
         >
           {renderControls()}
           
-          <div className="relative">
+          <div className="glass-glass-relative">
             <canvas
               ref={canvasRef}
               width={width}
@@ -747,12 +747,12 @@ export const GlassGestureZone = forwardRef<HTMLDivElement, GlassGestureZoneProps
           
           {/* Recent gestures */}
           {recognizedGestures.length > 0 && (
-            <div className="glass-p-4 bg-background/10 glass-radius-md">
-              <div className="glass-text-sm font-medium glass-mb-2">Recent Gestures:</div>
+            <div className="glass-glass-p-4 glass-surface-overlay glass-radius-md">
+              <div className="glass-glass-text-sm glass-glass-font-medium glass-glass-mb-2">Recent Gestures:</div>
               <div className="space-y-1">
                 {recognizedGestures.slice(-5).map(gesture => (
-                  <div key={gesture.id} className="glass-text-xs glass-p-2 bg-primary/10 glass-radius-sm">
-                    <span className="font-medium">{gesture.type.replace('_', ' ')}</span>
+                  <div key={gesture.id} className="glass-glass-text-xs glass-glass-p-2 glass-surface-primary/10 glass-radius-sm">
+                    <span className="glass-glass-font-medium">{gesture.type.replace('_', ' ')}</span>
                     <span className="glass-text-secondary glass-ml-2">
                       {Math.round(gesture.confidence * 100)}% confidence
                     </span>

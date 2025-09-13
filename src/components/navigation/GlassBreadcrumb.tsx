@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { forwardRef } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { useA11yId } from '@/utils/a11y';
@@ -145,11 +145,11 @@ export const GlassBreadcrumb = forwardRef<HTMLElement, GlassBreadcrumbProps>(
           {...props}
         >
             <nav aria-label="Breadcrumb" id={navId}>
-                <ol className="flex items-center glass-gap-2">
+                <ol className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
                     {itemsToRender.map((item, index) => (
-                        <li key={index} className="flex items-center">
+                        <li key={index} className="glass-glass-flex glass-glass-items-center">
                             {index > 0 && (
-                                <span className="glass-mx-2 glass-text-primary/40" aria-hidden="true">
+                                <span className="glass-glass-mx-2 glass-glass-text-primary/40" aria-hidden="true">
                                     {separator}
                                 </span>
                             )}

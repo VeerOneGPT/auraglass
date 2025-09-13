@@ -281,11 +281,12 @@ export const LiquidGlassMaterial = forwardRef<HTMLDivElement, LiquidGlassMateria
         if (modifications.backdropBlur !== undefined) {
           const currentBlur = materialSpec.backdropBlur.px;
           const adjustedBlur = currentBlur * modifications.backdropBlur;
-          styles.backdropFilter = styles.backdropFilter?.replace(
+          const backdropFilter = (styles as any).backdropFilter?.replace(
             /blur\([\d.]+px\)/,
             `blur(${adjustedBlur}px)`
           );
-          styles.WebkitBackdropFilter = styles.backdropFilter;
+          (styles as any).backdropFilter = backdropFilter;
+          (styles as any).WebkitBackdropFilter = backdropFilter;
         }
       }
       
@@ -296,8 +297,9 @@ export const LiquidGlassMaterial = forwardRef<HTMLDivElement, LiquidGlassMateria
         const brightness = 1.15 + (materialSpec.ior - 1) * 0.1;
         const contrast = 1.08 + materialSpec.sheen * 0.02;
         
-        styles.backdropFilter = `blur(${materialSpec.backdropBlur.px}px) saturate(${saturation}) brightness(${brightness}) contrast(${contrast})`;
-        styles.WebkitBackdropFilter = styles.backdropFilter;
+        const backdropFilter = `blur(${materialSpec.backdropBlur.px}px) saturate(${saturation}) brightness(${brightness}) contrast(${contrast})`;
+        (styles as any).backdropFilter = backdropFilter;
+        (styles as any).WebkitBackdropFilter = backdropFilter;
       }
       
       // Apply thickness-based enhancements

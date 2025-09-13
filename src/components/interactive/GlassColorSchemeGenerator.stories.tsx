@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassColorSchemeGenerator } from './GlassColorSchemeGenerator';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassColorSchemeGenerator> = {
   title: 'Components/Interactive/GlassColorSchemeGenerator',

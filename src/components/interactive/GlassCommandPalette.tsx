@@ -2,7 +2,7 @@
 
 import { GlassButton } from '../button/GlassButton';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { forwardRef, useEffect, useMemo, useRef, useState } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -408,7 +408,7 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
 
     return (
       <div
-        className="fixed inset-0 z-50 flex items-start justify-center pt-[10vh]"
+        className="glass-glass-fixed glass-glass-inset-0 glass-z-50 glass-glass-flex glass-glass-items-start glass-glass-justify-center pt-[10vh]"
         onClick={(e) => {
           if (e.target === e.currentTarget) {
             onOpenChange?.(false);
@@ -424,7 +424,7 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
         />
 
         {/* Command Palette */}
-        <Motion preset="scaleIn" duration={200} className="relative w-full max-w-2xl glass-mx-4">
+        <Motion preset="scaleIn" duration={200} className="glass-glass-relative glass-glass-w-full max-w-2xl glass-glass-mx-4">
           <OptimizedGlass ref={ref}
             intent="neutral"
             elevation="level4"
@@ -442,7 +442,7 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
             {...props}
           >
             {/* Search Input */}
-            <div className="glass-p-4 border-b border-border/10">
+            <div className="glass-glass-p-4 glass-glass-border-b glass-glass-border-glass-glass-border/10">
               <GlassInput
                 ref={inputRef}
                 value={search}
@@ -450,7 +450,7 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
                 placeholder={placeholder}
                 size="lg"
                 leftIcon={
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="glass-glass-w-5 glass-glass-h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 }
@@ -458,41 +458,41 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
                   search && (
                     <GlassButton
                       type="button"
-                      className="glass-p-1 glass-radius-md hover:bg-muted/20 transition-colors"
+                      className="glass-glass-p-1 glass-radius-md hover:bg-muted/20 transition-colors"
                       onClick={(e) => setSearch('')}
                     >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="glass-glass-w-4 glass-glass-h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                       </svg>
                     </GlassButton>
                   )
                 }
-                className="border-0 bg-transparent focus:ring-0"
+                className="glass-glass-border-0 glass-glass-bg-transparent focus:ring-0"
               />
             </div>
 
             {/* Results */}
             <div
               ref={listRef}
-              className="max-h-96 overflow-y-auto overscroll-contain"
+              className="max-h-96 glass-glass-overflow-y-auto overscroll-contain"
               role="listbox"
             >
               {loading ? (
-                <div className="flex items-center justify-center py-8">
-                  <div className="flex items-center glass-gap-3">
-                    <div className="w-5 h-5 border-2 border-primary border-t-transparent glass-radius-full animate-spin" />
+                <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-py-8">
+                  <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3">
+                    <div className="glass-glass-w-5 glass-glass-h-5 glass-glass-border-2 glass-glass-border-primary glass-glass-border-t-transparent glass-radius-full animate-spin" />
                     <span className="glass-text-secondary">{loadingMessage}</span>
                   </div>
                 </div>
               ) : (filteredItems?.length || 0) === 0 ? (
-                <div className="py-8 text-center glass-text-secondary">
+                <div className="glass-glass-py-8 glass-glass-text-center glass-text-secondary">
                   {emptyMessage}
                 </div>
               ) : (
                 Object.entries(groupedItems).map(([category, categoryItems]) => (
                   <div key={category}>
                     {showCategories && Object.keys(groupedItems).length > 1 && (
-                      <div className="glass-px-4 glass-py-2 glass-text-xs font-medium glass-text-secondary bg-muted/10 border-b border-border/5">
+                      <div className="glass-glass-px-4 glass-glass-py-2 glass-glass-text-xs glass-glass-font-medium glass-text-secondary bg-muted/10 glass-glass-border-b glass-glass-border-glass-glass-border/5">
                         {search ? 'Results' : category}
                       </div>
                     )}
@@ -531,18 +531,18 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
                         >
                           {/* Icon */}
                           {item?.icon && (
-                            <span className="flex-shrink-0 glass-text-secondary">
+                            <span className="glass-glass-flex-shrink-0 glass-text-secondary">
                               {item?.icon}
                             </span>
                           )}
 
                           {/* Content */}
-                          <div className="flex-1 min-w-0">
-                            <div className="font-medium text-foreground">
+                          <div className="glass-glass-flex-1 glass-glass-min-w-0">
+                            <div className="glass-glass-font-medium glass-glass-text-primary">
                               {item?.label}
                             </div>
                             {item?.description && (
-                              <div className="glass-text-sm glass-text-secondary truncate">
+                              <div className="glass-glass-text-sm glass-text-secondary glass-glass-truncate">
                                 {item?.description}
                               </div>
                             )}
@@ -564,21 +564,21 @@ export const GlassCommandPalette = forwardRef<HTMLDivElement, GlassCommandPalett
 
             {/* Footer */}
             {(filteredItems?.length || 0) > 0 && (
-              <div className="glass-px-4 glass-py-2 glass-text-xs glass-text-secondary bg-muted/5 border-t border-border/5">
-                <div className="flex items-center justify-between">
+              <div className="glass-glass-px-4 glass-glass-py-2 glass-glass-text-xs glass-text-secondary bg-muted/5 glass-glass-border-t glass-glass-border-glass-glass-border/5">
+                <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
                   <span>
                     {(filteredItems?.length || 0)} {(filteredItems?.length || 0) === 1 ? 'result' : 'results'}
                   </span>
-                  <div className="flex items-center glass-gap-4">
-                    <span className="flex items-center glass-gap-1">
+                  <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
+                    <span className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
                       <GlassBadge variant="secondary" size="sm">↑↓</GlassBadge>
                       Navigate
                     </span>
-                    <span className="flex items-center glass-gap-1">
+                    <span className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
                       <GlassBadge variant="secondary" size="sm">↵</GlassBadge>
                       Select
                     </span>
-                    <span className="flex items-center glass-gap-1">
+                    <span className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
                       <GlassBadge variant="secondary" size="sm">Esc</GlassBadge>
                       Close
                     </span>

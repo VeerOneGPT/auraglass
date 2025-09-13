@@ -3,7 +3,7 @@
 import React, { forwardRef, useRef, useEffect, useState, useCallback } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { useA11yId } from '../../utils/a11y';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 import { useGlassSound } from '../../utils/soundDesign';
@@ -435,10 +435,10 @@ export const GlassColorWheel = forwardRef<HTMLDivElement, GlassColorWheelProps>(
       >
         <Motion
           preset={isMotionSafe && respectMotionPreference ? "fadeIn" : "none"}
-          className="glass-gap-4"
+          className="glass-glass-gap-4"
         >
           {/* Color Wheel */}
-          <div className="relative flex justify-center">
+          <div className="glass-glass-relative glass-glass-flex glass-glass-justify-center">
             <canvas
               ref={wheelRef}
               width={config.wheel}
@@ -452,7 +452,7 @@ export const GlassColorWheel = forwardRef<HTMLDivElement, GlassColorWheelProps>(
             
             {/* Hue indicator */}
             <div
-              className="absolute w-4 h-4 border-2 border-white glass-radius-full shadow-lg pointer-events-none"
+              className="glass-glass-absolute glass-glass-w-4 glass-glass-h-4 glass-glass-border-2 glass-glass-border-white glass-radius-full glass-glass-shadow-lg glass-pointer-events-none"
               style={{
                 left: '50%',
                 top: '50%',
@@ -462,12 +462,12 @@ export const GlassColorWheel = forwardRef<HTMLDivElement, GlassColorWheelProps>(
           </div>
 
           {/* Saturation/Brightness Area */}
-          <div className="relative">
+          <div className="glass-glass-relative">
             <canvas
               ref={saturationRef}
               width={config.saturation}
               height={config.saturation * 0.6}
-              className="w-full cursor-crosshair glass-radius-md border border-border/20"
+              className="glass-glass-w-full cursor-crosshair glass-radius-md glass-glass-border glass-glass-border-glass-glass-border/20"
               onClick={handleSaturationInteraction}
               onMouseDown={() => setIsDragging('saturation')}
               onMouseMove={(e) => isDragging === 'saturation' && handleSaturationInteraction(e)}
@@ -476,7 +476,7 @@ export const GlassColorWheel = forwardRef<HTMLDivElement, GlassColorWheelProps>(
             
             {/* Saturation/Brightness indicator */}
             <div
-              className="absolute w-3 h-3 border-2 border-white glass-radius-full shadow-lg pointer-events-none"
+              className="glass-glass-absolute w-3 h-3 glass-glass-border-2 glass-glass-border-white glass-radius-full glass-glass-shadow-lg glass-pointer-events-none"
               style={{
                 left: `${hsv.s}%`,
                 top: `${100 - hsv.v}%`,
@@ -487,12 +487,12 @@ export const GlassColorWheel = forwardRef<HTMLDivElement, GlassColorWheelProps>(
 
           {/* Alpha Slider */}
           {showAlpha && (
-            <div className="relative">
+            <div className="glass-glass-relative">
               <canvas
                 ref={alphaRef}
                 width={config.alpha}
                 height={20}
-                className="w-full cursor-crosshair glass-radius-md border border-border/20"
+                className="glass-glass-w-full cursor-crosshair glass-radius-md glass-glass-border glass-glass-border-glass-glass-border/20"
                 onClick={handleAlphaInteraction}
                 onMouseDown={() => setIsDragging('alpha')}
                 onMouseMove={(e) => isDragging === 'alpha' && handleAlphaInteraction(e)}
@@ -501,7 +501,7 @@ export const GlassColorWheel = forwardRef<HTMLDivElement, GlassColorWheelProps>(
               
               {/* Alpha indicator */}
               <div
-                className="absolute w-3 h-6 border-2 border-white glass-radius-md shadow-lg pointer-events-none"
+                className="glass-glass-absolute w-3 glass-glass-h-6 glass-glass-border-2 glass-glass-border-white glass-radius-md glass-glass-shadow-lg glass-pointer-events-none"
                 style={{
                   left: `${currentAlpha * 100}%`,
                   top: '50%',
@@ -512,9 +512,9 @@ export const GlassColorWheel = forwardRef<HTMLDivElement, GlassColorWheelProps>(
           )}
 
           {/* Color Preview */}
-          <div className="flex items-center glass-gap-2">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
             <div
-              className="w-12 h-8 glass-radius-md border border-border/20 shadow-inner"
+              className="glass-glass-w-12 glass-glass-h-8 glass-radius-md glass-glass-border glass-glass-border-glass-glass-border/20 glass-glass-shadow-inner"
               style={{
                 backgroundColor: showAlpha ? `${currentColor}${Math.round(currentAlpha * 255).toString(16).padStart(2, '0')}` : currentColor
               }}
@@ -545,7 +545,7 @@ export const GlassColorWheel = forwardRef<HTMLDivElement, GlassColorWheelProps>(
 
           {/* Color Swatches */}
           {showSwatches && swatches.length > 0 && (
-            <div className="grid grid-cols-8 glass-gap-1">
+            <div className="glass-glass-grid glass-glass-glass-grid-cols-8 glass-glass-gap-1">
               {swatches.map((swatch, index) => (
                 <Motion
                   key={index}

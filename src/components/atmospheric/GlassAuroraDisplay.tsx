@@ -3,7 +3,7 @@
 import React, { forwardRef, useRef, useEffect, useState, useCallback } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { useA11yId } from '../../utils/a11y';
 import { useMotionPreferenceContext } from '../../contexts/MotionPreferenceContext';
 import { useGlassSound } from '../../utils/soundDesign';
@@ -558,10 +558,10 @@ export const GlassAuroraDisplay = forwardRef<HTMLDivElement, GlassAuroraDisplayP
           depth={1}
           tint="neutral"
           border="subtle"
-          className="glass-aurora-controls flex flex-wrap items-center glass-gap-4 glass-p-4 glass-radius-lg backdrop-blur-md border border-border/20"
+          className="glass-aurora-controls glass-glass-flex glass-glass-flex-wrap glass-glass-items-center glass-glass-gap-4 glass-glass-p-4 glass-radius-lg backdrop-blur-md glass-glass-border glass-glass-border-glass-glass-border/20"
         >
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">Intensity:</label>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">Intensity:</label>
             <input
               type="range"
               min="0"
@@ -571,15 +571,15 @@ export const GlassAuroraDisplay = forwardRef<HTMLDivElement, GlassAuroraDisplayP
               onChange={(e) => setCurrentIntensity(parseFloat(e.target.value))}
               className="w-20"
             />
-            <span className="glass-text-sm min-w-[3ch]">{Math.round(currentIntensity * 100)}%</span>
+            <span className="glass-glass-text-sm min-w-[3ch]">{Math.round(currentIntensity * 100)}%</span>
           </div>
 
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">Colors:</label>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">Colors:</label>
             <select
               value={colorPreset}
               onChange={(e) => {}}
-              className="glass-px-2 glass-py-1 glass-radius-md bg-background/20 border border-border/20"
+              className="glass-glass-px-2 glass-glass-py-1 glass-radius-md glass-surface-overlay glass-glass-border glass-glass-border-glass-glass-border/20"
             >
               <option value="classic">Classic</option>
               <option value="rare">Rare</option>
@@ -589,12 +589,12 @@ export const GlassAuroraDisplay = forwardRef<HTMLDivElement, GlassAuroraDisplayP
             </select>
           </div>
 
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">Activity:</label>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">Activity:</label>
             <select
               value={activityLevel}
               onChange={(e) => {}}
-              className="glass-px-2 glass-py-1 glass-radius-md bg-background/20 border border-border/20"
+              className="glass-glass-px-2 glass-glass-py-1 glass-radius-md glass-surface-overlay glass-glass-border glass-glass-border-glass-glass-border/20"
             >
               <option value="low">Low</option>
               <option value="moderate">Moderate</option>
@@ -603,8 +603,8 @@ export const GlassAuroraDisplay = forwardRef<HTMLDivElement, GlassAuroraDisplayP
             </select>
           </div>
 
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">Time:</label>
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">Time:</label>
             <input
               type="range"
               min="0"
@@ -616,8 +616,8 @@ export const GlassAuroraDisplay = forwardRef<HTMLDivElement, GlassAuroraDisplayP
             />
           </div>
 
-          <div className="flex items-center glass-gap-2">
-            <label className="glass-text-sm">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={showStars}
@@ -626,7 +626,7 @@ export const GlassAuroraDisplay = forwardRef<HTMLDivElement, GlassAuroraDisplayP
               />
               Stars
             </label>
-            <label className="glass-text-sm">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={showSolarWind}
@@ -635,7 +635,7 @@ export const GlassAuroraDisplay = forwardRef<HTMLDivElement, GlassAuroraDisplayP
               />
               Solar Wind
             </label>
-            <label className="glass-text-sm">
+            <label className="glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={realTimeMode}
@@ -666,16 +666,16 @@ export const GlassAuroraDisplay = forwardRef<HTMLDivElement, GlassAuroraDisplayP
       >
         <Motion
           preset={isMotionSafe && respectMotionPreference ? "fadeIn" : "none"}
-          className="flex flex-col glass-gap-4 glass-p-4"
+          className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4 glass-glass-p-4"
         >
           {renderControls()}
           
-          <div className="relative">
+          <div className="glass-glass-relative">
             <canvas
               ref={canvasRef}
               width={width}
               height={height}
-              className="border border-border/20 glass-radius-md bg-black"
+              className="glass-glass-border glass-glass-border-glass-glass-border/20 glass-radius-md glass-surface-dark"
               style={{ width, height }}
             />
           </div>

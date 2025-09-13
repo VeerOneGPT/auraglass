@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef, useState, useEffect, useCallback, useRef, useMemo, ForwardedRef, ReactNode } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { OptimizedGlass, Motion } from '../../primitives';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import { useAnimationContext } from '../../contexts/AnimationContext';
@@ -17,7 +17,7 @@ import { useKeyboardNavigation } from '../../utils/a11yHooks';
 
 // Helper components
 const Badge = ({ children }: { children: React.ReactNode }) => (
-  <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] glass-px-1.5 glass-text-xs font-semibold glass-text-primary bg-blue-500 glass-radius-full">
+  <span className="glass-inline-glass-glass-flex glass-glass-items-center glass-glass-justify-center min-w-[18px] h-[18px] glass-glass-px-1.5 glass-glass-text-xs glass-glass-font-semibold glass-glass-text-primary glass-surface-blue glass-radius-full">
     {children}
   </span>
 );
@@ -512,7 +512,7 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
           {/* Active indicator */}
           {!prefersReducedMotion && (
             <div
-              className="absolute bg-blue-500 glass-radius-sm z-0 pointer-events-none transition-all duration-300 ease-out"
+              className="glass-glass-absolute glass-surface-blue glass-radius-sm z-0 glass-pointer-events-none transition-all duration-300 ease-out"
               style={{
                 left: `${indicatorStyle.left}px`,
                 top: `${indicatorStyle.top}px`,
@@ -542,7 +542,7 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
 
         {/* Actions container */}
         {actions && (
-          <div className="flex items-center glass-gap-3">
+          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3">
             {actions}
           </div>
         )}

@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassStatCard } from './GlassStatCard';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 import { TrendingUp, Users, DollarSign } from 'lucide-react';
 
 const meta: Meta<typeof GlassStatCard> = {
@@ -98,7 +98,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 glass-gap-6">
+    <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 lg:glass-glass-glass-grid-cols-3 glass-glass-gap-6">
       <GlassStatCard
         {...args}
         variant="default"
@@ -178,7 +178,7 @@ export const WithProgress: Story = {
 
 export const Sizes: Story = {
   render: (args) => (
-    <div className="grid grid-cols-1 md:grid-cols-2 glass-gap-6">
+    <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 glass-glass-gap-6">
       <GlassStatCard {...args} size="sm" title="Small Size" value="1.2K" />
       <GlassStatCard {...args} size="md" title="Medium Size" value="2.4K" />
       <GlassStatCard {...args} size="lg" title="Large Size" value="5.8K" />

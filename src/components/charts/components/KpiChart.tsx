@@ -1,6 +1,7 @@
 // Typography tokens available via typography.css (imported in index.css)
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../../lib/utilsComprehensive';
 import React from 'react';
+import { createGlassStyle } from '../../../core/mixins/glassMixins';
 
 export interface KpiData {
   value: number | string;
@@ -46,20 +47,7 @@ export const KpiChart: React.FC<KpiChartProps> = ({
     }
   };
 
-  const style = {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '20px',
-    background: '${glassStyles.surface?.base || "rgba(255, 255, 255, 0.05)"}',
-    borderRadius: '12px',
-    backdropFilter: 'blur(8px)',
-    border: '1px solid ${glassStyles.surface?.base || "rgba(255, 255, 255, 0.1)"}',
-    color: 'white',
-    fontSize: 'var(--typography-heading-size)',
-    fontWeight: 'var(--typography-heading-weight)',
-  };
+  const style = createGlassStyle({ intent: "neutral", elevation: "level2" });
 
   return (
     <div style={style}>

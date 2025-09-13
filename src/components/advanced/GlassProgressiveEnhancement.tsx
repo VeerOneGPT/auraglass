@@ -5,7 +5,8 @@
 
 import React, { useRef, useEffect, useState, useCallback, createContext, useContext } from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
+import { detectDevice } from '../../utils/deviceCapabilities';
 
 interface DeviceCapabilities {
   gpu: {
@@ -238,11 +239,9 @@ export function GlassProgressiveEnhancement({
   
   // GPU detection
   async function detectGPUCapabilities() {
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl') as WebGLRenderingContext | null;
-    const gl2 = canvas.getContext('webgl2');
-
-    if (!gl) {
+    const device = detectDevice();
+    // If no WebGL support, avoid creating any context
+    if (!device.capabilities.webgl) {
       return {
         renderer: 'unknown',
         vendor: 'unknown',
@@ -252,10 +251,46 @@ export function GlassProgressiveEnhancement({
       };
     }
 
-    const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-    const renderer = debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : 'unknown';
-    const vendor = debugInfo ? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) : 'unknown';
-    
+    // Create a minimal WebGL context only to get renderer/vendor info, then release it
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    const attrs: WebGLContextAttributes & { powerPreference?: any } = {
+      alpha: false,
+      antialias: false,
+      depth: false,
+      stencil: false,
+      preserveDrawingBuffer: false,
+      desynchronized: true as any,
+      failIfMajorPerformanceCaveat: true,
+      powerPreference: 'low-power',
+    };
+
+    const gl = (canvas.getContext('webgl', attrs) as WebGLRenderingContext | null) ||
+               (canvas.getContext('experimental-webgl', attrs) as WebGLRenderingContext | null);
+
+    let renderer = 'unknown';
+    let vendor = 'unknown';
+    if (gl) {
+      try {
+        const debugInfo = (gl as any).getExtension && (gl as any).getExtension('WEBGL_debug_renderer_info');
+        if (debugInfo) {
+          renderer = (gl as any).getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || 'unknown';
+          vendor = (gl as any).getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || 'unknown';
+        }
+      } catch {}
+      // Explicitly release the context
+      try {
+        const lose = (gl as any).getExtension && (gl as any).getExtension('WEBGL_lose_context');
+        lose && lose.loseContext && lose.loseContext();
+      } catch {}
+    }
+    try {
+      canvas.width = 0;
+      canvas.height = 0;
+      if (canvas.parentNode) canvas.parentNode.removeChild(canvas);
+    } catch {}
+
     // Simplified GPU tier detection
     let tier: 'low' | 'mid' | 'high' = 'mid';
     if (renderer.includes('Intel HD') || renderer.includes('Intel(R) UHD')) {
@@ -263,13 +298,13 @@ export function GlassProgressiveEnhancement({
     } else if (renderer.includes('RTX') || renderer.includes('RX ') || renderer.includes('Pro')) {
       tier = 'high';
     }
-    
+
     return {
       renderer,
       vendor,
       tier,
       webglSupport: true,
-      webgl2Support: !!gl2,
+      webgl2Support: device.capabilities.webgl2,
     };
   }
   
@@ -516,7 +551,7 @@ export function GlassProgressiveEnhancement({
         
         {/* Quality indicator */}
         {process.env.NODE_ENV === 'development' && (
-          <div className="fixed bottom-2 left-2 glass-surface-primary glass-glass-p-2 glass-radius-sm glass-text-xs opacity-50 z-50">
+          <div className="glass-glass-fixed bottom-2 left-2 glass-surface-primary glass-glass-p-2 glass-radius-sm glass-glass-text-xs opacity-50 glass-z-50">
             <div>Quality: {currentTier.name}</div>
             <div>FPS: {Math.round(performanceMonitor.current.fps)}</div>
             {capabilities && (
@@ -579,7 +614,7 @@ export function EnhancedGlass({
         repeat: Infinity,
       } : undefined}
       style={{
-        backdropFilter: enableBackdropFilter ? `blur(${effectiveBlur}px)` : undefined,
+        // Use createGlassStyle() instead,
       }}
       {...props}
     >
@@ -587,13 +622,13 @@ export function EnhancedGlass({
       
       {/* Conditional enhancements */}
       {enableParticles && (
-        <div className="absolute inset-0 pointer-events-none">
+        <div className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none">
           {/* Particle system would go here */}
         </div>
       )}
       
       {enableWebGL && (
-        <canvas className="absolute inset-0 pointer-events-none" />
+        <canvas className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none" />
       )}
     </motion.div>
   );

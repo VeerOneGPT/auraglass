@@ -632,11 +632,11 @@ export function GlassQuantumButton({
       {/* Quantum superposition visualization */}
       <AnimatePresence>
         {!isCollapsed && superposition.length > 0 && (
-          <div className="absolute inset-0 flex">
+          <div className="glass-glass-absolute glass-glass-inset-0 glass-glass-flex">
             {superposition.map((state, index) => (
               <motion.div
                 key={index}
-                className="flex-1 h-full opacity-30"
+                className="glass-glass-flex-1 glass-glass-h-full opacity-30"
                 style={{ backgroundColor: state.state.color }}
                 initial={{ opacity: 0 }}
                 animate={{ 
@@ -655,7 +655,7 @@ export function GlassQuantumButton({
       <AnimatePresence>
         {isCollapsed && currentState && (
           <motion.div
-            className="absolute inset-0"
+            className="glass-glass-absolute glass-glass-inset-0"
             style={{ backgroundColor: currentState.color }}
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 0.8 }}
@@ -666,12 +666,12 @@ export function GlassQuantumButton({
       </AnimatePresence>
 
       {/* Button content */}
-      <div className="relative z-10">
+      <div className="glass-glass-relative glass-z-10">
         {isCollapsed ? currentState?.label : children}
       </div>
 
       {/* Quantum interference pattern */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
+      <div className="glass-glass-absolute glass-glass-inset-0 opacity-10 glass-pointer-events-none">
         <QuantumInterferencePattern 
           width={100} 
           height={40} 
@@ -795,7 +795,7 @@ export function GlassQuantumEntangledPair({
   return (
     <div className={cn("flex glass-gap-4", className)}>
       <motion.div 
-        className="flex-1 relative"
+        className="glass-glass-flex-1 glass-glass-relative"
         animate={{
           opacity: 0.5 + (state1Superposition[0]?.probability || 0) * 0.5,
           scale: 0.95 + (state1Superposition[0]?.probability || 0) * 0.1,
@@ -806,7 +806,7 @@ export function GlassQuantumEntangledPair({
       </motion.div>
       
       <motion.div 
-        className="flex-1 relative"
+        className="glass-glass-flex-1 glass-glass-relative"
         animate={{
           opacity: 0.5 + (state2Superposition[0]?.probability || 0) * 0.5,
           scale: 0.95 + (state2Superposition[0]?.probability || 0) * 0.1,
@@ -817,8 +817,8 @@ export function GlassQuantumEntangledPair({
       </motion.div>
 
       {/* Entanglement visualization */}
-      <div className="absolute inset-0 pointer-events-none">
-        <svg className="w-full h-full">
+      <div className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none">
+        <svg className="glass-glass-w-full glass-glass-h-full">
           <motion.line
             x1="25%"
             y1="50%"
@@ -866,15 +866,15 @@ export function GlassQuantumCoherenceIndicator({
 
   return (
     <div className={cn("flex items-center glass-gap-2", className)}>
-      <span className="glass-text-xs glass-text-secondary">Coherence:</span>
+      <span className="glass-glass-text-xs glass-text-secondary">Coherence:</span>
       <div className="w-20 h-2 bg-gray-700 glass-radius-full overflow-hidden">
         <motion.div
-          className="h-full bg-blue-500 glass-radius-full"
+          className="glass-glass-h-full glass-surface-blue glass-radius-full"
           animate={{ width: `${coherence * 100}%` }}
           transition={{ duration: 0.3 }}
         />
       </div>
-      <span className="glass-text-xs glass-text-secondary">
+      <span className="glass-glass-text-xs glass-text-secondary">
         {(coherence * 100).toFixed(1)}%
       </span>
     </div>

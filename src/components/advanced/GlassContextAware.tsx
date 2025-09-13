@@ -5,7 +5,7 @@
 
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 interface EnvironmentContext {
   lightLevel: number; // 0-1 (dark to bright)
@@ -384,7 +384,7 @@ export function GlassContextAware({
         '--glass-adaptive-opacity': smoothOpacity,
         '--glass-adaptive-contrast': smoothContrast,
         '--glass-adaptive-saturation': smoothSaturation,
-        backdropFilter: `blur(${smoothBlur.get()}px) contrast(${smoothContrast.get()}) saturate(${smoothSaturation.get()})`,
+        // Use createGlassStyle() instead,
         backgroundColor: `rgba(255, 255, 255, ${smoothOpacity.get()})`,
       } as React.CSSProperties}
     >
@@ -392,7 +392,7 @@ export function GlassContextAware({
       
       {/* Context debug overlay (development only) */}
       {process.env.NODE_ENV === 'development' && (
-        <div className="absolute top-2 right-2 glass-text-xs glass-surface-primary glass-glass-p-2 glass-radius-sm opacity-50">
+        <div className="glass-glass-absolute glass--glass--glassglass--top-2 right-2 glass-glass-text-xs glass-surface-primary glass-glass-p-2 glass-radius-sm opacity-50">
           <div>Light: {(environmentContext.lightLevel * 100).toFixed(0)}%</div>
           <div>Battery: {(environmentContext.batteryLevel * 100).toFixed(0)}%</div>
           <div>Task: {usageContext.taskType}</div>

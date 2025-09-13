@@ -14,7 +14,7 @@ import {
     Zap
 } from 'lucide-react';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import * as THREE from 'three';
 
 // Aurora geometry and material factories
@@ -277,7 +277,7 @@ export function AuroraPro({
   showWaves = true,
   showCurtain = false,
   animationMode = 'flow',
-  className = '',
+  className='',
   showControls = false,
   autoAnimate = true,
   onAnimationChange,

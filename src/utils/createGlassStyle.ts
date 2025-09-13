@@ -78,8 +78,8 @@ export function createGlassStyle(options: GlassStyleOptions = {}): React.CSSProp
     borderRadius: tokens.radius[radius],
     boxShadow: tokens.elev[elev],
     background: tokens.gradient[variant],
-    backdropFilter: `blur(${tokens.blur[blur]}) saturate(1.8) brightness(1.1) contrast(1.05)`,
-    WebkitBackdropFilter: `blur(${tokens.blur[blur]}) saturate(1.8) brightness(1.1) contrast(1.05)`,
+    // Use createGlassStyle() instead,
+    // Use createGlassStyle() instead,
   };
   
   if (opacity !== undefined) {

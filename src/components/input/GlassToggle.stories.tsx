@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassToggle } from './GlassToggle';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassToggle> = {
   title: 'Components/Input/GlassToggle',
@@ -41,9 +41,9 @@ type Story = StoryObj<typeof GlassToggle>;
 export const Default: Story = {
   args: {
     children: (
-      <div className="glass-p-4 text-center">
-        <h3 className="glass-text-lg font-semibold glass-mb-2">GlassToggle</h3>
-        <p className="glass-text-sm opacity-80">This is the default glasstoggle component.</p>
+      <div className="glass-glass-p-4 glass-glass-text-center">
+        <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-mb-2">GlassToggle</h3>
+        <p className="glass-glass-text-sm opacity-80">This is the default glasstoggle component.</p>
       </div>
     ),
   },
@@ -51,7 +51,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-wrap glass-gap-4">
+    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4">
       <GlassToggle {...args}>
         Default
       </GlassToggle>

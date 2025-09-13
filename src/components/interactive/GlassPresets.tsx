@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 
 import { ZLayer } from '../../core/zspace';
 import { useGlassTheme } from '../../hooks/useGlassTheme';

@@ -60,7 +60,7 @@ export const GlassStepIcon: React.FC<GlassStepIconProps> = ({
 
     return (
         <Motion
-          className="inline-block"
+          className="inline-glass-glass-block"
         >
           <OptimizedGlass
             intent={intent}

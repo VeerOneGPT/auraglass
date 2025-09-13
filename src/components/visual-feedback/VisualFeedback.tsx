@@ -20,9 +20,9 @@ const pulseAnimation = keyframes`
 `;
 
 const glowAnimation = keyframes`
-  0% { box-shadow: 0 0 5px rgba(var(--feedback-color-rgb), 0.3); }
-  50% { box-shadow: 0 0 15px rgba(var(--feedback-color-rgb), 0.6); }
-  100% { box-shadow: 0 0 5px rgba(var(--feedback-color-rgb), 0.3); }
+  0% { box-shadow: var(--glass-elev-2); }
+  50% { box-shadow: var(--glass-elev-2); }
+  100% { box-shadow: var(--glass-elev-2); }
 `;
 
 const highlightAnimation = keyframes`

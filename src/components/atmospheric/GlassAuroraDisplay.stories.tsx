@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from 'storybook/test';
 import { GlassAuroraDisplay } from './GlassAuroraDisplay';
 
 const meta = {
@@ -8,6 +9,10 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  args: {
+    onAuroraChange: fn(),
+    onSolarEvent: fn(),
+  },
   argTypes: {
     width: {
       control: { type: 'range', min: 400, max: 1200, step: 50 },

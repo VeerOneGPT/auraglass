@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassMetricCard } from './GlassMetricCard';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassMetricCard> = {
   title: 'Components/Dashboard/GlassMetricCard',
@@ -65,7 +65,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-wrap glass-gap-4">
+    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4">
       <GlassMetricCard key="default" {...args} variant="default" />
       <GlassMetricCard key="success" {...args} variant="success" />
       <GlassMetricCard key="warning" {...args} variant="warning" />

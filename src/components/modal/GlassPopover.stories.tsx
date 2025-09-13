@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassPopover } from './GlassPopover';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassPopover> = {
   title: 'Components/Modal/GlassPopover',
@@ -54,16 +54,16 @@ type Story = StoryObj<typeof GlassPopover>;
 export const Default: Story = {
   args: {
     content: (
-      <div className="glass-p-4">
-        <h3 className="font-semibold glass-mb-2">Popover Content</h3>
-        <p className="glass-text-sm">This is the content inside the popover.</p>
-        <button className="glass-mt-2 glass-px-3 glass-py-1 bg-blue-500 glass-text-primary glass-radius-md glass-text-sm">
+      <div className="glass-glass-p-4">
+        <h3 className="glass-glass-font-semibold glass-glass-mb-2">Popover Content</h3>
+        <p className="glass-glass-text-sm">This is the content inside the popover.</p>
+        <button className="glass-mt-2 glass-glass-px-3 glass-glass-py-1 glass-surface-blue glass-glass-text-primary glass-radius-md glass-glass-text-sm">
           Action
         </button>
       </div>
     ),
     children: (
-      <button className="glass-px-4 glass-py-2 bg-blue-500 glass-text-primary glass-radius-md">
+      <button className="glass-glass-px-4 glass-glass-py-2 glass-surface-blue glass-glass-text-primary glass-radius-md">
         Click me
       </button>
     ),
@@ -75,23 +75,23 @@ export const WithTitle: Story = {
     title: 'Settings',
     description: 'Configure your preferences',
     content: (
-      <div className="glass-p-4 glass-gap-3">
-        <div className="flex items-center justify-between">
-          <span className="glass-text-sm">Notifications</span>
+      <div className="glass-glass-p-4 glass-glass-gap-3">
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
+          <span className="glass-glass-text-sm">Notifications</span>
           <input type="checkbox" defaultChecked />
         </div>
-        <div className="flex items-center justify-between">
-          <span className="glass-text-sm">Dark Mode</span>
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
+          <span className="glass-glass-text-sm">Dark Mode</span>
           <input type="checkbox" />
         </div>
-        <div className="flex items-center justify-between">
-          <span className="glass-text-sm">Auto-save</span>
+        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
+          <span className="glass-glass-text-sm">Auto-save</span>
           <input type="checkbox" defaultChecked />
         </div>
       </div>
     ),
     children: (
-      <button className="glass-px-4 glass-py-2 bg-gray-500 glass-text-primary glass-radius-md">
+      <button className="glass-glass-px-4 glass-glass-py-2 bg-gray-500 glass-glass-text-primary glass-radius-md">
         Settings
       </button>
     ),

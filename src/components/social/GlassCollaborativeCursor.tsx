@@ -66,7 +66,7 @@ export const GlassCollaborativeCursor = forwardRef<HTMLDivElement, GlassCollabor
     showActions = true,
     onCursorMove,
     onUserAction,
-    className = '',
+    className='',
     ...props
   }, ref) => {
     const [cursorTrails, setCursorTrails] = useState<Record<string, Array<{ x: number; y: number; timestamp: number }>>>({})

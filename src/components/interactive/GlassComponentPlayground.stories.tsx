@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassComponentPlayground } from './GlassComponentPlayground';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassComponentPlayground> = {
   title: 'Components/Interactive/GlassComponentPlayground',
@@ -48,7 +48,7 @@ const meta: Meta<typeof GlassComponentPlayground> = {
         name: 'Sample Button',
         description: 'A basic button component',
         category: 'buttons',
-        component: ({ children }) => <button className="glass-px-4 glass-py-2 bg-blue-500 glass-text-primary glass-radius-md">{children || 'Button'}</button>,
+        component: ({ children }) => <button className="glass-glass-px-4 glass-glass-py-2 glass-surface-blue glass-glass-text-primary glass-radius-md">{children || 'Button'}</button>,
         props: { children: 'Click me!' },
       },
     ],
@@ -71,7 +71,7 @@ export const Default: Story = {
         name: 'Default Button',
         description: 'A basic button component',
         category: 'buttons',
-        component: ({ children }) => <button className="glass-px-4 glass-py-2 bg-blue-500 glass-text-primary glass-radius-md">{children || 'Button'}</button>,
+        component: ({ children }) => <button className="glass-glass-px-4 glass-glass-py-2 glass-surface-blue glass-glass-text-primary glass-radius-md">{children || 'Button'}</button>,
         props: { children: 'Default Button' },
       },
     ],
@@ -87,7 +87,7 @@ export const Variants: Story = {
         name: 'Primary Button',
         description: 'A primary styled button',
         category: 'buttons',
-        component: ({ children }) => <button className="glass-px-4 glass-py-2 bg-green-500 glass-text-primary glass-radius-md">{children || 'Primary'}</button>,
+        component: ({ children }) => <button className="glass-glass-px-4 glass-glass-py-2 glass-surface-green glass-glass-text-primary glass-radius-md">{children || 'Primary'}</button>,
         props: { children: 'Primary Button' },
       },
       {
@@ -95,7 +95,7 @@ export const Variants: Story = {
         name: 'Secondary Button',
         description: 'A secondary styled button',
         category: 'buttons',
-        component: ({ children }) => <button className="glass-px-4 glass-py-2 bg-gray-500 glass-text-primary glass-radius-md">{children || 'Secondary'}</button>,
+        component: ({ children }) => <button className="glass-glass-px-4 glass-glass-py-2 bg-gray-500 glass-glass-text-primary glass-radius-md">{children || 'Secondary'}</button>,
         props: { children: 'Secondary Button' },
       },
     ],

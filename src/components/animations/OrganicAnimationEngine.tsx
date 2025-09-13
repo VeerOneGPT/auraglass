@@ -264,7 +264,7 @@ const MOTION_PATTERNS: Record<OrganicMotionPattern, Variants> = {
 
 export const OrganicAnimationEngine: React.FC<OrganicAnimationEngineProps> = ({
   children,
-  className = '',
+  className='',
   sequences = [],
   emotionalContext = 'calm',
   enablePhysics = true,
@@ -534,7 +534,7 @@ export const OrganicAnimationEngine: React.FC<OrganicAnimationEngineProps> = ({
           position: 'absolute',
           top: 0,
           right: 0,
-          background: 'rgba(0, 0, 0, 0.8)',
+          background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
           color: 'white',
           padding: '4px 8px',
           fontSize: '10px',

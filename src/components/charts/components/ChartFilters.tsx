@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../../lib/utilsComprehensive';
 
 import { glassTokenUtils } from '../../../tokens/glass';
 export interface ChartFiltersProps {

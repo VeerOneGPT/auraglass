@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassFluidSimulation } from './GlassFluidSimulation';
+import { fn } from 'storybook/test';
 
 const meta = {
   title: 'Glass UI/Immersive/GlassFluidSimulation',
@@ -8,7 +9,10 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  args: { onChange: fn(), onForceChange: fn() },
   argTypes: {
+    // Avoid color control for non-string tuple
+    fluidColor: { control: false },
     width: {
       control: { type: 'range', min: 400, max: 1200, step: 50 },
     },

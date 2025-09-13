@@ -7,7 +7,7 @@
  * Migrated to use OptimizedGlass architecture.
  */
 import React, { forwardRef, useState, useEffect } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { OptimizedGlass, Motion } from '../../primitives';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
@@ -113,7 +113,7 @@ export const WidgetGlass = React.memo(forwardRef<HTMLDivElement, WidgetGlassProp
     return (
       <Motion
         preset={shouldAnimate ? "bounceIn" : "none"}
-        className="relative"
+        className="glass-glass-relative"
       >
         <OptimizedGlass
           ref={ref}
@@ -183,9 +183,9 @@ export const WidgetGlass = React.memo(forwardRef<HTMLDivElement, WidgetGlassProp
           {/* Widget highlight overlay */}
           {highlightOnHover && isHovered && interactive && (
             <div 
-              className="absolute inset-0 pointer-events-none rounded-inherit transition-opacity duration-200"
+              className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none glass-radius-inherit transition-opacity duration-200"
               style={{
-                background: 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, transparent 50%)',
+                background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
                 opacity: 0.6,
               }}
             />
@@ -194,7 +194,7 @@ export const WidgetGlass = React.memo(forwardRef<HTMLDivElement, WidgetGlassProp
           {/* Pulse animation for high priority widgets */}
           {priority === 'high' && shouldAnimate && (
             <div 
-              className="absolute inset-0 pointer-events-none rounded-inherit animate-pulse"
+              className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none glass-radius-inherit animate-pulse"
               style={{
                 boxShadow: '0 0 0 2px rgba(99, 102, 241, 0.2)',
                 opacity: isHovered ? 0.6 : 0.3,
@@ -204,7 +204,7 @@ export const WidgetGlass = React.memo(forwardRef<HTMLDivElement, WidgetGlassProp
           )}
           
           {/* Content */}
-          <div className="relative z-10">
+          <div className="glass-glass-relative glass-z-10">
             {children}
           </div>
         </OptimizedGlass>

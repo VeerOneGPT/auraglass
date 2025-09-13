@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef } from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { OptimizedGlass } from '../../primitives';
 import { useA11yId } from '@/utils/a11y';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -48,9 +48,9 @@ export const GlassToolbar = forwardRef<HTMLDivElement, GlassToolbarProps>(({
       )}
       {...rest}
     >
-      <div className="min-w-0 flex items-center glass-gap-2">{left}</div>
-      <div className="min-w-0 flex-1 flex items-center justify-center">{center}</div>
-      <div className="min-w-0 flex items-center glass-gap-2">{right}</div>
+      <div className="glass-glass-min-w-0 glass-glass-flex glass-glass-items-center glass-glass-gap-2">{left}</div>
+      <div className="glass-glass-min-w-0 glass-glass-flex-1 glass-glass-flex glass-glass-items-center glass-glass-justify-center">{center}</div>
+      <div className="glass-glass-min-w-0 glass-glass-flex glass-glass-items-center glass-glass-gap-2">{right}</div>
     </OptimizedGlass>
   );
 });

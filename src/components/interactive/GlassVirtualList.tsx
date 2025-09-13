@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { Loader2 } from 'lucide-react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Motion } from '../../primitives';
@@ -156,7 +156,7 @@ export const GlassVirtualList: React.FC<GlassVirtualListProps> = ({
     }, [height]);
 
     return (
-        <Motion preset="fadeIn" className="w-full">
+        <Motion preset="fadeIn" className="glass-glass-w-full">
             <div
                 ref={containerRef}
                 className={cn(
@@ -170,11 +170,11 @@ export const GlassVirtualList: React.FC<GlassVirtualListProps> = ({
             >
                 <div
                     ref={contentRef}
-                    className="relative"
+                    className="glass-glass-relative"
                     style={{ height: totalHeight }}
                 >
                     <div
-                        className="absolute top-0 left-0 right-0"
+                        className="glass-glass-absolute top-0 left-0 right-0"
                         style={{ transform: `translateY(${offsetY}px)` }}
                     >
                         {visibleItems.map((item, index) => {
@@ -197,10 +197,10 @@ export const GlassVirtualList: React.FC<GlassVirtualListProps> = ({
 
                 {/* Loading indicator */}
                 {loading && (
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
-                        <div className="flex items-center glass-gap-2 glass-px-4 glass-py-2 bg-black/80 backdrop-blur-md glass-radius-full">
-                            <Loader2 className="w-4 h-4 animate-spin" />
-                            <span className="glass-text-primary glass-text-sm">Loading...</span>
+                    <div className="glass-glass-absolute bottom-4 left-1/2 transform -translate-x-1/2">
+                        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-px-4 glass-glass-py-2 glass-surface-dark/80 backdrop-blur-md glass-radius-full">
+                            <Loader2 className="glass-glass-w-4 glass-glass-h-4 animate-spin" />
+                            <span className="glass-glass-text-primary glass-glass-text-sm">Loading...</span>
                         </div>
                     </div>
                 )}
@@ -314,7 +314,7 @@ export const GlassVirtualGrid: React.FC<GlassVirtualGridProps> = ({
     }, []);
 
     return (
-        <Motion preset="fadeIn" className="w-full">
+        <Motion preset="fadeIn" className="glass-glass-w-full">
             <div
                 ref={containerRef}
                 className={cn(
@@ -326,15 +326,15 @@ export const GlassVirtualGrid: React.FC<GlassVirtualGridProps> = ({
                 {...props}
             >
                 <div
-                    className="relative"
+                    className="glass-glass-relative"
                     style={{ height: totalRows * rowHeight }}
                 >
                     <div
-                        className="absolute top-0 left-0 right-0"
+                        className="glass-glass-absolute top-0 left-0 right-0"
                         style={{ transform: `translateY(${offsetY}px)` }}
                     >
                         <div
-                            className="grid glass-gap-2"
+                            className="glass-glass-grid glass-glass-gap-2"
                             style={{
                                 gridTemplateColumns: `repeat(${columns}, 1fr)`,
                                 gap: `${gap}px`

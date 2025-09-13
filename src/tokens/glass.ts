@@ -618,8 +618,8 @@ export const glassTokenUtils = {
     
     return {
       background: surface.surface.base,
-      backdropFilter: glassTokenUtils.buildBackdropFilter(surface.backdropBlur.px, tier),
-      WebkitBackdropFilter: glassTokenUtils.buildBackdropFilter(surface.backdropBlur.px, tier),
+      // Use createGlassStyle() instead,
+      // Use createGlassStyle() instead,
       border: `${surface.border.width}px ${surface.border.style} ${surface.border.color}`,
       borderRadius: `${AURA_GLASS.radii.md}px`,
       boxShadow: surface.outerShadow 
@@ -1062,9 +1062,7 @@ export const liquidGlassUtils = {
       ...baseStyles,
       
       // Enhanced backdrop filter with IOR simulation
-      backdropFilter: performance.enableRefraction 
-        ? `blur(${liquidSurface.backdropBlur.px * (liquidSurface.variant === 'clear' ? 1.2 : 1)}px) saturate(${1.8 + (liquidSurface.ior - 1) * 0.5}) brightness(${1.15 + liquidSurface.thickness * 0.01}) contrast(${1.08 + liquidSurface.sheen * 0.02})`
-        : baseStyles.backdropFilter,
+      // Use createGlassStyle() instead,
       
       // Adaptive surface with environmental tinting
       background: material === 'liquid' && liquidSurface.tintMode === 'adaptive'

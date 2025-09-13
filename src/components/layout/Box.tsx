@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { useA11yId } from '@/utils/a11y';
 
 export interface BoxProps extends React.HTMLAttributes<HTMLDivElement> {

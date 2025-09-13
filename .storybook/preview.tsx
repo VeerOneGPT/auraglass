@@ -176,3 +176,12 @@ const preview: Preview = {
 };
 
 export default preview;
+// Silence benign AbortError rejections during fast refresh / story switches
+if (typeof window !== 'undefined') {
+  window.addEventListener('unhandledrejection', (e) => {
+    // Ignore aborts from fetch/media/image when Storybook swaps stories/iframes
+    if (e?.reason?.name === 'AbortError') {
+      e.preventDefault();
+    }
+  });
+}

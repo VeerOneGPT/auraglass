@@ -1,5 +1,5 @@
 import React from 'react';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 
 export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div';
@@ -21,8 +21,19 @@ const variantMap = {
 export const Typography = React.forwardRef<HTMLElement, TypographyProps>(
   ({ variant = 'p', className, children, ...props }, ref) => {
     const Component = variantMap[variant];
+    const sizeClass: Record<keyof typeof variantMap, string> = {
+      h1: 'glass-text-5xl',
+      h2: 'glass-text-4xl',
+      h3: 'glass-text-3xl',
+      h4: 'glass-text-xl',
+      h5: 'glass-text-lg',
+      h6: 'glass-text-base',
+      p: 'glass-text-base',
+      span: 'glass-text-base',
+      div: 'glass-text-base',
+    };
     return React.createElement(Component, {
-      className: cn(className),
+      className: cn('glass-text-primary', sizeClass[variant], className),
       ref,
       ...props
     }, children);

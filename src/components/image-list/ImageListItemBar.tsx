@@ -48,7 +48,7 @@ const ImageListItemBarRoot = styled.div<{
       -webkit-backdrop-filter: ${glassStyles.WebkitBackdropFilter};
       border: ${glassStyles.border};
       border-radius: ${glassStyles.borderRadius};
-      box-shadow: ${glassStyles.boxShadow};
+      box-shadow: var(--glass-elev-2);
       color: ${glassStyles.color};
       transition: ${glassStyles.transition};
       position: ${glassStyles.position};

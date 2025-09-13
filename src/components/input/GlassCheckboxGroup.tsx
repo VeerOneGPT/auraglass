@@ -3,7 +3,7 @@
 import React, { forwardRef, useState, useCallback, createContext, useContext } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import { createFormFieldA11y, useA11yId, announceToScreenReader } from '../../utils/a11y';
 import { useMotionPreference } from '../../hooks/useMotionPreference';
 import { useGlassSound } from '../../utils/soundDesign';
@@ -262,7 +262,7 @@ export const GlassCheckboxItem = forwardRef<HTMLDivElement, GlassCheckboxItemPro
               ) : (
                 // Check mark
                 <svg
-                  className="w-full h-full"
+                  className="glass-glass-w-full glass-glass-h-full"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -279,12 +279,12 @@ export const GlassCheckboxItem = forwardRef<HTMLDivElement, GlassCheckboxItemPro
           )}
           
           {/* Inner glow effect */}
-          <div className="absolute inset-0 glass-radius-md bg-gradient-to-br from-white/10 via-transparent to-transparent" />
+          <div className="glass-glass-absolute glass-glass-inset-0 glass-radius-md glass-gradient-primary from-white/10 via-transparent to-transparent" />
         </OptimizedGlass>
         </Motion>
 
         {/* Content */}
-        <div className="flex-1 min-w-0">
+        <div className="glass-glass-flex-1 glass-glass-min-w-0">
           {children}
         </div>
         
@@ -296,7 +296,7 @@ export const GlassCheckboxItem = forwardRef<HTMLDivElement, GlassCheckboxItemPro
           checked={isSelected}
           onChange={() => {}} // Handled by onClick
           disabled={isDisabled}
-          className="sr-only"
+          className="glass-glass-sr-only"
           tabIndex={-1}
         />
       </OptimizedGlass>
@@ -484,13 +484,13 @@ export const GlassCheckboxGroup = forwardRef<HTMLDivElement, GlassCheckboxGroupP
                   value={option.value}
                   disabled={option.disabled}
                 >
-                  <div className="flex items-start glass-gap-3">
+                  <div className="glass-glass-flex glass-glass-items-start glass-glass-gap-3">
                     {option.icon && (
-                      <div className="flex-shrink-0 mt-0.5">
+                      <div className="glass-glass-flex-shrink-0 glass-mt-0-5">
                         {option.icon}
                       </div>
                     )}
-                    <div className="flex-1 min-w-0">
+                    <div className="glass-glass-flex-1 glass-glass-min-w-0">
                       <div className={cn(
                         'font-medium text-foreground',
                         config.label

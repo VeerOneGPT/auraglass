@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { TreeItem } from './TreeItem';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 import { TreeView } from './TreeView';
 
 const meta: Meta<typeof TreeItem> = {
@@ -62,7 +62,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-wrap glass-gap-4">
+    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4">
       <TreeView>
         <TreeItem {...args} nodeId="variant-1" label="Basic Item" />
         <TreeItem {...args} nodeId="variant-2" label="With Icon" icon="📁" />

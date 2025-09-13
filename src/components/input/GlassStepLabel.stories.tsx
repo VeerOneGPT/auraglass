@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { GlassStepLabel } from './GlassStepLabel';
-import { cn } from '@/lib/utils';
+import { cn } from '../../lib/utils';
 
 const meta: Meta<typeof GlassStepLabel> = {
   title: 'Components/Input/GlassStepLabel',
@@ -54,7 +54,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="flex flex-wrap glass-gap-4">
+    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4">
       <GlassStepLabel {...args} />
       <GlassStepLabel {...args} label="Completed Step" active={false} completed={true} />
       <GlassStepLabel {...args} label="Inactive Step" active={false} completed={false} />

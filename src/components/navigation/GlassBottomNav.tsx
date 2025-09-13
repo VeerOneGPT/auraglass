@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import React, { forwardRef } from 'react';
 import { OptimizedGlass } from '../../primitives';
 import { Motion } from '../../primitives';
@@ -149,7 +149,7 @@ export const GlassBottomNav = forwardRef<HTMLDivElement, GlassBottomNavProps>(
       const iconToShow = active && item?.activeIcon ? item?.activeIcon : item?.icon;
 
       return (
-        <div key={item?.id} className="relative flex-1">
+        <div key={item?.id} className="glass-glass-relative glass-glass-flex-1">
           <GlassButton
             variant={active ? 'primary' : 'ghost'}
             size="sm"
@@ -189,7 +189,7 @@ export const GlassBottomNav = forwardRef<HTMLDivElement, GlassBottomNavProps>(
             {active && !showLabels && (
               <Motion
                 preset={respectMotionPreference ? "scaleIn" : "none"}
-                className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary glass-radius-full"
+                className="glass-glass-absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 glass-surface-primary glass-radius-full"
               />
             )}
           </GlassButton>
@@ -199,7 +199,7 @@ export const GlassBottomNav = forwardRef<HTMLDivElement, GlassBottomNavProps>(
             <GlassBadge
               variant={item?.badgeVariant || 'error'}
               size="xs"
-              className="absolute -top-1 -right-1 min-w-[1.25rem] h-5 flex items-center justify-center"
+              className="glass-glass-absolute -glass--glass-top-1 -right-1 min-w-[1.25rem] glass-glass-h-5 glass-glass-flex glass-glass-items-center glass-glass-justify-center"
             >
               {item?.badge}
             </GlassBadge>
@@ -235,7 +235,7 @@ export const GlassBottomNav = forwardRef<HTMLDivElement, GlassBottomNavProps>(
         id={navId}
         {...props}
       >
-        <HStack space="none" className="w-full">
+        <HStack space="none" className="glass-glass-w-full">
           {items.map(item => renderNavigationItem(item))}
         </HStack>
       </OptimizedGlass>

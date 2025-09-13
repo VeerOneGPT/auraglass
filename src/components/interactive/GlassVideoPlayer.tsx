@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/lib/utilsComprehensive';
+import { cn } from '../../lib/utilsComprehensive';
 import {
     AlertCircle,
     Loader2,
@@ -324,7 +324,7 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
     if (sources.length === 0) {
         return (
             <GlassCard className={cn('p-8', className)}>
-                <div className="text-center glass-text-primary/60">
+                <div className="glass-glass-text-center glass-glass-text-primary/60">
                     No video sources provided
                 </div>
             </GlassCard>
@@ -332,7 +332,7 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
     }
 
     return (
-        <Motion preset="fadeIn" className="w-full">
+        <Motion preset="fadeIn" className="glass-glass-w-full">
             <GlassCard
                 className={cn(
                     'overflow-hidden relative group',
@@ -344,12 +344,12 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
                 onMouseMove={handleMouseMove}
                 {...props}
             >
-                <CardContent className="glass-p-0">
+                <CardContent className="glass-glass-p-0">
                     {/* Video Element */}
-                    <div className="relative bg-black aspect-video overflow-hidden">
+                    <div className="glass-glass-relative glass-surface-dark aspect-video overflow-hidden">
                         <video
                             ref={videoRef}
-                            className="w-full h-full object-contain"
+                            className="glass-glass-w-full glass-glass-h-full object-contain"
                             poster={poster}
                             autoPlay={autoPlay}
                             onLoadedData={handleLoadedData}
@@ -378,53 +378,53 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
 
                         {/* Loading State */}
                         {isLoading && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                                <Loader2 className="w-8 h-8 glass-text-primary animate-spin" />
+                            <div className="glass-glass-absolute glass-glass-inset-0 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-surface-dark/50">
+                                <Loader2 className="glass-glass-w-8 glass-glass-h-8 glass-glass-text-primary animate-spin" />
                             </div>
                         )}
 
                         {/* Error State */}
                         {error && (
-                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/50 glass-text-primary">
-                                <AlertCircle className="w-12 h-12 glass-mb-4" />
+                            <div className="glass-glass-absolute glass-glass-inset-0 glass-glass-flex glass-glass-flex-col glass-glass-items-center glass-glass-justify-center glass-surface-dark/50 glass-glass-text-primary">
+                                <AlertCircle className="glass-glass-w-12 glass-glass-h-12 glass-glass-mb-4" />
                                 <p>{error}</p>
                             </div>
                         )}
 
                         {/* Big Play Button */}
                         {!isPlaying && !isLoading && !error && (
-                            <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="glass-glass-absolute glass-glass-inset-0 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
                                 <GlassButton
                                     variant="secondary"
                                     size="lg"
                                     onClick={handlePlayPause}
-                                    className="glass-p-6 glass-radius-full"
+                                    className="glass-glass-p-6 glass-radius-full"
                                 >
-                                    <Play className="w-8 h-8" />
+                                    <Play className="glass-glass-w-8 glass-glass-h-8" />
                                 </GlassButton>
                             </div>
                         )}
 
                         {/* Controls Overlay */}
                         {controls && showControls && (
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent">
+                            <div className="glass-glass-absolute glass-glass-inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent">
                                 {/* Top Bar */}
-                                <div className="absolute top-0 left-0 right-0 glass-p-4 flex justify-between items-center">
+                                <div className="glass-glass-absolute top-0 left-0 right-0 glass-glass-p-4 glass-glass-flex glass-glass-justify-between glass-glass-items-center">
                                     {title && (
-                                        <GlassBadge variant="secondary" className="bg-black/50">
+                                        <GlassBadge variant="secondary" className="glass-surface-dark/50">
                                             {title}
                                         </GlassBadge>
                                     )}
 
-                                    <div className="flex items-center glass-gap-2">
+                                    <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
                                         {enableTheaterMode && (
                                             <GlassButton
                                                 variant="ghost"
                                                 size="sm"
                                                 onClick={(e) => setIsTheaterMode(!isTheaterMode)}
-                                                className="glass-text-primary"
+                                                className="glass-glass-text-primary"
                                             >
-                                                {isTheaterMode ? <Minimize className="w-4 h-4" /> : <Maximize className="w-4 h-4" />}
+                                                {isTheaterMode ? <Minimize className="glass-glass-w-4 glass-glass-h-4" /> : <Maximize className="glass-glass-w-4 glass-glass-h-4" />}
                                             </GlassButton>
                                         )}
 
@@ -432,35 +432,35 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
                                             variant="ghost"
                                             size="sm"
                                             onClick={(e) => setShowSettings(!showSettings)}
-                                            className="glass-text-primary"
+                                            className="glass-glass-text-primary"
                                         >
-                                            <Settings className="w-4 h-4" />
+                                            <Settings className="glass-glass-w-4 glass-glass-h-4" />
                                         </GlassButton>
                                     </div>
                                 </div>
 
                                 {/* Center Controls */}
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <div className="flex items-center glass-gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div className="glass-glass-absolute glass-glass-inset-0 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+                                    <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
                                         <GlassButton
                                             variant="secondary"
                                             size="lg"
                                             onClick={(e) => handleSkip(-10)}
-                                            className="glass-p-3"
+                                            className="glass-glass-p-3"
                                         >
-                                            <SkipBack className="w-6 h-6" />
+                                            <SkipBack className="glass-glass-w-6 glass-glass-h-6" />
                                         </GlassButton>
 
                                         <GlassButton
                                             variant="secondary"
                                             size="lg"
                                             onClick={handlePlayPause}
-                                            className="glass-p-4"
+                                            className="glass-glass-p-4"
                                         >
                                             {isPlaying ? (
-                                                <Pause className="w-8 h-8" />
+                                                <Pause className="glass-glass-w-8 glass-glass-h-8" />
                                             ) : (
-                                                <Play className="w-8 h-8" />
+                                                <Play className="glass-glass-w-8 glass-glass-h-8" />
                                             )}
                                         </GlassButton>
 
@@ -468,83 +468,83 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
                                             variant="secondary"
                                             size="lg"
                                             onClick={(e) => handleSkip(10)}
-                                            className="glass-p-3"
+                                            className="glass-glass-p-3"
                                         >
-                                            <SkipForward className="w-6 h-6" />
+                                            <SkipForward className="glass-glass-w-6 glass-glass-h-6" />
                                         </GlassButton>
                                     </div>
                                 </div>
 
                                 {/* Bottom Controls */}
-                                <div className="absolute bottom-0 left-0 right-0 glass-p-4">
+                                <div className="glass-glass-absolute bottom-0 left-0 right-0 glass-glass-p-4">
                                     {/* Progress Bar */}
                                     <div
-                                        className="w-full h-1 bg-white/20 glass-radius-full glass-mb-4 cursor-pointer"
+                                        className="glass-glass-w-full h-1 glass-surface-subtle/20 glass-radius-full glass-glass-mb-4 glass-glass-cursor-pointer"
                                         onClick={handleSeek}
                                     >
                                         <div
-                                            className="h-full bg-primary glass-radius-full transition-all duration-100"
+                                            className="glass-glass-h-full glass-surface-primary glass-radius-full transition-all duration-100"
                                             style={{ width: `${duration > 0 ? (currentTime / duration) * 100 : 0}%` }}
                                         />
                                     </div>
 
                                     {/* Control Buttons */}
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center glass-gap-4">
+                                    <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
+                                        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
                                             <GlassButton
                                                 variant="ghost"
                                                 size="sm"
                                                 onClick={handlePlayPause}
-                                                className="glass-text-primary glass-p-2"
+                                                className="glass-glass-text-primary glass-glass-p-2"
                                             >
                                                 {isPlaying ? (
-                                                    <Pause className="w-5 h-5" />
+                                                    <Pause className="glass-glass-w-5 glass-glass-h-5" />
                                                 ) : (
-                                                    <Play className="w-5 h-5" />
+                                                    <Play className="glass-glass-w-5 glass-glass-h-5" />
                                                 )}
                                             </GlassButton>
 
-                                            <div className="flex items-center glass-gap-2">
+                                            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
                                                 <GlassButton
                                                     variant="ghost"
                                                     size="sm"
                                                     onClick={handleMuteToggle}
-                                                    className="glass-text-primary glass-p-2"
+                                                    className="glass-glass-text-primary glass-glass-p-2"
                                                 >
                                                     {isMuted || volume === 0 ? (
-                                                        <VolumeX className="w-5 h-5" />
+                                                        <VolumeX className="glass-glass-w-5 glass-glass-h-5" />
                                                     ) : (
-                                                        <Volume2 className="w-5 h-5" />
+                                                        <Volume2 className="glass-glass-w-5 glass-glass-h-5" />
                                                     )}
                                                 </GlassButton>
 
-                                                <div className="w-20 h-1 bg-white/20 glass-radius-full cursor-pointer">
+                                                <div className="w-20 h-1 glass-surface-subtle/20 glass-radius-full glass-glass-cursor-pointer">
                                                     <div
-                                                        className="h-full bg-white glass-radius-full"
+                                                        className="glass-glass-h-full glass-surface-subtle glass-radius-full"
                                                         style={{ width: `${isMuted ? 0 : volume * 100}%` }}
                                                     />
                                                 </div>
                                             </div>
 
-                                            <span className="glass-text-primary glass-text-sm">
+                                            <span className="glass-glass-text-primary glass-glass-text-sm">
                                                 {formatTime(currentTime)} / {formatTime(duration)}
                                             </span>
                                         </div>
 
-                                        <div className="flex items-center glass-gap-2">
-                                            <span className="glass-text-primary glass-text-sm">{playbackSpeed}x</span>
+                                        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+                                            <span className="glass-glass-text-primary glass-glass-text-sm">{playbackSpeed}x</span>
 
                                             {enableFullscreen && (
                                                 <GlassButton
                                                     variant="ghost"
                                                     size="sm"
                                                     onClick={handleFullscreenToggle}
-                                                    className="glass-text-primary glass-p-2"
+                                                    className="glass-glass-text-primary glass-glass-p-2"
                                                 >
                                                     {isFullscreen ? (
-                                                        <Minimize className="w-5 h-5" />
+                                                        <Minimize className="glass-glass-w-5 glass-glass-h-5" />
                                                     ) : (
-                                                        <Maximize className="w-5 h-5" />
+                                                        <Maximize className="glass-glass-w-5 glass-glass-h-5" />
                                                     )}
                                                 </GlassButton>
                                             )}

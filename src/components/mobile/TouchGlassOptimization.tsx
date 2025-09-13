@@ -2,7 +2,8 @@
 
 import { AnimatePresence, motion, PanInfo, useMotionValue } from 'framer-motion'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { cn } from '@/lib/utilsComprehensive'
+import { cn } from '../../lib/utilsComprehensive'
+import { createGlassStyle } from '../../core/mixins/glassMixins'
 
 // Touch-Optimized Glass Component
 interface TouchGlassProps {
@@ -22,7 +23,7 @@ export function TouchOptimizedGlass({
   onTap,
   onLongPress,
   onSwipe,
-  className = '',
+  className='',
   touchFeedback = true,
   rippleEffect = true,
   hapticsEnabled = true,
@@ -129,24 +130,9 @@ export function TouchOptimizedGlass({
   }, [onSwipe, triggerHaptics])
 
   const glassStyles = {
-    light: {
-      background: 'rgba(255, 255, 255, 0.05)',
-      backdropFilter: 'blur(8px)',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      boxShadow: '0 4px 16px rgba(0, 0, 0, 0.05)'
-    },
-    medium: {
-      background: 'rgba(255, 255, 255, 0.1)',
-      backdropFilter: 'blur(12px)',
-      border: '1px solid rgba(255, 255, 255, 0.18)',
-      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
-    },
-    heavy: {
-      background: 'rgba(255, 255, 255, 0.15)',
-      backdropFilter: 'blur(20px)',
-      border: '1px solid rgba(255, 255, 255, 0.25)',
-      boxShadow: '0 16px 64px rgba(0, 0, 0, 0.15)'
-    }
+    light: createGlassStyle({ intent: "neutral", elevation: "level2" }),
+    medium: createGlassStyle({ intent: "neutral", elevation: "level2" }),
+    heavy: createGlassStyle({ intent: "neutral", elevation: "level2" })
   }
 
   const glassStyle = glassStyles[glassIntensity]
@@ -157,7 +143,7 @@ export function TouchOptimizedGlass({
       className={`relative overflow-hidden touch-none select-none ${className}`}
       style={{
         ...glassStyle,
-        WebkitBackdropFilter: glassStyle.backdropFilter,
+        // Use createGlassStyle() instead,
         borderRadius: '12px',
         minHeight: '44px', // iOS minimum touch target
         minWidth: '44px',
@@ -178,14 +164,14 @@ export function TouchOptimizedGlass({
         {ripples.map((ripple) => (
           <motion.div
             key={ripple.id}
-            className="absolute pointer-events-none"
+            className="glass-glass-absolute glass-pointer-events-none"
             style={{
               left: ripple.x - 20,
               top: ripple.y - 20,
               width: 40,
               height: 40,
               borderRadius: '50%',
-              background: 'rgba(255, 255, 255, 0.3)'
+              background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */'
             }}
             initial={{ scale: 0, opacity: 1 }}
             animate={{ scale: 3, opacity: 0 }}
@@ -200,9 +186,9 @@ export function TouchOptimizedGlass({
         <AnimatePresence>
           {isPressed && (
             <motion.div
-              className="absolute inset-0 pointer-events-none"
+              className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none"
               style={{
-                background: 'rgba(255, 255, 255, 0.1)',
+                background: '/* Use createGlassStyle({ intent: "neutral", elevation: "level2" }) */',
                 borderRadius: 'inherit'
               }}
               initial={{ opacity: 0 }}
@@ -235,7 +221,7 @@ export function MobileGlassNavigation({
   onSwipeRight,
   onSwipeUp,
   onSwipeDown,
-  className = ''
+  className=''
 }: MobileGlassNavigationProps) {
   const [swipeDirection, setSwipeDirection] = useState<string | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -266,12 +252,7 @@ export function MobileGlassNavigation({
     <motion.div
       ref={containerRef}
       className={`relative ${className}`}
-      style={{
-        background: 'rgba(255, 255, 255, 0.1)',
-        backdropFilter: 'blur(12px)',
-        border: '1px solid rgba(255, 255, 255, 0.18)',
-        borderRadius: '16px'
-      }}
+      style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
       drag="x"
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.2}
@@ -316,7 +297,7 @@ export function AdaptiveGlassDensity({
   screenSize,
   devicePixelRatio,
   autoAdapt = true,
-  className = ''
+  className=''
 }: AdaptiveGlassDensityProps) {
   const [currentDensity, setCurrentDensity] = useState<'light' | 'medium' | 'heavy'>('medium')
 
@@ -346,24 +327,9 @@ export function AdaptiveGlassDensity({
   }, [autoAdapt, devicePixelRatio])
 
   const densityStyles = {
-    light: {
-      background: 'rgba(255, 255, 255, 0.05)',
-      backdropFilter: 'blur(6px)',
-      border: '1px solid rgba(255, 255, 255, 0.08)',
-      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)'
-    },
-    medium: {
-      background: 'rgba(255, 255, 255, 0.1)',
-      backdropFilter: 'blur(12px)',
-      border: '1px solid rgba(255, 255, 255, 0.18)',
-      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
-    },
-    heavy: {
-      background: 'rgba(255, 255, 255, 0.15)',
-      backdropFilter: 'blur(20px)',
-      border: '1px solid rgba(255, 255, 255, 0.25)',
-      boxShadow: '0 16px 64px rgba(0, 0, 0, 0.15)'
-    }
+    light: createGlassStyle({ intent: "neutral", elevation: "level2" }),
+    medium: createGlassStyle({ intent: "neutral", elevation: "level2" }),
+    heavy: createGlassStyle({ intent: "neutral", elevation: "level2" })
   }
 
   const style = densityStyles[currentDensity]
@@ -373,7 +339,7 @@ export function AdaptiveGlassDensity({
       className={className}
       style={{
         ...style,
-        WebkitBackdropFilter: style.backdropFilter,
+        // Use createGlassStyle() instead,
         borderRadius: '12px',
         transition: 'all 0.3s ease-in-out'
       }}
@@ -399,7 +365,7 @@ export function TouchRippleEffects({
   color = 'rgba(255, 255, 255, 0.3)',
   maxRipples = 3,
   rippleDuration = 600,
-  className = ''
+  className=''
 }: TouchRippleEffectsProps) {
   const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([])
   const containerRef = useRef<HTMLDivElement>(null)
@@ -436,7 +402,7 @@ export function TouchRippleEffects({
         {ripples.map((ripple) => (
           <motion.div
             key={ripple.id}
-            className="absolute pointer-events-none rounded-full"
+            className="glass-glass-absolute glass-pointer-events-none glass-radius-full"
             style={{
               left: ripple.x - 20,
               top: ripple.y - 20,
@@ -471,7 +437,7 @@ export function MobileGlassBottomSheet({
   children,
   height = '50vh',
   snapPoints = ['25vh', '50vh', '75vh'],
-  className = ''
+  className=''
 }: MobileGlassBottomSheetProps) {
   const [currentHeight, setCurrentHeight] = useState(height)
 
@@ -512,15 +478,7 @@ export function MobileGlassBottomSheet({
           {/* Bottom Sheet */}
           <motion.div
             className={`fixed bottom-0 left-0 right-0 z-50 ${className}`}
-            style={{
-              height: currentHeight,
-              background: 'rgba(255, 255, 255, 0.1)',
-              backdropFilter: 'blur(20px)',
-              WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(255, 255, 255, 0.18)',
-              borderBottom: 'none',
-              borderRadius: '16px 16px 0 0'
-            }}
+            style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
@@ -531,12 +489,12 @@ export function MobileGlassBottomSheet({
             onDragEnd={handleDragEnd}
           >
             {/* Handle */}
-            <div className="flex justify-center py-3">
+            <div className="glass-glass-flex glass-glass-justify-center glass-glass-py-3">
               <div className={cn("glass-w-12 glass-h-1.5 glass-surface-secondary glass-radius-full")} />
             </div>
 
             {/* Content */}
-            <div className="px-6 pb-6 overflow-y-auto max-h-full">
+            <div className="glass-glass-px-6 pb-6 glass-glass-overflow-y-auto max-glass-glass-h-full">
               {children}
             </div>
           </motion.div>

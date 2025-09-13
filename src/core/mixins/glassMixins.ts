@@ -10,6 +10,7 @@ import React from 'react';
  */
 
 import { CSSProperties } from 'react';
+import { detectDevice } from '../../utils/deviceCapabilities';
 import { AURA_GLASS, PERFORMANCE_TIERS, glassTokenUtils, GlassIntent, GlassElevation, QualityTier } from '../../tokens/glass';
 
 export interface GlassOptions {
@@ -244,10 +245,8 @@ export function canUseHighQualityGlass(): boolean {
   const devicePixelRatio = window.devicePixelRatio || 1;
   const isHighDPI = devicePixelRatio >= 2;
   
-  // Check for hardware acceleration
-  const canvas = document.createElement('canvas');
-  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-  const hasWebGL = !!gl;
+  // Check for hardware acceleration via cached device capabilities
+  const hasWebGL = detectDevice().capabilities.webgl;
   
   return isHighDPI && hasWebGL;
 }
