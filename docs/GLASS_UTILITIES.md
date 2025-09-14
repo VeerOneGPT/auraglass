@@ -182,13 +182,39 @@ Glass-specific radius values optimized for glassmorphism:
 .glass-text-primary      /* Primary text color */
 .glass-text-secondary    /* Secondary text color */
 .glass-text-muted        /* Muted/disabled text */
-.glass-text-white        /* Pure white text */
-.glass-text-black        /* Pure black text */
 .glass-text-success      /* Success state text */
 .glass-text-warning      /* Warning state text */
 .glass-text-danger       /* Error/danger text */
 .glass-text-info         /* Information text */
 ```
+
+Note: Prefer token-driven text (glass-text-primary/secondary) over absolute `.glass-text-white`/`.glass-text-black` in components. For gradient/dynamic backgrounds, use the automatic contrast system below.
+
+### 6.1 Automatic Text Contrast (NEW)
+
+To keep text readable on light/dark gradients without inline styles:
+
+- Attribute-driven tokens:
+  - Set `data-bg="dark"` on a container to force white-on-dark token values inside.
+  - Set `data-bg="light"` on a container to force black-on-light token values inside.
+
+- Auto-detection for dynamic backgrounds:
+```tsx
+import useAutoTextContrast from '@/hooks/useAutoTextContrast';
+
+export function GradientSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  useAutoTextContrast(ref, { threshold: 0.55, observe: true });
+  return (
+    <section ref={ref} className="glass-radius-xl">
+      <h2 className="glass-text-primary">Always readable</h2>
+      <p className="glass-text-secondary">Tokens flip automatically.</p>
+    </section>
+  );
+}
+```
+
+Under the hood, the hook samples background luminance and sets `data-bg='dark'` or `'light'` to flip `--glass-text-*` tokens. This remains 100% token-compliant and passes lint rules (no JSX style attrs).
 
 #### Surface Colors
 ```css

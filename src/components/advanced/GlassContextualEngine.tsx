@@ -1166,7 +1166,7 @@ export function GlassContextualDashboard({
         🌐
         {adaptations.length > 0 && (
           <motion.div
-            className="glass-glass-absolute -glass--glass-top-1 -right-1 w-3 h-3 glass-surface-green glass-radius-full"
+            className="glass-glass-glass-absolute -glass--glass--glass--glass--glassglass--glass-top-1 -right-1 glass-glass-glass-w-3 glass-glass-glass-h-3 glass-surface-green glass-radius-full"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
           />
@@ -1184,32 +1184,32 @@ export function GlassContextualDashboard({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.95 }}
           >
-            <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
-              <h3 className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary">
+            <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between">
+              <h3 className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary">
                 Contextual Engine
               </h3>
               <button
                 onClick={() => setShowDashboard(false)}
-                className="glass-glass-text-xs glass-text-secondary hover:glass-glass-text-primary"
+                className="glass-glass-glass-text-xs glass-text-secondary hover:glass-glass-glass-text-primary"
               >
                 ✕
               </button>
             </div>
 
             {/* Current Context */}
-            <div className="glass-glass-gap-2">
-              <h4 className="glass-glass-text-xs glass-glass-font-medium glass-text-secondary glass-glass-uppercase tracking-wide">
+            <div className="glass-glass-glass-gap-2">
+              <h4 className="glass-glass-glass-text-xs glass-glass-glass-font-medium glass-text-secondary glass-glass-glass-uppercase tracking-wide">
                 Current Context
               </h4>
-              <div className="glass-glass-grid glass-glass-glass-grid-cols-2 glass-glass-gap-2 glass-glass-text-xs">
-                <div className="glass-surface-secondary glass-glass-p-2 glass-radius-sm">
+              <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-2 glass-glass-glass-gap-2 glass-glass-glass-text-xs">
+                <div className="glass-surface-secondary glass-glass-glass-p-2 glass-radius-sm">
                   <div className="glass-text-tertiary">Environment</div>
-                  <div className="glass-glass-text-primary">{context.environment?.timeOfDay}</div>
+                  <div className="glass-glass-glass-text-primary">{context.environment?.timeOfDay}</div>
                   <div className="glass-text-secondary">{context.environment?.lightLevel}lx</div>
                 </div>
-                <div className="glass-surface-secondary glass-glass-p-2 glass-radius-sm">
+                <div className="glass-surface-secondary glass-glass-glass-p-2 glass-radius-sm">
                   <div className="glass-text-tertiary">Device</div>
-                  <div className="glass-glass-text-primary">{context.device?.deviceMotion}</div>
+                  <div className="glass-glass-glass-text-primary">{context.device?.deviceMotion}</div>
                   <div className="glass-text-secondary">{((context.device?.batteryLevel || 0) * 100).toFixed(0)}%</div>
                 </div>
               </div>
@@ -1217,15 +1217,15 @@ export function GlassContextualDashboard({
 
             {/* Active Adaptation */}
             {topAdaptation && (
-              <div className="glass-glass-gap-2">
-                <h4 className="glass-glass-text-xs glass-glass-font-medium glass-text-secondary glass-glass-uppercase tracking-wide">
+              <div className="glass-glass-glass-gap-2">
+                <h4 className="glass-glass-glass-text-xs glass-glass-glass-font-medium glass-text-secondary glass-glass-glass-uppercase tracking-wide">
                   Active Adaptation
                 </h4>
-                <div className="glass-glass-p-3 glass-surface-secondary glass-radius-md">
-                  <div className="glass-glass-text-sm glass-glass-text-primary glass-glass-font-medium glass-glass-mb-1">
+                <div className="glass-glass-glass-p-3 glass-surface-secondary glass-radius-md">
+                  <div className="glass-glass-glass-text-sm glass-glass-glass-text-primary glass-glass-glass-font-medium glass-glass-glass-mb-1">
                     {topAdaptation.id.split('-')[0].replace(/([A-Z])/g, ' $1').toLowerCase()}
                   </div>
-                  <div className="glass-glass-text-xs glass-text-tertiary">
+                  <div className="glass-glass-glass-text-xs glass-text-tertiary">
                     Confidence: {(topAdaptation.confidence * 100).toFixed(0)}%
                   </div>
                 </div>

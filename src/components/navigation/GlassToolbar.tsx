@@ -48,9 +48,9 @@ export const GlassToolbar = forwardRef<HTMLDivElement, GlassToolbarProps>(({
       )}
       {...rest}
     >
-      <div className="glass-glass-min-w-0 glass-glass-flex glass-glass-items-center glass-glass-gap-2">{left}</div>
-      <div className="glass-glass-min-w-0 glass-glass-flex-1 glass-glass-flex glass-glass-items-center glass-glass-justify-center">{center}</div>
-      <div className="glass-glass-min-w-0 glass-glass-flex glass-glass-items-center glass-glass-gap-2">{right}</div>
+      <div className="glass-glass-glass-min-glass-glass-w-0 glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">{left}</div>
+      <div className="glass-glass-glass-min-glass-glass-w-0 glass-glass-glass-flex-1 glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center">{center}</div>
+      <div className="glass-glass-glass-min-glass-glass-w-0 glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">{right}</div>
     </OptimizedGlass>
   );
 });

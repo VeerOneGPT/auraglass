@@ -15,10 +15,11 @@ const meta: Meta<typeof ModularGlassDataChart> = {
     },
   },
   argTypes: {
-    className: {
-      control: 'text',
-      description: 'className prop',
-    },
+    className: { control: 'text', description: 'className prop' },
+    // Avoid Storybook inferring color controls for token-based props
+    color: { control: { type: 'select' }, options: ['primary', 'secondary', 'blue', 'green', 'yellow', 'red', 'pink', 'gray'] },
+    palette: { control: 'object' },
+    axis: { control: 'object' },
   },
   args: {
     className: '',
@@ -34,7 +35,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args: any) => (
-    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4">
+    <div className="glass-glass-glass-flex glass-glass-glass-flex-wrap glass-glass-glass-gap-4">
       <ModularGlassDataChart {...args}>
         Default
       </ModularGlassDataChart>

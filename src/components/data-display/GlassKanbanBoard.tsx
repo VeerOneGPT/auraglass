@@ -275,31 +275,31 @@ export const GlassKanbanBoard = forwardRef<HTMLDivElement, GlassKanbanBoardProps
 
             {/* Card Description */}
             {card.description && (
-              <p className="glass-text-secondary glass-glass-text-sm line-clamp-3">
+              <p className="glass-text-secondary glass-glass-glass-text-sm line-clamp-3">
                 {card.description}
               </p>
             )}
 
             {/* Custom Content */}
             {card.content && (
-              <div className="glass-glass-text-sm">
+              <div className="glass-glass-glass-text-sm">
                 {card.content}
               </div>
             )}
 
             {/* Tags */}
             {card.tags && card.tags.length > 0 && (
-              <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-1">
+              <div className="glass-glass-glass-flex glass-glass-glass-flex-wrap glass-glass-glass-gap-1">
                 {card.tags.slice(0, 3).map((tag, index) => (
                   <span
                     key={index}
-                    className="glass-glass-px-2 glass-glass-py-1 glass-glass-text-xs glass-surface-primary/10 glass-glass-text-primary glass-radius-full"
+                    className="glass-glass-glass-px-2 glass-glass-glass-py-1 glass-glass-glass-text-xs glass-surface-primary/10 glass-glass-glass-text-primary glass-radius-full"
                   >
                     {tag}
                   </span>
                 ))}
                 {card.tags.length > 3 && (
-                  <span className="glass-glass-px-2 glass-glass-py-1 glass-glass-text-xs bg-muted/20 glass-text-secondary glass-radius-full">
+                  <span className="glass-glass-glass-px-2 glass-glass-glass-py-1 glass-glass-glass-text-xs glass-surface-subtle glass-text-secondary glass-radius-full">
                     +{card.tags.length - 3}
                   </span>
                 )}
@@ -307,18 +307,18 @@ export const GlassKanbanBoard = forwardRef<HTMLDivElement, GlassKanbanBoardProps
             )}
 
             {/* Footer */}
-            <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between pt-2">
+            <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between pt-2">
               {/* Assignee */}
               {card.assignee && (
-                <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+                <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
                   {card.assignee.avatar ? (
                     <img
                       src={card.assignee.avatar}
                       alt={card.assignee.name}
-                      className="glass-glass-w-6 glass-glass-h-6 glass-radius-full"
+                      className="glass-glass-glass-w-6 glass-glass-glass-h-6 glass-radius-full"
                     />
                   ) : (
-                    <div className="glass-glass-w-6 glass-glass-h-6 glass-surface-primary/20 glass-glass-text-primary glass-radius-full glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-text-xs glass-glass-font-medium">
+                    <div className="glass-glass-glass-w-6 glass-glass-glass-h-6 glass-surface-primary/20 glass-glass-glass-text-primary glass-radius-full glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-text-xs glass-glass-glass-font-medium">
                       {card.assignee.name.charAt(0).toUpperCase()}
                     </div>
                   )}
@@ -360,13 +360,13 @@ export const GlassKanbanBoard = forwardRef<HTMLDivElement, GlassKanbanBoardProps
       const isOverLimit = column.limit && cardCount > column.limit;
 
       return (
-        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+        <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between">
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
             <div
-              className="w-3 h-3 glass-radius-full"
+              className="glass-glass-glass-w-3 glass-glass-glass-h-3 glass-radius-full"
               style={{ backgroundColor: column.color || '#6b7280' }}
             />
-            <h2 className="glass-glass-font-semibold glass-glass-text-primary">{column.title}</h2>
+            <h2 className="glass-glass-glass-font-semibold glass-glass-glass-text-primary">{column.title}</h2>
             {showCardCounts && (
               <span className={cn(
                 'glass-px-2 glass-py-1 glass-text-xs glass-radius-full',
@@ -380,7 +380,7 @@ export const GlassKanbanBoard = forwardRef<HTMLDivElement, GlassKanbanBoardProps
             )}
           </div>
 
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-1">
             {showAddCard && !column.readOnly && (
               <button
                 onClick={() => onCardAdd?.(column.id)}
@@ -441,13 +441,13 @@ export const GlassKanbanBoard = forwardRef<HTMLDivElement, GlassKanbanBoardProps
       >
         <Motion
           preset={!prefersReducedMotion && respectMotionPreference ? "fadeIn" : "none"}
-          className="glass-glass-flex glass-glass-flex-col glass-glass-h-full"
+          className="glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-h-full"
         >
           {/* Board Header */}
           {(title || description) && (
-            <div className="glass-glass-p-6 glass-glass-border-b glass-glass-border-glass-glass-border/20">
+            <div className="glass-glass-glass-p-6 glass-glass-glass-border-b glass-glass-glass-border-glass-glass-glass-border/20">
               {title && (
-                <h1 className="glass-glass-text-xl font-bold glass-glass-text-primary glass-glass-mb-2">
+                <h1 className="glass-glass-glass-text-xl glass-glass-glass-font-bold glass-glass-glass-text-primary glass-glass-glass-mb-2">
                   {title}
                 </h1>
               )}
@@ -460,13 +460,13 @@ export const GlassKanbanBoard = forwardRef<HTMLDivElement, GlassKanbanBoardProps
           )}
 
           {/* Kanban Columns */}
-          <div className="glass-glass-flex-1 glass-overflow-x-auto overflow-y-hidden">
+          <div className="glass-glass-glass-flex-1 glass-glass-glass-overflow-x-auto overflow-y-hidden">
             {columns.length === 0 && emptyState ? (
-              <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-h-full glass-glass-p-8">
+              <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-h-full glass-glass-glass-p-8">
                 {emptyState}
               </div>
             ) : (
-              <div className="glass-glass-flex glass-glass-gap-6 glass-glass-p-6 glass-glass-h-full" style={{ minWidth: 'fit-content' }}>
+              <div className="glass-glass-glass-flex glass-glass-glass-gap-6 glass-glass-glass-p-6 glass-glass-glass-h-full" style={{ minWidth: 'fit-content' }}>
                 {columns.map((column) => (
                   <Motion
                     key={column.id}
@@ -491,10 +491,10 @@ export const GlassKanbanBoard = forwardRef<HTMLDivElement, GlassKanbanBoardProps
                       aria-label={`Column: ${column.title}`}
                     >
                       {/* Column Header */}
-                      <div className="glass-glass-p-4 glass-glass-border-b glass-glass-border-glass-glass-border/20">
+                      <div className="glass-glass-glass-p-4 glass-glass-glass-border-b glass-glass-glass-border-glass-glass-glass-border/20">
                         {renderColumnHeader ? renderColumnHeader(column) : defaultRenderColumnHeader(column)}
                         {column.description && (
-                          <p className="glass-glass-text-sm glass-text-secondary glass-mt-2">
+                          <p className="glass-glass-glass-text-sm glass-text-secondary glass-mt-2">
                             {column.description}
                           </p>
                         )}
@@ -505,7 +505,7 @@ export const GlassKanbanBoard = forwardRef<HTMLDivElement, GlassKanbanBoardProps
                         ref={(el) => {
                           if (el) columnRefs.current[column.id] = el;
                         }}
-                        className="glass-glass-flex-1 glass-glass-overflow-y-auto glass-glass-p-4 glass-glass-gap-3"
+                        className="glass-glass-glass-flex-1 glass-glass-glass-overflow-y-auto glass-glass-glass-p-4 glass-glass-glass-gap-3"
                         onScroll={(e: React.UIEvent) => handleColumnScroll(column.id, e.currentTarget.scrollTop)}
                       >
                         {column.cards.map((card, index) => (
@@ -532,7 +532,7 @@ export const GlassKanbanBoard = forwardRef<HTMLDivElement, GlassKanbanBoardProps
 
                         {/* Empty State */}
                         {column.cards.length === 0 && (
-                          <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center h-32 glass-text-secondary glass-glass-text-sm glass-glass-border-2 glass-glass-border-dashed glass-glass-border-glass-glass-border/20 glass-radius-lg">
+                          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-h-32 glass-text-secondary glass-glass-glass-text-sm glass-glass-glass-border-2 glass-glass-glass-border-dashed glass-glass-glass-border-glass-glass-glass-border/20 glass-radius-lg">
                             {column.readOnly ? 'No cards' : 'Drop cards here or click + to add'}
                           </div>
                         )}
@@ -557,10 +557,10 @@ export const GlassKanbanBoard = forwardRef<HTMLDivElement, GlassKanbanBoardProps
                       )}
                       aria-label="Add new column"
                     >
-                      <div className="glass-glass-w-12 glass-glass-h-12 glass-radius-full bg-current/10 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-mb-2">
-                        <span className="glass-glass-text-2xl font-light">+</span>
+                      <div className="glass-glass-glass-w-12 glass-glass-glass-h-12 glass-radius-full glass-glass-glass-bg-transparent/10 glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-mb-2">
+                        <span className="glass-glass-glass-text-2xl font-light">+</span>
                       </div>
-                      <span className="glass-glass-text-sm glass-glass-font-medium">Add Column</span>
+                      <span className="glass-glass-glass-text-sm glass-glass-glass-font-medium">Add Column</span>
                     </button>
                   </Motion>
                 )}

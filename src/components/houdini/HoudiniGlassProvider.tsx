@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { createGlassStyle } from '../../core/mixins/glassMixins';
 import { cn } from '../../lib/utilsComprehensive';
 
@@ -26,42 +26,42 @@ const HoudiniGlassContext = createContext<HoudiniGlassContextType | null>(null);
 // Glass presets with CSS custom properties
 export const glassPresets = {
   standard: {
-    '--glass-background': 'rgba(255, 255, 255, 0.1)',
-    '--glass-border': 'rgba(255, 255, 255, 0.2)',
-    '--glass-blur': '20px',
-    '--glass-shadow': '0 8px 32px rgba(0, 0, 0, 0.1)',
+    '--glass-background': 'var(--glass-bg-default)',
+    '--glass-border': 'var(--glass-border-default)',
+    '--glass-blur': 'var(--glass-blur-lg)',
+    '--glass-shadow': 'var(--glass-elev-2)',
     '--glass-animation-speed': '1',
     '--glass-blur-intensity': '10'
   },
   frosted: {
-    '--glass-background': 'rgba(255, 255, 255, 0.15)',
-    '--glass-border': 'rgba(255, 255, 255, 0.3)',
-    '--glass-blur': '30px',
-    '--glass-shadow': '0 12px 40px rgba(0, 0, 0, 0.15)',
+    '--glass-background': 'var(--glass-bg-hover)',
+    '--glass-border': 'var(--glass-border-hover)',
+    '--glass-blur': 'var(--glass-blur-xl)',
+    '--glass-shadow': 'var(--glass-elev-3)',
     '--glass-animation-speed': '1.2',
     '--glass-blur-intensity': '15'
   },
   minimal: {
-    '--glass-background': 'rgba(255, 255, 255, 0.05)',
-    '--glass-border': 'rgba(255, 255, 255, 0.1)',
-    '--glass-blur': '10px',
-    '--glass-shadow': '0 4px 16px rgba(0, 0, 0, 0.05)',
+    '--glass-background': 'var(--glass-bg-active)',
+    '--glass-border': 'var(--glass-border-disabled)',
+    '--glass-blur': 'var(--glass-blur-sm)',
+    '--glass-shadow': 'var(--glass-elev-1)',
     '--glass-animation-speed': '0.8',
     '--glass-blur-intensity': '5'
   },
   heavy: {
-    '--glass-background': 'rgba(255, 255, 255, 0.25)',
-    '--glass-border': 'rgba(255, 255, 255, 0.4)',
-    '--glass-blur': '40px',
-    '--glass-shadow': '0 16px 64px rgba(0, 0, 0, 0.2)',
+    '--glass-background': 'var(--glass-bg-strong)',
+    '--glass-border': 'var(--glass-border-strong)',
+    '--glass-blur': 'var(--glass-blur-2xl)',
+    '--glass-shadow': 'var(--glass-elev-4)',
     '--glass-animation-speed': '1.5',
     '--glass-blur-intensity': '20'
   },
   crystal: {
-    '--glass-background': 'rgba(255, 255, 255, 0.02)',
-    '--glass-border': 'rgba(255, 255, 255, 0.05)',
-    '--glass-blur': '5px',
-    '--glass-shadow': '0 2px 8px rgba(0, 0, 0, 0.03)',
+    '--glass-background': 'var(--glass-bg-active)',
+    '--glass-border': 'var(--glass-border-disabled)',
+    '--glass-blur': 'var(--glass-blur-sm)',
+    '--glass-shadow': 'var(--glass-elev-1)',
     '--glass-animation-speed': '0.5',
     '--glass-blur-intensity': '2'
   }
@@ -192,7 +192,11 @@ export function HoudiniGlassProvider({
       const reducedEffects = enabledEffectsState.filter(effect =>
         !['caustics', 'refraction'].includes(effect)
       );
-      setEnabledEffectsState(reducedEffects);
+      setEnabledEffectsState(prev => {
+        const sameLength = prev.length === reducedEffects.length;
+        const sameOrder = sameLength && prev.every((v, i) => v === reducedEffects[i]);
+        return sameOrder ? prev : reducedEffects;
+      });
 
       // Reduce animation complexity
       document.documentElement.style.setProperty('--glass-animation-speed', '0.5');
@@ -203,7 +207,12 @@ export function HoudiniGlassProvider({
       }
     } else {
       // Restore full effects
-      setEnabledEffectsState(enabledEffects);
+      setEnabledEffectsState(prev => {
+        const next = enabledEffects;
+        const sameLength = prev.length === next.length;
+        const sameOrder = sameLength && prev.every((v, i) => v === next[i]);
+        return sameOrder ? prev : next;
+      });
       document.documentElement.style.setProperty('--glass-animation-speed', '1');
       document.documentElement.style.setProperty('--glass-blur-intensity', '10');
     }
@@ -335,7 +344,20 @@ export function useGlassEffect(
   } = {}
 ) {
   const { isSupported, hasPropertyAPI, hasPaintAPI, performanceMode } = useHoudiniGlass();
-  const [appliedEffects, setAppliedEffects] = useState<string[]>([]);
+  // Derive applied effects without causing re-render loops
+  const appliedEffects = useMemo(() => {
+    if (options.enableWorklets && hasPaintAPI && !performanceMode) {
+      return effects;
+    }
+    return [] as string[];
+  }, [effects, options.enableWorklets, hasPaintAPI, performanceMode]);
+
+  // Stabilize dependency keys to avoid reruns from referentially new objects/arrays
+  const effectsKey = useMemo(() => effects.join(','), [effects]);
+  const customPropsKey = useMemo(
+    () => JSON.stringify(options.customProperties ?? {}),
+    [options.customProperties]
+  );
 
   useEffect(() => {
     const element = elementRef.current;
@@ -377,14 +399,12 @@ export function useGlassEffect(
       if (workletStyles.length > 0) {
         element.style.backgroundImage = workletStyles.join(', ');
       }
-
-      setAppliedEffects(effects);
     }
   }, [
     elementRef,
-    effects,
+    effectsKey,
     options.preset,
-    options.customProperties,
+    customPropsKey,
     options.enableWorklets,
     isSupported,
     hasPropertyAPI,
@@ -404,6 +424,12 @@ function registerGlassProperties() {
   // Register CSS custom properties for glass effects
   if (typeof CSS !== 'undefined' && CSS.registerProperty) {
     try {
+      if (typeof window !== 'undefined') {
+        if ((window as any).__AURAGLASS_PROPERTIES_REGISTERED__) {
+          return;
+        }
+        (window as any).__AURAGLASS_PROPERTIES_REGISTERED__ = true as any;
+      }
       CSS.registerProperty({
         name: '--glass-background',
         syntax: '<color>',
@@ -456,12 +482,22 @@ declare global {
   interface CSS {
     paintWorklet?: Worklet;
   }
+  interface Window {
+    __AURAGLASS_WORKLETS_REGISTERED__?: boolean;
+    __AURAGLASS_PROPERTIES_REGISTERED__?: boolean;
+  }
 }
 
 function registerGlassWorklets() {
   // Register paint worklets for advanced glass effects
   if (typeof CSS !== 'undefined' && (CSS as any).paintWorklet) {
     try {
+      if (typeof window !== 'undefined') {
+        if ((window as any).__AURAGLASS_WORKLETS_REGISTERED__) {
+          return;
+        }
+        (window as any).__AURAGLASS_WORKLETS_REGISTERED__ = true as any;
+      }
       // In a real implementation, these would be actual worklet files
       // CSS.paintWorklet.addModule('/worklets/glass-frost.js');
       // CSS.paintWorklet.addModule('/worklets/glass-caustics.js');

@@ -13,6 +13,28 @@ const config: StorybookConfig = {
     options: {},
   },
 
+  // Ensure Vite pre-bundles react-reconciler/scheduler used by @react-three/fiber
+  viteFinal: async (config) => {
+    // Optimize dependencies for R3F to avoid CJS interop issues
+    config.optimizeDeps = config.optimizeDeps || {};
+    const include = new Set([
+      ...(config.optimizeDeps.include || []),
+      'react-reconciler',
+      'scheduler',
+      '@react-three/fiber',
+      '@react-three/drei',
+      'three',
+    ]);
+    config.optimizeDeps.include = Array.from(include);
+
+    // Avoid duplicated React instances
+    config.resolve = config.resolve || {} as any;
+    const dedupe = new Set([...(config.resolve.dedupe || []), 'react', 'react-dom']);
+    (config.resolve as any).dedupe = Array.from(dedupe);
+
+    return config;
+  },
+
   typescript: {
     check: false,
     reactDocgen: 'react-docgen-typescript',

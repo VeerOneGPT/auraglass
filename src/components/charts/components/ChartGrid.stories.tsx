@@ -52,10 +52,10 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4">
-      <div className="glass-glass-relative w-80 h-40 bg-gray-900/20 glass-radius-md glass-glass-border">
+    <div className="glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-gap-4">
+      <div className="glass-glass-glass-relative glass-glass-glass-w-80 h-40 glass-surface-subtle/20 glass-radius-md glass-glass-glass-border">
         <ChartGrid {...args} />
-        <div className="glass-glass-absolute glass-glass-inset-0 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-text-primary/50">
+        <div className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-text-primary/50">
           Grid Example
         </div>
       </div>

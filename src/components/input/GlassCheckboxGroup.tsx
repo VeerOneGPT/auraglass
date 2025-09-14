@@ -258,11 +258,11 @@ export const GlassCheckboxItem = forwardRef<HTMLDivElement, GlassCheckboxItemPro
             >
               {indeterminate ? (
                 // Indeterminate indicator (horizontal line)
-                <div className="w-2 h-0.5 bg-current glass-radius-full" />
+                <div className="glass-glass-glass-w-2 glass-glass-glass-h-0-5 glass-glass-glass-bg-transparent glass-radius-full" />
               ) : (
                 // Check mark
                 <svg
-                  className="glass-glass-w-full glass-glass-h-full"
+                  className="glass-glass-glass-w-full glass-glass-glass-h-full"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -279,12 +279,12 @@ export const GlassCheckboxItem = forwardRef<HTMLDivElement, GlassCheckboxItemPro
           )}
           
           {/* Inner glow effect */}
-          <div className="glass-glass-absolute glass-glass-inset-0 glass-radius-md glass-gradient-primary from-white/10 via-transparent to-transparent" />
+          <div className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-radius-md glass-gradient-primary glass-gradient-primary via-transparent glass-gradient-primary" />
         </OptimizedGlass>
         </Motion>
 
         {/* Content */}
-        <div className="glass-glass-flex-1 glass-glass-min-w-0">
+        <div className="glass-glass-glass-flex-1 glass-glass-glass-min-glass-glass-w-0">
           {children}
         </div>
         
@@ -296,7 +296,7 @@ export const GlassCheckboxItem = forwardRef<HTMLDivElement, GlassCheckboxItemPro
           checked={isSelected}
           onChange={() => {}} // Handled by onClick
           disabled={isDisabled}
-          className="glass-glass-sr-only"
+          className="glass-glass-glass-sr-only"
           tabIndex={-1}
         />
       </OptimizedGlass>
@@ -484,13 +484,13 @@ export const GlassCheckboxGroup = forwardRef<HTMLDivElement, GlassCheckboxGroupP
                   value={option.value}
                   disabled={option.disabled}
                 >
-                  <div className="glass-glass-flex glass-glass-items-start glass-glass-gap-3">
+                  <div className="glass-glass-glass-flex glass-glass-glass-items-start glass-glass-glass-gap-3">
                     {option.icon && (
-                      <div className="glass-glass-flex-shrink-0 glass-mt-0-5">
+                      <div className="glass-glass-glass-flex-shrink-0 glass-mt-0-5">
                         {option.icon}
                       </div>
                     )}
-                    <div className="glass-glass-flex-1 glass-glass-min-w-0">
+                    <div className="glass-glass-glass-flex-1 glass-glass-glass-min-glass-glass-w-0">
                       <div className={cn(
                         'font-medium text-foreground',
                         config.label

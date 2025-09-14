@@ -190,6 +190,32 @@ export const GlassColorPicker: React.FC<GlassColorPickerProps> = ({
 
     const triggerRef = useRef<HTMLDivElement>(null);
     const popoverRef = useRef<HTMLDivElement>(null);
+    const swatchRef = useRef<HTMLDivElement>(null);
+    const hueRef = useRef<HTMLInputElement>(null);
+    const satRef = useRef<HTMLInputElement>(null);
+    const lightRef = useRef<HTMLInputElement>(null);
+    const alphaRef = useRef<HTMLInputElement>(null);
+    // apply trigger color without JSX style attr
+    useEffect(() => {
+        if (triggerRef.current) {
+            triggerRef.current.style.backgroundColor = currentColor;
+        }
+        if (swatchRef.current) {
+            swatchRef.current.style.backgroundColor = currentColor;
+        }
+        if (hueRef.current) {
+            hueRef.current.classList.add('glass-color-hue-gradient');
+        }
+        if (satRef.current) {
+            satRef.current.style.background = `linear-gradient(to right, hsl(${hsl.h}, 0%, ${hsl.l}%) 0%, hsl(${hsl.h}, 100%, ${hsl.l}%) 100%)`;
+        }
+        if (lightRef.current) {
+            lightRef.current.style.background = `linear-gradient(to right, hsl(${hsl.h}, ${hsl.s}%, 0%) 0%, hsl(${hsl.h}, ${hsl.s}%, 50%) 50%, hsl(${hsl.h}, ${hsl.s}%, 100%) 100%)`;
+        }
+        if (alphaRef.current) {
+            alphaRef.current.style.background = `linear-gradient(to right, transparent 0%, ${currentColor} 100%)`;
+        }
+    }, [currentColor, hsl.h, hsl.s, hsl.l]);
 
     // Size configurations
     const sizeConfigs = {
@@ -309,7 +335,7 @@ export const GlassColorPicker: React.FC<GlassColorPickerProps> = ({
     const config = sizeConfigs[size];
 
     return (
-        <div className="glass-glass-relative">
+        <div className="glass-glass-glass-relative">
             {/* Color Trigger */}
             <div
                 ref={triggerRef}
@@ -320,7 +346,6 @@ export const GlassColorPicker: React.FC<GlassColorPickerProps> = ({
                     disabled && 'opacity-50 cursor-not-allowed',
                     className
                 )}
-                style={{ backgroundColor: currentColor }}
                 onClick={(e) => !disabled && setIsOpen(!isOpen)}
                 role="button"
                 tabIndex={0}
@@ -335,23 +360,28 @@ export const GlassColorPicker: React.FC<GlassColorPickerProps> = ({
 
             {/* Color Picker Popover */}
             {isOpen && (
-                <Motion preset="fadeIn" className="glass-glass-absolute glass-z-50 glass-mt-2">
+                <Motion
+                  preset="fadeIn"
+                  className={cn(
+                    'glass-glass-absolute glass-glass-z-50 glass-mt-2',
+                    placement === 'top' && 'glass-bottom-full',
+                    placement === 'bottom' && 'glass-top-full',
+                    placement === 'left' && 'glass-right-full',
+                    placement === 'right' && 'glass-left-full'
+                  )}
+                >
                     <div
                         ref={popoverRef}
                         className={cn(
                             'glass-radius-xl border border-white/20 shadow-2xl backdrop-blur-md bg-black/20',
                             config.popover
                         )}
-                        style={{
-                            [placement === 'top' ? 'bottom' : 'top']: '100%',
-                            [placement === 'left' ? 'right' : 'left']: placement === 'left' || placement === 'right' ? '100%' : 'auto'
-                        }}
                     >
-                        <GlassCard variant="outline" className="glass-glass-border-0 glass-glass-bg-transparent">
+                        <GlassCard variant="outline" className="glass-glass-glass-border-0 glass-glass-glass-bg-transparent">
                             <CardHeader className="pb-4">
-                                <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
-                                    <CardTitle className="glass-glass-text-lg glass-glass-font-semibold glass-glass-text-primary glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-                                        <Palette className="glass-glass-w-5 glass-glass-h-5" />
+                                <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between">
+                                    <CardTitle className="glass-glass-glass-text-lg glass-glass-glass-font-semibold glass-glass-glass-text-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+                                        <Palette className="glass-glass-glass-w-5 glass-glass-glass-h-5" />
                                         Color Picker
                                     </CardTitle>
                                     <GlassButton
@@ -366,124 +396,116 @@ export const GlassColorPicker: React.FC<GlassColorPickerProps> = ({
 
                             <CardContent className="space-y-6">
                                 {/* Current Color Display */}
-                                <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
+                                <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-4">
                                     <div
-                                        className="glass-glass-w-16 glass-glass-h-16 glass-radius-lg glass-glass-border-2 glass-glass-border-white/20"
-                                        style={{ backgroundColor: currentColor }}
+                                        ref={swatchRef}
+                                        className="glass-glass-glass-w-16 glass-glass-glass-h-16 glass-radius-lg glass-glass-glass-border-2 glass-glass-glass-border-white/20"
                                     />
-                                    <div className="glass-glass-flex-1">
+                                    <div className="glass-glass-glass-flex-1">
                                         {showInput && (
                                             <GlassInput
                                                 value={inputValue}
                                                 onChange={(e) => handleInputChange(e.target.value)}
                                                 placeholder="#000000"
-                                                className="glass-glass-text-sm"
+                                                className="glass-glass-glass-text-sm"
                                             />
                                         )}
-                                        <div className="glass-glass-text-xs glass-glass-text-primary/60 glass-mt-1">
+                                        <div className="glass-glass-glass-text-xs glass-glass-glass-text-primary/60 glass-mt-1">
                                             {formatColorValue(currentColor)}
                                         </div>
                                     </div>
                                 </div>
 
                                 {/* HSL Sliders */}
-                                <div className="glass-glass-gap-4">
+                                <div className="glass-glass-glass-gap-4">
                                     <div>
-                                        <label className="glass-glass-text-sm glass-glass-text-primary/80 glass-glass-mb-2 glass-glass-block">Hue</label>
+                                        <label className="glass-glass-glass-text-sm glass-glass-glass-text-primary/80 glass-glass-glass-mb-2 glass-glass-glass-block">Hue</label>
                                         <input
+                                            ref={hueRef}
                                             type="range"
                                             min="0"
                                             max="360"
                                             value={hsl.h}
                                             onChange={(e) => handleHslChange('h', Number(e.target.value))}
-                                            className="glass-glass-w-full h-2 bg-gray-700 glass-radius-lg appearance-none glass-glass-cursor-pointer slider"
-                                            style={{
-                                                background: `linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%)`
-                                            }}
+                                            className="glass-glass-glass-w-full glass-glass-glass-h-2 glass-surface-subtle glass-radius-lg appearance-none glass-glass-glass-cursor-pointer slider"
                                         />
                                     </div>
 
                                     <div>
-                                        <label className="glass-glass-text-sm glass-glass-text-primary/80 glass-glass-mb-2 glass-glass-block">Saturation</label>
+                                        <label className="glass-glass-glass-text-sm glass-glass-glass-text-primary/80 glass-glass-glass-mb-2 glass-glass-glass-block">Saturation</label>
                                         <input
+                                            ref={satRef}
                                             type="range"
                                             min="0"
                                             max="100"
                                             value={hsl.s}
                                             onChange={(e) => handleHslChange('s', Number(e.target.value))}
-                                            className="glass-glass-w-full h-2 bg-gray-700 glass-radius-lg appearance-none glass-glass-cursor-pointer"
-                                            style={{
-                                                background: `linear-gradient(to right, hsl(${hsl.h}, 0%, ${hsl.l}%) 0%, hsl(${hsl.h}, 100%, ${hsl.l}%) 100%)`
-                                            }}
+                                            className="glass-glass-glass-w-full glass-glass-glass-h-2 glass-surface-subtle glass-radius-lg appearance-none glass-glass-glass-cursor-pointer"
                                         />
                                     </div>
 
                                     <div>
-                                        <label className="glass-glass-text-sm glass-glass-text-primary/80 glass-glass-mb-2 glass-glass-block">Lightness</label>
+                                        <label className="glass-glass-glass-text-sm glass-glass-glass-text-primary/80 glass-glass-glass-mb-2 glass-glass-glass-block">Lightness</label>
                                         <input
+                                            ref={lightRef}
                                             type="range"
                                             min="0"
                                             max="100"
                                             value={hsl.l}
                                             onChange={(e) => handleHslChange('l', Number(e.target.value))}
-                                            className="glass-glass-w-full h-2 bg-gray-700 glass-radius-lg appearance-none glass-glass-cursor-pointer"
-                                            style={{
-                                                background: `linear-gradient(to right, hsl(${hsl.h}, ${hsl.s}%, 0%) 0%, hsl(${hsl.h}, ${hsl.s}%, 50%) 50%, hsl(${hsl.h}, ${hsl.s}%, 100%) 100%)`
-                                            }}
+                                            className="glass-glass-glass-w-full glass-glass-glass-h-2 glass-surface-subtle glass-radius-lg appearance-none glass-glass-glass-cursor-pointer"
                                         />
                                     </div>
 
                                     {showAlpha && (
                                         <div>
-                                            <label className="glass-glass-text-sm glass-glass-text-primary/80 glass-glass-mb-2 glass-glass-block">Alpha</label>
+                                            <label className="glass-glass-glass-text-sm glass-glass-glass-text-primary/80 glass-glass-glass-mb-2 glass-glass-glass-block">Alpha</label>
                                             <input
+                                                ref={alphaRef}
                                                 type="range"
                                                 min="0"
                                                 max="100"
                                                 value={(rgb.a || 1) * 100}
                                                 onChange={(e) => handleAlphaChange(Number(e.target.value))}
-                                                className="glass-glass-w-full h-2 bg-gray-700 glass-radius-lg appearance-none glass-glass-cursor-pointer"
-                                                style={{
-                                                    background: `linear-gradient(to right, transparent 0%, ${currentColor} 100%)`
-                                                }}
+                                                className="glass-glass-glass-w-full glass-glass-glass-h-2 glass-surface-subtle glass-radius-lg appearance-none glass-glass-glass-cursor-pointer"
                                             />
                                         </div>
                                     )}
                                 </div>
 
                                 {/* RGB Inputs */}
-                                <div className="glass-glass-grid glass-glass-glass-grid-cols-3 glass-glass-gap-4">
+                                <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-3 glass-glass-glass-gap-4">
                                     <div>
-                                        <label className="glass-glass-text-sm glass-glass-text-primary/80 glass-glass-mb-2 glass-glass-block">R</label>
+                                        <label className="glass-glass-glass-text-sm glass-glass-glass-text-primary/80 glass-glass-glass-mb-2 glass-glass-glass-block">R</label>
                                         <GlassInput
                                             type="number"
                                             min="0"
                                             max="255"
                                             value={rgb.r}
                                             onChange={(e) => handleRgbChange('r', Number(e.target.value))}
-                                            className="glass-glass-text-sm"
+                                            className="glass-glass-glass-text-sm"
                                         />
                                     </div>
                                     <div>
-                                        <label className="glass-glass-text-sm glass-glass-text-primary/80 glass-glass-mb-2 glass-glass-block">G</label>
+                                        <label className="glass-glass-glass-text-sm glass-glass-glass-text-primary/80 glass-glass-glass-mb-2 glass-glass-glass-block">G</label>
                                         <GlassInput
                                             type="number"
                                             min="0"
                                             max="255"
                                             value={rgb.g}
                                             onChange={(e) => handleRgbChange('g', Number(e.target.value))}
-                                            className="glass-glass-text-sm"
+                                            className="glass-glass-glass-text-sm"
                                         />
                                     </div>
                                     <div>
-                                        <label className="glass-glass-text-sm glass-glass-text-primary/80 glass-glass-mb-2 glass-glass-block">B</label>
+                                        <label className="glass-glass-glass-text-sm glass-glass-glass-text-primary/80 glass-glass-glass-mb-2 glass-glass-glass-block">B</label>
                                         <GlassInput
                                             type="number"
                                             min="0"
                                             max="255"
                                             value={rgb.b}
                                             onChange={(e) => handleRgbChange('b', Number(e.target.value))}
-                                            className="glass-glass-text-sm"
+                                            className="glass-glass-glass-text-sm"
                                         />
                                     </div>
                                 </div>
@@ -491,21 +513,21 @@ export const GlassColorPicker: React.FC<GlassColorPickerProps> = ({
                                 {/* Color Palette */}
                                 {showPresets && (
                                     <div>
-                                        <label className="glass-glass-text-sm glass-glass-text-primary/80 glass-glass-mb-3 glass-glass-block">Palette</label>
-                                        <div className="glass-glass-grid glass-glass-glass-grid-cols-5 glass-glass-gap-2">
-                                            {palette.map((color) => (
+                                        <label className="glass-glass-glass-text-sm glass-glass-glass-text-primary/80 glass-glass-glass-mb-3 glass-glass-glass-block">Palette</label>
+                                        <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-5 glass-glass-glass-gap-2">
+                                            {palette.map((color, i) => (
                                                 <button
-                                                    key={color}
+                                                    key={`${color}-${i}`}
                                                     className={cn(
-                                                        'w-8 h-8 glass-radius-lg border-2 transition-all duration-200',
+                                                        'w-8 h-8 glass-radius-lg border-2 transition-all duration-200 glass-focus',
                                                         currentColor === color ? 'border-white scale-110' : 'border-white/20 hover:border-white/40'
                                                     )}
-                                                    style={{ backgroundColor: color }}
+                                                    ref={(el) => { if (el) el.style.backgroundColor = color; }}
                                                     onClick={(e) => handleColorChange(color)}
                                                     title={color}
                                                 >
                                                     {currentColor === color && (
-                                                        <Check className="glass-glass-w-4 glass-glass-h-4 glass-glass-text-primary mx-auto" />
+                                                        <Check className="glass-glass-glass-w-4 glass-glass-glass-h-4 glass-glass-glass-text-primary glass-glass-glass-mx-auto" />
                                                     )}
                                                 </button>
                                             ))}
@@ -516,13 +538,13 @@ export const GlassColorPicker: React.FC<GlassColorPickerProps> = ({
                                 {/* Material Palette */}
                                 {showPresets && (
                                     <div>
-                                        <label className="glass-glass-text-sm glass-glass-text-primary/80 glass-glass-mb-3 glass-glass-block">Material Colors</label>
-                                        <div className="glass-glass-grid glass-glass-glass-grid-cols-5 glass-glass-gap-2">
-                                            {materialPalette.slice(0, 10).map((color) => (
+                                        <label className="glass-glass-glass-text-sm glass-glass-glass-text-primary/80 glass-glass-glass-mb-3 glass-glass-glass-block">Material Colors</label>
+                                        <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-5 glass-glass-glass-gap-2">
+                                            {materialPalette.slice(0, 10).map((color, i) => (
                                                 <button
-                                                    key={color}
-                                                    className="glass-glass-w-8 glass-glass-h-8 glass-radius-lg glass-glass-border-2 glass-glass-border-white/20 hover:glass-glass-border-white/40 transition-all duration-200"
-                                                    style={{ backgroundColor: color }}
+                                                    key={`${color}-${i}`}
+                                                    className="glass-glass-glass-w-8 glass-glass-glass-h-8 glass-radius-lg glass-glass-glass-border-2 glass-glass-glass-border-white/20 hover:glass-glass-glass-border-white/40 transition-all duration-200 glass-focus"
+                                                    ref={(el) => { if (el) el.style.backgroundColor = color; }}
                                                     onClick={(e) => handleColorChange(color)}
                                                     title={color}
                                                 />
@@ -532,16 +554,16 @@ export const GlassColorPicker: React.FC<GlassColorPickerProps> = ({
                                 )}
 
                                 {/* Actions */}
-                                <div className="glass-glass-flex glass-glass-justify-between glass-glass-gap-3 pt-4 glass-glass-border-t glass-glass-border-white/10">
+                                <div className="glass-glass-glass-flex glass-glass-glass-justify-between glass-glass-glass-gap-3 pt-4 glass-glass-glass-border-t glass-glass-glass-border-white/10">
                                     <GlassButton
                                         variant="ghost"
                                         size="sm"
                                         onClick={(e) => handleColorChange(defaultValue)}
                                     >
-                                        <RotateCcw className="glass-glass-w-4 glass-glass-h-4 glass-mr-2" />
+                                        <RotateCcw className="glass-glass-glass-w-4 glass-glass-glass-h-4 glass-mr-2" />
                                         Reset
                                     </GlassButton>
-                                    <div className="glass-glass-flex glass-glass-gap-2">
+                                    <div className="glass-glass-glass-flex glass-glass-glass-gap-2">
                                         <GlassButton
                                             variant="ghost"
                                             size="sm"
@@ -590,10 +612,10 @@ export const GlassColorPalette: React.FC<GlassColorPaletteProps> = ({
     };
 
     return (
-        <div className={cn('flex flex-wrap glass-gap-2', className)}>
-            {colors.map((color) => (
+        <div className={cn('glass-flex glass-flex-wrap glass-gap-2', className)}>
+            {colors.map((color, i) => (
                 <button
-                    key={color}
+                    key={`${color}-${i}`}
                     className={cn(
                         'glass-radius-lg border-2 transition-all duration-200',
                         sizeConfigs[size],
@@ -601,7 +623,7 @@ export const GlassColorPalette: React.FC<GlassColorPaletteProps> = ({
                             ? 'border-white scale-110 ring-2 ring-white/50'
                             : 'border-white/20 hover:border-white/40 hover:scale-105'
                     )}
-                    style={{ backgroundColor: color }}
+                    ref={(el) => { if (el) el.style.backgroundColor = color; }}
                     onClick={(e) => onColorSelect?.(color)}
                     title={color}
                 />

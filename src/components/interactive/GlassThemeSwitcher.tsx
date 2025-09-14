@@ -128,12 +128,12 @@ export const GlassThemeSwitcher: React.FC<GlassThemeSwitcherProps> = ({
     } as React.CSSProperties), []);
 
     return (
-        <Motion preset="fadeIn" className="glass-glass-w-full">
+        <Motion preset="fadeIn" className="glass-glass-glass-w-full">
             <GlassCard className={cn('overflow-hidden', className)} {...props}>
                 <CardHeader className="pb-3">
-                    <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
-                        <CardTitle className="glass-glass-text-primary glass-glass-text-lg glass-glass-font-semibold glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-                            <Palette className="glass-glass-w-5 glass-glass-h-5" />
+                    <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between">
+                        <CardTitle className="glass-glass-glass-text-primary glass-glass-glass-text-lg glass-glass-glass-font-semibold glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+                            <Palette className="glass-glass-glass-w-5 glass-glass-glass-h-5" />
                             Theme
                         </CardTitle>
 
@@ -142,9 +142,9 @@ export const GlassThemeSwitcher: React.FC<GlassThemeSwitcherProps> = ({
                                 variant="ghost"
                                 size="sm"
                                 onClick={(e) => setShowCustomizer(!showCustomizer)}
-                                className="glass-glass-p-2"
+                                className="glass-glass-glass-p-2"
                             >
-                                <Settings className="glass-glass-w-4 glass-glass-h-4" />
+                                <Settings className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
                             </GlassButton>
                         )}
                     </div>
@@ -176,16 +176,16 @@ export const GlassThemeSwitcher: React.FC<GlassThemeSwitcherProps> = ({
                                     {/* Preview */}
                                     {showPreview && (
                                         <div
-                                            className="glass-glass-w-full glass-glass-h-16 glass-radius-md glass-glass-mb-3 ring-1 ring-white/10"
+                                            className="glass-glass-glass-w-full glass-glass-glass-h-16 glass-radius-md glass-glass-glass-mb-3 ring-1 ring-white/10"
                                             style={getPreviewStyle(theme.preview)}
                                         >
-                                            <div className="glass-glass-p-2 glass-glass-gap-1">
+                                            <div className="glass-glass-glass-p-2 glass-glass-glass-gap-1">
                                                 <div
-                                                    className="h-2 glass-radius-md"
+                                                    className="glass-glass-glass-h-2 glass-radius-md"
                                                     style={{ backgroundColor: 'var(--preview-primary)' }}
                                                 />
                                                 <div
-                                                    className="h-1 glass-radius-md"
+                                                    className="glass-glass-glass-h-1 glass-radius-md"
                                                     style={{ backgroundColor: 'var(--preview-secondary)' }}
                                                 />
                                             </div>
@@ -193,14 +193,14 @@ export const GlassThemeSwitcher: React.FC<GlassThemeSwitcherProps> = ({
                                     )}
 
                                     {/* Theme Info */}
-                                    <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
-                                        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-                                            <IconComponent className="glass-glass-w-4 glass-glass-h-4" />
-                                            <span className="glass-glass-font-medium glass-glass-text-sm">{theme.name}</span>
+                                    <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between">
+                                        <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+                                            <IconComponent className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
+                                            <span className="glass-glass-glass-font-medium glass-glass-glass-text-sm">{theme.name}</span>
                                         </div>
 
                                         {isSelected && (
-                                            <Check className="glass-glass-w-4 glass-glass-h-4 glass-glass-text-primary" />
+                                            <Check className="glass-glass-glass-w-4 glass-glass-glass-h-4 glass-glass-glass-text-primary" />
                                         )}
                                     </div>
                                 </Motion>
@@ -211,8 +211,8 @@ export const GlassThemeSwitcher: React.FC<GlassThemeSwitcherProps> = ({
                     {/* Custom Themes */}
                     {themes.length > 0 && (
                         <>
-                            <div className="glass-glass-mb-3">
-                                <h4 className="glass-glass-text-primary/80 glass-glass-text-sm glass-glass-font-medium">Custom Themes</h4>
+                            <div className="glass-glass-glass-mb-3">
+                                <h4 className="glass-glass-glass-text-primary/80 glass-glass-glass-text-sm glass-glass-glass-font-medium">Custom Themes</h4>
                             </div>
 
                             <div className={cn(
@@ -238,16 +238,16 @@ export const GlassThemeSwitcher: React.FC<GlassThemeSwitcherProps> = ({
                                             {/* Preview */}
                                             {showPreview && (
                                                 <div
-                                                    className="glass-glass-w-full glass-glass-h-16 glass-radius-md glass-glass-mb-3 glass-glass-border glass-glass-border-white/20"
+                                                    className="glass-glass-glass-w-full glass-glass-glass-h-16 glass-radius-md glass-glass-glass-mb-3 glass-glass-glass-border glass-glass-glass-border-white/20"
                                                     style={getPreviewStyle(theme.preview)}
                                                 >
-                                                    <div className="glass-glass-p-2 glass-glass-gap-1">
+                                                    <div className="glass-glass-glass-p-2 glass-glass-glass-gap-1">
                                                         <div
-                                                            className="h-2 glass-radius-md"
+                                                            className="glass-glass-glass-h-2 glass-radius-md"
                                                             style={{ backgroundColor: theme.preview.primary }}
                                                         />
                                                         <div
-                                                            className="h-1 glass-radius-md"
+                                                            className="glass-glass-glass-h-1 glass-radius-md"
                                                             style={{ backgroundColor: theme.preview.secondary }}
                                                         />
                                                     </div>
@@ -255,10 +255,10 @@ export const GlassThemeSwitcher: React.FC<GlassThemeSwitcherProps> = ({
                                             )}
 
                                             {/* Theme Info */}
-                                            <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
-                                                <span className="glass-glass-font-medium glass-glass-text-sm">{theme.name}</span>
+                                            <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between">
+                                                <span className="glass-glass-glass-font-medium glass-glass-glass-text-sm">{theme.name}</span>
                                                 {isSelected && (
-                                                    <Check className="glass-glass-w-4 glass-glass-h-4 glass-glass-text-primary" />
+                                                    <Check className="glass-glass-glass-w-4 glass-glass-glass-h-4 glass-glass-glass-text-primary" />
                                                 )}
                                             </div>
                                         </Motion>
@@ -270,32 +270,32 @@ export const GlassThemeSwitcher: React.FC<GlassThemeSwitcherProps> = ({
 
                     {/* Custom Theme Customizer */}
                     {showCustomizer && (
-                        <Motion preset="slideDown" className="mt-6 glass-glass-p-4 glass-surface-subtle/5 glass-radius-lg">
-                            <div className="glass-glass-gap-4">
-                                <h4 className="glass-glass-text-primary glass-glass-font-medium glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-                                    <Eye className="glass-glass-w-4 glass-glass-h-4" />
+                        <Motion preset="slideDown" className="mt-6 glass-glass-glass-p-4 glass-surface-subtle/5 glass-radius-lg">
+                            <div className="glass-glass-glass-gap-4">
+                                <h4 className="glass-glass-glass-text-primary glass-glass-glass-font-medium glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+                                    <Eye className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
                                     Customize Theme
                                 </h4>
 
                                 {/* Color Pickers */}
-                                <div className="glass-glass-grid glass-glass-glass-grid-cols-2 glass-glass-gap-4">
+                                <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-2 glass-glass-glass-gap-4">
                                     {Object.entries(customColors).map(([key, value]) => (
-                                        <div key={key} className="glass-glass-gap-2">
-                                            <label className="glass-glass-text-primary/80 glass-glass-text-sm glass-glass-capitalize">
+                                        <div key={key} className="glass-glass-glass-gap-2">
+                                            <label className="glass-glass-glass-text-primary/80 glass-glass-glass-text-sm glass-glass-glass-capitalize">
                                                 {key}
                                             </label>
-                                            <div className="glass-glass-flex glass-glass-gap-2">
+                                            <div className="glass-glass-glass-flex glass-glass-glass-gap-2">
                                                 <input
                                                     type="color"
                                                     value={value}
                                                     onChange={(e) => handleCustomColorChange(key, e.target.value)}
-                                                    className="glass-glass-w-10 glass-glass-h-8 glass-radius-md ring-1 ring-white/10 glass-glass-cursor-pointer"
+                                                    className="glass-glass-glass-w-10 glass-glass-glass-h-8 glass-radius-md ring-1 ring-white/10 glass-glass-glass-cursor-pointer"
                                                 />
                                                 <input
                                                     type="text"
                                                     value={value}
                                                     onChange={(e) => handleCustomColorChange(key, e.target.value)}
-                                                    className="glass-glass-flex-1 glass-glass-px-3 glass-glass-py-1 glass-surface-subtle/10 ring-1 ring-white/10 glass-radius-md glass-glass-text-primary glass-glass-text-sm focus:outline-none focus:ring-white/30"
+                                                    className="glass-glass-glass-flex-1 glass-glass-glass-px-3 glass-glass-glass-py-1 glass-surface-subtle/10 ring-1 ring-white/10 glass-radius-md glass-glass-glass-text-primary glass-glass-glass-text-sm focus:outline-none focus:ring-white/30"
                                                 />
                                             </div>
                                         </div>
@@ -304,33 +304,33 @@ export const GlassThemeSwitcher: React.FC<GlassThemeSwitcherProps> = ({
 
                                 {/* Preview */}
                                 <div
-                                    className="glass-glass-w-full h-20 glass-radius-md ring-1 ring-white/10"
+                                    className="glass-glass-glass-w-full glass-glass-glass-h-20 glass-radius-md ring-1 ring-white/10"
                                     style={{
                                         backgroundColor: customColors.background,
                                         color: customColors.text
                                     }}
                                 >
-                                    <div className="glass-glass-p-3 glass-glass-gap-2">
+                                    <div className="glass-glass-glass-p-3 glass-glass-glass-gap-2">
                                         <div
-                                            className="h-3 glass-radius-md"
+                                            className="glass-glass-glass-h-3 glass-radius-md"
                                             style={{ backgroundColor: customColors.primary }}
                                         />
                                         <div
-                                            className="h-2 glass-radius-md"
+                                            className="glass-glass-glass-h-2 glass-radius-md"
                                             style={{ backgroundColor: customColors.secondary }}
                                         />
                                     </div>
                                 </div>
 
                                 {/* Actions */}
-                                <div className="glass-glass-flex glass-glass-gap-2">
+                                <div className="glass-glass-glass-flex glass-glass-glass-gap-2">
                                     <GlassButton
                                         variant="primary"
                                         size="sm"
                                         onClick={handleSaveCustomTheme}
-                                        className="glass-glass-flex glass-glass-items-center glass-glass-gap-2"
+                                        className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2"
                                     >
-                                        <Save className="glass-glass-w-4 glass-glass-h-4" />
+                                        <Save className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
                                         Save Theme
                                     </GlassButton>
 

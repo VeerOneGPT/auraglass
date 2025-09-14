@@ -20,6 +20,32 @@ const CommentBubble: React.FC<{
   const [showReplies, setShowReplies] = useState(false);
   const [replyText, setReplyText] = useState('');
   const [isReplying, setIsReplying] = useState(false);
+  const bubbleRef = useRef<HTMLDivElement>(null);
+  const avatarRef = useRef<HTMLDivElement>(null);
+  const pointerRef = useRef<HTMLDivElement>(null);
+
+  // Apply dynamic positioning and colors without JSX style attribute
+  useEffect(() => {
+    const el = bubbleRef.current;
+    if (!el) return;
+    el.style.left = `${comment.position.x}px`;
+    el.style.top = `${comment.position.y}px`;
+    el.style.transform = 'translate(-50%, -100%)';
+  }, [comment.position.x, comment.position.y]);
+
+  useEffect(() => {
+    const ptr = pointerRef.current; if (!ptr) return;
+    ptr.style.left = '50%';
+    ptr.style.top = '100%';
+    ptr.style.transform = 'translateX(-50%)';
+    ptr.style.filter = 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))';
+  }, []);
+
+  useEffect(() => {
+    if (avatarRef.current) {
+      avatarRef.current.style.backgroundColor = user?.color || '#6B7280';
+    }
+  }, [user?.color]);
 
   const handleReply = () => {
     if (replyText.trim()) {
@@ -44,59 +70,55 @@ const CommentBubble: React.FC<{
 
   return (
     <div
+      ref={bubbleRef}
       className={cn(
-        "absolute z-40 max-w-xs",
-        comment.resolved && "opacity-60"
+        'glass-absolute glass-z-40 glass-container-xs',
+        comment.resolved && 'opacity-60'
       )}
-      style={{
-        left: comment.position.x,
-        top: comment.position.y,
-        transform: 'translate(-50%, -100%)'
-      }}
     >
-      <div className="glass-glass-relative">
+      <div className="glass-glass-glass-relative">
         {/* Main comment */}
         <Glass className={cn(
           "p-3 mb-2 shadow-lg border-l-4",
           comment.resolved ? "border-gray-400" : "border-blue-500"
         )}>
-          <div className="glass-glass-flex glass-glass-items-start glass-glass-justify-between glass-glass-mb-2">
-            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+          <div className="glass-glass-glass-flex glass-glass-glass-items-start glass-glass-glass-justify-between glass-glass-glass-mb-2">
+            <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
               <div
-                className="glass-glass-w-6 glass-glass-h-6 glass-radius-full glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-text-primary glass-glass-text-xs glass-glass-font-medium"
-                style={{ backgroundColor: user?.color || '#6B7280' }}
+                ref={avatarRef}
+                className="glass-glass-glass-w-6 glass-glass-glass-h-6 glass-radius-full glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-text-primary glass-glass-glass-text-xs glass-glass-glass-font-medium"
               >
                 {user?.name?.[0]?.toUpperCase() || '?'}
               </div>
-              <span className="glass-glass-text-sm glass-glass-font-medium glass-text-secondary">
+              <span className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-text-secondary">
                 {user?.name || 'Unknown User'}
               </span>
-              <span className="glass-glass-text-xs glass-text-secondary">
+              <span className="glass-glass-glass-text-xs glass-text-secondary">
                 {formatTime(comment.timestamp)}
               </span>
             </div>
-            <div className="glass-glass-flex glass-glass-gap-1">
+            <div className="glass-glass-glass-flex glass-glass-glass-gap-1">
               {!comment.resolved && (isOwner || user?.id === comment.userId) && (
                 <button
                   onClick={() => onResolve(comment.id)}
-                  className="glass-glass-text-primary hover:glass-glass-text-primary glass-glass-text-xs glass-glass-p-1"
+                  className="glass-glass-glass-text-primary hover:glass-glass-glass-text-primary glass-glass-glass-text-xs glass-glass-glass-p-1 glass-focus"
                   title="Resolve comment"
                 >
                   ✓
                 </button>
               )}
               {comment.resolved && (
-                <span className="glass-glass-text-primary glass-glass-text-xs">Resolved</span>
+                <span className="glass-glass-glass-text-primary glass-glass-glass-text-xs">Resolved</span>
               )}
             </div>
           </div>
           
-          <p className="glass-glass-text-sm glass-text-secondary glass-glass-mb-2">{comment.content}</p>
+          <p className="glass-glass-glass-text-sm glass-text-secondary glass-glass-glass-mb-2">{comment.content}</p>
           
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3 glass-glass-text-xs">
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-3 glass-glass-glass-text-xs">
             <button
               onClick={() => setIsReplying(!isReplying)}
-              className="glass-glass-text-primary hover:glass-glass-text-primary"
+              className="glass-glass-glass-text-primary hover:glass-glass-glass-text-primary glass-focus"
             >
               Reply
             </button>
@@ -104,7 +126,7 @@ const CommentBubble: React.FC<{
             {(comment.replies?.length || 0) > 0 && (
               <button
                 onClick={() => setShowReplies(!showReplies)}
-                className="glass-text-secondary hover:glass-text-secondary"
+                className="glass-text-secondary hover:glass-text-secondary glass-focus"
               >
                 {showReplies ? 'Hide' : 'Show'} {comment.replies?.length} replies
               </button>
@@ -114,26 +136,26 @@ const CommentBubble: React.FC<{
 
         {/* Reply input */}
         {isReplying && (
-          <Glass className="glass-glass-p-3 glass-glass-mb-2 bg-blue-50">
+          <Glass className="glass-glass-glass-p-3 glass-glass-glass-mb-2 glass-surface-subtle">
             <textarea
               value={replyText}
               onChange={(e) => setReplyText(e.target.value)}
               placeholder="Write a reply..."
-              className="glass-glass-w-full glass-glass-p-2 glass-glass-text-sm glass-glass-border glass-glass-border-subtle glass-radius resize-none focus:ring-2 focus:ring-blue-500 focus:glass-glass-border-blue"
+              className="glass-glass-glass-w-full glass-glass-glass-p-2 glass-glass-glass-text-sm glass-glass-glass-border glass-glass-glass-border-subtle glass-radius resize-none focus:ring-2 focus:ring-blue-500 focus:glass-glass-glass-border-blue"
               rows={2}
               autoFocus
             />
-            <div className="glass-glass-flex glass-glass-justify-end glass-glass-gap-2 mt-2">
+            <div className="glass-glass-glass-flex glass-glass-glass-justify-end glass-glass-glass-gap-2 mt-2">
               <button
                 onClick={() => setIsReplying(false)}
-                className="glass-glass-px-3 glass-glass-py-1 glass-glass-text-xs glass-text-secondary hover:glass-text-secondary"
+                className="glass-glass-glass-px-3 glass-glass-glass-py-1 glass-glass-glass-text-xs glass-text-secondary hover:glass-text-secondary glass-focus"
               >
                 Cancel
               </button>
               <button
                 onClick={handleReply}
                 disabled={!replyText.trim()}
-                className="glass-glass-px-3 glass-glass-py-1 glass-glass-text-xs glass-surface-blue glass-glass-text-primary glass-radius hover:glass-surface-blue disabled:opacity-50 disabled:cursor-not-allowed"
+                className="glass-glass-glass-px-3 glass-glass-glass-py-1 glass-glass-glass-text-xs glass-surface-blue glass-glass-glass-text-primary glass-radius hover:glass-surface-blue disabled:opacity-50 disabled:cursor-not-allowed glass-focus"
               >
                 Reply
               </button>
@@ -143,26 +165,26 @@ const CommentBubble: React.FC<{
 
         {/* Replies */}
         {showReplies && comment.replies && comment.replies.length > 0 && (
-          <div className="ml-4 glass-glass-space-y-2">
+          <div className="ml-4 glass-glass-glass-space-y-2">
             {comment.replies.map(reply => {
               const replyUser = user; // In real app, would look up by reply.userId
               return (
-                <Glass key={reply.id} className="glass-glass-p-2 glass-surface-subtle">
-                  <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-mb-1">
+                <Glass key={reply.id} className="glass-glass-glass-p-2 glass-surface-subtle">
+                  <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2 glass-glass-glass-mb-1">
                     <div
-                      className="glass-glass-w-4 glass-glass-h-4 glass-radius-full glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-text-primary glass-glass-text-xs"
-                      style={{ backgroundColor: replyUser?.color || '#6B7280' }}
+                      ref={(el) => { if (el) el.style.backgroundColor = replyUser?.color || '#6B7280'; }}
+                      className="glass-glass-glass-w-4 glass-glass-glass-h-4 glass-radius-full glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-text-primary glass-glass-glass-text-xs"
                     >
                       {replyUser?.name?.[0]?.toUpperCase() || '?'}
                     </div>
-                    <span className="glass-glass-text-xs glass-glass-font-medium glass-text-secondary">
+                    <span className="glass-glass-glass-text-xs glass-glass-glass-font-medium glass-text-secondary">
                       {replyUser?.name || 'Unknown User'}
                     </span>
-                    <span className="glass-glass-text-xs glass-text-secondary">
+                    <span className="glass-glass-glass-text-xs glass-text-secondary">
                       {formatTime(reply.timestamp)}
                     </span>
                   </div>
-                  <p className="glass-glass-text-xs glass-text-secondary">{reply.content}</p>
+                  <p className="glass-glass-glass-text-xs glass-text-secondary">{reply.content}</p>
                 </Glass>
               );
             })}
@@ -171,8 +193,8 @@ const CommentBubble: React.FC<{
 
         {/* Comment pointer */}
         <div
-          className="glass-glass-absolute left-1/2 top-full w-0 h-0 glass-glass-border-l-4 glass-glass-border-r-4 glass-glass-border-t-4 glass-glass-border-transparent glass-glass-border-t-white transform -translate-x-1/2"
-          style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}
+          ref={pointerRef}
+          className="glass-glass-glass-absolute glass-glass-glass-w-0 glass-glass-glass-h-0 glass-glass-glass-border-l-4 glass-glass-glass-border-r-4 glass-glass-glass-border-t-4 glass-glass-glass-border-transparent glass-glass-glass-border-t-white"
         />
       </div>
     </div>
@@ -185,23 +207,29 @@ const CommentDot: React.FC<{
   count?: number;
   onClick: () => void;
   resolved?: boolean;
-}> = ({ position, color, count = 1, onClick, resolved }) => (
-  <button
-    className={cn(
-      "absolute z-30 w-6 h-6 rounded-full border-2 border-white shadow-lg transition-all hover:scale-110",
-      resolved ? "opacity-60" : "animate-pulse"
-    )}
-    style={{
-      left: position.x,
-      top: position.y,
-      backgroundColor: resolved ? '#6B7280' : color,
-      transform: 'translate(-50%, -50%)'
-    }}
-    onClick={onClick}
-  >
-    <span className="glass-glass-text-primary glass-glass-text-xs font-bold">{count}</span>
-  </button>
-);
+}> = ({ position, color, count = 1, onClick, resolved }) => {
+  const ref = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    el.style.left = `${position.x}px`;
+    el.style.top = `${position.y}px`;
+    el.style.transform = 'translate(-50%, -50%)';
+    el.style.backgroundColor = resolved ? '#6B7280' : color;
+  }, [position.x, position.y, color, resolved]);
+  return (
+    <button
+      ref={ref}
+      className={cn(
+        'glass-absolute glass-z-30 glass-w-6 glass-h-6 glass-radius-full glass-border glass-shadow-lg glass-transition glass-focus',
+        resolved ? 'opacity-60' : 'animate-pulse'
+      )}
+      onClick={onClick}
+      aria-label={resolved ? 'Resolved comment' : 'Comment'}
+    >
+      <span className="glass-glass-glass-text-primary glass-glass-glass-text-xs glass-glass-glass-font-bold">{count}</span>
+    </button>
+  );
+};
 
 export const GlassCollaborativeComments: React.FC<CollaborativeCommentsProps> = ({
   className,
@@ -223,6 +251,34 @@ export const GlassCollaborativeComments: React.FC<CollaborativeCommentsProps> = 
   const [selectedComment, setSelectedComment] = useState<string | null>(null);
   
   const containerRef = useRef<HTMLDivElement>(null);
+  const newBubbleRef = useRef<HTMLDivElement>(null);
+  const newAvatarRef = useRef<HTMLDivElement>(null);
+  const newPointerRef = useRef<HTMLDivElement>(null);
+
+  // Position and color for the new comment bubble (no JSX style attr)
+  useEffect(() => {
+    const el = newBubbleRef.current;
+    if (!el || !newCommentPosition) return;
+    el.style.left = `${newCommentPosition.x}px`;
+    el.style.top = `${newCommentPosition.y}px`;
+    el.style.transform = 'translate(-50%, -100%)';
+  }, [newCommentPosition]);
+
+  useEffect(() => {
+    if (newAvatarRef.current) {
+      newAvatarRef.current.style.backgroundColor = currentUser?.color || '#6B7280';
+    }
+  }, [currentUser?.color]);
+
+  useEffect(() => {
+    if (newPointerRef.current) {
+      const ptr = newPointerRef.current;
+      ptr.style.left = '50%';
+      ptr.style.top = '100%';
+      ptr.style.transform = 'translateX(-50%)';
+      ptr.style.filter = 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))';
+    }
+  }, [isAddingComment, newCommentPosition]);
 
   useEffect(() => {
     if (!allowComments || !showComments) return;
@@ -356,23 +412,19 @@ export const GlassCollaborativeComments: React.FC<CollaborativeCommentsProps> = 
 
       {/* New comment input */}
       {isAddingComment && newCommentPosition && (
-        <div
-          className="glass-glass-absolute z-40 max-w-xs"
-          style={{
-            left: newCommentPosition.x,
-            top: newCommentPosition.y,
-            transform: 'translate(-50%, -100%)'
-          }}
-        >
-          <Glass className="glass-glass-p-3 glass-glass-shadow-lg glass-glass-border-l-4 glass-glass-border-blue">
-            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-mb-2">
+          <div
+            ref={newBubbleRef}
+            className="glass-glass-glass-absolute glass-z-40 glass-container-xs"
+          >
+          <Glass className="glass-glass-glass-p-3 glass-glass-glass-shadow-lg glass-glass-glass-border-l-4 glass-glass-glass-border-blue">
+            <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2 glass-glass-glass-mb-2">
               <div
-                className="glass-glass-w-6 glass-glass-h-6 glass-radius-full glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-text-primary glass-glass-text-xs glass-glass-font-medium"
-                style={{ backgroundColor: currentUser?.color || '#6B7280' }}
+                ref={newAvatarRef}
+                className="glass-glass-glass-w-6 glass-glass-glass-h-6 glass-radius-full glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-text-primary glass-glass-glass-text-xs glass-glass-glass-font-medium"
               >
                 {currentUser?.name?.[0]?.toUpperCase() || '?'}
               </div>
-              <span className="glass-glass-text-sm glass-glass-font-medium glass-text-secondary">
+              <span className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-text-secondary">
                 {currentUser?.name || 'You'}
               </span>
             </div>
@@ -381,26 +433,26 @@ export const GlassCollaborativeComments: React.FC<CollaborativeCommentsProps> = 
               value={newCommentText}
               onChange={(e) => setNewCommentText(e.target.value)}
               placeholder="Write a comment..."
-              className="glass-glass-w-full glass-glass-p-2 glass-glass-text-sm glass-glass-border glass-glass-border-subtle glass-radius resize-none focus:ring-2 focus:ring-blue-500 focus:glass-glass-border-blue"
+              className="glass-glass-glass-w-full glass-glass-glass-p-2 glass-glass-glass-text-sm glass-glass-glass-border glass-glass-glass-border-subtle glass-radius resize-none focus:ring-2 focus:ring-blue-500 focus:glass-glass-glass-border-blue"
               rows={3}
               autoFocus
             />
             
-            <div className="glass-glass-flex glass-glass-justify-end glass-glass-gap-2 mt-2">
+            <div className="glass-glass-glass-flex glass-glass-glass-justify-end glass-glass-glass-gap-2 mt-2">
               <button
                 onClick={() => {
                   setIsAddingComment(false);
                   setNewCommentPosition(null);
                   setNewCommentText('');
                 }}
-                className="glass-glass-px-3 glass-glass-py-1 glass-glass-text-xs glass-text-secondary hover:glass-text-secondary"
+                className="glass-glass-glass-px-3 glass-glass-glass-py-1 glass-glass-glass-text-xs glass-text-secondary hover:glass-text-secondary glass-focus"
               >
                 Cancel
               </button>
               <button
                 onClick={handleAddComment}
                 disabled={!newCommentText.trim()}
-                className="glass-glass-px-3 glass-glass-py-1 glass-glass-text-xs glass-surface-blue glass-glass-text-primary glass-radius hover:glass-surface-blue disabled:opacity-50 disabled:cursor-not-allowed"
+                className="glass-glass-glass-px-3 glass-glass-glass-py-1 glass-glass-glass-text-xs glass-surface-blue glass-glass-glass-text-primary glass-radius hover:glass-surface-blue disabled:opacity-50 disabled:cursor-not-allowed glass-focus"
               >
                 Comment
               </button>
@@ -409,8 +461,8 @@ export const GlassCollaborativeComments: React.FC<CollaborativeCommentsProps> = 
           
           {/* Comment pointer */}
           <div
-            className="glass-glass-absolute left-1/2 top-full w-0 h-0 glass-glass-border-l-4 glass-glass-border-r-4 glass-glass-border-t-4 glass-glass-border-transparent glass-glass-border-t-white transform -translate-x-1/2"
-            style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}
+            ref={newPointerRef}
+            className="glass-glass-glass-absolute glass-glass-glass-w-0 glass-glass-glass-h-0 glass-glass-glass-border-l-4 glass-glass-glass-border-r-4 glass-glass-glass-border-t-4 glass-glass-glass-border-transparent glass-glass-glass-border-t-white"
           />
         </div>
       )}
@@ -418,7 +470,7 @@ export const GlassCollaborativeComments: React.FC<CollaborativeCommentsProps> = 
       {/* Click outside to close */}
       {(selectedComment || isAddingComment) && (
         <div
-          className="glass-glass-fixed glass-glass-inset-0 z-20"
+          className="glass-glass-glass-fixed glass-glass-glass-inset-0 z-20"
           onClick={() => {
             setSelectedComment(null);
             if (isAddingComment) {
@@ -432,7 +484,7 @@ export const GlassCollaborativeComments: React.FC<CollaborativeCommentsProps> = 
 
       {/* Helper text */}
       {comments.length === 0 && currentUser && (
-        <div className="glass-glass-absolute bottom-4 right-4 bg-blue-100 glass-glass-text-primary glass-glass-p-3 glass-radius-lg glass-glass-text-sm max-w-xs">
+        <div className="glass-glass-glass-absolute bottom-4 right-4 glass-surface-subtle glass-glass-glass-text-primary glass-glass-glass-p-3 glass-radius-lg glass-glass-glass-text-sm max-w-xs">
           💡 Double-click anywhere to add a comment
         </div>
       )}

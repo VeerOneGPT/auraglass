@@ -148,54 +148,55 @@ export interface GlassButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLBu
  * GlassButton component
  * A glassmorphism button with multiple variants and animations
  */
-export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
+export const GlassButton = forwardRef(function GlassButton(
+  {
     variant = 'default',
-      size = 'md',
-      elevation = 'level2',
-      glassVariant = 'frosted',
-      intensity = 'medium',
-      depth = 2,
-      tint = 'neutral',
-      border = "subtle",
-      loading = false,
-      iconOnly = false,
-      fullWidth = false,
-      animation = 'none',
-      leftIcon,
-      rightIcon,
-      loadingSpinner,
-      loadingText = 'Loading...',
-      className,
-      children,
-      disabled,
-      asChild = false,
-      flat = false,
-      material = 'glass',
-      materialProps,
-      description,
-      'aria-label': ariaLabel,
-      'aria-labelledby': ariaLabelledBy,
-      'aria-describedby': ariaDescribedBy,
-      'aria-pressed': ariaPressed,
-      'aria-expanded': ariaExpanded,
-      'aria-controls': ariaControls,
-      'aria-haspopup': ariaHaspopup,
-      // Consciousness features
-      predictive = false,
-      preloadContent = false,
-      eyeTracking = false,
-      gazeResponsive = false,
-      adaptive = false,
-      biometricResponsive = false,
-      spatialAudio = false,
-      audioFeedback = false,
-      trackAchievements = false,
-      achievementId,
-      usageContext = 'main',
-      ...props
-    },
-    ref,
-  ) => {
+    size = 'md',
+    elevation = 'level2',
+    glassVariant = 'frosted',
+    intensity = 'medium',
+    depth = 2,
+    tint = 'neutral',
+    border = "subtle",
+    loading = false,
+    iconOnly = false,
+    fullWidth = false,
+    animation = 'none',
+    leftIcon,
+    rightIcon,
+    loadingSpinner,
+    loadingText = 'Loading...',
+    className,
+    children,
+    disabled,
+    asChild = false,
+    flat = false,
+    material = 'glass',
+    materialProps,
+    description,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledBy,
+    'aria-describedby': ariaDescribedBy,
+    'aria-pressed': ariaPressed,
+    'aria-expanded': ariaExpanded,
+    'aria-controls': ariaControls,
+    'aria-haspopup': ariaHaspopup,
+    // Consciousness features
+    predictive = false,
+    preloadContent = false,
+    eyeTracking = false,
+    gazeResponsive = false,
+    adaptive = false,
+    biometricResponsive = false,
+    spatialAudio = false,
+    audioFeedback = false,
+    trackAchievements = false,
+    achievementId,
+    usageContext = 'main',
+    ...props
+  }: GlassButtonProps,
+  ref: React.Ref<HTMLButtonElement>
+) {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const [clickCount, setClickCount] = useState(0);
     const [isHovered, setIsHovered] = useState(false);
@@ -215,6 +216,37 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
 
     // Handle ref forwarding
     useImperativeHandle(ref, () => buttonRef.current as HTMLButtonElement);
+
+    // Utility: filter out non-DOM props before spreading on elements
+    const filterDomProps = useCallback((p: any) => {
+      const {
+        loadingText: _lt,
+        asChild: _ac,
+        leftIcon: _li,
+        rightIcon: _ri,
+        loadingSpinner: _ls,
+        animation: _an,
+        flat: _fl,
+        description: _desc,
+        // Master flag
+        consciousness: _cons,
+        // Consciousness-related props
+        predictive: _pred,
+        preloadContent: _prel,
+        eyeTracking: _eye,
+        gazeResponsive: _gaze,
+        adaptive: _ad,
+        biometricResponsive: _bio,
+        spatialAudio: _sa,
+        audioFeedback: _af,
+        trackAchievements: _ta,
+        achievementId: _aid,
+        usageContext: _uctx,
+        onClick: _oc,
+        ...valid
+      } = (p || {}) as any;
+      return valid;
+    }, []);
 
     // Biometric adaptation effects
     useEffect(() => {
@@ -563,7 +595,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
         return (
           <>
             {loadingSpinner || (
-              <div className="glass-glass-w-4 glass-glass-h-4 glass-glass-border-2 glass-glass-border-current glass-glass-border-t-transparent glass-radius-full animate-spin" />
+              <div className="glass-glass-glass-w-4 glass-glass-glass-h-4 glass-glass-glass-border-2 glass-glass-glass-border-current glass-glass-glass-border-t-transparent glass-radius-full animate-spin" />
             )}
             {!iconOnly && <span className="ml-2">{loadingText}</span>}
           </>
@@ -589,7 +621,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
         <Motion
           preset={getAnimationPreset()}
           animateOnHover={animation !== 'none'}
-          className="inline-glass-glass-block"
+          className="inline-glass-glass-glass-block"
         >
           <Comp
             className={cn(
@@ -604,37 +636,11 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
             onClick={handleInteraction}
             ref={buttonRef}
             {...a11yProps}
-            {...((() => {
-              const {
-                loadingText: _,
-                asChild: __,
-                leftIcon: ___,
-                rightIcon: ____,
-                loadingSpinner: _____,
-                animation: ______,
-                flat: _______,
-                description: ________,
-                // Filter out consciousness props
-                predictive: _________,
-                preloadContent: __________,
-                eyeTracking: ___________,
-                gazeResponsive: ____________,
-                adaptive: _____________,
-                biometricResponsive: ______________,
-                spatialAudio: _______________,
-                audioFeedback: ________________,
-                trackAchievements: _________________,
-                achievementId: __________________,
-                usageContext: ___________________,
-                onClick: ____________________,
-                ...validProps
-              } = props as any;
-              return validProps;
-            })())}
+            {...filterDomProps(props)}
           >
             {renderContent()}
             {description && (
-              <span id={descriptionId} className="glass-glass-sr-only">
+              <span id={descriptionId} className="glass-glass-glass-sr-only">
                 {description}
               </span>
             )}
@@ -647,7 +653,7 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
       <Motion
         preset={getAnimationPreset()}
         animateOnHover={animation !== 'none'}
-        className="inline-glass-glass-block"
+        className="inline-glass-glass-glass-block"
       >
         {material === 'liquid' ? (
           <LiquidGlassMaterial
@@ -688,6 +694,8 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
                 loadingSpinner: _____,
                 animation: ______,
                 description: _______,
+                // Filter out the master flag too so it never hits the DOM
+                consciousness: __ignoreConsciousness,
                 material: ________,
                 materialProps: _________,
                 predictive: __________,
@@ -714,13 +722,13 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
           ) : (
             <>
             {resolvedVariant === 'gradient' && (
-              <div className="glass-glass-absolute glass-glass-inset-0 glass-gradient-primary from-primary/20 via-secondary/20 to-accent/20 glass-radius-md" />
+              <div className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-gradient-primary glass-gradient-primary via-secondary/20 glass-gradient-primary glass-radius-md" />
             )}
-              <span className="glass-glass-relative glass-z-10">
+              <span className="glass-glass-glass-relative glass-glass-glass-z-10">
                 {renderContent()}
               </span>
               {description && (
-                <span id={descriptionId} className="glass-glass-sr-only">
+                <span id={descriptionId} className="glass-glass-glass-sr-only">
                   {description}
                 </span>
               )}
@@ -760,33 +768,8 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
           onClick={handleInteraction}
           ref={buttonRef}
           {...a11yProps}
-          {...((() => {
-            const {
-              loadingText: _,
-              asChild: __,
-              leftIcon: ___,
-              rightIcon: ____,
-              loadingSpinner: _____,
-              animation: ______,
-              description: _______,
-              // Filter out consciousness props
-              predictive: ________,
-              preloadContent: _________,
-              eyeTracking: __________,
-              gazeResponsive: ___________,
-              adaptive: ____________,
-              biometricResponsive: _____________,
-              spatialAudio: ______________,
-              audioFeedback: _______________,
-              trackAchievements: ________________,
-              achievementId: _________________,
-              usageContext: __________________,
-              onClick: ___________________,
-              ...validProps
-            } = props as any;
-            return validProps;
-          })())}
-        >
+            {...filterDomProps(props)}
+          >
           {asChild ? (
             // When rendering asChild (Slot), Slot expects exactly one child element.
             // Defer content to the passed child to avoid React.Children.only errors.
@@ -794,13 +777,13 @@ export const GlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(  ({
           ) : (
             <>
             {resolvedVariant === 'gradient' && (
-              <div className="glass-glass-absolute glass-glass-inset-0 glass-gradient-primary from-primary/20 via-secondary/20 to-accent/20 glass-radius-md" />
+              <div className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-gradient-primary glass-gradient-primary via-secondary/20 glass-gradient-primary glass-radius-md" />
             )}
-              <span className="glass-glass-relative glass-z-10">
+              <span className="glass-glass-glass-relative glass-glass-glass-z-10">
                 {renderContent()}
               </span>
               {description && (
-                <span id={descriptionId} className="glass-glass-sr-only">
+                <span id={descriptionId} className="glass-glass-glass-sr-only">
                   {description}
                 </span>
               )}
@@ -828,22 +811,23 @@ export interface IconButtonProps extends Omit<GlassButtonProps, 'iconOnly' | 'le
   'aria-label': string;
 }
 
-export const IconButton = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ icon, variant = 'ghost', flat = true, size = 'sm', ...props }, ref) => {
-    return (
-      <GlassButton
-        ref={ref}
-        iconOnly
-        variant={variant}
-        flat={flat}
-        size={size as any}
-        {...props}
-      >
-        {icon}
-      </GlassButton>
-    );
-  }
-);
+export const IconButton = forwardRef(function IconButton(
+  { icon, variant = 'ghost', flat = true, size = 'sm', ...props }: IconButtonProps,
+  ref: React.Ref<HTMLButtonElement>
+) {
+  return (
+    <GlassButton
+      ref={ref}
+      iconOnly
+      variant={variant}
+      flat={flat}
+      size={size as any}
+      {...props}
+    >
+      {icon}
+    </GlassButton>
+  );
+});
 
 IconButton.displayName = 'IconButton';
 
@@ -952,34 +936,32 @@ export interface ToggleButtonProps extends Omit<GlassButtonProps, 'variant'> {
   unpressedVariant?: GlassButtonProps['variant'];
 }
 
-export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
-  (
-    {
-      pressed = false,
-      onPressedChange,
-      pressedVariant = 'primary',
-      unpressedVariant = 'outline',
-      onClick,
-      ...props
-    },
-    ref
-  ) => {
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-      onPressedChange?.(!pressed);
-      onClick?.(event);
-    };
+export const ToggleButton = forwardRef(function ToggleButton(
+  {
+    pressed = false,
+    onPressedChange,
+    pressedVariant = 'primary',
+    unpressedVariant = 'outline',
+    onClick,
+    ...props
+  }: ToggleButtonProps,
+  ref: React.Ref<HTMLButtonElement>
+) {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    onPressedChange?.(!pressed);
+    onClick?.(event);
+  };
 
-    return (
-      <GlassButton
-        ref={ref}
-        variant={pressed ? pressedVariant : unpressedVariant}
-        onClick={handleClick}
-        aria-pressed={pressed}
-        {...props}
-      />
-    );
-  }
-);
+  return (
+    <GlassButton
+      ref={ref}
+      variant={pressed ? pressedVariant : unpressedVariant}
+      onClick={handleClick}
+      aria-pressed={pressed}
+      {...props}
+    />
+  );
+});
 
 ToggleButton.displayName = 'ToggleButton';
 
@@ -1009,54 +991,52 @@ export interface FloatingActionButtonProps extends Omit<GlassButtonProps, 'size'
   'aria-label': string;
 }
 
-export const FloatingActionButton = forwardRef<HTMLButtonElement, FloatingActionButtonProps>(
-  (
-    {
-      size = 'md',
-      position = 'bottom-right',
-      icon,
-      extended = false,
-      children,
-      className,
-      ...props
-    },
-    ref
-  ) => {
-    const positionClasses = {
-      'bottom-right': 'fixed bottom-6 right-6',
-      'bottom-left': 'fixed bottom-6 left-6',
-      'top-right': 'fixed top-6 right-6',
-      'top-left': 'fixed top-6 left-6',
-    };
+export const FloatingActionButton = forwardRef(function FloatingActionButton(
+  {
+    size = 'md',
+    position = 'bottom-right',
+    icon,
+    extended = false,
+    children,
+    className,
+    ...props
+  }: FloatingActionButtonProps,
+  ref: React.Ref<HTMLButtonElement>
+) {
+  const positionClasses = {
+    'bottom-right': 'fixed bottom-6 right-6',
+    'bottom-left': 'fixed bottom-6 left-6',
+    'top-right': 'fixed top-6 right-6',
+    'top-left': 'fixed top-6 left-6',
+  };
 
-    const sizeClasses = {
-      sm: extended ? 'h-8 px-3' : 'h-8 w-8',
-      md: extended ? 'h-10 px-4' : 'h-10 w-10',
-      lg: extended ? 'h-12 px-6' : 'h-12 w-12',
-    };
+  const sizeClasses = {
+    sm: extended ? 'h-8 px-3' : 'h-8 w-8',
+    md: extended ? 'h-10 px-4' : 'h-10 w-10',
+    lg: extended ? 'h-12 px-6' : 'h-12 w-12',
+  };
 
-    return (
-      <GlassButton
-        ref={ref}
-        variant="default"
-        elevation={'level3'}
-        animation="bounce"
-        iconOnly={!extended}
-        leftIcon={extended ? icon : undefined}
-        className={cn(
-          'shadow-lg z-50',
-          'glass-radius-full',
-          positionClasses?.[position],
-          sizeClasses?.[size],
-          className
-        )}
-        {...props}
-      >
-        {extended ? children : icon}
-      </GlassButton>
-    );
-  }
-);
+  return (
+    <GlassButton
+      ref={ref}
+      variant="default"
+      elevation={'level3'}
+      animation="bounce"
+      iconOnly={!extended}
+      leftIcon={extended ? icon : undefined}
+      className={cn(
+        'shadow-lg z-50',
+        'glass-radius-full',
+        positionClasses?.[position],
+        sizeClasses?.[size],
+        className
+      )}
+      {...props}
+    >
+      {extended ? children : icon}
+    </GlassButton>
+  );
+});
 
 FloatingActionButton.displayName = 'FloatingActionButton';
 
@@ -1064,8 +1044,11 @@ FloatingActionButton.displayName = 'FloatingActionButton';
  * Enhanced GlassButton with consciousness features enabled by default
  * Use this for buttons that should be intelligent and adaptive
  */
-export const ConsciousGlassButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
-  (props, ref) => (
+export const ConsciousGlassButton = forwardRef(function ConsciousGlassButton(
+  props: GlassButtonProps,
+  ref: React.Ref<HTMLButtonElement>
+) {
+  return (
     <GlassButton
       ref={ref}
       predictive={true}
@@ -1075,16 +1058,19 @@ export const ConsciousGlassButton = forwardRef<HTMLButtonElement, GlassButtonPro
       achievementId="conscious_button_usage"
       {...props}
     />
-  )
-);
+  );
+});
 
 ConsciousGlassButton.displayName = 'ConsciousGlassButton';
 
 /**
  * Eye-tracking enabled button for gaze-responsive interactions
  */
-export const GazeResponsiveButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
-  (props, ref) => (
+export const GazeResponsiveButton = forwardRef(function GazeResponsiveButton(
+  props: GlassButtonProps,
+  ref: React.Ref<HTMLButtonElement>
+) {
+  return (
     <GlassButton
       ref={ref}
       eyeTracking={true}
@@ -1095,16 +1081,19 @@ export const GazeResponsiveButton = forwardRef<HTMLButtonElement, GlassButtonPro
       achievementId="gaze_button_interaction"
       {...props}
     />
-  )
-);
+  );
+});
 
 GazeResponsiveButton.displayName = 'GazeResponsiveButton';
 
 /**
  * Predictive button that learns user interaction patterns
  */
-export const PredictiveButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
-  (props, ref) => (
+export const PredictiveButton = forwardRef(function PredictiveButton(
+  props: GlassButtonProps,
+  ref: React.Ref<HTMLButtonElement>
+) {
+  return (
     <GlassButton
       ref={ref}
       predictive={true}
@@ -1113,16 +1102,19 @@ export const PredictiveButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
       achievementId="predictive_button_usage"
       {...props}
     />
-  )
-);
+  );
+});
 
 PredictiveButton.displayName = 'PredictiveButton';
 
 /**
  * Accessibility-focused button with biometric adaptation and spatial audio
  */
-export const AccessibleButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
-  (props, ref) => (
+export const AccessibleButton = forwardRef(function AccessibleButton(
+  props: GlassButtonProps,
+  ref: React.Ref<HTMLButtonElement>
+) {
+  return (
     <GlassButton
       ref={ref}
       adaptive={true}
@@ -1133,8 +1125,8 @@ export const AccessibleButton = forwardRef<HTMLButtonElement, GlassButtonProps>(
       achievementId="accessible_button_usage"
       {...props}
     />
-  )
-);
+  );
+});
 
 AccessibleButton.displayName = 'AccessibleButton';
 

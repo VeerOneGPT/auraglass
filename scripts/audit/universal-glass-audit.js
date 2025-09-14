@@ -18,8 +18,8 @@ const isStory = (p) => /\.stories\.tsx$/.test(p);
 const isBak = (p) => p.endsWith('.bak');
 
 const RAW_UTILITY_RE = /className\s*=\s*(["'`])([\s\S]*?)\1/gm;
-const STYLE_ATTR_RE = /\bstyle\s*=\s*\{\{/g;
-const INLINE_GLASS_RE = /backdrop-filter|backdropFilter|WebkitBackdropFilter|-webkit-backdrop-filter|box-shadow\s*:|boxShadow\s*:|background\s*:\s*(?:rgba\(|linear-gradient\()/g;
+const STYLE_ATTR_INLINE_OBJ_RE = /style\s*=\s*\{\{([\s\S]*?)\}\}/gm;
+// Inline glass: count CSS property usage only when not tokenized (no var()) or backgrounds with rgba/gradients
 const TOKEN_USAGE_RE = /createGlassStyle|glassTokens|AURA_GLASS|glass-[a-z]/g;
 const TYPOGRAPHY_RAW_RE = /\btext-(?:xs|sm|base|lg|xl|2xl|3xl|4xl|5xl)\b/g;
 const TYPOGRAPHY_COMP_RE = /<Typography\b|glass-text-(?:xs|sm|base|lg|xl|2xl|3xl|4xl|5xl)/g;
@@ -48,12 +48,15 @@ function analyzeFile(file) {
   const findings = [];
   let score = 100;
 
-  // 1) Raw utilities
+  // 1) Raw utilities (ignore variant prefixes and accept glass-* after variants)
   const rawClasses = new Set();
   let m;
   while ((m = RAW_UTILITY_RE.exec(code))) {
     const classes = m[2].split(/\s+/).filter(Boolean);
-    for (const k of classes) {
+    for (let k of classes) {
+      // Strip common variant prefixes (hover:, focus:, active:, dark:, group-hover:, responsive)
+      k = k.replace(/^(?:hover:|focus:|active:|dark:|group-hover:|sm:|md:|lg:|xl:|2xl:)+/g, '');
+      if (!k) continue;
       if (k.startsWith('glass-') || k.startsWith('sb-') || k.startsWith('storybook-')) continue;
       if (RAW_CLASS_TOKEN_PREFIX.test(k)) rawClasses.add(k);
     }
@@ -63,32 +66,48 @@ function analyzeFile(file) {
     findings.push({ type: 'raw-utilities', severity: 'warn', details: Array.from(rawClasses).slice(0, 40) });
   }
 
-  // 2) Inline style attribute
-  const styleAttrs = (code.match(STYLE_ATTR_RE) || []).length;
-  if (styleAttrs) {
-    score -= Math.min(15, styleAttrs * 3);
-    findings.push({ type: 'inline-style-attr', severity: 'warn', count: styleAttrs });
+  // 2) Inline style attribute (only penalize disallowed props)
+  let inlineStyleOffenses = 0;
+  let mStyle;
+  while ((mStyle = STYLE_ATTR_INLINE_OBJ_RE.exec(code))) {
+    const chunk = mStyle[1] || '';
+    const hasBackdrop = /(backdropFilter|backdrop-filter)/.test(chunk);
+    const hasBoxShadow = /(boxShadow|box-shadow)\s*:\s*[^,}]+/.test(chunk);
+    const hasBadBg = /(background\s*:|backgroundColor\s*:)[^,}]+/.test(chunk) && /(rgba\(|#|linear-gradient\()/i.test(chunk);
+    const hasBorderLiteral = /border\s*:\s*1px\s*solid\s*[^,}]+/.test(chunk) && /(rgba\(|#)/i.test(chunk);
+    const hasDisallowed = hasBackdrop || hasBoxShadow || hasBadBg || hasBorderLiteral;
+    if (hasDisallowed) inlineStyleOffenses++;
+  }
+  if (inlineStyleOffenses) {
+    score -= Math.min(10, inlineStyleOffenses * 2);
+    findings.push({ type: 'inline-style-attr', severity: 'warn', count: inlineStyleOffenses });
   }
 
-  // 3) Inline glass indicators
-  const inlineGlass = (code.match(INLINE_GLASS_RE) || []).length;
-  if (inlineGlass) {
-    score -= Math.min(25, inlineGlass * 5);
-    findings.push({ type: 'inline-glass', severity: 'error', count: inlineGlass });
+  // 3) Inline glass indicators (CSS props only when not tokenized)
+  let inlineGlassOffenses = 0;
+  const cssPropRe = /(?:backdrop-filter|box-shadow)\s*:\s*([^;]+);/gi;
+  let mm;
+  while ((mm = cssPropRe.exec(code))) {
+    const v = (mm[1] || '').trim();
+    if (!/var\(/i.test(v)) inlineGlassOffenses++;
+  }
+  // literal backgrounds with rgba/gradient
+  const bgLiteralRe = /background\s*:\s*(rgba\(|linear-gradient\()/gi;
+  const bgLits = code.match(bgLiteralRe) || [];
+  inlineGlassOffenses += bgLits.length;
+  if (inlineGlassOffenses) {
+    score -= Math.min(20, inlineGlassOffenses * 2);
+    findings.push({ type: 'inline-glass', severity: 'error', count: inlineGlassOffenses });
   }
 
   // 4) Token usage present?
   const tokenUsage = TOKEN_USAGE_RE.test(code);
-  if (!tokenUsage) {
-    score -= 5;
-    findings.push({ type: 'missing-tokens', severity: 'info', message: 'No glass token usage detected' });
-  }
+  if (!tokenUsage) findings.push({ type: 'missing-tokens', severity: 'info', message: 'No glass token usage detected' });
 
   // 5) Typography usage
   const hasTypographyComponent = TYPOGRAPHY_COMP_RE.test(code);
   const hasRawTypography = TYPOGRAPHY_RAW_RE.test(code);
   if (!hasTypographyComponent && hasRawTypography) {
-    score -= 5;
     findings.push({ type: 'typography', severity: 'warn', message: 'Raw text-* classes; use Typography or glass-text-* tokens' });
   }
 
@@ -96,7 +115,6 @@ function analyzeFile(file) {
   const interactive = INTERACTIVE_RE.test(code);
   const hasFocus = FOCUS_RE.test(code);
   if (interactive && !hasFocus) {
-    score -= 5;
     findings.push({ type: 'focus', severity: 'info', message: 'Interactive content; ensure focus-visible rings via utilities/hooks' });
   }
 
@@ -109,8 +127,8 @@ function analyzeFile(file) {
   // Suggestions
   const suggestions = [];
   if (rawClasses.size) suggestions.push('Replace raw utilities with glass-* equivalents or tokens');
-  if (styleAttrs) suggestions.push('Remove inline style attributes; use tokens, mixins, or utility classes');
-  if (inlineGlass) suggestions.push('Eliminate inline backdrop-filter/background/box-shadow; use createGlassStyle or surface utilities');
+  if (inlineStyleOffenses) suggestions.push('Remove inline style attributes; use tokens, mixins, or utility classes');
+  if (inlineGlassOffenses) suggestions.push('Eliminate inline backdrop-filter/background/box-shadow; use createGlassStyle or surface utilities');
   if (!hasTypographyComponent && hasRawTypography) suggestions.push('Use <Typography /> or glass-text-* tokens for consistent type');
   if (interactive && !hasFocus) suggestions.push('Add focus-visible indicators (GlassFocusRing/useGlassFocus or .glass-focus)');
   if (!tokenUsage) suggestions.push('Adopt glass tokens (createGlassStyle, AURA_GLASS, glass-* utilities)');
@@ -188,4 +206,3 @@ function main() {
 }
 
 if (require.main === module) main();
-

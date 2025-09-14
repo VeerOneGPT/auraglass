@@ -252,7 +252,7 @@ export const GlassPagination: React.FC<GlassPaginationProps> = ({
                     size={size}
                     ariaLabel="First page"
                 >
-                    <ChevronsLeft className="glass-glass-w-4 glass-glass-h-4" />
+                    <ChevronsLeft className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
                 </GlassPaginationItem>
             )}
 
@@ -264,19 +264,19 @@ export const GlassPagination: React.FC<GlassPaginationProps> = ({
                     size={size}
                     ariaLabel="Previous page"
                 >
-                    <ChevronLeft className="glass-glass-w-4 glass-glass-h-4" />
+                    <ChevronLeft className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
                 </GlassPaginationItem>
             )}
 
             {/* Page numbers */}
-            <div ref={pagesRef} className="glass-glass-relative glass-inline-glass-glass-flex glass-glass-items-center glass-glass-gap-1">
+            <div ref={pagesRef} className="glass-glass-glass-relative glass-inline-glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-1">
                 {/* Ink indicator */}
-                <div className="glass-glass-absolute bottom-0 h-0.5 glass-surface-primary transition-all duration-200" style={{ left: ink.left, width: ink.width }} />
+                <div className="glass-glass-glass-absolute bottom-0 glass-glass-glass-h-0-5 glass-surface-primary transition-all duration-200" style={{ left: ink.left, width: ink.width }} />
                 {pageNumbers.map((page, index) => (
                     <React.Fragment key={index}>
                         {page === '...' ? (
                             <GlassPaginationItem disabled size={size}>
-                                <MoreHorizontal className="glass-glass-w-4 glass-glass-h-4" />
+                                <MoreHorizontal className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
                             </GlassPaginationItem>
                         ) : (
                             <GlassPaginationItem
@@ -302,7 +302,7 @@ export const GlassPagination: React.FC<GlassPaginationProps> = ({
                     size={size}
                     ariaLabel="Next page"
                 >
-                    <ChevronRight className="glass-glass-w-4 glass-glass-h-4" />
+                    <ChevronRight className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
                 </GlassPaginationItem>
             )}
 
@@ -314,13 +314,13 @@ export const GlassPagination: React.FC<GlassPaginationProps> = ({
                     size={size}
                     ariaLabel="Last page"
                 >
-                    <ChevronsRight className="glass-glass-w-4 glass-glass-h-4" />
+                    <ChevronsRight className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
                 </GlassPaginationItem>
             )}
 
             {loading && (
                 <div className="glass-ml-2">
-                    <div className="glass-glass-w-4 glass-glass-h-4 glass-glass-border-2 glass-glass-border-white/30 glass-glass-border-t-white/60 glass-radius-full animate-spin" />
+                    <div className="glass-glass-glass-w-4 glass-glass-glass-h-4 glass-glass-glass-border-2 glass-glass-glass-border-white/30 glass-glass-glass-border-t-white/60 glass-radius-full animate-spin" />
                 </div>
             )}
             </OptimizedGlass>
@@ -486,11 +486,11 @@ export const GlassPaginationWithInfo: React.FC<GlassPaginationWithInfoProps> = (
     const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
     return (
-        <div className="glass-glass-flex glass-glass-flex-col sm:glass-glass-flex-row glass-glass-items-center glass-glass-justify-between glass-glass-gap-4">
+        <div className="glass-glass-glass-flex glass-glass-glass-flex-col sm:glass-glass-glass-flex-row glass-glass-glass-items-center glass-glass-glass-justify-between glass-glass-glass-gap-4">
             {showItemInfo && (
-                <div className="glass-glass-text-primary/60 glass-glass-text-sm">
-                    Showing <span className="glass-glass-font-medium glass-glass-text-primary">{startItem}-{endItem}</span> of{' '}
-                    <span className="glass-glass-font-medium glass-glass-text-primary">{totalItems.toLocaleString()}</span> {itemName}
+                <div className="glass-glass-glass-text-primary/60 glass-glass-glass-text-sm">
+                    Showing <span className="glass-glass-glass-font-medium glass-glass-glass-text-primary">{startItem}-{endItem}</span> of{' '}
+                    <span className="glass-glass-glass-font-medium glass-glass-glass-text-primary">{totalItems.toLocaleString()}</span> {itemName}
                 </div>
             )}
 

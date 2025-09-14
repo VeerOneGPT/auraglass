@@ -227,7 +227,7 @@ export const LayeredGlassStack: React.FC<LayeredGlassStackProps> = ({
           customConfig={layerData.config}
           enableParallax={enableParallax}
           enableHover={enableHover}
-          className="glass-glass-absolute glass-glass-inset-0"
+          className="glass-glass-glass-absolute glass-glass-glass-inset-0"
         >
           {layerData.content}
         </GlassDepthLayer>

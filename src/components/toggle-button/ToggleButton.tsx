@@ -145,6 +145,9 @@ function ToggleButtonComponent(
     className,
     style,
     glass = false,
+    // Prevent custom props from leaking to DOM
+    glassVariant,
+    blurStrength,
     color = 'default',
     size = 'medium',
     fullWidth = false,
@@ -333,7 +336,7 @@ function ToggleButtonComponent(
         preset="scaleIn"
         animateOnHover={true}
         duration={0.2}
-        className="inline-glass-glass-block"
+        className="inline-glass-glass-glass-block"
       >
         <OptimizedGlass
           ref={(node) => {
@@ -369,11 +372,11 @@ function ToggleButtonComponent(
           {...a11yProps}
           {...rest}
         >
-          <span className="glass-glass-relative glass-z-10">
+          <span className="glass-glass-glass-relative glass-glass-glass-z-10">
             {children}
           </span>
           {description && (
-            <span id={descriptionId} className="glass-glass-sr-only">
+            <span id={descriptionId} className="glass-glass-glass-sr-only">
               {description}
             </span>
           )}
@@ -387,7 +390,7 @@ function ToggleButtonComponent(
       preset="scaleIn"
       animateOnHover={true}
       duration={0.2}
-      className="inline-glass-glass-block"
+      className="inline-glass-glass-glass-block"
     >
       <button
         ref={(node) => {
@@ -414,7 +417,7 @@ function ToggleButtonComponent(
       >
         {children}
         {description && (
-          <span id={descriptionId} className="glass-glass-sr-only">
+          <span id={descriptionId} className="glass-glass-glass-sr-only">
             {description}
           </span>
         )}
@@ -451,5 +454,4 @@ GlassToggleButton.displayName = 'GlassToggleButton';
 
 export default ToggleButton;
 export { GlassToggleButton, ToggleButton };
-
 

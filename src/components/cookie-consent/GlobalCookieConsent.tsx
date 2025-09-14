@@ -437,7 +437,7 @@ export const GlobalCookieConsent = forwardRef<HTMLDivElement, GlobalCookieConsen
                 onCheckedChange={() => handleToggleCategory(category.id, category.required)}
                 disabled={category.required}
               />
-              <Typography variant="span" style={{ fontWeight: 'var(--typography-heading-weight)' }}>
+              <Typography variant="span" className="glass-glass-glass-font-semibold">
                 {category.name} {category.required && <em>(Required)</em>}
               </Typography>
             </CategoryHeader>
@@ -449,6 +449,8 @@ export const GlobalCookieConsent = forwardRef<HTMLDivElement, GlobalCookieConsen
             {category.cookies && category.cookies.length > 0 && (
               <>
                 <DetailsToggle
+                  aria-expanded={expanded}
+                  aria-controls="cookie-details"
                   onClick={(e) => {
                     // Logic to show cookie details could be expanded here
                   }}
@@ -476,7 +478,7 @@ export const GlobalCookieConsent = forwardRef<HTMLDivElement, GlobalCookieConsen
           {...rest}
         >
           <Box>
-            <Typography variant="h6" style={{ marginBottom: '8px', fontWeight: 'var(--typography-heading-weight)' }}>
+            <Typography variant="h6" className="glass-glass-glass-mb-2 glass-glass-glass-font-semibold">
               {title}
             </Typography>
 
@@ -492,7 +494,7 @@ export const GlobalCookieConsent = forwardRef<HTMLDivElement, GlobalCookieConsen
               )}
             </Typography>
 
-            {customContent && <Box style={{ marginTop: '1.5rem' }}>{customContent}</Box>}
+            {customContent && <Box className="glass-mt-4">{customContent}</Box>}
 
             {!expanded && cookieCategories.length > 0 && (
               <Button variant="ghost" onClick={handleShowDetails} size="sm">
@@ -500,7 +502,9 @@ export const GlobalCookieConsent = forwardRef<HTMLDivElement, GlobalCookieConsen
               </Button>
             )}
 
-            {(expanded || initiallyExpanded) && cookieCategories.length > 0 && renderCategories()}
+            {(expanded || initiallyExpanded) && cookieCategories.length > 0 && (
+              <div id="cookie-details">{renderCategories()}</div>
+            )}
 
             <ButtonContainer>
               {dismissible && (

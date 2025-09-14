@@ -2,7 +2,7 @@ import { useReducedMotion } from './useReducedMotion';
 
 export interface MotionAwareAnimationConfig {
   getAnimationProps: (props?: any) => any;
-  getTransition: (duration?: number, easing?: string) => any;
+  getTransition: (duration?: number, easing?: any) => any;
 }
 
 export interface AnimationDurationConfig {
@@ -16,18 +16,49 @@ export function useMotionAwareAnimation(): MotionAwareAnimationConfig {
     if (prefersReducedMotion) {
       return {
         ...props,
-        transition: 'none',
+        // Use a zero-duration transition compatible with Framer Motion
+        transition: { duration: 0 },
         animate: props?.initial || {},
       };
     }
     return props;
   };
 
-  const getTransition = (duration: number = 0.3, easing: string = 'ease-out') => {
+  // Normalize easing to Framer Motion-friendly values
+  const normalizeEase = (easing: string | number[] | ((t: number) => number)) => {
+    if (typeof easing === 'string') {
+      const e = easing.trim().toLowerCase();
+      // Convert common CSS names to Framer Motion names
+      if (e === 'ease-in') return 'easeIn';
+      if (e === 'ease-out') return 'easeOut';
+      if (e === 'ease-in-out' || e === 'ease') return 'easeInOut';
+      if (e === 'linear') return 'linear';
+      if (e === 'spring') return 'spring';
+      // Support CSS cubic-bezier() by converting to an array that Framer understands
+      if (e.startsWith('cubic-bezier(') && e.endsWith(')')) {
+        const nums = e
+          .slice('cubic-bezier('.length, -1)
+          .split(',')
+          .map((n) => parseFloat(n.trim()))
+          .filter((n) => Number.isFinite(n));
+        if (nums.length === 4) return nums as unknown as number[];
+      }
+      // Fallback
+      return 'easeInOut';
+    }
+    return easing;
+  };
+
+  const getTransition = (duration: number = 0.3, easing: any = 'easeOut') => {
     if (prefersReducedMotion) {
       return { duration: 0 };
     }
-    return { duration, ease: easing };
+    const normalized = normalizeEase(easing);
+    if (normalized === 'spring') {
+      // Let callers provide additional spring settings if needed elsewhere
+      return { type: 'spring' } as any;
+    }
+    return { duration, ease: normalized as any };
   };
 
   return {

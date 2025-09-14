@@ -161,7 +161,7 @@ export const MotionAwareGlass = forwardRef<HTMLDivElement, MotionAwareGlassProps
 
         {/* Screen reader information for motion preference */}
         {prefersReducedMotion && (
-          <span className="glass-glass-sr-only">
+          <span className="glass-glass-glass-sr-only">
             Motion reduced for accessibility
           </span>
         )}
@@ -195,7 +195,10 @@ export const MotionAwareGlassInput = forwardRef<HTMLDivElement, Omit<MotionAware
 MotionAwareGlassInput.displayName = 'MotionAwareGlassInput';
 
 // Hook for easy access to motion-aware glass styles
-export const useMotionAwareGlassStyles = () => {
+export const useMotionAwareGlassStyles: () => {
+  getGlassStyle: (variant?: MotionAwareGlassProps['variant']) => React.CSSProperties;
+  prefersReducedMotion: boolean;
+} = () => {
   const { prefersReducedMotion } = useMotionPreferenceContext();
 
   return {

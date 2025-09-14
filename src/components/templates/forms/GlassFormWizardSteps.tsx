@@ -76,8 +76,8 @@ const StepIndicator = forwardRef<HTMLDivElement, StepIndicatorProps>(
     const renderStepIcon = () => {
       if (isCompleted) {
         return (
-          <div className="glass-glass-w-8 glass-glass-h-8 glass-radius-full bg-success glass-glass-flex glass-glass-items-center glass-glass-justify-center">
-            <svg className="glass-glass-w-4 glass-glass-h-4 text-success-foreground" fill="currentColor" viewBox="0 0 20 20">
+          <div className="glass-glass-glass-w-8 glass-glass-glass-h-8 glass-radius-full bg-success glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center">
+            <svg className="glass-glass-glass-w-4 glass-glass-glass-h-4 text-success-foreground" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
             </svg>
           </div>
@@ -112,7 +112,7 @@ const StepIndicator = forwardRef<HTMLDivElement, StepIndicatorProps>(
               {step.title}
             </span>
             {step.optional && (
-              <span className="glass-glass-text-xs glass-text-secondary bg-muted glass-glass-px-1.5 glass-glass-py-0.5 glass-radius-md">
+              <span className="glass-glass-glass-text-xs glass-text-secondary glass-surface-subtle glass-glass-glass-px-1.5 glass-glass-glass-py-0.5 glass-radius-md">
                 Optional
               </span>
             )}
@@ -123,8 +123,8 @@ const StepIndicator = forwardRef<HTMLDivElement, StepIndicatorProps>(
 
     if (layout === 'vertical') {
       return (
-        <div ref={ref} className="glass-glass-flex glass-glass-items-start glass-glass-gap-4">
-          <div className="glass-glass-flex glass-glass-flex-col glass-glass-items-center">
+        <div ref={ref} className="glass-glass-glass-flex glass-glass-glass-items-start glass-glass-glass-gap-4">
+          <div className="glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-items-center">
             {renderStepIcon()}
             {index < step.title.length - 1 && (
               <div className={cn(
@@ -133,7 +133,7 @@ const StepIndicator = forwardRef<HTMLDivElement, StepIndicatorProps>(
               )} />
             )}
           </div>
-          <VStack space="xs" className="glass-glass-flex-1">
+          <VStack space="xs" className="glass-glass-glass-flex-1">
             <span className={cn(
               'font-medium transition-colors',
               isActive ? 'text-primary' : isCompleted ? 'text-success' : 'glass-text-secondary'
@@ -141,12 +141,12 @@ const StepIndicator = forwardRef<HTMLDivElement, StepIndicatorProps>(
               {step.title}
             </span>
             {step.description && (
-              <p className="glass-glass-text-sm glass-text-secondary">
+              <p className="glass-glass-glass-text-sm glass-text-secondary">
                 {step.description}
               </p>
             )}
             {step.optional && (
-              <span className="glass-glass-text-xs glass-text-secondary bg-muted glass-glass-px-1.5 glass-glass-py-0.5 glass-radius-md w-fit">
+              <span className="glass-glass-glass-text-xs glass-text-secondary glass-surface-subtle glass-glass-glass-px-1.5 glass-glass-glass-py-0.5 glass-radius-md w-fit">
                 Optional
               </span>
             )}
@@ -216,10 +216,10 @@ export const GlassFormWizardSteps = forwardRef<HTMLDivElement, GlassFormWizardSt
       return (
         <VStack space="sm">
           <HStack space="sm" align="center" justify="between">
-            <span className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary">
+            <span className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary">
               Step {currentStep + 1} of {totalSteps}
             </span>
-            <span className="glass-glass-text-sm glass-text-secondary">
+            <span className="glass-glass-glass-text-sm glass-text-secondary">
               {Math.round(progressValue)}% Complete
             </span>
           </HStack>

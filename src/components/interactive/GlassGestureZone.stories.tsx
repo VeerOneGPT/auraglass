@@ -20,6 +20,8 @@ const meta = {
     },
     trailColor: {
       control: { type: 'color' },
+      type: 'string',
+      table: { type: { summary: 'string' } },
     },
   },
 } satisfies Meta<typeof GlassGestureZone>;

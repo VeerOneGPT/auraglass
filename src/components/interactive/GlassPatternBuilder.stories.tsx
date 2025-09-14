@@ -23,6 +23,8 @@ const meta = {
     },
     backgroundColor: {
       control: { type: 'color' },
+      type: 'string',
+      table: { type: { summary: 'string' } },
     },
     exportFormat: {
       control: { type: 'select' },

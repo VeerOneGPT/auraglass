@@ -63,47 +63,47 @@ const Toolbar: React.FC = () => {
   }, [pageState.components.length, handleSave]);
 
   return (
-    <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-p-4 glass-surface-subtle glass-glass-border-b glass-glass-border-subtle">
+    <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between glass-glass-glass-p-4 glass-surface-subtle glass-glass-glass-border-b glass-glass-glass-border-subtle">
       {/* Left Side - Main Actions */}
-      <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
-        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-          <h1 className="glass-glass-text-xl font-bold glass-text-secondary">Page Builder</h1>
-          <span className="glass-glass-text-xs glass-text-secondary glass-surface-subtle glass-glass-px-2 glass-glass-py-1 glass-radius">
+      <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-4">
+        <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+          <h1 className="glass-glass-glass-text-xl glass-glass-glass-font-bold glass-text-secondary">Page Builder</h1>
+          <span className="glass-glass-glass-text-xs glass-text-secondary glass-surface-subtle glass-glass-glass-px-2 glass-glass-glass-py-1 glass-radius">
             v1.0
           </span>
         </div>
         
-        <div className="w-px glass-glass-h-6 bg-gray-300" />
+        <div className="glass-glass-glass-w-px glass-glass-glass-h-6 glass-surface-subtle" />
         
         {/* File Actions */}
-        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+        <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
           <button
             onClick={clearPage}
-            className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-px-3 glass-glass-py-2 glass-glass-text-sm glass-text-secondary hover:glass-surface-subtle glass-radius-md transition-colors"
+            className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2 glass-glass-glass-px-3 glass-glass-glass-py-2 glass-glass-glass-text-sm glass-text-secondary hover:glass-surface-subtle glass-radius-md transition-colors"
           >
             <span>🗑️</span>
             New
           </button>
           <button
             onClick={handleSave}
-            className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-px-3 glass-glass-py-2 glass-glass-text-sm glass-text-secondary hover:glass-surface-subtle glass-radius-md transition-colors"
+            className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2 glass-glass-glass-px-3 glass-glass-glass-py-2 glass-glass-glass-text-sm glass-text-secondary hover:glass-surface-subtle glass-radius-md transition-colors"
           >
             <span>💾</span>
             Save
           </button>
           <button
             onClick={handleLoad}
-            className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-px-3 glass-glass-py-2 glass-glass-text-sm glass-text-secondary hover:glass-surface-subtle glass-radius-md transition-colors"
+            className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2 glass-glass-glass-px-3 glass-glass-glass-py-2 glass-glass-glass-text-sm glass-text-secondary hover:glass-surface-subtle glass-radius-md transition-colors"
           >
             <span>📁</span>
             Load
           </button>
         </div>
 
-        <div className="w-px glass-glass-h-6 bg-gray-300" />
+        <div className="glass-glass-glass-w-px glass-glass-glass-h-6 glass-surface-subtle" />
 
         {/* Undo/Redo */}
-        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
+        <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-1">
           <button
             onClick={undo}
             disabled={!canUndo()}
@@ -134,7 +134,7 @@ const Toolbar: React.FC = () => {
       </div>
 
       {/* Center - Breakpoint Controls */}
-      <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-surface-subtle glass-radius-lg glass-glass-p-1">
+      <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2 glass-surface-subtle glass-radius-lg glass-glass-glass-p-1">
         {[
           { key: 'desktop', icon: '🖥️', label: 'Desktop' },
           { key: 'tablet', icon: '📱', label: 'Tablet' },
@@ -158,9 +158,9 @@ const Toolbar: React.FC = () => {
       </div>
 
       {/* Right Side - View Options & Actions */}
-      <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
+      <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-4">
         {/* View Options */}
-        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+        <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
           <button
             onClick={toggleGrid}
             className={cn(
@@ -187,10 +187,10 @@ const Toolbar: React.FC = () => {
           </button>
         </div>
 
-        <div className="w-px glass-glass-h-6 bg-gray-300" />
+        <div className="glass-glass-glass-w-px glass-glass-glass-h-6 glass-surface-subtle" />
 
         {/* Preview & Publish */}
-        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+        <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
           <button
             onClick={togglePreviewMode}
             className={cn(
@@ -209,7 +209,7 @@ const Toolbar: React.FC = () => {
               console.log('Publishing:', data);
               alert('Page published! (Demo - check console for data)');
             }}
-            className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-px-4 glass-glass-py-2 glass-glass-text-sm glass-glass-font-medium glass-surface-blue glass-glass-text-primary hover:glass-surface-blue glass-radius-md transition-colors"
+            className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2 glass-glass-glass-px-4 glass-glass-glass-py-2 glass-glass-glass-text-sm glass-glass-glass-font-medium glass-surface-blue glass-glass-glass-text-primary hover:glass-surface-blue glass-radius-md transition-colors"
           >
             <span>🚀</span>
             Publish
@@ -290,12 +290,12 @@ const PageBuilderCore: React.FC<PageBuilderProps> = ({
       <Toolbar />
 
       {/* Main Content */}
-      <div className="glass-glass-flex-1 glass-glass-flex overflow-hidden">
+      <div className="glass-glass-glass-flex-1 glass-glass-glass-flex overflow-hidden">
         {/* Left Panels */}
-        <div className="glass-glass-flex">
+        <div className="glass-glass-glass-flex">
           {/* Left Panel Tabs */}
           {!leftPanelCollapsed && (
-            <div className="glass-glass-w-12 glass-surface-subtle glass-glass-border-r glass-glass-border-subtle glass-glass-flex glass-glass-flex-col">
+            <div className="glass-glass-glass-w-12 glass-surface-subtle glass-glass-glass-border-r glass-glass-glass-border-subtle glass-glass-glass-flex glass-glass-glass-flex-col">
               <button
                 onClick={() => setActiveLeftPanel('components')}
                 className={cn(
@@ -306,7 +306,7 @@ const PageBuilderCore: React.FC<PageBuilderProps> = ({
                 )}
                 title="Components"
               >
-                <span className="glass-glass-text-lg">📦</span>
+                <span className="glass-glass-glass-text-lg">📦</span>
                 Comp
               </button>
               <button
@@ -319,14 +319,14 @@ const PageBuilderCore: React.FC<PageBuilderProps> = ({
                 )}
                 title="Structure"
               >
-                <span className="glass-glass-text-lg">🌳</span>
+                <span className="glass-glass-glass-text-lg">🌳</span>
                 Tree
               </button>
             </div>
           )}
 
           {/* Active Left Panel */}
-          <div className="glass-glass-border-r glass-glass-border-subtle">
+          <div className="glass-glass-glass-border-r glass-glass-glass-border-subtle">
             {activeLeftPanel === 'components' ? (
               <GlassComponentPalette
                 collapsed={leftPanelCollapsed}
@@ -345,7 +345,7 @@ const PageBuilderCore: React.FC<PageBuilderProps> = ({
         <GlassCanvas />
 
         {/* Right Panel - Properties */}
-        <div className="glass-glass-border-l glass-glass-border-subtle">
+        <div className="glass-glass-glass-border-l glass-glass-glass-border-subtle">
           <GlassPropertyPanel
             collapsed={rightPanelCollapsed}
             onToggleCollapse={() => setRightPanelCollapsed(!rightPanelCollapsed)}
@@ -354,12 +354,12 @@ const PageBuilderCore: React.FC<PageBuilderProps> = ({
       </div>
 
       {/* Status Bar */}
-      <div className="glass-glass-h-6 bg-gray-800 text-gray-300 glass-glass-text-xs glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-px-4">
-        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
+      <div className="glass-glass-glass-h-6 glass-surface-primary text-gray-300 glass-glass-glass-text-xs glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between glass-glass-glass-px-4">
+        <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-4">
           <span>🟢 Ready</span>
           <span>Auto-save: ON</span>
         </div>
-        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
+        <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-4">
           <span>Zoom: 100%</span>
           <span>Grid: {`${false ? 'ON' : 'OFF'}`}</span>
         </div>

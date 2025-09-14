@@ -303,10 +303,10 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
 
       return (
         <Motion preset="slideDown">
-          <Glass className="glass-glass-p-4 glass-radius-lg">
+          <Glass className="glass-glass-glass-p-4 glass-radius-lg">
             <VStack space="md">
               <HStack space="sm" align="center" justify="between">
-                <h3 className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary">Filters</h3>
+                <h3 className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary">Filters</h3>
                 <GlassButton
                   variant="ghost"
                   size="sm"
@@ -317,10 +317,10 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
                 </GlassButton>
               </HStack>
               
-              <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 lg:glass-glass-glass-grid-cols-3 xl:glass-glass-glass-grid-cols-4 glass-glass-gap-4">
+              <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-1 md:glass-glass-glass-glass-glass-grid-cols-2 lg:glass-glass-glass-glass-glass-grid-cols-3 xl:glass-glass-glass-glass-glass-grid-cols-4 glass-glass-glass-gap-4">
                 {filters.map((filter) => (
                   <div key={filter.id}>
-                    <label className="glass-glass-block glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary glass-glass-mb-2">
+                    <label className="glass-glass-glass-block glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary glass-glass-glass-mb-2">
                       {filter.label}
                     </label>
                     
@@ -331,7 +331,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
                           ...activeFilters,
                           [filter.id]: e.target.value
                         })}
-                        className="glass-glass-w-full glass-glass-px-3 glass-glass-py-2 bg-background glass-glass-border glass-glass-border-glass-glass-border glass-radius-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="glass-glass-glass-w-full glass-glass-glass-px-3 glass-glass-glass-py-2 bg-background glass-glass-glass-border glass-glass-glass-border-glass-glass-glass-border glass-radius-md focus:outline-none focus:ring-2 focus:ring-primary"
                       >
                         <option value="">{filter.placeholder || 'Select...'}</option>
                         {filter.options?.map((option) => (
@@ -350,7 +350,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
                           [filter.id]: e.target.value
                         })}
                         placeholder={filter.placeholder}
-                        className="glass-glass-w-full glass-glass-px-3 glass-glass-py-2 bg-background glass-glass-border glass-glass-border-glass-glass-border glass-radius-md focus:outline-none focus:ring-2 focus:ring-primary"
+                        className="glass-glass-glass-w-full glass-glass-glass-px-3 glass-glass-glass-py-2 bg-background glass-glass-glass-border glass-glass-glass-border-glass-glass-glass-border glass-radius-md focus:outline-none focus:ring-2 focus:ring-primary"
                       />
                     )}
                   </div>
@@ -375,7 +375,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
         <HStack space="sm" align="center" justify="between">
           <HStack space="sm" align="center">
             {hasSelectedItems && (
-              <span className="glass-glass-text-sm glass-text-secondary">
+              <span className="glass-glass-glass-text-sm glass-text-secondary">
                 {(selectedItems?.length || 0)} item{(selectedItems?.length || 0) !== 1 ? 's' : ''} selected
               </span>
             )}
@@ -430,14 +430,14 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
             {renderCard ? renderCard(item, index) : (
               <GlassCard
                 variant="default"
-                className="glass-glass-h-full glass-glass-cursor-pointer hover:glass-glass-shadow-lg transition-glass-glass-shadow"
+                className="glass-glass-glass-h-full glass-glass-glass-cursor-pointer hover:glass-glass-glass-shadow-lg transition-glass-glass-glass-shadow"
                 onClick={(e) => onRowClick?.(item)}
               >
                 <VStack space="sm">
-                  <div className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary">
+                  <div className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary">
                     {item?.name || item?.title || item?.id}
                   </div>
-                  <div className="glass-glass-text-xs glass-text-secondary">
+                  <div className="glass-glass-glass-text-xs glass-text-secondary">
                     {item?.description || 'No description'}
                   </div>
                 </VStack>
@@ -463,7 +463,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
             {renderCard ? renderCard(item, index) : (
               <GlassCard
                 variant="outlined"
-                className="glass-foundation-complete backdrop-blur-md glass-glass-bg-transparent glass-glass-border-white/40 glass-glass-shadow-2xl glass-glass-cursor-pointer hover:glass-glass-shadow-2xl hover:scale-[1.01] transition-all"
+                className="glass-foundation-complete backdrop-blur-md glass-glass-glass-bg-transparent glass-glass-glass-border-white/40 glass-glass-glass-shadow-2xl glass-glass-glass-cursor-pointer hover:glass-glass-glass-shadow-2xl hover:scale-[1.01] transition-all"
                 onClick={(e) => onRowClick?.(item)}
               >
                 <HStack space="md" align="center">
@@ -477,15 +477,15 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
                         handleSelectionChange(newSelection);
                       }}
                       onClick={(e) => e.stopPropagation()}
-                      className="glass-radius-md glass-glass-border-glass-glass-border focus:ring-primary"
+                      className="glass-radius-md glass-glass-glass-border-glass-glass-glass-border focus:ring-primary"
                     />
                   )}
                   
-                  <VStack space="xs" className="glass-glass-flex-1">
-                    <div className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary">
+                  <VStack space="xs" className="glass-glass-glass-flex-1">
+                    <div className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary">
                       {item?.name || item?.title || item?.id}
                     </div>
-                    <div className="glass-glass-text-xs glass-glass-text-primary/70">
+                    <div className="glass-glass-glass-text-xs glass-glass-glass-text-primary/70">
                       {item?.description || 'No description'}
                     </div>
                   </VStack>
@@ -507,19 +507,19 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
     const renderContent = () => {
       if (loading) {
         return (
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center h-64">
-            <div className="glass-glass-w-8 glass-glass-h-8 glass-glass-border-2 glass-glass-border-primary glass-glass-border-t-transparent glass-radius-full animate-spin" />
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-h-64">
+            <div className="glass-glass-glass-w-8 glass-glass-glass-h-8 glass-glass-glass-border-2 glass-glass-glass-border-primary glass-glass-glass-border-t-transparent glass-radius-full animate-spin" />
           </div>
         );
       }
 
       if ((currentPageData?.length || 0) === 0) {
         return emptyState || (
-          <div className="glass-glass-flex glass-glass-flex-col glass-glass-items-center glass-glass-justify-center h-64 glass-glass-text-center">
-            <div className="glass-glass-text-lg glass-glass-font-medium glass-text-secondary glass-glass-mb-2">
+          <div className="glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-h-64 glass-glass-glass-text-center">
+            <div className="glass-glass-glass-text-lg glass-glass-glass-font-medium glass-text-secondary glass-glass-glass-mb-2">
               No items found
             </div>
-            <div className="glass-glass-text-sm glass-text-secondary">
+            <div className="glass-glass-glass-text-sm glass-text-secondary">
               Try adjusting your search or filters
             </div>
           </div>
@@ -564,7 +564,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
               onChange={onSearchChange}
               showFilters={false}
               showCategories={false}
-              className="w-64"
+              className="glass-glass-glass-w-64"
             />
           }
         />
@@ -592,7 +592,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
               Previous
             </GlassButton>
             
-            <span className="glass-glass-text-sm glass-text-secondary">
+            <span className="glass-glass-glass-text-sm glass-text-secondary">
               Page {currentPage} of {totalPages}
             </span>
             

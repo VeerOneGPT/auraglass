@@ -69,31 +69,31 @@ export const ArcticAurora: Story = {
     showControls: true
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <AuroraPro {...args}>
-        <div className="min-h-screen bg-gradient-to-b from-slate-900 via-blue-900 to-indigo-900 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-p-8">
-          <div className="glass-glass-text-center glass-glass-text-primary max-w-2xl">
-            <div className="glass-glass-text-6xl mb-6">🌌</div>
-            <h1 className="glass-glass-text-4xl font-bold mb-6">Arctic Aurora</h1>
-            <p className="glass-glass-text-xl text-blue-200 mb-8">
+        <div className="glass-min-glass-glass-h-screen glass-gradient-primary glass-gradient-primary via-blue-900 glass-gradient-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-p-8">
+          <div className="glass-glass-glass-text-center glass-glass-glass-text-primary max-w-2xl">
+            <div className="glass-glass-glass-text-6xl mb-6">🌌</div>
+            <h1 className="glass-glass-glass-text-4xl glass-glass-glass-font-bold mb-6">Arctic Aurora</h1>
+            <p className="glass-glass-glass-text-xl text-blue-200 mb-8">
               Experience the mesmerizing beauty of the northern lights with ethereal blue and green aurora waves
               dancing across the night sky. This arctic display captures the magic of polar light shows.
             </p>
-            <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-3 glass-glass-gap-4 glass-glass-text-sm">
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">❄️</div>
-                <div className="glass-glass-font-semibold">Arctic Colors</div>
-                <div className="text-blue-300">Cool blue & green palette</div>
+            <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-1 md:glass-glass-glass-glass-glass-grid-cols-3 glass-glass-glass-gap-4 glass-glass-glass-text-sm">
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">❄️</div>
+                <div className="glass-glass-glass-font-semibold">Arctic Colors</div>
+                <div className="glass-text-secondary">Cool blue & green palette</div>
               </div>
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">🌊</div>
-                <div className="glass-glass-font-semibold">Flowing Waves</div>
-                <div className="text-blue-300">Smooth, organic movement</div>
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">🌊</div>
+                <div className="glass-glass-glass-font-semibold">Flowing Waves</div>
+                <div className="glass-text-secondary">Smooth, organic movement</div>
               </div>
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">✨</div>
-                <div className="glass-glass-font-semibold">Particle Effects</div>
-                <div className="text-blue-300">Scattered light particles</div>
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">✨</div>
+                <div className="glass-glass-glass-font-semibold">Particle Effects</div>
+                <div className="glass-text-secondary">Scattered light particles</div>
               </div>
             </div>
           </div>
@@ -116,31 +116,31 @@ export const ForestAurora: Story = {
     showControls: true
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <AuroraPro {...args}>
-        <div className="min-h-screen bg-gradient-to-b from-green-900 via-emerald-900 to-teal-900 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-p-8">
-          <div className="glass-glass-text-center glass-glass-text-primary max-w-2xl">
-            <div className="glass-glass-text-6xl mb-6">🌲</div>
-            <h1 className="glass-glass-text-4xl font-bold mb-6">Forest Aurora</h1>
-            <p className="glass-glass-text-xl text-green-200 mb-8">
+        <div className="glass-min-glass-glass-h-screen glass-gradient-primary glass-gradient-primary via-emerald-900 glass-gradient-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-p-8">
+          <div className="glass-glass-glass-text-center glass-glass-glass-text-primary max-w-2xl">
+            <div className="glass-glass-glass-text-6xl mb-6">🌲</div>
+            <h1 className="glass-glass-glass-text-4xl glass-glass-glass-font-bold mb-6">Forest Aurora</h1>
+            <p className="glass-glass-glass-text-xl text-green-200 mb-8">
               Immerse yourself in nature's light show with deep forest greens and earthy aurora effects.
               Experience the tranquility of woodland aurora displays with pulsing light patterns.
             </p>
-            <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-3 glass-glass-gap-4 glass-glass-text-sm">
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">🌿</div>
-                <div className="glass-glass-font-semibold">Forest Greens</div>
-                <div className="text-green-300">Deep emerald & jade tones</div>
+            <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-1 md:glass-glass-glass-glass-glass-grid-cols-3 glass-glass-glass-gap-4 glass-glass-glass-text-sm">
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">🌿</div>
+                <div className="glass-glass-glass-font-semibold">Forest Greens</div>
+                <div className="glass-text-secondary">Deep emerald & jade tones</div>
               </div>
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">💚</div>
-                <div className="glass-glass-font-semibold">Pulsing Rhythm</div>
-                <div className="text-green-300">Organic breathing effect</div>
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">💚</div>
+                <div className="glass-glass-glass-font-semibold">Pulsing Rhythm</div>
+                <div className="glass-text-secondary">Organic breathing effect</div>
               </div>
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">🌳</div>
-                <div className="glass-glass-font-semibold">Curtain Effect</div>
-                <div className="text-green-300">Layered aurora curtains</div>
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">🌳</div>
+                <div className="glass-glass-glass-font-semibold">Curtain Effect</div>
+                <div className="glass-text-secondary">Layered aurora curtains</div>
               </div>
             </div>
           </div>
@@ -163,31 +163,31 @@ export const SunsetAurora: Story = {
     showControls: true
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <AuroraPro {...args}>
-        <div className="min-h-screen bg-gradient-to-b from-orange-600 via-pink-600 to-purple-800 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-p-8">
-          <div className="glass-glass-text-center glass-glass-text-primary max-w-2xl">
-            <div className="glass-glass-text-6xl mb-6">🌅</div>
-            <h1 className="glass-glass-text-4xl font-bold mb-6">Sunset Aurora</h1>
-            <p className="glass-glass-text-xl text-orange-200 mb-8">
+        <div className="glass-min-glass-glass-h-screen glass-gradient-primary glass-gradient-primary via-pink-600 glass-gradient-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-p-8">
+          <div className="glass-glass-glass-text-center glass-glass-glass-text-primary max-w-2xl">
+            <div className="glass-glass-glass-text-6xl mb-6">🌅</div>
+            <h1 className="glass-glass-glass-text-4xl glass-glass-glass-font-bold mb-6">Sunset Aurora</h1>
+            <p className="glass-glass-glass-text-xl text-orange-200 mb-8">
               Witness the spectacular fusion of sunset colors with aurora effects.
               Experience shifting color palettes that dance like fire in the evening sky.
             </p>
-            <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-3 glass-glass-gap-4 glass-glass-text-sm">
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">🔥</div>
-                <div className="glass-glass-font-semibold">Fiery Colors</div>
-                <div className="text-orange-300">Orange, pink & purple hues</div>
+            <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-1 md:glass-glass-glass-glass-glass-grid-cols-3 glass-glass-glass-gap-4 glass-glass-glass-text-sm">
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">🔥</div>
+                <div className="glass-glass-glass-font-semibold">Fiery Colors</div>
+                <div className="glass-text-secondary">Orange, pink & purple hues</div>
               </div>
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">🌈</div>
-                <div className="glass-glass-font-semibold">Color Shifting</div>
-                <div className="text-orange-300">Dynamic color transitions</div>
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">🌈</div>
+                <div className="glass-glass-glass-font-semibold">Color Shifting</div>
+                <div className="glass-text-secondary">Dynamic color transitions</div>
               </div>
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">⭐</div>
-                <div className="glass-glass-font-semibold">Intense Display</div>
-                <div className="text-orange-300">High-intensity effects</div>
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">⭐</div>
+                <div className="glass-glass-glass-font-semibold">Intense Display</div>
+                <div className="glass-text-secondary">High-intensity effects</div>
               </div>
             </div>
           </div>
@@ -210,31 +210,31 @@ export const OceanAurora: Story = {
     showControls: true
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <AuroraPro {...args}>
-        <div className="min-h-screen bg-gradient-to-b from-blue-800 via-cyan-800 to-teal-900 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-p-8">
-          <div className="glass-glass-text-center glass-glass-text-primary max-w-2xl">
-            <div className="glass-glass-text-6xl mb-6">🌊</div>
-            <h1 className="glass-glass-text-4xl font-bold mb-6">Ocean Aurora</h1>
-            <p className="glass-glass-text-xl text-cyan-200 mb-8">
+        <div className="glass-min-glass-glass-h-screen glass-gradient-primary glass-gradient-primary via-cyan-800 glass-gradient-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-p-8">
+          <div className="glass-glass-glass-text-center glass-glass-glass-text-primary max-w-2xl">
+            <div className="glass-glass-glass-text-6xl mb-6">🌊</div>
+            <h1 className="glass-glass-glass-text-4xl glass-glass-glass-font-bold mb-6">Ocean Aurora</h1>
+            <p className="glass-glass-glass-text-xl text-cyan-200 mb-8">
               Dive into the depths of oceanic aurora with calming blue and teal colors.
               Experience the gentle ebb and flow of underwater light patterns.
             </p>
-            <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-3 glass-glass-gap-4 glass-glass-text-sm">
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">🏄‍♂️</div>
-                <div className="glass-glass-font-semibold">Ocean Blues</div>
-                <div className="text-cyan-300">Deep sea & coastal colors</div>
+            <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-1 md:glass-glass-glass-glass-glass-grid-cols-3 glass-glass-glass-gap-4 glass-glass-glass-text-sm">
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">🏄‍♂️</div>
+                <div className="glass-glass-glass-font-semibold">Ocean Blues</div>
+                <div className="glass-text-secondary">Deep sea & coastal colors</div>
               </div>
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">🌊</div>
-                <div className="glass-glass-font-semibold">Wave Motion</div>
-                <div className="text-cyan-300">Fluid, flowing animations</div>
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">🌊</div>
+                <div className="glass-glass-glass-font-semibold">Wave Motion</div>
+                <div className="glass-text-secondary">Fluid, flowing animations</div>
               </div>
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">🐚</div>
-                <div className="glass-glass-font-semibold">Serene Effect</div>
-                <div className="text-cyan-300">Calming, peaceful display</div>
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">🐚</div>
+                <div className="glass-glass-glass-font-semibold">Serene Effect</div>
+                <div className="glass-text-secondary">Calming, peaceful display</div>
               </div>
             </div>
           </div>
@@ -257,31 +257,31 @@ export const CosmicAurora: Story = {
     showControls: true
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <AuroraPro {...args}>
-        <div className="min-h-screen bg-gradient-to-b from-purple-900 via-indigo-900 to-black glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-p-8">
-          <div className="glass-glass-text-center glass-glass-text-primary max-w-2xl">
-            <div className="glass-glass-text-6xl mb-6">🌌</div>
-            <h1 className="glass-glass-text-4xl font-bold mb-6">Cosmic Aurora</h1>
-            <p className="glass-glass-text-xl text-purple-200 mb-8">
+        <div className="glass-min-glass-glass-h-screen glass-gradient-primary glass-gradient-primary via-indigo-900 glass-gradient-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-p-8">
+          <div className="glass-glass-glass-text-center glass-glass-glass-text-primary max-w-2xl">
+            <div className="glass-glass-glass-text-6xl mb-6">🌌</div>
+            <h1 className="glass-glass-glass-text-4xl glass-glass-glass-font-bold mb-6">Cosmic Aurora</h1>
+            <p className="glass-glass-glass-text-xl text-purple-200 mb-8">
               Journey through the cosmos with deep purple and violet aurora effects.
               Experience the mystery and wonder of universal light displays.
             </p>
-            <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-3 glass-glass-gap-4 glass-glass-text-sm">
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">🪐</div>
-                <div className="glass-glass-font-semibold">Cosmic Colors</div>
-                <div className="text-purple-300">Deep space color palette</div>
+            <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-1 md:glass-glass-glass-glass-glass-grid-cols-3 glass-glass-glass-gap-4 glass-glass-glass-text-sm">
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">🪐</div>
+                <div className="glass-glass-glass-font-semibold">Cosmic Colors</div>
+                <div className="glass-text-secondary">Deep space color palette</div>
               </div>
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">🌟</div>
-                <div className="glass-glass-font-semibold">Mixed Effects</div>
-                <div className="text-purple-300">Combined animation modes</div>
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">🌟</div>
+                <div className="glass-glass-glass-font-semibold">Mixed Effects</div>
+                <div className="glass-text-secondary">Combined animation modes</div>
               </div>
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">✨</div>
-                <div className="glass-glass-font-semibold">Stellar Display</div>
-                <div className="text-purple-300">High particle density</div>
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">✨</div>
+                <div className="glass-glass-glass-font-semibold">Stellar Display</div>
+                <div className="glass-text-secondary">High particle density</div>
               </div>
             </div>
           </div>
@@ -304,12 +304,12 @@ export const MinimalAurora: Story = {
     showControls: false
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <AuroraPro {...args}>
-        <div className="min-h-screen glass-surface-subtle glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-p-8">
-          <div className="glass-glass-text-center max-w-2xl">
-            <div className="glass-glass-text-4xl mb-6">🌟</div>
-            <h1 className="glass-glass-text-2xl font-bold glass-text-secondary mb-6">Minimal Aurora</h1>
+        <div className="glass-min-glass-glass-h-screen glass-surface-subtle glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-p-8">
+          <div className="glass-glass-glass-text-center max-w-2xl">
+            <div className="glass-glass-glass-text-4xl mb-6">🌟</div>
+            <h1 className="glass-glass-glass-text-2xl glass-glass-glass-font-bold glass-text-secondary mb-6">Minimal Aurora</h1>
             <p className="glass-text-secondary">
               A subtle aurora display perfect for clean, minimal designs.
               Gentle effects that enhance without overwhelming the content.
@@ -334,18 +334,18 @@ export const AuroraShowcase: Story = {
     showControls: true
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <AuroraPro {...args}>
-        <div className="min-h-screen glass-glass-p-8">
-          <div className="max-w-6xl mx-auto">
-            <h1 className="glass-glass-text-4xl font-bold glass-glass-text-primary glass-glass-text-center mb-12">
+        <div className="glass-min-glass-glass-h-screen glass-glass-glass-p-8">
+          <div className="max-w-6xl glass-glass-glass-mx-auto">
+            <h1 className="glass-glass-glass-text-4xl glass-glass-glass-font-bold glass-glass-glass-text-primary glass-glass-glass-text-center mb-12">
               Aurora Pro Showcase
             </h1>
 
-            <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 glass-glass-gap-8 mb-8">
-              <div className="glass-glass-p-6 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-border glass-glass-border-white/20">
-                <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-4">🌌 Dynamic Effects</h3>
-                <ul className="glass-glass-text-primary/80 glass-glass-space-y-2 glass-glass-text-sm">
+            <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-1 md:glass-glass-glass-glass-glass-grid-cols-2 glass-glass-glass-gap-8 mb-8">
+              <div className="glass-glass-glass-p-6 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-glass-border glass-glass-glass-border-white/20">
+                <h3 className="glass-glass-glass-text-xl glass-glass-glass-font-semibold glass-glass-glass-text-primary glass-glass-glass-mb-4">🌌 Dynamic Effects</h3>
+                <ul className="glass-glass-glass-text-primary/80 glass-glass-glass-space-y-2 glass-glass-glass-text-sm">
                   <li>• Flowing aurora waves with organic movement</li>
                   <li>• Pulsing intensity for breathing effects</li>
                   <li>• Color shifting through cosmic palettes</li>
@@ -353,9 +353,9 @@ export const AuroraShowcase: Story = {
                 </ul>
               </div>
 
-              <div className="glass-glass-p-6 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-border glass-glass-border-white/20">
-                <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-4">✨ Visual Features</h3>
-                <ul className="glass-glass-text-primary/80 glass-glass-space-y-2 glass-glass-text-sm">
+              <div className="glass-glass-glass-p-6 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-glass-border glass-glass-glass-border-white/20">
+                <h3 className="glass-glass-glass-text-xl glass-glass-glass-font-semibold glass-glass-glass-text-primary glass-glass-glass-mb-4">✨ Visual Features</h3>
+                <ul className="glass-glass-glass-text-primary/80 glass-glass-glass-space-y-2 glass-glass-glass-text-sm">
                   <li>• Multiple aurora wave layers</li>
                   <li>• Particle systems with realistic physics</li>
                   <li>• Curtain effects for depth</li>
@@ -364,29 +364,29 @@ export const AuroraShowcase: Story = {
               </div>
             </div>
 
-            <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-4 glass-glass-gap-6">
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20 glass-glass-text-center">
-                <div className="glass-glass-text-3xl glass-glass-mb-2">🎨</div>
-                <div className="glass-glass-text-primary glass-glass-font-semibold">Color Palettes</div>
-                <div className="glass-glass-text-primary/60 glass-glass-text-sm">6+ themes</div>
+            <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-1 md:glass-glass-glass-glass-glass-grid-cols-4 glass-glass-glass-gap-6">
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20 glass-glass-glass-text-center">
+                <div className="glass-glass-glass-text-3xl glass-glass-glass-mb-2">🎨</div>
+                <div className="glass-glass-glass-text-primary glass-glass-glass-font-semibold">Color Palettes</div>
+                <div className="glass-glass-glass-text-primary/60 glass-glass-glass-text-sm">6+ themes</div>
               </div>
 
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20 glass-glass-text-center">
-                <div className="glass-glass-text-3xl glass-glass-mb-2">🎭</div>
-                <div className="glass-glass-text-primary glass-glass-font-semibold">Animation Modes</div>
-                <div className="glass-glass-text-primary/60 glass-glass-text-sm">4 styles</div>
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20 glass-glass-glass-text-center">
+                <div className="glass-glass-glass-text-3xl glass-glass-glass-mb-2">🎭</div>
+                <div className="glass-glass-glass-text-primary glass-glass-glass-font-semibold">Animation Modes</div>
+                <div className="glass-glass-glass-text-primary/60 glass-glass-glass-text-sm">4 styles</div>
               </div>
 
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20 glass-glass-text-center">
-                <div className="glass-glass-text-3xl glass-glass-mb-2">⚡</div>
-                <div className="glass-glass-text-primary glass-glass-font-semibold">Performance</div>
-                <div className="glass-glass-text-primary/60 glass-glass-text-sm">60fps</div>
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20 glass-glass-glass-text-center">
+                <div className="glass-glass-glass-text-3xl glass-glass-glass-mb-2">⚡</div>
+                <div className="glass-glass-glass-text-primary glass-glass-glass-font-semibold">Performance</div>
+                <div className="glass-glass-glass-text-primary/60 glass-glass-glass-text-sm">60fps</div>
               </div>
 
-              <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-border glass-glass-border-white/20 glass-glass-text-center">
-                <div className="glass-glass-text-3xl glass-glass-mb-2">🎛️</div>
-                <div className="glass-glass-text-primary glass-glass-font-semibold">Controls</div>
-                <div className="glass-glass-text-primary/60 glass-glass-text-sm">Interactive</div>
+              <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20 glass-glass-glass-text-center">
+                <div className="glass-glass-glass-text-3xl glass-glass-glass-mb-2">🎛️</div>
+                <div className="glass-glass-glass-text-primary glass-glass-glass-font-semibold">Controls</div>
+                <div className="glass-glass-glass-text-primary/60 glass-glass-glass-text-sm">Interactive</div>
               </div>
             </div>
           </div>
@@ -410,33 +410,33 @@ export const CustomAurora: Story = {
     showControls: true
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <AuroraPro {...args}>
-        <div className="min-h-screen bg-gradient-to-b from-gray-900 via-slate-800 to-gray-900 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-p-8">
-          <div className="glass-glass-text-center glass-glass-text-primary max-w-2xl">
-            <div className="glass-glass-text-6xl mb-6">🎨</div>
-            <h1 className="glass-glass-text-4xl font-bold mb-6">Custom Aurora</h1>
-            <p className="glass-glass-text-xl text-gray-300 mb-8">
+        <div className="glass-min-glass-glass-h-screen glass-gradient-primary glass-gradient-primary via-slate-800 glass-gradient-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-p-8">
+          <div className="glass-glass-glass-text-center glass-glass-glass-text-primary max-w-2xl">
+            <div className="glass-glass-glass-text-6xl mb-6">🎨</div>
+            <h1 className="glass-glass-glass-text-4xl glass-glass-glass-font-bold mb-6">Custom Aurora</h1>
+            <p className="glass-glass-glass-text-xl text-gray-300 mb-8">
               Create your own aurora experience with custom color palettes.
               Mix and match colors to create unique atmospheric effects.
             </p>
-            <div className="glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-border glass-glass-border-white/20">
-              <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-4">Custom Colors</h3>
-              <div className="glass-glass-flex glass-glass-justify-center glass-glass-gap-4 glass-glass-mb-4">
-                <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-                  <div className="glass-glass-w-6 glass-glass-h-6 glass-radius-full glass-surface-red"></div>
-                  <span className="glass-glass-text-primary/80 glass-glass-text-sm">Coral Red</span>
+            <div className="glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-glass-border glass-glass-glass-border-white/20">
+              <h3 className="glass-glass-glass-text-lg glass-glass-glass-font-semibold glass-glass-glass-text-primary glass-glass-glass-mb-4">Custom Colors</h3>
+              <div className="glass-glass-glass-flex glass-glass-glass-justify-center glass-glass-glass-gap-4 glass-glass-glass-mb-4">
+                <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+                  <div className="glass-glass-glass-w-6 glass-glass-glass-h-6 glass-radius-full glass-surface-red"></div>
+                  <span className="glass-glass-glass-text-primary/80 glass-glass-glass-text-sm">Coral Red</span>
                 </div>
-                <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-                  <div className="glass-glass-w-6 glass-glass-h-6 glass-radius-full bg-teal-400"></div>
-                  <span className="glass-glass-text-primary/80 glass-glass-text-sm">Teal</span>
+                <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+                  <div className="glass-glass-glass-w-6 glass-glass-glass-h-6 glass-radius-full bg-teal-400"></div>
+                  <span className="glass-glass-glass-text-primary/80 glass-glass-glass-text-sm">Teal</span>
                 </div>
-                <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-                  <div className="glass-glass-w-6 glass-glass-h-6 glass-radius-full glass-surface-blue"></div>
-                  <span className="glass-glass-text-primary/80 glass-glass-text-sm">Sky Blue</span>
+                <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+                  <div className="glass-glass-glass-w-6 glass-glass-glass-h-6 glass-radius-full glass-surface-blue"></div>
+                  <span className="glass-glass-glass-text-primary/80 glass-glass-glass-text-sm">Sky Blue</span>
                 </div>
               </div>
-              <p className="glass-glass-text-primary/60 glass-glass-text-sm">
+              <p className="glass-glass-glass-text-primary/60 glass-glass-glass-text-sm">
                 Customize the aurora colors to match your brand or create unique visual experiences
               </p>
             </div>

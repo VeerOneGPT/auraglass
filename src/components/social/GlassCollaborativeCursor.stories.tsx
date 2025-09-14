@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { GlassCollaborativeCursor, type CursorUser } from './GlassCollaborativeCursor';
 
 const mockUsers: CursorUser[] = [
@@ -69,14 +70,20 @@ const mockUsers: CursorUser[] = [
   }
 ];
 
-const meta = {
+const meta: Meta<typeof GlassCollaborativeCursor> = {
   title: 'Glass UI/Social/GlassCollaborativeCursor',
   component: GlassCollaborativeCursor,
   parameters: {
     layout: 'fullscreen',
   },
   tags: ['autodocs'],
+  args: {
+    onCursorMove: fn(),
+    onUserAction: fn(),
+  },
   argTypes: {
+    onCursorMove: { action: undefined },
+    onUserAction: { action: undefined },
     cursorSize: {
       control: { type: 'select' },
       options: ['small', 'medium', 'large'],
@@ -88,7 +95,7 @@ const meta = {
       control: { type: 'range', min: 5, max: 50, step: 5 },
     },
   },
-} satisfies Meta<typeof GlassCollaborativeCursor>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

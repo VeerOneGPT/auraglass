@@ -21,6 +21,11 @@ const meta: Meta<typeof GlassFab> = {
       control: 'text',
       description: 'className prop',
     },
+    color: {
+      control: { type: 'select' },
+      options: ['primary', 'secondary', 'success', 'error', 'warning', 'info', 'default'],
+      description: 'Predefined color theme (not a hex color)'
+    },
     children: {
       control: 'text',
       description: 'children prop',
@@ -32,6 +37,7 @@ const meta: Meta<typeof GlassFab> = {
   },
   args: {
     className: '',
+    color: 'default',
     children: '',
     disabled: false,
   },
@@ -43,9 +49,9 @@ type Story = StoryObj<typeof GlassFab>;
 export const Default: Story = {
   args: {
     children: (
-      <div className="glass-glass-p-4 glass-glass-text-center">
-        <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-glass-mb-2">GlassFab</h3>
-        <p className="glass-glass-text-sm opacity-80">This is the default glassfab component.</p>
+      <div className="glass-glass-glass-p-4 glass-glass-glass-text-center">
+        <h3 className="glass-glass-glass-text-lg glass-glass-glass-font-semibold glass-glass-glass-mb-2">GlassFab</h3>
+        <p className="glass-glass-glass-text-sm opacity-80">This is the default glassfab component.</p>
       </div>
     ),
   },
@@ -53,7 +59,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4">
+    <div className="glass-glass-glass-flex glass-glass-glass-flex-wrap glass-glass-glass-gap-4">
       <GlassFab {...args}>
         Default
       </GlassFab>

@@ -32,7 +32,8 @@ const CLASS_MAP = new Map([
   [/\btext-primary\b/g, 'glass-text-primary'],
   [/\btext-foreground\b/g, 'glass-text-primary'],
   [/\btext-gray-(?:[456789]00)\b/g, 'glass-text-secondary'],
-  [/\btext-(blue|green|red|yellow)-(?:[4-9]00)\b/g, 'glass-text-primary'],
+  [/\btext-(blue|green|red|yellow|purple|orange|cyan)-(?:[4-9]00)\b/g, 'glass-text-primary'],
+  [/\btext-(blue|green|red|yellow|purple|orange|cyan)-300\b/g, 'glass-text-secondary'],
   // bg
   [/\bbg-white\b/g, 'glass-surface-subtle'],
   [/\bbg-black\b/g, 'glass-surface-dark'],
@@ -42,6 +43,11 @@ const CLASS_MAP = new Map([
   [/\bbg-transparent\b/g, 'glass-bg-transparent'],
   [/\bbg-gradient-to-(r|br)\b/g, 'glass-gradient-primary'],
   [/\bbg-(background|glass-surface)\/\d{1,2}\b/g, 'glass-surface-overlay'],
+  [/\bbg-(?:gray|blue|green|red|yellow|purple|orange|cyan)-(50|100|200|300|700|900)\b/g, 'glass-surface-subtle'],
+  [/\bbg-(?:gray|blue|green|red|yellow|purple|orange|cyan)-(400|500|600|800)\b/g, 'glass-surface-primary'],
+  [/\bbg-current\b/g, 'glass-bg-transparent'],
+  [/\bbg-muted(?:\/\d{1,2})?\b/g, 'glass-surface-subtle'],
+  [/\bbg-opacity-50\b/g, 'glass-opacity-50'],
   [/\bbg-(?:black|white)\/\d{1,2}\b/g, 'glass-surface-overlay'],
   // border
   [/\bborder\b/g, 'glass-border'],
@@ -70,9 +76,17 @@ const CLASS_MAP = new Map([
   [/\btop-2\b/g, 'glass-top-2'],
   [/\b-?top-1\b/g, (m) => m.startsWith('-') ? 'glass--top-1' : 'glass-top-1'],
   [/\b-?top-2\b/g, (m) => m.startsWith('-') ? 'glass--top-2' : 'glass-top-2'],
-  // sizing tokens (subset)
-  [/\bw-(4|5|6|8|10|12|16)\b/g, (m, n) => `glass-w-${n}`],
-  [/\bh-(4|5|6|8|10|12|16)\b/g, (m, n) => `glass-h-${n}`],
+  // sizing tokens (expanded)
+  [/\bw-(1|2|3|4|5|6|8|10|12|16|20|24|32|48|64|80|96)\b/g, (m, n) => `glass-w-${n}`],
+  [/\bh-(1|2|3|4|5|6|8|10|12|16|20|24|32|48|64|96)\b/g, (m, n) => `glass-h-${n}`],
+  [/\bw-0\b/g, 'glass-w-0'],
+  [/\bh-0\b/g, 'glass-h-0'],
+  [/\bw-px\b/g, 'glass-w-px'],
+  [/\bh-px\b/g, 'glass-h-px'],
+  [/\bh-0\.5\b/g, 'glass-h-0-5'],
+  [/\bh-screen\b/g, 'glass-h-screen'],
+  [/\bw-1\/2\b/g, 'glass-w-1-2'],
+  [/\bw-3\/4\b/g, 'glass-w-3-4'],
   // overflow & truncate
   [/\boverflow-y-auto\b/g, 'glass-overflow-y-auto'],
   [/\boverflow-auto\b/g, 'glass-overflow-auto'],
@@ -80,14 +94,18 @@ const CLASS_MAP = new Map([
   // font weight and display
   [/\bfont-medium\b/g, 'glass-font-medium'],
   [/\bfont-semibold\b/g, 'glass-font-semibold'],
+  [/\bfont-bold\b/g, 'glass-font-bold'],
   [/\bsr-only\b/g, 'glass-sr-only'],
   [/\bblock\b/g, 'glass-block'],
   [/\bopacity-90\b/g, 'glass-opacity-90'],
+  [/\bopacity-30\b/g, 'glass-opacity-30'],
+  [/\bopacity-10\b/g, 'glass-opacity-10'],
   // positioning
   [/\babsolute\b/g, 'glass-absolute'],
   [/\bfixed\b/g, 'glass-fixed'],
   [/\bz-50\b/g, 'glass-z-50'],
   [/\bz-10\b/g, 'glass-z-10'],
+  [/\bmx-auto\b/g, 'glass-mx-auto'],
   // cursor
   [/\bcursor-pointer\b/g, 'glass-cursor-pointer'],
   // spacing shortcuts
@@ -106,6 +124,16 @@ const CLASS_MAP = new Map([
   [/\bpointer-events-none\b/g, 'glass-pointer-events-none'],
   // overflow
   [/\boverflow-x-auto\b/g, 'glass-overflow-x-auto'],
+  // min width
+  [/\bmin-w-64\b/g, 'glass-min-w-64'],
+  // color shortcuts (fall back to sensible tokens)
+  [/\btext-white(?:\/\d+)?\b/g, 'glass-text-primary'],
+  [/\bbg-white(?:\/\d+)?\b/g, 'glass-surface-overlay'],
+  [/\bfrom-[a-z0-9-]+(?:\/\d+)?\b/g, 'glass-gradient-primary'],
+  [/\bto-[a-z0-9-]+(?:\/\d+)?\b/g, 'glass-gradient-primary'],
+  [/\bbg-gradient-glass-gradient-primary\b/g, 'glass-gradient-primary'],
+  [/\btext-glass-text-secondary\b/g, 'glass-text-secondary'],
+  [/\btext-glass-text\b/g, 'glass-text-primary'],
   // grid-cols-N
   [/\bgrid-cols-(\d{1,2})\b/g, (m, n) => `glass-grid-cols-${n}`],
 ]);

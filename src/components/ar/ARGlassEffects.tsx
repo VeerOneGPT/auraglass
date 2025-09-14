@@ -518,8 +518,8 @@ export function ARGlassEffects({
         'glass-p-md glass-radius-lg glass-text-danger',
         className
       )}>
-        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-          <AlertCircle className="glass-glass-w-5 glass-glass-h-5" />
+        <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+          <AlertCircle className="glass-glass-glass-w-5 glass-glass-glass-h-5" />
           <span>AR Glass Effects Error: {error}</span>
         </div>
       </div>
@@ -533,8 +533,8 @@ export function ARGlassEffects({
         'glass-p-md glass-radius-lg glass-text-info',
         className
       )}>
-        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-          <Loader2 className="glass-glass-w-5 glass-glass-h-5 animate-spin" />
+        <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+          <Loader2 className="glass-glass-glass-w-5 glass-glass-glass-h-5 animate-spin" />
           <span>Initializing AR Glass Effects...</span>
         </div>
       </div>
@@ -548,7 +548,7 @@ export function ARGlassEffects({
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass-glass-absolute glass-top-4 glass-right-4 glass-glass-z-10 glass-glass-flex glass-glass-gap-2"
+          className="glass-glass-glass-absolute glass-top-4 glass-right-4 glass-glass-glass-z-10 glass-glass-glass-flex glass-glass-glass-gap-2"
         >
           <button
             onClick={handleARToggle}
@@ -562,17 +562,17 @@ export function ARGlassEffects({
             )}
           >
             {isLoading ? (
-              <Loader2 className="glass-glass-w-4 glass-glass-h-4 animate-spin" />
+              <Loader2 className="glass-glass-glass-w-4 glass-glass-glass-h-4 animate-spin" />
             ) : session.isActive ? (
-              <EyeOff className="glass-glass-w-4 glass-glass-h-4" />
+              <EyeOff className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
             ) : (
-              <Eye className="glass-glass-w-4 glass-glass-h-4" />
+              <Eye className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
             )}
             {isLoading ? 'Loading...' : session.isActive ? 'Exit AR' : 'Enter AR'}
           </button>
 
           {enableVoiceControl && (
-            <div className="glass-glass-px-3 glass-glass-py-2 glass-surface-green/20 glass-glass-text-primary glass-radius-lg glass-glass-text-sm">
+            <div className="glass-glass-glass-px-3 glass-glass-glass-py-2 glass-surface-green/20 glass-glass-glass-text-primary glass-radius-lg glass-glass-glass-text-sm">
               🎤 Voice Active
             </div>
           )}
@@ -584,32 +584,32 @@ export function ARGlassEffects({
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="glass-glass-absolute top-4 left-4 glass-z-10 glass-glass-p-4 glass-surface-dark/80 backdrop-blur-lg glass-radius-lg glass-glass-text-primary glass-glass-text-sm max-w-xs"
+          className="glass-glass-glass-absolute top-4 left-4 glass-glass-glass-z-10 glass-glass-glass-p-4 glass-surface-dark/80 backdrop-blur-lg glass-radius-lg glass-glass-glass-text-primary glass-glass-glass-text-sm max-w-xs"
         >
-          <h3 className="glass-glass-font-semibold glass-glass-mb-2 glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-            <Info className="glass-glass-w-4 glass-glass-h-4" />
+          <h3 className="glass-glass-glass-font-semibold glass-glass-glass-mb-2 glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+            <Info className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
             AR Capabilities
           </h3>
           <ul className="space-y-1">
-            <li className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <li className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
               <span className={capabilities.isARSupported ? 'text-green-400' : 'text-red-400'}>
                 {capabilities.isARSupported ? '✅' : '❌'}
               </span>
               AR Supported
             </li>
-            <li className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <li className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
               <span className={capabilities.supportsHandTracking ? 'text-green-400' : 'text-red-400'}>
                 {capabilities.supportsHandTracking ? '✅' : '❌'}
               </span>
               Hand Tracking
             </li>
-            <li className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <li className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
               <span className={capabilities.supportsHitTest ? 'text-green-400' : 'text-red-400'}>
                 {capabilities.supportsHitTest ? '✅' : '❌'}
               </span>
               Hit Testing
             </li>
-            <li className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+            <li className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
               <span className={capabilities.supportsDomOverlay ? 'text-green-400' : 'text-red-400'}>
                 {capabilities.supportsDomOverlay ? '✅' : '❌'}
               </span>
@@ -624,11 +624,11 @@ export function ARGlassEffects({
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass-glass-absolute bottom-4 left-4 glass-z-10 glass-surface-red glass-glass-text-primary glass-glass-p-3 glass-radius-lg max-w-xs"
+          className="glass-glass-glass-absolute bottom-4 left-4 glass-glass-glass-z-10 glass-surface-red glass-glass-glass-text-primary glass-glass-glass-p-3 glass-radius-lg max-w-xs"
         >
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-            <AlertCircle className="glass-glass-w-4 glass-glass-h-4" />
-            <span className="glass-glass-text-sm">{xrError}</span>
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+            <AlertCircle className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
+            <span className="glass-glass-glass-text-sm">{xrError}</span>
           </div>
         </motion.div>
       )}
@@ -638,10 +638,10 @@ export function ARGlassEffects({
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="glass-glass-absolute bottom-4 right-4 glass-z-10 glass-surface-green glass-glass-text-primary glass-glass-p-3 glass-radius-lg glass-glass-text-sm"
+          className="glass-glass-glass-absolute bottom-4 right-4 glass-glass-glass-z-10 glass-surface-green glass-glass-glass-text-primary glass-glass-glass-p-3 glass-radius-lg glass-glass-glass-text-sm"
         >
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-            <Hand className="glass-glass-w-4 glass-glass-h-4" />
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+            <Hand className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
             <span>Hands: {handTracking.left.isActive ? 'L' : ''} {handTracking.right.isActive ? 'R' : ''}</span>
           </div>
         </motion.div>
@@ -650,7 +650,7 @@ export function ARGlassEffects({
       {/* 3D Canvas */}
       <Canvas
         ref={canvasRef}
-        className="glass-glass-w-full glass-glass-h-full"
+        className="glass-glass-glass-w-full glass-glass-glass-h-full"
         camera={{ position: [0, 1.6, 3], fov: 75 }}
         gl={{
           antialias: true,

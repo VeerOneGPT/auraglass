@@ -138,33 +138,33 @@ export const Default: Story = {
           className={`chart-element relative overflow-hidden ${className}`}
           style={{ transition: 'transform 180ms ease, box-shadow 180ms ease' }}
         >
-          <div className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none" style={style} />
-          <div className="glass-glass-relative glass-glass-text-center">
-            <div className="glass-glass-w-8 glass-glass-h-8 glass-radius-full mx-auto glass-glass-mb-2" style={{ backgroundColor: dotColor }} />
-            <p className="glass-glass-text-sm glass-glass-font-medium">{label}</p>
+          <div className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-glass-glass-pointer-events-none" style={style} />
+          <div className="glass-glass-glass-relative glass-glass-glass-text-center">
+            <div className="glass-glass-glass-w-8 glass-glass-glass-h-8 glass-radius-full glass-glass-glass-mx-auto glass-glass-glass-mb-2" style={{ backgroundColor: dotColor }} />
+            <p className="glass-glass-glass-text-sm glass-glass-glass-font-medium">{label}</p>
           </div>
         </div>
       );
     };
 
     return (
-      <div className="glass-glass-p-8 space-y-6">
-        <div className="glass-glass-text-center">
-          <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-mb-2">Galileo Element Interaction Plugin</h3>
-          <p className="glass-glass-text-sm opacity-80 glass-glass-mb-4">
+      <div className="glass-glass-glass-p-8 space-y-6">
+        <div className="glass-glass-glass-text-center">
+          <h3 className="glass-glass-glass-text-xl glass-glass-glass-font-semibold glass-glass-glass-mb-2">Galileo Element Interaction Plugin</h3>
+          <p className="glass-glass-glass-text-sm opacity-80 glass-glass-glass-mb-4">
             Hover over and click the elements below to see the interactive effects.
           </p>
         </div>
 
-        <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4 glass-glass-justify-center">
-          <LensCard className="glass-glass-p-4 glass-gradient-primary from-sky-200/20 to-blue-200/20 dark:from-slate-700/20 dark:to-slate-600/20 backdrop-blur-md glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-cursor-pointer" label="Data Point 1" dotColor="#3B82F6" />
-          <LensCard className="glass-glass-p-4 glass-gradient-primary from-green-500/20 to-blue-500/20 backdrop-blur-md glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-cursor-pointer" label="Data Point 2" dotColor="#10B981" />
-          <LensCard className="glass-glass-p-4 glass-gradient-primary from-blue-200/20 to-indigo-200/20 dark:from-slate-600/20 dark:to-slate-500/20 backdrop-blur-md glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-cursor-pointer" label="Data Point 3" dotColor="#6366F1" />
+        <div className="glass-glass-glass-flex glass-glass-glass-flex-wrap glass-glass-glass-gap-4 glass-glass-glass-justify-center">
+          <LensCard className="glass-glass-glass-p-4 glass-gradient-primary glass-gradient-primary glass-gradient-primary dark:glass-gradient-primary dark:glass-gradient-primary backdrop-blur-md glass-glass-glass-border glass-glass-glass-border-white/20 glass-radius-lg glass-glass-glass-cursor-pointer" label="Data Point 1" dotColor="#3B82F6" />
+          <LensCard className="glass-glass-glass-p-4 glass-gradient-primary glass-gradient-primary glass-gradient-primary backdrop-blur-md glass-glass-glass-border glass-glass-glass-border-white/20 glass-radius-lg glass-glass-glass-cursor-pointer" label="Data Point 2" dotColor="#10B981" />
+          <LensCard className="glass-glass-glass-p-4 glass-gradient-primary glass-gradient-primary glass-gradient-primary dark:glass-gradient-primary dark:glass-gradient-primary backdrop-blur-md glass-glass-glass-border glass-glass-glass-border-white/20 glass-radius-lg glass-glass-glass-cursor-pointer" label="Data Point 3" dotColor="#6366F1" />
         </div>
 
-        <div className="bg-gray-900/50 backdrop-blur-md glass-glass-border glass-glass-border-white/10 glass-radius-lg glass-glass-p-4">
-          <h4 className="glass-glass-text-sm glass-glass-font-semibold glass-glass-mb-2">Plugin Status:</h4>
-          <p className="glass-glass-text-xs opacity-75">
+        <div className="glass-surface-subtle/50 backdrop-blur-md glass-glass-glass-border glass-glass-glass-border-white/10 glass-radius-lg glass-glass-glass-p-4">
+          <h4 className="glass-glass-glass-text-sm glass-glass-glass-font-semibold glass-glass-glass-mb-2">Plugin Status:</h4>
+          <p className="glass-glass-glass-text-xs opacity-75">
             Plugin created successfully with effects: Magnetic, Ripple, Glow
           </p>
         </div>
@@ -201,26 +201,26 @@ export const DisabledEffects: Story = {
     const plugin = createGalileoPlugin(config);
 
     return (
-      <div className="glass-glass-p-8 space-y-6">
-        <div className="glass-glass-text-center">
-          <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-mb-2">Disabled Effects</h3>
-          <p className="glass-glass-text-sm opacity-80 glass-glass-mb-4">
+      <div className="glass-glass-glass-p-8 space-y-6">
+        <div className="glass-glass-glass-text-center">
+          <h3 className="glass-glass-glass-text-xl glass-glass-glass-font-semibold glass-glass-glass-mb-2">Disabled Effects</h3>
+          <p className="glass-glass-glass-text-sm opacity-80 glass-glass-glass-mb-4">
             All interactive effects are disabled. Elements won't respond to hover or click.
           </p>
         </div>
 
-        <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4 glass-glass-justify-center">
-          <div className="chart-element glass-glass-p-4 glass-gradient-primary from-red-500/20 to-orange-500/20 backdrop-blur-md glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-cursor-pointer">
-            <div className="glass-glass-text-center">
-              <div className="glass-glass-w-8 glass-glass-h-8 glass-surface-red glass-radius-full mx-auto glass-glass-mb-2"></div>
-              <p className="glass-glass-text-sm glass-glass-font-medium">No Effects</p>
+        <div className="glass-glass-glass-flex glass-glass-glass-flex-wrap glass-glass-glass-gap-4 glass-glass-glass-justify-center">
+          <div className="chart-element glass-glass-glass-p-4 glass-gradient-primary glass-gradient-primary glass-gradient-primary backdrop-blur-md glass-glass-glass-border glass-glass-glass-border-white/20 glass-radius-lg glass-glass-glass-cursor-pointer">
+            <div className="glass-glass-glass-text-center">
+              <div className="glass-glass-glass-w-8 glass-glass-glass-h-8 glass-surface-red glass-radius-full glass-glass-glass-mx-auto glass-glass-glass-mb-2"></div>
+              <p className="glass-glass-glass-text-sm glass-glass-glass-font-medium">No Effects</p>
             </div>
           </div>
         </div>
 
-        <div className="bg-gray-900/50 backdrop-blur-md glass-glass-border glass-glass-border-white/10 glass-radius-lg glass-glass-p-4">
-          <h4 className="glass-glass-text-sm glass-glass-font-semibold glass-glass-mb-2">Plugin Status:</h4>
-          <p className="glass-glass-text-xs opacity-75">
+        <div className="glass-surface-subtle/50 backdrop-blur-md glass-glass-glass-border glass-glass-glass-border-white/10 glass-radius-lg glass-glass-glass-p-4">
+          <h4 className="glass-glass-glass-text-sm glass-glass-glass-font-semibold glass-glass-glass-mb-2">Plugin Status:</h4>
+          <p className="glass-glass-glass-text-xs opacity-75">
             Plugin created with all effects disabled
           </p>
         </div>

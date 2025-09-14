@@ -335,10 +335,10 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
           depth={3}
           tint="neutral"
           border="strong"
-          className="glass-heatmap-tooltip glass-glass-p-3 glass-radius-lg glass-glass-shadow-lg backdrop-blur-md glass-glass-border glass-glass-border-glass-glass-border/20"
+          className="glass-heatmap-tooltip glass-glass-glass-p-3 glass-radius-lg glass-glass-glass-shadow-lg backdrop-blur-md glass-glass-glass-border glass-glass-glass-border-glass-glass-glass-border/20"
         >
-          <div className="glass-glass-text-sm glass-glass-gap-1">
-            <div className="glass-glass-font-semibold">
+          <div className="glass-glass-glass-text-sm glass-glass-glass-gap-1">
+            <div className="glass-glass-glass-font-semibold">
               {cell.label || `Cell (${cell.col}, ${cell.row})`}
             </div>
             <div>Value: {cell.value}</div>
@@ -377,7 +377,7 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
             isHorizontal ? 'flex items-center glass-gap-3' : 'flex flex-col glass-gap-3'
           )}
         >
-          <div className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary">
+          <div className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary">
             Legend
           </div>
           
@@ -385,7 +385,7 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
             'flex',
             isHorizontal ? 'flex-row items-center glass-gap-1' : 'flex-col glass-gap-1'
           )}>
-            <div className="glass-glass-text-xs glass-text-secondary">
+            <div className="glass-glass-glass-text-xs glass-text-secondary">
               {processedData.minValue.toFixed(1)}
             </div>
             
@@ -407,7 +407,7 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
               ))}
             </div>
             
-            <div className="glass-glass-text-xs glass-text-secondary">
+            <div className="glass-glass-glass-text-xs glass-text-secondary">
               {processedData.maxValue.toFixed(1)}
             </div>
           </div>
@@ -447,7 +447,7 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
       >
         <Motion
           preset={!prefersReducedMotion && respectMotionPreference && animated ? "fadeIn" : "none"}
-          className="glass-glass-relative"
+          className="glass-glass-glass-relative"
         >
           <div
             ref={containerRef}
@@ -461,25 +461,25 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
           >
             {/* Legend */}
             {showLegend && (
-              <div className="glass-glass-flex-shrink-0 glass-glass-p-4">
+              <div className="glass-glass-glass-flex-shrink-0 glass-glass-glass-p-4">
                 {renderLegend()}
               </div>
             )}
             
             {/* Main Content */}
-            <div className="glass-glass-flex-1 glass-glass-p-6 glass-glass-overflow-auto">
+            <div className="glass-glass-glass-flex-1 glass-glass-glass-p-6 glass-glass-glass-overflow-auto">
               {/* Y-Axis */}
-              <div className="glass-glass-flex">
+              <div className="glass-glass-glass-flex">
                 {yAxis && (
-                  <div className="glass-glass-flex glass-glass-flex-col glass-glass-justify-between glass-mr-2">
+                  <div className="glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-justify-between glass-mr-2">
                     {yAxis.title && (
-                      <div className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary glass-glass-mb-2 writing-mode-vertical-lr transform rotate-180">
+                      <div className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary glass-glass-glass-mb-2 writing-mode-vertical-lr transform rotate-180">
                         {yAxis.title}
                       </div>
                     )}
-                    <div className="glass-glass-flex glass-glass-flex-col glass-glass-justify-between glass-glass-h-full">
+                    <div className="glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-justify-between glass-glass-glass-h-full">
                       {yAxis.labels?.map((label, index) => (
-                        <div key={index} className="glass-glass-text-xs glass-text-secondary glass-glass-text-right pr-2">
+                        <div key={index} className="glass-glass-glass-text-xs glass-text-secondary glass-glass-glass-text-right pr-2">
                           {label}
                         </div>
                       ))}
@@ -490,23 +490,23 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
                 {/* Heatmap Grid */}
                 <div
                   ref={heatmapRef}
-                  className="glass-glass-relative"
+                  className="glass-glass-glass-relative"
                   onWheel={(e: React.WheelEvent) => handleZoom(e.deltaY > 0 ? -0.1 : 0.1, e)}
                 >
                   {/* X-Axis */}
                   {xAxis && (
-                    <div className="glass-glass-mb-2">
+                    <div className="glass-glass-glass-mb-2">
                       {xAxis.title && (
-                        <div className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary glass-glass-text-center glass-glass-mb-2">
+                        <div className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary glass-glass-glass-text-center glass-glass-glass-mb-2">
                           {xAxis.title}
                         </div>
                       )}
                       <div 
-                        className="glass-glass-flex glass-glass-justify-between"
+                        className="glass-glass-glass-flex glass-glass-glass-justify-between"
                         style={{ width: (cellSize * internalZoomLevel + cellGap) * gridDimensions.cols - cellGap }}
                       >
                         {xAxis.labels?.map((label, index) => (
-                          <div key={index} className="glass-glass-text-xs glass-text-secondary glass-glass-text-center">
+                          <div key={index} className="glass-glass-glass-text-xs glass-text-secondary glass-glass-glass-text-center">
                             {label}
                           </div>
                         ))}
@@ -516,7 +516,7 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
                   
                   {/* Grid */}
                   <div
-                    className="glass-glass-grid gap-px"
+                    className="glass-glass-glass-grid gap-px"
                     style={{
                       gridTemplateColumns: `repeat(${gridDimensions.cols}, ${cellSize * internalZoomLevel}px)`,
                       gridTemplateRows: `repeat(${gridDimensions.rows}, ${cellSize * internalZoomLevel}px)`,
@@ -534,7 +534,7 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
                             renderCell ? renderCell(cell) : defaultRenderCell(cell)
                           ) : (
                             <div
-                              className="glass-surface-overlay glass-glass-border glass-glass-border-dashed glass-glass-border-glass-glass-border/30"
+                              className="glass-surface-overlay glass-glass-glass-border glass-glass-glass-border-dashed glass-glass-glass-border-glass-glass-glass-border/30"
                               style={{
                                 width: cellSize * internalZoomLevel,
                                 height: cellSize * internalZoomLevel,
@@ -553,7 +553,7 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
           {/* Tooltip */}
           {showTooltips && hoveredCell && (
             <div
-              className="glass-glass-absolute glass-pointer-events-none glass-z-50"
+              className="glass-glass-glass-absolute glass-glass-glass-pointer-events-none glass-glass-glass-z-50"
               style={{
                 left: tooltipPosition.x + 10,
                 top: tooltipPosition.y - 10,
@@ -566,16 +566,16 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
           
           {/* Zoom Controls */}
           {zoomable && (
-            <div className="glass-glass-absolute top-4 right-4 glass-glass-flex glass-glass-flex-col glass-glass-gap-1">
+            <div className="glass-glass-glass-absolute top-4 right-4 glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-gap-1">
               <button
                 onClick={() => handleZoom(0.1, {} as any)}
-                className="glass-glass-w-8 glass-glass-h-8 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-radius-md glass-glass-text-sm font-bold transition-all hover:scale-105"
+                className="glass-glass-glass-w-8 glass-glass-glass-h-8 glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-radius-md glass-glass-glass-text-sm glass-glass-glass-font-bold transition-all hover:scale-105"
               >
                 +
               </button>
               <button
                 onClick={() => handleZoom(-0.1, {} as any)}
-                className="glass-glass-w-8 glass-glass-h-8 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-radius-md glass-glass-text-sm font-bold transition-all hover:scale-105"
+                className="glass-glass-glass-w-8 glass-glass-glass-h-8 glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-radius-md glass-glass-glass-text-sm glass-glass-glass-font-bold transition-all hover:scale-105"
               >
                 −
               </button>

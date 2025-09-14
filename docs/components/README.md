@@ -1,7 +1,7 @@
 # AuraGlass Component Reference
 
 **🏆 AuraGlass Perfect 100/100 Design System Score Achievement:**
-- **Total Glass Components**: 317 components with perfect compliance
+- **Total Glass Components**: 341 components with perfect compliance
 - **Component Categories**: 28 specialized categories  
 - **Design System Score**: 100/100 (Industry-first perfect score)
 - **Token Coverage**: 100% (Zero hardcoded values)
@@ -30,6 +30,31 @@ This document provides detailed information about all components available in th
 - **[Visual Testing Guide](../VISUAL_TESTING_GUIDE.md)** - 500+ automated tests
 - **[Design Tokens Reference](../DESIGN_TOKENS.md)** - Complete token system (500+ tokens)
 - **[Component Standards](../COMPONENT_STANDARDS.md)** - Development best practices
+
+## 🌓 Automatic Text Contrast (NEW)
+For hero/prism/slider sections that use gradients or dynamic backgrounds, AuraGlass provides automatic, token-driven text contrast.
+
+- Manual context (simple): set `data-bg` on a wrapper to flip the text tokens:
+  - `data-bg="dark"` → white-on-dark
+  - `data-bg="light"` → black-on-light
+
+- Automatic context (dynamic):
+```tsx
+import useAutoTextContrast from '@/hooks/useAutoTextContrast';
+
+export function ShowcaseSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  useAutoTextContrast(ref, { observe: true });
+  return (
+    <section ref={ref}>
+      <h3 className="glass-text-primary">This will always be readable</h3>
+      <p className="glass-text-secondary">Tokens adapt to the background.</p>
+    </section>
+  );
+}
+```
+
+This approach avoids inline styles and preserves full token compliance while ensuring accessibility.
 
 ## Component Index
 

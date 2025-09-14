@@ -12,7 +12,7 @@ console.warn('[AuraGlass] glassBorder.ts is deprecated. Use createGlassStyle() i
  * @deprecated Use createGlassStyle() instead
  * @example createGlassStyle({ intent: 'neutral', elevation: 'level2' })
  */
-export const glassBorder = (() => {
+export const glassBorder: { border: string | number; borderRadius: string | number } = (() => {
   console.warn('[AuraGlass] glassBorder export is deprecated. Use createGlassStyle().');
   const styles = createGlassStyle();
   return {
@@ -25,7 +25,7 @@ export const glassBorder = (() => {
  * @deprecated Use createGlassStyle({ interactive: true }) instead
  * @example createGlassStyle({ intent: 'neutral', elevation: 'level2', interactive: true })
  */
-export const glassBorderHover = (() => {
+export const glassBorderHover: { border: string | number; borderRadius: string | number } = (() => {
   console.warn('[AuraGlass] glassBorderHover export is deprecated. Use createGlassStyle({ interactive: true }).');
   const styles = createGlassStyle({ intent: 'neutral', elevation: 'level3', interactive: true });
   return {

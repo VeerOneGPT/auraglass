@@ -86,22 +86,22 @@ function PredictiveEngineDemo() {
   };
 
   return (
-    <div className="min-h-screen glass-glass-p-8 space-y-8">
+    <div className="glass-min-glass-glass-h-screen glass-glass-glass-p-8 space-y-8">
       {/* Header */}
-      <div className="glass-glass-text-center glass-glass-gap-4">
-        <h1 className="glass-glass-text-4xl font-bold glass-glass-text-primary">
+      <div className="glass-glass-glass-text-center glass-glass-glass-gap-4">
+        <h1 className="glass-glass-glass-text-4xl glass-glass-glass-font-bold glass-glass-glass-text-primary">
           🧠 Glass Predictive Engine
         </h1>
-        <p className="glass-glass-text-lg glass-text-secondary">
+        <p className="glass-glass-glass-text-lg glass-text-secondary">
           AI-powered system that learns your behavior and anticipates your needs
         </p>
-        <div className="glass-surface-secondary glass-radius-lg glass-glass-p-4">
-          <div className="glass-glass-text-sm glass-glass-text-primary glass-glass-mb-2">
+        <div className="glass-surface-secondary glass-radius-lg glass-glass-glass-p-4">
+          <div className="glass-glass-glass-text-sm glass-glass-glass-text-primary glass-glass-glass-mb-2">
             AI Learning Progress: {interactionCount} interactions recorded
           </div>
-          <div className="glass-glass-w-full glass-surface-primary glass-radius-sm h-2 overflow-hidden">
+          <div className="glass-glass-glass-w-full glass-surface-primary glass-radius-sm glass-glass-glass-h-2 overflow-hidden">
             <div 
-              className="glass-glass-h-full glass-gradient-primary from-blue-500 to-purple-500 transition-all duration-500"
+              className="glass-glass-glass-h-full glass-gradient-primary glass-gradient-primary glass-gradient-primary transition-all duration-500"
               style={{ width: `${Math.min(100, interactionCount * 2)}%` }}
             />
           </div>
@@ -109,7 +109,7 @@ function PredictiveEngineDemo() {
       </div>
 
       {/* Interactive Elements */}
-      <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-3 glass-glass-gap-6">
+      <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-1 md:glass-glass-glass-glass-glass-grid-cols-3 glass-glass-glass-gap-6">
         {[
           { id: 'button-1', label: 'Primary Action', color: 'blue' },
           { id: 'button-2', label: 'Secondary Action', color: 'purple' },
@@ -125,9 +125,9 @@ function PredictiveEngineDemo() {
             onFocus={() => handleInteraction('focus')}
             tabIndex={0}
           >
-            <div className="glass-glass-text-2xl">🎯</div>
-            <h3 className="glass-glass-text-lg glass-glass-font-medium glass-glass-text-primary">{item.label}</h3>
-            <p className="glass-glass-text-sm glass-text-secondary">
+            <div className="glass-glass-glass-text-2xl">🎯</div>
+            <h3 className="glass-glass-glass-text-lg glass-glass-glass-font-medium glass-glass-glass-text-primary">{item.label}</h3>
+            <p className="glass-glass-glass-text-sm glass-text-secondary">
               Click to generate AI predictions
             </p>
           </div>
@@ -135,81 +135,81 @@ function PredictiveEngineDemo() {
       </div>
 
       {/* AI Predictions Display */}
-      <div className="glass-glass-grid glass-glass-glass-grid-cols-1 lg:glass-glass-glass-grid-cols-2 glass-glass-gap-6">
-        <div className="glass-surface-primary glass-elev-1 glass-radius-lg glass-glass-p-6">
-          <h3 className="glass-glass-text-xl glass-glass-font-medium glass-glass-text-primary glass-glass-mb-4">
+      <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-1 lg:glass-glass-glass-glass-glass-grid-cols-2 glass-glass-glass-gap-6">
+        <div className="glass-surface-primary glass-elev-1 glass-radius-lg glass-glass-glass-p-6">
+          <h3 className="glass-glass-glass-text-xl glass-glass-glass-font-medium glass-glass-glass-text-primary glass-glass-glass-mb-4">
             🔮 AI Predictions ({predictions.length})
           </h3>
           {predictions.length > 0 ? (
-            <div className="glass-glass-gap-3">
+            <div className="glass-glass-glass-gap-3">
               {predictions.slice(0, 5).map((prediction) => (
                 <div 
                   key={prediction.id}
-                  className="glass-surface-secondary glass-radius-md glass-glass-p-3"
+                  className="glass-surface-secondary glass-radius-md glass-glass-glass-p-3"
                 >
-                  <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-mb-2">
-                    <span className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary glass-glass-capitalize">
+                  <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between glass-glass-glass-mb-2">
+                    <span className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary glass-glass-glass-capitalize">
                       {prediction.type}: {prediction.target}
                     </span>
-                    <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+                    <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
                       <div 
-                        className="w-2 h-2 glass-radius-full"
+                        className="glass-glass-glass-w-2 glass-glass-glass-h-2 glass-radius-full"
                         style={{
                           backgroundColor: prediction.confidence > 0.8 ? '#10b981' : 
                                          prediction.confidence > 0.6 ? '#f59e0b' : '#ef4444'
                         }}
                       />
-                      <span className="glass-glass-text-xs glass-text-secondary">
+                      <span className="glass-glass-glass-text-xs glass-text-secondary">
                         {(prediction.confidence * 100).toFixed(0)}%
                       </span>
                     </div>
                   </div>
-                  <div className="glass-glass-text-xs glass-text-tertiary">
+                  <div className="glass-glass-glass-text-xs glass-text-tertiary">
                     Timing: {prediction.timing}ms | Metadata: {Object.keys(prediction.metadata).length} items
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="glass-glass-text-center glass-glass-text-sm glass-text-secondary glass-glass-py-8">
+            <div className="glass-glass-glass-text-center glass-glass-glass-text-sm glass-text-secondary glass-glass-glass-py-8">
               Start interacting to see AI predictions appear...
             </div>
           )}
         </div>
 
-        <div className="glass-surface-primary glass-elev-1 glass-radius-lg glass-glass-p-6">
-          <h3 className="glass-glass-text-xl glass-glass-font-medium glass-glass-text-primary glass-glass-mb-4">
+        <div className="glass-surface-primary glass-elev-1 glass-radius-lg glass-glass-glass-p-6">
+          <h3 className="glass-glass-glass-text-xl glass-glass-glass-font-medium glass-glass-glass-text-primary glass-glass-glass-mb-4">
             💡 AI Insights ({insights.length})
           </h3>
           {insights.length > 0 ? (
-            <div className="glass-glass-gap-3">
+            <div className="glass-glass-glass-gap-3">
               {insights.slice(0, 3).map((insight) => (
                 <div 
                   key={insight.id}
-                  className="glass-surface-secondary glass-radius-md glass-glass-p-3"
+                  className="glass-surface-secondary glass-radius-md glass-glass-glass-p-3"
                 >
-                  <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-mb-2">
-                    <span className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary glass-glass-capitalize">
+                  <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between glass-glass-glass-mb-2">
+                    <span className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary glass-glass-glass-capitalize">
                       {insight.category}
                     </span>
-                    <span className="glass-glass-text-xs glass-text-secondary">
+                    <span className="glass-glass-glass-text-xs glass-text-secondary">
                       Impact: {(insight.impact * 100).toFixed(0)}%
                     </span>
                   </div>
-                  <div className="glass-glass-text-sm glass-glass-text-primary glass-glass-mb-1">
+                  <div className="glass-glass-glass-text-sm glass-glass-glass-text-primary glass-glass-glass-mb-1">
                     {insight.insight}
                   </div>
-                  <div className="glass-glass-text-xs glass-text-tertiary">
+                  <div className="glass-glass-glass-text-xs glass-text-tertiary">
                     💡 {insight.recommendation}
                   </div>
-                  <div className="glass-glass-text-xs glass-text-quaternary glass-mt-1">
+                  <div className="glass-glass-glass-text-xs glass-text-quaternary glass-mt-1">
                     Confidence: {(insight.confidence * 100).toFixed(0)}%
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="glass-glass-text-center glass-glass-text-sm glass-text-secondary glass-glass-py-8">
+            <div className="glass-glass-glass-text-center glass-glass-glass-text-sm glass-text-secondary glass-glass-glass-py-8">
               AI insights will appear after sufficient interaction data...
             </div>
           )}
@@ -217,37 +217,37 @@ function PredictiveEngineDemo() {
       </div>
 
       {/* Neural Network Visualization */}
-      <div className="glass-surface-primary glass-elev-1 glass-radius-lg glass-glass-p-6">
-        <h3 className="glass-glass-text-xl glass-glass-font-medium glass-glass-text-primary glass-glass-mb-4">
+      <div className="glass-surface-primary glass-elev-1 glass-radius-lg glass-glass-glass-p-6">
+        <h3 className="glass-glass-glass-text-xl glass-glass-glass-font-medium glass-glass-glass-text-primary glass-glass-glass-mb-4">
           🧪 Neural Network Activity
         </h3>
-        <div className="glass-glass-grid glass-glass-glass-grid-cols-3 glass-glass-gap-4 glass-glass-text-center">
-          <div className="glass-glass-gap-2">
-            <div className="glass-glass-text-2xl">📥</div>
-            <div className="glass-glass-text-sm glass-text-secondary">Input Layer</div>
-            <div className="glass-glass-text-lg glass-glass-font-medium glass-glass-text-primary">
+        <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-3 glass-glass-glass-gap-4 glass-glass-glass-text-center">
+          <div className="glass-glass-glass-gap-2">
+            <div className="glass-glass-glass-text-2xl">📥</div>
+            <div className="glass-glass-glass-text-sm glass-text-secondary">Input Layer</div>
+            <div className="glass-glass-glass-text-lg glass-glass-glass-font-medium glass-glass-glass-text-primary">
               {interactionCount > 10 ? '10 neurons' : `${interactionCount} neurons`}
             </div>
           </div>
-          <div className="glass-glass-gap-2">
-            <div className="glass-glass-text-2xl">🔄</div>
-            <div className="glass-glass-text-sm glass-text-secondary">Hidden Layer</div>
-            <div className="glass-glass-text-lg glass-glass-font-medium glass-glass-text-primary">
+          <div className="glass-glass-glass-gap-2">
+            <div className="glass-glass-glass-text-2xl">🔄</div>
+            <div className="glass-glass-glass-text-sm glass-text-secondary">Hidden Layer</div>
+            <div className="glass-glass-glass-text-lg glass-glass-glass-font-medium glass-glass-glass-text-primary">
               20 neurons
             </div>
           </div>
-          <div className="glass-glass-gap-2">
-            <div className="glass-glass-text-2xl">📤</div>
-            <div className="glass-glass-text-sm glass-text-secondary">Output Layer</div>
-            <div className="glass-glass-text-lg glass-glass-font-medium glass-glass-text-primary">
+          <div className="glass-glass-glass-gap-2">
+            <div className="glass-glass-glass-text-2xl">📤</div>
+            <div className="glass-glass-glass-text-sm glass-text-secondary">Output Layer</div>
+            <div className="glass-glass-glass-text-lg glass-glass-glass-font-medium glass-glass-glass-text-primary">
               5 predictions
             </div>
           </div>
         </div>
-        <div className="glass-mt-4 glass-glass-text-center">
-          <div className="glass-inline-glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-surface-secondary glass-radius-full glass-glass-px-4 glass-glass-py-2">
-            <div className="w-2 h-2 glass-surface-green glass-radius-full animate-pulse" />
-            <span className="glass-glass-text-sm glass-glass-text-primary">
+        <div className="glass-mt-4 glass-glass-glass-text-center">
+          <div className="glass-inline-glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2 glass-surface-secondary glass-radius-full glass-glass-glass-px-4 glass-glass-glass-py-2">
+            <div className="glass-glass-glass-w-2 glass-glass-glass-h-2 glass-surface-green glass-radius-full animate-pulse" />
+            <span className="glass-glass-glass-text-sm glass-glass-glass-text-primary">
               Neural network {interactionCount > 5 ? 'actively learning' : 'initializing'}
             </span>
           </div>
@@ -269,11 +269,11 @@ export const Interactive: Story = {
 export const Conservative: Story = {
   render: (args) => (
     <GlassPredictiveEngineProvider {...args}>
-      <div className="glass-glass-p-8">
-        <h2 className="glass-glass-text-2xl font-bold glass-glass-text-primary glass-glass-mb-4">
+      <div className="glass-glass-glass-p-8">
+        <h2 className="glass-glass-glass-text-2xl glass-glass-glass-font-bold glass-glass-glass-text-primary glass-glass-glass-mb-4">
           Conservative AI Mode
         </h2>
-        <p className="glass-glass-text-sm glass-text-secondary mb-6">
+        <p className="glass-glass-glass-text-sm glass-text-secondary mb-6">
           High confidence threshold (80%), slower learning, 3 max predictions
         </p>
         <PredictiveEngineDemo />
@@ -293,11 +293,11 @@ export const Conservative: Story = {
 export const Aggressive: Story = {
   render: (args) => (
     <GlassPredictiveEngineProvider {...args}>
-      <div className="glass-glass-p-8">
-        <h2 className="glass-glass-text-2xl font-bold glass-glass-text-primary glass-glass-mb-4">
+      <div className="glass-glass-glass-p-8">
+        <h2 className="glass-glass-glass-text-2xl glass-glass-glass-font-bold glass-glass-glass-text-primary glass-glass-glass-mb-4">
           Aggressive AI Mode
         </h2>
-        <p className="glass-glass-text-sm glass-text-secondary mb-6">
+        <p className="glass-glass-glass-text-sm glass-text-secondary mb-6">
           Low confidence threshold (40%), fast learning, 10 max predictions
         </p>
         <PredictiveEngineDemo />
@@ -317,11 +317,11 @@ export const Aggressive: Story = {
 export const Experimental: Story = {
   render: (args) => (
     <GlassPredictiveEngineProvider {...args}>
-      <div className="glass-glass-p-8">
-        <h2 className="glass-glass-text-2xl font-bold glass-glass-text-primary glass-glass-mb-4">
+      <div className="glass-glass-glass-p-8">
+        <h2 className="glass-glass-glass-text-2xl glass-glass-glass-font-bold glass-glass-glass-text-primary glass-glass-glass-mb-4">
           Experimental AI Mode
         </h2>
-        <p className="glass-glass-text-sm glass-text-secondary mb-6">
+        <p className="glass-glass-glass-text-sm glass-text-secondary mb-6">
           Ultra-low confidence threshold (30%), maximum predictions (15), advanced neural network
         </p>
         <PredictiveEngineDemo />
@@ -342,23 +342,23 @@ export const Experimental: Story = {
 export const PredictionIndicatorOnly: Story = {
   render: () => (
     <GlassPredictiveEngineProvider>
-      <div className="min-h-screen glass-glass-p-8">
-        <h2 className="glass-glass-text-2xl font-bold glass-glass-text-primary glass-glass-mb-4">
+      <div className="glass-min-glass-glass-h-screen glass-glass-glass-p-8">
+        <h2 className="glass-glass-glass-text-2xl glass-glass-glass-font-bold glass-glass-glass-text-primary glass-glass-glass-mb-4">
           Prediction Indicator Demo
         </h2>
-        <p className="glass-glass-text-sm glass-text-secondary mb-8">
+        <p className="glass-glass-glass-text-sm glass-text-secondary mb-8">
           The floating AI indicator shows when predictions are available. Click elements to generate predictions.
         </p>
         
-        <div className="glass-glass-grid glass-glass-glass-grid-cols-2 md:glass-glass-glass-grid-cols-4 glass-glass-gap-4">
+        <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-2 md:glass-glass-glass-glass-glass-grid-cols-4 glass-glass-glass-gap-4">
           {Array.from({ length: 8 }, (_, i) => (
             <button
               key={i}
-              className="glass-surface-primary glass-elev-2 glass-radius-lg glass-glass-p-4 hover:glass-elev-3 transition-all duration-300"
+              className="glass-surface-primary glass-elev-2 glass-radius-lg glass-glass-glass-p-4 hover:glass-elev-3 transition-all duration-300"
               onClick={() => console.log(`Button ${i + 1} clicked`)}
             >
-              <div className="glass-glass-text-lg glass-glass-mb-2">🎯</div>
-              <div className="glass-glass-text-sm glass-glass-text-primary">Action {i + 1}</div>
+              <div className="glass-glass-glass-text-lg glass-glass-glass-mb-2">🎯</div>
+              <div className="glass-glass-glass-text-sm glass-glass-glass-text-primary">Action {i + 1}</div>
             </button>
           ))}
         </div>

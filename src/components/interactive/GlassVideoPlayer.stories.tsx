@@ -57,7 +57,24 @@ export const Default: Story = {
         quality: '720p',
       },
     ],
-    poster: 'https://via.placeholder.com/640x360/0066cc/ffffff?text=Video+Poster',
+    // Use an inline SVG data URI to avoid external network requests
+    poster:
+      "data:image/svg+xml;charset=UTF-8," +
+      encodeURIComponent(
+        `<svg xmlns='http://www.w3.org/2000/svg' width='640' height='360'>` +
+          `<defs>` +
+            `<linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>` +
+              `<stop offset='0%' stop-color='#0066cc'/>` +
+              `<stop offset='100%' stop-color='#004a99'/>` +
+            `</linearGradient>` +
+          `</defs>` +
+          `<rect width='100%' height='100%' fill='url(#g)'/>` +
+          `<text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle'` +
+                ` font-size='28' font-family='Inter, Arial, Helvetica, sans-serif' fill='#ffffff' opacity='0.9'>` +
+            `Video Poster` +
+          `</text>` +
+        `</svg>`
+      ),
     onPlay: fn(),
     onPause: fn(),
   },

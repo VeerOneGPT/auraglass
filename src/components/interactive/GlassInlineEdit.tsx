@@ -28,14 +28,14 @@ export function GlassInlineEdit({ value, onChange, placeholder = 'Edit…', clas
               if (e.key === 'Escape') { setDraft(value); setEditing(false); }
             }}
             placeholder={placeholder}
-            className="glass-glass-bg-transparent glass-glass-border glass-glass-border-white/20 glass-radius-lg glass-glass-px-2 glass-glass-py-1 glass-glass-text-sm outline-none"
+            className="glass-glass-glass-bg-transparent glass-glass-glass-border glass-glass-glass-border-white/20 glass-radius-lg glass-glass-glass-px-2 glass-glass-glass-py-1 glass-glass-glass-text-sm outline-none"
           />
           <GlassButton size="sm" variant="primary" onClick={(e) => { onChange(draft); setEditing(false); }}>Save</GlassButton>
           <GlassButton size="sm" variant="ghost" onClick={(e) => { setDraft(value); setEditing(false); }}>Cancel</GlassButton>
         </>
       ) : (
-        <button className="glass-glass-px-2 glass-glass-py-1 glass-radius-lg hover:glass-surface-subtle/10 glass-glass-text-sm" onClick={(e) => setEditing(true)}>
-          {value || <span className="glass-glass-text-primary/60">{placeholder}</span>}
+        <button className="glass-glass-glass-px-2 glass-glass-glass-py-1 glass-radius-lg hover:glass-surface-subtle/10 glass-glass-glass-text-sm" onClick={(e) => setEditing(true)}>
+          {value || <span className="glass-glass-glass-text-primary/60">{placeholder}</span>}
         </button>
       )}
     </div>

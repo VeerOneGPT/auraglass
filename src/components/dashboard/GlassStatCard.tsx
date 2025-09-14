@@ -256,14 +256,14 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
     if (loading) {
         return (
             <GlassCard className={cn('animate-pulse', config.cardClass, className)}>
-                <div className="glass-glass-gap-4">
-                    <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
-                        <div className="glass-glass-h-4 glass-surface-subtle/20 glass-radius-md w-24"></div>
-                        <div className="glass-glass-w-8 glass-glass-h-8 glass-surface-subtle/20 glass-radius-md"></div>
+                <div className="glass-glass-glass-gap-4">
+                    <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between">
+                        <div className="glass-glass-glass-h-4 glass-surface-subtle/20 glass-radius-md glass-glass-glass-w-24"></div>
+                        <div className="glass-glass-glass-w-8 glass-glass-glass-h-8 glass-surface-subtle/20 glass-radius-md"></div>
                     </div>
-                    <div className="glass-glass-gap-2">
-                        <div className="glass-glass-h-8 glass-surface-subtle/20 glass-radius-md w-32"></div>
-                        <div className="glass-glass-h-4 glass-surface-subtle/20 glass-radius-md w-20"></div>
+                    <div className="glass-glass-glass-gap-2">
+                        <div className="glass-glass-glass-h-8 glass-surface-subtle/20 glass-radius-md glass-glass-glass-w-32"></div>
+                        <div className="glass-glass-glass-h-4 glass-surface-subtle/20 glass-radius-md glass-glass-glass-w-20"></div>
                     </div>
                     {showSparkline && (
                         <div className={cn('bg-white/10 glass-radius-md', config.sparklineHeight)}></div>
@@ -274,7 +274,7 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
     }
 
     return (
-        <Motion preset="fadeIn" className="glass-glass-w-full glass-stat-card">
+        <Motion preset="fadeIn" className="glass-glass-glass-w-full glass-stat-card">
             <GlassCard
                 variant={variant === 'default' ? 'default' : 'elevated'}
                 elevation={'level2'}
@@ -298,7 +298,7 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
                         'flex items-start justify-between',
                         layout === 'horizontal' ? 'flex-row items-center' : 'flex-col'
                     )}>
-                        <div className="glass-glass-flex-1">
+                        <div className="glass-glass-glass-flex-1">
                             <CardTitle className={cn(config.titleClass, 'glass-text-primary/90 flex items-center glass-gap-2')}>
                                 {displayIcon && (
                                     <span className={cn(config.iconSize, variantConfig.iconColor)}>
@@ -308,13 +308,13 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
                                 {title}
                             </CardTitle>
                             {description && (
-                                <p className="glass-glass-text-sm glass-glass-text-primary/60 glass-mt-1">{description}</p>
+                                <p className="glass-glass-glass-text-sm glass-glass-glass-text-primary/60 glass-mt-1">{description}</p>
                             )}
                         </div>
 
                         {/* Trend indicator */}
                         {trend && (
-                            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1 glass-mt-2">
+                            <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-1 glass-mt-2">
                                 {trend.direction === 'up' && <ArrowUpIcon className={cn('w-4 h-4', variantConfig.trendUpColor)} />}
                                 {trend.direction === 'down' && <ArrowDownIcon className={cn('w-4 h-4', variantConfig.trendDownColor)} />}
                                 {trend.direction === 'neutral' && <Minus className={cn('w-4 h-4', variantConfig.trendNeutralColor)} />}
@@ -339,7 +339,7 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
                             {value}
                         </span>
                         {unit && (
-                            <span className="glass-glass-text-lg glass-glass-text-primary/70 glass-glass-font-medium">
+                            <span className="glass-glass-glass-text-lg glass-glass-glass-text-primary/70 glass-glass-glass-font-medium">
                                 {unit}
                             </span>
                         )}
@@ -347,7 +347,7 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
 
                     {/* Sparkline */}
                     {showSparkline && (sparklineData?.length || 0) > 0 && (
-                        <div className="glass-glass-mb-4">
+                        <div className="glass-glass-glass-mb-4">
                             <svg
                                 width="100%"
                                 height={config.sparklineHeight.replace('h-', '')}
@@ -366,39 +366,39 @@ export const GlassStatCard: React.FC<GlassStatCardProps> = ({
 
                     {/* Progress bar */}
                     {progress !== undefined && (
-                        <div className="glass-glass-mb-4">
-                            <div className="glass-glass-w-full glass-surface-subtle/10 glass-radius-full h-2 overflow-hidden">
+                        <div className="glass-glass-glass-mb-4">
+                            <div className="glass-glass-glass-w-full glass-surface-subtle/10 glass-radius-full glass-glass-glass-h-2 overflow-hidden">
                                 <Motion
                                     preset="slideRight"
-                                    className="glass-glass-h-full glass-gradient-primary from-primary/60 to-primary glass-radius-full"
+                                    className="glass-glass-glass-h-full glass-gradient-primary glass-gradient-primary glass-gradient-primary glass-radius-full"
                                     style={{ width: `${Math.min(progress, 100)}%` }}
                                 />
                             </div>
-                            <div className="glass-glass-flex glass-glass-justify-between glass-glass-items-center glass-mt-1">
-                                <span className="glass-glass-text-xs glass-glass-text-primary/60">Progress</span>
-                                <span className="glass-glass-text-xs glass-glass-text-primary/60">{Math.round(progress)}%</span>
+                            <div className="glass-glass-glass-flex glass-glass-glass-justify-between glass-glass-glass-items-center glass-mt-1">
+                                <span className="glass-glass-glass-text-xs glass-glass-glass-text-primary/60">Progress</span>
+                                <span className="glass-glass-glass-text-xs glass-glass-glass-text-primary/60">{Math.round(progress)}%</span>
                             </div>
                         </div>
                     )}
 
                     {/* Previous value comparison */}
                     {previousValue && (
-                        <div className="glass-glass-mb-4 glass-glass-p-3 glass-surface-subtle/5 glass-radius-lg">
-                            <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
-                                <span className="glass-glass-text-sm glass-glass-text-primary/70">Previous period</span>
-                                <span className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary">{previousValue}{unit}</span>
+                        <div className="glass-glass-glass-mb-4 glass-glass-glass-p-3 glass-surface-subtle/5 glass-radius-lg">
+                            <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between">
+                                <span className="glass-glass-glass-text-sm glass-glass-glass-text-primary/70">Previous period</span>
+                                <span className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary">{previousValue}{unit}</span>
                             </div>
                         </div>
                     )}
 
                     {/* Additional stats */}
                     {additionalStats && (additionalStats?.length || 0) > 0 && (
-                        <div className="glass-glass-gap-3">
+                        <div className="glass-glass-glass-gap-3">
                             {additionalStats.map((stat, index) => (
-                                <div key={index} className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
-                                    <span className="glass-glass-text-sm glass-glass-text-primary/70">{stat.label}</span>
-                                    <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-                                        <span className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary">{stat.value}</span>
+                                <div key={index} className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between">
+                                    <span className="glass-glass-glass-text-sm glass-glass-glass-text-primary/70">{stat.label}</span>
+                                    <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+                                        <span className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary">{stat.value}</span>
                                         {stat.change !== undefined && (
                                             <span className={cn(
                                                 'glass-text-xs font-medium',

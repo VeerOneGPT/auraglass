@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { useArgs } from '@storybook/preview-api';
 import { GlassInput } from './GlassInput';
 import { cn } from '../../lib/utils';
 
@@ -27,10 +28,8 @@ const meta: Meta<typeof GlassInput> = {
       control: 'text',
       description: 'placeholder prop',
     },
-    value: {
-      control: 'text',
-      description: 'value prop',
-    },
+    // Intentionally omit `value` from Controls to avoid
+    // passing a controlled value without onChange by default
     size: {
       control: { type: 'select' },
       options: ["sm","md","lg"],
@@ -51,7 +50,6 @@ const meta: Meta<typeof GlassInput> = {
     className: '',
     disabled: false,
     placeholder: 'Enter text...',
-    value: '',
     size: 'md',
     variant: 'default',
     state: 'default',
@@ -69,7 +67,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4 max-w-md">
+    <div className="glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-gap-4 max-w-md">
       <GlassInput {...args} variant="default" placeholder="Default variant" />
       <GlassInput {...args} variant="filled" placeholder="Filled variant" />
       <GlassInput {...args} variant="outlined" placeholder="Outlined variant" />
@@ -80,7 +78,7 @@ export const Variants: Story = {
 
 export const States: Story = {
   render: (args) => (
-    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4 max-w-md">
+    <div className="glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-gap-4 max-w-md">
       <GlassInput {...args} state="default" placeholder="Default state" />
       <GlassInput {...args} state="success" placeholder="Success state" />
       <GlassInput {...args} state="warning" placeholder="Warning state" />
@@ -91,7 +89,7 @@ export const States: Story = {
 
 export const Sizes: Story = {
   render: (args) => (
-    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4 max-w-md">
+    <div className="glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-gap-4 max-w-md">
       <GlassInput {...args} size="sm" placeholder="Small size" />
       <GlassInput {...args} size="md" placeholder="Medium size" />
       <GlassInput {...args} size="lg" placeholder="Large size" />
@@ -101,10 +99,33 @@ export const Sizes: Story = {
 
 export const WithIcons: Story = {
   render: (args) => (
-    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4 max-w-md">
+    <div className="glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-gap-4 max-w-md">
       <GlassInput {...args} leftIcon="🔍" placeholder="With left icon" />
       <GlassInput {...args} rightIcon="✨" placeholder="With right icon" />
       <GlassInput {...args} leftIcon="👤" rightIcon="✓" placeholder="With both icons" />
     </div>
   ),
+};
+
+// Controlled example that wires value + onChange via Storybook args
+export const Controlled: Story = {
+  render: (args) => {
+    const [{ value = '' }, updateArgs] = useArgs();
+    return (
+      <div className="max-w-md glass-glass-glass-space-y-3">
+        <GlassInput
+          {...args}
+          value={value}
+          onChange={(e) => updateArgs({ value: (e.target as HTMLInputElement).value })}
+          placeholder={args.placeholder ?? 'Controlled input'}
+        />
+        <div className="glass-glass-glass-text-sm glass-text-secondary">
+          Current value: <code>{JSON.stringify(value)}</code>
+        </div>
+      </div>
+    );
+  },
+  args: {
+    value: 'Hello',
+  },
 };

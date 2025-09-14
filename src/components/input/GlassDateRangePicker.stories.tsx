@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { GlassDateRangePicker } from './GlassDateRangePicker';
 import { cn } from '../../lib/utils';
 
@@ -36,16 +37,20 @@ type Story = StoryObj<typeof GlassDateRangePicker>;
 export const Default: Story = {
   args: {
     placeholder: 'Select date range',
+    onChange: fn(),
+    defaultValue: { from: null, to: null },
   },
 };
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-4">
+    <div className="glass-glass-glass-flex glass-glass-glass-flex-wrap glass-glass-glass-gap-4">
       <GlassDateRangePicker {...args} />
     </div>
   ),
   args: {
     placeholder: 'Pick date range',
+    onChange: fn(),
+    defaultValue: { from: null, to: null },
   },
 };

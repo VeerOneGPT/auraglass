@@ -282,7 +282,7 @@ export const GlassFractalLayout = forwardRef<HTMLDivElement, GlassFractalLayoutP
       >
         <div
           ref={containerRef}
-          className="glass-glass-absolute glass-glass-inset-0 glass-glass-flex glass-glass-items-center glass-glass-justify-center"
+          className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center"
           style={{
             transform: `scale(${currentZoom})`,
             transformOrigin: 'center'
@@ -297,7 +297,7 @@ export const GlassFractalLayout = forwardRef<HTMLDivElement, GlassFractalLayoutP
               return (
                 <motion.div
                   key={`${node.id}-${node.depth}`}
-                  className="glass-glass-absolute glass-glass-cursor-pointer"
+                  className="glass-glass-glass-absolute glass-glass-glass-cursor-pointer"
                   style={{
                     left: '50%',
                     top: '50%',
@@ -333,7 +333,7 @@ export const GlassFractalLayout = forwardRef<HTMLDivElement, GlassFractalLayoutP
                   {node.children?.map((child, childIndex) => (
                     <div
                       key={`line-${child.id}`}
-                      className="glass-glass-absolute glass-glass-border-l glass-glass-border-white/30"
+                      className="glass-glass-glass-absolute glass-glass-glass-border-l glass-glass-glass-border-white/30"
                       style={{
                         left: '50%',
                         top: '50%',
@@ -352,7 +352,7 @@ export const GlassFractalLayout = forwardRef<HTMLDivElement, GlassFractalLayoutP
 
                   {/* Depth indicator */}
                   {(node.depth || 0) > 0 && (
-                    <div className="glass-glass-absolute -glass--glass-top-1 -right-1 glass-surface-dark/50 glass-glass-text-primary glass-glass-text-xs glass-radius-full glass-glass-w-4 glass-glass-h-4 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
+                    <div className="glass-glass-glass-absolute -glass--glass--glass--glass--glassglass--glass-top-1 -right-1 glass-surface-dark/50 glass-glass-glass-text-primary glass-glass-glass-text-xs glass-radius-full glass-glass-glass-w-4 glass-glass-glass-h-4 glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center">
                       {node.depth}
                     </div>
                   )}
@@ -363,18 +363,18 @@ export const GlassFractalLayout = forwardRef<HTMLDivElement, GlassFractalLayoutP
         </div>
 
         {/* Controls */}
-        <div className="glass-glass-absolute bottom-4 left-4 glass-glass-flex glass-glass-flex-col glass-glass-gap-2">
-          <div className="glass-glass-text-xs glass-glass-text-primary/70 glass-surface-dark/20 glass-glass-px-2 glass-glass-py-1 glass-radius glass-glass-backdrop-blur-sm">
+        <div className="glass-glass-glass-absolute bottom-4 left-4 glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-gap-2">
+          <div className="glass-glass-glass-text-xs glass-glass-glass-text-primary/70 glass-surface-dark/20 glass-glass-glass-px-2 glass-glass-glass-py-1 glass-radius glass-glass-glass-backdrop-blur-sm">
             Type: {fractalType}
           </div>
-          <div className="glass-glass-text-xs glass-glass-text-primary/70 glass-surface-dark/20 glass-glass-px-2 glass-glass-py-1 glass-radius glass-glass-backdrop-blur-sm">
+          <div className="glass-glass-glass-text-xs glass-glass-glass-text-primary/70 glass-surface-dark/20 glass-glass-glass-px-2 glass-glass-glass-py-1 glass-radius glass-glass-glass-backdrop-blur-sm">
             Depth: {Math.floor(growthProgress * maxDepth)}/{maxDepth}
           </div>
-          <div className="glass-glass-text-xs glass-glass-text-primary/70 glass-surface-dark/20 glass-glass-px-2 glass-glass-py-1 glass-radius glass-glass-backdrop-blur-sm">
+          <div className="glass-glass-glass-text-xs glass-glass-glass-text-primary/70 glass-surface-dark/20 glass-glass-glass-px-2 glass-glass-glass-py-1 glass-radius glass-glass-glass-backdrop-blur-sm">
             Nodes: {allNodes.length}
           </div>
           {interactiveZoom && (
-            <div className="glass-glass-text-xs glass-glass-text-primary/70 glass-surface-dark/20 glass-glass-px-2 glass-glass-py-1 glass-radius glass-glass-backdrop-blur-sm">
+            <div className="glass-glass-glass-text-xs glass-glass-glass-text-primary/70 glass-surface-dark/20 glass-glass-glass-px-2 glass-glass-glass-py-1 glass-radius glass-glass-glass-backdrop-blur-sm">
               Zoom: {(currentZoom * 100).toFixed(0)}%
             </div>
           )}
@@ -382,10 +382,10 @@ export const GlassFractalLayout = forwardRef<HTMLDivElement, GlassFractalLayoutP
 
         {/* Growth progress indicator */}
         {animateGrowth && growthProgress < 1 && (
-          <div className="glass-glass-absolute top-4 right-4">
-            <div className="w-32 h-2 glass-surface-dark/20 glass-radius-full glass-glass-backdrop-blur-sm">
+          <div className="glass-glass-glass-absolute top-4 right-4">
+            <div className="glass-glass-glass-w-32 glass-glass-glass-h-2 glass-surface-dark/20 glass-radius-full glass-glass-glass-backdrop-blur-sm">
               <div
-                className="glass-glass-h-full glass-surface-subtle/50 glass-radius-full transition-all duration-100"
+                className="glass-glass-glass-h-full glass-surface-subtle/50 glass-radius-full transition-all duration-100"
                 style={{ width: `${growthProgress * 100}%` }}
               />
             </div>

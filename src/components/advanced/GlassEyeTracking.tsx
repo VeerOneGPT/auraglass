@@ -515,7 +515,7 @@ export function GlassEyeTrackingCalibration({
         <div className={cn("glass-absolute glass-inset-0")}>
           <div className={cn("glass-relative glass-w-full glass-h-full")}>
             {/* Progress */}
-            <div className={cn("glass-absolute glass-top-4 glass-left-1/2 glass-transform glass-translate-x-1/2-neg")}>
+            <div className={cn("glass-absolute glass-top-4 glass-left-1-2 glass-translate-x-1/2-neg")}> 
               <div className={cn("glass-surface-secondary glass-radius-lg glass-px-4 glass-py-2")}>
                 <span className={cn("glass-text-sm glass-text-primary")}>
                   Point {currentPoint + 1} of {calibrationPoints.length}
@@ -524,7 +524,7 @@ export function GlassEyeTrackingCalibration({
             </div>
 
             {/* Instructions */}
-            <div className={cn("glass-absolute glass-top-20 glass-left-1/2 glass-transform glass-translate-x-1/2-neg glass-text-center")}>
+            <div className={cn("glass-absolute glass-top-20 glass-left-1-2 glass-translate-x-1/2-neg glass-text-center")}> 
               <p className={cn("glass-text-lg glass-text-primary glass-mb-2")}>
                 Look at the blue dot and click it
               </p>
@@ -537,11 +537,8 @@ export function GlassEyeTrackingCalibration({
             {calibrationPoints.map((point, index) => (
               <motion.div
                 key={index}
-                className={cn("glass-absolute glass-w-4 glass-h-4 glass-transform glass-translate-x-1/2-neg glass-translate-y-1/2-neg glass-cursor-pointer")}
-                style={{
-                  left: `${point.x}%`,
-                  top: `${point.y}%`,
-                }}
+                className={cn("glass-absolute glass-w-4 glass-h-4 glass-translate-x-1/2-neg glass-translate-y-1/2-neg glass-cursor-pointer glass-focus")}
+                ref={(el)=>{ if(el){ el.style.left = `${point.x}%`; el.style.top = `${point.y}%`; }}}
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{
                   scale: index === currentPoint ? [1, 1.2, 1] : index < currentPoint ? 1 : 0,
@@ -682,13 +679,7 @@ export function GlassGazeResponsive({
         stiffness: 150,
         damping: 20,
       }}
-      style={{
-        ...(glassIntensity && {
-          backgroundColor: isGazed 
-            ? `rgba(255, 255, 255, ${0.1 + gazeIntensity * 0.1})` 
-            : undefined,
-        }),
-      }}
+      // background color applied via ref assignment above
     >
       {children}
       
@@ -727,30 +718,22 @@ export function GlassGazeVisualization({
   if (!show) return null;
 
   return (
-    <div className={cn("fixed inset-0 pointer-events-none z-40", className)}>
+    <div className={cn("glass-fixed glass-inset-0 glass-pointer-events-none glass-z-40", className)}>
       <AnimatePresence>
         {activeInteractions.map(interaction => (
           <motion.div
             key={interaction.region.id}
-            className="glass-glass-absolute"
-            style={{
-              left: interaction.region.x,
-              top: interaction.region.y,
-              width: interaction.region.width,
-              height: interaction.region.height,
-            }}
+            className="glass-absolute"
+            ref={(el)=>{ if(!el) return; const r=interaction.region as any; el.style.left = typeof r.x==='number'? `${r.x}px` : r.x; el.style.top = typeof r.y==='number'? `${r.y}px` : r.y; el.style.width = typeof r.width==='number'? `${r.width}px` : r.width; el.style.height = typeof r.height==='number'? `${r.height}px` : r.height; }}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 0.6, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
           >
             <div
               className={cn("glass-w-full glass-h-full glass-border-2 glass-radius-md")}
-              style={{
-                borderColor: `rgba(59, 130, 246, ${interaction.intensity})`,
-                backgroundColor: `rgba(59, 130, 246, ${interaction.intensity * 0.1})`,
-              }}
+              ref={(el)=>{ if(!el) return; const a=interaction.intensity; el.style.borderColor = `rgba(59,130,246,${a})`; el.style.backgroundColor = `rgba(59,130,246,${a*0.1})`; }}
             />
-            <div className={cn("glass-absolute glass-top-6-neg glass-left-0 glass-text-xs glass-font-mono glass-text-primary")}>
+            <div className={cn("glass-absolute glass--top-2 glass-left-0 glass-text-xs glass-font-mono glass-text-primary")}> 
               {interaction.type} ({(interaction.intensity * 100).toFixed(0)}%)
             </div>
           </motion.div>

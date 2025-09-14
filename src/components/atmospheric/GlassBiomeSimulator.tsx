@@ -888,10 +888,10 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
           depth={1}
           tint="neutral"
           border="subtle"
-          className="glass-biome-controls glass-glass-flex glass-glass-flex-wrap glass-glass-items-center glass-glass-gap-4 glass-glass-p-4 glass-radius-lg backdrop-blur-md glass-glass-border glass-glass-border-glass-glass-border/20"
+          className="glass-biome-controls glass-glass-glass-flex glass-glass-glass-flex-wrap glass-glass-glass-items-center glass-glass-glass-gap-4 glass-glass-glass-p-4 glass-radius-lg backdrop-blur-md glass-glass-glass-border glass-glass-glass-border-glass-glass-glass-border/20"
         >
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-            <label className="glass-glass-text-sm">Biome:</label>
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+            <label className="glass-glass-glass-text-sm">Biome:</label>
             <select
               value={currentBiome.type}
               onChange={(e) => {
@@ -899,7 +899,7 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
                 setCurrentBiome(newBiome);
                 onBiomeChange?.(newBiome);
               }}
-              className="glass-glass-px-2 glass-glass-py-1 glass-radius-md glass-surface-overlay glass-glass-border glass-glass-border-glass-glass-border/20"
+              className="glass-glass-glass-px-2 glass-glass-glass-py-1 glass-radius-md glass-surface-overlay glass-glass-glass-border glass-glass-glass-border-glass-glass-glass-border/20"
             >
               <option value="forest">Forest</option>
               <option value="ocean">Ocean</option>
@@ -912,8 +912,8 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
             </select>
           </div>
 
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-            <label className="glass-glass-text-sm">Season:</label>
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+            <label className="glass-glass-glass-text-sm">Season:</label>
             <select
               value={currentBiome.season}
               onChange={(e) => {
@@ -921,7 +921,7 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
                 setCurrentBiome(newBiome);
                 onSeasonChange?.(e.target.value as any);
               }}
-              className="glass-glass-px-2 glass-glass-py-1 glass-radius-md glass-surface-overlay glass-glass-border glass-glass-border-glass-glass-border/20"
+              className="glass-glass-glass-px-2 glass-glass-glass-py-1 glass-radius-md glass-surface-overlay glass-glass-glass-border glass-glass-glass-border-glass-glass-glass-border/20"
             >
               <option value="spring">Spring</option>
               <option value="summer">Summer</option>
@@ -930,8 +930,8 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
             </select>
           </div>
 
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-            <label className="glass-glass-text-sm">Time:</label>
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+            <label className="glass-glass-glass-text-sm">Time:</label>
             <input
               type="range"
               min="0"
@@ -943,12 +943,12 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
                 setCurrentBiome(prev => ({ ...prev, timeOfDay: newTime }));
                 onTimeChange?.(newTime);
               }}
-              className="w-20"
+              className="glass-glass-glass-w-20"
             />
           </div>
 
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-            <label className="glass-glass-text-sm">
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+            <label className="glass-glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={dayNightCycle}
@@ -957,7 +957,7 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
               />
               Day/Night
             </label>
-            <label className="glass-glass-text-sm">
+            <label className="glass-glass-glass-text-sm">
               <input
                 type="checkbox"
                 checked={parallaxEnabled}
@@ -988,16 +988,16 @@ export const GlassBiomeSimulator = forwardRef<HTMLDivElement, GlassBiomeSimulato
       >
         <Motion
           preset={isMotionSafe && respectMotionPreference ? "fadeIn" : "none"}
-          className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4 glass-glass-p-4"
+          className="glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-gap-4 glass-glass-glass-p-4"
         >
           {renderControls()}
           
-          <div className="glass-glass-relative">
+          <div className="glass-glass-glass-relative">
             <canvas
               ref={canvasRef}
               width={width}
               height={height}
-              className="glass-glass-border glass-glass-border-glass-glass-border/20 glass-radius-md"
+              className="glass-glass-glass-border glass-glass-glass-border-glass-glass-glass-border/20 glass-radius-md"
               style={{ width, height }}
             />
           </div>

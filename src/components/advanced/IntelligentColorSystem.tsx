@@ -734,9 +734,9 @@ export const ColorAdaptationDemo: React.FC = () => {
             Brand Colors
           </label>
           <div className={cn('glass-flex glass-space-x-2')}>
-            {demoColors.map((color) => (
+            {demoColors.map((color, i) => (
               <motion.button
-                key={color}
+                key={`${color}-${i}`}
                 className={cn('glass-w-8 glass-h-8 glass-radius-full glass-border-2')}
                 style={{
                   backgroundColor: color,

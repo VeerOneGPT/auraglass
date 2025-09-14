@@ -268,7 +268,7 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
             x={midX}
             y={midY - 5}
             textAnchor="middle"
-            className="glass-glass-text-xs fill-white/70"
+            className="glass-glass-glass-text-xs fill-white/70"
           >
             {connection.label}
           </text>
@@ -324,7 +324,7 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
                 if (e.key === 'Escape') handleEditCancel();
               }}
               onBlur={handleEditSubmit}
-              className="glass-glass-w-full glass-glass-h-full glass-glass-px-2 glass-glass-py-1 glass-glass-bg-transparent glass-glass-border glass-glass-border-white/30 glass-radius-md glass-glass-text-primary glass-glass-text-sm focus:outline-none focus:glass-glass-border-white/60"
+              className="glass-glass-glass-w-full glass-glass-glass-h-full glass-glass-glass-px-2 glass-glass-glass-py-1 glass-glass-glass-bg-transparent glass-glass-glass-border glass-glass-glass-border-white/30 glass-radius-md glass-glass-glass-text-primary glass-glass-glass-text-sm focus:outline-none focus:glass-glass-glass-border-white/60"
             />
           </foreignObject>
         );
@@ -382,7 +382,7 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
               x={node.position.x + nodeSize / 2}
               y={node.position.y + nodeHeight / 2 + 4}
               textAnchor="middle"
-              className="glass-glass-text-sm fill-white glass-glass-font-medium glass-pointer-events-none select-none"
+              className="glass-glass-glass-text-sm fill-white glass-glass-glass-font-medium glass-glass-glass-pointer-events-none select-none"
             >
               {node.icon && <tspan x={node.position.x + nodeSize / 2 - 15}>{node.icon}</tspan>}
               <tspan x={node.icon ? node.position.x + nodeSize / 2 + 15 : node.position.x + nodeSize / 2}>
@@ -404,16 +404,16 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
       elevation="level1"
     >
       {/* Toolbar */}
-      <div className="glass-glass-absolute top-4 left-4 glass-z-10 glass-glass-flex glass-glass-gap-2">
+      <div className="glass-glass-glass-absolute top-4 left-4 glass-glass-glass-z-10 glass-glass-glass-flex glass-glass-glass-gap-2">
         <OptimizedGlass
-          className="glass-glass-px-3 glass-glass-py-1 glass-radius-md glass-glass-text-sm glass-glass-cursor-pointer hover:glass-surface-subtle/10"
+          className="glass-glass-glass-px-3 glass-glass-glass-py-1 glass-radius-md glass-glass-glass-text-sm glass-glass-glass-cursor-pointer hover:glass-surface-subtle/10"
           intensity="subtle"
           onClick={(e: React.MouseEvent) => setZoom(1)}
         >
           Reset Zoom
         </OptimizedGlass>
         <OptimizedGlass
-          className="glass-glass-px-3 glass-glass-py-1 glass-radius-md glass-glass-text-sm"
+          className="glass-glass-glass-px-3 glass-glass-glass-py-1 glass-radius-md glass-glass-glass-text-sm"
           intensity="subtle"
         >
           Zoom: {(zoom * 100).toFixed(0)}%
@@ -422,8 +422,8 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
 
       {/* Mini-map */}
       {showMinimap && (
-        <div className="glass-glass-absolute bottom-4 right-4 glass-z-10 w-32 h-24 glass-surface-dark/20 glass-radius-md glass-glass-border glass-glass-border-white/20">
-          <svg className="glass-glass-w-full glass-glass-h-full" viewBox="0 0 320 240">
+        <div className="glass-glass-glass-absolute bottom-4 right-4 glass-glass-glass-z-10 glass-glass-glass-w-32 glass-glass-glass-h-24 glass-surface-dark/20 glass-radius-md glass-glass-glass-border glass-glass-glass-border-white/20">
+          <svg className="glass-glass-glass-w-full glass-glass-glass-h-full" viewBox="0 0 320 240">
             {positionedNodes.map(node => (
               <circle
                 key={`mini-${node.id}`}
@@ -440,14 +440,14 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
       {/* Main SVG Canvas */}
       <div
         ref={containerRef}
-        className="glass-glass-w-full glass-glass-h-full overflow-hidden"
+        className="glass-glass-glass-w-full glass-glass-glass-h-full overflow-hidden"
         onWheel={handleWheel}
         onMouseDown={handlePanStart}
         style={{ cursor: isPanning ? 'grabbing' : 'grab' }}
       >
         <svg
           ref={svgRef}
-          className="glass-glass-w-full glass-glass-h-full"
+          className="glass-glass-glass-w-full glass-glass-glass-h-full"
           style={{
             transform: `scale(${zoom}) translate(${pan.x / zoom}px, ${pan.y / zoom}px)`,
             transformOrigin: 'center',

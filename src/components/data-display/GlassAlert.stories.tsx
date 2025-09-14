@@ -53,7 +53,7 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4">
+    <div className="glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-gap-4">
       <GlassAlert {...args} variant="info">
         This is an info alert
       </GlassAlert>

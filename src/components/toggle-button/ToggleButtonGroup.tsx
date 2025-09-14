@@ -44,6 +44,9 @@ function ToggleButtonGroupComponent(
     className,
     style,
     glass = false,
+    // Prevent custom props from leaking to DOM
+    glassVariant,
+    blurStrength,
     color = 'primary',
     size = 'medium',
     fullWidth = false,
@@ -125,6 +128,8 @@ function ToggleButtonGroupComponent(
       fullWidth,
       variant,
       glass,
+      glassVariant,
+      blurStrength,
       selected: isSelected,
       onChange: handleButtonSelection,
       grouped: true,

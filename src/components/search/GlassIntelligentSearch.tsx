@@ -494,9 +494,9 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
   return (
     <div className={cn("w-full max-w-4xl mx-auto", className)}>
       {/* Search Input */}
-      <Glass className="glass-glass-relative">
-        <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3 glass-glass-p-4">
-          <div className="glass-glass-relative glass-glass-flex-1">
+      <Glass className="glass-glass-glass-relative">
+        <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-3 glass-glass-glass-p-4">
+          <div className="glass-glass-glass-relative glass-glass-glass-flex-1">
             <input
               ref={searchInputRef}
               type="text"
@@ -511,15 +511,15 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
               }}
               onFocus={() => setShowSuggestionsList(suggestions.length > 0)}
               placeholder={placeholder}
-              className="glass-glass-w-full pl-10 pr-4 glass-glass-py-3 glass-glass-border glass-glass-border-subtle glass-radius-lg focus:ring-2 focus:ring-blue-500 focus:glass-glass-border-blue"
+              className="glass-glass-glass-w-full pl-10 pr-4 glass-glass-glass-py-3 glass-glass-glass-border glass-glass-glass-border-subtle glass-radius-lg focus:ring-2 focus:ring-blue-500 focus:glass-glass-glass-border-blue"
               aria-label="Search input"
             />
             
-            <div className="glass-glass-absolute left-3 glass--glass-top-1/2 transform -translate-y-1/2">
+            <div className="glass-glass-glass-absolute left-3 glass--glass--glass--glass--glassglass--glass-top-1/2 transform -translate-y-1/2">
               {isSearching ? (
-                <div className="animate-spin glass-glass-w-5 glass-glass-h-5 glass-glass-border-2 glass-glass-border-blue glass-glass-border-t-transparent glass-radius-full" />
+                <div className="animate-spin glass-glass-glass-w-5 glass-glass-glass-h-5 glass-glass-glass-border-2 glass-glass-glass-border-blue glass-glass-glass-border-t-transparent glass-radius-full" />
               ) : (
-                <span className="glass-text-secondary glass-glass-text-lg">🔍</span>
+                <span className="glass-text-secondary glass-glass-glass-text-lg">🔍</span>
               )}
             </div>
           </div>
@@ -542,7 +542,7 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
 
           <button
             onClick={handleSearchSubmit}
-            className="glass-glass-px-6 glass-glass-py-3 glass-surface-blue glass-glass-text-primary glass-radius-lg hover:glass-surface-blue transition-colors"
+            className="glass-glass-glass-px-6 glass-glass-glass-py-3 glass-surface-blue glass-glass-glass-text-primary glass-radius-lg hover:glass-surface-blue transition-colors"
           >
             Search
           </button>
@@ -550,27 +550,27 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
 
         {/* Suggestions Dropdown */}
         {showSuggestionsList && suggestions.length > 0 && (
-          <div className="glass-glass-absolute top-full left-0 right-0 mt-2 glass-surface-subtle glass-glass-border glass-glass-border-subtle glass-radius-lg glass-glass-shadow-lg glass-z-50 max-h-60 glass-glass-overflow-y-auto">
+          <div className="glass-glass-glass-absolute top-full left-0 right-0 mt-2 glass-surface-subtle glass-glass-glass-border glass-glass-glass-border-subtle glass-radius-lg glass-glass-glass-shadow-lg glass-glass-glass-z-50 max-h-60 glass-glass-glass-overflow-y-auto">
             {suggestions.map((suggestion, index) => (
               <button
                 key={`${suggestion.type}-${suggestion.text}`}
                 ref={el => suggestionRefs.current[index] = el}
                 onClick={() => handleSuggestionClick(suggestion)}
-                className="glass-glass-w-full glass-glass-px-4 glass-glass-py-2 glass-glass-text-left hover:glass-surface-subtle glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-border-b glass-glass-border-gray-100 last:glass-glass-border-b-0"
+                className="glass-glass-glass-w-full glass-glass-glass-px-4 glass-glass-glass-py-2 glass-glass-glass-text-left hover:glass-surface-subtle glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between glass-glass-glass-border-b glass-glass-glass-border-gray-100 last:glass-glass-glass-border-b-0"
               >
-                <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3">
-                  <span className="glass-glass-text-sm">
+                <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-3">
+                  <span className="glass-glass-glass-text-sm">
                     {suggestion.type === 'query' && '🔍'}
                     {suggestion.type === 'category' && '📁'}
                     {suggestion.type === 'tag' && '🏷️'}
                   </span>
                   <span className="glass-text-secondary">{suggestion.text}</span>
                   {suggestion.category && (
-                    <span className="glass-glass-text-xs glass-text-secondary">in {suggestion.category}</span>
+                    <span className="glass-glass-glass-text-xs glass-text-secondary">in {suggestion.category}</span>
                   )}
                 </div>
                 {suggestion.count && (
-                  <span className="glass-glass-text-xs glass-text-secondary">{suggestion.count}</span>
+                  <span className="glass-glass-glass-text-xs glass-text-secondary">{suggestion.count}</span>
                 )}
               </button>
             ))}
@@ -580,21 +580,21 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
 
       {/* NLP Analysis Display */}
       {enableNLP && searchAnalysis && query.trim() && (
-        <Glass className="mt-4 glass-glass-p-4 bg-blue-50">
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4 glass-glass-text-sm">
-            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-              <span className="glass-glass-font-medium glass-glass-text-primary">Intent:</span>
-              <span className="glass-glass-px-2 glass-glass-py-1 bg-blue-100 glass-glass-text-primary glass-radius glass-glass-capitalize">
+        <Glass className="mt-4 glass-glass-glass-p-4 glass-surface-subtle">
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-4 glass-glass-glass-text-sm">
+            <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+              <span className="glass-glass-glass-font-medium glass-glass-glass-text-primary">Intent:</span>
+              <span className="glass-glass-glass-px-2 glass-glass-glass-py-1 glass-surface-subtle glass-glass-glass-text-primary glass-radius glass-glass-glass-capitalize">
                 {searchAnalysis.intent}
               </span>
             </div>
             
             {searchAnalysis.entities.length > 0 && (
-              <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-                <span className="glass-glass-font-medium glass-glass-text-primary">Entities:</span>
-                <div className="glass-glass-flex glass-glass-gap-1">
+              <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+                <span className="glass-glass-glass-font-medium glass-glass-glass-text-primary">Entities:</span>
+                <div className="glass-glass-glass-flex glass-glass-glass-gap-1">
                   {searchAnalysis.entities.slice(0, 3).map((entity: any, index: number) => (
-                    <span key={index} className="glass-glass-px-2 glass-glass-py-1 bg-purple-100 text-purple-700 glass-radius glass-glass-text-xs">
+                    <span key={index} className="glass-glass-glass-px-2 glass-glass-glass-py-1 glass-surface-subtle glass-glass-glass-text-primary glass-radius glass-glass-glass-text-xs">
                       {entity.type}: {entity.value}
                     </span>
                   ))}
@@ -602,11 +602,11 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
               </div>
             )}
             
-            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-              <span className="glass-glass-font-medium glass-glass-text-primary">Keywords:</span>
-              <div className="glass-glass-flex glass-glass-gap-1">
+            <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+              <span className="glass-glass-glass-font-medium glass-glass-glass-text-primary">Keywords:</span>
+              <div className="glass-glass-glass-flex glass-glass-glass-gap-1">
                 {searchAnalysis.keywords.slice(0, 4).map((keyword: string, index: number) => (
-                  <span key={index} className="glass-glass-px-2 glass-glass-py-1 bg-green-100 glass-glass-text-primary glass-radius glass-glass-text-xs">
+                  <span key={index} className="glass-glass-glass-px-2 glass-glass-glass-py-1 glass-surface-subtle glass-glass-glass-text-primary glass-radius glass-glass-glass-text-xs">
                     {keyword}
                   </span>
                 ))}
@@ -618,30 +618,30 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
 
       {/* Filters */}
       {showFilters && availableFilters.length > 0 && (
-        <Glass className="mt-4 glass-glass-p-4">
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-mb-4">
-            <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-text-secondary">Filters</h3>
+        <Glass className="mt-4 glass-glass-glass-p-4">
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between glass-glass-glass-mb-4">
+            <h3 className="glass-glass-glass-text-lg glass-glass-glass-font-semibold glass-text-secondary">Filters</h3>
             {Object.keys(filters).length > 0 && (
               <button
                 onClick={clearFilters}
-                className="glass-glass-text-sm glass-glass-text-primary hover:glass-glass-text-primary"
+                className="glass-glass-glass-text-sm glass-glass-glass-text-primary hover:glass-glass-glass-text-primary"
               >
                 Clear all
               </button>
             )}
           </div>
           
-          <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-3 glass-glass-gap-4">
+          <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-1 md:glass-glass-glass-glass-glass-grid-cols-3 glass-glass-glass-gap-4">
             {availableFilters.map(filter => (
               <div key={filter.id}>
-                <label className="glass-glass-block glass-glass-text-sm glass-glass-font-medium glass-text-secondary glass-glass-mb-2">
+                <label className="glass-glass-glass-block glass-glass-glass-text-sm glass-glass-glass-font-medium glass-text-secondary glass-glass-glass-mb-2">
                   {filter.name}
                 </label>
                 
                 {filter.type === 'multiselect' && (
-                  <div className="glass-glass-space-y-2 max-h-32 glass-glass-overflow-y-auto">
+                  <div className="glass-glass-glass-space-y-2 max-glass-glass-glass-h-32 glass-glass-glass-overflow-y-auto">
                     {filter.options?.map(option => (
-                      <label key={option.value} className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-text-sm">
+                      <label key={option.value} className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2 glass-glass-glass-text-sm">
                         <input
                           type="checkbox"
                           checked={filters[filter.id]?.includes(option.value) || false}
@@ -653,10 +653,10 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
                               handleFilterChange(filter.id, current.filter((v: string) => v !== option.value));
                             }
                           }}
-                          className="glass-radius glass-glass-border-subtle glass-glass-text-primary focus:ring-blue-500"
+                          className="glass-radius glass-glass-glass-border-subtle glass-glass-glass-text-primary focus:ring-blue-500"
                         />
-                        <span className="glass-glass-flex-1">{option.label}</span>
-                        <span className="glass-text-secondary glass-glass-text-xs">({option.count})</span>
+                        <span className="glass-glass-glass-flex-1">{option.label}</span>
+                        <span className="glass-text-secondary glass-glass-glass-text-xs">({option.count})</span>
                       </label>
                     ))}
                   </div>
@@ -671,11 +671,11 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
                       step={filter.range.step || 1}
                       value={filters[filter.id] || filter.range.min}
                       onChange={(e) => handleFilterChange(filter.id, parseFloat(e.target.value))}
-                      className="glass-glass-w-full"
+                      className="glass-glass-glass-w-full"
                     />
-                    <div className="glass-glass-flex glass-glass-justify-between glass-glass-text-xs glass-text-secondary mt-1">
+                    <div className="glass-glass-glass-flex glass-glass-glass-justify-between glass-glass-glass-text-xs glass-text-secondary mt-1">
                       <span>{filter.range.min}</span>
-                      <span className="glass-glass-font-medium">{filters[filter.id] || filter.range.min}</span>
+                      <span className="glass-glass-glass-font-medium">{filters[filter.id] || filter.range.min}</span>
                       <span>{filter.range.max}</span>
                     </div>
                   </div>
@@ -689,10 +689,10 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
       {/* Results */}
       <div className="mt-6">
         {query.trim() || Object.keys(filters).length > 0 ? (
-          <div className="glass-glass-mb-4 glass-glass-text-sm glass-text-secondary">
+          <div className="glass-glass-glass-mb-4 glass-glass-glass-text-sm glass-text-secondary">
             Found {results.length} results
             {query.trim() && (
-              <span> for "<span className="glass-glass-font-medium">{query}</span>"</span>
+              <span> for "<span className="glass-glass-glass-font-medium">{query}</span>"</span>
             )}
             {Object.keys(filters).length > 0 && (
               <span> with {Object.keys(filters).length} filters applied</span>
@@ -700,48 +700,48 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
           </div>
         ) : null}
 
-        <div className="glass-glass-space-y-4">
+        <div className="glass-glass-glass-space-y-4">
           {results.map(result => (
             <Glass
               key={result.id}
-              className="glass-glass-p-6 glass-glass-cursor-pointer hover:glass-glass-shadow-lg transition-glass-glass-shadow"
+              className="glass-glass-glass-p-6 glass-glass-glass-cursor-pointer hover:glass-glass-glass-shadow-lg transition-glass-glass-glass-shadow"
               onClick={() => onResultClick?.(result)}
             >
-              <div className="glass-glass-flex glass-glass-items-start glass-glass-gap-4">
-                <div className="glass-glass-text-2xl">{getResultIcon(result.category)}</div>
+              <div className="glass-glass-glass-flex glass-glass-glass-items-start glass-glass-glass-gap-4">
+                <div className="glass-glass-glass-text-2xl">{getResultIcon(result.category)}</div>
                 
-                <div className="glass-glass-flex-1 glass-glass-min-w-0">
-                  <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3 glass-glass-mb-2">
-                    <h3 className="glass-glass-text-lg glass-glass-font-semibold glass-text-secondary">
+                <div className="glass-glass-glass-flex-1 glass-glass-glass-min-glass-glass-w-0">
+                  <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-3 glass-glass-glass-mb-2">
+                    <h3 className="glass-glass-glass-text-lg glass-glass-glass-font-semibold glass-text-secondary">
                       {highlightText(result.title, result.highlights?.title)}
                     </h3>
-                    <span className="glass-glass-px-2 glass-glass-py-1 glass-glass-text-xs glass-surface-subtle glass-text-secondary glass-radius">
+                    <span className="glass-glass-glass-px-2 glass-glass-glass-py-1 glass-glass-glass-text-xs glass-surface-subtle glass-text-secondary glass-radius">
                       {result.category}
                     </span>
                     {result.metadata?.rating && (
-                      <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
-                        <span className="glass-glass-text-primary">⭐</span>
-                        <span className="glass-glass-text-sm glass-text-secondary">{result.metadata.rating}</span>
+                      <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-1">
+                        <span className="glass-glass-glass-text-primary">⭐</span>
+                        <span className="glass-glass-glass-text-sm glass-text-secondary">{result.metadata.rating}</span>
                       </div>
                     )}
                   </div>
                   
-                  <p className="glass-text-secondary glass-glass-mb-3">
+                  <p className="glass-text-secondary glass-glass-glass-mb-3">
                     {highlightText(result.description, result.highlights?.description)}
                   </p>
                   
                   {result.tags.length > 0 && (
-                    <div className="glass-glass-flex glass-glass-flex-wrap glass-glass-gap-1">
+                    <div className="glass-glass-glass-flex glass-glass-glass-flex-wrap glass-glass-glass-gap-1">
                       {result.tags.slice(0, 5).map(tag => (
                         <span
                           key={tag}
-                          className="glass-glass-px-2 glass-glass-py-1 glass-glass-text-xs bg-blue-100 glass-glass-text-primary glass-radius"
+                          className="glass-glass-glass-px-2 glass-glass-glass-py-1 glass-glass-glass-text-xs glass-surface-subtle glass-glass-glass-text-primary glass-radius"
                         >
                           {tag}
                         </span>
                       ))}
                       {result.tags.length > 5 && (
-                        <span className="glass-glass-px-2 glass-glass-py-1 glass-glass-text-xs glass-surface-subtle glass-text-secondary glass-radius">
+                        <span className="glass-glass-glass-px-2 glass-glass-glass-py-1 glass-glass-glass-text-xs glass-surface-subtle glass-text-secondary glass-radius">
                           +{result.tags.length - 5} more
                         </span>
                       )}
@@ -749,7 +749,7 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
                   )}
                 </div>
                 
-                <div className="glass-glass-text-sm glass-text-secondary">
+                <div className="glass-glass-glass-text-sm glass-text-secondary">
                   Score: {result.score.toFixed(1)}
                 </div>
               </div>
@@ -757,10 +757,10 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
           ))}
           
           {results.length === 0 && (query.trim() || Object.keys(filters).length > 0) && !isSearching && (
-            <div className="glass-glass-text-center glass-glass-py-12 glass-text-secondary">
-              <div className="glass-glass-text-6xl glass-glass-mb-4">🔍</div>
-              <h3 className="glass-glass-text-lg glass-glass-font-medium glass-glass-mb-2">No results found</h3>
-              <p className="glass-glass-text-sm">
+            <div className="glass-glass-glass-text-center glass-glass-glass-py-12 glass-text-secondary">
+              <div className="glass-glass-glass-text-6xl glass-glass-glass-mb-4">🔍</div>
+              <h3 className="glass-glass-glass-text-lg glass-glass-glass-font-medium glass-glass-glass-mb-2">No results found</h3>
+              <p className="glass-glass-glass-text-sm">
                 Try adjusting your search terms or filters, or try using more general keywords.
               </p>
             </div>

@@ -55,8 +55,8 @@ export const Default: Story = {
 
 export const Variants: Story = {
   render: (args) => (
-    <div className="glass-glass-flex glass-glass-flex-col glass-glass-gap-4">
-      <div className="glass-glass-relative w-80 h-40 bg-gray-900/20 glass-radius-md glass-glass-border glass-glass-p-4">
+    <div className="glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-gap-4">
+      <div className="glass-glass-glass-relative glass-glass-glass-w-80 h-40 glass-surface-subtle/20 glass-radius-md glass-glass-glass-border glass-glass-glass-p-4">
         <ChartRenderer
           {...args}
           datasets={[{

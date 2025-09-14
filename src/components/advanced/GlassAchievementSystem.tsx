@@ -771,7 +771,7 @@ const AchievementNotificationCard = forwardRef<HTMLDivElement, {
       aria-atomic="true"
       tabIndex={0}
       onKeyDown={handleKeyDown}
-      className="glass-glass-relative"
+      className="glass-glass-glass-relative"
       initial={{ x: 300, opacity: 0, scale: 0.8 }}
       animate={{ x: 0, opacity: 1, scale: 1 }}
       exit={{ x: 300, opacity: 0, scale: 0.8 }}
@@ -791,7 +791,7 @@ const AchievementNotificationCard = forwardRef<HTMLDivElement, {
         border="glow"
         animation="none"
         performanceMode="medium"
-        className="w-80 glass-glass-p-4 glass-glass-relative overflow-hidden glass-radius-lg"
+        className="glass-glass-glass-w-80 glass-glass-glass-p-4 glass-glass-glass-relative overflow-hidden glass-radius-lg"
       >
         {/* Rarity glow */}
         <div 
@@ -801,14 +801,14 @@ const AchievementNotificationCard = forwardRef<HTMLDivElement, {
           )}
         />
         
-        <div className="glass-glass-relative glass-z-10">
+        <div className="glass-glass-glass-relative glass-glass-glass-z-10">
         {/* Header */}
-        <div className="glass-glass-flex glass-glass-items-start glass-glass-justify-between glass-glass-mb-3">
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3">
-            <div className="glass-glass-text-2xl">{achievement.icon}</div>
+        <div className="glass-glass-glass-flex glass-glass-glass-items-start glass-glass-glass-justify-between glass-glass-glass-mb-3">
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-3">
+            <div className="glass-glass-glass-text-2xl">{achievement.icon}</div>
             <div>
-              <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-                <h3 className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/90">
+              <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+                <h3 className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary/90">
                   Achievement Unlocked!
                 </h3>
                 <span className={cn(
@@ -825,7 +825,7 @@ const AchievementNotificationCard = forwardRef<HTMLDivElement, {
           </div>
           <button
             onClick={onClose}
-            className="glass-glass-text-xs glass-glass-text-primary/60 hover:glass-glass-text-primary/90"
+            className="glass-glass-glass-text-xs glass-glass-glass-text-primary/60 hover:glass-glass-glass-text-primary/90"
             aria-label="Close achievement notification"
           >
             ✕
@@ -833,27 +833,27 @@ const AchievementNotificationCard = forwardRef<HTMLDivElement, {
         </div>
 
         {/* Achievement details */}
-        <div className="glass-glass-mb-3">
-          <h4 className="glass-glass-font-medium glass-glass-text-primary/90 glass-glass-mb-1">
+        <div className="glass-glass-glass-mb-3">
+          <h4 className="glass-glass-glass-font-medium glass-glass-glass-text-primary/90 glass-glass-glass-mb-1">
             {achievement.title}
           </h4>
-          <p className="glass-glass-text-sm glass-glass-text-primary/70">
+          <p className="glass-glass-glass-text-sm glass-glass-glass-text-primary/70">
             {achievement.description}
           </p>
         </div>
 
         {/* XP reward */}
-        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-            <div className="glass-glass-text-xs glass-glass-text-primary/60">Reward:</div>
-            <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
+        <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between">
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+            <div className="glass-glass-glass-text-xs glass-glass-glass-text-primary/60">Reward:</div>
+            <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-1">
               <span className="text-amber-400">✨</span>
-              <span className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/90">
+              <span className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary/90">
                 +{achievement.xp} XP
               </span>
             </div>
           </div>
-          <div className="glass-glass-text-xs glass-glass-text-primary/50">
+          <div className="glass-glass-glass-text-xs glass-glass-glass-text-primary/50">
             {achievement.category}
           </div>
         </div>
@@ -862,7 +862,7 @@ const AchievementNotificationCard = forwardRef<HTMLDivElement, {
 
       {/* Celebration particles */}
       <motion.div
-        className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none"
+        className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-glass-glass-pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ opacity: [0, 1, 0] }}
         transition={{ duration: 2, delay: delay / 1000 + 0.5 }}
@@ -870,7 +870,7 @@ const AchievementNotificationCard = forwardRef<HTMLDivElement, {
         {Array.from({ length: 12 }, (_, i) => (
           <motion.div
             key={i}
-            className="glass-glass-absolute w-1 h-1 bg-amber-400 glass-radius-full"
+            className="glass-glass-glass-absolute glass-glass-glass-w-1 glass-glass-glass-h-1 bg-amber-400 glass-radius-full"
             style={{
               left: '50%',
               top: '50%',
@@ -927,30 +927,30 @@ export function GlassAchievementDashboard({
       aria-label="Achievement dashboard"
     >
       {/* Header */}
-      <div className="glass-glass-p-4 glass-glass-border-b glass-glass-border-white/10">
-        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-mb-2">
-          <h3 className="glass-glass-text-lg glass-glass-font-medium glass-glass-text-primary/90">Glass Achievements</h3>
-          <div className="glass-glass-text-sm glass-glass-text-primary/70">Level {progress.level}</div>
+      <div className="glass-glass-glass-p-4 glass-glass-glass-border-b glass-glass-glass-border-white/10">
+        <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between glass-glass-glass-mb-2">
+          <h3 className="glass-glass-glass-text-lg glass-glass-glass-font-medium glass-glass-glass-text-primary/90">Glass Achievements</h3>
+          <div className="glass-glass-glass-text-sm glass-glass-glass-text-primary/70">Level {progress.level}</div>
         </div>
         
         {/* XP Progress bar */}
-        <div className="glass-glass-w-full glass-surface-subtle/5 glass-glass-backdrop-blur-sm glass-radius-sm h-2 overflow-hidden">
+        <div className="glass-glass-glass-w-full glass-surface-subtle/5 glass-glass-glass-backdrop-blur-sm glass-radius-sm glass-glass-glass-h-2 overflow-hidden">
           <motion.div
-            className="glass-glass-h-full glass-gradient-primary from-blue-500 to-purple-500"
+            className="glass-glass-glass-h-full glass-gradient-primary glass-gradient-primary glass-gradient-primary"
             animate={{ 
               width: `${(progress.currentXP / progress.xpToNextLevel) * 100}%` 
             }}
             transition={{ duration: 0.5 }}
           />
         </div>
-        <div className="glass-glass-flex glass-glass-justify-between glass-glass-text-xs glass-glass-text-primary/50 glass-mt-1">
+        <div className="glass-glass-glass-flex glass-glass-glass-justify-between glass-glass-glass-text-xs glass-glass-glass-text-primary/50 glass-mt-1">
           <span>{progress.currentXP} XP</span>
           <span>{progress.xpToNextLevel} XP to next level</span>
         </div>
       </div>
 
       {/* Tabs */}
-      <div className="glass-glass-flex glass-glass-border-b glass-glass-border-white/10">
+      <div className="glass-glass-glass-flex glass-glass-glass-border-b glass-glass-glass-border-white/10">
         {[
           { id: 'progress', label: 'Progress', count: progress.totalXP },
           { id: 'achievements', label: 'Achievements', count: unlockedAchievements.length },
@@ -967,40 +967,40 @@ export function GlassAchievementDashboard({
             )}
           >
             <div>{tab.label}</div>
-            <div className="glass-glass-text-xs">{tab.count}</div>
+            <div className="glass-glass-glass-text-xs">{tab.count}</div>
           </button>
         ))}
       </div>
 
       {/* Content */}
-      <div className="glass-glass-p-4 glass-glass-max-h-64 glass-glass-overflow-y-auto">
+      <div className="glass-glass-glass-p-4 glass-max-glass-glass-glass-h-64 glass-glass-glass-overflow-y-auto">
         {activeTab === 'progress' && (
-          <div className="glass-glass-gap-3">
-            <div className="glass-glass-grid glass-glass-glass-grid-cols-2 glass-glass-gap-2 glass-glass-text-center">
-              <div className="glass-surface-subtle/5 glass-glass-backdrop-blur-sm glass-radius-md glass-glass-p-2">
-                <div className="glass-glass-text-lg glass-glass-font-medium glass-glass-text-primary/90">{progress.level}</div>
-                <div className="glass-glass-text-xs glass-glass-text-primary/60">Level</div>
+          <div className="glass-glass-glass-gap-3">
+            <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-2 glass-glass-glass-gap-2 glass-glass-glass-text-center">
+              <div className="glass-surface-subtle/5 glass-glass-glass-backdrop-blur-sm glass-radius-md glass-glass-glass-p-2">
+                <div className="glass-glass-glass-text-lg glass-glass-glass-font-medium glass-glass-glass-text-primary/90">{progress.level}</div>
+                <div className="glass-glass-glass-text-xs glass-glass-glass-text-primary/60">Level</div>
               </div>
-              <div className="glass-surface-subtle/5 glass-glass-backdrop-blur-sm glass-radius-md glass-glass-p-2">
-                <div className="glass-glass-text-lg glass-glass-font-medium glass-glass-text-primary/90">{progress.totalXP}</div>
-                <div className="glass-glass-text-xs glass-glass-text-primary/60">Total XP</div>
+              <div className="glass-surface-subtle/5 glass-glass-glass-backdrop-blur-sm glass-radius-md glass-glass-glass-p-2">
+                <div className="glass-glass-glass-text-lg glass-glass-glass-font-medium glass-glass-glass-text-primary/90">{progress.totalXP}</div>
+                <div className="glass-glass-glass-text-xs glass-glass-glass-text-primary/60">Total XP</div>
               </div>
             </div>
             
             <div>
-              <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/90 glass-glass-mb-2">In Progress</h4>
-              <div className="glass-glass-gap-2">
+              <h4 className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary/90 glass-glass-glass-mb-2">In Progress</h4>
+              <div className="glass-glass-glass-gap-2">
                 {availableAchievements.slice(0, 3).map(achievement => (
-                  <div key={achievement.id} className="glass-surface-subtle/5 glass-glass-backdrop-blur-sm glass-radius-sm glass-glass-p-2">
-                    <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-mb-1">
-                      <span className="glass-glass-text-sm glass-glass-text-primary/90">{achievement.title}</span>
-                      <span className="glass-glass-text-xs glass-glass-text-primary/60">
+                  <div key={achievement.id} className="glass-surface-subtle/5 glass-glass-glass-backdrop-blur-sm glass-radius-sm glass-glass-glass-p-2">
+                    <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between glass-glass-glass-mb-1">
+                      <span className="glass-glass-glass-text-sm glass-glass-glass-text-primary/90">{achievement.title}</span>
+                      <span className="glass-glass-glass-text-xs glass-glass-glass-text-primary/60">
                         {(achievement.progress * 100).toFixed(0)}%
                       </span>
                     </div>
-                    <div className="glass-glass-w-full bg-gray-700 glass-radius-full h-1">
+                    <div className="glass-glass-glass-w-full glass-surface-subtle glass-radius-full glass-glass-glass-h-1">
                       <div 
-                        className="glass-surface-blue h-1 glass-radius-full"
+                        className="glass-surface-blue glass-glass-glass-h-1 glass-radius-full"
                         style={{ width: `${achievement.progress * 100}%` }}
                       />
                     </div>
@@ -1012,25 +1012,25 @@ export function GlassAchievementDashboard({
         )}
 
         {activeTab === 'achievements' && (
-          <div className="glass-glass-gap-2">
+          <div className="glass-glass-glass-gap-2">
             {unlockedAchievements.map(achievement => (
-              <div key={achievement.id} className="glass-surface-subtle/5 glass-glass-backdrop-blur-sm glass-radius-sm glass-glass-p-3">
-                <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-3">
-                  <div className="glass-glass-text-xl">{achievement.icon}</div>
-                  <div className="glass-glass-flex-1">
-                    <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
-                      <h4 className="glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/90">
+              <div key={achievement.id} className="glass-surface-subtle/5 glass-glass-glass-backdrop-blur-sm glass-radius-sm glass-glass-glass-p-3">
+                <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-3">
+                  <div className="glass-glass-glass-text-xl">{achievement.icon}</div>
+                  <div className="glass-glass-glass-flex-1">
+                    <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between">
+                      <h4 className="glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary/90">
                         {achievement.title}
                       </h4>
-                      <span className="glass-glass-text-xs glass-glass-text-primary/60">
+                      <span className="glass-glass-glass-text-xs glass-glass-glass-text-primary/60">
                         +{achievement.xp} XP
                       </span>
                     </div>
-                    <p className="glass-glass-text-xs glass-glass-text-primary/60">
+                    <p className="glass-glass-glass-text-xs glass-glass-glass-text-primary/60">
                       {achievement.description}
                     </p>
                     {achievement.unlockedAt && (
-                      <div className="glass-glass-text-xs glass-glass-text-primary/50 glass-mt-1">
+                      <div className="glass-glass-glass-text-xs glass-glass-glass-text-primary/50 glass-mt-1">
                         Unlocked {new Date(achievement.unlockedAt).toLocaleDateString()}
                       </div>
                     )}
@@ -1042,8 +1042,8 @@ export function GlassAchievementDashboard({
         )}
 
         {activeTab === 'stats' && (
-          <div className="glass-glass-gap-3">
-            <div className="glass-glass-grid glass-glass-glass-grid-cols-2 glass-glass-gap-2">
+          <div className="glass-glass-glass-gap-3">
+            <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-2 glass-glass-glass-gap-2">
               {[
                 { label: 'Interactions', value: progress.stats.totalInteractions },
                 { label: 'Components', value: progress.stats.componentsExplored.length },
@@ -1052,9 +1052,9 @@ export function GlassAchievementDashboard({
                 { label: 'Time Spent', value: `${Math.floor(progress.stats.timeSpent / 60000)}m` },
                 { label: 'Social', value: progress.stats.socialInteractions },
               ].map(stat => (
-                <div key={stat.label} className="glass-surface-subtle/5 glass-glass-backdrop-blur-sm glass-radius-md glass-glass-p-2 glass-glass-text-center">
-                  <div className="glass-glass-text-lg glass-glass-font-medium glass-glass-text-primary/90">{stat.value}</div>
-                  <div className="glass-glass-text-xs glass-glass-text-primary/60">{stat.label}</div>
+                <div key={stat.label} className="glass-surface-subtle/5 glass-glass-glass-backdrop-blur-sm glass-radius-md glass-glass-glass-p-2 glass-glass-glass-text-center">
+                  <div className="glass-glass-glass-text-lg glass-glass-glass-font-medium glass-glass-glass-text-primary/90">{stat.value}</div>
+                  <div className="glass-glass-glass-text-xs glass-glass-glass-text-primary/60">{stat.label}</div>
                 </div>
               ))}
             </div>

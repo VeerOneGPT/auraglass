@@ -523,9 +523,9 @@ export const GlassWhiteboard: React.FC<GlassWhiteboardProps> = ({
 
           {/* Colors */}
           <div className={cn('glass-flex glass-gap-1')}>
-            {availableColors.map(color => (
+            {availableColors.map((color, i) => (
               <button
-                key={color}
+                key={`${color}-${i}`}
                 onClick={(e) => handleColorChange(color)}
                 className={cn(
                   'glass-w-8 glass-h-8 glass-radius-md glass-border-2 glass-transition-all',

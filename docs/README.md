@@ -2,7 +2,7 @@
 
 ## Overview
 
-Welcome to the comprehensive AuraGlass documentation. This design system provides a complete glassmorphism component library with a 100/100 design system score, token-first architecture, and advanced enforcement tooling.
+Welcome to the comprehensive AuraGlass documentation. This design system provides a complete glassmorphism component library with a 100/100 design system score, token-first architecture, and advanced enforcement tooling. The current audit covers 341 components (Pass 341, Near 0, Needs Work 0).
 
 ## 🚀 Quick Start
 
@@ -16,6 +16,20 @@ npm run glass:full-check
 
 # Start development with live validation
 npm run dev
+```
+
+### 🏭 Production AI Deployment (NEW!)
+```bash
+# Configure API keys
+cp .env.example .env
+# Add: OPENAI_API_KEY, PINECONE_API_KEY, JWT_SECRET
+
+# Quick deployment
+npm install --legacy-peer-deps
+./scripts/deploy.sh
+
+# Or use Docker
+docker-compose up -d
 ```
 
 ### Basic Usage
@@ -53,7 +67,8 @@ function App() {
 | **[Migration Guide](../MIGRATION.md)** | Migrate from raw values to token-first system | Upgrading existing projects |
 | **[Button Spacing Guide](./BUTTON_SPACING_GUIDE.md)** | Specific spacing patterns for buttons and layouts | When implementing button layouts |
 | **[Accessibility Guide](./ACCESSIBILITY_GUIDE.md)** | WCAG compliance and accessibility patterns | When ensuring inclusive design |
-| **[AI-Powered Components](./components/AI_POWERED_COMPONENTS.md)** | Complete guide to 8 revolutionary AI-powered systems | When implementing AI features |
+| **[AI-Powered Components](./components/AI_POWERED_COMPONENTS.md)** | Complete guide to 15 production-ready AI-powered systems | When implementing AI features |
+| **[Production AI Infrastructure](./PRODUCTION_AI_INFRASTRUCTURE.md)** | Real AI service integrations with OpenAI, Pinecone, Google Vision | When deploying to production |
 
 ## 🎨 Design System Architecture
 
@@ -125,6 +140,38 @@ npm run lint:fix           # Fix ESLint violations
 - **Pre-commit Hooks**: Validates before each commit
 - **CI/CD Integration**: Blocks deployment if score < threshold
 - **VSCode Integration**: Real-time highlighting and suggestions
+
+## 🌓 Automatic Text Contrast (NEW)
+
+Many showcase sections use custom gradients or dynamic backgrounds. AuraGlass now provides automatic, token-driven text contrast so content remains readable without inline styles:
+
+- Use attribute-driven tokens when you know the background luminance:
+
+```html
+<section data-bg="dark">
+  <h1 class="glass-text-primary">White on dark</h1>
+  <p class="glass-text-secondary">Automatic token override.</p>
+</section>
+```
+
+- Or auto-detect with the hook for dynamic/animated backgrounds:
+
+```tsx
+import useAutoTextContrast from '@/hooks/useAutoTextContrast';
+
+export function GradientHero() {
+  const ref = useRef<HTMLDivElement>(null);
+  useAutoTextContrast(ref, { observe: true });
+  return (
+    <div ref={ref} className="glass-radius-2xl">
+      <h2 className="glass-text-primary">Readable on any gradient</h2>
+      <p className="glass-text-secondary">No inline styles required.</p>
+    </div>
+  );
+}
+```
+
+Under the hood, the hook samples computed background luminance, then sets `data-bg='dark'` or `'light'` on the container, flipping `--glass-text-*` tokens for all descendants.
 
 ## 🎭 Component Patterns
 
@@ -355,7 +402,7 @@ Install recommended extensions for real-time validation:
 ### 🏆 325+ Glass Components with Perfect 100/100 Score Achievement
 
 **Current Enhancement Status:**
-- **✅ Enhanced Components**: 325+ components with full glass token compliance, including 8 revolutionary AI-powered systems
+- **✅ Enhanced Components**: 325+ components with full glass token compliance, including 15 production-ready AI-powered systems with real API integrations
 - **🔄 In Progress**: 0 components - all enhancement complete  
 - **🎯 Perfect Achievement**: 100% glass token usage across all components
 - **🏆 Industry First**: Perfect 100/100 design system compliance score
@@ -382,7 +429,8 @@ Install recommended extensions for real-time validation:
 | **Effects & Animations** | 12+ | ✅ 12 | ✅ 0 | ✅ Complete | ✅ Complete |
 | **AI & Intelligence** | 15+ | ✅ 15 | ✅ 0 | ✅ Complete | ✅ Complete |
 | **Revolutionary Features** | 45+ | ✅ 45 | ✅ 0 | ✅ Complete | ✅ Complete |
-| **🤖 AI-Powered Systems** | 8+ | ✅ 8 | ✅ 0 | ✅ Complete | ✅ Complete |
+| **🤖 AI-Powered Systems** | 15+ | ✅ 15 | ✅ 0 | ✅ Complete | ✅ [AI Documentation](./components/AI_POWERED_COMPONENTS.md) |
+| **🚀 Production AI Services** | 7+ | ✅ 7 | ✅ 0 | ✅ Complete | ✅ [Production Guide](./PRODUCTION_AI_INFRASTRUCTURE.md) |
 
 ### 📚 **Comprehensive Documentation System**
 
@@ -410,7 +458,7 @@ The systematic enhancement of AuraGlass components follows a structured approach
 
 ### 🤖 **Revolutionary AI-Powered Component Systems**
 
-AuraGlass now includes 8 cutting-edge AI-powered component systems that rival major platforms like Figma, Adobe Creative Suite, and Shopify:
+AuraGlass now includes 15 production-ready AI-powered systems with real API integrations that rival major platforms like Figma, Adobe Creative Suite, and Shopify:
 
 #### **🤖 Smart Form Builder**
 - **AI-Assisted Validation**: Intelligent field validation with contextual error messages
@@ -459,6 +507,37 @@ AuraGlass now includes 8 cutting-edge AI-powered component systems that rival ma
 - **Face Detection**: Smart face detection for automatic cropping and focus
 - **Background Removal**: Professional background removal with edge refinement
 - **Batch Processing**: Efficient processing of multiple images with progress tracking
+
+### 🚀 **Production AI Infrastructure (NEW!)**
+
+#### **Real AI Service Integrations**
+- **OpenAI GPT-4**: Smart form generation, content summarization, semantic search
+- **Pinecone Vector DB**: Production semantic search with embeddings
+- **Google Vision API**: Face detection, OCR, object recognition
+- **Remove.bg API**: Professional background removal
+- **Redis Caching**: High-performance caching with fallback
+- **Sentry Monitoring**: Comprehensive error tracking
+
+#### **Enterprise Security**
+- **JWT Authentication**: Secure token-based auth with refresh tokens
+- **Role-Based Access**: User, Developer, Admin roles with permissions
+- **API Key Management**: Secure API key generation and validation
+- **Rate Limiting**: Configurable limits for all AI endpoints
+- **Input Sanitization**: Protection against prompt injection
+
+#### **Production Infrastructure**
+- **WebSocket Server**: Real-time collaboration with Socket.io
+- **Docker Deployment**: Complete containerization
+- **Nginx Reverse Proxy**: Load balancing and SSL
+- **PM2 Process Management**: Auto-restart and monitoring
+- **Kubernetes Ready**: Helm charts and configs
+
+#### **Cost Optimization**
+- **Intelligent Model Selection**: Automatic cheaper model selection
+- **Request Batching**: Efficient API usage
+- **Smart Caching**: LRU cache with TTL
+- **Fallback Mechanisms**: Graceful degradation
+- **Usage Analytics**: API consumption tracking
 
 ### Token-First Architecture
 - **4px Grid System**: Consistent spacing throughout
@@ -509,7 +588,10 @@ After implementing AuraGlass with proper documentation:
 - 📈 **Developer Productivity** with real-time validation
 - 🎭 **Motion System** respecting user preferences
 - 🤖 **AI-Powered Features** rivaling major platforms like Figma and Adobe
-- 🌟 **Revolutionary Capabilities** with 8 cutting-edge AI systems
+- 🌟 **Revolutionary Capabilities** with 15 production-ready AI systems
+- 🚀 **Production AI Infrastructure** with real OpenAI, Pinecone, and Google Vision integrations
+- 🔐 **Enterprise Security** with JWT auth, RBAC, and rate limiting
+- 💰 **Cost-Optimized AI** with intelligent caching and model selection
 
 ---
 

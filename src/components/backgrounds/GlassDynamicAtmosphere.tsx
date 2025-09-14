@@ -257,11 +257,7 @@ const AtmosphereEffect = styled.div<{
     switch (props.$type) {
       case 'subtle':
         return css`
-          background: radial-gradient(
-            circle at 50% 50%,
-            ${props.$primaryColor}${Math.round(intensity * 40)},
-            transparent 70%
-          );
+          background: var(--atmosphere-bg, transparent);
           animation: ${props.$reducedMotion
             ? 'none'
             : css`${subtlePulse} ${animationDuration} infinite ease-in-out`};
@@ -270,16 +266,7 @@ const AtmosphereEffect = styled.div<{
 
       case 'nebula':
         return css`
-          background: radial-gradient(
-              circle at 30% 50%,
-              ${props.$primaryColor}${Math.round(intensity * 60)},
-              transparent 50%
-            ),
-            radial-gradient(
-              circle at 70% 50%,
-              ${props.$secondaryColor}${Math.round(intensity * 60)},
-              transparent 50%
-            );
+          background: var(--atmosphere-bg, transparent);
           background-size: 200% 200%;
           animation: ${props.$reducedMotion
             ? 'none'
@@ -294,14 +281,7 @@ const AtmosphereEffect = styled.div<{
             position: absolute;
             width: 200%;
             height: 200px;
-            background: linear-gradient(
-              90deg,
-              ${props.$primaryColor}00,
-              ${props.$primaryColor}${Math.round(intensity * 60)},
-              ${props.$secondaryColor}${Math.round(intensity * 60)},
-              ${props.$accentColor}${Math.round(intensity * 60)},
-              ${props.$primaryColor}00
-            );
+            background: var(--atmosphere-aurora-bg, transparent);
             top: 20%;
             border-radius: 50%;
             transform: rotate(-5deg);
@@ -315,13 +295,7 @@ const AtmosphereEffect = styled.div<{
 
       case 'waves':
         return css`
-          background: linear-gradient(
-            135deg,
-            ${props.$primaryColor}${Math.round(intensity * 50)},
-            ${props.$secondaryColor}${Math.round(intensity * 50)},
-            ${props.$accentColor}${Math.round(intensity * 50)},
-            ${props.$primaryColor}${Math.round(intensity * 50)}
-          );
+          background: var(--atmosphere-bg, transparent);
           background-size: 400% 400%;
           animation: ${props.$reducedMotion
             ? 'none'
@@ -331,13 +305,7 @@ const AtmosphereEffect = styled.div<{
 
       case 'gradient':
         return css`
-          background: linear-gradient(
-            -45deg,
-            ${props.$primaryColor}${Math.round(intensity * 40)},
-            ${props.$secondaryColor}${Math.round(intensity * 40)},
-            ${props.$accentColor}${Math.round(intensity * 40)},
-            ${props.$primaryColor}${Math.round(intensity * 40)}
-          );
+          background: var(--atmosphere-bg, transparent);
           background-size: 400% 400%;
           animation: ${props.$reducedMotion
             ? 'none'
@@ -439,8 +407,44 @@ export const DynamicAtmosphere = forwardRef<HTMLDivElement, DynamicAtmospherePro
 
     const prefersReducedMotion = useReducedMotion();
     const shouldReduceMotion = respectReducedMotion && prefersReducedMotion;
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [transform, setTransform] = useState<string>('');
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [transform, setTransform] = useState<string>('');
+
+  // Compute and inject CSS variables for backgrounds to avoid inline glass literals
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const withAlpha = (hex: string, a: number) => {
+      // Expect #rrggbb
+      const v = hex.replace('#','');
+      const r = parseInt(v.slice(0,2),16);
+      const g = parseInt(v.slice(2,4),16);
+      const b = parseInt(v.slice(4,6),16);
+      return `rgba(${r}, ${g}, ${b}, ${Math.max(0, Math.min(1, a))})`;
+    };
+
+    const i = intensity;
+    const pc = primaryColor;
+    const sc = secondaryColor;
+    const ac = accentColor;
+
+    let bg = '';
+    if (type === 'subtle') {
+      bg = `radial-gradient(circle at 50% 50%, ${withAlpha(pc, i * 0.4)}, transparent 70%)`;
+    } else if (type === 'nebula') {
+      bg = `radial-gradient(circle at 30% 50%, ${withAlpha(pc, i * 0.6)}, transparent 50%), radial-gradient(circle at 70% 50%, ${withAlpha(sc, i * 0.6)}, transparent 50%)`;
+    } else if (type === 'waves') {
+      bg = `linear-gradient(135deg, ${withAlpha(pc, i * 0.5)}, ${withAlpha(sc, i * 0.5)}, ${withAlpha(ac, i * 0.5)}, ${withAlpha(pc, i * 0.5)})`;
+    } else if (type === 'gradient') {
+      bg = `linear-gradient(-45deg, ${withAlpha(pc, i * 0.4)}, ${withAlpha(sc, i * 0.4)}, ${withAlpha(ac, i * 0.4)}, ${withAlpha(pc, i * 0.4)})`;
+    }
+    if (bg) el.style.setProperty('--atmosphere-bg', bg);
+
+    if (type === 'aurora') {
+      const aur = `linear-gradient(90deg, ${withAlpha(pc, 0)}, ${withAlpha(pc, i * 0.6)}, ${withAlpha(sc, i * 0.6)}, ${withAlpha(ac, i * 0.6)}, ${withAlpha(pc, 0)})`;
+      el.style.setProperty('--atmosphere-aurora-bg', aur);
+    }
+  }, [type, intensity, primaryColor, secondaryColor, accentColor]);
 
     // Convert width and height to string
     const widthValue = typeof width === 'number' ? `${width}px` : width;

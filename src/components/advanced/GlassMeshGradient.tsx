@@ -192,7 +192,7 @@ export function GlassMeshGradient({
     <div className={cn("relative overflow-hidden", className)}>
       <canvas
         ref={canvasRef}
-        className="glass-glass-absolute glass-glass-inset-0 glass-glass-w-full glass-glass-h-full"
+        className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-glass-glass-w-full glass-glass-glass-h-full"
         style={{
           filter: `blur(${blur}px) ${filterStyle}`,
           opacity,
@@ -223,10 +223,10 @@ export const GlassMeshBackground = forwardRef<HTMLDivElement, GlassMeshGradientP
       aria-hidden="true"
     >
       <GlassMeshGradient
-        className="glass-glass-absolute glass-glass-inset-0"
+        className="glass-glass-glass-absolute glass-glass-glass-inset-0"
         {...meshProps}
       />
-      <div className="glass-glass-relative glass-z-10">
+      <div className="glass-glass-glass-relative glass-glass-glass-z-10">
         {children}
       </div>
     </OptimizedGlass>

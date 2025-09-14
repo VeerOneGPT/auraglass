@@ -175,7 +175,7 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
 
     const defaultRemoveIcon = (
       <svg
-        className="glass-glass-w-full glass-glass-h-full"
+        className="glass-glass-glass-w-full glass-glass-glass-h-full"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -202,7 +202,7 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
         )}
 
         {/* Content */}
-        <span className="glass-glass-flex-1 glass-glass-min-w-0 glass-glass-truncate glass-glass-font-medium">
+        <span className="glass-glass-glass-flex-1 glass-glass-glass-min-glass-glass-w-0 glass-glass-glass-truncate glass-glass-glass-font-medium">
           {children}
         </span>
 
@@ -226,7 +226,7 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
         )}
 
         {/* Glass overlay effect */}
-        <div className="glass-glass-absolute glass-glass-inset-0 glass-radius-full glass-gradient-primary from-white/10 via-transparent to-transparent glass-pointer-events-none" />
+        <div className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-radius-full glass-gradient-primary glass-gradient-primary via-transparent glass-gradient-primary glass-glass-glass-pointer-events-none" />
       </>
     );
 

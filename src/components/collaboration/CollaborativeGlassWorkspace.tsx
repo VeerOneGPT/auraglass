@@ -223,7 +223,11 @@ function WorkspaceContent({
   }
 
   return (
-    <div className={cn('glass-collaborative-workspace glass-h-screen glass-flex glass-flex-col glass-surface-dark', className)}>
+    <div
+      className={cn('glass-collaborative-workspace glass-h-screen glass-flex glass-flex-col glass-surface-dark', className)}
+      role="main"
+      aria-live="polite"
+    >
       {/* Workspace Header */}
       {showToolbar && (
         <WorkspaceHeader
@@ -292,7 +296,7 @@ function WorkspaceContent({
                 showComments={enableComments}
                 enableRealTimeSync={enableRealTimeSync}
                 layout="vertical"
-                className="glass-glass-h-full"
+                className="glass-glass-glass-h-full"
               />
             </div>
 
@@ -419,41 +423,41 @@ function WorkspaceHeader({
 
   return (
     <div
-      className="workspace-header glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-px-4 glass-glass-py-3 glass-glass-border-b glass-glass-border-white/10"
+      className="workspace-header glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between glass-glass-glass-px-4 glass-glass-glass-py-3 glass-glass-glass-border-b glass-glass-glass-border-white/10"
       style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
     >
       {/* Left Section */}
-      <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-4">
-        <h1 className="glass-glass-text-xl font-bold glass-glass-text-primary">{workspace.name}</h1>
-        <div className="glass-glass-text-sm glass-glass-text-primary/60">
+      <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-4">
+        <h1 className="glass-glass-glass-text-xl glass-glass-glass-font-bold glass-glass-glass-text-primary">{workspace.name}</h1>
+        <div className="glass-glass-glass-text-sm glass-glass-glass-text-primary/60">
           {canEdit ? '✏️ Editing' : '👁️ Viewing'}
         </div>
       </div>
 
       {/* Center Section - Tools */}
-      <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+      <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
         {/* Undo/Redo */}
         {enableVersionControl && (
           <>
             <button
               onClick={onUndo}
               disabled={!canUndo}
-              className="glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 disabled:opacity-50 glass-glass-text-primary"
+              className="glass-glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 disabled:opacity-50 glass-glass-glass-text-primary"
               title="Undo"
             >
-              <Undo className="glass-glass-w-4 glass-glass-h-4" />
+              <Undo className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
             </button>
             <button
               onClick={onRedo}
               disabled={!canRedo}
-              className="glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 disabled:opacity-50 glass-glass-text-primary"
+              className="glass-glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 disabled:opacity-50 glass-glass-glass-text-primary"
               title="Redo"
             >
-              <Redo className="glass-glass-w-4 glass-glass-h-4" />
+              <Redo className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
             </button>
             <button
               onClick={() => onCreateSnapshot(`Snapshot ${Date.now()}`)}
-              className="glass-glass-px-3 glass-glass-py-2 glass-glass-text-sm glass-surface-blue glass-glass-text-primary glass-radius hover:glass-surface-blue"
+              className="glass-glass-glass-px-3 glass-glass-glass-py-2 glass-glass-glass-text-sm glass-surface-blue glass-glass-glass-text-primary glass-radius hover:glass-surface-blue"
               title="Create Snapshot"
             >
               📷 Snapshot
@@ -462,16 +466,16 @@ function WorkspaceHeader({
         )}
 
         {/* Layout Switcher */}
-        <div className="glass-glass-relative">
+        <div className="glass-glass-glass-relative">
           <button
             onClick={() => setShowLayoutMenu(!showLayoutMenu)}
-            className="glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 glass-glass-text-primary"
+            className="glass-glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 glass-glass-glass-text-primary"
             title="Change Layout"
           >
             🔀
           </button>
           {showLayoutMenu && (
-            <div className="glass-glass-absolute top-full left-0 mt-2 glass-glass-p-2 bg-slate-800 glass-glass-border glass-glass-border-white/20 glass-radius glass-glass-shadow-lg glass-z-50">
+            <div className="glass-glass-glass-absolute top-full left-0 mt-2 glass-glass-glass-p-2 bg-slate-800 glass-glass-glass-border glass-glass-glass-border-white/20 glass-radius glass-glass-glass-shadow-lg glass-glass-glass-z-50">
               {['split', 'tabs', 'canvas-focused', 'editor-focused'].map(layout => (
                 <button
                   key={layout}
@@ -499,22 +503,22 @@ function WorkspaceHeader({
             }`}
             title={isVoiceActive ? 'Leave Voice Chat' : 'Join Voice Chat'}
           >
-            {isVoiceActive ? <Mic className="glass-glass-w-4 glass-glass-h-4" /> : <MicOff className="glass-glass-w-4 glass-glass-h-4" />}
+            {isVoiceActive ? <Mic className="glass-glass-glass-w-4 glass-glass-glass-h-4" /> : <MicOff className="glass-glass-glass-w-4 glass-glass-glass-h-4" />}
             {voiceUsers.length > 0 && ` (${voiceUsers.length})`}
           </button>
         )}
       </div>
 
       {/* Right Section */}
-      <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
+      <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
         {/* Online Users */}
         {showOnlineUsers && (
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-            <div className="glass-glass-flex -space-x-2">
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+            <div className="glass-glass-glass-flex -space-x-2">
               {onlineUsers.slice(0, 5).map((user: any) => (
                 <div
                   key={user.id}
-                  className="glass-glass-w-8 glass-glass-h-8 glass-radius-full glass-glass-border-2 glass-glass-border-white glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-text-xs font-bold glass-glass-text-primary"
+                  className="glass-glass-glass-w-8 glass-glass-glass-h-8 glass-radius-full glass-glass-glass-border-2 glass-glass-glass-border-white glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-text-xs glass-glass-glass-font-bold glass-glass-glass-text-primary"
                   style={{ backgroundColor: user.color }}
                   title={user.name}
                 >
@@ -522,12 +526,12 @@ function WorkspaceHeader({
                 </div>
               ))}
               {onlineUsers.length > 5 && (
-                <div className="glass-glass-w-8 glass-glass-h-8 glass-radius-full bg-gray-600 glass-glass-border-2 glass-glass-border-white glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-text-xs glass-glass-text-primary">
+                <div className="glass-glass-glass-w-8 glass-glass-glass-h-8 glass-radius-full glass-surface-primary glass-glass-glass-border-2 glass-glass-glass-border-white glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-text-xs glass-glass-glass-text-primary">
                   +{onlineUsers.length - 5}
                 </div>
               )}
             </div>
-            <span className="glass-glass-text-sm glass-glass-text-primary/60">
+            <span className="glass-glass-glass-text-sm glass-glass-glass-text-primary/60">
               {onlineUsers.length} online
             </span>
           </div>
@@ -536,17 +540,17 @@ function WorkspaceHeader({
         {/* Controls */}
         <button
           onClick={onToggleSidebar}
-          className="glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 glass-glass-text-primary"
+          className="glass-glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 glass-glass-glass-text-primary"
           title="Toggle Sidebar"
         >
-          <Layers className="glass-glass-w-4 glass-glass-h-4" />
+          <Layers className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
         </button>
         <button
           onClick={onToggleFullscreen}
-          className="glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 glass-glass-text-primary"
+          className="glass-glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 glass-glass-glass-text-primary"
           title="Toggle Fullscreen"
         >
-          {isFullscreen ? <Minimize className="glass-glass-w-4 glass-glass-h-4" /> : <Maximize className="glass-glass-w-4 glass-glass-h-4" />}
+          {isFullscreen ? <Minimize className="glass-glass-glass-w-4 glass-glass-glass-h-4" /> : <Maximize className="glass-glass-glass-w-4 glass-glass-glass-h-4" />}
         </button>
       </div>
     </div>
@@ -558,9 +562,9 @@ function WorkspaceTabs({ selectedElementId, onElementSelect, ...props }: any) {
   const [activeTab, setActiveTab] = useState<'canvas' | 'editor'>('canvas');
 
   return (
-    <div className="glass-glass-flex glass-glass-flex-col glass-glass-h-full">
+    <div className="glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-h-full">
       {/* Tab Navigation */}
-      <div className="glass-glass-flex glass-glass-border-b glass-glass-border-white/20 bg-slate-800">
+      <div className="glass-glass-glass-flex glass-glass-glass-border-b glass-glass-glass-border-white/20 bg-slate-800">
         <button
           onClick={() => setActiveTab('canvas')}
           className={`px-6 py-3 font-medium ${
@@ -584,11 +588,11 @@ function WorkspaceTabs({ selectedElementId, onElementSelect, ...props }: any) {
       </div>
 
       {/* Tab Content */}
-      <div className="glass-glass-flex-1 glass-glass-p-4">
+      <div className="glass-glass-glass-flex-1 glass-glass-glass-p-4">
         {activeTab === 'canvas' ? (
-          <CollaborativeGlassCanvas {...props} onElementSelect={onElementSelect} className="glass-glass-h-full" />
+          <CollaborativeGlassCanvas {...props} onElementSelect={onElementSelect} className="glass-glass-glass-h-full" />
         ) : (
-          <MultiUserGlassEditor {...props} className="glass-glass-h-full" />
+          <MultiUserGlassEditor {...props} className="glass-glass-glass-h-full" />
         )}
       </div>
     </div>
@@ -603,7 +607,7 @@ function CollaborativeGlassCanvas({ width, height, gridSize, showGrid, showRuler
     >
       {showGrid && (
         <div
-          className="glass-glass-absolute glass-glass-inset-0 opacity-20"
+          className="glass-glass-glass-absolute glass-glass-glass-inset-0 opacity-20"
           style={{
             backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
             backgroundSize: `${gridSize}px ${gridSize}px`
@@ -611,11 +615,11 @@ function CollaborativeGlassCanvas({ width, height, gridSize, showGrid, showRuler
         />
       )}
 
-      <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-h-full glass-glass-text-primary/60">
-        <div className="glass-glass-text-center">
-          <div className="glass-glass-text-4xl glass-glass-mb-4">🎨</div>
-          <p className="glass-glass-text-lg">Collaborative Canvas</p>
-          <p className="glass-glass-text-sm">Click to start designing together</p>
+      <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-h-full glass-glass-glass-text-primary/60">
+        <div className="glass-glass-glass-text-center">
+          <div className="glass-glass-glass-text-4xl glass-glass-glass-mb-4">🎨</div>
+          <p className="glass-glass-glass-text-lg">Collaborative Canvas</p>
+          <p className="glass-glass-glass-text-sm">Click to start designing together</p>
         </div>
       </div>
     </div>
@@ -628,36 +632,36 @@ function MultiUserGlassEditor({ target, showPreview, showHistory, showComments, 
       className={`multi-user-editor ${className}`}
       style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
     >
-      <div className="glass-glass-p-4">
-        <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-mb-4">
-          <h3 className="glass-glass-text-primary glass-glass-font-semibold">Properties Editor</h3>
-          <div className="glass-glass-flex glass-glass-gap-2">
-            {showHistory && <button className="glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 glass-glass-text-primary">📜</button>}
-            {showComments && <button className="glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 glass-glass-text-primary">💬</button>}
-            {enableRealTimeSync && <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1 glass-glass-text-primary glass-glass-text-sm"><Wifi className="w-3 h-3" /> Live</div>}
+      <div className="glass-glass-glass-p-4">
+        <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between glass-glass-glass-mb-4">
+          <h3 className="glass-glass-glass-text-primary glass-glass-glass-font-semibold">Properties Editor</h3>
+          <div className="glass-glass-glass-flex glass-glass-glass-gap-2">
+            {showHistory && <button className="glass-glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 glass-glass-glass-text-primary">📜</button>}
+            {showComments && <button className="glass-glass-glass-p-2 glass-radius hover:glass-surface-subtle/10 glass-glass-glass-text-primary">💬</button>}
+            {enableRealTimeSync && <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-1 glass-glass-glass-text-primary glass-glass-glass-text-sm"><Wifi className="glass-glass-glass-w-3 glass-glass-glass-h-3" /> Live</div>}
           </div>
         </div>
 
-        <div className="glass-glass-space-y-4">
+        <div className="glass-glass-glass-space-y-4">
           <div>
-            <label className="glass-glass-block glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80 glass-glass-mb-2">Target Element</label>
-            <div className="glass-glass-p-2 glass-surface-subtle/5 glass-radius glass-glass-text-primary glass-glass-text-sm">{target}</div>
+            <label className="glass-glass-glass-block glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary/80 glass-glass-glass-mb-2">Target Element</label>
+            <div className="glass-glass-glass-p-2 glass-surface-subtle/5 glass-radius glass-glass-glass-text-primary glass-glass-glass-text-sm">{target}</div>
           </div>
 
           <div>
-            <label className="glass-glass-block glass-glass-text-sm glass-glass-font-medium glass-glass-text-primary/80 glass-glass-mb-2">Properties</label>
-            <div className="glass-glass-space-y-2">
-              <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-                <span className="glass-glass-text-primary/60 glass-glass-text-sm w-20">Width:</span>
-                <input type="number" className="glass-glass-flex-1 glass-glass-p-2 glass-surface-subtle/10 glass-radius glass-glass-text-primary glass-glass-text-sm" placeholder="Auto" />
+            <label className="glass-glass-glass-block glass-glass-glass-text-sm glass-glass-glass-font-medium glass-glass-glass-text-primary/80 glass-glass-glass-mb-2">Properties</label>
+            <div className="glass-glass-glass-space-y-2">
+              <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+                <span className="glass-glass-glass-text-primary/60 glass-glass-glass-text-sm glass-glass-glass-w-20">Width:</span>
+                <input type="number" className="glass-glass-glass-flex-1 glass-glass-glass-p-2 glass-surface-subtle/10 glass-radius glass-glass-glass-text-primary glass-glass-glass-text-sm" placeholder="Auto" />
               </div>
-              <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-                <span className="glass-glass-text-primary/60 glass-glass-text-sm w-20">Height:</span>
-                <input type="number" className="glass-glass-flex-1 glass-glass-p-2 glass-surface-subtle/10 glass-radius glass-glass-text-primary glass-glass-text-sm" placeholder="Auto" />
+              <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+                <span className="glass-glass-glass-text-primary/60 glass-glass-glass-text-sm glass-glass-glass-w-20">Height:</span>
+                <input type="number" className="glass-glass-glass-flex-1 glass-glass-glass-p-2 glass-surface-subtle/10 glass-radius glass-glass-glass-text-primary glass-glass-glass-text-sm" placeholder="Auto" />
               </div>
-              <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-2">
-                <span className="glass-glass-text-primary/60 glass-glass-text-sm w-20">Opacity:</span>
-                <input type="range" min="0" max="1" step="0.1" className="glass-glass-flex-1" />
+              <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2">
+                <span className="glass-glass-glass-text-primary/60 glass-glass-glass-text-sm glass-glass-glass-w-20">Opacity:</span>
+                <input type="range" min="0" max="1" step="0.1" className="glass-glass-glass-flex-1" />
               </div>
             </div>
           </div>
@@ -670,15 +674,15 @@ function MultiUserGlassEditor({ target, showPreview, showHistory, showComments, 
 function WorkspaceSidebar({ selectedElementId, onElementSelect, showMiniMap, showOnlineUsers, onlineUsers, currentUser, isVoiceActive, voiceUsers, enableComments }: any) {
   return (
     <div
-      className="workspace-sidebar w-80 glass-glass-border-l glass-glass-border-white/20 glass-glass-p-4 glass-glass-space-y-4"
+      className="workspace-sidebar glass-glass-glass-w-80 glass-glass-glass-border-l glass-glass-glass-border-white/20 glass-glass-glass-p-4 glass-glass-glass-space-y-4"
       style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
     >
       {/* Mini Map */}
       {showMiniMap && (
-        <div className="glass-glass-space-y-2">
-          <h3 className="glass-glass-text-sm glass-glass-font-semibold glass-glass-text-primary/80 glass-glass-uppercase">Mini Map</h3>
-          <div className="aspect-video bg-slate-800 glass-glass-border glass-glass-border-white/20 glass-radius glass-glass-p-2">
-            <div className="glass-glass-text-xs glass-glass-text-primary/50 glass-glass-text-center mt-8">
+        <div className="glass-glass-glass-space-y-2">
+          <h3 className="glass-glass-glass-text-sm glass-glass-glass-font-semibold glass-glass-glass-text-primary/80 glass-glass-glass-uppercase">Mini Map</h3>
+          <div className="aspect-video bg-slate-800 glass-glass-glass-border glass-glass-glass-border-white/20 glass-radius glass-glass-glass-p-2">
+            <div className="glass-glass-glass-text-xs glass-glass-glass-text-primary/50 glass-glass-glass-text-center mt-8">
               Canvas overview
             </div>
           </div>
@@ -687,26 +691,26 @@ function WorkspaceSidebar({ selectedElementId, onElementSelect, showMiniMap, sho
 
       {/* Online Users */}
       {showOnlineUsers && (
-        <div className="glass-glass-space-y-2">
-          <h3 className="glass-glass-text-sm glass-glass-font-semibold glass-glass-text-primary/80 glass-glass-uppercase">Online Users</h3>
-          <div className="glass-glass-space-y-2">
+        <div className="glass-glass-glass-space-y-2">
+          <h3 className="glass-glass-glass-text-sm glass-glass-glass-font-semibold glass-glass-glass-text-primary/80 glass-glass-glass-uppercase">Online Users</h3>
+          <div className="glass-glass-glass-space-y-2">
             {onlineUsers.map((user: any) => (
               <div
                 key={user.id}
-                className="glass-glass-flex glass-glass-items-center glass-glass-gap-3 glass-glass-p-2 glass-radius hover:glass-surface-subtle/5"
+                className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-3 glass-glass-glass-p-2 glass-radius hover:glass-surface-subtle/5"
               >
                 <div
-                  className="glass-glass-w-6 glass-glass-h-6 glass-radius-full glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-text-xs font-bold glass-glass-text-primary"
+                  className="glass-glass-glass-w-6 glass-glass-glass-h-6 glass-radius-full glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-text-xs glass-glass-glass-font-bold glass-glass-glass-text-primary"
                   style={{ backgroundColor: user.color }}
                 >
                   {user.name[0]}
                 </div>
-                <div className="glass-glass-flex-1">
-                  <div className="glass-glass-text-sm glass-glass-text-primary">{user.name}</div>
-                  <div className="glass-glass-text-xs glass-glass-text-primary/50">{user.role}</div>
+                <div className="glass-glass-glass-flex-1">
+                  <div className="glass-glass-glass-text-sm glass-glass-glass-text-primary">{user.name}</div>
+                  <div className="glass-glass-glass-text-xs glass-glass-glass-text-primary/50">{user.role}</div>
                 </div>
                 {voiceUsers.includes(user.id) && (
-                  <div className="glass-glass-text-primary glass-glass-text-xs">🎤</div>
+                  <div className="glass-glass-glass-text-primary glass-glass-glass-text-xs">🎤</div>
                 )}
               </div>
             ))}
@@ -715,19 +719,19 @@ function WorkspaceSidebar({ selectedElementId, onElementSelect, showMiniMap, sho
       )}
 
       {/* Quick Actions */}
-      <div className="glass-glass-space-y-2">
-        <h3 className="glass-glass-text-sm glass-glass-font-semibold glass-glass-text-primary/80 glass-glass-uppercase">Quick Actions</h3>
-        <div className="glass-glass-space-y-2">
-          <button className="glass-glass-w-full glass-glass-text-left glass-glass-px-3 glass-glass-py-2 glass-glass-text-sm glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-radius glass-glass-text-primary">
-            <Copy className="glass-glass-w-4 glass-glass-h-4 inline mr-2" />
+      <div className="glass-glass-glass-space-y-2">
+        <h3 className="glass-glass-glass-text-sm glass-glass-glass-font-semibold glass-glass-glass-text-primary/80 glass-glass-glass-uppercase">Quick Actions</h3>
+        <div className="glass-glass-glass-space-y-2">
+          <button className="glass-glass-glass-w-full glass-glass-glass-text-left glass-glass-glass-px-3 glass-glass-glass-py-2 glass-glass-glass-text-sm glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-radius glass-glass-glass-text-primary">
+            <Copy className="glass-glass-glass-w-4 glass-glass-glass-h-4 inline mr-2" />
             Copy Selected
           </button>
-          <button className="glass-glass-w-full glass-glass-text-left glass-glass-px-3 glass-glass-py-2 glass-glass-text-sm glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-radius glass-glass-text-primary">
-            <ClipboardPaste className="glass-glass-w-4 glass-glass-h-4 inline mr-2" />
+          <button className="glass-glass-glass-w-full glass-glass-glass-text-left glass-glass-glass-px-3 glass-glass-glass-py-2 glass-glass-glass-text-sm glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-radius glass-glass-glass-text-primary">
+            <ClipboardPaste className="glass-glass-glass-w-4 glass-glass-glass-h-4 inline mr-2" />
             Paste
           </button>
-          <button className="glass-glass-w-full glass-glass-text-left glass-glass-px-3 glass-glass-py-2 glass-glass-text-sm glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-radius glass-glass-text-primary">
-            <Trash2 className="glass-glass-w-4 glass-glass-h-4 inline mr-2" />
+          <button className="glass-glass-glass-w-full glass-glass-glass-text-left glass-glass-glass-px-3 glass-glass-glass-py-2 glass-glass-glass-text-sm glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-radius glass-glass-glass-text-primary">
+            <Trash2 className="glass-glass-glass-w-4 glass-glass-glass-h-4 inline mr-2" />
             Delete Selected
           </button>
         </div>
@@ -747,20 +751,20 @@ function GlassTeamCursorsWithEffects({ showNames, showVoiceIndicators, cursorSiz
 function VoiceChatPanel({ isActive, voiceUsers, onClose, onToggleVoice }: any) {
   return (
     <div
-      className="glass-glass-fixed bottom-4 right-4 w-80 glass-glass-p-4 glass-radius-lg glass-glass-border glass-glass-border-white/20"
+      className="glass-glass-glass-fixed bottom-4 right-4 glass-glass-glass-w-80 glass-glass-glass-p-4 glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20"
       style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
     >
-      <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-mb-4">
-        <h3 className="glass-glass-text-primary glass-glass-font-semibold">Voice Chat</h3>
-        <button onClick={onClose} className="glass-glass-text-primary/70 hover:glass-glass-text-primary">
+      <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between glass-glass-glass-mb-4">
+        <h3 className="glass-glass-glass-text-primary glass-glass-glass-font-semibold">Voice Chat</h3>
+        <button onClick={onClose} className="glass-glass-glass-text-primary/70 hover:glass-glass-glass-text-primary">
           ✕
         </button>
       </div>
 
-      <div className="glass-glass-space-y-2 glass-glass-mb-4">
+      <div className="glass-glass-glass-space-y-2 glass-glass-glass-mb-4">
         {voiceUsers.map((userId: string) => (
-          <div key={userId} className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-text-primary glass-glass-text-sm">
-            <div className="w-2 h-2 glass-surface-green glass-radius-full animate-pulse" />
+          <div key={userId} className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2 glass-glass-glass-text-primary glass-glass-glass-text-sm">
+            <div className="glass-glass-glass-w-2 glass-glass-glass-h-2 glass-surface-green glass-radius-full animate-pulse" />
             User {userId}
           </div>
         ))}
@@ -781,41 +785,41 @@ function VoiceChatPanel({ isActive, voiceUsers, onClose, onToggleVoice }: any) {
 function VersionControlPanel({ onClose, onCreateSnapshot, canUndo, canRedo, onUndo, onRedo }: any) {
   return (
     <div
-      className="glass-glass-fixed bottom-4 left-4 w-80 glass-glass-p-4 glass-radius-lg glass-glass-border glass-glass-border-white/20"
+      className="glass-glass-glass-fixed bottom-4 left-4 glass-glass-glass-w-80 glass-glass-glass-p-4 glass-radius-lg glass-glass-glass-border glass-glass-glass-border-white/20"
       style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
     >
-      <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between glass-glass-mb-4">
-        <h3 className="glass-glass-text-primary glass-glass-font-semibold">Version Control</h3>
-        <button onClick={onClose} className="glass-glass-text-primary/70 hover:glass-glass-text-primary">
+      <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between glass-glass-glass-mb-4">
+        <h3 className="glass-glass-glass-text-primary glass-glass-glass-font-semibold">Version Control</h3>
+        <button onClick={onClose} className="glass-glass-glass-text-primary/70 hover:glass-glass-glass-text-primary">
           ✕
         </button>
       </div>
 
-      <div className="glass-glass-space-y-2">
-        <div className="glass-glass-flex glass-glass-gap-2">
+      <div className="glass-glass-glass-space-y-2">
+        <div className="glass-glass-glass-flex glass-glass-glass-gap-2">
           <button
             onClick={onUndo}
             disabled={!canUndo}
-            className="glass-glass-flex-1 glass-glass-py-2 glass-glass-px-3 glass-radius glass-surface-subtle/10 glass-glass-text-primary disabled:opacity-50"
+            className="glass-glass-glass-flex-1 glass-glass-glass-py-2 glass-glass-glass-px-3 glass-radius glass-surface-subtle/10 glass-glass-glass-text-primary disabled:opacity-50"
           >
-            <Undo className="glass-glass-w-4 glass-glass-h-4 inline mr-1" />
+            <Undo className="glass-glass-glass-w-4 glass-glass-glass-h-4 inline mr-1" />
             Undo
           </button>
           <button
             onClick={onRedo}
             disabled={!canRedo}
-            className="glass-glass-flex-1 glass-glass-py-2 glass-glass-px-3 glass-radius glass-surface-subtle/10 glass-glass-text-primary disabled:opacity-50"
+            className="glass-glass-glass-flex-1 glass-glass-glass-py-2 glass-glass-glass-px-3 glass-radius glass-surface-subtle/10 glass-glass-glass-text-primary disabled:opacity-50"
           >
-            <Redo className="glass-glass-w-4 glass-glass-h-4 inline mr-1" />
+            <Redo className="glass-glass-glass-w-4 glass-glass-glass-h-4 inline mr-1" />
             Redo
           </button>
         </div>
 
         <button
           onClick={() => onCreateSnapshot(`Manual snapshot ${Date.now()}`)}
-          className="glass-glass-w-full glass-glass-py-2 glass-glass-px-3 glass-radius glass-surface-blue glass-glass-text-primary hover:glass-surface-blue"
+          className="glass-glass-glass-w-full glass-glass-glass-py-2 glass-glass-glass-px-3 glass-radius glass-surface-blue glass-glass-glass-text-primary hover:glass-surface-blue"
         >
-          <Save className="glass-glass-w-4 glass-glass-h-4 inline mr-1" />
+          <Save className="glass-glass-glass-w-4 glass-glass-glass-h-4 inline mr-1" />
           Create Snapshot
         </button>
       </div>
@@ -827,43 +831,43 @@ function WorkspaceFloatingActions({ isVoiceActive, onToggleVoice, onShowVoicePan
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="glass-glass-fixed bottom-6 right-6">
+    <div className="glass-glass-glass-fixed bottom-6 right-6">
       <div
         className={`flex flex-col gap-2 ${isExpanded ? 'opacity-100' : 'opacity-0 pointer-events-none'} transition-opacity`}
       >
         {enableVoiceChat && (
           <button
             onClick={onShowVoicePanel}
-            className="glass-glass-w-12 glass-glass-h-12 glass-radius-full glass-surface-green glass-glass-text-primary glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-shadow-lg hover:glass-surface-green"
+            className="glass-glass-glass-w-12 glass-glass-glass-h-12 glass-radius-full glass-surface-green glass-glass-glass-text-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-shadow-lg hover:glass-surface-green"
             title="Voice Chat"
           >
-            <Mic className="glass-glass-w-4 glass-glass-h-4" />
+            <Mic className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
           </button>
         )}
 
         {enableVersionControl && (
           <button
             onClick={onShowVersionPanel}
-            className="glass-glass-w-12 glass-glass-h-12 glass-radius-full glass-surface-blue glass-glass-text-primary glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-shadow-lg hover:glass-surface-blue"
+            className="glass-glass-glass-w-12 glass-glass-glass-h-12 glass-radius-full glass-surface-blue glass-glass-glass-text-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-shadow-lg hover:glass-surface-blue"
             title="Version Control"
           >
-            <Settings className="glass-glass-w-4 glass-glass-h-4" />
+            <Settings className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
           </button>
         )}
 
         <button
           onClick={onToggleFullscreen}
-          className="glass-glass-w-12 glass-glass-h-12 glass-radius-full bg-purple-600 glass-glass-text-primary glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-shadow-lg hover:bg-purple-700"
+          className="glass-glass-glass-w-12 glass-glass-glass-h-12 glass-radius-full glass-surface-primary glass-glass-glass-text-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-shadow-lg hover:glass-surface-subtle"
           title="Fullscreen"
         >
-          <Maximize className="glass-glass-w-4 glass-glass-h-4" />
+          <Maximize className="glass-glass-glass-w-4 glass-glass-glass-h-4" />
         </button>
       </div>
 
       {/* Main FAB */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-14 h-14 glass-radius-full bg-slate-700 glass-glass-text-primary glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-shadow-lg hover:bg-slate-600 mt-2"
+        className="w-14 h-14 glass-radius-full bg-slate-700 glass-glass-glass-text-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-shadow-lg hover:bg-slate-600 mt-2"
         style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
       >
         {isExpanded ? '✕' : '⚡'}
@@ -875,13 +879,13 @@ function WorkspaceFloatingActions({ isVoiceActive, onToggleVoice, onShowVoicePan
 // Loading and Error Components
 function WorkspaceLoadingState({ message = "Connecting to workspace..." }: { message?: string }) {
   return (
-    <div className="h-screen glass-glass-flex glass-glass-items-center glass-glass-justify-center bg-slate-900">
-      <div className="glass-glass-text-center glass-glass-space-y-4">
+    <div className="glass-glass-glass-h-screen glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center bg-slate-900">
+      <div className="glass-glass-glass-text-center glass-glass-glass-space-y-4">
         <div
-          className="glass-glass-w-16 glass-glass-h-16 glass-glass-border-4 glass-glass-border-blue glass-glass-border-t-transparent glass-radius-full animate-spin mx-auto"
+          className="glass-glass-glass-w-16 glass-glass-glass-h-16 glass-glass-glass-border-4 glass-glass-glass-border-blue glass-glass-glass-border-t-transparent glass-radius-full animate-spin glass-glass-glass-mx-auto"
         />
-        <div className="glass-glass-text-primary glass-glass-text-lg">{message}</div>
-        <div className="glass-glass-text-primary/60 glass-glass-text-sm">Please wait...</div>
+        <div className="glass-glass-glass-text-primary glass-glass-glass-text-lg">{message}</div>
+        <div className="glass-glass-glass-text-primary/60 glass-glass-glass-text-sm">Please wait...</div>
       </div>
     </div>
   );
@@ -889,14 +893,14 @@ function WorkspaceLoadingState({ message = "Connecting to workspace..." }: { mes
 
 function WorkspaceConnectionError({ onRetry, error }: { onRetry: () => void; error: string }) {
   return (
-    <div className="h-screen glass-glass-flex glass-glass-items-center glass-glass-justify-center bg-slate-900">
-      <div className="glass-glass-text-center glass-glass-space-y-4 max-w-md">
-        <div className="glass-glass-text-primary glass-glass-text-6xl glass-glass-mb-4">⚠️</div>
-        <div className="glass-glass-text-primary glass-glass-text-xl glass-glass-font-semibold">Connection Error</div>
-        <div className="glass-glass-text-primary/70">{error}</div>
+    <div className="glass-glass-glass-h-screen glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center bg-slate-900">
+      <div className="glass-glass-glass-text-center glass-glass-glass-space-y-4 max-w-md">
+        <div className="glass-glass-glass-text-primary glass-glass-glass-text-6xl glass-glass-glass-mb-4">⚠️</div>
+        <div className="glass-glass-glass-text-primary glass-glass-glass-text-xl glass-glass-glass-font-semibold">Connection Error</div>
+        <div className="glass-glass-glass-text-primary/70">{error}</div>
         <button
           onClick={onRetry}
-          className="glass-glass-px-6 glass-glass-py-3 glass-surface-blue glass-glass-text-primary glass-radius hover:glass-surface-blue transition-colors"
+          className="glass-glass-glass-px-6 glass-glass-glass-py-3 glass-surface-blue glass-glass-glass-text-primary glass-radius hover:glass-surface-blue transition-colors"
         >
           Retry Connection
         </button>

@@ -202,8 +202,12 @@ const OptimizedGlassCore = forwardRef<
       tint: __ignoreTint,
       border: __ignoreBorder,
       blur: __ignoreBlur,
+      // Common prop name used across components; should not reach DOM
+      blurStrength: __ignoreBlurStrength,
       variant: __ignoreVariant,
       lighting: __ignoreLighting,
+      // Consciousness master flag should never reach the DOM
+      consciousness: __ignoreConsciousness,
       caustics: __ignoreCaustics,
       chromatic: __ignoreChromatic,
       parallax: __ignoreParallax,
@@ -211,8 +215,17 @@ const OptimizedGlassCore = forwardRef<
       adaptive: __ignoreAdaptive,
       magnet: __ignoreMagnet,
       cursorHighlight: __ignoreCursorHighlight,
+      glassConfig: __ignoreGlassConfig,
       ...domProps
     } = (restProps as any) || {};
+
+    // Remove any accidental custom props leaking to DOM, e.g., camelCase starting with 'glass'
+    // Keep data-*/aria-* untouched; React handles them.
+    Object.keys(domProps).forEach((key) => {
+      if (/^glass[A-Z]/.test(key)) {
+        delete (domProps as any)[key];
+      }
+    });
 
     return (
       <Component

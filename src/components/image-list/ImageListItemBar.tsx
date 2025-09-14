@@ -33,32 +33,20 @@ const ImageListItemBarRoot = styled.div<{
   ${props => (props.$position === 'bottom' ? 'bottom: 0;' : '')}
   
   /* Glass styling */
-  ${props => {
-    if (!props.$glass) return '';
-
-    const glassStyles = createGlassStyle({
-      intent: 'neutral',
-      elevation: 'level2',
-      tier: 'high'
-    });
-
-    return `
-      background: ${glassStyles.background};
-      backdrop-filter: ${glassStyles.backdropFilter};
-      -webkit-backdrop-filter: ${glassStyles.WebkitBackdropFilter};
-      border: ${glassStyles.border};
-      border-radius: ${glassStyles.borderRadius};
-      box-shadow: var(--glass-elev-2);
-      color: ${glassStyles.color};
-      transition: ${glassStyles.transition};
-      position: ${glassStyles.position};
-      transform: ${glassStyles.transform};
-    `;
-  }}
+  ${props => props.$glass && `
+    background: var(--glass-bg-default);
+    backdrop-filter: var(--glass-backdrop-blur);
+    -webkit-backdrop-filter: var(--glass-backdrop-blur);
+    border: 1px solid var(--glass-border-default);
+    border-radius: var(--glass-radius-md);
+    box-shadow: var(--glass-elev-2);
+    color: var(--glass-text-primary);
+    transition: var(--glass-transition);
+  `}
   
   /* Base styling */
-  background-color: ${props => (props.$glass ? 'rgba(0, 0, 0, 0.3)' : 'rgba(0, 0, 0, 0.5)')};
-  color: ${glassTokenUtils.getSurface('neutral', 'level2').text.primary};
+  background-color: ${props => (props.$glass ? 'var(--glass-bg-default)' : 'var(--glass-bg-active)')};
+  color: var(--glass-text-primary);
   padding: 8px 12px;
   display: flex;
   align-items: center;

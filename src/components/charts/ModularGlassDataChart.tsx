@@ -293,7 +293,7 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
   const [animationValues, setAnimationValues] = useState<Record<string, number>>({});
   const [isAnimating, setIsAnimating] = useState(false);
   
-  const animate = (key: string, from: number, to: number, duration: number = 500) => {
+  const animate = React.useCallback((key: string, from: number, to: number, duration: number = 500) => {
     setIsAnimating(true);
     setAnimationValues(prev => ({ ...prev, [key]: from }));
     
@@ -336,7 +336,7 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
         }
       }, duration / steps);
     }
-  };
+  }, [enablePhysicsAnimation]);
   
   const getValue = (key: string) => animationValues[key] ?? 1;
   
@@ -746,13 +746,7 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
           adaptiveComplexity === 'low' && 'glass-chart-simplified',
           adaptiveComplexity === 'high' && 'glass-chart-enhanced'
         )}
-        style={{
-          ...style,
-          width,
-          height: typeof height === 'number' ? `${height}px` : height,
-          opacity: isPreloading ? 0.7 : 1,
-          transition: 'opacity 0.3s ease',
-        }}
+        data-preloading={isPreloading ? 'true' : undefined}
         $glassVariant={glassVariant}
         $blurStrength={blurStrength}
         $color={color}
@@ -777,16 +771,8 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
             
             {/* Predictive insights display */}
             {predictive && chartInsights.length > 0 && (
-              <div 
-                style={{
-                  marginTop: '8px',
-                  padding: '8px 12px',
-                  background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
-                  borderRadius: '6px',
-                  border: '1px solid rgba(99, 102, 241, 0.2)',
-                  fontSize: '12px',
-                  color: 'rgba(99, 102, 241, 0.9)'
-                }}
+              <div
+                className="glass-glass-mt-2 glass-glass-px-3 glass-glass-py-2 glass-radius glass-glass-border glass-glass-text-primary glass-surface-primary/10"
                 data-insights-panel="true"
               >
                 <strong>💡 KPI Insights:</strong> {chartInsights.slice(0, 2).map(insight => insight.title || insight.message).join(', ')}
@@ -830,14 +816,7 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
         adaptiveComplexity === 'low' && 'glass-chart-simplified',
         adaptiveComplexity === 'high' && 'glass-chart-enhanced'
       )}
-      style={{
-        ...style,
-        width,
-        height: typeof height === 'number' ? `${height}px` : height,
-        opacity: isPreloading ? 0.7 : 1,
-        transition: 'opacity 0.3s ease',
-        filter: currentDataFocus && gazeResponsive ? 'brightness(1.05) saturate(1.1)' : undefined,
-      }}
+      data-preloading={isPreloading ? 'true' : undefined}
       $glassVariant={glassVariant}
       $blurStrength={blurStrength}
       $color={color}
@@ -877,16 +856,8 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
           
           {/* Predictive insights display */}
           {predictive && chartInsights.length > 0 && (
-            <div 
-              style={{
-                marginTop: '8px',
-                padding: '8px 12px',
-                background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
-                borderRadius: '6px',
-                border: '1px solid rgba(99, 102, 241, 0.2)',
-                fontSize: '12px',
-                color: 'rgba(99, 102, 241, 0.9)'
-              }}
+            <div
+              className="glass-glass-mt-2 glass-glass-px-3 glass-glass-py-2 glass-radius glass-glass-border glass-glass-text-primary glass-surface-primary/10"
               data-insights-panel="true"
             >
               <strong>💡 Insights:</strong> {chartInsights.slice(0, 2).map(insight => insight.title || insight.message).join(', ')}
@@ -896,13 +867,8 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
           
           {/* Biometric adaptation indicator */}
           {biometricResponsive && adaptiveComplexity !== 'medium' && (
-            <div 
-              style={{
-                marginTop: '4px',
-                fontSize: '10px',
-                color: 'rgba(255, 255, 255, 0.6)',
-                fontStyle: 'italic'
-              }}
+            <div
+              className="glass-glass-mt-1 glass-glass-text-xs glass-text-secondary"
               data-adaptation-indicator="true"
             >
               🧠 Adapted for {adaptiveComplexity} cognitive load
@@ -1060,17 +1026,7 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
       {/* Eye tracking focus overlay */}
       {currentDataFocus && gazeResponsive && (
         <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
-            pointerEvents: 'none',
-            zIndex: 1,
-            animation: 'pulse 2s infinite'
-          }}
+          className="glass-absolute glass-inset-0 glass-surface-primary/10 pointer-events-none glass-z-10"
           data-gaze-overlay="true"
         />
       )}
@@ -1078,18 +1034,7 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
       {/* Preloading indicator */}
       {isPreloading && (
         <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
-            color: 'white',
-            padding: '8px 12px',
-            borderRadius: '4px',
-            fontSize: '12px',
-            zIndex: 10,
-          }}
+          className="glass-absolute glass-z-50 glass-top-2 glass-left-2 glass-surface-primary glass-glass-text-primary glass-glass-px-3 glass-glass-py-2 glass-radius"
         >
           🔄 Analyzing data patterns...
         </div>
@@ -1098,17 +1043,7 @@ export const ModularGlassDataChart = React.forwardRef<GlassDataChartRef, GlassDa
       {/* Chart insights footer */}
       {(chartInsights.length > 0 || currentDataFocus) && (
         <div
-          style={{
-            position: 'absolute',
-            bottom: '8px',
-            right: '8px',
-            background: '/* Use createGlassStyle({ intent: "primary", elevation: "level2" }) */',
-            color: 'rgba(255, 255, 255, 0.9)',
-            padding: '4px 8px',
-            borderRadius: '4px',
-            fontSize: '10px',
-            zIndex: 5,
-          }}
+          className="glass-absolute glass-glass-px-2 glass-glass-py-1 glass-surface-primary/10 glass-glass-text-primary glass-radius glass-z-10"
           data-consciousness-footer="true"
         >
           {chartInsights.length > 0 && `📊 ${chartInsights.length} insights`}

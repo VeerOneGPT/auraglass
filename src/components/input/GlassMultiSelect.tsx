@@ -185,7 +185,7 @@ const Token = styled.div<{
   font-size: 0.85rem;
   gap: 6px;
   max-width: 200px;
-  background: rgba(99, 102, 241, 0.2);
+  background: var(--glass-bg-default);
   backdrop-filter: var(--glass-backdrop-blur);
   border: 1px solid var(--glass-border-default);
   color: rgba(255, 255, 255, 0.95);
@@ -205,7 +205,7 @@ const Token = styled.div<{
   
   /* Hover styles */
   &:hover {
-    background: rgba(99, 102, 241, 0.3);
+    background: var(--glass-bg-default);
     
     /* Only show the remove button hover effect when not disabled */
     ${props => !props.$isDisabled && css`
@@ -347,7 +347,7 @@ const OptionItem = styled.li<{
   
   /* Selected state */
   ${props => props.$isSelected && css`
-    background-color: rgba(99, 102, 241, 0.15);
+    background: var(--glass-bg-default);
     font-weight: var(--typography-subheading-weight);
     
     &::after {
@@ -357,7 +357,7 @@ const OptionItem = styled.li<{
       top: 0;
       bottom: 0;
       width: 3px;
-      background-color: rgba(99, 102, 241, 0.8);
+      background: var(--glass-bg-default);
     }
   `}
   
@@ -391,7 +391,7 @@ const GroupHeader = styled.div<{ $size: 'small' | 'medium' | 'large' }>`
   font-weight: var(--typography-heading-weight);
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.6);
-  background-color: rgba(0, 0, 0, 0.2);
+  background: var(--glass-bg-default);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   letter-spacing: 0.5px;
 `;

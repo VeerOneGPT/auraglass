@@ -17,7 +17,7 @@ export const GlassCardLink: React.FC<GlassCardLinkProps> = ({
 }) => {
   return (
     <Motion
-      className="inline-glass-glass-block"
+      className="inline-glass-glass-glass-block"
     >
       <a
         href={href}

@@ -58,18 +58,18 @@ export const Winter: Story = {
     showControls: true
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <SeasonalParticles {...args}>
-        <div className="min-h-screen bg-gradient-to-b from-blue-900 via-blue-800 to-blue-900 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-p-8">
-          <div className="glass-glass-text-center glass-glass-text-primary">
-            <div className="glass-glass-text-6xl glass-glass-mb-4">❄️</div>
-            <h1 className="glass-glass-text-4xl font-bold glass-glass-mb-4">Winter Wonderland</h1>
-            <p className="glass-glass-text-xl text-blue-200 max-w-2xl">
+        <div className="glass-min-glass-glass-h-screen glass-gradient-primary glass-gradient-primary via-blue-800 glass-gradient-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-p-8">
+          <div className="glass-glass-glass-text-center glass-glass-glass-text-primary">
+            <div className="glass-glass-glass-text-6xl glass-glass-glass-mb-4">❄️</div>
+            <h1 className="glass-glass-glass-text-4xl glass-glass-glass-font-bold glass-glass-glass-mb-4">Winter Wonderland</h1>
+            <p className="glass-glass-glass-text-xl text-blue-200 max-w-2xl">
               Experience the magic of falling snow with realistic physics and beautiful winter ambiance.
               Watch the snowflakes gently drift down with natural wind effects.
             </p>
-            <div className="mt-8 glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-border glass-glass-border-white/20">
-              <p className="glass-glass-text-sm text-blue-200">
+            <div className="mt-8 glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-glass-border glass-glass-glass-border-white/20">
+              <p className="glass-glass-glass-text-sm text-blue-200">
                 ❄️ Snow particles with realistic falling animation<br/>
                 🌬️ Wind effects that influence particle movement<br/>
                 🎨 Dynamic lighting and atmospheric effects
@@ -92,18 +92,18 @@ export const Spring: Story = {
     showControls: true
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <SeasonalParticles {...args}>
-        <div className="min-h-screen bg-gradient-to-b from-pink-400 via-pink-300 to-green-300 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-p-8">
-          <div className="glass-glass-text-center glass-text-secondary">
-            <div className="glass-glass-text-6xl glass-glass-mb-4">🌸</div>
-            <h1 className="glass-glass-text-4xl font-bold glass-glass-mb-4">Spring Blossoms</h1>
-            <p className="glass-glass-text-xl glass-text-secondary max-w-2xl">
+        <div className="glass-min-glass-glass-h-screen glass-gradient-primary glass-gradient-primary via-pink-300 glass-gradient-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-p-8">
+          <div className="glass-glass-glass-text-center glass-text-secondary">
+            <div className="glass-glass-glass-text-6xl glass-glass-glass-mb-4">🌸</div>
+            <h1 className="glass-glass-glass-text-4xl glass-glass-glass-font-bold glass-glass-glass-mb-4">Spring Blossoms</h1>
+            <p className="glass-glass-glass-text-xl glass-text-secondary max-w-2xl">
               Celebrate the arrival of spring with floating petals and gentle breezes.
               Experience the rebirth of nature through delicate particle animations.
             </p>
-            <div className="mt-8 glass-glass-p-4 glass-surface-subtle/80 backdrop-blur-lg glass-radius-xl glass-glass-border glass-glass-border-white/50">
-              <p className="glass-glass-text-sm glass-text-secondary">
+            <div className="mt-8 glass-glass-glass-p-4 glass-surface-subtle/80 backdrop-blur-lg glass-radius-xl glass-glass-glass-border glass-glass-glass-border-white/50">
+              <p className="glass-glass-glass-text-sm glass-text-secondary">
                 🌸 Floating flower petals with organic movement<br/>
                 🌬️ Gentle spring breezes affecting particles<br/>
                 🎨 Vibrant colors celebrating new life
@@ -126,18 +126,18 @@ export const Summer: Story = {
     showControls: true
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <SeasonalParticles {...args}>
-        <div className="min-h-screen bg-gradient-to-b from-yellow-400 via-orange-400 to-red-400 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-p-8">
-          <div className="glass-glass-text-center glass-glass-text-primary">
-            <div className="glass-glass-text-6xl glass-glass-mb-4">☀️</div>
-            <h1 className="glass-glass-text-4xl font-bold glass-glass-mb-4">Summer Rays</h1>
-            <p className="glass-glass-text-xl text-orange-100 max-w-2xl">
+        <div className="glass-min-glass-glass-h-screen glass-gradient-primary glass-gradient-primary via-orange-400 glass-gradient-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-p-8">
+          <div className="glass-glass-glass-text-center glass-glass-glass-text-primary">
+            <div className="glass-glass-glass-text-6xl glass-glass-glass-mb-4">☀️</div>
+            <h1 className="glass-glass-glass-text-4xl glass-glass-glass-font-bold glass-glass-glass-mb-4">Summer Rays</h1>
+            <p className="glass-glass-glass-text-xl text-orange-100 max-w-2xl">
               Feel the warmth of summer with radiant sun rays and golden particles.
               Experience the energy and brightness of the summer season.
             </p>
-            <div className="mt-8 glass-glass-p-4 glass-surface-dark/20 backdrop-blur-lg glass-radius-xl glass-glass-border glass-glass-border-white/30">
-              <p className="glass-glass-text-sm text-orange-100">
+            <div className="mt-8 glass-glass-glass-p-4 glass-surface-dark/20 backdrop-blur-lg glass-radius-xl glass-glass-glass-border glass-glass-glass-border-white/30">
+              <p className="glass-glass-glass-text-sm text-orange-100">
                 ☀️ Radiant sun rays with pulsing light effects<br/>
                 🌟 Golden particles dancing in the summer breeze<br/>
                 🎨 Warm, vibrant colors evoking summer energy
@@ -160,18 +160,18 @@ export const Autumn: Story = {
     showControls: true
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <SeasonalParticles {...args}>
-        <div className="min-h-screen bg-gradient-to-b from-orange-600 via-red-600 to-yellow-600 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-p-8">
-          <div className="glass-glass-text-center glass-glass-text-primary">
-            <div className="glass-glass-text-6xl glass-glass-mb-4">🍂</div>
-            <h1 className="glass-glass-text-4xl font-bold glass-glass-mb-4">Autumn Leaves</h1>
-            <p className="glass-glass-text-xl text-orange-100 max-w-2xl">
+        <div className="glass-min-glass-glass-h-screen glass-gradient-primary glass-gradient-primary via-red-600 glass-gradient-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-p-8">
+          <div className="glass-glass-glass-text-center glass-glass-glass-text-primary">
+            <div className="glass-glass-glass-text-6xl glass-glass-glass-mb-4">🍂</div>
+            <h1 className="glass-glass-glass-text-4xl glass-glass-glass-font-bold glass-glass-glass-mb-4">Autumn Leaves</h1>
+            <p className="glass-glass-glass-text-xl text-orange-100 max-w-2xl">
               Witness the beauty of fall with gently falling leaves and crisp autumn winds.
               Experience the changing colors and peaceful descent of autumn foliage.
             </p>
-            <div className="mt-8 glass-glass-p-4 glass-surface-dark/20 backdrop-blur-lg glass-radius-xl glass-glass-border glass-glass-border-white/30">
-              <p className="glass-glass-text-sm text-orange-100">
+            <div className="mt-8 glass-glass-glass-p-4 glass-surface-dark/20 backdrop-blur-lg glass-radius-xl glass-glass-glass-border glass-glass-glass-border-white/30">
+              <p className="glass-glass-glass-text-sm text-orange-100">
                 🍂 Falling autumn leaves with realistic physics<br/>
                 🌬️ Crisp winds carrying particles naturally<br/>
                 🎨 Rich, earthy colors of fall foliage
@@ -195,24 +195,24 @@ export const AutoSeason: Story = {
     showControls: true
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <SeasonalParticles {...args}>
-        <div className="min-h-screen glass-gradient-primary from-purple-900 via-blue-900 to-green-900 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-p-8">
-          <div className="glass-glass-text-center glass-glass-text-primary">
-            <div className="glass-glass-text-6xl glass-glass-mb-4">🌈</div>
-            <h1 className="glass-glass-text-4xl font-bold glass-glass-mb-4">Seasonal Journey</h1>
-            <p className="glass-glass-text-xl text-purple-200 max-w-2xl">
+        <div className="glass-min-glass-glass-h-screen glass-gradient-primary glass-gradient-primary via-blue-900 glass-gradient-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-p-8">
+          <div className="glass-glass-glass-text-center glass-glass-glass-text-primary">
+            <div className="glass-glass-glass-text-6xl glass-glass-glass-mb-4">🌈</div>
+            <h1 className="glass-glass-glass-text-4xl glass-glass-glass-font-bold glass-glass-glass-mb-4">Seasonal Journey</h1>
+            <p className="glass-glass-glass-text-xl text-purple-200 max-w-2xl">
               Embark on a journey through all four seasons automatically.
               Watch as the environment transforms with each seasonal change.
             </p>
-            <div className="mt-8 glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-border glass-glass-border-white/20">
-              <p className="glass-glass-text-sm text-purple-200">
+            <div className="mt-8 glass-glass-glass-p-4 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-glass-border glass-glass-glass-border-white/20">
+              <p className="glass-glass-glass-text-sm text-purple-200">
                 🌈 Automatic seasonal progression every 8 seconds<br/>
                 🔄 Smooth transitions between different environments<br/>
                 🎭 Dynamic particle systems adapting to each season
               </p>
             </div>
-            <div className="mt-4 glass-glass-text-sm text-purple-300">
+            <div className="mt-4 glass-glass-glass-text-sm glass-text-secondary">
               Seasons cycle: Winter → Spring → Summer → Autumn → Repeat
             </div>
           </div>
@@ -232,12 +232,12 @@ export const MinimalWinter: Story = {
     showControls: false
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <SeasonalParticles {...args}>
-        <div className="min-h-screen glass-surface-subtle glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-p-8">
-          <div className="glass-glass-text-center">
-            <div className="glass-glass-text-4xl glass-glass-mb-4">❄️</div>
-            <h1 className="glass-glass-text-2xl font-bold glass-text-secondary glass-glass-mb-4">Minimal Winter</h1>
+        <div className="glass-min-glass-glass-h-screen glass-surface-subtle glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-p-8">
+          <div className="glass-glass-glass-text-center">
+            <div className="glass-glass-glass-text-4xl glass-glass-glass-mb-4">❄️</div>
+            <h1 className="glass-glass-glass-text-2xl glass-glass-glass-font-bold glass-text-secondary glass-glass-glass-mb-4">Minimal Winter</h1>
             <p className="glass-text-secondary max-w-xl">
               A subtle winter scene with gentle snowfall.
               Perfect for applications needing understated seasonal effects.
@@ -259,13 +259,13 @@ export const IntenseSummer: Story = {
     showControls: true
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <SeasonalParticles {...args}>
-        <div className="min-h-screen bg-gradient-to-b from-yellow-300 via-orange-400 to-red-500 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-glass-p-8">
-          <div className="glass-glass-text-center glass-glass-text-primary">
-            <div className="glass-glass-text-5xl glass-glass-mb-4">☀️</div>
-            <h1 className="glass-glass-text-3xl font-bold glass-glass-mb-4">Intense Summer</h1>
-            <p className="glass-glass-text-xl text-yellow-100 max-w-2xl">
+        <div className="glass-min-glass-glass-h-screen glass-gradient-primary glass-gradient-primary via-orange-400 glass-gradient-primary glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-glass-glass-p-8">
+          <div className="glass-glass-glass-text-center glass-glass-glass-text-primary">
+            <div className="glass-glass-glass-text-5xl glass-glass-glass-mb-4">☀️</div>
+            <h1 className="glass-glass-glass-text-3xl glass-glass-glass-font-bold glass-glass-glass-mb-4">Intense Summer</h1>
+            <p className="glass-glass-glass-text-xl text-yellow-100 max-w-2xl">
               Experience summer in full intensity with abundant sun rays and strong winds.
               Feel the heat and energy of the brightest season!
             </p>
@@ -287,61 +287,61 @@ export const SeasonalGallery: Story = {
     showControls: true
   },
   render: (args) => (
-    <div className="glass-glass-relative">
+    <div className="glass-glass-glass-relative">
       <SeasonalParticles {...args}>
-        <div className="min-h-screen glass-glass-p-8">
-          <div className="max-w-6xl mx-auto">
-            <h1 className="glass-glass-text-4xl font-bold glass-glass-text-primary glass-glass-text-center mb-12">
+        <div className="glass-min-glass-glass-h-screen glass-glass-glass-p-8">
+          <div className="max-w-6xl glass-glass-glass-mx-auto">
+            <h1 className="glass-glass-glass-text-4xl glass-glass-glass-font-bold glass-glass-glass-text-primary glass-glass-glass-text-center mb-12">
               Seasonal Gallery
             </h1>
 
-            <div className="glass-glass-grid glass-glass-glass-grid-cols-1 md:glass-glass-glass-grid-cols-2 glass-glass-gap-8">
-              <div className="glass-glass-p-6 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-border glass-glass-border-white/20">
-                <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-4">Winter ❄️</h3>
-                <p className="glass-glass-text-primary/80 glass-glass-text-sm glass-glass-mb-4">
+            <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-1 md:glass-glass-glass-glass-glass-grid-cols-2 glass-glass-glass-gap-8">
+              <div className="glass-glass-glass-p-6 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-glass-border glass-glass-glass-border-white/20">
+                <h3 className="glass-glass-glass-text-xl glass-glass-glass-font-semibold glass-glass-glass-text-primary glass-glass-glass-mb-4">Winter ❄️</h3>
+                <p className="glass-glass-glass-text-primary/80 glass-glass-glass-text-sm glass-glass-glass-mb-4">
                   Gentle snowfall with crystalline beauty and peaceful ambiance.
                   Perfect for creating a serene, magical atmosphere.
                 </p>
-                <div className="glass-glass-text-xs text-blue-300">
+                <div className="glass-glass-glass-text-xs glass-text-secondary">
                   • Realistic snow physics<br/>
                   • Wind-affected drift<br/>
                   • Icy blue aesthetics
                 </div>
               </div>
 
-              <div className="glass-glass-p-6 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-border glass-glass-border-white/20">
-                <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-4">Spring 🌸</h3>
-                <p className="glass-glass-text-primary/80 glass-glass-text-sm glass-glass-mb-4">
+              <div className="glass-glass-glass-p-6 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-glass-border glass-glass-glass-border-white/20">
+                <h3 className="glass-glass-glass-text-xl glass-glass-glass-font-semibold glass-glass-glass-text-primary glass-glass-glass-mb-4">Spring 🌸</h3>
+                <p className="glass-glass-glass-text-primary/80 glass-glass-glass-text-sm glass-glass-glass-mb-4">
                   Delicate flower petals dancing in the spring breeze.
                   Symbolizing renewal and the beauty of new beginnings.
                 </p>
-                <div className="glass-glass-text-xs text-pink-300">
+                <div className="glass-glass-glass-text-xs text-pink-300">
                   • Organic petal movement<br/>
                   • Vibrant spring colors<br/>
                   • Gentle floating animation
                 </div>
               </div>
 
-              <div className="glass-glass-p-6 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-border glass-glass-border-white/20">
-                <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-4">Summer ☀️</h3>
-                <p className="glass-glass-text-primary/80 glass-glass-text-sm glass-glass-mb-4">
+              <div className="glass-glass-glass-p-6 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-glass-border glass-glass-glass-border-white/20">
+                <h3 className="glass-glass-glass-text-xl glass-glass-glass-font-semibold glass-glass-glass-text-primary glass-glass-glass-mb-4">Summer ☀️</h3>
+                <p className="glass-glass-glass-text-primary/80 glass-glass-glass-text-sm glass-glass-glass-mb-4">
                   Radiant sun rays and golden particles filling the air.
                   Capturing the warmth and energy of bright summer days.
                 </p>
-                <div className="glass-glass-text-xs text-yellow-300">
+                <div className="glass-glass-glass-text-xs glass-text-secondary">
                   • Pulsing light effects<br/>
                   • Golden particle systems<br/>
                   • Warm, vibrant energy
                 </div>
               </div>
 
-              <div className="glass-glass-p-6 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-border glass-glass-border-white/20">
-                <h3 className="glass-glass-text-xl glass-glass-font-semibold glass-glass-text-primary glass-glass-mb-4">Autumn 🍂</h3>
-                <p className="glass-glass-text-primary/80 glass-glass-text-sm glass-glass-mb-4">
+              <div className="glass-glass-glass-p-6 glass-surface-subtle/10 backdrop-blur-lg glass-radius-xl glass-glass-glass-border glass-glass-glass-border-white/20">
+                <h3 className="glass-glass-glass-text-xl glass-glass-glass-font-semibold glass-glass-glass-text-primary glass-glass-glass-mb-4">Autumn 🍂</h3>
+                <p className="glass-glass-glass-text-primary/80 glass-glass-glass-text-sm glass-glass-glass-mb-4">
                   Falling leaves in rich autumn colors with realistic physics.
                   Celebrating the beauty of change and transition.
                 </p>
-                <div className="glass-glass-text-xs text-orange-300">
+                <div className="glass-glass-glass-text-xs glass-text-secondary">
                   • Realistic leaf physics<br/>
                   • Earthy autumn palette<br/>
                   • Swirling wind effects

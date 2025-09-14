@@ -3,9 +3,10 @@
  * Real-time glass effects that adapt to environment, time, weather, and user activity
  */
 
-import { motion, useAnimation, useSpring, useTransform } from 'framer-motion';
+import { motion, useAnimation, useSpring } from 'framer-motion';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { cn } from '../../lib/utilsComprehensive';
+import './glass-morphing.css';
 
 // Environmental adaptation types
 type EnvironmentalContext = {
@@ -474,18 +475,48 @@ export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
   ]);
 
   // Generate dynamic CSS for glass effects
-  const glassStyleProps = useMemo(() => ({
-    '--glass-opacity': opacityMotion,
-    '--glass-blur': useTransform(blurMotion, value => `${value}px`),
-    '--glass-refraction': refractionMotion,
-    '--glass-reflection': reflectionMotion,
-    '--glass-chromatic': chromaticMotion,
-    '--glass-caustic': causticMotion,
-    '--glass-temperature': temperatureMotion,
-    '--glass-viscosity': viscosityMotion,
-    '--glass-crystalline': crystallineMotion,
-    '--glass-iridescence': iridescenceMotion,
-  }), [
+  // Bind motion values to CSS variables on the container element
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const subs: Array<() => void> = [];
+    subs.push(opacityMotion.on('change', v => el.style.setProperty('--gm-opacity', String(v))));
+    subs.push(blurMotion.on('change', v => el.style.setProperty('--gm-blur', `${v}px`)));
+    subs.push(refractionMotion.on('change', v => el.style.setProperty('--gm-refraction', String(v))));
+    subs.push(reflectionMotion.on('change', v => el.style.setProperty('--gm-reflection', String(v))));
+    subs.push(chromaticMotion.on('change', v => el.style.setProperty('--gm-chromatic', String(v))));
+    subs.push(causticMotion.on('change', v => el.style.setProperty('--gm-caustic', String(v))));
+    subs.push(temperatureMotion.on('change', v => {
+      el.style.setProperty('--gm-temperature', String(v));
+      // Map temperature [-1..1] -> hue around blue (200) to warm (+/- 60)
+      const hue = Math.round(v * 60 + 200);
+      el.style.setProperty('--gm-hue', String(hue));
+    }));
+    subs.push(viscosityMotion.on('change', v => el.style.setProperty('--gm-viscosity', String(v))));
+    subs.push(crystallineMotion.on('change', v => el.style.setProperty('--gm-crystalline', String(v))));
+    subs.push(iridescenceMotion.on('change', v => el.style.setProperty('--gm-iridescence', String(v))));
+
+    // Prime initial values
+    const prime = () => {
+      el.style.setProperty('--gm-opacity', String(opacityMotion.get()));
+      el.style.setProperty('--gm-blur', `${blurMotion.get()}px`);
+      el.style.setProperty('--gm-refraction', String(refractionMotion.get()));
+      el.style.setProperty('--gm-reflection', String(reflectionMotion.get()));
+      el.style.setProperty('--gm-chromatic', String(chromaticMotion.get()));
+      el.style.setProperty('--gm-caustic', String(causticMotion.get()));
+      const t = temperatureMotion.get();
+      el.style.setProperty('--gm-temperature', String(t));
+      el.style.setProperty('--gm-hue', String(Math.round(t * 60 + 200)));
+      el.style.setProperty('--gm-viscosity', String(viscosityMotion.get()));
+      el.style.setProperty('--gm-crystalline', String(crystallineMotion.get()));
+      el.style.setProperty('--gm-iridescence', String(iridescenceMotion.get()));
+    };
+    prime();
+
+    return () => { subs.forEach(unsub => unsub()); };
+  }, [
+    containerRef,
     opacityMotion, blurMotion, refractionMotion, reflectionMotion,
     chromaticMotion, causticMotion, temperatureMotion, viscosityMotion,
     crystallineMotion, iridescenceMotion
@@ -494,173 +525,35 @@ export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
   return (
     <motion.div
       ref={containerRef}
-      className={cn("glass-morphing-container", className)}
-      style={{
-        ...glassStyleProps,
-        position: 'relative',
-        overflow: 'hidden',
-      }}
+      className={cn('glass-morphing-container', className)}
       animate={controls}
     >
       {/* Dynamic glass layers */}
-      <div className={cn("glass-morphing-effects")}>
+      <div className={cn('glass-morphing-effects')}> 
         {/* Base glass layer */}
-        <motion.div
-          className={cn("glass-layer glass-base")}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            // Use createGlassStyle() instead,
-            background: useTransform(
-              [opacityMotion, temperatureMotion, iridescenceMotion],
-              (values: number[]) => {
-                const [opacity, temp, iridescence] = values;
-                const hue = temp * 60 + 200; // Blue to warm spectrum
-                const iridescenceAlpha = iridescence * 0.3;
-                return `linear-gradient(45deg,
-                  hsla(${hue}, 70%, 80%, ${opacity * 0.1}),
-                  hsla(${hue + 60}, 60%, 75%, ${opacity * 0.1}),
-                  hsla(${hue + 120}, 80%, 85%, ${iridescenceAlpha})
-                )`;
-              }
-            ),
-            borderRadius: 'inherit',
-          }}
-        />
+        <div className={cn('glass-layer glass-base')} />
 
         {/* Refraction layer */}
-        <motion.div
-          className={cn("glass-layer glass-refraction")}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: useTransform(
-              refractionMotion,
-              value => `radial-gradient(circle at 30% 30%, 
-                rgba(255, 255, 255, ${value * 0.2}) 0%, 
-                transparent 50%
-              )`
-            ),
-            borderRadius: 'inherit',
-          }}
-        />
+        <div className={cn('glass-layer glass-refraction')} />
 
         {/* Reflection layer */}
-        <motion.div
-          className={cn("glass-layer glass-reflection")}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: useTransform(
-              reflectionMotion,
-              value => `linear-gradient(135deg, 
-                rgba(255, 255, 255, ${value * 0.4}) 0%, 
-                transparent 30%, 
-                rgba(255, 255, 255, ${value * 0.1}) 100%
-              )`
-            ),
-            borderRadius: 'inherit',
-          }}
-        />
+        <div className={cn('glass-layer glass-reflection')} />
 
         {/* Chromatic aberration layer */}
-        <motion.div
-          className={cn("glass-layer glass-chromatic")}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: useTransform(
-              chromaticMotion,
-              value => `linear-gradient(90deg, 
-                rgba(255, 0, 0, ${value * 0.05}) 0%, 
-                transparent 20%, 
-                rgba(0, 255, 0, ${value * 0.05}) 40%, 
-                transparent 60%, 
-                rgba(0, 0, 255, ${value * 0.05}) 80%, 
-                transparent 100%
-              )`
-            ),
-            borderRadius: 'inherit',
-            mixBlendMode: 'multiply',
-          }}
-        />
+        <div className={cn('glass-layer glass-chromatic')} />
 
         {/* Caustic pattern layer */}
-        <motion.div
-          className={cn("glass-layer glass-caustic")}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: useTransform(
-              causticMotion,
-              value => `radial-gradient(ellipse at 60% 20%, 
-                rgba(255, 255, 255, ${value * 0.3}) 0%, 
-                transparent 25%
-              ), radial-gradient(ellipse at 20% 70%, 
-                rgba(255, 255, 255, ${value * 0.2}) 0%, 
-                transparent 25%
-              )`
-            ),
-            borderRadius: 'inherit',
-            animation: isTransitioning ? 'none' : 'caustic-shimmer 4s ease-in-out infinite',
-          }}
-        />
+        <div className={cn('glass-layer glass-caustic')} />
 
         {/* Crystalline structure layer */}
-        <motion.div
-          className={cn("glass-layer glass-crystalline")}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: useTransform(
-              crystallineMotion,
-              value => `conic-gradient(from 45deg, 
-                rgba(255, 255, 255, ${value * 0.1}) 0deg, 
-                transparent 60deg, 
-                rgba(255, 255, 255, ${value * 0.15}) 120deg, 
-                transparent 180deg, 
-                rgba(255, 255, 255, ${value * 0.1}) 240deg, 
-                transparent 300deg
-              )`
-            ),
-            borderRadius: 'inherit',
-            clipPath: useTransform(
-              crystallineMotion,
-              value => `polygon(
-                0% 0%, 
-                ${100 - value * 20}% 0%, 
-                100% ${value * 30}%, 
-                100% 100%, 
-                ${value * 15}% 100%, 
-                0% ${100 - value * 25}%
-              )`
-            ),
-          }}
-        />
+        <div className={cn('glass-layer glass-crystalline')} />
 
         {/* Viscosity flow layer */}
-        <motion.div
-          className={cn("glass-layer glass-viscosity")}
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: useTransform(
-              viscosityMotion,
-              value => `linear-gradient(180deg, 
-                rgba(255, 255, 255, ${value * 0.1}) 0%, 
-                rgba(255, 255, 255, ${value * 0.2}) 40%, 
-                rgba(255, 255, 255, ${value * 0.05}) 100%
-              )`
-            ),
-            borderRadius: 'inherit',
-            transform: useTransform(viscosityMotion, value => `scaleY(${1 + value * 0.02})`),
-            filter: useTransform(viscosityMotion, value => `blur(${value * 2}px)`),
-          }}
-        />
+        <div className={cn('glass-layer glass-viscosity')} />
       </div>
 
       {/* Content */}
-      <div className={cn("glass-morphing-content")} style={{ position: 'relative', zIndex: 1 }}>
+      <div className={cn('glass-morphing-content')}>
         {children}
       </div>
 
@@ -671,36 +564,7 @@ export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
         </div>
       )}
 
-      <style>{`
-        @keyframes caustic-shimmer {
-          0%, 100% { opacity: 0.8; }
-          50% { opacity: 1; }
-        }
-
-        .glass-morphing-transition-indicator {
-          position: absolute;
-          inset: 0;
-          pointer-events: none;
-          z-index: 2;
-        }
-
-        .transition-shimmer {
-          position: absolute;
-          inset: -2px;
-          background: linear-gradient(90deg, 
-            transparent 0%, 
-            rgba(255, 255, 255, 0.2) 50%, 
-            transparent 100%
-          );
-          border-radius: inherit;
-          animation: shimmer 2s ease-in-out;
-        }
-
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-      `}</style>
+      {/* CSS handled via glass-morphing.css */}
     </motion.div>
   );
 };

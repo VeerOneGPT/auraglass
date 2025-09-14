@@ -223,7 +223,7 @@ export function GlassReactions({
       {children}
       
       {/* Reactions overlay */}
-      <div className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none overflow-hidden">
+      <div className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-glass-glass-pointer-events-none overflow-hidden">
         <AnimatePresence>
           {allReactions.map(reaction => (
             <ReactionComponent
@@ -254,7 +254,7 @@ export function GlassReactions({
       
       {/* Keyboard shortcuts hint */}
       {enableShortcuts && (
-        <div className="glass-glass-absolute bottom-2 right-2 glass-surface-primary glass-glass-p-2 glass-radius-sm glass-glass-text-xs opacity-50">
+        <div className="glass-glass-glass-absolute bottom-2 right-2 glass-surface-primary glass-glass-glass-p-2 glass-radius-sm glass-glass-glass-text-xs opacity-50">
           Press 1-{reactionTypes.length} for quick reactions
         </div>
       )}
@@ -355,14 +355,14 @@ function ReactionComponent({
         damping: 15,
       }}
     >
-      <span className="glass-glass-block transform -translate-x-1/2 -translate-y-1/2">
+      <span className="glass-glass-glass-block transform -translate-x-1/2 -translate-y-1/2">
         {emoji}
       </span>
       
       {/* Glass shimmer effect */}
       {glassEffect && (
         <motion.div
-          className="glass-glass-absolute glass-glass-inset-0 glass-gradient-primary from-transparent via-white to-transparent opacity-30"
+          className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-gradient-primary glass-gradient-primary via-white glass-gradient-primary glass-glass-glass-opacity-30"
           animate={{
             x: [-100, 100],
           }}
@@ -435,7 +435,7 @@ function ReactionPicker({
       exit={{ opacity: 0, scale: 0.8, y: 10 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >
-      <div className="glass-glass-grid glass-glass-glass-grid-cols-4 glass-glass-gap-1">
+      <div className="glass-glass-glass-grid glass-glass-glass-glass-glass-grid-cols-4 glass-glass-glass-gap-1">
         {reactionTypes.map((reactionType, index) => (
           <motion.button
             key={reactionType.emoji}

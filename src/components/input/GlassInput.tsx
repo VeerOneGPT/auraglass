@@ -423,7 +423,7 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
             })())}
           />
 
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-gap-1">
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-1">
             {loading && (
               <div className={cn('animate-spin glass-radius-full border-2 border-current border-t-transparent', iconSize?.[size])} />
             )}

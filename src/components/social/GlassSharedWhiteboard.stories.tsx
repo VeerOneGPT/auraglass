@@ -102,6 +102,8 @@ const meta = {
     },
     backgroundColor: {
       control: { type: 'color' },
+      type: 'string',
+      table: { type: { summary: 'string' } },
     },
   },
 } satisfies Meta<typeof GlassSharedWhiteboard>;

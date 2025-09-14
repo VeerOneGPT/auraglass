@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { GlassProbabilityCloud, type ProbabilityPoint } from './GlassProbabilityCloud';
 
 const mockProbabilityPoints: ProbabilityPoint[] = [
@@ -60,14 +61,20 @@ const lowUncertaintyPoints: ProbabilityPoint[] = mockProbabilityPoints.map(point
   probability: 0.7 + Math.random() * 0.3
 }));
 
-const meta = {
+const meta: Meta<typeof GlassProbabilityCloud> = {
   title: 'Glass UI/Quantum/GlassProbabilityCloud',
   component: GlassProbabilityCloud,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  args: {
+    onMeasurement: fn(),
+    onUncertaintyChange: fn(),
+  },
   argTypes: {
+    onMeasurement: { action: undefined },
+    onUncertaintyChange: { action: undefined },
     width: {
       control: { type: 'range', min: 400, max: 1000, step: 50 },
     },
@@ -87,7 +94,7 @@ const meta = {
       control: { type: 'range', min: 0.01, max: 1, step: 0.01 },
     },
   },
-} satisfies Meta<typeof GlassProbabilityCloud>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;

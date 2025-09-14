@@ -122,7 +122,7 @@ export const GlassDropdownMenuContent = forwardRef<
           border="subtle"
           animation="none"
           performanceMode="medium"
-                            className="glass-glass-p-0 glass-radial-reveal glass-lift"
+                            className="glass-glass-glass-p-0 glass-radial-reveal glass-lift"
                         >
                             {children}
                         </OptimizedGlass>
@@ -176,13 +176,13 @@ export const GlassDropdownMenuItem = forwardRef<
                 {...props}
             >
                 {icon && (
-                    <span className="mr-3 glass-glass-flex glass-glass-h-4 glass-glass-w-4 glass-glass-items-center glass-glass-justify-center">
+                    <span className="mr-3 glass-glass-glass-flex glass-glass-glass-h-4 glass-glass-glass-w-4 glass-glass-glass-items-center glass-glass-glass-justify-center">
                         {icon}
                     </span>
                 )}
-                <span className="glass-glass-flex-1">{children}</span>
+                <span className="glass-glass-glass-flex-1">{children}</span>
                 {shortcut && (
-                    <span className="ml-auto glass-glass-text-xs glass-text-secondary">
+                    <span className="ml-auto glass-glass-glass-text-xs glass-text-secondary">
                         {shortcut}
                     </span>
                 )}
@@ -227,15 +227,15 @@ export const GlassDropdownMenuCheckboxItem = forwardRef<
                 checked={checked}
                 {...props}
             >
-                <DropdownMenuPrimitive.ItemIndicator className="glass-glass-absolute left-2 glass-glass-flex h-3.5 w-3.5 glass-glass-items-center glass-glass-justify-center">
-                    <Check className="h-3 w-3" />
+                <DropdownMenuPrimitive.ItemIndicator className="glass-glass-glass-absolute left-2 glass-glass-glass-flex glass-glass-glass-h-3.5 glass-glass-glass-w-3.5 glass-glass-glass-items-center glass-glass-glass-justify-center">
+                    <Check className="glass-glass-glass-h-3 glass-glass-glass-w-3" />
                 </DropdownMenuPrimitive.ItemIndicator>
                 {icon && (
-                    <span className="ml-6 mr-3 glass-glass-flex glass-glass-h-4 glass-glass-w-4 glass-glass-items-center glass-glass-justify-center">
+                    <span className="ml-6 mr-3 glass-glass-glass-flex glass-glass-glass-h-4 glass-glass-glass-w-4 glass-glass-glass-items-center glass-glass-glass-justify-center">
                         {icon}
                     </span>
                 )}
-                <span className="glass-glass-flex-1">{children}</span>
+                <span className="glass-glass-glass-flex-1">{children}</span>
             </DropdownMenuPrimitive.CheckboxItem>
         );
     }
@@ -277,15 +277,15 @@ export const GlassDropdownMenuRadioItem = forwardRef<
                 )}
                 {...props}
             >
-                <DropdownMenuPrimitive.ItemIndicator className="glass-glass-absolute left-2 glass-glass-flex h-3.5 w-3.5 glass-glass-items-center glass-glass-justify-center">
-                    <div className="h-2 w-2 glass-radius-full bg-current" />
+                <DropdownMenuPrimitive.ItemIndicator className="glass-glass-glass-absolute left-2 glass-glass-glass-flex glass-glass-glass-h-3.5 glass-glass-glass-w-3.5 glass-glass-glass-items-center glass-glass-glass-justify-center">
+                    <div className="glass-glass-glass-h-2 glass-glass-glass-w-2 glass-radius-full glass-glass-glass-bg-transparent" />
                 </DropdownMenuPrimitive.ItemIndicator>
                 {icon && (
-                    <span className="ml-6 mr-3 glass-glass-flex glass-glass-h-4 glass-glass-w-4 glass-glass-items-center glass-glass-justify-center">
+                    <span className="ml-6 mr-3 glass-glass-glass-flex glass-glass-glass-h-4 glass-glass-glass-w-4 glass-glass-glass-items-center glass-glass-glass-justify-center">
                         {icon}
                     </span>
                 )}
-                <span className="glass-glass-flex-1">{children}</span>
+                <span className="glass-glass-glass-flex-1">{children}</span>
             </DropdownMenuPrimitive.RadioItem>
         );
     }
@@ -412,12 +412,12 @@ export const GlassDropdownMenuSubTrigger = forwardRef<
                 {...props}
             >
                 {icon && (
-                    <span className="mr-3 glass-glass-flex glass-glass-h-4 glass-glass-w-4 glass-glass-items-center glass-glass-justify-center">
+                    <span className="mr-3 glass-glass-glass-flex glass-glass-glass-h-4 glass-glass-glass-w-4 glass-glass-glass-items-center glass-glass-glass-justify-center">
                         {icon}
                     </span>
                 )}
-                <span className="glass-glass-flex-1">{children}</span>
-                <ChevronRight className="ml-auto glass-glass-h-4 glass-glass-w-4" />
+                <span className="glass-glass-glass-flex-1">{children}</span>
+                <ChevronRight className="ml-auto glass-glass-glass-h-4 glass-glass-glass-w-4" />
             </DropdownMenuPrimitive.SubTrigger>
         );
     }
@@ -463,7 +463,7 @@ export const GlassDropdownMenuSubContent = forwardRef<
           border="subtle"
           animation="none"
           performanceMode="medium"
-                    className="glass-glass-p-0 glass-radial-reveal glass-lift"
+                    className="glass-glass-glass-p-0 glass-radial-reveal glass-lift"
                 >
                     {props?.children}
                 </OptimizedGlass>

@@ -32,6 +32,90 @@ export interface MotionProps extends HTMLAttributes<HTMLDivElement> {
   animateOnScroll?: boolean;
 }
 
+// --- Utilities to avoid non-animatable background warnings ---
+function isSimpleColor(value: unknown): boolean {
+  if (typeof value !== 'string') return false;
+  const v = value.trim();
+  if (v === 'transparent') return true;
+  // rgb/rgba
+  if (/^rgba?\(/i.test(v)) return true;
+  // hsl/hsla
+  if (/^hsla?\(/i.test(v)) return true;
+  // hex
+  if (/^#([0-9a-f]{3}|[0-9a-f]{4}|[0-9a-f]{6}|[0-9a-f]{8})$/i.test(v)) return true;
+  // CSS variable (often colors in this lib)
+  if (/^var\(/i.test(v)) return true;
+  return false;
+}
+
+function coerceBackgroundKey(obj: any): any {
+  if (!obj || typeof obj !== 'object') return obj;
+  // Copy to avoid mutating user objects
+  const copy: any = Array.isArray(obj) ? obj.map((v) => v) : { ...obj };
+  for (const key of Object.keys(copy)) {
+    const val = (copy as any)[key];
+    if (key === 'background') {
+      if (isSimpleColor(val)) {
+        // Move to backgroundColor to make it animatable
+        (copy as any).backgroundColor = val === 'transparent' ? 'rgba(0, 0, 0, 0)' : val;
+        delete (copy as any).background;
+      }
+    } else if (typeof val === 'object' && val) {
+      (copy as any)[key] = coerceBackgroundKey(val);
+    }
+  }
+  return copy;
+}
+
+// Normalize easing values to what Framer Motion expects
+function normalizeEasingValue(value: any): any {
+  if (typeof value === 'string') {
+    const e = value.trim().toLowerCase();
+    if (e === 'ease-in') return 'easeIn';
+    if (e === 'ease-out') return 'easeOut';
+    if (e === 'ease-in-out' || e === 'ease') return 'easeInOut';
+    if (e === 'linear') return 'linear';
+    if (e.startsWith('cubic-bezier(') && e.endsWith(')')) {
+      const nums = e
+        .slice('cubic-bezier('.length, -1)
+        .split(',')
+        .map((n) => parseFloat(n.trim()))
+        .filter((n) => Number.isFinite(n));
+      if (nums.length === 4) return nums as unknown as number[];
+    }
+  }
+  return value;
+}
+
+// Recursively walk an object and normalize any transition.easing/ease occurrences
+function normalizeTransitions(obj: any): any {
+  if (!obj || typeof obj !== 'object') return obj;
+  const copy: any = Array.isArray(obj) ? obj.map((v) => normalizeTransitions(v)) : { ...obj };
+  for (const key of Object.keys(copy)) {
+    const val = copy[key];
+    if (key === 'transition') {
+      if (typeof val === 'string') {
+        // Strings are not valid for Framer transitions; drop to avoid runtime errors
+        delete copy[key];
+        continue;
+      }
+      if (val && typeof val === 'object') {
+        const t = { ...val };
+        if ('easing' in t && !('ease' in t)) {
+          t.ease = normalizeEasingValue((t as any).easing);
+          delete (t as any).easing;
+        } else if ('ease' in t) {
+          t.ease = normalizeEasingValue((t as any).ease);
+        }
+        copy[key] = t;
+      }
+    } else if (typeof val === 'object' && val) {
+      copy[key] = normalizeTransitions(val);
+    }
+  }
+  return copy;
+}
+
 function getVariants(preset: AnimationPreset): Variants {
   switch (preset) {
     case 'fadeIn':
@@ -135,8 +219,43 @@ export const MotionFramer = forwardRef<HTMLDivElement, MotionProps>(
       baseProps.whileHover = { scale: 1.015 };
     }
 
+    // Sanitize incoming motion props to avoid animating unsupported CSS shorthands like `background`
+    // and to normalize easing names in transition objects passed by callers.
+    let sanitizedProps: any = { ...props };
+    // Strip non-DOM custom flags that might leak
+    if ('consciousness' in sanitizedProps) delete sanitizedProps.consciousness;
+    const coerce = (obj: any) => normalizeTransitions(coerceBackgroundKey(obj));
+    if (sanitizedProps.animate && typeof sanitizedProps.animate === 'object') {
+      sanitizedProps.animate = coerce(sanitizedProps.animate);
+    }
+    if (sanitizedProps.initial && typeof sanitizedProps.initial === 'object') {
+      sanitizedProps.initial = coerce(sanitizedProps.initial);
+    }
+    if (sanitizedProps.exit && typeof sanitizedProps.exit === 'object') {
+      sanitizedProps.exit = coerce(sanitizedProps.exit);
+    }
+    if (sanitizedProps.whileHover && typeof sanitizedProps.whileHover === 'object') {
+      sanitizedProps.whileHover = coerce(sanitizedProps.whileHover);
+    }
+    if (sanitizedProps.whileInView && typeof sanitizedProps.whileInView === 'object') {
+      sanitizedProps.whileInView = coerce(sanitizedProps.whileInView);
+    }
+    if (sanitizedProps.variants && typeof sanitizedProps.variants === 'object') {
+      sanitizedProps.variants = coerce(sanitizedProps.variants);
+    }
+    if (sanitizedProps.transition) {
+      sanitizedProps = normalizeTransitions(sanitizedProps);
+    }
+    if (sanitizedProps.style && typeof sanitizedProps.style === 'object' && 'background' in sanitizedProps.style) {
+      const bg = sanitizedProps.style.background;
+      if (isSimpleColor(bg)) {
+        sanitizedProps.style = { ...sanitizedProps.style, backgroundColor: bg === 'transparent' ? 'rgba(0, 0, 0, 0)' : bg };
+        delete sanitizedProps.style.background;
+      }
+    }
+
     return (
-      <motion.div {...baseProps} {...props}>
+      <motion.div {...baseProps} {...sanitizedProps}>
         {children}
       </motion.div>
     );

@@ -69,37 +69,15 @@ export function useGlassFocus(options: GlassFocusOptions = {}) {
 
   const finalOptions = { ...DEFAULT_OPTIONS, ...options };
 
-  // Generate focus ring styles
-  const focusRingStyles = useCallback(() => {
+  // Base inline styles only (no pseudo-selectors here)
+  const baseStyle = useCallback((): React.CSSProperties => {
     if (!finalOptions.enabled) return {};
-
     return {
       outline: 'none',
       position: 'relative',
-      '&::before': {
-        content: '""',
-        position: 'absolute',
-        top: `-${finalOptions.offset}px`,
-        left: `-${finalOptions.offset}px`,
-        right: `-${finalOptions.offset}px`,
-        bottom: `-${finalOptions.offset}px`,
-        borderRadius: 'inherit',
-        border: `${finalOptions.width}px solid ${finalOptions.color}`,
-        filter: `blur(${finalOptions.blur}px)`,
-        opacity: 0,
-        pointerEvents: 'none',
-        transition: `opacity ${finalOptions.duration}ms ease`,
-        zIndex: -1,
-        ...finalOptions.customStyles,
-      },
-      '&.glass-focus-visible::before': {
-        opacity: 1,
-      },
-      '&.glass-focus-keyboard::before': {
-        boxShadow: `0 0 ${finalOptions.spread}px ${finalOptions.color}`,
-      },
-    };
-  }, [finalOptions]);
+      // pseudo-element styles are applied by CSS-in-JS in the wrapper component
+    } as React.CSSProperties;
+  }, [finalOptions.enabled]);
 
   // Handle focus events
   const handleFocus = useCallback((event: FocusEvent) => {
@@ -267,7 +245,7 @@ export function useGlassFocus(options: GlassFocusOptions = {}) {
   return {
     ref: elementRef,
     focusState,
-    focusRingStyles: focusRingStyles(),
+    baseStyle: baseStyle(),
     focus,
     blur,
     options: finalOptions,

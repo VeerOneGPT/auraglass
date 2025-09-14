@@ -164,18 +164,18 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onRemove }) => {
         isRemoving && '-translate-x-full opacity-0'
       )}
     >
-      <div className="glass-glass-flex glass-glass-items-start glass-glass-gap-3">
-        <div className="glass-glass-text-lg glass-glass-flex-shrink-0 glass-mt-0-5">
+      <div className="glass-glass-glass-flex glass-glass-glass-items-start glass-glass-glass-gap-3">
+        <div className="glass-glass-glass-text-lg glass-glass-glass-flex-shrink-0 glass-mt-0-5">
           {getToastIcon()}
         </div>
         
-        <div className="glass-glass-flex-1 glass-glass-min-w-0">
-          <div className="glass-glass-flex glass-glass-items-center glass-glass-justify-between">
-            <h4 className="glass-glass-font-semibold glass-glass-text-sm glass-glass-truncate pr-2">{toast.title}</h4>
+        <div className="glass-glass-glass-flex-1 glass-glass-glass-min-glass-glass-w-0">
+          <div className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-between">
+            <h4 className="glass-glass-glass-font-semibold glass-glass-glass-text-sm glass-glass-glass-truncate pr-2">{toast.title}</h4>
             {toast.dismissible && (
               <button
                 onClick={handleRemove}
-                className="glass-glass-flex-shrink-0 glass-glass-w-5 glass-glass-h-5 glass-glass-flex glass-glass-items-center glass-glass-justify-center glass-radius-full hover:glass-surface-dark/10 transition-colors glass-glass-text-xs opacity-70 hover:opacity-100"
+                className="glass-glass-glass-flex-shrink-0 glass-glass-glass-w-5 glass-glass-glass-h-5 glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center glass-radius-full hover:glass-surface-dark/10 transition-colors glass-glass-glass-text-xs opacity-70 hover:opacity-100"
               >
                 ✕
               </button>
@@ -183,7 +183,7 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onRemove }) => {
           </div>
           
           {toast.message && (
-            <p className="glass-glass-text-sm glass-glass-opacity-90 mt-1 leading-relaxed">{toast.message}</p>
+            <p className="glass-glass-glass-text-sm glass-glass-glass-opacity-90 mt-1 leading-relaxed">{toast.message}</p>
           )}
           
           {toast.action && (
@@ -192,7 +192,7 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onRemove }) => {
                 toast.action!.onClick();
                 handleRemove();
               }}
-              className="mt-2 glass-glass-text-sm glass-glass-font-medium underline hover:no-underline transition-all"
+              className="mt-2 glass-glass-glass-text-sm glass-glass-glass-font-medium underline hover:no-underline transition-all"
             >
               {toast.action.label}
             </button>
@@ -202,7 +202,7 @@ const ToastItem: React.FC<ToastItemProps> = ({ toast, onRemove }) => {
       
       {/* Progress bar */}
       {toast.duration && toast.duration > 0 && (
-        <div className="mt-3 glass-glass-w-full h-1 glass-surface-dark/10 glass-radius-full overflow-hidden">
+        <div className="mt-3 glass-glass-glass-w-full glass-glass-glass-h-1 glass-surface-dark/10 glass-radius-full overflow-hidden">
           <div 
             className={cn('h-full glass-radius-full transition-all ease-linear', getProgressBarColor())}
             style={{

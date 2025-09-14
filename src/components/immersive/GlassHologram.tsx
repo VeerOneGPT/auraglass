@@ -333,7 +333,7 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
             <img
               src={layer.source}
               alt={layer.id}
-              className="max-glass-glass-w-full max-glass-glass-h-full object-contain select-none"
+              className="max-glass-glass-glass-w-full max-glass-glass-glass-h-full object-contain select-none"
               style={{
                 filter: `drop-shadow(0 0 20px ${colors.primary}60)`,
               }}
@@ -345,7 +345,7 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
           return (
             <video
               src={layer.source}
-              className="max-glass-glass-w-full max-glass-glass-h-full object-contain"
+              className="max-glass-glass-glass-w-full max-glass-glass-glass-h-full object-contain"
               style={{
                 filter: `drop-shadow(0 0 20px ${colors.primary}60)`,
               }}
@@ -359,7 +359,7 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
         case 'shape':
           return (
             <div 
-              className="glass-glass-w-16 glass-glass-h-16 glass-glass-border-2 glass-radius-lg"
+              className="glass-glass-glass-w-16 glass-glass-glass-h-16 glass-glass-glass-border-2 glass-radius-lg"
               style={{
                 borderColor: colors.primary,
                 backgroundColor: `${colors.primary}20`,
@@ -370,11 +370,11 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
 
         case 'particle':
           return (
-            <div className="glass-glass-relative w-20 h-20">
+            <div className="glass-glass-glass-relative glass-glass-glass-w-20 glass-glass-glass-h-20">
               {Array.from({ length: 8 }, (_, i) => (
                 <div
                   key={i}
-                  className="glass-glass-absolute w-1 h-1 glass-radius-full"
+                  className="glass-glass-glass-absolute glass-glass-glass-w-1 glass-glass-glass-h-1 glass-radius-full"
                   style={{
                     backgroundColor: colors.accent,
                     boxShadow: `0 0 4px ${colors.accent}`,
@@ -398,7 +398,7 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
         case 'grid':
           return (
             <div 
-              className="glass-glass-absolute glass-glass-inset-0 opacity-20"
+              className="glass-glass-glass-absolute glass-glass-glass-inset-0 opacity-20"
               style={{
                 backgroundImage: `
                   linear-gradient(${colors.primary}40 1px, transparent 1px),
@@ -411,8 +411,8 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
 
         case 'circuit':
           return (
-            <div className="glass-glass-absolute glass-glass-inset-0 opacity-10">
-              <svg className="glass-glass-w-full glass-glass-h-full">
+            <div className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-glass-glass-opacity-10">
+              <svg className="glass-glass-glass-w-full glass-glass-glass-h-full">
                 {Array.from({ length: 10 }, (_, i) => (
                   <g key={i}>
                     <path
@@ -436,13 +436,13 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
         case 'matrix':
           return (
             <div 
-              className="glass-glass-absolute glass-glass-inset-0 opacity-15 font-mono glass-glass-text-xs overflow-hidden"
+              className="glass-glass-glass-absolute glass-glass-glass-inset-0 opacity-15 font-mono glass-glass-glass-text-xs overflow-hidden"
               style={{ color: colors.primary }}
             >
               {Array.from({ length: 20 }, (_, i) => (
                 <div
                   key={i}
-                  className="glass-glass-absolute whitespace-nowrap animate-pulse"
+                  className="glass-glass-glass-absolute whitespace-nowrap animate-pulse"
                   style={{
                     left: `${i * 5}%`,
                     top: `${Math.random() * 100}%`,
@@ -457,11 +457,11 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
 
         case 'particles':
           return (
-            <div className="glass-glass-absolute glass-glass-inset-0">
+            <div className="glass-glass-glass-absolute glass-glass-glass-inset-0">
               {Array.from({ length: 30 }, (_, i) => (
                 <div
                   key={i}
-                  className="glass-glass-absolute w-1 h-1 glass-radius-full opacity-30"
+                  className="glass-glass-glass-absolute glass-glass-glass-w-1 glass-glass-glass-h-1 glass-radius-full glass-glass-glass-opacity-30"
                   style={{
                     backgroundColor: colors.accent,
                     left: `${Math.random() * 100}%`,
@@ -484,19 +484,10 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
       if (!scanLines) return null;
 
       return (
-        <div className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none opacity-20">
+        <div className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-glass-glass-pointer-events-none opacity-20">
           <div 
-            className="glass-glass-w-full glass-glass-h-full"
-            style={{
-              background: `repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                ${colors.primary}40 2px,
-                ${colors.primary}40 4px
-              )`,
-              animation: !prefersReducedMotion ? 'scan 2s linear infinite' : undefined,
-            }}
+            className="glass-glass-glass-w-full glass-glass-glass-h-full"
+            ref={(el)=>{ if(!el) return; el.style.background = `repeating-linear-gradient(0deg, transparent, transparent 2px, ${colors.primary}40 2px, ${colors.primary}40 4px)`; el.style.animation = !prefersReducedMotion ? 'scan 2s linear infinite' : ''; }}
           />
         </div>
       );
@@ -508,11 +499,8 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
 
       return (
         <div 
-          className="glass-glass-absolute glass-glass-inset-0 glass-pointer-events-none opacity-10"
-          style={{
-            background: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-            animation: !prefersReducedMotion ? 'noise 0.2s steps(10) infinite' : undefined,
-          }}
+          className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-glass-glass-pointer-events-none glass-glass-glass-opacity-10"
+          ref={(el)=>{ if(!el) return; el.style.background = "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\")"; el.style.animation = !prefersReducedMotion ? 'noise 0.2s steps(10) infinite' : ''; }}
         />
       );
     };
@@ -542,20 +530,20 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
       >
         <Motion
           preset={!prefersReducedMotion && respectMotionPreference ? "fadeIn" : "none"}
-          className="glass-glass-relative glass-glass-w-full glass-glass-h-full"
+          className="glass-glass-glass-relative glass-glass-glass-w-full glass-glass-glass-h-full"
         >
           {/* Background Pattern */}
           {renderBackground()}
 
           {/* Loading State */}
           {loading && (
-            <div className="glass-glass-absolute glass-glass-inset-0 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
-              <div className="glass-glass-flex glass-glass-flex-col glass-glass-items-center glass-glass-gap-4">
+            <div className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center">
+              <div className="glass-glass-glass-flex glass-glass-glass-flex-col glass-glass-glass-items-center glass-glass-glass-gap-4">
                 <div 
-                  className="glass-glass-w-12 glass-glass-h-12 glass-glass-border-4 glass-glass-border-t-transparent glass-radius-full animate-spin"
+                  className="glass-glass-glass-w-12 glass-glass-glass-h-12 glass-glass-glass-border-4 glass-glass-glass-border-t-transparent glass-radius-full animate-spin"
                   style={{ borderColor: colors.primary, borderTopColor: 'transparent' }}
                 />
-                <div className="glass-glass-text-sm" style={{ color: colors.primary }}>
+                <div className="glass-glass-glass-text-sm" style={{ color: colors.primary }}>
                   Initializing Hologram...
                 </div>
               </div>
@@ -564,10 +552,10 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
 
           {/* Error State */}
           {error && (
-            <div className="glass-glass-absolute glass-glass-inset-0 glass-glass-flex glass-glass-items-center glass-glass-justify-center">
-              <div className="glass-glass-text-center">
-                <div className="glass-glass-text-2xl glass-glass-mb-2">⚠️</div>
-                <div className="glass-glass-text-sm" style={{ color: colors.primary }}>
+            <div className="glass-glass-glass-absolute glass-glass-glass-inset-0 glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-justify-center">
+              <div className="glass-glass-glass-text-center">
+                <div className="glass-glass-glass-text-2xl glass-glass-glass-mb-2">⚠️</div>
+                <div className="glass-glass-glass-text-sm" style={{ color: colors.primary }}>
                   {error}
                 </div>
               </div>
@@ -578,7 +566,7 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
           {!loading && !error && (
             <div
               ref={hologramRef}
-              className="glass-glass-relative glass-glass-w-full glass-glass-h-full"
+              className="glass-glass-glass-relative glass-glass-glass-w-full glass-glass-glass-h-full"
               style={{
                 transformStyle: 'preserve-3d',
                 perspective: '800px',
@@ -618,18 +606,18 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
 
           {/* Controls */}
           {showControls && !loading && !error && (
-            <div className="glass-glass-absolute bottom-4 left-1/2 transform -translate-x-1/2">
+            <div className="glass-glass-glass-absolute bottom-4 left-1/2 transform -translate-x-1/2">
               <OptimizedGlass
                 elevation="level3"
                 intensity="strong"
                 depth={2}
                 tint="neutral"
                 border="subtle"
-                className="glass-glass-flex glass-glass-items-center glass-glass-gap-2 glass-glass-px-4 glass-glass-py-2 glass-radius-lg backdrop-blur-md glass-glass-border glass-glass-border-glass-glass-border/20"
+                className="glass-glass-glass-flex glass-glass-glass-items-center glass-glass-glass-gap-2 glass-glass-glass-px-4 glass-glass-glass-py-2 glass-radius-lg backdrop-blur-md glass-glass-glass-border glass-glass-glass-border-glass-glass-glass-border/20"
               >
                 <button
                   onClick={() => setCurrentProjection(prev => ({ ...prev, angle: (prev.angle + 90) % 360 }))}
-                  className="glass-glass-p-1 glass-radius-md hover:glass-surface-overlay transition-all"
+                  className="glass-glass-glass-p-1 glass-radius-md hover:glass-surface-overlay transition-all"
                   title="Rotate"
                   style={{ color: colors.primary }}
                 >
@@ -638,14 +626,14 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
                 
                 <button
                   onClick={() => setCurrentProjection(prev => ({ ...prev, distance: prev.distance === 100 ? 150 : 100 }))}
-                  className="glass-glass-p-1 glass-radius-md hover:glass-surface-overlay transition-all"
+                  className="glass-glass-glass-p-1 glass-radius-md hover:glass-surface-overlay transition-all"
                   title="Zoom"
                   style={{ color: colors.primary }}
                 >
                   🔍
                 </button>
 
-                <div className="glass-glass-text-xs" style={{ color: colors.primary }}>
+                <div className="glass-glass-glass-text-xs" style={{ color: colors.primary }}>
                   Layers: {layers.length}
                 </div>
               </OptimizedGlass>
@@ -660,9 +648,9 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
               depth={1}
               tint="neutral"
               border="subtle"
-              className="glass-glass-absolute top-4 left-4 glass-glass-p-3 glass-radius-lg backdrop-blur-md glass-glass-border glass-glass-border-glass-glass-border/20"
+              className="glass-glass-glass-absolute top-4 left-4 glass-glass-glass-p-3 glass-radius-lg backdrop-blur-md glass-glass-glass-border glass-glass-glass-border-glass-glass-glass-border/20"
             >
-              <div className="glass-glass-text-xs font-mono glass-glass-gap-1" style={{ color: colors.primary }}>
+              <div className="glass-glass-glass-text-xs font-mono glass-glass-glass-gap-1" style={{ color: colors.primary }}>
                 <div>Angle: {currentProjection.angle.toFixed(1)}°</div>
                 <div>Tilt: {currentProjection.tilt.toFixed(1)}°</div>
                 <div>Distance: {currentProjection.distance}</div>
@@ -676,9 +664,9 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
 
           {/* Interaction Indicator */}
           {interactive && isHovering && (
-            <div className="glass-glass-absolute top-4 right-4">
+            <div className="glass-glass-glass-absolute top-4 right-4">
               <div 
-                className="w-3 h-3 glass-radius-full animate-pulse"
+                className="glass-glass-glass-w-3 glass-glass-glass-h-3 glass-radius-full animate-pulse"
                 style={{ backgroundColor: colors.accent }}
               />
             </div>

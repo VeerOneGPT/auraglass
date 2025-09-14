@@ -18,7 +18,7 @@ const meta: Meta<typeof CursorGlow> = {
     size: { control: { type: 'range', min: 120, max: 600, step: 10 } },
     intensity: { control: { type: 'range', min: 0, max: 1, step: 0.05 } },
     opacity: { control: { type: 'range', min: 0, max: 1, step: 0.02 } },
-    color: { control: 'color' },
+    color: { control: 'color', type: 'string', table: { type: { summary: 'string' } } },
   },
   args: {
     size: 320,

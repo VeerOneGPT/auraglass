@@ -60,10 +60,13 @@ document.body.style.letterSpacing = '-0.01em';
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
+    // Limit implicit actions to DOM-like handlers to avoid SB_PREVIEW_API_0002
+    actions: { argTypesRegex: '^on(?:Click|Change|Input|Submit|Key.*|Mouse.*|Pointer.*|Focus|Blur|Wheel|Drag.*|Drop|Scroll)$' },
     controls: {
       matchers: {
-        color: /(background|color)$/i,
+        // Narrow color matcher to avoid mis-assigning color control to union-typed props
+        // Components with real color strings define argTypes explicitly
+        color: /backgroundColor$/i,
         date: /Date$/,
       },
     },

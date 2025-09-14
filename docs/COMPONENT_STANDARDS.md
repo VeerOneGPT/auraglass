@@ -607,3 +607,32 @@ When reviewing component implementations:
 ---
 
 Following these component standards ensures consistency, accessibility, and maintainability across the entire AuraGlass design system while maintaining our 100/100 design system score.
+### 4. Automatic Text Contrast (NEW)
+When components render over gradients or dynamic backgrounds, avoid hardcoded white/black text. Use token-driven auto-contrast:
+
+- Attribute-driven override on a section:
+```html
+<section data-bg="dark">   <!-- forces white-on-dark tokens inside -->
+  <h1 class="glass-text-primary">Readable on dark</h1>
+  <p class="glass-text-secondary">Secondary contrast token</p>
+  ...
+</section>
+```
+
+- Auto-detect for dynamic backgrounds:
+```tsx
+import useAutoTextContrast from '@/hooks/useAutoTextContrast';
+
+export function Hero() {
+  const ref = useRef<HTMLDivElement>(null);
+  useAutoTextContrast(ref, { threshold: 0.55, observe: true });
+  return (
+    <div ref={ref}>
+      <h2 className="glass-text-primary">Always readable</h2>
+      <p className="glass-text-secondary">Tokens flip to match background luminance.</p>
+    </div>
+  );
+}
+```
+
+This flips `--glass-text-*` tokens to white-on-dark or black-on-light without inline styles, preserving full lint/token compliance.

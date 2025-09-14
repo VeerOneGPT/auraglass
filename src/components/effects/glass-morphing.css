@@ -1,0 +1,108 @@
+/* Glass Morphing Engine — CSS variable driven (no inline style attrs) */
+
+.glass-morphing-container {
+  position: relative;
+  overflow: hidden;
+  /* baseline variables */
+  --gm-opacity: 0.8;
+  --gm-blur: 6px;
+  --gm-refraction: 0.5;
+  --gm-reflection: 0.5;
+  --gm-chromatic: 0.3;
+  --gm-caustic: 0.4;
+  --gm-temperature: 0; /* -1..1 */
+  --gm-viscosity: 0.3; /* 0..1 */
+  --gm-crystalline: 0.2; /* 0..1 */
+  --gm-iridescence: 0.4; /* 0..1 */
+  --gm-hue: 200; /* computed from temperature */
+}
+
+.glass-morphing-effects { position: absolute; inset: 0; }
+.glass-layer { position: absolute; inset: 0; border-radius: inherit; }
+
+/* Base layer — token-friendly gradient using CSS vars */
+.glass-layer.glass-base {
+  background: linear-gradient(
+    45deg,
+    hsl(var(--gm-hue) 70% 80% / calc(var(--gm-opacity) * 0.10)),
+    hsl(calc(var(--gm-hue) + 60) 60% 75% / calc(var(--gm-opacity) * 0.10)),
+    hsl(calc(var(--gm-hue) + 120) 80% 85% / calc(var(--gm-iridescence) * 0.30))
+  );
+}
+
+/* Caustic shimmer — animated subtle overlay */
+@keyframes caustic-shimmer { 0%,100%{ opacity:.8 } 50%{ opacity:1 } }
+.glass-layer.glass-caustic {
+  mix-blend-mode: screen;
+  opacity: calc(var(--gm-caustic) * 0.8);
+  animation: caustic-shimmer 4s ease-in-out infinite;
+}
+
+/* Refraction layer */
+.glass-layer.glass-refraction {
+  filter: blur(calc(var(--gm-refraction) * 8px));
+  opacity: calc(0.4 + var(--gm-refraction) * 0.4);
+}
+
+/* Reflection layer */
+.glass-layer.glass-reflection {
+  background: radial-gradient(
+    circle at 30% -10%,
+    rgba(255 255 255 / calc(var(--gm-reflection) * 0.35)) 0%,
+    transparent 60%
+  );
+}
+
+/* Chromatic aberration layer */
+.glass-layer.glass-chromatic {
+  background: linear-gradient(
+    90deg,
+    hsl(calc(var(--gm-hue) - 40) 80% 70% / calc(var(--gm-chromatic) * 0.15)),
+    hsl(calc(var(--gm-hue) + 40) 80% 70% / calc(var(--gm-chromatic) * 0.15))
+  );
+  mix-blend-mode: multiply;
+}
+
+/* Crystalline shapes — polygon with CSS math */
+.glass-layer.glass-crystalline {
+  background: conic-gradient(
+    from 45deg,
+    rgba(255 255 255 / calc(var(--gm-crystalline) * 0.10)) 0deg,
+    transparent 60deg,
+    rgba(255 255 255 / calc(var(--gm-crystalline) * 0.15)) 120deg,
+    transparent 180deg,
+    rgba(255 255 255 / calc(var(--gm-crystalline) * 0.10)) 240deg,
+    transparent 300deg
+  );
+  clip-path: polygon(
+    0% 0%,
+    calc(100% - (var(--gm-crystalline) * 20%)) 0%,
+    100% calc(var(--gm-crystalline) * 30%),
+    100% 100%,
+    calc(var(--gm-crystalline) * 15%) 100%,
+    0% calc(100% - (var(--gm-crystalline) * 25%))
+  );
+}
+
+/* Viscosity flow */
+.glass-layer.glass-viscosity {
+  background: linear-gradient(
+    180deg,
+    rgba(255 255 255 / calc(var(--gm-viscosity) * 0.10)) 0%,
+    rgba(255 255 255 / calc(var(--gm-viscosity) * 0.20)) 40%,
+    rgba(255 255 255 / calc(var(--gm-viscosity) * 0.05)) 100%
+  );
+  transform: scaleY(calc(1 + var(--gm-viscosity) * 0.02));
+  filter: blur(calc(var(--gm-viscosity) * 2px));
+}
+
+.glass-morphing-content { position: relative; z-index: 1; }
+
+/* Transition shimmer indicator */
+.glass-morphing-transition-indicator { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+.transition-shimmer {
+  position: absolute; inset: -2px; border-radius: inherit;
+  background: linear-gradient(90deg, transparent 0%, rgba(255 255 255 / .20) 50%, transparent 100%);
+  animation: shimmer 2s ease-in-out;
+}
+@keyframes shimmer { 0% { transform: translateX(-100%);} 100% { transform: translateX(100%);} }

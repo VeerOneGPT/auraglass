@@ -284,6 +284,8 @@ export const GlassContainer = forwardRef<HTMLDivElement, GlassContainerProps>(
       minWidth,
       maxHeight,
       minHeight,
+      // Prevent leaking master toggle to DOM
+      consciousness: _consciousness,
       predictive: _predictive,
       preloadContent: _preloadContent,
       eyeTracking: _eyeTracking,

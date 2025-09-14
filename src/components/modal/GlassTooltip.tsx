@@ -229,7 +229,7 @@ export const GlassTooltip = forwardRef<HTMLDivElement, GlassTooltipProps>(({
         <Motion
           preset={getAnimationPreset()}
           duration={shouldAnimate ? 200 : 0}
-          className="glass-glass-fixed z-[9999] glass-pointer-events-none"
+          className="glass-glass-glass-fixed z-[9999] glass-glass-glass-pointer-events-none"
           style={{
             ...getPositionStyles(),
             maxWidth,
@@ -252,13 +252,13 @@ export const GlassTooltip = forwardRef<HTMLDivElement, GlassTooltipProps>(({
               border="subtle"
               animation="none"
               performanceMode="medium"
-              className="glass-glass-px-3 glass-glass-py-2 glass-radius-lg glass-glass-text-sm glass-glass-text-primary glass-glass-shadow-lg"
+              className="glass-glass-glass-px-3 glass-glass-glass-py-2 glass-radius-lg glass-glass-glass-text-sm glass-glass-glass-text-primary glass-glass-glass-shadow-lg"
             >
               {content}
 
               {showArrow && (
                 <div
-                  className="glass-glass-absolute w-0 h-0 glass-glass-border-l-4 glass-glass-border-r-4 glass-glass-border-b-4 glass-glass-border-transparent glass-glass-border-b-white/20"
+                  className="glass-glass-glass-absolute glass-glass-glass-w-0 glass-glass-glass-h-0 glass-glass-glass-border-l-4 glass-glass-glass-border-r-4 glass-glass-glass-border-b-4 glass-glass-glass-border-transparent glass-glass-glass-border-b-white/20"
                   style={getArrowStyles()}
                   aria-hidden="true"
                 />

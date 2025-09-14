@@ -26,9 +26,9 @@ const glowAnimation = keyframes`
 `;
 
 const highlightAnimation = keyframes`
-  0% { background-color: rgba(var(--feedback-color-rgb), 0); }
-  50% { background-color: rgba(var(--feedback-color-rgb), 0.2); }
-  100% { background-color: rgba(var(--feedback-color-rgb), 0); }
+  0% { background: var(--glass-bg-default);, 0); }
+  50% { background: var(--glass-bg-default);, 0.2); }
+  100% { background: var(--glass-bg-default);, 0); }
 `;
 
 // Convert color string to RGB values
@@ -129,7 +129,7 @@ const Ripple = styled.span<{
 }>`
   position: absolute;
   border-radius: 50%;
-  background-color: rgba(var(--feedback-color-rgb), 0.3);
+  background: var(--glass-bg-default);, 0.3);
   transform: scale(0);
   animation: ripple ${props => props.$duration}ms linear;
   top: ${props => props.$y}px;

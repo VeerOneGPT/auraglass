@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { fn } from '@storybook/test';
 import { GlassVoiceWaveform, type VoiceParticipant } from './GlassVoiceWaveform';
 
 const mockParticipants: VoiceParticipant[] = [
@@ -67,13 +68,17 @@ const mockParticipants: VoiceParticipant[] = [
   }
 ];
 
-const meta = {
+const meta: Meta<typeof GlassVoiceWaveform> = {
   title: 'Glass UI/Social/GlassVoiceWaveform',
   component: GlassVoiceWaveform,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  args: {
+    onParticipantClick: fn(),
+    onMuteToggle: fn(),
+  },
   argTypes: {
     waveformStyle: {
       control: { type: 'select' },
@@ -96,7 +101,7 @@ const meta = {
       control: { type: 'range', min: 0.1, max: 3, step: 0.1 },
     },
   },
-} satisfies Meta<typeof GlassVoiceWaveform>;
+};
 
 export default meta;
 type Story = StoryObj<typeof meta>;
