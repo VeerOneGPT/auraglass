@@ -17,7 +17,13 @@
       "text-primary": "#f8fafc",
       "text-secondary": "rgba(248, 250, 252, 0.7)",
       "text-tertiary": "rgba(248, 250, 252, 0.5)",
-      "accent": "#6366f1"
+      "accent": "#6366f1",
+      "selection-dark": "hsla(210, 100%, 60%, 0.3)",
+      "selection-light": "hsla(210, 100%, 60%, 0.2)",
+      "scrollbar-thumb-dark": "hsla(217, 33%, 30%, 0.5)",
+      "scrollbar-thumb-dark-hover": "hsla(217, 33%, 40%, 0.7)",
+      "scrollbar-thumb-light": "hsla(220, 14%, 70%, 0.5)",
+      "scrollbar-thumb-light-hover": "hsla(220, 14%, 60%, 0.7)"
     },
     "semantic": {
       "primary": "#6366f1",

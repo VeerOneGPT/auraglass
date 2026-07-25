@@ -14,7 +14,7 @@
 
 /* Theme transition for specific properties */
 [data-theme] {
-  transition: 
+  transition:
     background-color 200ms ease-out,
     color 200ms ease-out,
     border-color 200ms ease-out,
@@ -27,7 +27,7 @@
 [data-theme] .glass,
 [data-theme] .glass-surface,
 [data-theme] .glass-border {
-  transition: 
+  transition:
     background 200ms ease-out,
     backdrop-filter 200ms ease-out,
     border-color 200ms ease-out,
@@ -47,7 +47,7 @@
 /* High contrast theme styles */
 [data-theme="high-contrast"] {
   color-scheme: dark;
-  
+
   /* Forced colors mode support */
   @media (prefers-contrast: high) {
     forced-colors: active;
@@ -56,47 +56,48 @@
 
 /* Theme-specific focus styles */
 [data-theme="dark"] *:focus-visible {
-  outline-color: var(--primary);
+  outline-color: var(--aura-color-semantic-primary);
   outline-offset: 2px;
 }
 
 [data-theme="light"] *:focus-visible {
-  outline-color: var(--primary);
+  outline-color: var(--aura-color-semantic-primary);
   outline-offset: 2px;
 }
 
 [data-theme="high-contrast"] *:focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--aura-color-semantic-primary);
   outline-offset: 3px;
 }
 
-/* Theme-specific selection styles */
+/* Theme-specific selection styles.
+   No `color` is set for light/dark: selected text keeps its own inherited
+   color, which reads correctly against these translucent selection tokens. */
 [data-theme="dark"] ::selection {
-  background-color: hsla(210, 100%, 60%, 0.3);
-  color: var(--foreground);
+  background-color: var(--aura-color-global-selection-dark);
 }
 
 [data-theme="light"] ::selection {
-  background-color: hsla(210, 100%, 60%, 0.2);
-  color: var(--foreground);
+  background-color: var(--aura-color-global-selection-light);
 }
 
 [data-theme="high-contrast"] ::selection {
-  background-color: var(--accent);
-  color: var(--background);
+  background-color: var(--aura-color-semantic-primary);
+  color: var(--aura-color-global-background-base);
 }
 
 /* Theme-specific scrollbar styles */
 [data-theme="dark"] {
-  scrollbar-color: hsla(217, 33%, 30%, 0.5) transparent;
+  scrollbar-color: var(--aura-color-global-scrollbar-thumb-dark) transparent;
 }
 
 [data-theme="light"] {
-  scrollbar-color: hsla(220, 14%, 70%, 0.5) transparent;
+  scrollbar-color: var(--aura-color-global-scrollbar-thumb-light) transparent;
 }
 
 [data-theme="high-contrast"] {
-  scrollbar-color: var(--foreground) var(--background);
+  scrollbar-color: var(--aura-color-global-text-primary)
+    var(--aura-color-global-background-base);
 }
 
 /* WebKit scrollbar styling */
@@ -105,12 +106,12 @@
 }
 
 [data-theme="dark"]::-webkit-scrollbar-thumb {
-  background: hsla(217, 33%, 30%, 0.5);
-  border-radius: var(--radius-full);
+  background: var(--aura-color-global-scrollbar-thumb-dark);
+  border-radius: var(--aura-radius-pill);
 }
 
 [data-theme="dark"]::-webkit-scrollbar-thumb:hover {
-  background: hsla(217, 33%, 40%, 0.7);
+  background: var(--aura-color-global-scrollbar-thumb-dark-hover);
 }
 
 [data-theme="light"]::-webkit-scrollbar-track {
@@ -118,22 +119,22 @@
 }
 
 [data-theme="light"]::-webkit-scrollbar-thumb {
-  background: hsla(220, 14%, 70%, 0.5);
-  border-radius: var(--radius-full);
+  background: var(--aura-color-global-scrollbar-thumb-light);
+  border-radius: var(--aura-radius-pill);
 }
 
 [data-theme="light"]::-webkit-scrollbar-thumb:hover {
-  background: hsla(220, 14%, 60%, 0.7);
+  background: var(--aura-color-global-scrollbar-thumb-light-hover);
 }
 
 [data-theme="high-contrast"]::-webkit-scrollbar-track {
-  background: var(--background);
-  border: 1px solid var(--border);
+  background: var(--aura-color-global-background-base);
+  border: 1px solid var(--aura-color-global-border-strong);
 }
 
 [data-theme="high-contrast"]::-webkit-scrollbar-thumb {
-  background: var(--foreground);
-  border: 1px solid var(--border);
+  background: var(--aura-color-global-text-primary);
+  border: 1px solid var(--aura-color-global-border-strong);
 }
 
 /* Print styles for themes */
@@ -143,7 +144,7 @@
     background: white !important;
     color: black !important;
   }
-  
+
   [data-theme="dark"] *,
   [data-theme="high-contrast"] * {
     background: transparent !important;
