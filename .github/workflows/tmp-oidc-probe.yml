@@ -39,12 +39,42 @@ jobs:
             echo "<none>"
           fi
 
-      - name: Remove setup-node npmrc and probe auth
+      - name: Probe npm OIDC token exchange directly
         run: |
-          if [ -n "${NPM_CONFIG_USERCONFIG:-}" ]; then
-            rm -f "$NPM_CONFIG_USERCONFIG"
+          set -uo pipefail
+
+          # Ask GitHub for an OIDC ID token with npm's expected audience.
+          echo "--- requesting GitHub ID token ---"
+          resp=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
+            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=npm:registry.npmjs.org")
+          id_token=$(printf '%s' "$resp" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("value",""))')
+          if [ -z "$id_token" ]; then
+            echo "FAILED to obtain ID token"; exit 1
           fi
-          echo "--- npm whoami (expected to fail; OIDC is publish-only) ---"
-          npm whoami || echo "whoami failed (not necessarily fatal)"
-          echo "--- npm publish --dry-run ---"
-          npm publish --access public --dry-run --ignore-scripts
+          echo "ID token obtained (length ${#id_token})"
+
+          # Decode only the non-sensitive claims npm matches against.
+          echo "--- ID token claims (subset) ---"
+          printf '%s' "$id_token" | cut -d. -f2 \
+            | python3 -c '
+import sys,base64,json
+raw=sys.stdin.read().strip()
+raw+="="*(-len(raw)%4)
+c=json.loads(base64.urlsafe_b64decode(raw))
+for k in ("iss","aud","repository","repository_owner","workflow_ref","job_workflow_ref","ref","environment"):
+    print(f"  {k} = {c.get(k)}")
+'
+
+          # Exchange it at npm. 200 => trusted publisher configured and matched.
+          echo "--- POST npm OIDC exchange for package aura-glass ---"
+          code=$(curl -sS -o /tmp/exchange.json -w '%{http_code}' -X POST \
+            -H "Authorization: Bearer $id_token" \
+            -H "Content-Type: application/json" \
+            "https://registry.npmjs.org/-/npm/v1/oidc/token/exchange/package/aura-glass")
+          echo "HTTP $code"
+          if [ "$code" = "200" ]; then
+            echo "SUCCESS: trusted publishing is configured and the claims matched."
+          else
+            echo "--- error body ---"
+            cat /tmp/exchange.json; echo
+          fi
