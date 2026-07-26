@@ -1,6 +1,6 @@
 # 3.3 App-Chrome Visual Evidence
 
-Generated at: 2026-06-05T04:30:27.186Z
+Generated at: 2026-07-26T02:44:27.946Z
 
 Command:
 
@@ -8,7 +8,7 @@ Command:
 node scripts/ci/verify-app-chrome-visuals.js
 ```
 
-Result: pass. The final release gate packed `aura-glass@3.3.0`; this visual script installed the local tarball into a temporary Vite app, rendered the app-chrome surfaces from public package entrypoints, loaded each target in Chromium, and captured visual baselines.
+Result: pass. The script packed `aura-glass@3.5.0`, installed the tarball into a temporary Vite app, rendered the app-chrome surfaces from public package entrypoints, loaded each target in Chromium, and captured visual baselines.
 
 | Target | Viewport | Reduced motion | Screenshot |
 | --- | --- | --- | --- |

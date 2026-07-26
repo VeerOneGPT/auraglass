@@ -58,6 +58,39 @@ const waitForUrl = async (url, timeoutMs = 120000) => {
 
 const safeId = (id) => id.replace(/[^a-z0-9-]/gi, "-").toLowerCase();
 
+// Tears down a detached dev server and everything it spawned. The npm wrapper is
+// only the group leader; Vite and its esbuild service are grandchildren, so a
+// signal aimed at the wrapper alone leaves them running. Their inherited stdout
+// and stderr pipes are referenced by this process's event loop, which is enough
+// to keep Node alive indefinitely after the gate has otherwise finished.
+const stopServer = (server) => {
+  server.stdout?.destroy();
+  server.stderr?.destroy();
+
+  if (server.exitCode !== null || server.signalCode !== null) return;
+
+  // Negative pid targets the whole process group created by `detached: true`.
+  try {
+    process.kill(-server.pid, "SIGTERM");
+  } catch (error) {
+    if (error.code !== "ESRCH") throw error;
+    return;
+  }
+
+  // Escalate if the group ignores SIGTERM, then stop referencing the timer so it
+  // cannot itself hold the event loop open.
+  const forceKill = setTimeout(() => {
+    try {
+      process.kill(-server.pid, "SIGKILL");
+    } catch (error) {
+      if (error.code !== "ESRCH") throw error;
+    }
+  }, 5000);
+  forceKill.unref();
+
+  server.unref();
+};
+
 const targets = [
   { id: "icon-gallery", viewport: { width: 1280, height: 920 } },
   { id: "dropdown-menu", viewport: { width: 1280, height: 920 } },
@@ -806,10 +839,14 @@ export default defineConfig({
   run("npm run build", { cwd: appDir });
 
   const port = 4691;
+  // `detached: true` puts the dev server in its own process group so teardown can
+  // signal the whole tree. Killing only the npm wrapper leaves the Vite/esbuild
+  // grandchildren alive, and their open stdio pipes keep this process from exiting.
   const server = spawn("npm", ["run", "dev", "--", "--port", String(port)], {
     cwd: appDir,
     stdio: ["ignore", "pipe", "pipe"],
     env: { ...process.env, FORCE_COLOR: "0" },
+    detached: true,
   });
   let serverLog = "";
   server.stdout.on("data", (chunk) => {
@@ -942,7 +979,7 @@ ${keyboardChecks.map((check) => `| ${check.id} | ${check.passed ? "Pass" : "Fail
       `App-chrome visual gate passed for ${screenshots.length} targets and ${keyboardChecks.length} keyboard checks.`
     );
   } finally {
-    server.kill("SIGTERM");
+    stopServer(server);
     const reportDir = path.join(projectRoot, "reports", "3.3-release");
     fs.mkdirSync(reportDir, { recursive: true });
     fs.writeFileSync(path.join(reportDir, "app-chrome-visual-server.log"), serverLog, "utf8");
