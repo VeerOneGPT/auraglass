@@ -67,13 +67,13 @@ jobs:
       - name: Publish with npm trusted publishing
         if: env.HAS_NPM_TOKEN != 'true'
         run: |
-          # setup-node writes `_authToken=${NODE_AUTH_TOKEN}` into this .npmrc.
-          # With no NPM_TOKEN secret it expands to a literal placeholder, and npm
-          # then authenticates with that junk token instead of performing the OIDC
-          # exchange — the registry rejects it as 404. Drop the line so npm sees
-          # no credentials and falls back to trusted publishing.
-          if [ -n "${NPM_CONFIG_USERCONFIG:-}" ] && [ -f "$NPM_CONFIG_USERCONFIG" ]; then
-            sed -i '/_authToken/d' "$NPM_CONFIG_USERCONFIG"
+          # setup-node's registry-url writes an .npmrc with
+          # `_authToken=${NODE_AUTH_TOKEN}` plus `always-auth=true`. With no
+          # NPM_TOKEN secret the token expands to a literal placeholder (=> E404)
+          # and always-auth makes npm fail ENEEDAUTH rather than fall back. Remove
+          # the file entirely so npm performs the OIDC exchange.
+          if [ -n "${NPM_CONFIG_USERCONFIG:-}" ]; then
+            rm -f "$NPM_CONFIG_USERCONFIG"
           fi
           npm publish --access public
 

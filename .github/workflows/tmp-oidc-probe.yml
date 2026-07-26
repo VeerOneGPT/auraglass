@@ -1,0 +1,50 @@
+name: TMP OIDC probe
+
+# Temporary diagnostic workflow: verifies npm trusted publishing (OIDC) auth
+# without running the ~10 minute release gates. Delete once publishing works.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  probe:
+    name: Probe npm OIDC auth
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
+
+      - name: Inspect environment
+        run: |
+          echo "npm: $(npm --version)"
+          echo "NPM_CONFIG_USERCONFIG=${NPM_CONFIG_USERCONFIG:-<unset>}"
+          echo "ACTIONS_ID_TOKEN_REQUEST_URL present: ${ACTIONS_ID_TOKEN_REQUEST_URL:+yes}"
+          echo "--- setup-node .npmrc ---"
+          if [ -n "${NPM_CONFIG_USERCONFIG:-}" ] && [ -f "$NPM_CONFIG_USERCONFIG" ]; then
+            sed 's/=.*/=<redacted>/' "$NPM_CONFIG_USERCONFIG"
+          else
+            echo "<none>"
+          fi
+
+      - name: Remove setup-node npmrc and probe auth
+        run: |
+          if [ -n "${NPM_CONFIG_USERCONFIG:-}" ]; then
+            rm -f "$NPM_CONFIG_USERCONFIG"
+          fi
+          echo "--- npm whoami (expected to fail; OIDC is publish-only) ---"
+          npm whoami || echo "whoami failed (not necessarily fatal)"
+          echo "--- npm publish --dry-run ---"
+          npm publish --access public --dry-run --ignore-scripts
