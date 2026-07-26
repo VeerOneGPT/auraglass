@@ -66,7 +66,16 @@ jobs:
 
       - name: Publish with npm trusted publishing
         if: env.HAS_NPM_TOKEN != 'true'
-        run: npm publish --access public
+        run: |
+          # setup-node writes `_authToken=${NODE_AUTH_TOKEN}` into this .npmrc.
+          # With no NPM_TOKEN secret it expands to a literal placeholder, and npm
+          # then authenticates with that junk token instead of performing the OIDC
+          # exchange — the registry rejects it as 404. Drop the line so npm sees
+          # no credentials and falls back to trusted publishing.
+          if [ -n "${NPM_CONFIG_USERCONFIG:-}" ] && [ -f "$NPM_CONFIG_USERCONFIG" ]; then
+            sed -i '/_authToken/d' "$NPM_CONFIG_USERCONFIG"
+          fi
+          npm publish --access public
 
       - name: Publish with npm token provenance
         if: env.HAS_NPM_TOKEN == 'true'
