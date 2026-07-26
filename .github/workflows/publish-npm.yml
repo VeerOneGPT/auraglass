@@ -36,37 +36,6 @@ jobs:
           node --version
           npm --version
 
-      # TEMPORARY diagnostic: confirms npm's trusted publisher config matches this
-      # workflow's OIDC claims before spending ~10 minutes on release gates.
-      # Remove once publishing is confirmed working.
-      - name: Probe npm OIDC token exchange
-        run: |
-          set -uo pipefail
-          id_token=$(curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
-            "$ACTIONS_ID_TOKEN_REQUEST_URL&audience=npm:registry.npmjs.org" | jq -r '.value // empty')
-          if [ -z "$id_token" ]; then
-            echo "FAILED to obtain ID token"; exit 1
-          fi
-          payload=$(printf '%s' "$id_token" | cut -d. -f2)
-          case $(( ${#payload} % 4 )) in
-            2) payload="${payload}==" ;;
-            3) payload="${payload}=" ;;
-          esac
-          printf '%s' "$payload" | tr '_-' '/+' | base64 -d 2>/dev/null \
-            | jq '{repository, repository_owner, workflow_ref, ref, environment}'
-          code=$(curl -sS -o /tmp/exchange.json -w '%{http_code}' -X POST \
-            -H "Authorization: Bearer $id_token" \
-            -H "Content-Type: application/json" \
-            "https://registry.npmjs.org/-/npm/v1/oidc/token/exchange/package/aura-glass")
-          echo "exchange HTTP $code"
-          if [ "$code" = "200" ]; then
-            echo "trusted publishing OK for this workflow"
-          else
-            cat /tmp/exchange.json; echo
-            echo "trusted publisher config does not match this workflow; failing early"
-            exit 1
-          fi
-
       - name: Install dependencies
         run: npm ci
 
