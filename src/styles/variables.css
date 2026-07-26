@@ -1,5 +1,12 @@
+/*
+ * GENERATED FILE — do not edit by hand.
+ * Source: tokens/personas/*.json  •  Regenerate: npm run build:tokens
+ * token-lint-ignore-file: this file defines the raw token values that the
+ * rest of the stylesheets reference via var().
+ */
 :root {
   --aura-color-semantic-primary: #6366f1;
+  --aura-color-semantic-secondary: #8b5cf6;
   --aura-color-semantic-success: #22c55e;
   --aura-color-semantic-warning: #f59e0b;
   --aura-color-semantic-danger: #ef4444;

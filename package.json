@@ -1,6 +1,6 @@
 {
   "name": "aura-glass",
-  "version": "3.4.8",
+  "version": "3.5.0",
   "description": "Liquid Glass React and Next.js component library for polished dashboards, AI apps, media tools, and SaaS interfaces.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -325,8 +325,9 @@
     "release:dry-run": "npm run ci && npm publish --dry-run --provenance --access public",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prepublishOnly": "npm run build && npm run verify:pack && npm run test:integration:next -- --skip-build && npm run test:integration:vite -- --skip-build",
+    "prepublishOnly": "npm run build && npm run verify:pack && npm run verify:css-vars && npm run test:integration:next -- --skip-build && npm run test:integration:vite -- --skip-build",
     "verify:pack": "node scripts/ci/verify-pack.js",
+    "verify:css-vars": "node scripts/ci/check-undefined-custom-props.mjs",
     "size-check": "bundlesize",
     "analyze": "npm run build && npx bundle-analyzer dist/index.mjs",
     "audit:3.1-frame-loop": "node scripts/audit/3.1-frame-loop-audit.js",

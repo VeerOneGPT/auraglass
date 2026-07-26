@@ -1,3 +1,9 @@
+/*
+ * GENERATED FILE — do not edit by hand.
+ * Source: tokens/personas/*.json  •  Regenerate: npm run build:tokens
+ * token-lint-ignore-file: this file defines the raw token values that the
+ * rest of the stylesheets reference via var().
+ */
 @keyframes aura-glass-fade {
   0% {
     opacity: 0;

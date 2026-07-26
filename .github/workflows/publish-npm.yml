@@ -59,6 +59,7 @@ jobs:
           npm run test:tree-shaking -- --strict
           npm run test:a11y:app-chrome
           npm run verify:pack
+          npm run verify:css-vars
           npm run test:integration:next -- --skip-build
           npm run test:integration:vite -- --skip-build
           npm run test:visual:app-chrome -- --skip-build

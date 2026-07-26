@@ -22,6 +22,52 @@ const writeFile = (filePath, contents) => {
   fs.writeFileSync(filePath, contents);
 };
 
+// Files written into src/ are committed, and lint-staged runs prettier over
+// src/**/*.{ts,css}. Without formatting here, every build rewrites them in raw
+// form and the next commit reformats them, so the tree is perpetually dirty.
+// Formatting at generation time makes `npm run build` idempotent.
+let prettier;
+try {
+  prettier = require("prettier");
+} catch {
+  prettier = null;
+}
+
+/**
+ * Banner for the CSS we generate into src/. These files are the token
+ * *definitions* — they are where every raw color literal legitimately lives, so
+ * the token linter (which forbids raw colors in favour of var() references)
+ * must not police them. `token-lint-ignore-file` is its documented opt-out.
+ * Only the src/ copies carry this; dist/ output is unchanged.
+ */
+const SRC_CSS_BANNER = `/*
+ * GENERATED FILE — do not edit by hand.
+ * Source: tokens/personas/*.json  •  Regenerate: npm run build:tokens
+ * token-lint-ignore-file: this file defines the raw token values that the
+ * rest of the stylesheets reference via var().
+ */
+`;
+
+const writeFormatted = async (filePath, contents) => {
+  let output = contents;
+
+  if (prettier) {
+    try {
+      const config = await prettier.resolveConfig(filePath);
+      output = await prettier.format(contents, {
+        ...config,
+        filepath: filePath,
+      });
+    } catch (error) {
+      console.warn(
+        `⚠️  Could not format ${path.relative(ROOT, filePath)}: ${error.message}`,
+      );
+    }
+  }
+
+  writeFile(filePath, output);
+};
+
 const kebab = (value) =>
   value
     .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
@@ -460,7 +506,7 @@ module.exports.description = auraTokens.description;
 `;
 };
 
-const main = () => {
+const main = async () => {
   const { manifest, personas } = loadPersonas();
 
   const representativePersona = personas[0]?.payload;
@@ -504,9 +550,18 @@ const main = () => {
   writeFile(path.join(DIST_ROOT, "index.mjs"), buildTokensModule("esm"));
   writeFile(path.join(DIST_ROOT, "index.cjs"), buildTokensModule("cjs"));
   writeFile(path.join(DIST_ROOT, "manifest.mjs"), manifestModule);
-  writeFile(path.join(SRC_TOKENS_DIR, "generated.ts"), generatedTs);
-  writeFile(path.join(SRC_STYLES_DIR, "variables.css"), cssOutput.trim() + "\n");
-  writeFile(path.join(SRC_STYLES_DIR, "keyframes.css"), keyframesCss.trim() + "\n");
+  await writeFormatted(path.join(SRC_TOKENS_DIR, "generated.ts"), generatedTs);
+  await writeFormatted(
+    path.join(SRC_STYLES_DIR, "variables.css"),
+    SRC_CSS_BANNER + cssOutput.trim() + "\n",
+  );
+  await writeFormatted(
+    path.join(SRC_STYLES_DIR, "keyframes.css"),
+    SRC_CSS_BANNER + keyframesCss.trim() + "\n",
+  );
 };
 
-main();
+main().catch((error) => {
+  console.error(error);
+  process.exit(1);
+});
