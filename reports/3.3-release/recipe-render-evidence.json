@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-05T04:30:59.248Z",
+  "generatedAt": "2026-08-14T01:39:02.566Z",
   "package": "aura-glass",
-  "version": "3.2.0",
-  "filename": "aura-glass-3.2.0.tgz",
-  "shasum": "b46456704a6ae5e39c13c3cabc98b090fe5d49ac",
-  "integrity": "sha512-YgqoGHVXvS2z+YXSqK9bJCAg1QWvH5aGs94i5GBzU+0UHSoMaan/evtoj9zRzJivwpwx+m2P036EbvAji2lhLg==",
+  "version": "3.5.0",
+  "filename": "aura-glass-3.5.0.tgz",
+  "shasum": "0e8a23250d22660ddf1bfd89c5fa608b1a1e0110",
+  "integrity": "sha512-ogqb/pX787824/lvvTxLVqIOsNCRKuHkJVMLBaJoL40RBkO0ABVVM0TevhyjQX2/EAcDglP+oN9R40LJJrl78Q==",
   "recipeCount": 28,
-  "appDir": "/var/folders/3s/trh_q1fd5yn1mdhbvwbf0qrw0000gn/T/auraglass-recipes-7IjGRF/recipe-app",
+  "appDir": "/var/folders/3s/trh_q1fd5yn1mdhbvwbf0qrw0000gn/T/auraglass-recipes-lThNdA/recipe-app",
   "screenshots": [
     {
       "id": "saas-dashboard",
