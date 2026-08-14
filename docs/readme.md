@@ -4,8 +4,9 @@ This is the documentation home for AuraGlass by AuraOne. It separates product us
 
 ## Current Source Of Truth
 
-- Package version: 3.3.0 in the current working tree.
-- Current 3.3 package surface: dependency-sovereign core app chrome with first-party icons, first-party primitives, native menus/selects for touched app-chrome surfaces, app-shell/workspace entrypoints, focused forms/data/navigation/overlays/workflows/marketing subpaths, Theme Engine 2.0, migration CLI commands, 28 package registry recipes, 6 token formats, optional hosted-runtime contracts, and release evidence.
+- Package version: 4.0.0 in the current working tree.
+- Current 4.0 package surface: 470 visually renderable component exports, one explicitly nonvisual public export, 28 package registry recipes, dependency-sovereign core app chrome, first-party icons and primitives, app-shell/workspace entrypoints, focused forms/data/navigation/overlays/workflows/marketing subpaths, Theme Engine 2.0, six token formats, optional hosted-runtime contracts, and migration CLI commands.
+- Current 4.0 verification: 498/498 visual-gate targets passed, 31/31 glass-pipeline checks passed, and the runtime-cleanliness audit found zero issues across 760 scanned source files.
 - Runtime scope: AuraGlass is package-first. The optional hosted runtime is self-hosted infrastructure for AI and collaboration features, not required for package-only apps.
 - Hosted runtime ports: API `http://localhost:3002` via `API_SERVER_PORT=3002`; WebSocket `ws://localhost:3001` via `WS_PORT=3001`; public client URLs use `NEXT_PUBLIC_API_URL` and `NEXT_PUBLIC_WS_URL`.
 - Hosted runtime production entrypoints must use the real TypeScript API server built from `server/index.ts` and `server/websocket-server.js`. The legacy `server/api-server.js` path is demo/mock-only and must not be documented as production infrastructure.
@@ -19,6 +20,7 @@ This is the documentation home for AuraGlass by AuraOne. It separates product us
 - Component selection guide: [docs/components/choosing.md](./components/choosing.md)
 - Marketing Kit guide: [docs/components/marketing/readme.md](./components/marketing/readme.md)
 - Component audit command: `npm run audit:components`
+- 4.0 full-audit summary: [reports/audit/audit-summary.json](../reports/audit/audit-summary.json)
 
 ## Primary Docs
 

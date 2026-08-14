@@ -1,5 +1,25 @@
 # Changelog
 
+## [4.0.0] - 2026-08-14
+
+### Changed
+
+- Completed the package-wide neutral-glass hardening pass across component implementations, generated materials, theme and persona tokens, Storybook presentation, responsive layouts, and shared utilities.
+- Reconciled the authoritative public inventory at 470 visually renderable component exports, one explicitly nonvisual public export, and 28 package recipes.
+- Added the licensed Aeonik font family and aligned package typography with the local production font stack.
+
+### Added
+
+- Added release-blocking accessibility story-quality coverage and token-purity/layout enforcement for public component stories.
+- Added complete, checked-in visual evidence for all 498 renderable component and recipe targets.
+
+### Verified
+
+- Full runtime visual audit: 498 passed, 0 blocked.
+- Glass pipeline: 31 passed, 0 failed, 0 warnings.
+- Runtime cleanliness: 760 source files scanned, 0 findings.
+- Historical Storybook certification: 356 passed entries retained with its screenshot evidence.
+
 ## [3.4.8] - 2026-07-23
 
 ### Fixed

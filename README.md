@@ -16,6 +16,16 @@ Developers use AuraGlass to:
 - Keep theming, design tokens, reduced motion, contrast handling, SSR helpers, and TypeScript types in one npm package.
 - Add copyable product surfaces with the `aura-glass` recipe CLI when a full screen is faster than a blank component file.
 
+## What’s New In 4.0
+
+AuraGlass 4.0 is the visual-hardening and certification release. The authoritative inventory covers 470 visually renderable component exports plus 28 package recipes, and the final full visual gate records 498 passed targets with zero blocked entries.
+
+- Default glass surfaces now stay neutral until an explicit semantic, intent, persona, or brand tint is requested.
+- Accessibility story-quality gates verify meaningful names, roles, interaction states, and usable documentation examples.
+- Token-purity and responsive-layout audits reject ungoverned visual literals, unsafe fixed geometry, and uncontrolled overflow.
+- The 31-check glass pipeline passes without failures or warnings, and the runtime-cleanliness audit reports zero findings across 760 scanned source files.
+- The licensed Aeonik family ships locally as the primary interface typography stack.
+
 ## Install
 
 ```bash
@@ -605,7 +615,7 @@ Useful scripts:
 
 ## Release Evidence
 
-The 3.4 surface redesign is verified by the release gate commands below — typecheck, token and style lints, the 31-check glass pipeline, 90 WCAG AA contrast checks, and 432 Jest suites with 2,373 tests — while 3.3-era package launch claims remain backed by checked-in evidence under `reports/3.3-release`. The normal publish path uses `npm publish --access public --tag latest` from a clean release commit after the dry-run, pack, and integration gates pass; `package.json` enables npm provenance for trusted publishing environments.
+The 4.0 visual-hardening release is verified by the full 498-target runtime visual audit, accessibility story-quality and token-purity/layout suites, the 31-check glass pipeline, runtime-cleanliness evidence, Storybook certification, typecheck, token and style lints, package tests, and integration smoke coverage. Historical 3.3 package-launch evidence remains under `reports/3.3-release`. The normal publish path uses `npm publish --access public --tag latest` from a clean release commit after the dry-run, pack, and integration gates pass; `package.json` enables npm provenance for trusted publishing environments.
 
 Package gates:
 
