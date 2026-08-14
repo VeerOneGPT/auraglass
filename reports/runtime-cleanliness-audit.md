@@ -1,11 +1,11 @@
 # Runtime Cleanliness Audit
 
-Generated: 2026-05-12T19:21:54.122Z
+Generated: 2026-08-14T02:42:09.770Z
 
 ## Summary
 
 - Scanned root: src
-- Scanned files: 671
+- Scanned files: 760
 - Files with findings: 0
 - Total findings: 0
 - Console findings: 0
