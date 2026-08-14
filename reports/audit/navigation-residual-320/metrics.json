@@ -1,0 +1,14 @@
+{
+  "glass-bottom-nav": {
+    "viewport": 320,
+    "documentScrollWidth": 320,
+    "bodyScrollWidth": 320,
+    "noHorizontalOverflow": true
+  },
+  "glass-pagination": {
+    "viewport": 320,
+    "documentScrollWidth": 320,
+    "bodyScrollWidth": 320,
+    "noHorizontalOverflow": true
+  }
+}
