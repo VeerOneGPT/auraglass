@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import {
   AnimatePresence,
@@ -18,6 +18,14 @@ import React, {
 import { cn } from "../../lib/utilsComprehensive";
 import { createGlassStyle } from "../../core/mixins/glassMixins";
 
+const channelBalancedGlassStyle = {
+  background:
+    "linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,255,255,0.18))",
+  border: "1px solid rgba(32,32,32,0.14)",
+  boxShadow:
+    "0 14px 34px rgba(32,32,32,0.1), inset 0 1px 0 rgba(255,255,255,0.26)",
+} as const;
+
 // Touch-Optimized Glass Component
 interface TouchGlassProps
   extends Omit<HTMLMotionProps<"div">, "ref" | "children"> {
@@ -32,237 +40,243 @@ interface TouchGlassProps
 }
 
 export const TouchOptimizedGlass = forwardRef<HTMLDivElement, TouchGlassProps>(
-  ({
-    children,
-    onTap,
-    onLongPress,
-    onSwipe,
-    className,
-    touchFeedback = true,
-    rippleEffect = true,
-    hapticsEnabled = true,
-    glassIntensity = "medium",
-    ...rest
-  },
-  ref
-) => {
-  const prefersReducedMotion = useReducedMotion();
-  const [isPressed, setIsPressed] = useState(false);
-  const [ripples, setRipples] = useState<
-    Array<{ id: number; x: number; y: number; timestamp: number }>
-  >([]);
-  const [longPressTimer, setLongPressTimer] = useState<NodeJS.Timeout | null>(
-    null
-  );
-  const containerRef = useRef<HTMLDivElement | null>(null);
-
-  const scale = useMotionValue(1);
-  const opacity = useMotionValue(1);
-
-  // Haptic feedback function
-  const triggerHaptics = useCallback(
-    (type: "light" | "medium" | "heavy" = "light") => {
-      if (!hapticsEnabled || typeof window === "undefined") return;
-
-      if ("navigator" in window && "vibrate" in navigator) {
-        const patterns = {
-          light: [10],
-          medium: [20],
-          heavy: [30, 10, 30],
-        };
-        navigator.vibrate(patterns[type]);
-      }
+  (
+    {
+      children,
+      onTap,
+      onLongPress,
+      onSwipe,
+      className,
+      touchFeedback = true,
+      rippleEffect = true,
+      hapticsEnabled = true,
+      glassIntensity = "medium",
+      ...rest
     },
-    [hapticsEnabled]
-  );
+    ref
+  ) => {
+    const prefersReducedMotion = useReducedMotion();
+    const [isPressed, setIsPressed] = useState(false);
+    const [ripples, setRipples] = useState<
+      Array<{ id: number; x: number; y: number; timestamp: number }>
+    >([]);
+    const [longPressTimer, setLongPressTimer] = useState<NodeJS.Timeout | null>(
+      null
+    );
+    const containerRef = useRef<HTMLDivElement | null>(null);
 
-  // Handle touch start
-  const handleTouchStart = useCallback(
-    (e: React.TouchEvent) => {
-      e.preventDefault();
-      setIsPressed(true);
-      scale.set(0.95);
+    const scale = useMotionValue(1);
+    const opacity = useMotionValue(1);
 
-      if (touchFeedback) {
-        triggerHaptics("light");
-      }
+    // Haptic feedback function
+    const triggerHaptics = useCallback(
+      (type: "light" | "medium" | "heavy" = "light") => {
+        if (!hapticsEnabled || typeof window === "undefined") return;
 
-      // Start long press timer
-      if (onLongPress) {
-        const timer = setTimeout(() => {
-          triggerHaptics("medium");
-          onLongPress();
-          setLongPressTimer(null);
-        }, 500);
-        setLongPressTimer(timer);
-      }
-
-      // Add ripple effect
-      if (rippleEffect && containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        const touch = e.touches[0];
-        const x = touch.clientX - rect.left;
-        const y = touch.clientY - rect.top;
-
-        const newRipple = {
-          id: Date.now(),
-          x,
-          y,
-          timestamp: Date.now(),
-        };
-
-        setRipples((prev: any) => [...prev, newRipple]);
-
-        // Remove ripple after animation
-        setTimeout(() => {
-          setRipples((prev: any) =>
-            prev.filter((r: any) => r.id !== newRipple.id)
-          );
-        }, 600);
-      }
-    },
-    [touchFeedback, rippleEffect, onLongPress, triggerHaptics, scale]
-  );
-
-  // Handle touch end
-  const handleTouchEnd = useCallback(() => {
-    setIsPressed(false);
-    scale.set(1);
-
-    // Clear long press timer
-    if (longPressTimer) {
-      clearTimeout(longPressTimer);
-      setLongPressTimer(null);
-    }
-
-    // Trigger tap if no long press occurred
-    if (onTap && !longPressTimer) {
-      triggerHaptics("light");
-      onTap();
-    }
-  }, [longPressTimer, onTap, triggerHaptics, scale]);
-
-  // Handle pan gesture for swipe detection
-  const handlePanEnd = useCallback(
-    (event: any, info: PanInfo) => {
-      const { offset, velocity } = info;
-      const swipeThreshold = 50;
-      const velocityThreshold = 500;
-
-      if (
-        Math.abs(offset.x) > swipeThreshold ||
-        Math.abs(velocity.x) > velocityThreshold
-      ) {
-        const direction = offset.x > 0 ? "right" : "left";
-        onSwipe?.(direction);
-        triggerHaptics("medium");
-      } else if (
-        Math.abs(offset.y) > swipeThreshold ||
-        Math.abs(velocity.y) > velocityThreshold
-      ) {
-        const direction = offset.y > 0 ? "down" : "up";
-        onSwipe?.(direction);
-        triggerHaptics("medium");
-      }
-    },
-    [onSwipe, triggerHaptics]
-  );
-
-  const glassStyles = {
-    light: createGlassStyle({ intent: "neutral", elevation: "level2" }),
-    medium: createGlassStyle({ intent: "neutral", elevation: "level2" }),
-    heavy: createGlassStyle({ intent: "neutral", elevation: "level2" }),
-  };
-
-  const glassStyle = glassStyles[glassIntensity];
-
-  return (
-    <motion.div
-      ref={(node) => {
-        containerRef.current = node;
-        if (typeof ref === 'function') {
-          ref(node);
-        } else if (ref) {
-          (ref as MutableRefObject<HTMLDivElement | null>).current = node;
+        if ("navigator" in window && "vibrate" in navigator) {
+          const patterns = {
+            light: [10],
+            medium: [20],
+            heavy: [30, 10, 30],
+          };
+          navigator.vibrate(patterns[type]);
         }
-      }}
-      className={cn('relative overflow-hidden touch-none select-none', className)}
-      style={{
-        ...glassStyle,
-        // Use createGlassStyle() instead,
-        borderRadius: "12px",
-        minHeight: "44px", // iOS minimum touch target
-        minWidth: "44px",
-        scale,
-        opacity,
-      }}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
-      onPanEnd={handlePanEnd}
-      drag="x"
-      dragConstraints={{ left: 0, right: 0 }}
-      dragElastic={0.1}
-      {...rest}
-    >
-      {children}
+      },
+      [hapticsEnabled]
+    );
 
-      {/* Ripple effects */}
-      <AnimatePresence>
-        {ripples.map((ripple) => (
-          <motion.div
-            key={ripple.id}
-            className='glass-absolute glass-pointer-events-none'
-            style={{
-              left: ripple.x - 20,
-              top: ripple.y - 20,
-              width: 40,
-              height: 40,
-              borderRadius: "50%",
-              background:
-                "var(--glass-neutral-level2-surface)",
-            }}
-            initial={{ scale: 0, opacity: 1 }}
-            animate={prefersReducedMotion ? {} : { scale: 3, opacity: 0 }}
-            exit={{ opacity: 0 }}
-            transition={
-              prefersReducedMotion
-                ? { duration: 0 }
-                : { duration: 0.6, ease: "easeOut" }
-            }
-          />
-        ))}
-      </AnimatePresence>
+    // Handle touch start
+    const handleTouchStart = useCallback(
+      (e: React.TouchEvent) => {
+        e.preventDefault();
+        setIsPressed(true);
+        scale.set(0.95);
 
-      {/* Touch feedback overlay */}
-      {touchFeedback && (
+        if (touchFeedback) {
+          triggerHaptics("light");
+        }
+
+        // Start long press timer
+        if (onLongPress) {
+          const timer = setTimeout(() => {
+            triggerHaptics("medium");
+            onLongPress();
+            setLongPressTimer(null);
+          }, 500);
+          setLongPressTimer(timer);
+        }
+
+        // Add ripple effect
+        if (rippleEffect && containerRef.current) {
+          const rect = containerRef.current.getBoundingClientRect();
+          const touch = e.touches[0];
+          const x = touch.clientX - rect.left;
+          const y = touch.clientY - rect.top;
+
+          const newRipple = {
+            id: Date.now(),
+            x,
+            y,
+            timestamp: Date.now(),
+          };
+
+          setRipples((prev: any) => [...prev, newRipple]);
+
+          // Remove ripple after animation
+          setTimeout(() => {
+            setRipples((prev: any) =>
+              prev.filter((r: any) => r.id !== newRipple.id)
+            );
+          }, 600);
+        }
+      },
+      [touchFeedback, rippleEffect, onLongPress, triggerHaptics, scale]
+    );
+
+    // Handle touch end
+    const handleTouchEnd = useCallback(() => {
+      setIsPressed(false);
+      scale.set(1);
+
+      // Clear long press timer
+      if (longPressTimer) {
+        clearTimeout(longPressTimer);
+        setLongPressTimer(null);
+      }
+
+      // Trigger tap if no long press occurred
+      if (onTap && !longPressTimer) {
+        triggerHaptics("light");
+        onTap();
+      }
+    }, [longPressTimer, onTap, triggerHaptics, scale]);
+
+    // Handle pan gesture for swipe detection
+    const handlePanEnd = useCallback(
+      (event: any, info: PanInfo) => {
+        const { offset, velocity } = info;
+        const swipeThreshold = 50;
+        const velocityThreshold = 500;
+
+        if (
+          Math.abs(offset.x) > swipeThreshold ||
+          Math.abs(velocity.x) > velocityThreshold
+        ) {
+          const direction = offset.x > 0 ? "right" : "left";
+          onSwipe?.(direction);
+          triggerHaptics("medium");
+        } else if (
+          Math.abs(offset.y) > swipeThreshold ||
+          Math.abs(velocity.y) > velocityThreshold
+        ) {
+          const direction = offset.y > 0 ? "down" : "up";
+          onSwipe?.(direction);
+          triggerHaptics("medium");
+        }
+      },
+      [onSwipe, triggerHaptics]
+    );
+
+    const glassStyles = {
+      light: createGlassStyle({ intent: "neutral", elevation: "level2" }),
+      medium: createGlassStyle({ intent: "neutral", elevation: "level2" }),
+      heavy: createGlassStyle({ intent: "neutral", elevation: "level2" }),
+    };
+
+    const glassStyle = glassStyles[glassIntensity];
+
+    return (
+      <motion.div
+        ref={(node) => {
+          containerRef.current = node;
+          if (typeof ref === "function") {
+            ref(node);
+          } else if (ref) {
+            (ref as MutableRefObject<HTMLDivElement | null>).current = node;
+          }
+        }}
+        className={cn(
+          "relative overflow-hidden touch-none select-none",
+          className
+        )}
+        style={{
+          ...glassStyle,
+          // Keep the material channel-balanced. A blue-black token shadow can
+          // create a broad cool cast when many cards are stacked on mobile.
+          ...channelBalancedGlassStyle,
+          borderRadius: "12px",
+          minHeight: "44px", // iOS minimum touch target
+          minWidth: "44px",
+          scale,
+          opacity,
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        onPanEnd={handlePanEnd}
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.1}
+        {...rest}
+      >
+        {children}
+
+        {/* Ripple effects */}
         <AnimatePresence>
-          {isPressed && (
+          {ripples.map((ripple) => (
             <motion.div
-              className='glass-absolute glass-inset-0 glass-pointer-events-none'
+              key={ripple.id}
+              className="glass-absolute glass-pointer-events-none"
               style={{
-                background:
-                  "var(--glass-neutral-level2-surface)",
-                borderRadius: "inherit",
+                left: ripple.x - 20,
+                top: ripple.y - 20,
+                width: 40,
+                height: 40,
+                borderRadius: "50%",
+                background: "var(--glass-neutral-level2-surface)",
               }}
-              initial={{ opacity: 0 }}
-              animate={prefersReducedMotion ? {} : { opacity: 1 }}
+              initial={{ scale: 0, opacity: 1 }}
+              animate={prefersReducedMotion ? {} : { scale: 3, opacity: 0 }}
               exit={{ opacity: 0 }}
               transition={
-                prefersReducedMotion ? { duration: 0 } : { duration: 0.1 }
+                prefersReducedMotion
+                  ? { duration: 0 }
+                  : { duration: 0.6, ease: "easeOut" }
               }
             />
-          )}
+          ))}
         </AnimatePresence>
-      )}
-    </motion.div>
-  );
-});
+
+        {/* Touch feedback overlay */}
+        {touchFeedback && (
+          <AnimatePresence>
+            {isPressed && (
+              <motion.div
+                className="glass-absolute glass-inset-0 glass-pointer-events-none"
+                style={{
+                  background: "var(--glass-neutral-level2-surface)",
+                  borderRadius: "inherit",
+                }}
+                initial={{ opacity: 0 }}
+                animate={prefersReducedMotion ? {} : { opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={
+                  prefersReducedMotion ? { duration: 0 } : { duration: 0.1 }
+                }
+              />
+            )}
+          </AnimatePresence>
+        )}
+      </motion.div>
+    );
+  }
+);
 
 TouchOptimizedGlass.displayName = "TouchOptimizedGlass";
 
-export const TouchGlassOptimization = forwardRef<HTMLDivElement, TouchGlassProps>(
-  (props, ref) => <TouchOptimizedGlass ref={ref} {...props} />
-);
+export const TouchGlassOptimization = forwardRef<
+  HTMLDivElement,
+  TouchGlassProps
+>((props, ref) => <TouchOptimizedGlass ref={ref} {...props} />);
 
 TouchGlassOptimization.displayName = "TouchGlassOptimization";
 
@@ -284,7 +298,7 @@ export function MobileGlassNavigation({
   onSwipeRight,
   onSwipeUp,
   onSwipeDown,
-  className="",
+  className = "",
 }: MobileGlassNavigationProps) {
   const prefersReducedMotion = useReducedMotion();
   const [swipeDirection, setSwipeDirection] = useState<string | null>(null);
@@ -318,8 +332,16 @@ export function MobileGlassNavigation({
   return (
     <motion.div
       ref={containerRef}
-      className={`relative ${className}`}
-      style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
+      className={cn(
+        "glass-relative glass-w-full glass-max-w-full glass-min-w-0 glass-overflow-hidden",
+        className
+      )}
+      style={{
+        ...createGlassStyle({ intent: "neutral", elevation: "level2" }),
+        ...channelBalancedGlassStyle,
+        borderRadius: 24,
+        boxSizing: "border-box",
+      }}
       drag="x"
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.2}
@@ -381,7 +403,7 @@ export function AdaptiveGlassDensity({
   screenSize,
   devicePixelRatio,
   autoAdapt = true,
-  className="",
+  className = "",
 }: AdaptiveGlassDensityProps) {
   const prefersReducedMotion = useReducedMotion();
   const [currentDensity, setCurrentDensity] = useState<
@@ -426,7 +448,7 @@ export function AdaptiveGlassDensity({
       className={className}
       style={{
         ...style,
-        // Use createGlassStyle() instead,
+        ...channelBalancedGlassStyle,
         borderRadius: "12px",
         transition: "all 0.3s ease-in-out",
       }}
@@ -452,7 +474,7 @@ export function TouchRippleEffects({
   color = "var(--glass-bg-hover)",
   maxRipples = 3,
   rippleDuration = 600,
-  className="",
+  className = "",
 }: TouchRippleEffectsProps) {
   const prefersReducedMotion = useReducedMotion();
   const [ripples, setRipples] = useState<
@@ -497,7 +519,7 @@ export function TouchRippleEffects({
         {ripples.map((ripple) => (
           <motion.div
             key={ripple.id}
-            className='glass-absolute glass-pointer-events-none glass-radius-full'
+            className="glass-absolute glass-pointer-events-none glass-radius-full"
             style={{
               left: ripple.x - 20,
               top: ripple.y - 20,
@@ -536,7 +558,7 @@ export function MobileGlassBottomSheet({
   children,
   height = "50vh",
   snapPoints = ["25vh", "50vh", "75vh"],
-  className="",
+  className = "",
 }: MobileGlassBottomSheetProps) {
   const prefersReducedMotion = useReducedMotion();
   const [currentHeight, setCurrentHeight] = useState(height);
@@ -572,8 +594,9 @@ export function MobileGlassBottomSheet({
           {/* Backdrop */}
           <motion.div
             className={cn(
-              "glass-foundation-complete glass-position-fixed glass-inset-0 glass-surface-overlay glass-z-40"
+              "glass-foundation-complete glass-position-fixed glass-inset-0 glass-z-40"
             )}
+            style={{ background: "rgba(32, 32, 32, 0.32)" }}
             initial={{ opacity: 0 }}
             animate={prefersReducedMotion ? {} : { opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -582,8 +605,18 @@ export function MobileGlassBottomSheet({
 
           {/* Bottom Sheet */}
           <motion.div
-            className={`fixed bottom-0 left-0 right-0 z-50 ${className}`}
-            style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
+            className={cn(
+              "glass-position-fixed glass-bottom-0 glass-left-0 glass-right-0 glass-z-50 glass-w-full glass-max-w-full glass-overflow-hidden",
+              className
+            )}
+            style={{
+              ...createGlassStyle({ intent: "neutral", elevation: "level2" }),
+              ...channelBalancedGlassStyle,
+              height: currentHeight,
+              maxHeight: "min(82vh, calc(100vh - 12px))",
+              borderRadius: "28px 28px 0 0",
+              boxSizing: "border-box",
+            }}
             initial={{ y: "100%" }}
             animate={prefersReducedMotion ? {} : { y: 0 }}
             exit={{ y: "100%" }}
@@ -605,7 +638,7 @@ export function MobileGlassBottomSheet({
             </div>
 
             {/* Content */}
-            <div className='glass-px-6 glass-pb-6 glass-overflow-y-auto glass-max-h-full'>
+            <div className="glass-px-6 glass-pb-6 glass-overflow-y-auto glass-max-h-full">
               {children}
             </div>
           </motion.div>

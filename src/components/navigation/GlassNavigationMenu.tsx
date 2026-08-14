@@ -56,6 +56,8 @@ export interface GlassNavigationMenuProps
    * Callback when item is clicked
    */
   onItemClick?: (item: NavigationItem) => void;
+  /** Item ids rendered expanded on first paint. */
+  defaultOpenItemIds?: string[];
 }
 
 export interface GlassNavigationMenuContentProps {
@@ -121,10 +123,13 @@ export const GlassNavigationMenu: React.FC<GlassNavigationMenuProps> = ({
   className,
   collapsed = false,
   onItemClick,
+  defaultOpenItemIds = [],
   "aria-label": ariaLabel,
   ...rest
 }) => {
-  const [openSubmenus, setOpenSubmenus] = useState<Set<string>>(new Set());
+  const [openSubmenus, setOpenSubmenus] = useState<Set<string>>(
+    () => new Set(defaultOpenItemIds)
+  );
 
   const handleItemClick = (item: NavigationItem) => {
     if (item?.disabled) return;
@@ -168,11 +173,11 @@ export const GlassNavigationMenu: React.FC<GlassNavigationMenuProps> = ({
   };
 
   const variantClasses = {
-    default: "glass-backdrop-blur ring-1 ring-white/10 bg-white/5",
+    default: "glass-backdrop-blur ring-1 ring-white/10 glass-surface-subtle/10",
     sidebar:
-      "glass-backdrop-blur ring-0 border-r border-white/10 bg-white/5",
+      "glass-backdrop-blur ring-0 border-r border-white/10 glass-surface-subtle/10",
     header:
-      "glass-backdrop-blur ring-0 border-b border-white/10 bg-white/5",
+      "glass-backdrop-blur ring-0 border-b border-white/10 glass-surface-subtle/10",
   };
 
   return (
@@ -189,7 +194,9 @@ export const GlassNavigationMenu: React.FC<GlassNavigationMenuProps> = ({
       performanceMode="medium"
       className={cn(
         variantClasses?.[variant],
-        orientation === "horizontal" ? "flex flex-row" : "flex flex-col",
+        orientation === "horizontal"
+          ? "flex flex-row gap-2"
+          : "flex flex-col gap-2",
         className
       )}
       role="navigation"
@@ -224,7 +231,7 @@ export const GlassNavigationMenu: React.FC<GlassNavigationMenuProps> = ({
             <Motion preset="slideDown" duration={200}>
               <div
                 className={cn(
-                  "glass-ml-4 border-l border-white/20 pl-4",
+                  "glass-ml-4 glass-mt-2 border-l border-white/20 pl-4",
                   orientation === "horizontal" &&
                     "absolute top-full left-0 glass-mt-2 z-50"
                 )}
@@ -320,7 +327,7 @@ export const GlassNavigationMenuItem: React.FC<
     onClick(item);
   };
 
-  const handleSubmenuToggle = (e: React.MouseEvent) => {
+  const handleSubmenuToggle = (e: React.SyntheticEvent) => {
     e.stopPropagation();
     onToggleSubmenu(item?.id);
   };
@@ -337,7 +344,7 @@ export const GlassNavigationMenuItem: React.FC<
         <button
           className={cn(
             "glass-relative glass-flex glass-items-center glass-justify-center glass-w-full",
-            "glass-text-primary/70 hover:glass-text-primary transition-colors duration-200",
+            "glass-text-primary hover:glass-text-primary transition-colors duration-200",
             "hover:bg-white/10 glass-radius-lg",
             "glass-focus glass-touch-target glass-contrast-guard",
             "focus:outline-none focus:ring-2 glass-focus-ring-white-opacity-30 focus:ring-offset-2 focus:ring-offset-transparent",
@@ -383,7 +390,7 @@ export const GlassNavigationMenuItem: React.FC<
       <button
         className={cn(
           "glass-relative glass-flex glass-items-center glass-justify-between glass-w-full",
-          "glass-text-primary/70 hover:glass-text-primary transition-all duration-200",
+          "glass-text-primary hover:glass-text-primary transition-all duration-200",
           "hover:bg-white/10 glass-radius-lg",
           "glass-focus glass-touch-target glass-contrast-guard",
           "focus:outline-none focus:ring-2 glass-focus-ring-white-opacity-30 focus:ring-offset-2 focus:ring-offset-transparent",
@@ -400,6 +407,8 @@ export const GlassNavigationMenuItem: React.FC<
         onMouseLeave={onHoverLeave}
         disabled={item?.disabled}
         type="button"
+        aria-haspopup={item?.children?.length ? "menu" : undefined}
+        aria-expanded={item?.children?.length ? hasSubmenuOpen : undefined}
         style={{
           border: 0,
           background: "transparent",
@@ -455,22 +464,25 @@ export const GlassNavigationMenuItem: React.FC<
 
           {/* Submenu toggle */}
           {item?.children && item?.children.length > 0 && (
-            <button
-              onClick={handleSubmenuToggle}
+            <span
               className="glass-p-1 hover:glass-surface-subtle/10 glass-radius-md glass-transition-colors glass-duration-200 glass-focus glass-touch-target glass-focus glass-touch-target glass-contrast-guard"
               aria-label="Toggle submenu"
-              type="button"
               style={{
                 border: 0,
                 background: "transparent",
                 color: "inherit",
                 font: "inherit",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
               }}
+              onClick={handleSubmenuToggle}
             >
               <Motion preset="rotateIn" duration={200}>
                 <ChevronRight className="glass-w-4 glass-h-4 glass-text-primary-glass-opacity-50" />
               </Motion>
-            </button>
+            </span>
           )}
         </div>
       </button>

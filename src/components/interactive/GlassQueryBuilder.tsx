@@ -52,10 +52,6 @@ const getRuleInputValue = (value: unknown): string => {
   return "";
 };
 
-const lightOnDarkButtonStyle: React.CSSProperties = {
-  color: "rgba(255, 255, 255, 0.95)",
-};
-
 export function GlassQueryBuilder({
   fields = [],
   value = { combinator: "AND", rules: [] },
@@ -156,8 +152,7 @@ export function GlassQueryBuilder({
             parent.rules.splice(idx, 1);
             update(value);
           }}
-          className="glass-text-white hover:glass-text-white"
-          style={lightOnDarkButtonStyle}
+          className="glass-text-primary hover:glass-text-secondary"
         >
           Remove
         </GlassButton>
@@ -203,8 +198,7 @@ export function GlassQueryBuilder({
             group.rules.push({ combinator: "AND", rules: [] });
             update(value);
           }}
-          className="glass-text-white hover:glass-text-white"
-          style={lightOnDarkButtonStyle}
+          className="glass-text-primary hover:glass-text-secondary"
         >
           + Group
         </GlassButton>
@@ -216,8 +210,7 @@ export function GlassQueryBuilder({
               parent.rules.splice(parent.rules.indexOf(group), 1);
               update(value);
             }}
-            className="glass-text-white hover:glass-text-white"
-            style={lightOnDarkButtonStyle}
+            className="glass-text-primary hover:glass-text-secondary"
           >
             Remove
           </GlassButton>

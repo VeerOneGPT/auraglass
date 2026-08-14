@@ -9,11 +9,13 @@
   isolation: isolate;
   backdrop-filter: var(
     --glass-tabbar-filter,
-    blur(var(--ag-tabbar-blur, var(--glass-blur-md, 12px))) saturate(1.15)
+    blur(var(--ag-tabbar-blur, var(--glass-blur-md, 24px)))
+      var(--glass-filter-base)
   );
   -webkit-backdrop-filter: var(
     --glass-tabbar-filter,
-    blur(var(--ag-tabbar-blur, var(--glass-blur-md, 12px))) saturate(1.15)
+    blur(var(--ag-tabbar-blur, var(--glass-blur-md, 24px)))
+      var(--glass-filter-base)
   );
   transition:
     backdrop-filter var(--glass-motion-duration-fast, 150ms) ease,
@@ -52,6 +54,7 @@
   z-index: 0;
   border-radius: var(--glass-radius-lg, var(--glass-radius-xl));
   pointer-events: none;
+  border: 1px solid var(--glass-border-default);
   background: var(
     --glass-tabbar-selector-bg,
     linear-gradient(
@@ -78,11 +81,13 @@
   );
   backdrop-filter: var(
     --glass-tabbar-selector-filter,
-    blur(var(--ag-selector-blur, var(--glass-blur-lg))) saturate(1.2)
+    blur(var(--ag-selector-blur, var(--glass-blur-lg, 32px)))
+      var(--glass-filter-base)
   );
   -webkit-backdrop-filter: var(
     --glass-tabbar-selector-filter,
-    blur(var(--ag-selector-blur, var(--glass-blur-lg))) saturate(1.2)
+    blur(var(--ag-selector-blur, var(--glass-blur-lg, 32px)))
+      var(--glass-filter-base)
   );
   transition:
     transform var(--glass-motion-duration-fast, 150ms)

@@ -774,7 +774,12 @@ export const GlassDrawer = forwardRef<HTMLDivElement, GlassDrawerProps>(
           eyeTracking && "consciousness-eye-trackable",
           className
         )}
-        style={isContained ? undefined : { zIndex }}
+        style={
+          {
+            ...(isContained ? {} : { zIndex }),
+            "--glass-specular-intensity": 0.18,
+          } as React.CSSProperties
+        }
         role="dialog"
         aria-modal={isModal}
         aria-label={ariaLabel || (title ? undefined : "Drawer")}
@@ -796,7 +801,7 @@ export const GlassDrawer = forwardRef<HTMLDivElement, GlassDrawerProps>(
             preset="fadeIn"
             duration={effectiveAnimationDuration}
             className={cn(
-              "absolute inset-0 glass-surface-dark/50 cursor-pointer",
+              "absolute inset-0 cursor-pointer",
               backdropBlur && "glass-backdrop-blur-md",
               consciousness && "consciousness-drawer-backdrop",
               adaptive &&
@@ -804,8 +809,8 @@ export const GlassDrawer = forwardRef<HTMLDivElement, GlassDrawerProps>(
                 "consciousness-urgent-backdrop"
             )}
             style={{
-              backgroundColor:
-                "color-mix(in srgb, var(--glass-black) 40%, transparent)",
+              background:
+                "linear-gradient(rgba(255,255,255,0.08), rgba(255,255,255,0.08)), linear-gradient(rgba(15,23,42,0.24), rgba(15,23,42,0.24))",
             }}
             onClick={handleBackdropClick}
             data-consciousness-backdrop="true"
@@ -938,8 +943,8 @@ export const GlassDrawer = forwardRef<HTMLDivElement, GlassDrawerProps>(
               hoverSheen
               className={cn(
                 isContained
-                  ? "w-full flex flex-col overflow-hidden border border-border/20 glass-radial-reveal"
-                  : "h-full flex flex-col border border-border/20 glass-radial-reveal",
+                  ? "w-full flex flex-col overflow-hidden border border-border/20 glass-radial-reveal glass-on-light"
+                  : "h-full flex flex-col border border-border/20 glass-radial-reveal glass-on-light",
                 getBorderRadius(),
                 resizable && "resize overflow-auto",
                 consciousness && "consciousness-drawer-glass",

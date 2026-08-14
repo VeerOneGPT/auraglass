@@ -21,7 +21,7 @@ export const Default: Story = {
       `}</style>
       <LiquidGlassSurfaceLayer>
         <div
-          className="glass-p-6 liquid-surface-layer-story"
+          className="glass-neutral-level1 glass-p-6 liquid-surface-layer-story"
           style={{
             width: "min(720px, 100%)",
             minHeight: 300,
@@ -29,8 +29,6 @@ export const Default: Story = {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 220px), 1fr))",
             gap: 18,
-            background:
-              "radial-gradient(circle at 20% 20%, rgba(96,165,250,.28), transparent 30%), radial-gradient(circle at 82% 72%, rgba(45,212,191,.22), transparent 30%), rgba(255,255,255,0.78)",
             boxShadow: "0 24px 80px rgba(15,23,42,.14)",
             color: "#0f172a",
           }}

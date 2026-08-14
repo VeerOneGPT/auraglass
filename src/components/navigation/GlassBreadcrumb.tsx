@@ -177,7 +177,7 @@ export const GlassBreadcrumb = forwardRef<HTMLElement, GlassBreadcrumbProps>(
         animation={shouldReduceMotion ? "none" : "gentle"}
         performanceMode="medium"
         className={cn(
-          "inline-flex items-center glass-backdrop-blur-md ring-1 ring-white/10 bg-white/5",
+          "inline-flex items-center glass-backdrop-blur-md ring-1 ring-white/10 bg-white/10",
           compact ? "glass-px-2 glass-py-1" : "glass-px-3 glass-py-1.5",
           (compact || contained) && "glass-max-w-full glass-overflow-hidden",
           sizeClasses?.[effectiveSize],

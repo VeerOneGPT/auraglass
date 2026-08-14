@@ -27,7 +27,7 @@ export function LiquidGlassShowcase() {
         overflow: "hidden",
         color: "#0f172a",
         background:
-          "linear-gradient(135deg, #eef6ff 0%, #f8fbff 42%, #effdf8 100%)",
+          "linear-gradient(135deg, #eeeeee 0%, #fafafa 46%, #f1f1f1 100%)",
       }}
     >
       <style>{`
@@ -37,8 +37,42 @@ export function LiquidGlassShowcase() {
           --glass-text-tertiary: rgba(100, 116, 139, 0.9);
         }
 
+        .liquid-glass-showcase-now-playing,
+        .liquid-glass-showcase-now-playing * {
+          color: rgba(15, 23, 42, 0.92) !important;
+        }
+
+        .liquid-glass-showcase .liquid-glass-material {
+          background-color: rgba(255, 255, 255, 0.24) !important;
+          background-image: linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.3),
+            rgba(255, 255, 255, 0.16)
+          ) !important;
+          border-color: rgba(255, 255, 255, 0.48) !important;
+          box-shadow:
+            0 18px 52px rgba(24, 24, 27, 0.14),
+            inset 0 1px 0 rgba(255, 255, 255, 0.28) !important;
+        }
+
+        .liquid-glass-showcase .liquid-glass-range::-webkit-slider-thumb {
+          background: #737373 !important;
+          box-shadow: 0 2px 8px rgba(24, 24, 27, 0.2) !important;
+        }
+
+        .liquid-glass-showcase .liquid-glass-range::-moz-range-thumb {
+          background: #737373 !important;
+          box-shadow: 0 2px 8px rgba(24, 24, 27, 0.2) !important;
+        }
+
+        .liquid-glass-showcase .liquid-glass-badge-cluster {
+          backdrop-filter: blur(24px) saturate(1.5) brightness(1.04) contrast(1.02) !important;
+          -webkit-backdrop-filter: blur(24px) saturate(1.5) brightness(1.04) contrast(1.02) !important;
+        }
+
         .liquid-glass-showcase-layout {
           grid-template-columns: 260px minmax(0, 1fr);
+          height: calc(100vh - 56px);
         }
 
         .liquid-glass-showcase-content {
@@ -48,12 +82,114 @@ export function LiquidGlassShowcase() {
         @media (max-width: 820px) {
           .liquid-glass-showcase {
             padding: 18px;
-            overflow: auto;
+            height: 100vh;
+            min-height: 0 !important;
+            overflow: hidden;
+          }
+
+          .liquid-glass-showcase-layout {
+            height: calc(100vh - 36px);
+            min-height: 0 !important;
+          }
+
+          .liquid-glass-showcase-layout > aside {
+            display: none;
           }
 
           .liquid-glass-showcase-layout,
           .liquid-glass-showcase-content {
             grid-template-columns: 1fr;
+          }
+
+          .liquid-glass-showcase main,
+          .liquid-glass-showcase section,
+          .liquid-glass-showcase .liquid-glass-toolbar,
+          .liquid-glass-showcase .liquid-glass-tab-bar,
+          .liquid-glass-showcase .liquid-glass-now-playing-bar,
+          .liquid-glass-showcase .liquid-glass-media-controls {
+            width: 100%;
+            min-width: 0;
+            max-width: 100%;
+            box-sizing: border-box;
+          }
+
+          .liquid-glass-showcase main {
+            height: 100%;
+            overflow: hidden;
+          }
+
+          .liquid-glass-showcase-content {
+            min-height: 0 !important;
+            overflow: hidden;
+          }
+
+          .liquid-glass-showcase-content > div:first-child {
+            min-height: 0 !important;
+          }
+
+          .liquid-glass-showcase .liquid-glass-toolbar > * > div {
+            flex-direction: column;
+            align-items: stretch;
+          }
+
+          .liquid-glass-showcase .liquid-glass-toolbar .liquid-glass-content > div {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            align-items: start;
+          }
+
+          .liquid-glass-showcase .liquid-glass-toolbar .liquid-glass-content > div > :nth-child(2) {
+            grid-column: 1 / -1;
+            grid-row: 2;
+            width: 100%;
+            overflow: visible;
+          }
+
+          .liquid-glass-showcase .liquid-glass-toolbar .liquid-glass-effect-group {
+            display: none;
+          }
+
+          .liquid-glass-showcase .liquid-glass-showcase-title {
+            min-width: 0 !important;
+          }
+
+          .liquid-glass-showcase .liquid-glass-toolbar input,
+          .liquid-glass-showcase .liquid-glass-toolbar .liquid-glass-search-field,
+          .liquid-glass-showcase .liquid-glass-toolbar [role="search"] {
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+          }
+
+          .liquid-glass-showcase .liquid-glass-toolbar .liquid-glass-search-field {
+            flex: 1 1 100%;
+            min-width: 100% !important;
+          }
+
+          .liquid-glass-showcase .liquid-glass-media-controls > div {
+            display: grid;
+            grid-template-columns: auto minmax(0, 1fr);
+          }
+
+          .liquid-glass-showcase .liquid-glass-media-controls input[type="range"] {
+            width: 100%;
+            min-width: 0 !important;
+            max-width: 100% !important;
+          }
+
+          .liquid-glass-showcase .liquid-glass-now-playing-bar {
+            flex-wrap: wrap;
+          }
+
+          .liquid-glass-showcase .liquid-glass-badge-cluster {
+            display: block;
+            border-radius: 24px !important;
+            overflow: visible !important;
+          }
+
+          .liquid-glass-showcase .liquid-glass-badge-cluster .liquid-glass-effect-group {
+            display: flex;
+            flex-wrap: wrap;
           }
         }
       `}</style>
@@ -64,7 +200,7 @@ export function LiquidGlassShowcase() {
           inset: 0,
           pointerEvents: "none",
           background:
-            "var(--glass-primary-level3-surface)",
+            "linear-gradient(145deg, rgba(255,255,255,0.24), rgba(255,255,255,0.10))",
         }}
       />
       <div
@@ -98,7 +234,10 @@ export function LiquidGlassShowcase() {
             floating
             scrollEdge="soft"
             left={
-              <div style={{ minWidth: 170 }}>
+              <div
+                className="liquid-glass-showcase-title"
+                style={{ minWidth: 170 }}
+              >
                 <strong style={{ display: "block", fontSize: 16 }}>
                   Aura Liquid Glass
                 </strong>
@@ -112,23 +251,25 @@ export function LiquidGlassShowcase() {
             center={
               <LiquidGlassSearchField
                 placeholder="Search surfaces"
-                scope="Workspace"
-                style={{ width: 280 }}
+                style={{ width: "min(280px, 100%)" }}
               />
             }
             right={
               <button
                 type="button"
+                className="liquid-glass-showcase-action glass-button glass-overlay-specular"
                 onClick={() => setSheetOpen(true)}
                 style={{
+                  appearance: "none",
                   border: 0,
                   borderRadius: 999,
-                  background:
-                    "var(--glass-primary-level2-surface)",
+                  background: "var(--glass-primary-level2-surface)",
                   color: "#0f172a",
                   cursor: "pointer",
                   font: "inherit",
                   padding: "7px 14px",
+                  boxShadow:
+                    "inset 0 1px 0 rgba(255,255,255,.48), 0 8px 20px rgba(15,23,42,.12)",
                 }}
               >
                 Open
@@ -160,8 +301,8 @@ export function LiquidGlassShowcase() {
                 display: "flex",
                 alignItems: "flex-end",
                 background:
-                  "linear-gradient(135deg, #1d4ed8 0%, #2563eb 38%, #14b8a6 100%)",
-                boxShadow: "0 24px 80px rgba(15, 23, 42, 0.18)",
+                  "radial-gradient(circle at 24% 18%, rgba(255,255,255,.72), transparent 34%), linear-gradient(135deg, #dedede 0%, #fafafa 48%, #d4d4d4 100%)",
+                boxShadow: "0 24px 80px rgba(24, 24, 27, 0.16)",
               }}
             >
               <LiquidGlassMediaControls
@@ -185,7 +326,7 @@ export function LiquidGlassShowcase() {
                   borderRadius: 24,
                   padding: 18,
                   background:
-                    "var(--glass-neutral-level3-surface)",
+                    "linear-gradient(145deg, rgba(255,255,255,.36), rgba(255,255,255,.18))",
                   boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.66)",
                 }}
               >
@@ -196,6 +337,26 @@ export function LiquidGlassShowcase() {
                   Liquid Glass groups navigation, media, search, and transient
                   UI without making content hard to read.
                 </p>
+                <div
+                  role="listbox"
+                  aria-label="Available surface views"
+                  style={{ display: "flex", gap: 8, marginTop: 14 }}
+                >
+                  <span
+                    role="option"
+                    aria-selected="true"
+                    className="glass-radius-full glass-px-3 glass-py-1 glass-text-xs glass-neutral-level1"
+                  >
+                    Overview
+                  </span>
+                  <span
+                    role="option"
+                    aria-selected="false"
+                    className="glass-radius-full glass-px-3 glass-py-1 glass-text-xs glass-neutral-level1"
+                  >
+                    Materials
+                  </span>
+                </div>
               </div>
             </div>
           </section>
@@ -218,8 +379,9 @@ export function LiquidGlassShowcase() {
                   progress={0.42}
                   style={
                     {
-                      color: "#f8fafc",
-                      "--glass-text-secondary": "rgba(226, 232, 240, 0.88)",
+                      color: "#0f172a",
+                      "--glass-text-primary": "rgba(15, 23, 42, 0.92)",
+                      "--glass-text-secondary": "rgba(51, 65, 85, 0.9)",
                     } as React.CSSProperties
                   }
                 />

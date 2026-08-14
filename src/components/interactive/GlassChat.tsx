@@ -1021,6 +1021,7 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                   <GlassButton
                     variant="ghost"
                     size="sm"
+                    iconOnly
                     onClick={handleFileAttachment}
                     className="glass-shrink-0 glass-p-2"
                     aria-label="Attach file"
@@ -1034,6 +1035,7 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                   <GlassButton
                     variant={isRecording ? "destructive" : "ghost"}
                     size="sm"
+                    iconOnly
                     onClick={handleVoiceToggle}
                     className="glass-shrink-0 glass-p-2"
                     aria-label={
@@ -1049,7 +1051,7 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                 )}
 
                 {/* Text input */}
-                <div className="glass-relative glass-min-w-0 glass-flex-1">
+                <div className="glass-flex glass-min-w-0 glass-flex-1 glass-items-end glass-gap-2">
                   <textarea
                     ref={inputRef}
                     value={newMessage}
@@ -1063,7 +1065,7 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                           : "Type a message..."
                     }
                     className={cn(
-                      "w-full bg-glass-fill ring-1 ring-white/10 glass-radius-lg glass-px-4 glass-py-2 glass-pr-12 glass-text-primary placeholder-white/50 focus:outline-none glass-focus-ring-white-opacity-30 resize-none max-h-[120px]",
+                      "glass-min-w-0 glass-flex-1 bg-glass-fill ring-1 ring-white/10 glass-radius-lg glass-px-4 glass-py-2 glass-text-primary placeholder-white/50 focus:outline-none glass-focus-ring-white-opacity-30 resize-none max-h-[120px]",
                       adaptive && "consciousness-adaptive-textarea",
                       predictive &&
                         conversationInsights?.urgency === "high" &&
@@ -1084,8 +1086,9 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                   <GlassButton
                     variant="ghost"
                     size="sm"
+                    iconOnly
                     onClick={(e) => setShowEmojiPicker(!showEmojiPicker)}
-                    className="glass-absolute glass-right-2 glass-top-1/2 glass-transform glass--translate-y-1-2 glass-p-1"
+                    className="glass-shrink-0"
                     aria-label="Open emoji picker"
                   >
                     <Smile className="glass-w-4 glass-h-4" />
@@ -1095,7 +1098,8 @@ export const GlassChat: React.FC<GlassChatProps> = ({
                 {/* Send button */}
                 <GlassButton
                   variant="primary"
-                  size="sm"
+                  size="md"
+                  iconOnly
                   onClick={handleSendMessage}
                   disabled={!newMessage.trim() && attachments.length === 0}
                   className={cn(

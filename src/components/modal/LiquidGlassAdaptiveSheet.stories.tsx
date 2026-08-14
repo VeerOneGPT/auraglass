@@ -30,8 +30,8 @@ const adaptiveSheetStoryCss = `
     border-radius: 28px;
     padding: 28px;
     background:
-      linear-gradient(115deg, rgba(255,255,255,0.72), rgba(219,234,254,0.42)),
-      repeating-linear-gradient(90deg, rgba(37,99,235,0.08) 0 72px, rgba(20,184,166,0.08) 72px 144px, rgba(244,114,182,0.08) 144px 216px);
+      linear-gradient(115deg, rgba(255,255,255,0.72), rgba(255,255,255,0.32)),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.18) 0 72px, rgba(255,255,255,0.10) 72px 144px, rgba(255,255,255,0.14) 144px 216px);
     box-shadow: 0 24px 80px rgba(15, 23, 42, 0.14);
   }
 
@@ -61,11 +61,11 @@ const adaptiveSheetStoryCss = `
   }
 
   .liquid-adaptive-sheet-story .liquid-glass-material {
-    border: 1px solid rgba(255, 255, 255, 0.58) !important;
+    border: 1px solid rgba(255, 255, 255, 0.32) !important;
     background:
-      linear-gradient(135deg, rgba(255,255,255,0.58), rgba(255,255,255,0.32)),
-      linear-gradient(90deg, rgba(37,99,235,0.1), rgba(20,184,166,0.1)) !important;
-    box-shadow: 0 24px 72px rgba(15, 23, 42, 0.18), inset 0 1px 0 rgba(255,255,255,0.5) !important;
+      linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.18)),
+      linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.08)) !important;
+    box-shadow: 0 24px 72px rgba(15, 23, 42, 0.18), inset 0 1px 0 rgba(255,255,255,0.28) !important;
     color: var(--sheet-story-ink);
   }
 
@@ -93,14 +93,14 @@ const adaptiveSheetStoryCss = `
 
   [data-storybook-preview-mode="liquid"] .liquid-adaptive-sheet-card {
     background:
-      linear-gradient(120deg, rgba(255,255,255,0.6), rgba(236,253,245,0.38)),
-      repeating-linear-gradient(90deg, rgba(37,99,235,0.14) 0 70px, rgba(20,184,166,0.14) 70px 140px, rgba(217,70,239,0.1) 140px 210px);
+      linear-gradient(120deg, rgba(255,255,255,0.6), rgba(255,255,255,0.32)),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.18) 0 70px, rgba(255,255,255,0.10) 70px 140px, rgba(255,255,255,0.14) 140px 210px);
   }
 
   [data-storybook-preview-mode="liquid"] .liquid-adaptive-sheet-story .liquid-glass-material {
     background:
-      linear-gradient(135deg, rgba(255,255,255,0.5), rgba(255,255,255,0.26)),
-      linear-gradient(90deg, rgba(37,99,235,0.14), rgba(20,184,166,0.12), rgba(217,70,239,0.08)) !important;
+      linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.16)),
+      linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.08)) !important;
   }
 
   [data-storybook-preview-mode="high-contrast"] .liquid-adaptive-sheet-story {

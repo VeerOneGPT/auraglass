@@ -554,7 +554,7 @@ export const GlassQuantumField = forwardRef<
       if (!ctx) return;
 
       // Clear canvas
-      ctx.fillStyle = "rgb(5, 5, 20)";
+      ctx.fillStyle = "rgba(255, 255, 255, 0.18)";
       ctx.fillRect(0, 0, width, height);
 
       // Draw quantum field background
@@ -562,7 +562,7 @@ export const GlassQuantumField = forwardRef<
         quantumField.nodes.forEach((node) => {
           if (node.probability > 0.1) {
             const alpha = node.probability * 0.3;
-            ctx.fillStyle = `rgba(14, 165, 233, ${alpha})`;
+            ctx.fillStyle = `rgba(71, 85, 105, ${Math.min(0.38, alpha + 0.1)})`;
             ctx.fillRect(node.x - 2, node.y - 2, 4, 4);
           }
         });
@@ -584,7 +584,10 @@ export const GlassQuantumField = forwardRef<
           const probability =
             particle.waveFunction.real ** 2 +
             particle.waveFunction.imaginary ** 2;
-          gradient.addColorStop(0, `rgba(168, 85, 247, ${probability * 0.3})`);
+          gradient.addColorStop(
+            0,
+            `rgba(100, 116, 139, ${probability * 0.24})`
+          );
           gradient.addColorStop(1, "transparent");
 
           ctx.fillStyle = gradient;
@@ -598,10 +601,8 @@ export const GlassQuantumField = forwardRef<
       if (showWaveFunctions) {
         particles.forEach((particle) => {
           const waveRadius = particle.amplitude * 30;
-          const phaseColor = Math.floor((particle.phase / (Math.PI * 2)) * 360);
-
           // Real part of wave function
-          ctx.strokeStyle = `hsl(${phaseColor}, 70%, 60%)`;
+          ctx.strokeStyle = "rgba(30, 41, 59, 0.62)";
           ctx.lineWidth = 2;
           ctx.globalAlpha = particle.amplitude;
 
@@ -624,7 +625,7 @@ export const GlassQuantumField = forwardRef<
           ctx.stroke();
 
           // Imaginary part
-          ctx.strokeStyle = `hsl(${(phaseColor + 90) % 360}, 70%, 60%)`;
+          ctx.strokeStyle = "rgba(100, 116, 139, 0.64)";
           if (ctx.setLineDash) ctx.setLineDash([5, 5]);
 
           ctx.beginPath();
@@ -655,7 +656,9 @@ export const GlassQuantumField = forwardRef<
         // Particle core
         const coreRadius = 3;
         const spinColor =
-          particle.spin > 0 ? "rgb(255, 100, 100)" : "rgb(100, 100, 255)";
+          particle.spin > 0
+            ? "rgba(30, 41, 59, 0.88)"
+            : "rgba(100, 116, 139, 0.92)";
 
         ctx.fillStyle = spinColor;
         ctx.beginPath();
@@ -686,7 +689,7 @@ export const GlassQuantumField = forwardRef<
           if (entangledParticles.length === 2) {
             const [p1, p2] = entangledParticles;
 
-            ctx.strokeStyle = "rgba(251, 191, 36, 0.6)";
+            ctx.strokeStyle = "rgba(71, 85, 105, 0.54)";
             ctx.lineWidth = 2;
             if (ctx.setLineDash) ctx.setLineDash([5, 5]);
 
@@ -716,10 +719,23 @@ export const GlassQuantumField = forwardRef<
       // Draw quantum info overlay
       if (showQuantumInfo) {
         ctx.save();
-        ctx.fillStyle = "rgba(15, 23, 42, 0.72)";
-        ctx.fillRect(10, 10, 300, 180);
+        ctx.fillStyle = "rgba(255, 255, 255, 0.76)";
+        ctx.strokeStyle = "rgba(148, 163, 184, 0.44)";
+        ctx.lineWidth = 1;
+        const panelWidth = Math.min(300, width - 20);
+        if (typeof ctx.roundRect === "function") {
+          ctx.beginPath();
+          ctx.roundRect(10, 10, panelWidth, 180, 14);
+          ctx.fill();
+          ctx.stroke();
+        } else {
+          ctx.fillRect(10, 10, panelWidth, 180);
+          if (typeof ctx.strokeRect === "function") {
+            ctx.strokeRect(10, 10, panelWidth, 180);
+          }
+        }
 
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "rgba(15, 23, 42, 0.92)";
         ctx.font = "14px monospace";
         ctx.fillText(`Quantum State Information:`, 20, 30);
         ctx.fillText(

@@ -37,7 +37,7 @@ const gridCards = [
 
 export const Default: Story = {
   render: (args) => (
-    <section className="glass-w-full glass-max-w-5xl glass-rounded-2xl glass-bg-white/60 glass-p-6 glass-shadow-xl">
+    <section className="glass-neutral-level1 glass-w-full glass-max-w-5xl glass-rounded-2xl glass-p-6 glass-shadow-xl">
       <div className="glass-mb-5 glass-flex glass-items-center glass-justify-between glass-gap-4">
         <div>
           <p className="glass-text-xs glass-font-semibold glass-uppercase glass-tracking-wide glass-text-secondary">

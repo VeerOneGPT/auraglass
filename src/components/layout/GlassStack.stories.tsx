@@ -32,7 +32,7 @@ export const Default: Story = {
   render: (args) => (
     <GlassStack
       {...args}
-      className="glass-w-full glass-max-w-md glass-rounded-2xl glass-bg-white/60 glass-p-5 glass-shadow-xl"
+      className="glass-neutral-level1 glass-w-full glass-max-w-md glass-rounded-2xl glass-p-5 glass-shadow-xl"
       aria-label="Release checklist"
     >
       <h3 className="glass-text-lg glass-font-semibold glass-text-primary">Release checklist</h3>
@@ -52,7 +52,7 @@ export const Variants: Story = {
       direction="horizontal"
       wrap
       divider={<span className="glass-h-10 glass-w-px glass-bg-slate-300/70" />}
-      className="glass-w-full glass-max-w-4xl glass-rounded-2xl glass-bg-white/60 glass-p-5 glass-shadow-xl"
+      className="glass-neutral-level1 glass-w-full glass-max-w-4xl glass-rounded-2xl glass-p-5 glass-shadow-xl"
     >
       {['Compact', 'Readable', 'Responsive'].map((label) => (
         <div key={label} className="glass-min-w-44 glass-flex-1 glass-rounded-xl glass-bg-white/65 glass-p-4">

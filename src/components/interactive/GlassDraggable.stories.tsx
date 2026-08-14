@@ -39,13 +39,22 @@ export default meta;
 type Story = StoryObj<typeof GlassDraggable>;
 
 export const Default: Story = {
+  render: (args) => (
+    <div className="glass-neutral-level1 glass-rounded-3xl glass-p-6">
+      <GlassDraggable {...args}>
+        <div className="glass-text-center">
+          <h3 className="glass-text-lg glass-font-semibold glass-text-primary glass-mb-2">
+            GlassDraggable
+          </h3>
+          <p className="glass-text-sm glass-text-secondary">
+            Drag the card to reposition it.
+          </p>
+        </div>
+      </GlassDraggable>
+    </div>
+  ),
   args: {
-    children: (
-      <div className="glass-p-4 glass-text-center">
-        <h3 className="glass-text-lg glass-font-semibold glass-mb-2">GlassDraggable</h3>
-        <p className="glass-text-sm opacity-80">This is the default glassdraggable component.</p>
-      </div>
-    ),
+    className: '',
   },
 };
 

@@ -269,11 +269,13 @@ export const GlassSidebar = forwardRef<HTMLDivElement, GlassSidebarProps>(
             : "absolute glass-right-2 glass-top-3",
           "w-10 h-10 glass-radius-full flex items-center justify-center",
           "glass-backdrop-blur-lg border",
+          "glass-bg-white/28",
           "glass-focus glass-touch-target glass-contrast-guard",
           "shadow-[0_6px_18px_color-mix(in_srgb,var(--glass-black)_35%,transparent),inset_0_1px_2px_var(--glass-bg-active)] ring-1",
-          "hover:bg-white/15 active:bg-white/20"
+          "bg-white/25 hover:bg-white/30 active:bg-white/32"
         )}
         aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+        style={{ backgroundColor: "rgba(255, 255, 255, 0.28)" }}
       >
         {isCollapsed ? (
           <ChevronRight
@@ -307,11 +309,11 @@ export const GlassSidebar = forwardRef<HTMLDivElement, GlassSidebarProps>(
               else if (ref && typeof (ref as any) === "object")
                 (ref as any).current = node;
             }}
-            intent="primary"
+              intent="neutral"
             elevation={variant === "floating" ? "level2" : "level1"}
             intensity="medium"
             depth={variant === "floating" ? 3 : 2}
-            tint="lavender"
+              tint="neutral"
             border={variant === "floating" ? "gradient" : "subtle"}
             animation="none"
             performanceMode="medium"
@@ -435,7 +437,7 @@ interface SidebarNavigationProps {
 
 function SidebarNavigation({ items, level = 0 }: SidebarNavigationProps) {
   return (
-    <ul className={cn("glass-gap-2", level > 0 && "glass-ml-4")}>
+    <ul className={cn("glass-flex glass-flex-col glass-gap-2", level > 0 && "glass-ml-4 glass-mt-2")}>
       {(items || []).map((item) => (
         <SidebarNavigationItem key={item?.id} item={item} level={level} />
       ))}
@@ -517,12 +519,12 @@ function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
             <span
               className={cn(
                 `flex-shrink-0 glass-px-2 glass-py-1 glass-text-xs glass-radius-full font-medium transition-all duration-[${ANIMATION.DURATION.fast}ms]`,
-                "bg-white/8 border border-white/15 shadow-md glass-backdrop-blur-md",
-                "group-hover:bg-white/12 group-hover:border-white/20 group-hover:shadow-lg",
+                "bg-white/24 border border-white/30 shadow-md",
+                "group-hover:bg-white/30 group-hover:border-white/32 group-hover:shadow-lg",
                 "relative z-10" // Ensure badge stays above any background effects
               )}
               style={{
-                color: "var(--glass-white)",
+                color: "rgba(15, 23, 42, 0.9)",
               }}
             >
               {item?.badge}

@@ -48,6 +48,14 @@ const searchFieldStyles = `
 
   .liquid-glass-search-field-control {
     color: var(--glass-text-primary);
+    min-height: 44px;
+    backdrop-filter: blur(16px) saturate(1.4) brightness(1.08) contrast(1.04) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(1.4) brightness(1.08) contrast(1.04) !important;
+    transition-property: transform, box-shadow, border-color, background-color !important;
+  }
+
+  .liquid-glass-search-field-control > label {
+    min-height: 44px;
   }
 
   .liquid-glass-search-field-control input::placeholder {
@@ -55,25 +63,28 @@ const searchFieldStyles = `
   }
 
   .liquid-glass-search-field-dropdown {
-    background: var(--glass-neutral-level4-surface);
-    border: 1px solid var(--glass-neutral-level4-border-color);
-    color: var(--glass-neutral-level4-text-primary);
-    backdrop-filter: blur(var(--glass-neutral-level4-blur)) var(--glass-filter-base);
-    -webkit-backdrop-filter: blur(var(--glass-neutral-level4-blur)) var(--glass-filter-base);
-    box-shadow: var(--glass-neutral-level4-shadow);
+    /* LiquidGlassMaterial owns the canonical white-frost fill, hairline
+       border, and blur/filter chain; this selector only owns overflow. */
+    color: var(--glass-theme-text, var(--glass-text-primary));
     overflow: hidden;
+    backdrop-filter: blur(16px) saturate(1.4) brightness(1.08) contrast(1.04) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(1.4) brightness(1.08) contrast(1.04) !important;
+    transition-property: transform, box-shadow, border-color, background-color !important;
   }
 
   .liquid-glass-search-field-option {
-    background: rgba(var(--glass-color-white) / 0.06);
-    color: var(--glass-text-primary);
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    background: rgba(var(--glass-color-white) / var(--glass-opacity-10));
+    color: var(--glass-theme-text, var(--glass-text-primary));
     border: 1px solid transparent;
   }
 
   .liquid-glass-search-field-option:hover,
   .liquid-glass-search-field-option:focus-visible {
-    background: rgba(56, 189, 248, 0.2);
-    border-color: rgba(125, 211, 252, 0.28);
+    background: rgba(var(--glass-color-white) / var(--glass-opacity-20));
+    border-color: var(--glass-border-hover);
   }
 `;
 
@@ -126,22 +137,18 @@ export const LiquidGlassSearchField = forwardRef<
         <style>{searchFieldStyles}</style>
         <LiquidGlassMaterial
           material="liquid"
+          intent="neutral"
           radius="full"
-          interactive
           elevation="level1"
+          tintMode="light"
           sheen={0}
           adaptToContent={false}
           enableRefraction={false}
           enableReflection={false}
+          adaptToMotion={false}
+          enableMicroInteractions={false}
           performanceLevel="efficient"
           className="liquid-glass-search-field-control"
-          style={{
-            background:
-              "var(--glass-primary-level3-surface)",
-            border: "1px solid rgba(148, 163, 184, 0.24)",
-            boxShadow:
-              "0 10px 28px rgba(2, 6, 23, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.08)",
-          }}
         >
           <label className="glass-flex glass-items-center glass-gap-2 glass-px-3 glass-py-2">
             <span className="glass-sr-only">{placeholder}</span>
@@ -176,25 +183,29 @@ export const LiquidGlassSearchField = forwardRef<
           (visibleResults.length > 0 || suggestions.length > 0) && (
             <LiquidGlassMaterial
               material="liquid"
+              intent="neutral"
               radius="xl"
               elevation="level1"
+              tintMode="light"
               sheen={0}
               adaptToContent={false}
               enableRefraction={false}
               enableReflection={false}
+              adaptToMotion={false}
+              enableMicroInteractions={false}
               performanceLevel="efficient"
               className="liquid-glass-search-field-dropdown glass-absolute glass-left-0 glass-right-0 glass-top-full glass-z-50 glass-mt-2"
               style={{
-                background:
-                  "var(--glass-primary-level3-surface)",
-                border: "1px solid rgba(148, 163, 184, 0.2)",
-                boxShadow: "0 18px 44px rgba(2, 6, 23, 0.34)",
+                position: "absolute",
+                insetInline: 0,
+                top: "calc(100% + 8px)",
+                zIndex: 50,
               }}
             >
               <div
                 role="listbox"
                 className="glass-flex glass-flex-col glass-p-2"
-                style={{ maxHeight: 280, overflowY: "auto" }}
+                style={{ maxHeight: 280, overflowY: "auto", gap: 8 }}
               >
                 {visibleResults.map((result) => (
                   <button

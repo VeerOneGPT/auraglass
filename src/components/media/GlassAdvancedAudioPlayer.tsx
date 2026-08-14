@@ -76,21 +76,23 @@ const audioButtonStyle: React.CSSProperties = {
   appearance: "none",
   WebkitAppearance: "none",
   border: "1px solid rgba(148, 163, 184, 0.38)",
-  color: "#f8fafc",
+  color: "rgba(15, 23, 42, 0.92)",
+  background: "linear-gradient(180deg, rgba(255,255,255,0.32), rgba(248,250,252,0.22))",
   boxShadow:
     "inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 28px rgba(2,6,23,0.24)",
 };
 
 const audioPrimaryButtonStyle: React.CSSProperties = {
   ...createGlassStyle({
-    intent: "primary",
+    intent: "neutral",
     elevation: "level4",
     interactive: true,
   }),
   appearance: "none",
   WebkitAppearance: "none",
-  color: "#f8fafc",
-  borderColor: "rgba(191, 219, 254, 0.7)",
+  color: "rgba(15, 23, 42, 0.94)",
+  background: "linear-gradient(180deg, rgba(255,255,255,0.35), rgba(248,250,252,0.25))",
+  borderColor: "rgba(148, 163, 184, 0.42)",
   boxShadow:
     "inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 28px rgba(2,6,23,0.24)",
 };
@@ -98,8 +100,8 @@ const audioPrimaryButtonStyle: React.CSSProperties = {
 const audioRangeStyle: React.CSSProperties = {
   appearance: "none",
   WebkitAppearance: "none",
-  color: "#0ea5e9",
-  accentColor: "#0ea5e9",
+  color: "#334155",
+  accentColor: "#334155",
 };
 
 const audioComponentStyles = `
@@ -144,8 +146,8 @@ const audioComponentStyles = `
     min-height: 0;
     display: flex;
     flex-direction: column;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(248, 250, 252, 0.68));
-    color: #0f172a;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(248, 250, 252, 0.22));
+    color: var(--glass-theme-text, var(--glass-text-primary));
   }
 
   .ag-advanced-audio-player .ag-audio-panel-scroll {
@@ -191,7 +193,7 @@ const fallbackCover =
       <circle cx="360" cy="360" r="170" fill="rgba(255,255,255,0.16)"/>
       <circle cx="360" cy="360" r="58" fill="rgba(255,255,255,0.88)"/>
       <rect x="112" y="108" width="408" height="74" rx="22" fill="rgba(255,255,255,0.18)"/>
-      <text x="142" y="158" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700" fill="#ffffff">AuraGlass Audio</text>
+      <text x="142" y="158" font-family="Aeonik, Arial, sans-serif" font-size="34" font-weight="700" fill="#ffffff">AuraGlass Audio</text>
       <rect x="116" y="572" width="488" height="12" rx="6" fill="rgba(255,255,255,0.24)"/>
       <rect x="116" y="572" width="228" height="12" rx="6" fill="#ffffff"/>
     </svg>
@@ -1002,7 +1004,7 @@ export const GlassAdvancedAudioPlayer: React.FC<AdvancedAudioPlayerProps> = (
       </div>
 
       {/* Controls */}
-      <div className="glass-flex glass-items-center glass-justify-center glass-gap-6">
+      <div className="glass-flex glass-items-center glass-justify-center glass-gap-6" style={{ marginBottom: 10 }}>
         <button
           onClick={() => handleSeek(Math.max(0, currentTime - 10))}
           className="glass-w-10 glass-h-10 glass-flex glass-items-center glass-justify-center hover:glass-surface-subtle glass-radius-full glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
@@ -1034,7 +1036,7 @@ export const GlassAdvancedAudioPlayer: React.FC<AdvancedAudioPlayerProps> = (
       {/* Volume and Speed */}
       <div
         className="glass-flex glass-items-center glass-justify-between"
-        style={{ gap: 16, flexWrap: "wrap" }}
+        style={{ gap: 16, flexWrap: "wrap", marginTop: 12 }}
       >
         <div className="glass-flex glass-items-center glass-gap-3">
           <button

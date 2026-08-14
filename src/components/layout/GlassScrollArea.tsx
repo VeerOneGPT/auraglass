@@ -142,6 +142,7 @@ export const GlassScrollArea = forwardRef<HTMLDivElement, GlassScrollAreaProps>(
       typeof effectiveMaxHeight === "number"
         ? `${effectiveMaxHeight}px`
         : effectiveMaxHeight;
+    const hasContent = React.Children.count(children) > 0;
 
     // Update dimensions when content changes
     useEffect(() => {
@@ -251,6 +252,13 @@ export const GlassScrollArea = forwardRef<HTMLDivElement, GlassScrollAreaProps>(
         style={{
           maxHeight: boundedMaxHeight,
           maxWidth: typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth,
+          minWidth: hasContent ? undefined : "240px",
+          minHeight: hasContent ? undefined : "96px",
+          background:
+            "linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,255,255,0.14))",
+          borderColor: "rgba(148, 163, 184, 0.24)",
+          boxShadow:
+            "inset 0 1px 10px rgba(255,255,255,0.14), inset 0 1px 0 rgba(255,255,255,0.30), 0 16px 38px rgba(15,23,42,0.10)",
           ...(contained || compact ? { height: boundedMaxHeight } : null),
         }}
         {...props}
@@ -291,6 +299,14 @@ export const GlassScrollArea = forwardRef<HTMLDivElement, GlassScrollAreaProps>(
             onScroll={handleScroll}
           >
             {children}
+            {!hasContent && (
+              <div
+                className="glass-flex glass-min-h-24 glass-items-center glass-justify-center glass-p-4 glass-text-sm"
+                style={{ color: "rgba(51, 65, 85, 0.82)" }}
+              >
+                No scrollable content
+              </div>
+            )}
           </div>
 
           {/* Edge fades */}
@@ -300,7 +316,7 @@ export const GlassScrollArea = forwardRef<HTMLDivElement, GlassScrollAreaProps>(
                 <div
                   className={cn(
                     "pointer-events-none absolute top-0 left-0 right-0 h-6 bg-gradient-to-b to-transparent",
-                    scrollActive ? "from-blue-400/20" : "from-black/20"
+                    "from-slate-500/15"
                   )}
                 />
               )}
@@ -308,7 +324,7 @@ export const GlassScrollArea = forwardRef<HTMLDivElement, GlassScrollAreaProps>(
                 <div
                   className={cn(
                     "pointer-events-none absolute bottom-0 left-0 right-0 h-6 bg-gradient-to-t to-transparent",
-                    scrollActive ? "from-blue-400/20" : "from-black/20"
+                    "from-slate-500/15"
                   )}
                 />
               )}

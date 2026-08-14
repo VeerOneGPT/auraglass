@@ -31,9 +31,9 @@ export const Default: Story = {
           border-radius: 32px;
           padding: 28px;
           background:
-            radial-gradient(circle at 22% 24%, rgba(96,165,250,.34), transparent 28%),
-            radial-gradient(circle at 78% 68%, rgba(45,212,191,.28), transparent 30%),
-            linear-gradient(135deg, rgba(255,255,255,.58), rgba(248,250,252,.34));
+            radial-gradient(circle at 22% 24%, rgba(255,255,255,.30), rgba(255,255,255,.08) 28%),
+            radial-gradient(circle at 78% 68%, rgba(148,163,184,.10), rgba(255,255,255,.08) 30%),
+            linear-gradient(135deg, rgba(255,255,255,.64), rgba(236,238,240,.38));
           box-shadow: 0 24px 80px rgba(15,23,42,.14);
         }
 

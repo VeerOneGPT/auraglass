@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 import { useMotionPreference } from "../../hooks/useMotionPreference";
 import { OptimizedGlass } from "../../primitives";
 import { useA11yId } from "../../utils/a11y";
-import { createGlassStyle } from "../../utils/createGlassStyle";
 import { useGlassSound } from "../../utils/soundDesign";
 import {
   ContrastGuard,
@@ -147,6 +146,7 @@ export const GlassIslandLayout = forwardRef<
     );
 
     const containerRef = useRef<HTMLDivElement>(null);
+    const viewportRef = useRef<HTMLDivElement | null>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const animationFrameRef = useRef<number>();
 
@@ -459,7 +459,7 @@ export const GlassIslandLayout = forwardRef<
 
     // Center view on load
     useEffect(() => {
-      if (centerOnLoad && layoutIslands.length > 0 && containerRef.current) {
+      if (centerOnLoad && layoutIslands.length > 0 && viewportRef.current) {
         const bounds = layoutIslands.reduce(
           (acc, island) => ({
             minX: Math.min(acc.minX, island.x),
@@ -470,16 +470,48 @@ export const GlassIslandLayout = forwardRef<
           { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity }
         );
 
-        const centerX = (bounds.minX + bounds.maxX) / 2;
-        const centerY = (bounds.minY + bounds.maxY) / 2;
-        const containerRect = containerRef.current.getBoundingClientRect();
+        const containerRect = viewportRef.current.getBoundingClientRect();
+        const contentWidth = Math.max(1, bounds.maxX - bounds.minX);
+        const contentHeight = Math.max(1, bounds.maxY - bounds.minY);
+        const availableWidth = Math.max(1, containerRect.width - 64);
+        const availableHeight = Math.max(
+          1,
+          containerRect.height - (compact ? 48 : 112)
+        );
+        const fitZoom = Math.max(
+          0.2,
+          Math.min(
+            zoomLevel,
+            availableWidth / contentWidth,
+            availableHeight / contentHeight
+          )
+        );
+
+        setCurrentZoom(fitZoom);
 
         setViewportOffset({
-          x: containerRect.width / 2 - centerX * currentZoom,
-          y: containerRect.height / 2 - centerY * currentZoom,
+          x:
+            (containerRect.width - contentWidth * fitZoom) / 2 -
+            bounds.minX * fitZoom,
+          y:
+            (containerRect.height - contentHeight * fitZoom) / 2 -
+            bounds.minY * fitZoom +
+            (compact ? 0 : 28),
         });
       }
-    }, [centerOnLoad, layoutIslands, currentZoom]);
+    }, [centerOnLoad, compact, layoutIslands, zoomLevel]);
+
+    const setViewportRef = useCallback(
+      (node: HTMLDivElement | null) => {
+        viewportRef.current = node;
+        if (typeof ref === "function") {
+          ref(node);
+        } else if (ref) {
+          Object.assign(ref, { current: node });
+        }
+      },
+      [ref]
+    );
 
     // Initialize
     useEffect(() => {
@@ -557,10 +589,11 @@ export const GlassIslandLayout = forwardRef<
 
     const StatsPanel = () => (
       <div
-        className={`
-        absolute bottom-4 left-4 p-3 rounded-lg border border-white/10
-        ${createGlassStyle({ blur: "sm", opacity: 0.8 }).background}
-      `}
+        className="glass-island-layout-stats glass-absolute glass-bottom-4 glass-left-4 glass-p-3 glass-radius-lg glass-border glass-border-soft"
+        style={{
+          background: "rgba(255,255,255,.2)",
+          boxShadow: "inset 0 1px 0 rgba(255,255,255,.28)",
+        }}
       >
         <div className="glass-text-xs glass-text-primary-glass-opacity-90 glass-space-y-1">
           <div>Islands: {layoutIslands.length}</div>
@@ -581,6 +614,15 @@ export const GlassIslandLayout = forwardRef<
           whileHover={shouldAnimate ? { scale: 1.05 } : {}}
           whileTap={shouldAnimate ? { scale: 0.95 } : {}}
           onClick={() => setCurrentZoom((prev: any) => Math.min(3, prev * 1.2))}
+          style={{
+            appearance: "none",
+            width: 44,
+            height: 44,
+            border: "1px solid rgba(148,163,184,.3)",
+            borderRadius: 14,
+            background: "rgba(255,255,255,.2)",
+            color: "rgba(15,23,42,.9)",
+          }}
         >
           🔍+
         </motion.button>
@@ -592,14 +634,30 @@ export const GlassIslandLayout = forwardRef<
           onClick={() =>
             setCurrentZoom((prev: any) => Math.max(0.2, prev / 1.2))
           }
+          style={{
+            appearance: "none",
+            width: 44,
+            height: 44,
+            border: "1px solid rgba(148,163,184,.3)",
+            borderRadius: 14,
+            background: "rgba(255,255,255,.2)",
+            color: "rgba(15,23,42,.9)",
+          }}
         >
           🔍-
         </motion.button>
 
         <motion.button
-          className={`p-2 border border-white/20 ${BORDER_RADIUS.lg} text-white transition-colors glass-focus glass-touch-target glass-contrast-guard ${
-            connectionMode ? "bg-blue-500/50" : "bg-white/10 hover:bg-white/20"
-          }`}
+          className={`p-2 border border-white/20 ${BORDER_RADIUS.lg} glass-text-primary glass-surface-overlay transition-colors glass-focus glass-touch-target glass-contrast-guard`}
+          style={{
+            appearance: "none",
+            width: 44,
+            height: 44,
+            border: "1px solid rgba(148,163,184,.3)",
+            borderRadius: 14,
+            background: "rgba(255,255,255,.2)",
+            color: "rgba(15, 23, 42, 0.94)",
+          }}
           whileHover={shouldAnimate ? { scale: 1.05 } : {}}
           whileTap={shouldAnimate ? { scale: 0.95 } : {}}
           onClick={() => setConnectionMode(!connectionMode)}
@@ -612,6 +670,15 @@ export const GlassIslandLayout = forwardRef<
           whileHover={shouldAnimate ? { scale: 1.05 } : {}}
           whileTap={shouldAnimate ? { scale: 0.95 } : {}}
           onClick={autoArrange}
+          style={{
+            appearance: "none",
+            width: 44,
+            height: 44,
+            border: "1px solid rgba(148,163,184,.3)",
+            borderRadius: 14,
+            background: "rgba(255,255,255,.2)",
+            color: "rgba(15,23,42,.9)",
+          }}
         >
           ⚡
         </motion.button>
@@ -620,9 +687,9 @@ export const GlassIslandLayout = forwardRef<
 
     return (
       <OptimizedGlass
-        ref={ref}
+        ref={setViewportRef}
         variant="frosted"
-        className={`glass-island-layout relative overflow-auto ${className}`}
+        className={`glass-island-layout glass-relative glass-overflow-hidden ${className}`}
         style={{
           width: effectiveWidth,
           maxWidth: "100%",
@@ -634,11 +701,33 @@ export const GlassIslandLayout = forwardRef<
             typeof effectiveHeight === "number"
               ? `${effectiveHeight}px`
               : effectiveHeight,
-          overflowX: "auto",
-          overflowY: "auto",
+          overflow: "hidden",
+          contain: "layout paint",
         }}
         {...props}
       >
+        <style>{`
+          @media (max-width: 520px) {
+            .glass-island-layout-minimap,
+            .glass-island-layout-stats {
+              display: none !important;
+            }
+
+            .glass-island-layout-controls {
+              flex-direction: row !important;
+              top: 96px !important;
+            }
+
+            .glass-island-layout-controls > * {
+              margin-top: 0 !important;
+              margin-left: 8px !important;
+            }
+
+            .glass-island-layout-controls > :first-child {
+              margin-left: 0 !important;
+            }
+          }
+        `}</style>
         {/* Header */}
         {!compact && (
           <div className="glass-absolute glass-top-0 glass-left-0 glass-right-0 glass-p-4 glass-z-10">
@@ -663,17 +752,27 @@ export const GlassIslandLayout = forwardRef<
           </div>
         )}
 
-        {/* Main container */}
+        {/* A bounded viewport prevents the transformed 2000px workspace from
+            becoming the parent surface's scroll geometry. */}
         <div
-          ref={containerRef}
-          className="glass-absolute glass-inset-0 glass-overflow-visible glass-cursor-move"
-          style={{
-            width: 2000,
-            height: 2000,
-            transform: `scale(${currentZoom}) translate(${viewportOffset.x}px, ${viewportOffset.y}px)`,
-            transformOrigin: "0 0",
-          }}
+          className="glass-absolute glass-inset-0 glass-overflow-hidden"
+          style={{ contain: "strict" }}
         >
+          {/* Main container */}
+          <div
+            ref={containerRef}
+            className="glass-absolute glass-inset-0 glass-overflow-visible glass-cursor-move"
+            style={{
+              width: 2000,
+              height: 2000,
+              contain: "strict",
+              // Offset is expressed in viewport pixels. Translate first, then
+              // scale the authored 2000px world; the prior order scaled the
+              // offset a second time and pushed islands out of view.
+              transform: `translate(${viewportOffset.x}px, ${viewportOffset.y}px) scale(${currentZoom})`,
+              transformOrigin: "0 0",
+            }}
+          >
           {/* Grid background */}
           {showGrid && (
             <div
@@ -733,11 +832,14 @@ export const GlassIslandLayout = forwardRef<
 
                 {/* Island controls */}
                 <div
-                  className="glass-absolute glass-top-2 glass-right-2 glass-flex glass-space-x-1 glass-opacity-0 glass-hover-opacity-100 glass-transition-opacity"
+                  className="glass-absolute glass-top-2 glass-right-2 glass-flex glass-space-x-1"
                   data-glass-overlay="true"
                 >
                   {island.category && (
-                    <span className="glass-px-2 glass-py-1 glass-surface-dark/30 glass-text-primary-opacity-70 glass-radius glass-text-xs">
+                    <span
+                      className="glass-px-2 glass-py-1 glass-surface-overlay glass-radius glass-text-xs"
+                      style={{ color: "rgb(15, 23, 42)" }}
+                    >
                       {island.category}
                     </span>
                   )}
@@ -754,7 +856,8 @@ export const GlassIslandLayout = forwardRef<
                         )
                       );
                     }}
-                    className="glass-w-6 glass-h-6 glass-surface-subtle/20 hover:glass-surface-subtle/30 glass-radius glass-text-primary-glass-opacity-80 glass-text-xs glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
+                    className="glass-w-6 glass-h-6 glass-surface-overlay hover:glass-surface-subtle glass-radius glass-text-xs glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
+                    style={{ color: "rgb(15, 23, 42)" }}
                   >
                     {island.minimized ? "□" : "_"}
                   </button>
@@ -775,6 +878,7 @@ export const GlassIslandLayout = forwardRef<
               </OptimizedGlass>
             </motion.div>
           ))}
+          </div>
         </div>
 
         {/* Controls */}

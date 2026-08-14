@@ -10,21 +10,22 @@ import {
 
 const touchStoryStyles = `
   .ag-touch-story-surface {
-    --glass-text-primary: #f8fafc;
-    --glass-text-secondary: #e2e8f0;
-    --glass-text-tertiary: #cbd5e1;
-    --typography-text-primary: #f8fafc;
-    --typography-text-secondary: #e2e8f0;
+    --glass-text-primary: rgba(24, 24, 24, 0.94);
+    --glass-text-secondary: rgba(48, 48, 48, 0.76);
+    --glass-text-tertiary: rgba(72, 72, 72, 0.64);
+    --typography-text-primary: rgba(24, 24, 24, 0.94);
+    --typography-text-secondary: rgba(48, 48, 48, 0.76);
+    --glass-neutral-level2-surface: linear-gradient(135deg, rgba(255, 255, 255, 0.64), rgba(255, 255, 255, 0.38));
     height: 100vh;
     min-height: 100vh;
     width: 100%;
     overflow: auto;
     box-sizing: border-box;
     background:
-      radial-gradient(circle at 18% 12%, rgba(59, 130, 246, 0.28), transparent 32%),
-      radial-gradient(circle at 82% 16%, rgba(20, 184, 166, 0.22), transparent 30%),
-      linear-gradient(135deg, #0f172a 0%, #4c1d95 50%, #164e63 100%);
-    color: #f8fafc;
+      radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.92), transparent 34%),
+      radial-gradient(circle at 82% 16%, rgba(196, 196, 196, 0.2), transparent 32%),
+      linear-gradient(135deg, #fafafa 0%, #eeeeee 48%, #dedede 100%);
+    color: rgba(24, 24, 24, 0.94);
     padding: clamp(16px, 4vw, 32px);
   }
 
@@ -44,21 +45,27 @@ const touchStoryStyles = `
   .ag-touch-story-surface p,
   .ag-touch-story-surface span,
   .ag-touch-story-surface div {
-    color: #f8fafc !important;
+    color: rgba(24, 24, 24, 0.94) !important;
   }
 
   .ag-touch-story-surface .glass-surface-subtle\\/10 {
-    background: rgba(15, 23, 42, 0.76) !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: rgba(24, 24, 24, 0.94) !important;
   }
 
   .ag-touch-story-surface .glass-surface-subtle\\/20,
   .ag-touch-story-surface .glass-surface-blue\\/20,
   .ag-touch-story-surface .glass-surface-green\\/20 {
-    background: rgba(30, 41, 59, 0.82) !important;
+    background: rgba(255, 255, 255, 0.28) !important;
+    color: rgba(24, 24, 24, 0.94) !important;
   }
 
   .ag-touch-story-surface .glass-contrast-guard {
-    color: #f8fafc !important;
+    color: rgba(24, 24, 24, 0.94) !important;
+  }
+
+  .ag-touch-story-surface :is(.glass-surface-blue, .glass-surface-green, .glass-surface-primary) {
+    background: rgba(255, 255, 255, 0.28) !important;
   }
 
   .ag-touch-story-surface button:disabled {
@@ -67,9 +74,9 @@ const touchStoryStyles = `
   }
 
   .ag-touch-story-surface button {
-    background: rgba(15, 23, 42, 0.88) !important;
-    color: #f8fafc !important;
-    border-color: rgba(226, 232, 240, 0.24) !important;
+    background: rgba(255, 255, 255, 0.28) !important;
+    color: rgba(24, 24, 24, 0.94) !important;
+    border-color: rgba(32, 32, 32, 0.12) !important;
   }
 
   .ag-touch-story-surface .glass-grid-cols-1 {
@@ -174,7 +181,7 @@ const touchStoryStyles = `
 `;
 
 const meta: Meta<typeof TouchOptimizedGlass> = {
-  title: 'Effects + Advanced/Touch Glass Optimization',
+  title: "Effects + Advanced/Touch Glass Optimization",
   component: TouchOptimizedGlass,
   parameters: {
     docs: {
@@ -772,52 +779,52 @@ export const RippleEffects: Story = {
           </TouchRippleEffects>
 
           <TouchRippleEffects
-            color="hsl(var(--glass-color-primary)/0.6)"
+            color="rgba(86, 94, 105, 0.38)"
             maxRipples={5}
             rippleDuration={800}
           >
             <div className="glass-p-8 glass-text-center glass-surface-subtle/10 glass-backdrop-blur-lg glass-radius-2xl glass-contrast-guard">
               <div className="glass-text-4xl glass-mb-3">💙</div>
               <h3 className="glass-text-xl glass-font-semibold glass-text-primary glass-mb-2">
-                Blue Ripple
+                Soft Ripple
               </h3>
               <p className="glass-text-primary glass-text-sm">
-                Custom blue color with longer duration and more simultaneous
+                Soft graphite ripple with longer duration and more simultaneous
                 ripples
               </p>
             </div>
           </TouchRippleEffects>
 
           <TouchRippleEffects
-            color="hsl(var(--glass-color-success)/0.5)"
+            color="rgba(44, 50, 59, 0.28)"
             maxRipples={2}
             rippleDuration={400}
           >
             <div className="glass-p-8 glass-text-center glass-surface-subtle/10 glass-backdrop-blur-lg glass-radius-2xl glass-contrast-guard">
               <div className="glass-text-4xl glass-mb-3">💚</div>
               <h3 className="glass-text-xl glass-font-semibold glass-text-primary glass-mb-2">
-                Green Ripple
+                Quick Ripple
               </h3>
               <p className="glass-text-primary glass-text-sm">
-                Fast green ripple with limited simultaneous effects for subtle
+                Fast neutral ripple with limited simultaneous effects for subtle
                 feedback
               </p>
             </div>
           </TouchRippleEffects>
 
           <TouchRippleEffects
-            color="rgba(249, 115, 22, 0.7)"
+            color="rgba(25, 30, 38, 0.34)"
             maxRipples={4}
             rippleDuration={1000}
           >
             <div className="glass-p-8 glass-text-center glass-surface-subtle/10 glass-backdrop-blur-lg glass-radius-2xl glass-contrast-guard">
               <div className="glass-text-4xl glass-mb-3">🧡</div>
               <h3 className="glass-text-xl glass-font-semibold glass-text-primary glass-mb-2">
-                Orange Ripple
+                Dramatic Ripple
               </h3>
               <p className="glass-text-primary glass-text-sm">
-                Bold orange ripple with slow, dramatic animation and multiple
-                effects
+                Deeper graphite ripple with slow, dramatic animation and
+                multiple effects
               </p>
             </div>
           </TouchRippleEffects>

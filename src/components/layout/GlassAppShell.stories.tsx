@@ -66,7 +66,7 @@ export const Default: Story = {
         sidebar={shellSidebar}
         padding="lg"
         maxWidth="full"
-        className="glass-h-[640px] glass-w-full glass-max-w-6xl glass-overflow-hidden glass-rounded-2xl glass-border glass-border-white/35 glass-bg-white/45 glass-shadow-2xl"
+        className="glass-neutral-level1 glass-h-[640px] glass-w-full glass-max-w-6xl glass-overflow-hidden glass-rounded-2xl glass-border glass-border-white/35 glass-shadow-2xl"
       >
         <section className="glass-space-y-5">
           <div>
@@ -116,7 +116,7 @@ export const Variants: Story = {
         variant="floating"
         header={shellHeader}
         padding="md"
-        className="glass-h-[520px] glass-w-full glass-max-w-4xl glass-overflow-hidden glass-rounded-2xl glass-border glass-border-white/35 glass-bg-white/50 glass-shadow-xl"
+        className="glass-neutral-level1 glass-h-[520px] glass-w-full glass-max-w-4xl glass-overflow-hidden glass-rounded-2xl glass-border glass-border-white/35 glass-shadow-xl"
       >
         <div className="glass-grid glass-grid-cols-2 glass-gap-4">
           {['Floating shell', 'Minimal content'].map((label) => (

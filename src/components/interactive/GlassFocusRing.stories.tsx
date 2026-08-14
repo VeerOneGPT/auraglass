@@ -39,13 +39,22 @@ export default meta;
 type Story = StoryObj<typeof GlassFocusRing>;
 
 export const Default: Story = {
+  render: (args) => (
+    <div className="glass-neutral-level1 glass-rounded-3xl glass-p-6">
+      <GlassFocusRing {...args}>
+        <div className="glass-text-center">
+          <h3 className="glass-text-lg glass-font-semibold glass-text-primary glass-mb-2">
+            GlassFocusRing
+          </h3>
+          <p className="glass-text-sm glass-text-secondary">
+            The focus ring stays visible around the focused element.
+          </p>
+        </div>
+      </GlassFocusRing>
+    </div>
+  ),
   args: {
-    children: (
-      <div className="glass-p-4 glass-text-center">
-        <h3 className="glass-text-lg glass-font-semibold glass-mb-2">GlassFocusRing</h3>
-        <p className="glass-text-sm opacity-80">This is the default glassfocusring component.</p>
-      </div>
-    ),
+    className: '',
   },
 };
 

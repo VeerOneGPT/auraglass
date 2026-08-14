@@ -5,7 +5,8 @@ import { cn } from "../../lib/utilsComprehensive";
 import { LiquidGlassMaterial } from "../../primitives/LiquidGlassMaterial";
 import { LiquidGlassScrollEdge } from "../../primitives/LiquidGlassScrollEdge";
 
-export interface LiquidGlassAdaptiveSheetProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface LiquidGlassAdaptiveSheetProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   open: boolean;
   onOpenChange?: (open: boolean) => void;
   title?: string;
@@ -16,7 +17,10 @@ export interface LiquidGlassAdaptiveSheetProps extends React.HTMLAttributes<HTML
   materialVariant?: "regular" | "clear";
 }
 
-export const LiquidGlassAdaptiveSheet = forwardRef<HTMLDivElement, LiquidGlassAdaptiveSheetProps>(
+export const LiquidGlassAdaptiveSheet = forwardRef<
+  HTMLDivElement,
+  LiquidGlassAdaptiveSheetProps
+>(
   (
     {
       open,
@@ -66,16 +70,46 @@ export const LiquidGlassAdaptiveSheet = forwardRef<HTMLDivElement, LiquidGlassAd
           aria-label={title}
           className={cn(
             "liquid-glass-adaptive-sheet glass-absolute glass-p-3",
-            isBottom ? "glass-left-0 glass-right-0 glass-bottom-0" : side === "left" ? "glass-left-0 glass-top-0 glass-bottom-0 glass-w-96" : "glass-right-0 glass-top-0 glass-bottom-0 glass-w-96",
+            isBottom
+              ? "glass-left-0 glass-right-0 glass-bottom-0"
+              : side === "left"
+                ? "glass-left-0 glass-top-0 glass-bottom-0 glass-w-96"
+                : "glass-right-0 glass-top-0 glass-bottom-0 glass-w-96",
             className
           )}
-          style={isBottom ? { height: typeof height === "number" ? `${height}px` : height } : undefined}
+          style={
+            isBottom
+              ? { height: typeof height === "number" ? `${height}px` : height }
+              : undefined
+          }
           data-source-id={sourceId}
           {...props}
         >
-          <LiquidGlassMaterial material="liquid" variant={materialVariant} radius={isBottom ? "2xl" : "xl"} className="glass-h-full">
+          <LiquidGlassMaterial
+            material="liquid"
+            variant={materialVariant}
+            intent="neutral"
+            tintMode="light"
+            adaptToContent={false}
+            environmentAdaptation={false}
+            radius={isBottom ? "2xl" : "xl"}
+            className="glass-h-full glass-on-light"
+            style={
+              {
+                background:
+                  "linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.16)), linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.08))",
+                "--glass-theme-text": "rgb(15,23,42)",
+                "--glass-text-primary": "rgb(15,23,42)",
+                "--glass-text-secondary": "rgba(15,23,42,0.76)",
+              } as React.CSSProperties
+            }
+          >
             <LiquidGlassScrollEdge edge="top" styleMode="soft" active />
-            {title && <h2 className="glass-p-4 glass-text-lg glass-font-semibold">{title}</h2>}
+            {title && (
+              <h2 className="glass-p-4 glass-text-lg glass-font-semibold glass-text-primary">
+                {title}
+              </h2>
+            )}
             <div className="glass-p-4">{children}</div>
           </LiquidGlassMaterial>
         </div>

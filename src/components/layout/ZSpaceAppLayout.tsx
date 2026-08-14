@@ -198,7 +198,11 @@ export const ZSpaceAppLayout = forwardRef<HTMLDivElement, ZSpaceAppLayoutProps>(
         {/* Header */}
         {header && (
           <div className="zspace-app-layout-header" style={{ ...headerStyles }}>
-            <GlassContainer style={{ width: "100%", height: "100%" }}>
+            <GlassContainer
+              glass
+              elevation={2}
+              style={{ width: "100%", height: "100%" }}
+            >
               {header}
             </GlassContainer>
           </div>
@@ -210,7 +214,11 @@ export const ZSpaceAppLayout = forwardRef<HTMLDivElement, ZSpaceAppLayoutProps>(
             className="zspace-app-layout-sidebar"
             style={{ ...sidebarStyles }}
           >
-            <GlassContainer style={{ width: "100%", height: "100%" }}>
+            <GlassContainer
+              glass
+              elevation={2}
+              style={{ width: "100%", height: "100%" }}
+            >
               {sidebar}
 
               {/* Sidebar toggle button */}
@@ -235,7 +243,11 @@ export const ZSpaceAppLayout = forwardRef<HTMLDivElement, ZSpaceAppLayoutProps>(
 
         {/* Main Content */}
         <main className="zspace-app-layout-main" style={{ ...mainStyles }}>
-          <GlassContainer style={{ minHeight: "100%", padding: "20px" }}>
+          <GlassContainer
+            glass
+            elevation={1}
+            style={{ minHeight: "100%", padding: "20px" }}
+          >
             {children}
           </GlassContainer>
         </main>
@@ -243,7 +255,11 @@ export const ZSpaceAppLayout = forwardRef<HTMLDivElement, ZSpaceAppLayoutProps>(
         {/* Footer */}
         {footer && (
           <div className="zspace-app-layout-footer" style={{ ...footerStyles }}>
-            <GlassContainer style={{ width: "100%", height: "100%" }}>
+            <GlassContainer
+              glass
+              elevation={1}
+              style={{ width: "100%", height: "100%" }}
+            >
               {footer}
             </GlassContainer>
           </div>
@@ -255,7 +271,11 @@ export const ZSpaceAppLayout = forwardRef<HTMLDivElement, ZSpaceAppLayoutProps>(
             className="zspace-app-layout-overlay"
             style={{ ...overlayStyles }}
           >
-            <GlassContainer style={{ width: "100%", height: "100%" }}>
+            <GlassContainer
+              glass
+              elevation="modal"
+              style={{ width: "100%", height: "100%" }}
+            >
               {overlay}
             </GlassContainer>
           </div>

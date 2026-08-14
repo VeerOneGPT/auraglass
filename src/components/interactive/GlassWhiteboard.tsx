@@ -18,6 +18,10 @@ export type DrawingTool =
 export type DrawingColor =
   | "var(--glass-white)"
   | "var(--glass-black)"
+  | "rgba(255, 255, 255, 0.30)"
+  | "rgba(255, 255, 255, 0.42)"
+  | "rgba(255, 255, 255, 0.54)"
+  | "rgba(255, 255, 255, 0.66)"
   | "hsl(var(--glass-color-danger))"
   | "hsl(var(--glass-color-success))"
   | "hsl(var(--glass-color-primary))"
@@ -86,12 +90,10 @@ export interface GlassWhiteboardProps
 const defaultColors: DrawingColor[] = [
   "var(--glass-white)",
   "var(--glass-black)",
-  "hsl(var(--glass-color-danger))",
-  "hsl(var(--glass-color-success))",
-  "hsl(var(--glass-color-primary))",
-  "hsl(var(--glass-color-warning))",
-  "var(--glass-color-accent)",
-  "hsl(var(--glass-color-info))",
+  "rgba(255, 255, 255, 0.30)",
+  "rgba(255, 255, 255, 0.42)",
+  "rgba(255, 255, 255, 0.54)",
+  "rgba(255, 255, 255, 0.66)",
 ];
 
 const defaultTools: DrawingTool[] = [
@@ -369,7 +371,7 @@ const GlassWhiteboard = React.forwardRef<HTMLDivElement, GlassWhiteboardProps>(
 
         switch (backgroundPattern) {
           case "grid":
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.10)";
+            ctx.strokeStyle = "rgba(48, 48, 48, 0.16)";
             ctx.lineWidth = 1;
             for (let x = 0; x < width; x += 20) {
               ctx.beginPath();
@@ -395,7 +397,7 @@ const GlassWhiteboard = React.forwardRef<HTMLDivElement, GlassWhiteboardProps>(
             }
             break;
           case "lines":
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.10)";
+            ctx.strokeStyle = "rgba(48, 48, 48, 0.16)";
             ctx.lineWidth = 1;
             for (let y = 0; y < height; y += 40) {
               ctx.beginPath();
@@ -651,7 +653,7 @@ const GlassWhiteboard = React.forwardRef<HTMLDivElement, GlassWhiteboardProps>(
         ref={ref}
         data-glass-component
         className={cn(
-          "glass-relative glass-max-w-full glass-overflow-hidden",
+          "glass-relative glass-max-w-full glass-overflow-auto",
           className
         )}
         style={{ maxHeight: "100%", minWidth: 0 }}
@@ -670,7 +672,7 @@ const GlassWhiteboard = React.forwardRef<HTMLDivElement, GlassWhiteboardProps>(
             )}
           >
             {/* Tools */}
-            <div className={cn("glass-flex glass-gap-1")}>
+            <div className={cn("glass-flex glass-flex-wrap glass-gap-2")}>
               {enabledTools.map((tool: any) => (
                 <button
                   key={tool}
@@ -689,13 +691,13 @@ const GlassWhiteboard = React.forwardRef<HTMLDivElement, GlassWhiteboardProps>(
             </div>
 
             {/* Colors */}
-            <div className={cn("glass-flex glass-gap-1")}>
+            <div className={cn("glass-flex glass-flex-wrap glass-gap-1")}>
               {availableColors.map((color, i) => (
                 <button
                   key={`${color}-${i}`}
                   onClick={(e) => handleColorChange(color)}
                   className={cn(
-                    "glass-w-7 glass-h-7 glass-radius-md glass-border glass-transition-all",
+                    "glass-w-7 glass-h-7 glass-shrink-0 glass-radius-md glass-border glass-transition-all",
                     "glass-focus glass-touch-target glass-contrast-guard",
                     currentColor === color
                       ? "glass-border-white"
@@ -709,7 +711,11 @@ const GlassWhiteboard = React.forwardRef<HTMLDivElement, GlassWhiteboardProps>(
             </div>
 
             {/* Brush Size */}
-            <div className={cn("glass-flex glass-items-center glass-gap-2")}>
+            <div
+              className={cn(
+                "glass-flex glass-flex-wrap glass-items-center glass-gap-1"
+              )}
+            >
               <label
                 htmlFor="brush-size"
                 className={cn("glass-text-sm glass-text-primary-70")}
@@ -724,7 +730,7 @@ const GlassWhiteboard = React.forwardRef<HTMLDivElement, GlassWhiteboardProps>(
                 value={brushSize}
                 onChange={(e) => setBrushSize(Number(e.target.value))}
                 className={cn(
-                  "glass-w-16 glass-focus glass-touch-target glass-contrast-guard"
+                  "glass-w-14 glass-min-w-0 glass-focus glass-touch-target glass-contrast-guard"
                 )}
                 aria-label="Brush size"
               />
@@ -736,7 +742,11 @@ const GlassWhiteboard = React.forwardRef<HTMLDivElement, GlassWhiteboardProps>(
             </div>
 
             {/* Opacity */}
-            <div className={cn("glass-flex glass-items-center glass-gap-2")}>
+            <div
+              className={cn(
+                "glass-flex glass-flex-wrap glass-items-center glass-gap-1"
+              )}
+            >
               <label
                 htmlFor="brush-opacity"
                 className={cn("glass-text-sm glass-text-primary-70")}
@@ -752,7 +762,7 @@ const GlassWhiteboard = React.forwardRef<HTMLDivElement, GlassWhiteboardProps>(
                 value={opacity}
                 onChange={(e) => setOpacity(Number(e.target.value))}
                 className={cn(
-                  "glass-w-16 glass-focus glass-touch-target glass-contrast-guard"
+                  "glass-w-14 glass-min-w-0 glass-focus glass-touch-target glass-contrast-guard"
                 )}
                 aria-label="Brush opacity"
               />
@@ -764,7 +774,7 @@ const GlassWhiteboard = React.forwardRef<HTMLDivElement, GlassWhiteboardProps>(
             </div>
 
             {/* Actions */}
-            <div className={cn("glass-flex glass-gap-1")}>
+            <div className={cn("glass-flex glass-flex-wrap glass-gap-1")}>
               <button
                 onClick={clearCanvas}
                 className={cn(
@@ -829,7 +839,7 @@ const GlassWhiteboard = React.forwardRef<HTMLDivElement, GlassWhiteboardProps>(
         <div
           ref={containerRef}
           className={cn(
-            "glass-relative glass-overflow-hidden glass-surface-dark/20"
+            "glass-relative glass-overflow-auto glass-box-border glass-surface-dark/20"
           )}
           style={{
             width: "100%",

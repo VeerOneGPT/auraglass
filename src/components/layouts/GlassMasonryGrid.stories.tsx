@@ -5,7 +5,6 @@ import { cn } from '../../lib/utils';
 // Generate mock items with varying heights and content
 const generateMockItems = (count: number): MasonryItem[] => {
   const categories = ['photos', 'quotes', 'articles', 'videos', 'recipes'];
-  const colors = ['from-red-400 to-pink-600', 'from-blue-400 to-purple-600', 'from-green-400 to-teal-600', 'from-yellow-400 to-orange-600', 'from-purple-400 to-indigo-600'];
   const descriptions: Record<string, string> = {
     photos: 'Landscape set',
     quotes: 'Fresh beginning',
@@ -17,7 +16,6 @@ const generateMockItems = (count: number): MasonryItem[] => {
   return Array.from({ length: count }, (_, i) => {
     const category = categories[i % categories.length];
     const height = 150 + ((i * 37) % 220);
-    const color = colors[i % colors.length];
     const priority = i % 5;
 
     return {
@@ -26,9 +24,8 @@ const generateMockItems = (count: number): MasonryItem[] => {
       category,
       priority,
       content: (
-        <div className={`glass-h-full glass-w-full bg-gradient-to-br ${color} rounded-lg flex items-center justify-center text-white relative glass-overflow-auto`}>
-          <div className="glass-absolute glass-inset-0 glass-surface-dark/20" />
-          <div className="glass-relative glass-z-10 glass-text-center glass-p-2 glass-text-white">
+        <div className="glass-h-full glass-w-full rounded-lg flex items-center justify-center relative glass-overflow-auto" style={{ background: 'linear-gradient(145deg, rgba(255,255,255,.28), rgba(255,255,255,.12))', border: '1px solid rgba(255,255,255,.28)', color: 'rgba(15,23,42,.92)' }}>
+          <div className="glass-relative glass-z-10 glass-text-center glass-p-2" style={{ color: 'rgba(15,23,42,.92)' }}>
             <h4 className="glass-font-semibold glass-mb-2">{category.charAt(0).toUpperCase() + category.slice(1)} {i + 1}</h4>
             <p className="glass-text-sm glass-opacity-90">
               {descriptions[category]}

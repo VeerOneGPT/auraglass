@@ -535,15 +535,15 @@ export const GlassWaveFunction = forwardRef<
               <div className={cn("glass-text-xs glass-text-secondary")}>
                 Amplitude
               </div>
-              <div className={cn("glass-text-xs glass-text-success")}>+2</div>
+              <div className={cn("glass-text-xs glass-text-primary")}>+2</div>
               <div
-                className={cn("glass-text-xs glass-text-muted")}
+                className={cn("glass-text-xs glass-text-secondary")}
                 style={{ marginTop: height / 4 - 20 }}
               >
                 0
               </div>
               <div
-                className={cn("glass-text-xs glass-text-danger")}
+                className={cn("glass-text-xs glass-text-primary")}
                 style={{ marginTop: height / 2 - 40 }}
               >
                 -2
@@ -655,7 +655,7 @@ export const GlassWaveFunction = forwardRef<
                     </span>
                     <span
                       className={cn(
-                        "glass-text-xs glass-text-muted glass-capitalize"
+                        "glass-text-xs glass-text-secondary glass-capitalize"
                       )}
                     >
                       ({wave.type})

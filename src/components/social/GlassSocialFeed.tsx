@@ -373,7 +373,8 @@ export const GlassSocialFeed = forwardRef<HTMLDivElement, GlassSocialFeedProps>(
                 {post.media.slice(0, 4).map((media, mediaIndex) => (
                   <div
                     key={mediaIndex}
-                    className="glass-relative glass-aspect-square glass-surface-subtle/5 glass-radius-lg glass-overflow-hidden"
+                    className="glass-relative glass-radius-lg glass-overflow-visible"
+                    style={{ minHeight: 220, aspectRatio: "1 / 1" }}
                   >
                     {media.type === "image" ? (
                       <img

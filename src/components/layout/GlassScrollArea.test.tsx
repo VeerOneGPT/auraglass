@@ -104,6 +104,15 @@ describe("GlassScrollArea", () => {
     expect(element).toHaveClass("custom-class");
   });
 
+  it("provides meaningful geometry and an empty state without children", () => {
+    render(<GlassScrollArea />);
+    const region = screen.getByRole("region", {
+      name: "Scrollable content area",
+    });
+    expect(region).toHaveStyle({ minWidth: "240px", minHeight: "96px" });
+    expect(screen.getByText("No scrollable content")).toBeInTheDocument();
+  });
+
   it("bounds compact contained content without letting rows spill outside", () => {
     const { container } = render(
       <GlassScrollArea compact contained maxHeight={180}>

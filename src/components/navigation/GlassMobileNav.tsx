@@ -215,7 +215,7 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
             </span>
             {item?.badge && (
               <GlassBadge
-                variant={item?.badgeVariant || "outline"}
+                variant={item?.badgeVariant || "secondary"}
                 size="xs"
                 className="glass-ml-auto"
               >
@@ -256,7 +256,7 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
           {/* Render children */}
           {hasChildren && isExpanded && (
             <Motion preset="slideDown" className="glass-mt-1">
-              <VStack space="xs">
+              <VStack space="sm">
                 {item?.children!.map((child: any) =>
                   renderNavigationItem(child, level + 1)
                 )}
@@ -281,7 +281,7 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
           )}
 
           {/* Section items */}
-          <VStack space="xs">
+          <VStack space="sm">
             {section.items.map((item: any) => renderNavigationItem(item))}
           </VStack>
         </div>
@@ -315,10 +315,11 @@ export const GlassMobileNav = forwardRef<HTMLDivElement, GlassMobileNavProps>(
         {showBackdrop && open && (
           <Motion
             preset="fadeIn"
-            className="glass-fixed glass-inset-0 glass-surface-dark/50 glass-backdrop-blur-md glass-z-100 glass-contrast-guard"
+            className="glass-fixed glass-inset-0 glass-backdrop-blur-md glass-z-100 glass-contrast-guard"
             style={{
-              backgroundColor:
-                "color-mix(in srgb, var(--glass-black) 40%, transparent)",
+              backgroundColor: "rgba(255, 255, 255, 0.2)",
+              backgroundImage:
+                "linear-gradient(rgba(255,255,255,0.12), rgba(255,255,255,0.12))",
             }}
             onClick={handleBackdropClick}
             aria-hidden="true"

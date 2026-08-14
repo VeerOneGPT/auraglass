@@ -207,7 +207,7 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
 
   // Grid Layout
   const renderGridLayout = () => (
-    <div className={cn("grid glass-gap-4", getGridColumnsClass())}>
+    <div className={cn("grid glass-gap-6", getGridColumnsClass())}>
       {visibleImages.map((image, index) => (
         <div
           key={image.id}
@@ -219,8 +219,6 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
         >
           <GlassCard
             variant="elevated"
-            interactive
-            onClick={(e) => handleImageClick(image, index)}
             className={cn(
               "overflow-hidden cursor-pointer hover:scale-[1.02] transition-all duration-200 glass-sheen glass-tilt",
               selectedImages.has(image.id) && "ring-2 ring-primary",
@@ -229,6 +227,15 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
           >
             <CardContent className="glass-p-0">
               <div className="glass-relative glass-overflow-hidden">
+                <button
+                  type="button"
+                  aria-label={image.alt || image.title || "View image"}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleImageClick(image, index);
+                  }}
+                  className="glass-absolute glass-inset-0 glass-z-10 glass-bg-transparent glass-border-0 glass-cursor-pointer glass-p-0 glass-m-0 glass-w-full glass-h-full"
+                />
                 <img
                   src={image.thumbnail || image.src}
                   alt={image.alt || image.title}
@@ -257,46 +264,9 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
                 )}
 
                 {/* Overlay with actions */}
-                <div className="glass-absolute glass-inset-0 glass-surface-dark/0 glass-group-hover:glass-surface-dark/40 glass-transition-all glass-duration-200">
+                <div className="glass-absolute glass-inset-0 glass-surface-dark/0 glass-group-hover:glass-surface-dark/40 glass-transition-all glass-duration-200 glass-pointer-events-none">
                   <div className="glass-absolute glass-inset-0 glass-flex glass-items-center glass-justify-center glass-opacity-0 glass-group-glass-hover-opacity-100 glass-transition-opacity">
-                    <div className="glass-flex glass-gap-2">
-                      <GlassButton
-                        variant="secondary"
-                        size="sm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (enableLightbox) setLightboxIndex(index);
-                        }}
-                        className="glass-p-2"
-                        aria-label={`View ${image.title || image.alt || "image"} in lightbox`}
-                      >
-                        <ZoomIn className="glass-w-4 glass-h-4" />
-                      </GlassButton>
-
-                      {showActions && (
-                        <>
-                          <GlassButton
-                            variant="secondary"
-                            size="sm"
-                            onClick={(e) => e.stopPropagation()}
-                            className="glass-p-2"
-                            aria-label={`Like ${image.title || image.alt || "image"}`}
-                          >
-                            <Heart className="glass-w-4 glass-h-4" />
-                          </GlassButton>
-
-                          <GlassButton
-                            variant="secondary"
-                            size="sm"
-                            onClick={(e) => e.stopPropagation()}
-                            className="glass-p-2"
-                            aria-label={`Share ${image.title || image.alt || "image"}`}
-                          >
-                            <Share2 className="glass-w-4 glass-h-4" />
-                          </GlassButton>
-                        </>
-                      )}
-                    </div>
+                    <div className="glass-flex glass-gap-2" />
                   </div>
                 </div>
 
@@ -352,6 +322,43 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
               )}
             </CardContent>
           </GlassCard>
+
+          {/* Image actions live outside the card so no interactive nodes overlap */}
+          <div className="glass-flex glass-justify-end glass-gap-2 glass-pt-2">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                if (enableLightbox) setLightboxIndex(index);
+              }}
+              className="glass-flex glass-h-10 glass-w-10 glass-shrink-0 glass-items-center glass-justify-center glass-radius-full glass-border glass-border-white/30 glass-bg-white/20 glass-text-primary glass-focus"
+              aria-label={`View ${image.title || image.alt || "image"} in lightbox`}
+            >
+              <ZoomIn className="glass-w-4 glass-h-4" />
+            </button>
+
+            {showActions && (
+              <>
+                <button
+                  type="button"
+                  onClick={(e) => e.stopPropagation()}
+                  className="glass-flex glass-h-10 glass-w-10 glass-shrink-0 glass-items-center glass-justify-center glass-radius-full glass-border glass-border-white/30 glass-bg-white/20 glass-text-primary glass-focus"
+                  aria-label={`Like ${image.title || image.alt || "image"}`}
+                >
+                  <Heart className="glass-w-4 glass-h-4" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={(e) => e.stopPropagation()}
+                  className="glass-flex glass-h-10 glass-w-10 glass-shrink-0 glass-items-center glass-justify-center glass-radius-full glass-border glass-border-white/30 glass-bg-white/20 glass-text-primary glass-focus"
+                  aria-label={`Share ${image.title || image.alt || "image"}`}
+                >
+                  <Share2 className="glass-w-4 glass-h-4" />
+                </button>
+              </>
+            )}
+          </div>
         </div>
       ))}
     </div>
@@ -371,13 +378,20 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
         >
           <GlassCard
             variant="elevated"
-            interactive
-            onClick={(e) => handleImageClick(image, index)}
             className="glass-overflow-hidden glass-cursor-pointer glass-hover-scale-1-01 glass-transition-transform"
           >
             <CardContent className="glass-p-0">
               <div className="glass-flex">
                 <div className="glass-w-32 glass-h-32 glass-flex-shrink-0">
+                  <button
+                    type="button"
+                    aria-label={image.alt || image.title || "View image"}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleImageClick(image, index);
+                    }}
+                    className="glass-w-full glass-h-full glass-bg-transparent glass-border-0 glass-cursor-pointer glass-p-0 glass-m-0"
+                  />
                   <img
                     src={image.thumbnail || image.src}
                     alt={image.alt || image.title}
@@ -607,9 +621,10 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
             <div className="glass-flex glass-items-center glass-gap-2">
               <GlassButton
                 variant={viewMode === "grid" ? "primary" : "ghost"}
-                size="sm"
+                size="md"
+                iconOnly
                 onClick={(e) => setViewMode("grid")}
-                className="glass-p-2"
+                className="glass-shrink-0"
                 aria-label="Switch to grid view"
               >
                 <Grid3X3 className="glass-w-4 glass-h-4" />
@@ -617,9 +632,10 @@ export const GlassGallery: React.FC<GlassGalleryProps> = ({
 
               <GlassButton
                 variant={viewMode === "list" ? "primary" : "ghost"}
-                size="sm"
+                size="md"
+                iconOnly
                 onClick={(e) => setViewMode("list")}
-                className="glass-p-2"
+                className="glass-shrink-0"
                 aria-label="Switch to list view"
               >
                 <List className="glass-w-4 glass-h-4" />

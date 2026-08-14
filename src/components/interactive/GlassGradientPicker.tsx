@@ -110,8 +110,8 @@ export const GlassGradientPicker: React.FC<GlassGradientPickerProps> = ({
   >("linear");
   const [angle, setAngle] = useState(45);
   const [stops, setStops] = useState<GradientStop[]>([
-    { color: "#7CD3FF", position: 0 },
-    { color: "#A78BFA", position: 100 },
+    { color: "rgba(255,255,255,.82)", position: 0 },
+    { color: "rgba(168,168,168,.22)", position: 100 },
   ]);
   const [selectedStopIndex, setSelectedStopIndex] = useState<number | null>(
     null
@@ -121,46 +121,42 @@ export const GlassGradientPicker: React.FC<GlassGradientPickerProps> = ({
   // Default presets
   const defaultPresets: GradientPreset[] = [
     {
-      id: "sunset",
-      name: "Sunset",
+      id: "pearl",
+      name: "Pearl",
       type: "linear",
       angle: 45,
       stops: [
-        { color: "#FB7185", position: 0 },
-        { color: "#FBBF24", position: 50 },
-        { color: "#A78BFA", position: 100 },
+        { color: "#ffffff", position: 0 },
+        { color: "#e2e8f0", position: 100 },
       ],
     },
     {
-      id: "ocean",
-      name: "Ocean",
+      id: "silver",
+      name: "Silver",
       type: "linear",
       angle: 90,
       stops: [
-        { color: "#7CD3FF", position: 0 },
-        { color: "#22D3EE", position: 50 },
-        { color: "#60A5FA", position: 100 },
+        { color: "#f8fafc", position: 0 },
+        { color: "#cbd5e1", position: 100 },
       ],
     },
     {
-      id: "forest",
-      name: "Forest",
+      id: "mist",
+      name: "Mist",
       type: "radial",
       stops: [
-        { color: "#86EFAC", position: 0 },
-        { color: "#34D399", position: 70 },
-        { color: "#059669", position: 100 },
+        { color: "#ffffff", position: 0 },
+        { color: "#dbe4ee", position: 100 },
       ],
     },
     {
-      id: "fire",
-      name: "Fire",
+      id: "graphite",
+      name: "Graphite",
       type: "conic",
       stops: [
-        { color: "#FB7185", position: 0 },
-        { color: "#FBBF24", position: 25 },
-        { color: "#F97316", position: 50 },
-        { color: "#DC2626", position: 100 },
+        { color: "#f1f5f9", position: 0 },
+        { color: "#94a3b8", position: 50 },
+        { color: "#e2e8f0", position: 100 },
       ],
     },
   ];
@@ -294,12 +290,16 @@ export const GlassGradientPicker: React.FC<GlassGradientPickerProps> = ({
   return (
     <Motion data-glass-component preset="fadeIn" className="glass-w-full">
       <GlassCard
-        className={cn("overflow-hidden", className)}
+        className={cn(
+          "glass-overflow-auto glass-w-full glass-min-w-0",
+          className
+        )}
         style={{
           maxHeight:
             resolvedMaxHeight ?? (compact || contained ? "240px" : undefined),
-          overflow:
-            compact || contained || resolvedMaxHeight ? "auto" : undefined,
+          overflow: "auto",
+          maxWidth: "100%",
+          boxSizing: "border-box",
         }}
         {...props}
       >
@@ -374,15 +374,8 @@ export const GlassGradientPicker: React.FC<GlassGradientPickerProps> = ({
             <div className="glass-flex glass-items-center glass-justify-between glass-gap-2">
               <ContrastGuard>
                 <code
-                  className="glass-text-xs glass-text-primary-glass-opacity-60 glass-surface-subtle/10 glass-px-2 glass-py-1 glass-radius-md glass-font-mono glass-flex-1 glass-min-w-0"
-                  style={{
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
-                    overflow: "hidden",
-                    overflowWrap: "anywhere",
-                    wordBreak: "break-word",
-                  }}
+                  className="glass-text-xs glass-text-primary-glass-opacity-60 glass-surface-subtle/10 glass-px-2 glass-py-1 glass-radius-md glass-font-mono glass-flex-1 glass-min-w-0 glass-overflow-auto"
+                  style={{ overflowWrap: "anywhere", wordBreak: "break-word" }}
                 >
                   {currentGradient}
                 </code>
@@ -437,7 +430,7 @@ export const GlassGradientPicker: React.FC<GlassGradientPickerProps> = ({
                 max="360"
                 value={angle}
                 onChange={(e) => setAngle(Number(e.target.value))}
-                className="glass-w-full glass-h-2 glass-surface-subtle/20 glass-radius-lg glass-appearance-none glass-cursor-pointer glass-focus glass-touch-target glass-contrast-guard"
+                className="glass-gradient-range glass-w-full glass-cursor-pointer glass-focus glass-touch-target glass-contrast-guard"
                 aria-label="Gradient angle"
               />
             </div>
@@ -478,15 +471,17 @@ export const GlassGradientPicker: React.FC<GlassGradientPickerProps> = ({
                     )}
                     onClick={(e) => setSelectedStopIndex(index)}
                   >
-                    <input
-                      type="color"
-                      value={normalizeColorInputValue(stop.color)}
-                      onChange={(e) =>
-                        handleStopChange(index, { color: e.target.value })
-                      }
-                      className="glass-w-8 glass-h-8 glass-radius-md glass-border glass-border-white/20 glass-cursor-pointer glass-focus glass-touch-target glass-contrast-guard"
-                      aria-label={`Color stop ${index + 1} color picker`}
-                    />
+                    <label className="glass-gradient-color-control glass-flex glass-h-10 glass-w-10 glass-shrink-0 glass-items-center glass-justify-center glass-radius-full glass-border glass-border-white/30 glass-bg-white/20">
+                      <input
+                        type="color"
+                        value={normalizeColorInputValue(stop.color)}
+                        onChange={(e) =>
+                          handleStopChange(index, { color: e.target.value })
+                        }
+                        className="glass-gradient-color-input glass-cursor-pointer glass-focus"
+                        aria-label={`Color stop ${index + 1} color picker`}
+                      />
+                    </label>
 
                     <div className="glass-flex-1">
                       <input
@@ -499,7 +494,7 @@ export const GlassGradientPicker: React.FC<GlassGradientPickerProps> = ({
                             position: Number(e.target.value),
                           })
                         }
-                        className="glass-w-full glass-h-2 glass-surface-subtle/20 glass-radius-lg glass-appearance-none glass-cursor-pointer glass-focus glass-touch-target glass-contrast-guard"
+                        className="glass-gradient-range glass-w-full glass-cursor-pointer glass-focus glass-touch-target glass-contrast-guard"
                         aria-label={`Color stop ${index + 1} position`}
                       />
                       <div className="glass-text-xs glass-text-primary-glass-opacity-60 glass-mt-1">

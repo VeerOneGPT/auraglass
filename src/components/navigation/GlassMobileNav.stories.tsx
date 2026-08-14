@@ -10,7 +10,7 @@ const navigation: MobileNavSection[] = [
     label: "Workspace",
     items: [
       { id: "home", label: "Home", icon: <Home size={18} />, href: "/home" },
-      { id: "audience", label: "Audience", icon: <Users size={18} />, href: "/audience", badge: "12", badgeVariant: "primary" },
+      { id: "audience", label: "Audience", icon: <Users size={18} />, href: "/audience", badge: "12", badgeVariant: "secondary" },
       { id: "metrics", label: "Metrics", icon: <BarChart3 size={18} />, href: "/metrics" },
       { id: "settings", label: "Settings", icon: <Settings size={18} />, href: "/settings" },
     ],
@@ -53,7 +53,12 @@ const MobileNavFrame = (args: ComponentProps<typeof GlassMobileNav>) => {
             <h2 className="glass-m-0 glass-text-2xl glass-font-semibold glass-text-primary">Mobile shell</h2>
             <p className="glass-mt-1 glass-text-sm glass-text-secondary">The sheet opens inside a full app surface instead of a tiny centered trigger.</p>
           </div>
-          <GlassButton leftIcon={<Menu size={16} />} onClick={() => setOpen(true)}>
+          <GlassButton
+            leftIcon={<Menu size={16} />}
+            onClick={() => setOpen(true)}
+            aria-expanded={open}
+            aria-controls="mobile-navigation-sheet"
+          >
             Menu
           </GlassButton>
         </div>
@@ -68,9 +73,10 @@ const MobileNavFrame = (args: ComponentProps<typeof GlassMobileNav>) => {
       </div>
       <GlassMobileNav
         {...args}
+        id="mobile-navigation-sheet"
         open={open}
         onOpenChange={setOpen}
-        logo={<div className="glass-grid glass-h-9 glass-w-9 glass-place-items-center glass-rounded-xl glass-bg-primary/15">AG</div>}
+        logo={<div className="glass-grid glass-h-9 glass-w-9 glass-place-items-center glass-rounded-xl glass-bg-white/25 glass-text-primary">AG</div>}
         footer={<div className="glass-text-xs glass-text-secondary">Signed in as ops@auraglass.dev</div>}
       />
     </div>

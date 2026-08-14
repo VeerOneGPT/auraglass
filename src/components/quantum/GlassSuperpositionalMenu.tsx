@@ -50,11 +50,21 @@ export interface GlassSuperpositionalMenuProps
 }
 
 const quantumColors = {
-  superposition: "#4F46E5",
-  entangled: "#EC4899",
-  collapsed: "hsl(var(--glass-color-success))",
-  decoherent: "hsl(var(--glass-color-warning))",
-  interference: "#8B5CF6",
+  superposition: "rgba(51, 65, 85, 0.72)",
+  entangled: "rgba(100, 116, 139, 0.72)",
+  collapsed: "rgba(30, 41, 59, 0.82)",
+  decoherent: "rgba(100, 116, 139, 0.68)",
+  interference: "rgba(71, 85, 105, 0.70)",
+};
+
+const menuGlassStyle: React.CSSProperties = {
+  background: "rgba(255, 255, 255, 0.3)",
+  border: "1px solid rgba(148, 163, 184, 0.4)",
+  color: "rgba(15, 23, 42, 0.94)",
+  backdropFilter: "blur(24px) saturate(1.5) brightness(1.06) contrast(1.04)",
+  WebkitBackdropFilter:
+    "blur(24px) saturate(1.5) brightness(1.06) contrast(1.04)",
+  boxShadow: "0 12px 30px rgba(15, 23, 42, 0.1)",
 };
 
 const wavePatterns = {
@@ -221,12 +231,7 @@ export const GlassSuperpositionalMenu = forwardRef<
       if (collapsedState) {
         return state.id === collapsedState ? 1 : 0.1;
       }
-      return 0.3 + state.probability * 0.7;
-    };
-
-    const getStateScale = (state: QuantumMenuState) => {
-      if (collapsedState && state.id !== collapsedState) return 0.5;
-      return 0.8 + state.probability * 0.4;
+      return 1;
     };
 
     const getQuantumPhase = (state: QuantumMenuState) => {
@@ -257,12 +262,10 @@ export const GlassSuperpositionalMenu = forwardRef<
 
       return (
         <svg
-          className={cn(
-            "glass-absolute glass-inset-0 glass-pointer-events-none"
-          )}
-          width="200"
-          height="50"
-          style={{ zIndex: -1 }}
+          className="glass-w-full glass-h-full glass-pointer-events-none"
+          viewBox="0 0 200 50"
+          preserveAspectRatio="none"
+          aria-hidden="true"
         >
           <path
             d={`M ${points.map((p) => `${p.x} ${p.y}`).join(" L ")}`}
@@ -337,7 +340,7 @@ export const GlassSuperpositionalMenu = forwardRef<
       <svg
         className={cn("glass-absolute glass-inset-0 glass-pointer-events-none")}
         data-glass-overlay="true"
-        style={{ zIndex: 10 }}
+        style={{ zIndex: 0, opacity: 0.18 }}
       >
         {currentStates
           .map((state) =>
@@ -396,62 +399,44 @@ export const GlassSuperpositionalMenu = forwardRef<
       index: number;
     }) => (
       <motion.div
-        className={cn("glass-relative")}
-        initial={{ opacity: 0, scale: 0.5 }}
+        className="glass-relative"
+        initial={{ opacity: 1 }}
         animate={
           prefersReducedMotion
             ? {}
             : {
                 opacity: getStateOpacity(state),
-                scale: getStateScale(state),
-                y: isObserved ? 0 : Math.sin(getQuantumPhase(state)) * 5,
-                rotateY: visualizeWaveFunction
-                  ? Math.sin(getQuantumPhase(state)) * 10
-                  : 0,
+                y: isObserved ? 0 : Math.sin(getQuantumPhase(state)) * 1.5,
               }
         }
         transition={respectMotionPreference({
           duration: 0.3,
           type: collapsedState ? "spring" : "tween",
         })}
-        whileHover={{
-          scale: getStateScale(state) * 1.05,
-          rotateY: 0,
-        }}
+        whileHover={{ y: -1 }}
         onClick={() => performMeasurement(state.id)}
       >
         <div
           className={cn(
             "glass-relative glass-p-4 glass-radius-lg glass-cursor-pointer glass-border-2 glass-transition-all glass-duration-300",
-            createGlassStyle({
-              variant: "default",
-              opacity: state.coherence,
-            }),
-            collapsedState === state.id
-              ? "glass-border-success glass-surface-success"
-              : state.entangled?.length
-                ? "glass-border-accent glass-surface-accent"
-                : "glass-border-primary glass-surface-primary"
+            "glass-border-subtle glass-surface-subtle"
           )}
           style={{
-            // Use createGlassStyle() instead,
-            boxShadow: `0 0 ${state.probability * 20}px ${
-              state.entangled?.length
-                ? quantumColors.entangled
-                : quantumColors.superposition
-            }40`,
+            ...menuGlassStyle,
+            boxShadow: `0 10px ${18 + state.probability * 12}px rgba(15, 23, 42, ${0.08 + state.probability * 0.06})`,
           }}
         >
-          {visualizeWaveFunction && !collapsedState && (
-            <WaveFunction state={state} index={index} />
-          )}
-
           <div className={cn("glass-relative glass-z-10")}>
             <div
               className={cn("glass-flex glass-items-center glass-space-x-3")}
             >
               {state.icon && (
-                <span className={cn("glass-text-2xl")}>{state.icon}</span>
+                <span
+                  style={{ fontSize: 18, lineHeight: 1 }}
+                  aria-hidden="true"
+                >
+                  {state.icon}
+                </span>
               )}
               <div className={cn("glass-flex-1")}>
                 <h3 className={cn("glass-text-primary glass-font-medium")}>
@@ -460,7 +445,7 @@ export const GlassSuperpositionalMenu = forwardRef<
                 {showProbabilities && (
                   <div
                     className={cn(
-                      "glass-flex glass-items-center glass-space-x-2 glass-text-sm glass-text-secondary"
+                      "glass-flex glass-items-center glass-flex-wrap glass-gap-2 glass-text-sm glass-text-secondary"
                     )}
                   >
                     <span>P: {(state.probability * 100).toFixed(1)}%</span>
@@ -494,6 +479,15 @@ export const GlassSuperpositionalMenu = forwardRef<
                 style={{ width: `${state.coherence * 100}%` }}
               />
             </div>
+
+            {visualizeWaveFunction && !collapsedState && (
+              <div
+                className="glass-mt-3 glass-w-full glass-overflow-hidden glass-radius"
+                style={{ height: 34, background: "rgba(226, 232, 240, 0.42)" }}
+              >
+                <WaveFunction state={state} index={index} />
+              </div>
+            )}
           </div>
 
           {/* Quantum field visualization */}
@@ -504,10 +498,8 @@ export const GlassSuperpositionalMenu = forwardRef<
               )}
               animate={{
                 background: [
-                  `radial-gradient(circle at ${50 + Math.sin(quantumTime) * 20}% ${50 + Math.cos(quantumTime * 0.7) * 20}%, 
-                   ${quantumColors.superposition}20 0%, transparent 50%)`,
-                  `radial-gradient(circle at ${50 + Math.sin(quantumTime + Math.PI) * 20}% ${50 + Math.cos(quantumTime * 0.7 + Math.PI) * 20}%, 
-                   ${quantumColors.superposition}20 0%, transparent 50%)`,
+                  `radial-gradient(circle at ${50 + Math.sin(quantumTime) * 20}% ${50 + Math.cos(quantumTime * 0.7) * 20}%, rgba(100, 116, 139, 0.10) 0%, transparent 50%)`,
+                  `radial-gradient(circle at ${50 + Math.sin(quantumTime + Math.PI) * 20}% ${50 + Math.cos(quantumTime * 0.7 + Math.PI) * 20}%, rgba(100, 116, 139, 0.10) 0%, transparent 50%)`,
                 ],
               }}
               transition={
@@ -535,12 +527,12 @@ export const GlassSuperpositionalMenu = forwardRef<
         ref={ref}
         variant="frosted"
         className={cn(
-          "glass-relative glass-p-6 glass-space-y-4 glass-text-white",
+          "glass-relative glass-p-6 glass-space-y-4 glass-text-primary",
           className
         )}
         style={{
-          color: "rgba(255, 255, 255, 0.95)",
-          backgroundColor: "var(--glass-primary-level3-surface)",
+          color: "rgba(15, 23, 42, 0.94)",
+          backgroundColor: "rgba(255, 255, 255, 0.3)",
         }}
         role="region"
         aria-label="Quantum superposition menu"
@@ -548,11 +540,16 @@ export const GlassSuperpositionalMenu = forwardRef<
       >
         {/* Quantum field background */}
         {showQuantumNoise && <QuantumNoise />}
-        {visualizeWaveFunction && <EntanglementLines />}
+        {visualizeWaveFunction &&
+          currentStates.some((state) => state.entangled?.length) && (
+            <EntanglementLines />
+          )}
 
         {/* Header */}
         <div
-          className={cn("glass-flex glass-items-center glass-justify-between")}
+          className={cn(
+            "glass-flex glass-items-start glass-justify-between glass-flex-wrap glass-gap-4"
+          )}
         >
           <div>
             <h2
@@ -569,26 +566,31 @@ export const GlassSuperpositionalMenu = forwardRef<
             </p>
           </div>
 
-          <div className={cn("glass-flex glass-items-center glass-space-x-4")}>
+          <div
+            className={cn(
+              "glass-flex glass-items-center glass-flex-wrap glass-gap-3"
+            )}
+          >
             {!collapsedState && (
               <>
                 <button
+                  aria-expanded="true"
+                  aria-controls={`${id}-states`}
                   onClick={() => performMeasurement()}
                   className={cn(
                     "glass-px-4 glass-py-2 glass-radius-lg glass-text-sm glass-font-medium glass-transition-colors glass-duration-200",
-                    createGlassStyle({ variant: "default" }),
                     "glass-text-primary hover:glass-text-white glass-border glass-border-primary hover:glass-border-white"
                   )}
                   style={{
-                    color: "rgba(255, 255, 255, 0.95)",
-                    backgroundColor: "var(--glass-primary-level3-surface)",
-                    borderColor: "rgba(255, 255, 255, 0.28)",
+                    ...menuGlassStyle,
                   }}
                 >
                   🔬 Measure
                 </button>
 
                 <button
+                  aria-expanded="true"
+                  aria-controls={`${id}-states`}
                   onClick={() => {
                     const randomStates = currentStates
                       .sort(() => Math.random() - 0.5)
@@ -598,13 +600,10 @@ export const GlassSuperpositionalMenu = forwardRef<
                   }}
                   className={cn(
                     "glass-px-4 glass-py-2 glass-radius-lg glass-text-sm glass-font-medium glass-transition-colors glass-duration-200",
-                    createGlassStyle({ variant: "default" }),
                     "glass-text-accent hover:glass-text-accent-light glass-border glass-border-accent hover:glass-border-accent-light"
                   )}
                   style={{
-                    color: "rgba(255, 255, 255, 0.95)",
-                    backgroundColor: "var(--glass-primary-level3-surface)",
-                    borderColor: "rgba(236, 72, 153, 0.42)",
+                    ...menuGlassStyle,
                   }}
                 >
                   ⚛ Entangle
@@ -612,14 +611,19 @@ export const GlassSuperpositionalMenu = forwardRef<
               </>
             )}
 
-            <div className={cn("glass-text-sm glass-text-muted")}>
+            <div className={cn("glass-text-sm glass-text-secondary")}>
               t: {quantumTime.toFixed(1)}
             </div>
           </div>
         </div>
 
         {/* Quantum states */}
-        <div className={cn("glass-space-y-3")}>
+        <div
+          id={`${id}-states`}
+          role="menu"
+          aria-label="Available quantum states"
+          className={cn("glass-space-y-3")}
+        >
           <AnimatePresence>
             {superpositionStates.map((state, index) => (
               <QuantumState key={state.id} state={state} index={index} />
@@ -630,9 +634,9 @@ export const GlassSuperpositionalMenu = forwardRef<
         {/* Quantum information */}
         <div
           className={cn(
-            "glass-p-4 glass-radius-lg glass-border glass-border-subtle",
-            createGlassStyle({ variant: "default" })
+            "glass-p-4 glass-radius-lg glass-border glass-border-subtle"
           )}
+          style={menuGlassStyle}
         >
           <div
             className={cn(
@@ -688,13 +692,10 @@ export const GlassSuperpositionalMenu = forwardRef<
             }}
             className={cn(
               "glass-w-full glass-p-3 glass-radius-lg glass-text-sm glass-font-medium glass-transition-colors glass-duration-200",
-              createGlassStyle({ variant: "default" }),
               "glass-text-info hover:glass-text-info-light glass-border glass-border-info hover:glass-border-info-light"
             )}
             style={{
-              color: "rgba(255, 255, 255, 0.95)",
-              backgroundColor: "var(--glass-primary-level3-surface)",
-              borderColor: "rgba(59, 130, 246, 0.42)",
+              ...menuGlassStyle,
             }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

@@ -54,11 +54,10 @@ export const LiquidGlassCommandSurface = forwardRef<
 
     return (
       <div className="glass-fixed glass-inset-0 glass-z-1200 glass-grid glass-place-items-start glass-overflow-y-auto glass-px-4 glass-py-16 sm:glass-px-6 sm:glass-py-24">
-        <button
-          type="button"
-          aria-label="Close command surface"
+        <div
+          aria-hidden="true"
           data-glass-overlay="true"
-          className="glass-absolute glass-inset-0 glass-bg-black/20"
+          className="glass-absolute glass-inset-0 glass-bg-white/20 glass-backdrop-blur-md"
           onClick={() => onOpenChange?.(false)}
         />
         <LiquidGlassMaterial
@@ -69,6 +68,15 @@ export const LiquidGlassCommandSurface = forwardRef<
             "liquid-glass-command-surface glass-relative glass-z-10 glass-mx-auto glass-w-full glass-max-w-2xl glass-overflow-hidden",
             className
           )}
+          style={
+            {
+              background:
+                "linear-gradient(135deg, rgba(255,255,255,0.30), rgba(255,255,255,0.18) 55%, rgba(255,255,255,0.12))",
+              color: "rgba(15,23,42,0.94)",
+              "--glass-theme-text": "rgba(15,23,42,0.94)",
+              "--glass-theme-text-secondary": "rgba(15,23,42,0.76)",
+            } as React.CSSProperties
+          }
           {...props}
         >
           <input
@@ -92,7 +100,7 @@ export const LiquidGlassCommandSurface = forwardRef<
           <div
             ref={listRef}
             role="listbox"
-            className="glass-relative glass-max-h-[min(24rem,calc(100vh-12rem))] glass-overflow-y-auto glass-p-2"
+            className="glass-relative glass-max-h-[min(24rem,calc(100vh-12rem))] glass-overflow-y-auto glass-p-2 glass-space-y-2"
             data-liquid-glass-scroll-target
           >
             <LiquidGlassScrollEdge
@@ -109,24 +117,37 @@ export const LiquidGlassCommandSurface = forwardRef<
                 disabled={item.disabled}
                 className={cn(
                   "glass-flex glass-w-full glass-min-w-0 glass-items-center glass-gap-3 glass-radius-lg glass-px-3 glass-py-2 glass-text-left",
-                  index === selectedIndex && "glass-surface-primary"
+                  index === selectedIndex && "glass-surface-primary/20"
                 )}
+                style={{
+                  background:
+                    index === selectedIndex
+                      ? "rgba(255,255,255,0.24)"
+                      : "rgba(255,255,255,0.12)",
+                  color: "rgba(15,23,42,0.94)",
+                }}
                 onMouseEnter={() => setSelectedIndex(index)}
                 onClick={item.onSelect}
               >
                 {item.icon}
                 <span className="glass-min-w-0 glass-flex-1">
-                  <span className="glass-block glass-truncate">
+                  <span className="glass-block glass-truncate glass-text-primary">
                     {item.label}
                   </span>
                   {item.description && (
-                    <span className="glass-block glass-truncate glass-text-xs glass-text-secondary">
+                    <span
+                      className="glass-block glass-truncate glass-text-xs glass-text-secondary"
+                      style={{ color: "rgba(15,23,42,0.76)" }}
+                    >
                       {item.description}
                     </span>
                   )}
                 </span>
                 {item.shortcut && (
-                  <span className="glass-shrink-0 glass-text-xs glass-text-secondary">
+                  <span
+                    className="glass-shrink-0 glass-text-xs glass-text-secondary"
+                    style={{ color: "rgba(15,23,42,0.76)" }}
+                  >
                     {item.shortcut}
                   </span>
                 )}

@@ -291,6 +291,19 @@ export const GlassComponentPlayground: React.FC<
                     ? "bg-white/20 glass-text-primary"
                     : "glass-text-primary/70 hover:glass-text-primary hover:bg-white/10"
                 }`}
+                style={{
+                  appearance: "none",
+                  WebkitAppearance: "none",
+                  width: "100%",
+                  border: "1px solid rgba(148,163,184,.28)",
+                  background:
+                    selectedExample === example.id
+                      ? "rgba(255,255,255,.22)"
+                      : "rgba(255,255,255,.12)",
+                  boxShadow: "inset 0 1px 0 rgba(255,255,255,.24)",
+                  color: "inherit",
+                  font: "inherit",
+                }}
               >
                 <div className="glass-font-medium glass-text-sm">
                   {example.name}
@@ -300,7 +313,7 @@ export const GlassComponentPlayground: React.FC<
                     {example.description}
                   </div>
                 )}
-                <div className="glass-text-xs glass-opacity-50 glass-mt-1 glass-capitalize">
+                <div className="glass-text-xs glass-text-secondary glass-mt-1 glass-capitalize">
                   {example.category}
                 </div>
               </button>
@@ -319,6 +332,21 @@ export const GlassComponentPlayground: React.FC<
                   ? "glass-text-primary border-b-2 border-blue-400"
                   : "glass-text-primary/70 hover:glass-text-primary"
               }`}
+              style={{
+                appearance: "none",
+                WebkitAppearance: "none",
+                border: 0,
+                borderBottom:
+                  activeTab === "preview"
+                    ? "2px solid rgba(100,116,139,.58)"
+                    : "2px solid transparent",
+                background:
+                  activeTab === "preview"
+                    ? "rgba(255,255,255,.18)"
+                    : "transparent",
+                color: "inherit",
+                font: "inherit",
+              }}
             >
               Preview
             </button>
@@ -331,6 +359,21 @@ export const GlassComponentPlayground: React.FC<
                     ? "glass-text-primary border-b-2 border-blue-400"
                     : "glass-text-primary/70 hover:glass-text-primary"
                 }`}
+                style={{
+                  appearance: "none",
+                  WebkitAppearance: "none",
+                  border: 0,
+                  borderBottom:
+                    activeTab === "code"
+                      ? "2px solid rgba(100,116,139,.58)"
+                      : "2px solid transparent",
+                  background:
+                    activeTab === "code"
+                      ? "rgba(255,255,255,.18)"
+                      : "transparent",
+                  color: "inherit",
+                  font: "inherit",
+                }}
               >
                 Code
               </button>
@@ -344,6 +387,21 @@ export const GlassComponentPlayground: React.FC<
                     ? "glass-text-primary border-b-2 border-blue-400"
                     : "glass-text-primary/70 hover:glass-text-primary"
                 }`}
+                style={{
+                  appearance: "none",
+                  WebkitAppearance: "none",
+                  border: 0,
+                  borderBottom:
+                    activeTab === "props"
+                      ? "2px solid rgba(100,116,139,.58)"
+                      : "2px solid transparent",
+                  background:
+                    activeTab === "props"
+                      ? "rgba(255,255,255,.18)"
+                      : "transparent",
+                  color: "inherit",
+                  font: "inherit",
+                }}
               >
                 Props
               </button>
@@ -359,6 +417,21 @@ export const GlassComponentPlayground: React.FC<
                     ? "glass-text-primary border-b-2 border-blue-400"
                     : "glass-text-primary/70 hover:glass-text-primary"
                 }`}
+                style={{
+                  appearance: "none",
+                  WebkitAppearance: "none",
+                  border: 0,
+                  borderBottom:
+                    activeTab === tab.id
+                      ? "2px solid rgba(100,116,139,.58)"
+                      : "2px solid transparent",
+                  background:
+                    activeTab === tab.id
+                      ? "rgba(255,255,255,.18)"
+                      : "transparent",
+                  color: "inherit",
+                  font: "inherit",
+                }}
               >
                 {tab.label}
               </button>
@@ -414,7 +487,15 @@ export const GlassComponentPlayground: React.FC<
                       onClick={() =>
                         navigator.clipboard?.writeText(componentCode)
                       }
-                      className="glass-px-3 glass-py-1 glass-text-sm glass-surface-subtle/10 hover:glass-surface-subtle/20 glass-radius-md glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
+                      className="glass-px-3 glass-py-1 glass-text-sm glass-radius-md glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
+                      style={{
+                        appearance: "none",
+                        WebkitAppearance: "none",
+                        border: "1px solid rgba(148, 163, 184, 0.28)",
+                        background: "rgba(255, 255, 255, 0.18)",
+                        color: "inherit",
+                        font: "inherit",
+                      }}
                     >
                       Copy
                     </button>

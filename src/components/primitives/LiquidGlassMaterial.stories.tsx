@@ -105,7 +105,7 @@ function MaterialStage({ children, narrow = false }: { children: ReactNode; narr
           padding: 28,
           borderRadius: 32,
           background:
-            'linear-gradient(135deg, rgba(255,255,255,0.70), rgba(219,234,254,0.52)), radial-gradient(circle at 16% 16%, rgba(59,130,246,0.22), transparent 28%), radial-gradient(circle at 84% 76%, rgba(20,184,166,0.18), transparent 30%)',
+            'linear-gradient(135deg, rgba(255,255,255,0.82), rgba(236,238,240,0.64)), radial-gradient(circle at 16% 16%, rgba(255,255,255,0.30), rgba(255,255,255,0.08) 28%), radial-gradient(circle at 84% 76%, rgba(148,163,184,0.10), rgba(255,255,255,0.08) 30%)',
           boxShadow: '0 24px 80px rgba(15,23,42,0.14)',
         }}
       >

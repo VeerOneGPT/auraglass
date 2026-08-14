@@ -255,7 +255,8 @@ export const GlassToggle = React.forwardRef<
       <Motion
         data-glass-component
         {...getAnimationProps()}
-        className="glass-inline-glass-block"
+        tabIndex={-1}
+        className="glass-inline-glass-block glass-pointer-events-none"
       >
         <OptimizedGlass
           intent="neutral"
@@ -271,6 +272,7 @@ export const GlassToggle = React.forwardRef<
           data-testid={dataTestId || "glasstoggle"}
           className={cn(
             "relative flex items-center justify-center glass-gap-2 font-medium",
+            "pointer-events-auto",
             "focus:outline-none focus:ring-2 glass-focus-ring-white-opacity-30 focus:ring-offset-2 focus:ring-offset-transparent",
             "disabled:opacity-50 glass-disabled-cursor-not-allowed disabled:hover:transform-none",
             sizeClasses[size],

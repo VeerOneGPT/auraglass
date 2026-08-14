@@ -50,6 +50,7 @@ export const GlassTabs = forwardRef<HTMLDivElement, GlassTabsProps>(
       variant = "default",
       activationMode = "automatic",
       className,
+      style,
       children,
       "aria-label": ariaLabel,
       ...props
@@ -146,7 +147,8 @@ export const GlassTabs = forwardRef<HTMLDivElement, GlassTabsProps>(
 GlassTabs.displayName = "GlassTabs";
 
 // TabsList component
-export interface GlassTabsListProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface GlassTabsListProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   loop?: boolean;
 }
 
@@ -230,6 +232,11 @@ export const GlassTabsList = forwardRef<HTMLDivElement, GlassTabsListProps>(
           variant === "pills" ? "rounded-2xl" : "glass-radius-xl",
           className
         )}
+        style={{
+          maxWidth: "100%",
+          minWidth: 0,
+          boxSizing: "border-box",
+        }}
         {...(commonA11y as any)}
         {...props}
       >
@@ -274,7 +281,8 @@ export const GlassTabsList = forwardRef<HTMLDivElement, GlassTabsListProps>(
 GlassTabsList.displayName = "GlassTabsList";
 
 // TabsTrigger component
-export interface GlassTabsTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface GlassTabsTriggerProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   value: string;
   icon?: React.ReactNode;
   badge?: string | number;
@@ -292,6 +300,7 @@ export const GlassTabsTrigger = forwardRef<
       badge,
       disabled = false,
       className,
+      style,
       children,
       onClick,
       ...props
@@ -408,7 +417,15 @@ export const GlassTabsTrigger = forwardRef<
     return (
       <Motion
         preset="scaleIn"
-        className="glass-relative glass-inline-glass-block glass-flex-shrink-0"
+        className={cn(
+          "glass-relative glass-inline-glass-block glass-flex-shrink-0",
+          className?.includes("glass-flex-1") && "glass-min-w-0 glass-flex-1"
+        )}
+        style={
+          className?.includes("glass-flex-1")
+            ? { flex: "1 1 0", minWidth: 0 }
+            : undefined
+        }
       >
         <GlassButton
           ref={(node: any) => {
@@ -426,6 +443,17 @@ export const GlassTabsTrigger = forwardRef<
           data-value={value}
           data-state={isSelected ? "active" : "inactive"}
           className={cn(baseStyles, variantStyles[variant], className)}
+          style={{
+            color: "rgba(15, 23, 42, 0.94)",
+            ...(className?.includes("glass-flex-1")
+              ? {
+                  width: "100%",
+                  maxWidth: "100%",
+                  minWidth: 0,
+                }
+              : undefined),
+            ...style,
+          }}
           disabled={disabled}
           onClick={handleClick}
           onKeyDown={handleKeyDown}
@@ -434,10 +462,15 @@ export const GlassTabsTrigger = forwardRef<
           {icon && <span className="glass-shrink-0">{icon}</span>}
 
           {children && (
-            <span className="glass-min-w-0 glass-truncate">{children}</span>
+            <span
+              className="glass-min-w-0 glass-truncate"
+              style={{ color: "rgba(15, 23, 42, 0.94)" }}
+            >
+              {children}
+            </span>
           )}
 
-          {badge && (
+          {badge && !className?.includes("glass-flex-1") && (
             <span
               className={cn(
                 "glass-ml-2 glass-radius-full glass-px-2 glass-py-0.5 glass-text-xs",
@@ -466,7 +499,8 @@ export const GlassTabsTrigger = forwardRef<
 GlassTabsTrigger.displayName = "GlassTabsTrigger";
 
 // TabsContent component
-export interface GlassTabsContentProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface GlassTabsContentProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   value: string;
   forceMount?: boolean;
 }
@@ -499,7 +533,7 @@ export const GlassTabsContent = forwardRef<
         role="tabpanel"
         aria-labelledby={`trigger-${value}`}
         id={`content-${value}`}
-        tabIndex={0}
+        tabIndex={-1}
         data-state={isSelected ? "active" : "inactive"}
         {...props}
       >

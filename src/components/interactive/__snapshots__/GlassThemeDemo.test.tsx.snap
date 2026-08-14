@@ -3,7 +3,7 @@
 exports[`GlassThemeDemo matches snapshot 1`] = `
 <div
   class="optimized-glass-surface glass-neutral-level3 glass-tier-high flex flex-col glass-gap-6 w-full glass-radius-xl p-8 relative overflow-hidden"
-  style="background-color: rgba(15, 23, 42, 0.24); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.24); border-radius: 8px; box-shadow: 0px 12px 40px 0px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 0 16px rgba(255,255,255,0.14); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+  style="background-color: rgba(255, 255, 255, 0.14); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 12px 40px 0px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 0 16px rgba(255,255,255,0.14); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
 >
   <div
     aria-hidden="true"
@@ -40,7 +40,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
     >
       <div
         class="optimized-glass-surface glass-neutral-level2 glass-tier-high glass-foundation-complete relative glass-radius-xl glass-overlay-noise glass-edge glass-overlay-specular glass-typography-reset duration-[300ms] ease-out glass-p-4 transition-none overflow-hidden"
-        style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+        style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
       >
         <div
           class="glass-relative glass-z-10"
@@ -248,7 +248,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
               >
                 <div
                   class="glass-w-full glass-radius-md glass-ring-1 glass-ring-white-opacity-10 glass-h-16 glass-mb-3"
-                  style="background-color: rgb(248, 250, 252); color: rgb(30, 41, 59); --preview-primary: #8b5cf6; --preview-secondary: #64748b;"
+                  style="background-color: rgb(248, 250, 252); color: rgb(30, 41, 59); --preview-primary: #cbd5e1; --preview-secondary: #64748b;"
                 >
                   <div
                     class="glass-p-2 glass-gap-1"
@@ -318,7 +318,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
         class="optimized-glass-surface glass-neutral-level1 glass-tier-high glass-max-w-full glass-items-center glass-justify-start glass-flex glass-flex-row glass-overflow-x-auto glass-overflow-y-hidden glass-tabs-list glass-radius-xl glass-p-1 glass-gap-2 glass-radius-xl"
         data-performance-mode="medium"
         role="tablist"
-        style="background-color: rgba(15, 23, 42, 0.2); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; box-shadow: 0px 4px 24px 0px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 0 8px rgba(255,255,255,0.10); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+        style="background-color: rgba(255, 255, 255, 0.1); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 4px 24px 0px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 0 8px rgba(255,255,255,0.10); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64); max-width: 100%; min-width: 0; box-sizing: border-box;"
       >
         <div
           class="motion-primitive glass-relative glass-inline-glass-block glass-flex-shrink-0"
@@ -330,7 +330,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
             <button
               aria-controls="content-inputs"
               aria-selected="true"
-              class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus relative overflow-hidden glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet glass-inline-flex glass-min-w-max glass-max-w-full glass-flex-shrink-0 glass-items-center glass-justify-center glass-gap-2 glass-whitespace-nowrap glass-radius-lg glass-px-3 glass-py-2 glass-text-sm glass-font-medium glass-transition-all glass-duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 glass-surface-subtle glass-text-primary glass-shadow-md glass-border glass-border-glass-border/20"
+              class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus relative overflow-hidden box-border glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet glass-inline-flex glass-min-w-max glass-max-w-full glass-flex-shrink-0 glass-items-center glass-justify-center glass-gap-2 glass-whitespace-nowrap glass-radius-lg glass-px-3 glass-py-2 glass-text-sm glass-font-medium glass-transition-all glass-duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 glass-surface-subtle glass-text-primary glass-shadow-md glass-border glass-border-glass-border/20"
               data-button-size="md"
               data-button-variant="default"
               data-magnet="true"
@@ -339,13 +339,14 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
               data-value="inputs"
               id="trigger-inputs"
               role="tab"
-              style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none;"
+              style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none; --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
             >
               <span
                 class="glass-relative glass-z-10"
               >
                 <span
                   class="glass-min-w-0 glass-truncate"
+                  style="color: rgba(15, 23, 42, 0.94);"
                 >
                   Input Components
                 </span>
@@ -363,7 +364,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
             <button
               aria-controls="content-feedback"
               aria-selected="false"
-              class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus relative overflow-hidden glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet glass-inline-flex glass-min-w-max glass-max-w-full glass-flex-shrink-0 glass-items-center glass-justify-center glass-gap-2 glass-whitespace-nowrap glass-radius-lg glass-px-3 glass-py-2 glass-text-sm glass-font-medium glass-transition-all glass-duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 glass-text-secondary hover:glass-text-primary hover:glass-surface-subtle/50"
+              class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus relative overflow-hidden box-border glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet glass-inline-flex glass-min-w-max glass-max-w-full glass-flex-shrink-0 glass-items-center glass-justify-center glass-gap-2 glass-whitespace-nowrap glass-radius-lg glass-px-3 glass-py-2 glass-text-sm glass-font-medium glass-transition-all glass-duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 glass-text-secondary hover:glass-text-primary hover:glass-surface-subtle/50"
               data-button-size="md"
               data-button-variant="default"
               data-magnet="true"
@@ -372,13 +373,14 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
               data-value="feedback"
               id="trigger-feedback"
               role="tab"
-              style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none;"
+              style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none; --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
             >
               <span
                 class="glass-relative glass-z-10"
               >
                 <span
                   class="glass-min-w-0 glass-truncate"
+                  style="color: rgba(15, 23, 42, 0.94);"
                 >
                   Feedback Components
                 </span>
@@ -396,7 +398,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
             <button
               aria-controls="content-layout"
               aria-selected="false"
-              class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus relative overflow-hidden glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet glass-inline-flex glass-min-w-max glass-max-w-full glass-flex-shrink-0 glass-items-center glass-justify-center glass-gap-2 glass-whitespace-nowrap glass-radius-lg glass-px-3 glass-py-2 glass-text-sm glass-font-medium glass-transition-all glass-duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 glass-text-secondary hover:glass-text-primary hover:glass-surface-subtle/50"
+              class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus relative overflow-hidden box-border glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet glass-inline-flex glass-min-w-max glass-max-w-full glass-flex-shrink-0 glass-items-center glass-justify-center glass-gap-2 glass-whitespace-nowrap glass-radius-lg glass-px-3 glass-py-2 glass-text-sm glass-font-medium glass-transition-all glass-duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 glass-text-secondary hover:glass-text-primary hover:glass-surface-subtle/50"
               data-button-size="md"
               data-button-variant="default"
               data-magnet="true"
@@ -405,13 +407,14 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
               data-value="layout"
               id="trigger-layout"
               role="tab"
-              style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none;"
+              style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none; --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
             >
               <span
                 class="glass-relative glass-z-10"
               >
                 <span
                   class="glass-min-w-0 glass-truncate"
+                  style="color: rgba(15, 23, 42, 0.94);"
                 >
                   Layout Components
                 </span>
@@ -429,7 +432,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
             <button
               aria-controls="content-navigation"
               aria-selected="false"
-              class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus relative overflow-hidden glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet glass-inline-flex glass-min-w-max glass-max-w-full glass-flex-shrink-0 glass-items-center glass-justify-center glass-gap-2 glass-whitespace-nowrap glass-radius-lg glass-px-3 glass-py-2 glass-text-sm glass-font-medium glass-transition-all glass-duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 glass-text-secondary hover:glass-text-primary hover:glass-surface-subtle/50"
+              class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus relative overflow-hidden box-border glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet glass-inline-flex glass-min-w-max glass-max-w-full glass-flex-shrink-0 glass-items-center glass-justify-center glass-gap-2 glass-whitespace-nowrap glass-radius-lg glass-px-3 glass-py-2 glass-text-sm glass-font-medium glass-transition-all glass-duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 glass-text-secondary hover:glass-text-primary hover:glass-surface-subtle/50"
               data-button-size="md"
               data-button-variant="default"
               data-magnet="true"
@@ -438,13 +441,14 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
               data-value="navigation"
               id="trigger-navigation"
               role="tab"
-              style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none;"
+              style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none; --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
             >
               <span
                 class="glass-relative glass-z-10"
               >
                 <span
                   class="glass-min-w-0 glass-truncate"
+                  style="color: rgba(15, 23, 42, 0.94);"
                 >
                   Navigation Components
                 </span>
@@ -462,7 +466,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
             <button
               aria-controls="content-display"
               aria-selected="false"
-              class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus relative overflow-hidden glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet glass-inline-flex glass-min-w-max glass-max-w-full glass-flex-shrink-0 glass-items-center glass-justify-center glass-gap-2 glass-whitespace-nowrap glass-radius-lg glass-px-3 glass-py-2 glass-text-sm glass-font-medium glass-transition-all glass-duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 glass-text-secondary hover:glass-text-primary hover:glass-surface-subtle/50"
+              class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus relative overflow-hidden box-border glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet glass-inline-flex glass-min-w-max glass-max-w-full glass-flex-shrink-0 glass-items-center glass-justify-center glass-gap-2 glass-whitespace-nowrap glass-radius-lg glass-px-3 glass-py-2 glass-text-sm glass-font-medium glass-transition-all glass-duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 glass-text-secondary hover:glass-text-primary hover:glass-surface-subtle/50"
               data-button-size="md"
               data-button-variant="default"
               data-magnet="true"
@@ -471,13 +475,14 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
               data-value="display"
               id="trigger-display"
               role="tab"
-              style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none;"
+              style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none; --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
             >
               <span
                 class="glass-relative glass-z-10"
               >
                 <span
                   class="glass-min-w-0 glass-truncate"
+                  style="color: rgba(15, 23, 42, 0.94);"
                 >
                   Display Components
                 </span>
@@ -494,14 +499,14 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
           data-state="active"
           id="content-inputs"
           role="tabpanel"
-          tabindex="0"
+          tabindex="-1"
         >
           <div
             class="glass-grid glass-grid-cols-1 md:glass-grid-cols-2 lg:glass-grid-cols-3 glass-gap-6 glass-mt-4"
           >
             <div
               class="optimized-glass-surface glass-neutral-level2 glass-tier-high glass-foundation-complete relative glass-radius-xl overflow-hidden glass-overlay-noise glass-edge glass-overlay-specular glass-typography-reset ease-out glass-p-4 p-5 h-full flex flex-col transition-all duration-200"
-              style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+              style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
             >
               <div
                 class="glass-relative glass-z-10"
@@ -520,14 +525,14 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
                     data-glass-component="true"
                   >
                     <button
-                      class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet"
+                      class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden box-border glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet"
                       data-button-size="md"
                       data-button-variant="primary"
                       data-caustics="true"
                       data-magnet="true"
                       data-performance-mode="ultra"
                       id="glass-button-:r3s:"
-                      style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none;"
+                      style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none; --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
                     >
                       <span
                         class="glass-relative glass-z-10"
@@ -541,14 +546,14 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
                     data-glass-component="true"
                   >
                     <button
-                      class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet"
+                      class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden box-border glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet"
                       data-adaptive="true"
                       data-button-size="md"
                       data-button-variant="outline"
                       data-magnet="true"
                       data-performance-mode="ultra"
                       id="glass-button-:r3t:"
-                      style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none;"
+                      style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none; --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
                     >
                       <span
                         class="glass-relative glass-z-10"
@@ -562,7 +567,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
                     data-glass-component="true"
                   >
                     <button
-                      class="inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-secondary hover:glass-text-primary glass-elev-0 glass-radius-md glass-magnet glass-ripple glass-press"
+                      class="inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden box-border glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-secondary hover:glass-text-primary glass-elev-0 glass-radius-md glass-magnet glass-ripple glass-press"
                       data-button-size="md"
                       data-button-variant="ghost"
                       id="glass-button-:r3u:"
@@ -575,7 +580,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
             </div>
             <div
               class="optimized-glass-surface glass-neutral-level2 glass-tier-high glass-foundation-complete relative glass-radius-xl overflow-hidden glass-overlay-noise glass-edge glass-overlay-specular glass-typography-reset ease-out glass-p-4 p-5 h-full flex flex-col transition-all duration-200"
-              style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+              style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
             >
               <div
                 class="glass-relative glass-z-10"
@@ -597,7 +602,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
                     <div
                       class="optimized-glass-surface glass-neutral-level1 glass-lift-on-hover glass-press glass-tier-high glass-relative glass-flex glass-items-center glass-transition-all glass-duration-200 glass-radius-2xl glass-surface-dark/30 glass-border glass-border-white/10 glass-h-10 glass-px-4 glass-text-sm glass-surface-dark/30 glass-border glass-border-white/10 focus:glass-border-blue"
                       data-performance-mode="medium"
-                      style="background-color: rgba(15, 23, 42, 0.2); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(148, 163, 184, 0.24); border-radius: 8px; box-shadow: 0 8px 22px rgba(2, 6, 23, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0);"
+                      style="background-color: rgba(255, 255, 255, 0.1); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(148, 163, 184, 0.24); border-radius: 8px; box-shadow: 0 8px 22px rgba(15, 23, 42, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 0 0 12px rgba(255, 255, 255, 0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
                     >
                       <input
                         aria-label="Standard"
@@ -618,7 +623,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
                     <div
                       class="optimized-glass-surface glass-neutral-level1 glass-lift-on-hover glass-press glass-tier-high glass-relative glass-flex glass-items-center glass-transition-all glass-duration-200 glass-radius-2xl glass-surface-dark/30 glass-border glass-border-white/10 glass-h-10 glass-px-4 glass-text-sm glass-surface-dark/30 glass-border glass-border-white/10 focus:glass-border-blue"
                       data-performance-mode="medium"
-                      style="background-color: rgba(15, 23, 42, 0.2); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(148, 163, 184, 0.24); border-radius: 8px; box-shadow: 0 8px 22px rgba(2, 6, 23, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0);"
+                      style="background-color: rgba(255, 255, 255, 0.1); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(148, 163, 184, 0.24); border-radius: 8px; box-shadow: 0 8px 22px rgba(15, 23, 42, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 0 0 12px rgba(255, 255, 255, 0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
                     >
                       <input
                         aria-label="With placeholder"
@@ -639,7 +644,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
                     <div
                       class="optimized-glass-surface glass-neutral-level1 glass-lift-on-hover glass-press glass-tier-high glass-relative glass-flex glass-items-center glass-transition-all glass-duration-200 glass-radius-2xl glass-surface-dark/30 glass-border glass-border-white/10 glass-h-10 glass-px-4 glass-text-sm glass-surface-dark/30 glass-border glass-border-white/10 focus:glass-border-blue glass-opacity-50"
                       data-performance-mode="medium"
-                      style="background-color: rgba(15, 23, 42, 0.2); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(148, 163, 184, 0.24); border-radius: 8px; box-shadow: 0 8px 22px rgba(2, 6, 23, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0);"
+                      style="background-color: rgba(255, 255, 255, 0.1); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(148, 163, 184, 0.24); border-radius: 8px; box-shadow: 0 8px 22px rgba(15, 23, 42, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 0 0 12px rgba(255, 255, 255, 0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
                     >
                       <input
                         aria-disabled="true"
@@ -659,7 +664,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
             </div>
             <div
               class="optimized-glass-surface glass-neutral-level2 glass-tier-high glass-foundation-complete relative glass-radius-xl overflow-hidden glass-overlay-noise glass-edge glass-overlay-specular glass-typography-reset ease-out glass-p-4 p-5 h-full flex flex-col transition-all duration-200"
-              style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+              style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
             >
               <div
                 class="glass-relative glass-z-10"
@@ -705,13 +710,13 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
                         aria-expanded="false"
                         aria-haspopup="listbox"
                         aria-label="Select Option"
-                        class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet glass-w-full glass-flex glass-items-center glass-justify-between glass-surface-dark/20 hover:glass-surface-dark/30 glass-border glass-border-white/20 hover:glass-border-white/30 glass-radius-xl glass-outline-none glass-text-left glass-text-primary-glass-opacity-90 hover:glass-text-primary glass-backdrop-blur-sm glass-focus glass-touch-target glass-contrast-guard"
+                        class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden box-border glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet glass-w-full glass-flex glass-items-center glass-justify-between glass-surface-dark/20 hover:glass-surface-dark/30 glass-border glass-border-white/20 hover:glass-border-white/30 glass-radius-xl glass-outline-none glass-text-left glass-text-primary-glass-opacity-90 hover:glass-text-primary glass-backdrop-blur-sm glass-focus glass-touch-target glass-contrast-guard"
                         data-button-size="md"
                         data-button-variant="default"
                         data-magnet="true"
                         data-performance-mode="ultra"
                         id="glass-button-:r43:"
-                        style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none;"
+                        style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none; --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
                         type="button"
                       >
                         <span
@@ -744,7 +749,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
             </div>
             <div
               class="optimized-glass-surface glass-neutral-level2 glass-tier-high glass-foundation-complete relative glass-radius-xl overflow-hidden glass-overlay-noise glass-edge glass-overlay-specular glass-typography-reset ease-out glass-p-4 p-5 h-full flex flex-col transition-all duration-200"
-              style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+              style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
             >
               <div
                 class="glass-relative glass-z-10"
@@ -783,7 +788,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
                           class="optimized-glass-surface glass-neutral-level1 glass-lift-on-hover glass-press glass-tier-high glass-checkbox-box relative inline-flex items-center justify-center cursor-pointer group glass-radius-lg transition-all duration-200 glass-h-5 glass-w-5 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary focus-within:ring-offset-background"
                           data-performance-mode="medium"
                           role="checkbox"
-                          style="background-color: rgba(15, 23, 42, 0.2); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; box-shadow: 0px 4px 24px 0px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 0 8px rgba(255,255,255,0.10); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0);"
+                          style="background-color: rgba(255, 255, 255, 0.1); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 4px 24px 0px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 0 8px rgba(255,255,255,0.10); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
                         >
                           <div
                             class="motion-primitive flex items-center justify-center glass-h-4 glass-w-4 opacity-0"
@@ -822,7 +827,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
                         data-performance-mode="medium"
                         id="glass-radio-item-:r48:"
                         role="radio"
-                        style="background: rgba(5, 11, 24, 0.18); background-color: rgba(15, 23, 42, 0.2); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; box-shadow: 0px 4px 24px 0px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 0 8px rgba(255,255,255,0.10); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); box-sizing: border-box;"
+                        style="background: rgba(5, 11, 24, 0.18); background-color: rgba(255, 255, 255, 0.1); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 4px 24px 0px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 0 8px rgba(255,255,255,0.10); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64); box-sizing: border-box;"
                         tabindex="0"
                       >
                         <div
@@ -858,7 +863,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
                         data-performance-mode="medium"
                         id="glass-switch-:r49:"
                         role="switch"
-                        style="background-color: rgba(15, 23, 42, 0.2); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; box-shadow: 0px 4px 24px 0px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 0 8px rgba(255,255,255,0.10); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); width: 44px; height: 24px;"
+                        style="background-color: rgba(255, 255, 255, 0.1); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 4px 24px 0px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 0 8px rgba(255,255,255,0.10); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64); width: 44px; height: 24px;"
                         type="button"
                       >
                         <div
@@ -884,7 +889,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
             </div>
             <div
               class="optimized-glass-surface glass-neutral-level2 glass-tier-high glass-foundation-complete relative glass-radius-xl overflow-hidden glass-overlay-noise glass-edge glass-overlay-specular glass-typography-reset ease-out glass-p-4 p-5 h-full flex flex-col transition-all duration-200"
-              style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+              style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
             >
               <div
                 class="glass-relative glass-z-10"
@@ -906,6 +911,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
                     class="glass-slider glass-relative glass-flex glass-items-center glass-w-full glass-h-6"
                     id="glass-slider-:r4b:"
                     role="group"
+                    style="overflow-x: clip; overflow-y: visible;"
                   >
                     <div
                       class="glass-slider-track glass-relative glass-backdrop-blur-md glass-radius-full glass-border glass-border-white/20 glass-w-full glass-h-2 glass-surface-subtle glass-cursor-pointer"
@@ -932,7 +938,7 @@ exports[`GlassThemeDemo matches snapshot 1`] = `
                       class="optimized-glass-surface glass-neutral-level3 glass-lift-on-hover glass-press glass-tier-high glass-slider-thumb glass-absolute glass-flex glass-items-center glass-justify-center glass-radius-full glass-cursor-pointer glass-transition-all glass-duration-200 glass-focus glass-border-primary glass-shadow-lg glass-h-5 glass-w-5 glass-top-1-2"
                       data-performance-mode="high"
                       role="slider"
-                      style="background-color: rgba(15, 23, 42, 0.24); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.24); border-radius: 8px; box-shadow: 0px 12px 40px 0px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 0 16px rgba(255,255,255,0.14); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out; position: relative; transform: translate(-50%, -50%); left: 50%;"
+                      style="background-color: rgba(255, 255, 255, 0.14); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 12px 40px 0px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.25), inset 0 0 16px rgba(255,255,255,0.14); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out; position: relative; transform: translate(-50%, -50%); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64); left: 50%;"
                       tabindex="0"
                     />
                   </div>

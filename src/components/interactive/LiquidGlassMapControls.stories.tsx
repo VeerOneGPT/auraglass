@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { LiquidGlassMapControls } from "./LiquidGlassMapControls";
 
 const meta: Meta<typeof LiquidGlassMapControls> = {
-  title: 'Effects + Advanced/Liquid Glass Map Controls',
+  title: "Effects + Advanced/Liquid Glass Map Controls",
   component: LiquidGlassMapControls,
   parameters: { layout: "fullscreen", previewSurface: "app" },
 };
@@ -30,9 +30,9 @@ export const Satellite: Story = {
           border-radius: 32px;
           color: #0f172a;
           background:
-            radial-gradient(circle at 24% 26%, rgba(96,165,250,.55), transparent 24%),
-            radial-gradient(circle at 72% 64%, rgba(20,184,166,.48), transparent 26%),
-            linear-gradient(135deg, #dbeafe, #e0f2fe 44%, #ccfbf1);
+            radial-gradient(circle at 24% 26%, rgba(255,255,255,.72), transparent 24%),
+            radial-gradient(circle at 72% 64%, rgba(148,163,184,.18), transparent 26%),
+            linear-gradient(135deg, #f8fafc, #eef2f7 44%, #e2e8f0);
           box-shadow: 0 28px 90px rgba(15,23,42,.18);
         }
 
@@ -85,9 +85,12 @@ export const Satellite: Story = {
           ]}
         />
         <div className="liquid-map-story-label">
-          <strong style={{ display: "block", fontSize: 18 }}>Satellite operations</strong>
+          <strong style={{ display: "block", fontSize: 18 }}>
+            Satellite operations
+          </strong>
           <span style={{ display: "block", marginTop: 6, color: "#475569" }}>
-            Clear vertical map controls remain readable over detailed map content.
+            Clear vertical map controls remain readable over detailed map
+            content.
           </span>
         </div>
       </div>

@@ -373,27 +373,14 @@ export const GlassCoherenceIndicator = forwardRef<
           ))}
 
           {/* Phase vector */}
-          <motion.line
+          <line
             x1="48"
             y1="48"
-            x2={phaseVector.x}
-            y2={phaseVector.y}
+            x2={Number.isFinite(phaseVector.x) ? phaseVector.x : 48}
+            y2={Number.isFinite(phaseVector.y) ? phaseVector.y : 48}
             stroke={getPhaseColor(currentPhase)}
             strokeWidth="3"
             strokeLinecap="round"
-            animate={
-              prefersReducedMotion
-                ? {}
-                : {
-                    x2: phaseVector.x,
-                    y2: phaseVector.y,
-                  }
-            }
-            transition={
-              shouldAnimate
-                ? { duration: ANIMATION.DURATION.fast / 1000 }
-                : { duration: 0 }
-            }
           />
 
           {/* Center dot */}
@@ -534,7 +521,7 @@ export const GlassCoherenceIndicator = forwardRef<
 
             <div
               className={cn(
-                "glass-flex glass-justify-between glass-mt-1 glass-text-xs glass-text-muted"
+                "glass-flex glass-justify-between glass-mt-1 glass-text-xs glass-text-secondary"
               )}
             >
               <span>0%</span>
@@ -605,8 +592,7 @@ export const GlassCoherenceIndicator = forwardRef<
             <div>
               <span className={cn("glass-text-secondary")}>Status:</span>
               <div
-                className={cn("glass-font-medium")}
-                style={{ color: coherenceStatus.color }}
+                className={cn("glass-font-medium glass-text-primary")}
               >
                 {clamp(currentCoherence) >= safeCoherenceThreshold
                   ? "Stable"

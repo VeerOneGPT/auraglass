@@ -99,8 +99,8 @@ const fallbackPoster =
       <path d="M604 360 468 280v160z" fill="#ffffff"/>
       <rect x="96" y="528" width="1088" height="16" rx="8" fill="rgba(255,255,255,0.24)"/>
       <rect x="96" y="528" width="462" height="16" rx="8" fill="#ffffff"/>
-      <text x="132" y="178" font-family="Inter, Arial, sans-serif" font-size="52" font-weight="700" fill="#ffffff">AuraGlass Video</text>
-      <text x="132" y="604" font-family="Inter, Arial, sans-serif" font-size="30" fill="#dbeafe">Stable visual media preview</text>
+      <text x="132" y="178" font-family="Aeonik, Arial, sans-serif" font-size="52" font-weight="700" fill="#ffffff">AuraGlass Video</text>
+      <text x="132" y="604" font-family="Aeonik, Arial, sans-serif" font-size="30" fill="#dbeafe">Stable visual media preview</text>
     </svg>
   `);
 
@@ -113,28 +113,30 @@ const controlButtonStyle: React.CSSProperties = {
   appearance: "none",
   WebkitAppearance: "none",
   border: "1px solid rgba(148, 163, 184, 0.42)",
-  color: "#f8fafc",
+  color: "#0f172a",
+  background: "linear-gradient(180deg, rgba(255,255,255,.32), rgba(248,250,252,.22))",
   boxShadow:
     "inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 28px rgba(2,6,23,0.28)",
 };
 
 const activeButtonStyle: React.CSSProperties = {
   ...createGlassStyle({
-    intent: "primary",
+    intent: "neutral",
     elevation: "level4",
     interactive: true,
   }),
   appearance: "none",
   WebkitAppearance: "none",
-  color: "#f8fafc",
-  borderColor: "rgba(191, 219, 254, 0.72)",
+  color: "#0f172a",
+  background: "linear-gradient(180deg, rgba(255,255,255,.35), rgba(248,250,252,.25))",
+  borderColor: "rgba(148, 163, 184, 0.48)",
   boxShadow:
     "inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 28px rgba(2,6,23,0.28)",
 };
 
 const menuStyle: React.CSSProperties = {
   ...createGlassStyle({ intent: "neutral", elevation: "level4" }),
-  color: "#f8fafc",
+  color: "#0f172a",
   border: "1px solid rgba(148, 163, 184, 0.34)",
   boxShadow: "0 18px 38px rgba(2, 6, 23, 0.42)",
 };
@@ -142,8 +144,8 @@ const menuStyle: React.CSSProperties = {
 const rangeStyle: React.CSSProperties = {
   appearance: "none",
   WebkitAppearance: "none",
-  color: "#38bdf8",
-  accentColor: "#38bdf8",
+  color: "#334155",
+  accentColor: "#334155",
 };
 
 const videoComponentStyles = `
@@ -205,10 +207,12 @@ const videoComponentStyles = `
   }
 
   .ag-advanced-video-player .ag-video-controls {
-    border-top: 1px solid var(--glass-border-default);
-    background:
-      linear-gradient(180deg, rgba(15, 23, 42, 0.42), rgba(2, 6, 23, 0.92)),
-      rgba(2, 6, 23, 0.84);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0.12)
+    );
     backdrop-filter: blur(var(--glass-neutral-level4-blur, 40px)) var(--glass-filter-base);
     -webkit-backdrop-filter: blur(var(--glass-neutral-level4-blur, 40px)) var(--glass-filter-base);
   }
@@ -462,12 +466,13 @@ const VideoControls: React.FC<ControlsProps> = ({
         bottom: 0,
         left: 0,
         zIndex: 20,
-        color: "#f8fafc",
+        color: "#0f172a",
       }}
     >
       {/* Progress Bar */}
       <div
-        className="glass-w-full glass-h-2 glass-surface-subtle/20 glass-radius-full glass-cursor-pointer glass-mb-4 glass-relative"
+        className="glass-w-full glass-radius-full glass-cursor-pointer glass-mb-4 glass-relative"
+        style={{ height: 16, overflow: "visible" }}
         onClick={handleProgressClick}
         onMouseMove={handleProgressDrag}
         onMouseDown={() => setSeeking(true)}
@@ -476,16 +481,20 @@ const VideoControls: React.FC<ControlsProps> = ({
       >
         {/* Buffered Progress */}
         <div
-          className="glass-absolute glass-top-0 glass-left-0 glass-h-full glass-surface-subtle glass-radius-full"
+          className="glass-absolute glass-left-0 glass-surface-subtle glass-radius-full"
           style={{
+            top: 4,
+            height: 8,
             width: `${bufferedPercent}%`,
           }}
         />
 
         {/* Played Progress */}
         <div
-          className="glass-absolute glass-top-0 glass-left-0 glass-h-full glass-surface-primary glass-radius-full"
+          className="glass-absolute glass-left-0 glass-surface-primary glass-radius-full"
           style={{
+            top: 4,
+            height: 8,
             width: `${playedPercent}%`,
           }}
         />
@@ -532,7 +541,7 @@ const VideoControls: React.FC<ControlsProps> = ({
             <button
               onClick={onMuteToggle}
               className="glass-w-10 glass-h-10 glass-flex glass-items-center glass-justify-center hover:glass-surface-subtle/20 glass-radius-full glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
-              style={controlButtonStyle}
+              style={{ ...controlButtonStyle, color: "rgba(248,250,252,.98)" }}
               aria-label={
                 isMuted || volume === 0 ? "Unmute video" : "Mute video"
               }

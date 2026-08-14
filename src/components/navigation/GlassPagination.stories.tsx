@@ -25,11 +25,12 @@ const meta: Meta<typeof GlassPagination> = {
   },
   args: {
     className: '',
-    currentPage: 4,
-    totalPages: 10,
-    size: 'md',
+    currentPage: 2,
+    totalPages: 4,
+    maxPageButtons: 4,
+    size: 'sm',
     disabled: false,
-    showFirstLast: true,
+    showFirstLast: false,
     onPageChange: fn(),
   },
 };
@@ -39,16 +40,15 @@ type Story = StoryObj<typeof GlassPagination>;
 
 const PaginationFrame = (props: React.ComponentProps<typeof GlassPagination>) => (
   <div
-    data-bg="dark"
+    data-bg="light"
     style={{
       minHeight: '100vh',
       display: 'grid',
       placeItems: 'center',
       padding: 16,
       boxSizing: 'border-box',
-      background:
-        'linear-gradient(135deg, rgba(15,23,42,0.96) 0%, rgba(30,41,59,0.92) 48%, rgba(8,47,73,0.9) 100%)',
-      color: '#f8fafc',
+      background: 'linear-gradient(145deg, #fafafa 0%, #f0f0f0 52%, #e6e6e6 100%)',
+      color: '#0f172a',
     }}
   >
     <section
@@ -56,19 +56,19 @@ const PaginationFrame = (props: React.ComponentProps<typeof GlassPagination>) =>
       style={{
         width: '100%',
         maxWidth: 560,
-        background: 'rgba(15,23,42,0.78)',
-        border: '1px solid rgba(226,232,240,0.18)',
-        color: '#f8fafc',
+        background: 'rgba(255,255,255,0.26)',
+        border: '1px solid rgba(255,255,255,0.32)',
+        color: '#0f172a',
       }}
     >
     <div className="glass-mb-4 glass-flex glass-items-center glass-justify-between glass-gap-4">
       <div>
-        <p className="glass-text-xs glass-font-semibold glass-uppercase glass-tracking-wide" style={{ color: '#cbd5e1' }}>
+        <p className="glass-text-xs glass-font-semibold glass-uppercase glass-tracking-wide" style={{ color: 'rgba(15,23,42,.7)' }}>
           Results
         </p>
-        <h3 className="glass-text-lg glass-font-semibold" style={{ color: '#f8fafc' }}>Renewal queue</h3>
+        <h3 className="glass-text-lg glass-font-semibold" style={{ color: '#0f172a' }}>Renewal queue</h3>
       </div>
-      <span className="glass-rounded-full glass-px-3 glass-py-1 glass-text-xs glass-font-medium" style={{ background: 'rgba(191,219,254,0.18)', color: '#bfdbfe' }}>
+      <span className="glass-rounded-full glass-px-3 glass-py-1 glass-text-xs glass-font-medium" style={{ background: 'rgba(255,255,255,0.28)', color: '#0f172a' }}>
         Page {props.currentPage}
       </span>
     </div>

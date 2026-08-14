@@ -110,6 +110,7 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
       centered = false,
       zIndex = 100,
       width,
+      showLabels,
       initialExpandedItems = [],
       collapsible = false,
       initialCollapsed = false,
@@ -392,6 +393,14 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
           <button
             type="button"
             className={itemClasses}
+            style={{
+              appearance: "none",
+              WebkitAppearance: "none",
+              border: 0,
+              background: isActive ? "rgba(100,116,139,.16)" : "transparent",
+              color: "inherit",
+              font: "inherit",
+            }}
             onClick={(e) => handleItemClick(item?.id || item?.key, item)}
             onKeyDown={handleNavKeyDown}
             disabled={item?.disabled}
@@ -519,6 +528,14 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
             )}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
+            style={{
+              appearance: "none",
+              WebkitAppearance: "none",
+              border: "1px solid rgba(148,163,184,.28)",
+              borderRadius: 12,
+              background: "rgba(255,255,255,.16)",
+              color: "inherit",
+            }}
           >
             <Icon name={mobileMenuOpen ? "close" : "menu"} />
           </button>
@@ -612,6 +629,13 @@ export const GlassNavigation = forwardRef<HTMLDivElement, GlassNavigationProps>(
                   "-left-3": collapsed,
                 }
               )}
+              style={{
+                appearance: "none",
+                WebkitAppearance: "none",
+                border: "1px solid rgba(148,163,184,.3)",
+                background: "rgba(255,255,255,.18)",
+                color: "inherit",
+              }}
             >
               <Icon
                 name={

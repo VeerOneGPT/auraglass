@@ -10,7 +10,6 @@ import {
 } from "../../primitives";
 import { Check, ChevronRight } from "../../icons";
 import React, { forwardRef } from "react";
-import { OptimizedGlass } from "../../primitives";
 import { Motion } from "../../primitives";
 
 type MenuSelectEvent = Event & { currentTarget?: EventTarget | null };
@@ -308,8 +307,8 @@ export const GlassDropdownMenuContent = forwardRef<
             }
             onDismiss={() => setOpen(false)}
             className={cn(
-              "glass-z-50 glass-min-w-[8rem] glass-overflow-hidden glass-radius-xl glass-p-1",
-              "glass-shadow-lg glass-border glass-border-glass-border/20",
+              "glass-z-50 glass-min-w-[8rem] glass-overflow-visible glass-radius-xl glass-p-1",
+              "glass-shadow-lg glass-border glass-border-glass-border/20 glass-backdrop-blur-xl glass-bg-white/24",
               "data-[state=open]:animate-in data-[state=closed]:animate-out",
               "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
               "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
@@ -319,6 +318,14 @@ export const GlassDropdownMenuContent = forwardRef<
               className
             )}
             style={{
+              background: "rgba(255, 255, 255, 0.24)",
+              border: "1px solid rgba(255, 255, 255, 0.24)",
+              backdropFilter:
+                "blur(24px) saturate(1.45) brightness(1.04) contrast(1.04)",
+              WebkitBackdropFilter:
+                "blur(24px) saturate(1.45) brightness(1.04) contrast(1.04)",
+              maxHeight: "min(32rem, calc(100vh - 1rem))",
+              overflowY: "auto",
               ...(isContained
                 ? {
                     position: "absolute",
@@ -363,19 +370,9 @@ export const GlassDropdownMenuContent = forwardRef<
             {...props}
           >
             <FocusScope loop>
-              <OptimizedGlass
-                intent="neutral"
-                elevation="level2"
-                intensity="medium"
-                depth={2}
-                tint="neutral"
-                border="subtle"
-                animation="none"
-                performanceMode="medium"
-                className="glass-p-0 glass-radial-reveal glass-lift"
-              >
+              <div className="glass-w-full glass-min-w-0 glass-p-0">
                 {children}
-              </OptimizedGlass>
+              </div>
             </FocusScope>
           </DismissableLayer>
         </Positioner>
@@ -872,8 +869,8 @@ export const GlassDropdownMenuSubContent = forwardRef<
           data-side="right"
           data-position-strategy={isContained ? "contained" : positionStrategy}
           className={cn(
-            "glass-z-50 glass-min-w-[8rem] glass-overflow-hidden glass-radius-xl glass-p-1",
-            "glass-shadow-lg glass-border glass-border-glass-border/20",
+            "glass-z-50 glass-min-w-[8rem] glass-overflow-visible glass-radius-xl glass-p-1",
+            "glass-shadow-lg glass-border glass-border-glass-border/20 glass-backdrop-blur-xl glass-bg-white/24",
             "data-[state=open]:animate-in data-[state=closed]:animate-out",
             "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
             "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
@@ -883,6 +880,12 @@ export const GlassDropdownMenuSubContent = forwardRef<
             className
           )}
           style={{
+            background: "rgba(255, 255, 255, 0.24)",
+            border: "1px solid rgba(255, 255, 255, 0.24)",
+            backdropFilter:
+              "blur(24px) saturate(1.45) brightness(1.04) contrast(1.04)",
+            WebkitBackdropFilter:
+              "blur(24px) saturate(1.45) brightness(1.04) contrast(1.04)",
             ...(isContained
               ? {
                   position: "absolute",
@@ -898,19 +901,7 @@ export const GlassDropdownMenuSubContent = forwardRef<
           }}
           {...props}
         >
-          <OptimizedGlass
-            intent="neutral"
-            elevation="level2"
-            intensity="medium"
-            depth={2}
-            tint="neutral"
-            border="subtle"
-            animation="none"
-            performanceMode="medium"
-            className="glass-p-0 glass-radial-reveal glass-lift"
-          >
-            {children}
-          </OptimizedGlass>
+          <div className="glass-w-full glass-min-w-0 glass-p-0">{children}</div>
         </DismissableLayer>
       </Positioner>
     );

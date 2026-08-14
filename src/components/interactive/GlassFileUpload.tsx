@@ -671,7 +671,7 @@ export const GlassFileUpload = forwardRef<HTMLDivElement, GlassFileUploadProps>(
               "glass-border-white/20 glass-surface-dark/20":
                 !isDragOver && !error,
               "glass-border-red glass-surface-red/20": error,
-              "glass-opacity-50 glass-cursor-not-allowed": disabled,
+              "glass-cursor-not-allowed": disabled,
             }
           )}
           onDragEnter={handleDragEnter}

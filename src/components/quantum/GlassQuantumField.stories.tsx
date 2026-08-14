@@ -1,31 +1,49 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import * as ComponentModule from "./GlassQuantumField";
 import {
-  CertificationCase,
-  type MissingComponentName,
-} from "../../stories/GlassMissingInventoryCertification.stories";
-
-const componentName = "GlassQuantumField" satisfies MissingComponentName;
-const Component = (ComponentModule as Record<string, any>)[componentName];
+  GlassQuantumField as GlassQuantumFieldComponent,
+  type GlassQuantumFieldProps,
+} from "./GlassQuantumField";
 
 const meta = {
-  title: 'Effects + Advanced/Glass Quantum Field',
-  component: Component,
+  title: "Effects + Advanced/Glass Quantum Field",
+  component: GlassQuantumFieldComponent,
   parameters: {
     layout: "centered",
     docs: {
       description: {
         component:
-          "Component-owned Storybook coverage for GlassQuantumField. This story renders the certified AuraGlass sample used by the full visual certification suite.",
+          "A live mount of GlassQuantumField configured as a compact, motion-stable quantum particle visualization.",
       },
     },
   },
-} satisfies Meta<typeof Component>;
+  tags: ["autodocs"],
+} satisfies Meta<typeof GlassQuantumFieldComponent>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  render: () => <CertificationCase name={componentName} />,
+const stableQuantumFieldArgs = {
+  width: 280,
+  height: 210,
+  particleCount: 12,
+  fieldResolution: 40,
+  coherence: 0.82,
+  entanglementStrength: 0.5,
+  uncertaintyLevel: 0.34,
+  energyLevel: 0.68,
+  showWaveFunctions: true,
+  showProbabilityClouds: true,
+  showEntanglement: true,
+  showMeasurement: false,
+  simulationType: "particle",
+  timeEvolution: false,
+  temperature: 0.08,
+  externalField: 0.2,
+  showControls: false,
+  showQuantumInfo: false,
+  respectMotionPreference: true,
+} satisfies GlassQuantumFieldProps;
+
+export const GlassQuantumField: Story = {
+  args: stableQuantumFieldArgs,
 };

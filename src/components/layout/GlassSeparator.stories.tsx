@@ -29,8 +29,17 @@ export default meta;
 type Story = StoryObj<typeof GlassSeparator>;
 
 export const Default: Story = {
+  render: (args) => (
+    <div className="glass-neutral-level1 glass-w-full glass-max-w-md glass-rounded-2xl glass-p-5 glass-shadow-xl">
+      <h3 className="glass-text-base glass-font-semibold glass-text-primary">Release checklist</h3>
+      <GlassSeparator {...args} className="glass-my-3" />
+      <p className="glass-text-sm glass-text-secondary">A separator divides content without adding noise.</p>
+      <GlassSeparator {...args} orientation="vertical" className="glass-mx-3 glass-inline-block glass-h-6" />
+      <span className="glass-text-sm glass-text-secondary">Inline separators stay aligned.</span>
+    </div>
+  ),
   args: {
-    
+    className: '',
   },
 };
 

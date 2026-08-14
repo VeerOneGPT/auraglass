@@ -30,7 +30,7 @@ export const Default: Story = {
   render: (args) => (
     <VStack
       {...args}
-      className="glass-w-full glass-max-w-md glass-rounded-2xl glass-bg-white/60 glass-p-5 glass-shadow-xl"
+      className="glass-neutral-level1 glass-w-full glass-max-w-md glass-rounded-2xl glass-p-5 glass-shadow-xl"
       aria-label="Account activity"
     >
       <h3 className="glass-text-lg glass-font-semibold glass-text-primary">Account activity</h3>

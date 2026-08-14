@@ -1,29 +1,41 @@
 .ag-marketing-scope {
-  --ag-aurora-a: var(--aura-marketing-palettes-aurora-cyan, #72f4ff);
-  --ag-aurora-b: var(--aura-marketing-palettes-aurora-violet, #7c5cff);
-  --ag-aurora-c: var(--aura-marketing-palettes-aurora-magenta, #ff6ec7);
-  --ag-aurora-d: var(--aura-marketing-palettes-aurora-mint, #7cffb2);
-  --ag-marketing-bg-0: #07111f;
-  --ag-marketing-bg-1: #111827;
+  --ag-aurora-a: var(
+    --aura-marketing-palettes-aurora-cyan,
+    var(--glass-color-accent)
+  );
+  --ag-aurora-b: var(
+    --aura-marketing-palettes-aurora-violet,
+    var(--glass-color-primary-light)
+  );
+  --ag-aurora-c: var(
+    --aura-marketing-palettes-aurora-magenta,
+    var(--glass-color-secondary)
+  );
+  --ag-aurora-d: var(
+    --aura-marketing-palettes-aurora-mint,
+    var(--glass-color-success-light)
+  );
+  --ag-marketing-bg-0: var(
+    --aura-color-global-background-base,
+    var(--glass-gray-900)
+  );
+  --ag-marketing-bg-1: var(--glass-gray-900);
   --glass-marketing-glass-bg: var(
     --aura-marketing-surface-showcase-background,
-    rgba(255, 255, 255, 0.1)
+    var(--glass-gradient-neutral)
   );
-  --glass-marketing-glass-bg-subtle: rgba(255, 255, 255, 0.07);
-  --glass-marketing-glass-bg-strong: rgba(255, 255, 255, 0.16);
+  --glass-marketing-glass-bg-subtle: var(
+    --aura-color-global-background-glass,
+    rgba(var(--glass-color-white) / 0.08)
+  );
+  --glass-marketing-glass-bg-strong: rgba(
+    var(--glass-color-white) / var(--glass-opacity-20)
+  );
   --glass-marketing-glass-border: var(
     --aura-marketing-surface-showcase-border,
-    rgba(255, 255, 255, 0.12)
+    var(--aura-color-global-border-soft, var(--glass-border-default))
   );
-  --glass-marketing-glass-border-strong: color-mix(
-    in srgb,
-    var(
-        --aura-marketing-surface-showcase-border,
-        var(--aura-color-global-border-soft)
-      )
-      70%,
-    white
-  );
+  --glass-marketing-glass-border-strong: rgba(var(--glass-color-white) / 0.28);
   --glass-marketing-glass-blur: var(--glass-blur-xl, 24px);
   --glass-marketing-glass-saturation: 1.65;
   --ag-marketing-vignette-opacity: 0.76;
@@ -33,30 +45,328 @@
   );
   --glass-elev-marketing-shadow: var(
     --aura-marketing-surface-showcase-glow,
-    0 24px 70px rgba(0, 0, 0, 0.28)
+    var(--glass-elev-6)
   );
   --glass-elev-marketing-highlight: inset 0 1px 0
     color-mix(in srgb, var(--glass-marketing-glass-border) 65%, transparent);
-  --glass-elev-marketing-particle: 0 0 16px rgba(255, 255, 255, 0.28);
+  --glass-elev-marketing-particle: 0 0 16px
+    rgba(var(--glass-color-white) / var(--glass-opacity-30));
   --glass-elev-marketing-core:
-    inset 0 1px 2px rgba(255, 255, 255, 0.48),
-    inset 0 -20px 48px rgba(0, 0, 0, 0.22);
-  --glass-elev-marketing-logo: 0 10px 28px rgba(0, 0, 0, 0.2);
-  --glass-elev-marketing-glow: 0 0 28px rgba(255, 255, 255, 0.1);
-  --glass-marketing-particle: rgba(255, 255, 255, var(--ag-particle-alpha));
-  --glass-marketing-vignette: rgba(0, 0, 0, 0.74);
-  --glass-marketing-shine-strong: rgba(255, 255, 255, 0.72);
-  --glass-marketing-shine-soft: rgba(255, 255, 255, 0.16);
-  --glass-marketing-logo-inner: rgba(255, 255, 255, 0.78);
-  --glass-marketing-highlight-line: rgba(255, 255, 255, 0.2);
-  --glass-marketing-feature-bg: rgba(255, 255, 255, 0.08);
-  --glass-marketing-text-primary: #f8fafc;
-  --glass-marketing-text-secondary: rgba(226, 232, 240, 0.82);
-  --glass-marketing-text-muted: rgba(203, 213, 225, 0.68);
+    inset 0 1px 2px rgba(var(--glass-color-white) / 0.28),
+    inset 0 -20px 48px rgba(var(--glass-color-black) / var(--glass-opacity-20));
+  --glass-elev-marketing-logo: 0 10px 28px
+    rgba(var(--glass-color-black) / var(--glass-opacity-20));
+  --glass-elev-marketing-glow: 0 0 28px
+    rgba(var(--glass-color-white) / var(--glass-opacity-10));
+  --glass-marketing-particle: rgba(
+    var(--glass-color-white) / var(--ag-particle-alpha, 0.3)
+  );
+  --glass-marketing-vignette: rgba(
+    var(--glass-color-black) / var(--glass-opacity-75)
+  );
+  --glass-marketing-shine-strong: rgba(
+    var(--glass-color-white) / var(--glass-opacity-30)
+  );
+  --glass-marketing-shine-soft: rgba(
+    var(--glass-color-white) / var(--glass-opacity-15)
+  );
+  --glass-marketing-logo-inner: rgba(
+    var(--glass-color-white) / var(--glass-opacity-30)
+  );
+  --glass-marketing-highlight-line: rgba(
+    var(--glass-color-white) / var(--glass-opacity-20)
+  );
+  --glass-marketing-feature-bg: rgba(var(--glass-color-white) / 0.08);
+  --glass-marketing-text-primary: var(
+    --aura-color-global-text-primary,
+    var(--glass-text-primary)
+  );
+  --glass-marketing-text-secondary: var(
+    --aura-color-global-text-secondary,
+    var(--glass-text-secondary)
+  );
+  --glass-marketing-text-muted: var(
+    --aura-color-global-text-tertiary,
+    var(--glass-text-tertiary)
+  );
   --ag-marketing-focus: var(
     --glass-focus-color-primary,
-    rgba(96, 165, 250, 0.65)
+    var(--glass-focus-color-default)
   );
+}
+
+/* The package recipe is rendered on the shared light evidence canvas. Keep
+   that launch surface luminous while preserving the normal dark aurora
+   treatment for standalone marketing pages. */
+.ag-marketing-launch-kit {
+  /* The launch recipe is a material demonstration, not a palette demo. Keep
+     chroma in a barely perceptible page-level atmosphere and make every
+     foreground material optically neutral. */
+  --ag-aurora-a: rgba(var(--glass-color-white) / 0.28);
+  --ag-aurora-b: rgba(var(--glass-color-white) / 0.22);
+  --ag-aurora-c: rgba(var(--glass-color-white) / 0.16);
+  --ag-aurora-d: rgba(var(--glass-color-white) / 0.12);
+  --glass-marketing-launch-backdrop-filter: blur(
+      var(--aura-glass-neutral-level2-backdrop-blur, 24px)
+    )
+    saturate(1.65) brightness(1.04) contrast(1.03);
+  --glass-marketing-ambient-accent: rgba(
+    var(--glass-color-white) / var(--glass-opacity-10)
+  );
+  --glass-elev-marketing-logo:
+    inset 0 1px 0 rgba(var(--glass-color-white) / 0.3),
+    0 12px 30px rgba(var(--glass-color-black) / 0.12);
+  --glass-elev-marketing-core: inset 0 1px 0
+    rgba(var(--glass-color-white) / 0.28);
+  --glass-elev-marketing-index:
+    inset 0 1px 0 rgba(var(--glass-color-white) / 0.3),
+    0 8px 20px rgba(var(--glass-color-black) / 0.1);
+  --glass-elev-marketing-button:
+    0 16px 42px rgba(var(--glass-color-black) / 0.16),
+    inset 0 1px 0 rgba(var(--glass-color-white) / 0.28),
+    inset 0 0 18px rgba(var(--glass-color-white) / 0.14);
+  --glass-theme-text: rgba(var(--glass-color-black) / var(--glass-opacity-90));
+  --glass-theme-text-secondary: rgba(
+    var(--glass-color-black) / var(--glass-opacity-90)
+  );
+  --glass-theme-text-tertiary: rgba(
+    var(--glass-color-black) / var(--glass-opacity-70)
+  );
+  --aura-marketing-surface-showcase-background: linear-gradient(
+    145deg,
+    rgba(var(--glass-color-white) / var(--glass-opacity-35)),
+    rgba(var(--glass-color-white) / var(--glass-opacity-20))
+  );
+  --aura-marketing-surface-showcase-glow:
+    0 24px 70px rgba(var(--glass-color-black) / var(--glass-opacity-15)),
+    0 0 44px rgba(var(--glass-color-white) / var(--glass-opacity-10));
+  background:
+    radial-gradient(
+      circle at 12% 8%,
+      rgba(var(--glass-color-white) / var(--glass-opacity-80)),
+      transparent 36%
+    ),
+    radial-gradient(
+      circle at 88% 16%,
+      var(--glass-marketing-ambient-accent),
+      transparent 34%
+    ),
+    linear-gradient(145deg, var(--glass-gray-50), var(--glass-gray-100));
+  color: rgba(var(--glass-color-black) / var(--glass-opacity-90));
+}
+
+.ag-marketing-launch-kit,
+.ag-marketing-launch-kit * {
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.ag-marketing-launch-kit > section {
+  width: 100%;
+  max-width: 100%;
+}
+
+.ag-marketing-launch-kit .ag-display-text {
+  display: block;
+  max-width: 100%;
+  overflow: visible;
+  overflow-wrap: anywhere;
+  line-height: 1.08;
+  padding-block: 0.12em 0.18em;
+}
+
+.ag-marketing-launch-kit .ag-display-text[data-gradient="true"] {
+  color: rgba(var(--glass-color-black) / var(--glass-opacity-90));
+  background: none;
+  -webkit-text-fill-color: currentColor;
+}
+
+@media (max-width: 639px) {
+  .ag-marketing-launch-kit > section {
+    padding: 1.25rem !important;
+  }
+
+  .ag-marketing-launch-kit .ag-display-text {
+    overflow-wrap: normal;
+    word-break: normal;
+    font-size: clamp(2.25rem, 12vw, 3.1rem) !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.045em;
+  }
+
+  .ag-marketing-launch-kit .ag-install-command {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .ag-marketing-launch-kit .ag-install-command__code {
+    overflow-x: visible;
+    white-space: normal;
+    overflow-wrap: normal;
+  }
+
+  .ag-marketing-launch-kit .ag-install-command__button {
+    flex-shrink: 0;
+  }
+}
+
+.ag-marketing-launch-kit .ag-marketing-scope {
+  --ag-aurora-a: rgba(var(--glass-color-white) / 0.28);
+  --ag-aurora-b: rgba(var(--glass-color-white) / 0.22);
+  --ag-aurora-c: rgba(var(--glass-color-white) / 0.16);
+  --ag-aurora-d: rgba(var(--glass-color-white) / 0.12);
+  --ag-marketing-bg-0: var(--glass-gray-50);
+  --ag-marketing-bg-1: var(--glass-gray-100);
+  --glass-theme-text: rgba(var(--glass-color-black) / var(--glass-opacity-90));
+  --glass-theme-text-secondary: rgba(
+    var(--glass-color-black) / var(--glass-opacity-90)
+  );
+  --glass-theme-text-tertiary: rgba(
+    var(--glass-color-black) / var(--glass-opacity-70)
+  );
+  --glass-theme-text-inverse: rgba(
+    var(--glass-color-black) / var(--glass-opacity-90)
+  );
+  --glass-text-primary: rgba(
+    var(--glass-color-black) / var(--glass-opacity-90)
+  );
+  --glass-text-secondary: rgba(
+    var(--glass-color-black) / var(--glass-opacity-90)
+  );
+  --glass-text-tertiary: rgba(
+    var(--glass-color-black) / var(--glass-opacity-70)
+  );
+  --glass-marketing-glass-bg-subtle: rgba(var(--glass-color-white) / 0.08);
+  --glass-marketing-text-primary: rgba(
+    var(--glass-color-black) / var(--glass-opacity-90)
+  );
+  --glass-marketing-text-secondary: rgba(
+    var(--glass-color-black) / var(--glass-opacity-90)
+  );
+  --glass-marketing-text-muted: rgba(
+    var(--glass-color-black) / var(--glass-opacity-70)
+  );
+  --glass-marketing-highlight-line: rgba(
+    var(--glass-color-white) / var(--glass-opacity-30)
+  );
+  --glass-marketing-feature-bg: rgba(
+    var(--glass-color-white) / var(--glass-opacity-20)
+  );
+}
+
+.ag-marketing-launch-kit .ag-aurora-background--light {
+  --ag-marketing-bg-0: var(--glass-gray-50);
+  --ag-marketing-bg-1: var(--glass-gray-100);
+  background:
+    radial-gradient(
+      circle at 16% 12%,
+      rgba(var(--glass-color-white) / 0.35),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 82% 18%,
+      var(--glass-marketing-ambient-accent),
+      transparent 32%
+    ),
+    linear-gradient(145deg, var(--glass-gray-50), var(--glass-gray-100));
+}
+
+.ag-marketing-launch-kit .ag-aurora-background__blob {
+  opacity: 0.2;
+  filter: blur(64px);
+}
+
+.ag-marketing-launch-kit .ag-aurora-background__grain {
+  opacity: 0.025;
+}
+
+.ag-marketing-launch-kit .ag-logo-mark {
+  border: 1px solid rgba(var(--glass-color-white) / 0.28);
+  background: linear-gradient(
+    145deg,
+    rgba(var(--glass-color-white) / 0.28),
+    rgba(var(--glass-color-white) / 0.12)
+  );
+  box-shadow: var(--glass-elev-marketing-logo);
+  backdrop-filter: var(--glass-marketing-launch-backdrop-filter);
+  -webkit-backdrop-filter: var(--glass-marketing-launch-backdrop-filter);
+}
+
+.ag-marketing-launch-kit .ag-logo-mark__core {
+  inset: 6px;
+  border-radius: 26%;
+  background: linear-gradient(
+    145deg,
+    rgba(var(--glass-color-white) / 0.35),
+    rgba(var(--glass-color-white) / 0.16)
+  );
+}
+
+.ag-marketing-launch-kit .ag-logo-mark__core::after {
+  background: rgba(var(--glass-color-white) / 0.2);
+  box-shadow: var(--glass-elev-marketing-core);
+}
+
+.ag-marketing-launch-kit .ag-showcase-card {
+  backdrop-filter: var(--glass-marketing-launch-backdrop-filter);
+  -webkit-backdrop-filter: var(--glass-marketing-launch-backdrop-filter);
+}
+
+.ag-marketing-launch-kit .ag-feature-tile__description,
+.ag-marketing-launch-kit .ag-install-command__button {
+  color: rgba(var(--glass-color-black) / var(--glass-opacity-90));
+}
+
+.ag-marketing-launch-kit .ag-feature-tile__index {
+  color: rgba(var(--glass-color-black) / var(--glass-opacity-90));
+  border: 1px solid rgba(var(--glass-color-white) / 0.28);
+  background: linear-gradient(
+    145deg,
+    rgba(var(--glass-color-white) / 0.35),
+    rgba(var(--glass-color-white) / 0.16)
+  );
+  box-shadow: var(--glass-elev-marketing-index);
+}
+
+.ag-marketing-launch-kit .ag-showcase-card[data-glow="aurora"]::after {
+  background: linear-gradient(
+    180deg,
+    rgba(var(--glass-color-white) / 0.16),
+    transparent 38%
+  );
+}
+
+/* The button itself remains neutral glass. Aurora color is carried by its
+   decorative content layer, keeping chroma out of the material substrate. */
+.ag-marketing-launch-kit .glass-button-aurora {
+  --glass-theme-text: rgba(var(--glass-color-black) / var(--glass-opacity-90));
+  background: linear-gradient(
+    180deg,
+    rgba(var(--glass-color-white) / var(--glass-opacity-15)),
+    rgba(var(--glass-color-white) / 0.08)
+  ) !important;
+  box-shadow: var(--glass-elev-marketing-button) !important;
+}
+
+.ag-marketing-launch-kit .glass-button-aurora-layer {
+  background:
+    radial-gradient(
+      circle at 18% 18%,
+      rgba(var(--glass-color-white) / 0.28),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 86% 12%,
+      rgba(var(--glass-color-white) / 0.16),
+      transparent 36%
+    ),
+    linear-gradient(
+      120deg,
+      transparent 0%,
+      rgba(var(--glass-color-white) / var(--glass-opacity-30)) 44%,
+      transparent 76%
+    );
 }
 
 .ag-aurora-background {
@@ -83,6 +393,17 @@
       transparent 36%
     ),
     linear-gradient(145deg, var(--ag-marketing-bg-0), var(--ag-marketing-bg-1));
+}
+
+.ag-aurora-background--light {
+  --ag-marketing-bg-0: color-mix(
+    in srgb,
+    var(--aura-marketing-palettes-ocean-foam, var(--glass-color-accent)) 24%,
+    var(--glass-gray-50)
+  );
+  --ag-marketing-bg-1: var(--glass-gray-50);
+  --glass-marketing-vignette: transparent;
+  --ag-marketing-vignette-opacity: 0;
 }
 
 .ag-aurora-background[data-fixed="true"] {
@@ -161,16 +482,16 @@
 
 .ag-aurora-background__particle {
   position: absolute;
-  width: var(--ag-particle-size);
-  height: var(--ag-particle-size);
-  left: var(--ag-particle-x);
-  top: var(--ag-particle-y);
+  width: var(--ag-particle-size, 2px);
+  height: var(--ag-particle-size, 2px);
+  left: var(--ag-particle-x, 50%);
+  top: var(--ag-particle-y, 50%);
   border-radius: var(--glass-radius-full, 9999px);
   background: var(--glass-marketing-particle);
   box-shadow: var(--glass-elev-marketing-particle);
-  animation: ag-particle-float var(--ag-particle-duration) ease-in-out infinite
-    alternate;
-  animation-delay: var(--ag-particle-delay);
+  animation: ag-particle-float var(--ag-particle-duration, 5s) ease-in-out
+    infinite alternate;
+  animation-delay: var(--ag-particle-delay, 0s);
 }
 
 .ag-aurora-background__grain,
@@ -351,9 +672,9 @@
   box-shadow:
     var(--glass-elev-marketing-shadow), var(--glass-elev-marketing-highlight);
   backdrop-filter: blur(var(--glass-marketing-glass-blur))
-    saturate(var(--glass-marketing-glass-saturation));
+    saturate(var(--glass-marketing-glass-saturation)) var(--glass-filter-base);
   -webkit-backdrop-filter: blur(var(--glass-marketing-glass-blur))
-    saturate(var(--glass-marketing-glass-saturation));
+    saturate(var(--glass-marketing-glass-saturation)) var(--glass-filter-base);
 }
 
 .ag-showcase-card[data-intensity="strong"] {
@@ -458,7 +779,7 @@
   height: 2rem;
   place-items: center;
   border-radius: var(--glass-radius-full, 9999px);
-  color: white;
+  color: var(--glass-white);
   background: linear-gradient(135deg, var(--ag-aurora-a), var(--ag-aurora-b));
   font-size: var(--glass-font-size-sm, 0.875rem);
   font-weight: var(--glass-font-bold, 700);
@@ -503,18 +824,7 @@
   gap: var(--glass-space-3, 0.75rem);
   min-height: 3rem;
   border: 0;
-  background:
-    radial-gradient(
-      circle at 20% 0%,
-      color-mix(in srgb, var(--ag-aurora-a) 18%, transparent),
-      transparent 42%
-    ),
-    radial-gradient(
-      circle at 100% 0%,
-      color-mix(in srgb, var(--ag-aurora-c) 14%, transparent),
-      transparent 40%
-    ),
-    var(--glass-marketing-glass-bg-subtle);
+  background: var(--glass-marketing-glass-bg-subtle);
   box-shadow: var(--glass-elev-3, var(--glass-elev-marketing-logo));
 }
 
@@ -539,7 +849,7 @@
   border-radius: var(--glass-radius-full, 9999px);
   padding: 0.45rem 0.7rem;
   color: var(--glass-marketing-text-secondary);
-  background: rgba(255, 255, 255, 0.055);
+  background: rgba(var(--glass-color-white) / 0.08);
   cursor: pointer;
   font: inherit;
   line-height: 1;
@@ -551,7 +861,7 @@
 
 .ag-install-command__button:hover {
   color: var(--glass-marketing-text-primary);
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(var(--glass-color-white) / var(--glass-opacity-10));
   border-color: var(--glass-marketing-glass-border-strong);
 }
 
@@ -576,31 +886,64 @@
 }
 
 [data-ag-palette="prism"] {
-  --ag-aurora-a: #67e8f9;
-  --ag-aurora-b: #a78bfa;
-  --ag-aurora-c: #fb7185;
-  --ag-aurora-d: #facc15;
+  --ag-aurora-a: var(
+    --aura-marketing-palettes-prism-cyan,
+    var(--glass-color-accent)
+  );
+  --ag-aurora-b: var(
+    --aura-marketing-palettes-prism-indigo,
+    var(--glass-color-secondary)
+  );
+  --ag-aurora-c: var(
+    --aura-marketing-palettes-prism-pink,
+    var(--glass-color-danger-light)
+  );
+  --ag-aurora-d: var(
+    --aura-marketing-palettes-aurora-mint,
+    var(--glass-color-success-light)
+  );
 }
 
 [data-ag-palette="ocean"] {
-  --ag-aurora-a: #38bdf8;
-  --ag-aurora-b: #22d3ee;
-  --ag-aurora-c: #2dd4bf;
-  --ag-aurora-d: #0f766e;
+  --ag-aurora-a: var(
+    --aura-marketing-palettes-ocean-foam,
+    var(--glass-color-accent)
+  );
+  --ag-aurora-b: var(
+    --aura-marketing-palettes-ocean-blue,
+    var(--glass-color-primary-light)
+  );
+  --ag-aurora-c: var(
+    --aura-marketing-palettes-ocean-deep,
+    var(--glass-color-secondary)
+  );
+  --ag-aurora-d: var(
+    --aura-marketing-palettes-aurora-cyan,
+    var(--glass-color-accent)
+  );
 }
 
 [data-ag-palette="ember"] {
-  --ag-aurora-a: #fbbf24;
-  --ag-aurora-b: #fb7185;
-  --ag-aurora-c: #f97316;
-  --ag-aurora-d: #ef4444;
+  --ag-aurora-a: var(
+    --aura-marketing-palettes-ember-gold,
+    var(--glass-color-warning-light)
+  );
+  --ag-aurora-b: var(
+    --aura-marketing-palettes-ember-rose,
+    var(--glass-color-danger-light)
+  );
+  --ag-aurora-c: var(
+    --aura-marketing-palettes-ember-coral,
+    var(--glass-color-warning-light)
+  );
+  --ag-aurora-d: var(--glass-color-danger-light);
 }
 
 [data-ag-palette="mono"] {
-  --ag-aurora-a: #ffffff;
-  --ag-aurora-b: #d1d5db;
-  --ag-aurora-c: #9ca3af;
-  --ag-aurora-d: #f9fafb;
+  --ag-aurora-a: var(--aura-marketing-palettes-mono-mist, var(--glass-gray-50));
+  --ag-aurora-b: var(--glass-gray-300);
+  --ag-aurora-c: var(--glass-gray-400);
+  --ag-aurora-d: var(--glass-gray-50);
 }
 
 [data-ag-reduced-motion="true"] *,

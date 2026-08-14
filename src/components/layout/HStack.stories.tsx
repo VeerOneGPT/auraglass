@@ -32,7 +32,7 @@ export const Default: Story = {
   render: (args) => (
     <HStack
       {...args}
-      className="glass-w-full glass-max-w-3xl glass-rounded-2xl glass-bg-white/60 glass-p-4 glass-shadow-xl"
+      className="glass-neutral-level1 glass-w-full glass-max-w-3xl glass-rounded-2xl glass-p-4 glass-shadow-xl"
       aria-label="Deployment status row"
     >
       <span className="glass-rounded-full glass-bg-blue-100 glass-px-3 glass-py-1 glass-text-sm glass-font-medium glass-text-blue-800">

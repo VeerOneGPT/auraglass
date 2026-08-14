@@ -336,7 +336,10 @@ export const GlassLazyImage: React.FC<GlassLazyImageProps> = ({
 
       {/* Image Info Overlay */}
       {(title || showStats) && (
-        <div className="glass-absolute glass-bottom-0 glass-left-0 glass-right-0 glass-p-3 glass-gradient-primary glass-gradient-primary glass-gradient-primary glass-opacity-0 glass-group-glass-hover-opacity-100 glass-transition-opacity">
+        <div
+          className="glass-absolute glass-bottom-0 glass-left-0 glass-right-0 glass-p-3 glass-backdrop-blur-md glass-opacity-100 glass-transition-opacity"
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }}
+        >
           {title && (
             <h3 className="glass-text-primary glass-font-medium glass-text-sm glass-mb-1 glass-truncate">
               {title}

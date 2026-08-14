@@ -392,7 +392,7 @@ export function GlassKanban({
     >
       <div
         className={cn(
-          "grid glass-gap-4 glass-p-4",
+          "glass-kanban-grid grid glass-gap-4 glass-p-4",
           consciousness && "consciousness-kanban-board",
           predictive &&
             workflowSuggestions.length > 0 &&

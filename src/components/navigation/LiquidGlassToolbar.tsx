@@ -4,7 +4,6 @@ import React, { forwardRef, type CSSProperties } from "react";
 import { cn } from "../../lib/utilsComprehensive";
 import { LiquidGlassEffectGroup } from "../../primitives/LiquidGlassEffectGroup";
 import { LiquidGlassMaterial } from "../../primitives/LiquidGlassMaterial";
-import { LiquidGlassScrollEdge } from "../../primitives/LiquidGlassScrollEdge";
 
 export interface LiquidGlassToolbarItem {
   id: string;
@@ -86,15 +85,15 @@ export const LiquidGlassToolbar = forwardRef<
       data-density={density}
       {...props}
     >
-      {scrollEdge && (
-        <LiquidGlassScrollEdge edge="top" styleMode={scrollEdge} active />
-      )}
       <LiquidGlassMaterial
         material="liquid"
         variant={materialVariant}
         radius="xl"
         interactive={false}
         className="glass-w-full glass-max-w-full"
+        style={{
+          background: "linear-gradient(145deg, rgba(255,255,255,.28), rgba(255,255,255,.14))",
+        }}
       >
         <div className="glass-flex glass-w-full glass-max-w-full glass-flex-wrap glass-items-center glass-justify-between glass-gap-3">
           <div className="glass-flex glass-min-w-0 glass-flex-1 glass-items-center glass-gap-2 sm:glass-flex-none">

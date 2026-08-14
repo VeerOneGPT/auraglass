@@ -26,8 +26,8 @@ const controlGroupStoryCss = `
     --control-story-muted: #334155;
     --control-story-panel: rgba(255, 255, 255, 0.66);
     --control-story-border: rgba(15, 23, 42, 0.1);
-    --control-story-active: rgba(37, 99, 235, 0.16);
-    --control-story-active-strong: rgba(20, 184, 166, 0.18);
+    --control-story-active: rgba(255, 255, 255, 0.3);
+    --control-story-active-strong: rgba(255, 255, 255, 0.36);
     min-height: 100vh;
     display: grid;
     place-items: center;
@@ -43,9 +43,7 @@ const controlGroupStoryCss = `
     border: 1px solid var(--control-story-border);
     border-radius: 30px;
     padding: 28px;
-    background:
-      linear-gradient(135deg, var(--control-story-panel), rgba(236,253,245,0.36)),
-      repeating-linear-gradient(90deg, rgba(96,165,250,0.15) 0 72px, rgba(45,212,191,0.13) 72px 144px, rgba(244,114,182,0.1) 144px 216px);
+    background: linear-gradient(135deg, var(--control-story-panel), rgba(255,255,255,0.34));
     box-shadow: 0 24px 80px rgba(15, 23, 42, 0.14);
   }
 
@@ -61,11 +59,10 @@ const controlGroupStoryCss = `
   }
 
   .liquid-control-group-story .liquid-glass-control-group {
-    border: 1px solid rgba(255, 255, 255, 0.58) !important;
+    border: 1px solid rgba(255, 255, 255, 0.32) !important;
     background:
-      linear-gradient(135deg, rgba(255,255,255,0.58), rgba(255,255,255,0.32)),
-      linear-gradient(90deg, rgba(96,165,250,0.1), rgba(45,212,191,0.1)) !important;
-    box-shadow: 0 18px 54px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255,255,255,0.48) !important;
+      linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.18)) !important;
+    box-shadow: 0 18px 54px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255,255,255,0.28) !important;
     color: var(--control-story-ink);
   }
 
@@ -75,12 +72,12 @@ const controlGroupStoryCss = `
 
   .liquid-control-group-button.is-active {
     background: var(--control-story-active);
-    box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.18);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
   }
 
   .liquid-control-group-button.is-alternate {
     background: var(--control-story-active-strong);
-    box-shadow: inset 0 0 0 1px rgba(20, 184, 166, 0.2);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.32);
   }
 
   [data-storybook-preview-mode="dark"] .liquid-control-group-story {
@@ -88,22 +85,20 @@ const controlGroupStoryCss = `
     --control-story-muted: #dbeafe;
     --control-story-panel: rgba(15, 23, 42, 0.66);
     --control-story-border: rgba(226, 232, 240, 0.22);
-    --control-story-active: rgba(96, 165, 250, 0.32);
-    --control-story-active-strong: #0f766e;
+    --control-story-active: rgba(255, 255, 255, 0.22);
+    --control-story-active-strong: rgba(255, 255, 255, 0.28);
   }
 
   [data-storybook-preview-mode="dark"] .liquid-control-group-panel {
     background:
-      linear-gradient(135deg, rgba(15,23,42,0.86), rgba(30,41,59,0.62)),
-      repeating-linear-gradient(90deg, rgba(96,165,250,0.2) 0 72px, rgba(45,212,191,0.16) 72px 144px, rgba(244,114,182,0.14) 144px 216px);
+      linear-gradient(135deg, rgba(15,23,42,0.86), rgba(30,41,59,0.62));
     box-shadow: 0 28px 90px rgba(0, 0, 0, 0.36);
   }
 
   [data-storybook-preview-mode="dark"] .liquid-control-group-story .liquid-glass-control-group {
     border-color: rgba(226, 232, 240, 0.28) !important;
     background:
-      linear-gradient(135deg, rgba(15,23,42,0.66), rgba(30,41,59,0.42)),
-      linear-gradient(90deg, rgba(96,165,250,0.18), rgba(45,212,191,0.14)) !important;
+      linear-gradient(135deg, rgba(15,23,42,0.66), rgba(30,41,59,0.42)) !important;
     box-shadow: 0 22px 64px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255,255,255,0.16) !important;
   }
 
@@ -115,14 +110,12 @@ const controlGroupStoryCss = `
 
   [data-storybook-preview-mode="liquid"] .liquid-control-group-panel {
     background:
-      linear-gradient(135deg, rgba(255,255,255,0.58), rgba(224,242,254,0.36)),
-      repeating-linear-gradient(90deg, rgba(96,165,250,0.18) 0 72px, rgba(45,212,191,0.16) 72px 144px, rgba(244,114,182,0.12) 144px 216px);
+      linear-gradient(135deg, rgba(255,255,255,0.58), rgba(255,255,255,0.32));
   }
 
   [data-storybook-preview-mode="liquid"] .liquid-control-group-story .liquid-glass-control-group {
     background:
-      linear-gradient(135deg, rgba(255,255,255,0.5), rgba(255,255,255,0.26)),
-      linear-gradient(90deg, rgba(96,165,250,0.14), rgba(45,212,191,0.12), rgba(244,114,182,0.08)) !important;
+      linear-gradient(135deg, rgba(255,255,255,0.5), rgba(255,255,255,0.26)) !important;
   }
 
   [data-storybook-preview-mode="high-contrast"] .liquid-control-group-story {

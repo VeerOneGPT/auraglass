@@ -1096,7 +1096,7 @@ export const GlassTabBar = forwardRef<
       {animationStyle === "spring" && !finalDisableAnimation && (
         <div className="glass-absolute glass-inset-0 glass-pointer-events-none glass-radius-lg glass-opacity-30">
           <div
-            className="glass-absolute glass-radius-full glass-surface-blue/20 glass-transition-all glass-duration-500 glass-ease-out"
+            className="glass-absolute glass-radius-full glass-bg-white/24 glass-transition-all glass-duration-500 glass-ease-out"
             style={{
               left: `${tabMagneticData.closestTabIndex !== null ? tabMagneticData.closestTabIndex * 60 : 0}px`,
               width: "60px",

@@ -479,16 +479,21 @@ export const GlassCommandPalette = forwardRef<
     if (!open) return null;
 
     const isContained =
-      contained || compact || positionStrategy === "absolute" || positionStrategy === "inline";
+      contained ||
+      compact ||
+      positionStrategy === "absolute" ||
+      positionStrategy === "inline";
     const rootClassName = isContained
       ? cn(
           "glass-flex glass-items-start glass-justify-center",
-          positionStrategy === "absolute" && "glass-absolute glass-inset-0 glass-z-10",
+          positionStrategy === "absolute" &&
+            "glass-absolute glass-inset-0 glass-z-10",
           positionStrategy === "inline" && "glass-relative glass-z-0",
           compact ? "glass-p-2" : "glass-p-4"
         )
       : "glass-fixed glass-inset-0 glass-z-50 glass-flex glass-items-start glass-justify-center glass-pt-10vh";
-    const paletteMaxHeight = maxHeight ?? (compact || contained ? 360 : undefined);
+    const paletteMaxHeight =
+      maxHeight ?? (compact || contained ? 360 : undefined);
     const paletteWidth = width ?? (compact || contained ? "100%" : undefined);
 
     return (
@@ -509,7 +514,7 @@ export const GlassCommandPalette = forwardRef<
         {!isContained && (
           <div
             className={cn(
-              "absolute inset-0 bg-black/20",
+              "absolute inset-0 glass-bg-white/20",
               backdropBlur && "glass-backdrop-blur-md"
             )}
           />
@@ -603,7 +608,7 @@ export const GlassCommandPalette = forwardRef<
             <div
               ref={listRef}
               className={cn(
-                "glass-overflow-y-auto glass-overscroll-contain",
+                "glass-overflow-y-auto glass-overscroll-contain glass-p-2 glass-space-y-2",
                 compact || contained ? "glass-max-h-64" : "glass-max-h-96"
               )}
               role={
@@ -631,7 +636,7 @@ export const GlassCommandPalette = forwardRef<
               ) : (
                 Object.entries(groupedItems).map(
                   ([category, categoryItems]) => (
-                    <div key={category}>
+                    <div key={category} className="glass-space-y-2">
                       {showCategories &&
                         Object.keys(groupedItems).length > 1 && (
                           <div className="glass-px-4 glass-py-2 glass-text-xs glass-font-medium glass-text-secondary glass-surface-subtle glass-border-b glass-border-glass-border/5">
@@ -659,7 +664,7 @@ export const GlassCommandPalette = forwardRef<
                             key={item?.id}
                             type="button"
                             className={cn(
-                              "w-full flex items-center glass-gap-3 glass-px-4 glass-py-3 text-left transition-colors",
+                              "w-full flex items-center glass-gap-3 glass-px-4 glass-py-3 text-left transition-colors glass-surface-subtle/10",
                               "hover:bg-muted/20 focus:bg-muted/20 focus:outline-none",
                               {
                                 "bg-primary/10 border-l-2 border-primary":

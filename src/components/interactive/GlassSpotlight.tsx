@@ -58,17 +58,31 @@ export const GlassSpotlight = forwardRef<HTMLDivElement, GlassSpotlightProps>(
     const holeStyle = useMemo((): React.CSSProperties | undefined => {
       if (!targetRect) return undefined;
 
+      const requestedWidth = Math.max(44, targetRect.width + padding * 2);
+      const requestedHeight = Math.max(44, targetRect.height + padding * 2);
+
       return {
         position: "absolute",
-        left: targetRect.left - padding,
-        top: targetRect.top - padding,
-        width: targetRect.width + padding * 2,
-        height: targetRect.height + padding * 2,
-        borderRadius: 12,
-        boxShadow: "0 0 0 9999px var(--glass-text-tertiary-dark)",
+        left: isContained
+          ? `clamp(16px, ${Math.max(16, targetRect.left - padding)}px, calc(100% - min(${requestedWidth}px, calc(100% - 32px)) - 16px))`
+          : targetRect.left - padding,
+        top: isContained
+          ? `clamp(16px, ${Math.max(16, targetRect.top - padding)}px, calc(100% - min(${requestedHeight}px, calc(100% - 32px)) - 16px))`
+          : targetRect.top - padding,
+        width: isContained
+          ? `min(${requestedWidth}px, calc(100% - 32px))`
+          : requestedWidth,
+        height: isContained
+          ? `min(${requestedHeight}px, calc(100% - 32px))`
+          : requestedHeight,
+        borderRadius: 20,
+        border: "1px solid rgba(255,255,255,0.78)",
+        background: "rgba(255,255,255,0.08)",
+        boxShadow:
+          "0 0 0 9999px rgba(15,23,42,0.24), 0 18px 44px rgba(15,23,42,0.16), inset 0 1px 0 rgba(255,255,255,0.72)",
         pointerEvents: "none",
       };
-    }, [targetRect, padding]);
+    }, [targetRect, padding, isContained]);
 
     const spotlightHoleStyle = holeStyle ? { ...holeStyle } : undefined;
 
@@ -94,14 +108,23 @@ export const GlassSpotlight = forwardRef<HTMLDivElement, GlassSpotlightProps>(
         ref={ref}
         data-glass-component
         className={cn(
+          "glass-spotlight glass-overlay-specular glass-edge",
           isContained ? "relative overflow-hidden" : "fixed inset-0",
           className
         )}
         style={{
           ...{
             background: targetRect
-              ? "transparent"
-              : "linear-gradient(135deg, rgba(15,23,42,0.7), rgba(15,23,42,0.85))",
+              ? "linear-gradient(145deg, rgba(255,255,255,0.28), rgba(255,255,255,0.16))"
+              : "linear-gradient(145deg, rgba(255,255,255,0.32), rgba(255,255,255,0.18))",
+            border: "1px solid rgba(255,255,255,0.46)",
+            borderRadius: isContained ? 28 : undefined,
+            boxShadow:
+              "0 24px 70px rgba(15,23,42,0.16), inset 0 1px 0 rgba(255,255,255,0.64)",
+            backdropFilter:
+              "blur(24px) saturate(1.4) brightness(1.04) contrast(1.02)",
+            WebkitBackdropFilter:
+              "blur(24px) saturate(1.4) brightness(1.04) contrast(1.02)",
             minHeight: resolvedHeight ?? (isContained ? "202px" : undefined),
             maxHeight: resolvedMaxHeight,
             width: isContained ? "100%" : undefined,
@@ -129,7 +152,7 @@ export const GlassSpotlight = forwardRef<HTMLDivElement, GlassSpotlightProps>(
                 width: 210px;
                 height: 210px;
                 border-radius: 999px;
-                background: radial-gradient(circle, rgba(255,255,255,0.58) 0%, rgba(124,211,255,0.46) 23%, rgba(216,111,255,0.20) 48%, transparent 76%);
+                background: radial-gradient(circle, rgba(255,255,255,0.72) 0%, rgba(226,232,240,0.48) 30%, rgba(148,163,184,0.18) 56%, transparent 76%);
                 filter: blur(1px);
                 pointer-events: none;
               }
@@ -148,7 +171,7 @@ export const GlassSpotlight = forwardRef<HTMLDivElement, GlassSpotlightProps>(
           </>
         ) : null}
         {spotlightHoleStyle ? (
-          <div style={{ ...spotlightHoleStyle }} />
+          <div data-spotlight-hole="true" style={{ ...spotlightHoleStyle }} />
         ) : (
           <span className="glass-sr-only">Glass spotlight inactive</span>
         )}

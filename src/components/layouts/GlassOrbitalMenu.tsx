@@ -299,7 +299,7 @@ export const GlassOrbitalMenu = forwardRef<
                         border border-white/20 glass-backdrop-blur-md transition-all duration-200
                         ${
                           item.disabled
-                            ? "bg-white/5 text-white/40 cursor-not-allowed"
+                            ? "bg-white/5 glass-text-tertiary cursor-not-allowed"
                             : "bg-white/10 hover:bg-white/15 text-white/90 hover:text-white"
                         }
                         ${isActive ? "ring-2 ring-white/40" : ""}

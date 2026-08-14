@@ -90,11 +90,21 @@ const calculateTunnelingProbability = (
 };
 
 const canvasColors = {
-  error: (alpha: number) => `rgba(239, 68, 68, ${alpha})`,
-  info: (alpha: number) => `rgba(14, 165, 233, ${alpha})`,
-  secondary: (alpha: number) => `rgba(168, 85, 247, ${alpha})`,
-  white: (alpha: number) => `rgba(255, 255, 255, ${alpha})`,
-  hover: "rgba(255, 255, 255, 0.22)",
+  error: (alpha: number) => `rgba(100, 116, 139, ${Math.min(0.48, alpha)})`,
+  info: (alpha: number) => `rgba(148, 163, 184, ${alpha})`,
+  secondary: (alpha: number) => `rgba(203, 213, 225, ${alpha})`,
+  white: (alpha: number) => `rgba(241, 245, 249, ${alpha})`,
+  hover: "rgba(100, 116, 139, 0.28)",
+};
+
+const neutralGlassStyle: React.CSSProperties = {
+  background: "rgba(255, 255, 255, 0.3)",
+  border: "1px solid rgba(148, 163, 184, 0.42)",
+  color: "rgba(15, 23, 42, 0.92)",
+  backdropFilter: "blur(24px) saturate(1.5) brightness(1.06) contrast(1.04)",
+  WebkitBackdropFilter:
+    "blur(24px) saturate(1.5) brightness(1.06) contrast(1.04)",
+  boxShadow: "0 12px 32px rgba(15, 23, 42, 0.12)",
 };
 
 export const GlassQuantumTunnel = forwardRef<
@@ -456,7 +466,7 @@ export const GlassQuantumTunnel = forwardRef<
         quantumStates.reduce(
           (sum, state) => sum + state.tunnelingProbability,
           0
-        ) / quantumStates.length
+        ) / Math.max(1, quantumStates.length)
       );
     }, [quantumStates]);
 
@@ -472,7 +482,7 @@ export const GlassQuantumTunnel = forwardRef<
       >
         <div className="glass-p-6 glass-space-y-4">
           {/* Header */}
-          <div className="glass-flex glass-items-center glass-justify-between">
+          <div className="glass-flex glass-items-start glass-justify-between glass-flex-wrap glass-gap-3">
             <div>
               <h2 className="glass-text-xl glass-font-semibold glass-text-primary-glass-opacity-90">
                 Quantum Tunnel
@@ -498,11 +508,37 @@ export const GlassQuantumTunnel = forwardRef<
 
           {/* Canvas */}
           <div className="glass-relative">
+            <style>{`
+              .glass-quantum-tunnel-state-rail {
+                display: none;
+              }
+
+              @media (max-width: 520px) {
+                .glass-quantum-tunnel-canvas-state {
+                  display: none !important;
+                }
+
+                .glass-quantum-tunnel-state-rail {
+                  display: grid;
+                  grid-template-columns: repeat(2, minmax(0, 1fr));
+                  gap: 8px;
+                  margin-top: 12px;
+                  width: 100%;
+                }
+              }
+            `}</style>
             <canvas
               ref={canvasRef}
               width={800}
               height={300}
-              className="glass-border glass-border-white/20 glass-radius-lg glass-surface-dark/20"
+              className="glass-border glass-border-subtle glass-radius-lg"
+              style={{
+                width: "100%",
+                maxWidth: "100%",
+                height: "auto",
+                display: "block",
+                background: "rgba(255, 255, 255, 0.22)",
+              }}
             />
 
             {/* Quantum state overlays */}
@@ -510,14 +546,18 @@ export const GlassQuantumTunnel = forwardRef<
               {quantumStates.map((state) => (
                 <motion.div
                   key={state.id}
-                  className={`
-                    absolute cursor-pointer transform -translate-x-1/2 -translate-y-1/2
-                    ${createGlassStyle({ opacity: 0.7 }).background}
-                    border border-white/20 rounded-lg p-2
-                  `}
+                  className="glass-quantum-tunnel-canvas-state glass-absolute glass-cursor-pointer glass-radius-lg glass-p-2"
                   style={{
-                    left: state.position.x,
-                    top: state.position.y,
+                    // Coordinates are authored in the 800x300 canvas space;
+                    // percentage positioning keeps overlays aligned when the
+                    // canvas scales down on tablet/mobile.
+                    left: `${(state.position.x / 800) * 100}%`,
+                    top: `${Math.min(88, Math.max(14, ((state.position.y + 32) / 300) * 100))}%`,
+                    transform: "translate(-50%, -50%)",
+                    minWidth: 86,
+                    maxWidth: 128,
+                    zIndex: 2,
+                    ...neutralGlassStyle,
                   }}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={
@@ -568,6 +608,44 @@ export const GlassQuantumTunnel = forwardRef<
               ))}
             </AnimatePresence>
 
+            <div
+              className="glass-quantum-tunnel-state-rail"
+              aria-label="Quantum states"
+            >
+              {quantumStates.map((state) => (
+                <button
+                  key={`compact-${state.id}`}
+                  type="button"
+                  className="glass-radius-lg glass-p-2 glass-text-left glass-focus glass-touch-target"
+                  style={{
+                    ...neutralGlassStyle,
+                    appearance: "none",
+                    minWidth: 0,
+                    width: "100%",
+                  }}
+                  onClick={() => handleStateClick(state.id)}
+                >
+                  <span className="glass-flex glass-items-center glass-gap-2">
+                    {state.icon && (
+                      <span className="glass-text-base" aria-hidden="true">
+                        {state.icon}
+                      </span>
+                    )}
+                    <span style={{ minWidth: 0 }}>
+                      <span className="glass-block glass-text-xs glass-font-medium glass-text-primary">
+                        {state.label}
+                      </span>
+                      {showTunnelingProbability && (
+                        <span className="glass-block glass-text-xs glass-text-secondary">
+                          T: {(state.tunnelingProbability * 100).toFixed(1)}%
+                        </span>
+                      )}
+                    </span>
+                  </span>
+                </button>
+              ))}
+            </div>
+
             {/* Active transitions */}
             <AnimatePresence>
               {activeTransitions.map((transition) => {
@@ -593,8 +671,8 @@ export const GlassQuantumTunnel = forwardRef<
                     key={`${transition.from}-${transition.to}-${transition.startTime}`}
                     className="glass-absolute glass-pointer-events-none"
                     style={{
-                      left: x,
-                      top: y,
+                      left: `${(x / 800) * 100}%`,
+                      top: `${(y / 300) * 100}%`,
                       transform: "translate(-50%, -50%)",
                     }}
                     initial={{ opacity: 0, scale: 0.5 }}
@@ -603,10 +681,11 @@ export const GlassQuantumTunnel = forwardRef<
                     }
                     exit={{ opacity: 0, scale: 0.5 }}
                   >
-                    <div className="glass-w-4 glass-h-4 glass-surface-pink glass-radius-full glass-shadow-lg glass-animate-pulse" />
-                    <div className="glass-absolute glass--bottom-8 glass--left-1-2 glass-transform glass--translate-x-1-2 glass-text-xs glass-text-pink-300 glass-whitespace-nowrap">
-                      Tunneling: {(transition.probability * 100).toFixed(1)}%
-                    </div>
+                    <div
+                      className="glass-w-4 glass-h-4 glass-radius-full glass-shadow-lg"
+                      style={{ background: "rgba(51, 65, 85, 0.82)" }}
+                      aria-label={`Tunneling ${(transition.probability * 100).toFixed(1)} percent`}
+                    />
                   </motion.div>
                 );
               })}
@@ -614,21 +693,18 @@ export const GlassQuantumTunnel = forwardRef<
           </div>
 
           {/* Controls */}
-          <div className="glass-flex glass-items-center glass-justify-between">
+          <div className="glass-flex glass-items-center glass-justify-between glass-flex-wrap glass-gap-3">
             <div className="glass-flex glass-items-center glass-space-x-4">
               <button
                 onClick={() => setMeasuredStates(new Set())}
-                className={`
-                  px-3 py-1 rounded text-sm font-medium transition-colors duration-[${ANIMATION.DURATION.fast}ms]
-                  ${createGlassStyle({ opacity: 0.7 }).background}
-                  border border-white/20 text-white/70 hover:text-white
-                `}
+                className="glass-px-3 glass-py-2 glass-radius-lg glass-text-sm glass-font-medium glass-focus"
+                style={neutralGlassStyle}
               >
                 Reset Measurements
               </button>
             </div>
 
-            <div className="glass-flex glass-items-center glass-space-x-6 glass-text-sm glass-text-primary-glass-opacity-60">
+            <div className="glass-flex glass-items-center glass-flex-wrap glass-gap-4 glass-text-sm glass-text-secondary">
               <div>Time: {currentTime.toFixed(1)}</div>
               <div>Active: {activeTransitions.length}</div>
               <div>Measured: {measuredStates.size}</div>
@@ -637,10 +713,8 @@ export const GlassQuantumTunnel = forwardRef<
 
           {/* Quantum statistics */}
           <div
-            className={`
-            p-4 rounded-lg border border-white/10 space-y-3
-            ${createGlassStyle({ opacity: 0.7 }).background}
-          `}
+            className="glass-p-4 glass-radius-lg glass-space-y-3"
+            style={neutralGlassStyle}
           >
             <h3 className="glass-text-sm glass-font-semibold glass-text-primary-glass-opacity-90">
               Quantum Statistics
@@ -700,7 +774,8 @@ export const GlassQuantumTunnel = forwardRef<
                   {activeTransitions.slice(-3).map((transition, index) => (
                     <div
                       key={index}
-                      className="glass-px-2 glass-py-1 glass-text-xs glass-surface-pink/20 glass-text-pink-300 glass-radius glass-border glass-border-pink-400/20"
+                      className="glass-px-2 glass-py-1 glass-text-xs glass-text-secondary glass-radius glass-border glass-border-subtle"
+                      style={{ background: "rgba(255, 255, 255, 0.42)" }}
                     >
                       {transition.from} → {transition.to} (
                       {(transition.probability * 100).toFixed(0)}%)

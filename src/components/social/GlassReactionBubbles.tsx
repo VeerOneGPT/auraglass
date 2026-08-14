@@ -387,9 +387,19 @@ export const GlassReactionBubbles = forwardRef<
           "glass-absolute glass-cursor-pointer glass-select-none glass-z-10"
         )}
         style={{
-          left: bubble.x,
-          top: bubble.y,
+          // Reactions are authored in the logical canvas coordinate space.
+          // Percentage positioning keeps demo/user supplied reactions inside
+          // a responsive surface when the canvas is narrower than `width`.
+          left: `${Math.min(
+            100,
+            Math.max(0, (bubble.x / Math.max(width, 1)) * 100)
+          )}%`,
+          top: `${Math.min(
+            100,
+            Math.max(0, (bubble.y / Math.max(height, 1)) * 100)
+          )}%`,
           fontSize: bubble.size || 30,
+          maxWidth: "calc(100% - 8px)",
         }}
         initial={{ scale: 0, opacity: 0 }}
         animate={
@@ -552,8 +562,15 @@ export const GlassReactionBubbles = forwardRef<
         intensity="subtle"
         className={cn("glass-relative glass-overflow-hidden", className)}
         style={{
-          width: "100%",
-          maxWidth: "100%",
+          // Use a definite preferred width so shrink-to-fit parents (for
+          // example Storybook's centered layout) cannot collapse this glass
+          // surface to its 2px border. max-width keeps it responsive.
+          width: `${width}px`,
+          minWidth: 0,
+          // Viewport-relative cap avoids the shrink-to-fit parent feedback
+          // loop that made this surface 2px wide in centered layouts.
+          maxWidth: "100vw",
+          boxSizing: "border-box",
           height:
             typeof effectiveHeight === "number"
               ? `${effectiveHeight}px`
@@ -569,7 +586,12 @@ export const GlassReactionBubbles = forwardRef<
         <div
           className={cn("glass-absolute glass-inset-0 glass-cursor-crosshair")}
           onClick={handleCanvasClick}
-          style={{ width: "100%", height: numericHeight }}
+          style={{
+            width: "100%",
+            height: numericHeight,
+            maxWidth: "100%",
+            overflow: "hidden",
+          }}
         >
           <AnimatePresence>
             {bubbles.map((bubble: any) => (
@@ -644,7 +666,7 @@ export const GlassReactionBubbles = forwardRef<
                 )}
               >
                 <span>{stats.totalReactions}</span>
-                <span className={cn("glass-text-muted")}>total</span>
+                <span style={{ color: "rgba(51, 65, 85, 0.9)" }}>total</span>
               </div>
               <div
                 className={cn(
@@ -652,7 +674,7 @@ export const GlassReactionBubbles = forwardRef<
                 )}
               >
                 <span>{stats.recentReactions}</span>
-                <span className={cn("glass-text-muted")}>recent</span>
+                <span style={{ color: "rgba(51, 65, 85, 0.9)" }}>recent</span>
               </div>
               {mostUsed && (
                 <div
@@ -672,10 +694,19 @@ export const GlassReactionBubbles = forwardRef<
         {interactive && showControls && height >= 300 && (
           <motion.div
             className={cn(
-              "glass-absolute glass-bottom-4 glass-left-1-2 glass-z-20 glass-px-4 glass-py-2 glass-radius-lg glass-text-sm glass-text-secondary glass-whitespace-nowrap",
+              "glass-absolute glass-bottom-4 glass-left-4 glass-z-20 glass-px-4 glass-py-2 glass-radius-lg glass-text-sm glass-text-secondary",
               createGlassStyle({ blur: "sm", opacity: 0.8 }).background
             )}
-            style={{ transform: "translateX(-50%)" }}
+            style={{
+              // Keep the helper inside the responsive reaction canvas. The
+              // previous nowrap/max-content width made the centered label
+              // extend past narrow glass surfaces and inflated scrollWidth.
+              width: "calc(100% - 32px)",
+              maxWidth: "calc(100% - 32px)",
+              boxSizing: "border-box",
+              whiteSpace: "normal",
+              textAlign: "center",
+            }}
             initial={{ opacity: 0, y: 20 }}
             animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
             transition={shouldAnimate ? { delay: 1 } : { duration: 0 }}

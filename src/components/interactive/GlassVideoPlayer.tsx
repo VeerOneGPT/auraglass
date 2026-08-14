@@ -370,7 +370,7 @@ export const GlassVideoPlayer: React.FC<GlassVideoPlayerProps> = ({
       >
         <CardContent className="glass-p-0">
           {/* Video Element */}
-          <div className="glass-relative glass-surface-dark glass-aspect-video glass-overflow-hidden">
+          <div className="glass-relative glass-surface-dark glass-aspect-video glass-overflow-visible glass-box-border">
             <video
               ref={videoRef}
               className="glass-w-full glass-h-full glass-object-contain"

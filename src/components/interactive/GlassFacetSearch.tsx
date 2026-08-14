@@ -268,16 +268,16 @@ const GlassFacetSearch = React.forwardRef<
         {...props}
       >
         {/* Search Input */}
-        <div className="glass-relative glass-mb-4">
+        <div className="glass-flex glass-items-center glass-gap-2 glass-mb-6 glass-pb-2">
           <GlassInput
             value={query}
             onChange={handleQueryChange}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
-            className="glass-w-full glass-pr-12"
+            className="glass-min-w-0 glass-flex-1"
             leftIcon={<Search className="glass-w-4 glass-h-4" />}
           />
-          <div className="glass-absolute glass-right-3 glass-top-1/2 glass--translate-y-1-2 glass-flex glass-items-center glass-gap-2">
+          <div className="glass-flex glass-shrink-0 glass-items-center glass-gap-2">
             {loading && (
               <div className="glass-w-4 glass-h-4 glass-border-2 glass-border-white/30 glass-border-t-white glass-radius-full glass-animate-spin" />
             )}
@@ -291,19 +291,18 @@ const GlassFacetSearch = React.forwardRef<
               </button>
             )}
             {showFilters && (
-              <GlassButton
-                variant="ghost"
-                size="sm"
+              <button
+                type="button"
                 onClick={(e) => setShowFacetPanel(!showFacetPanel)}
                 className={cn(
-                  "glass-transition",
+                  "glass-flex glass-h-8 glass-w-8 glass-shrink-0 glass-items-center glass-justify-center glass-radius-full glass-border glass-border-white/20 glass-bg-white/15 glass-transition glass-focus",
                   hasActiveFilters && "glass-text-primary"
                 )}
                 aria-label="Toggle filters"
                 aria-pressed={showFacetPanel}
               >
                 <SlidersHorizontal className="glass-w-4 glass-h-4" />
-              </GlassButton>
+              </button>
             )}
           </div>
 
@@ -315,7 +314,8 @@ const GlassFacetSearch = React.forwardRef<
                   initial={{ opacity: 0, y: -10 }}
                   animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="glass-absolute glass-top-full glass-left-0 glass-right-0 glass-mt-1 glass-z-10 glass-max-h-60 glass-overflow-y-auto"
+                  className="glass-absolute glass-left-0 glass-right-0 glass-z-10 glass-max-h-60 glass-overflow-y-auto"
+                  style={{ top: "calc(100% + 8px)" }}
                 >
                   <OptimizedGlass
                     elevation={"level2"}
@@ -416,7 +416,7 @@ const GlassFacetSearch = React.forwardRef<
 
         {/* Results */}
         {showResults && (loading || displayedResults.length > 0 || query) && (
-          <div className="glass-auto-gap glass-auto-gap-sm">
+          <div className="glass-auto-gap glass-auto-gap-sm" style={{ marginTop: 8 }}>
             <div className="glass-flex glass-items-center glass-justify-between">
               <h3 className="glass-text-base glass-font-semibold glass-text-primary">
                 Results {results.length > 0 && `(${results.length})`}

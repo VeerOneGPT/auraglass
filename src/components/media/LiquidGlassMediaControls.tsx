@@ -19,26 +19,38 @@ export interface LiquidGlassMediaControlsProps
   compact?: boolean;
 }
 
-const mediaButtonStyle: CSSProperties = createGlassStyle({
-  intent: "neutral",
-  elevation: "level2",
-});
+const mediaButtonStyle: CSSProperties = {
+  ...createGlassStyle({
+    intent: "neutral",
+    elevation: "level2",
+  }),
+  color: "#0f172a",
+  background:
+    "linear-gradient(180deg, rgba(255,255,255,.34), rgba(248,250,252,.24))",
+};
 
 const rangeStyle: CSSProperties = {
-  accentColor: "#2563eb",
+  appearance: "none",
+  WebkitAppearance: "none",
+  accentColor: "#64748b",
+  backgroundColor: "rgba(255, 255, 255, 0.28)",
+  backgroundImage: "none",
+  boxShadow:
+    "inset 0 0 0 1px rgba(71,85,105,.34), inset 0 2px 4px rgba(71,85,105,.14)",
+  height: 8,
+  borderRadius: 999,
   flex: "1 1 180px",
   minWidth: 120,
   maxWidth: 260,
 };
 
 const timeStyle: CSSProperties = {
-  color: "#f8fafc",
+  color: "#0f172a",
   fontVariantNumeric: "tabular-nums",
   fontSize: 13,
   lineHeight: 1,
   minWidth: 78,
   textAlign: "center",
-  textShadow: "0 1px 8px rgba(2, 6, 23, 0.36)",
 };
 
 const formatMediaTime = (seconds: number): string => {
@@ -73,6 +85,8 @@ export const LiquidGlassMediaControls = forwardRef<
       ref={ref}
       material="liquid"
       variant={variant}
+      tintMode="light"
+      adaptToContent={false}
       radius="full"
       className={cn("liquid-glass-media-controls", className)}
       data-local-dimming={localDimming ? "true" : "false"}

@@ -35,6 +35,11 @@ export default meta;
 type Story = StoryObj<typeof GlassStepper>;
 
 export const Default: Story = {
+  render: (args) => (
+    <div className="glass-neutral-level1 glass-rounded-3xl glass-p-6">
+      <GlassStepper {...args} />
+    </div>
+  ),
   args: {
     steps: [
       { id: 'step1', label: 'Step 1' },
@@ -42,6 +47,7 @@ export const Default: Story = {
       { id: 'step3', label: 'Step 3' },
       { id: 'step4', label: 'Step 4' },
     ],
+    className: '',
     onChange: fn(),
   },
 };

@@ -491,7 +491,7 @@ export const GlassWizard: React.FC<GlassWizardProps> = ({
                   </div>
 
                   {/* Step Content */}
-                  <div className="glass-flex-1 glass-min-w-0 glass-break-words">
+                  <div className="glass-flex-1 glass-min-w-0 glass-break-words text-slate-950">
                     {currentStepData.content}
                   </div>
                 </>

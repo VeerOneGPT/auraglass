@@ -176,17 +176,31 @@ export const GlassFractalLayout = forwardRef<
           return [];
 
         return nodes.map((node, index) => {
+          // Each generation scales once relative to its parent. The previous
+          // implementation also raised the factor by the absolute depth,
+          // compounding it twice and collapsing later generations to dots.
           const currentScale =
-            parentScale * Math.pow(displayScaleFactor, depth);
+            depth === 0 ? parentScale : parentScale * displayScaleFactor;
           let position = { x: 0, y: 0 };
           let rotation = 0;
+          let childParentAngle = parentAngle;
 
           switch (fractalType) {
             case "tree":
+              if (depth === 0) {
+                position = {
+                  x:
+                    parentPos.x +
+                    (index - (nodes.length - 1) / 2) * nodeDistance,
+                  y: parentPos.y,
+                };
+                rotation = 0;
+                break;
+              }
               const angleOffset =
                 (index - (nodes.length - 1) / 2) * branchAngle;
               const currentAngle = parentAngle + angleOffset;
-              const distance = nodeDistance * currentScale;
+              const distance = nodeDistance * Math.max(currentScale, 0.48);
               position = {
                 x:
                   parentPos.x +
@@ -196,6 +210,7 @@ export const GlassFractalLayout = forwardRef<
                   Math.sin((currentAngle * Math.PI) / 180) * distance,
               };
               rotation = currentAngle + 90;
+              childParentAngle = currentAngle;
               break;
 
             case "spiral":
@@ -257,7 +272,7 @@ export const GlassFractalLayout = forwardRef<
                     node.children,
                     depth + 1,
                     position,
-                    rotation || parentAngle,
+                    childParentAngle,
                     currentScale
                   )
                 : [],
@@ -407,7 +422,6 @@ export const GlassFractalLayout = forwardRef<
             {allNodes.map((node, index) => {
               const isHovered = hoveredNode === node.id;
               const isSelected = selectedNode === node.id;
-              const nodeScale = (node.scale || 1) * currentZoom;
               const nodeX = (node.position?.x || 0) * currentZoom;
               const nodeY = (node.position?.y || 0) * currentZoom;
 
@@ -418,7 +432,7 @@ export const GlassFractalLayout = forwardRef<
                   style={{
                     left: "50%",
                     top: "50%",
-                    transform: `translate(-50%, -50%) translate(${nodeX}px, ${nodeY}px) scale(${nodeScale}) rotate(${node.rotation || 0}deg)`,
+                    transform: `translate(-50%, -50%) translate(${nodeX}px, ${nodeY}px)`,
                   }}
                   custom={node.depth || 0}
                   variants={getNodeVariants()}
@@ -445,6 +459,8 @@ export const GlassFractalLayout = forwardRef<
                     `}
                     style={{
                       opacity: Math.max(0.3, 1 - (node.depth || 0) * 0.2),
+                      minWidth: isCompactLike ? 36 : 44,
+                      minHeight: isCompactLike ? 36 : 44,
                     }}
                   >
                     {node.content}
@@ -482,7 +498,7 @@ export const GlassFractalLayout = forwardRef<
 
                   {/* Depth indicator */}
                   {!isCompactLike && (node.depth || 0) > 0 && (
-                    <div className="glass-absolute glass-top-1 glass--right-1 glass-surface-dark/50 glass-text-primary glass-text-xs glass-radius-full glass-w-4 glass-h-4 glass-flex glass-items-center glass-justify-center">
+                    <div className="glass-absolute glass-top-1 glass-right-1 glass-surface-overlay glass-text-primary glass-text-xs glass-radius-full glass-w-5 glass-h-5 glass-flex glass-items-center glass-justify-center">
                       {node.depth}
                     </div>
                   )}

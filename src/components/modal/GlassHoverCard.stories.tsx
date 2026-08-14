@@ -99,7 +99,7 @@ type Story = StoryObj;
 
 export const Default: Story = {
   render: () => (
-    <div style={stageStyle}>
+    <div className="glass-neutral-level1 glass-rounded-3xl" style={stageStyle}>
       <GlassHoverCard
         content={accountContent}
         title="Account verified"
@@ -120,6 +120,7 @@ export const Default: Story = {
 export const Positions: Story = {
   render: () => (
     <div
+      className="glass-neutral-level1 glass-rounded-3xl"
       style={{
         ...stageStyle,
         gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
@@ -149,7 +150,7 @@ export const Positions: Story = {
 
 export const RichPreview: Story = {
   render: () => (
-    <div style={stageStyle}>
+    <div className="glass-neutral-level1 glass-rounded-3xl" style={stageStyle}>
       <GlassHoverCard
         content={
           <div style={{ display: "grid", gap: 12, minWidth: 260 }}>

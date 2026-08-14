@@ -1,19 +1,25 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { GlassIslandLayout, type Island, type IslandConnection } from './GlassIslandLayout';
+import type { Meta, StoryObj } from "@storybook/react";
+import {
+  GlassIslandLayout,
+  type Island,
+  type IslandConnection,
+} from "./GlassIslandLayout";
 
-import { cn } from '../../lib/utils';
+import { cn } from "../../lib/utils";
 // Generate mock islands with different content types
 const mockIslands: Island[] = [
   {
-    id: 'dashboard',
+    id: "dashboard",
     x: 100,
     y: 100,
     width: 300,
     height: 200,
-    category: 'analytics',
+    category: "analytics",
     content: (
       <div className="glass-h-full">
-        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">Dashboard</h3>
+        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">
+          Dashboard
+        </h3>
         <div className="glass-grid glass-glass-grid-cols-2 glass-gap-2 glass-text-sm glass-text-primary/70">
           <div>Users: 1,234</div>
           <div>Revenue: $5,678</div>
@@ -21,96 +27,112 @@ const mockIslands: Island[] = [
           <div>Conversion: 12.3%</div>
         </div>
       </div>
-    )
+    ),
   },
   {
-    id: 'chat',
+    id: "chat",
     x: 450,
     y: 150,
     width: 250,
     height: 180,
-    category: 'communication',
+    category: "communication",
     draggable: true,
     content: (
       <div className="glass-h-full">
-        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">Team Chat</h3>
+        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">
+          Team Chat
+        </h3>
         <div className="glass-space-y-2 glass-text-sm glass-text-primary/70">
           <div>Alice: Hey team! 👋</div>
           <div>Bob: Ready for the demo</div>
           <div>Charlie: Looking good!</div>
         </div>
       </div>
-    )
+    ),
   },
   {
-    id: 'calendar',
+    id: "calendar",
     x: 200,
     y: 350,
     width: 280,
     height: 160,
-    category: 'productivity',
+    category: "productivity",
     pinned: true,
     content: (
       <div className="glass-h-full">
-        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">Calendar</h3>
+        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">
+          Calendar
+        </h3>
         <div className="space-y-1 glass-text-sm glass-text-primary/70">
           <div>9:00 AM - Team standup</div>
           <div>2:00 PM - Client presentation</div>
           <div>4:00 PM - Code review</div>
         </div>
       </div>
-    )
+    ),
   },
   {
-    id: 'metrics',
+    id: "metrics",
     x: 520,
     y: 380,
     width: 200,
     height: 150,
-    category: 'analytics',
+    category: "analytics",
     content: (
       <div className="glass-h-full">
-        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">Metrics</h3>
+        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">
+          Metrics
+        </h3>
         <div className="glass-space-y-2">
           <div className="glass-w-full glass-surface-subtle/20 glass-radius-full glass-h-2">
-            <div className="glass-surface-green glass-h-2 glass-radius-full" style={{width: '75%'}}></div>
+            <div
+              className="glass-surface-green glass-h-2 glass-radius-full"
+              style={{ width: "75%" }}
+            ></div>
           </div>
           <div className="glass-w-full glass-surface-subtle/20 glass-radius-full glass-h-2">
-            <div className="glass-surface-blue glass-h-2 glass-radius-full" style={{width: '60%'}}></div>
+            <div
+              className="glass-surface-blue glass-h-2 glass-radius-full"
+              style={{ width: "60%" }}
+            ></div>
           </div>
         </div>
       </div>
-    )
+    ),
   },
   {
-    id: 'tasks',
+    id: "tasks",
     x: 50,
     y: 550,
     width: 320,
     height: 140,
-    category: 'productivity',
+    category: "productivity",
     content: (
       <div className="glass-h-full">
-        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">Tasks</h3>
+        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">
+          Tasks
+        </h3>
         <div className="space-y-1 glass-text-sm glass-text-primary/70">
           <div>✅ Update documentation</div>
           <div>🔄 Review pull requests</div>
           <div>⏳ Deploy to staging</div>
         </div>
       </div>
-    )
+    ),
   },
   {
-    id: 'notes',
+    id: "notes",
     x: 750,
     y: 200,
     width: 180,
     height: 220,
-    category: 'notes',
+    category: "notes",
     resizable: true,
     content: (
       <div className="glass-h-full">
-        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">Notes</h3>
+        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">
+          Notes
+        </h3>
         <div className="glass-text-sm glass-text-primary/70 space-y-1">
           <div>• Feature ideas</div>
           <div>• Bug reports</div>
@@ -118,129 +140,133 @@ const mockIslands: Island[] = [
           <div>• Architecture thoughts</div>
         </div>
       </div>
-    )
-  }
+    ),
+  },
 ];
 
 const mockConnections: IslandConnection[] = [
   {
-    from: 'dashboard',
-    to: 'metrics',
-    type: 'solid',
-    color: 'var(--glass-color-primary-light)',
-    strength: 1
+    from: "dashboard",
+    to: "metrics",
+    type: "solid",
+    color: "var(--glass-color-primary-light)",
+    strength: 1,
   },
   {
-    from: 'chat',
-    to: 'tasks',
-    type: 'dashed',
-    color: 'var(--glass-color-success-light)',
-    strength: 0.8
+    from: "chat",
+    to: "tasks",
+    type: "dashed",
+    color: "var(--glass-color-success-light)",
+    strength: 0.8,
   },
   {
-    from: 'calendar',
-    to: 'tasks',
-    type: 'dotted',
-    color: 'var(--glass-color-warning-light)',
-    strength: 0.6
+    from: "calendar",
+    to: "tasks",
+    type: "dotted",
+    color: "var(--glass-color-warning-light)",
+    strength: 0.6,
   },
   {
-    from: 'metrics',
-    to: 'notes',
-    type: 'animated',
-    color: 'var(--glass-color-danger-light)',
-    strength: 0.5
-  }
+    from: "metrics",
+    to: "notes",
+    type: "animated",
+    color: "var(--glass-color-danger-light)",
+    strength: 0.5,
+  },
 ];
 
 const smallIslands = mockIslands.slice(0, 3);
 const largeIslands = [
   ...mockIslands,
   {
-    id: 'reports',
+    id: "reports",
     x: 400,
     y: 600,
     width: 250,
     height: 160,
-    category: 'analytics',
+    category: "analytics",
     content: (
       <div className="glass-h-full">
-        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">Reports</h3>
+        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">
+          Reports
+        </h3>
         <div className="glass-text-sm glass-text-primary/70">
           Monthly performance analysis and insights
         </div>
       </div>
-    )
+    ),
   },
   {
-    id: 'settings',
+    id: "settings",
     x: 800,
     y: 500,
     width: 200,
     height: 120,
-    category: 'system',
+    category: "system",
     content: (
       <div className="glass-h-full">
-        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">Settings</h3>
+        <h3 className="glass-text-lg glass-font-semibold glass-text-primary/90 glass-mb-2">
+          Settings
+        </h3>
         <div className="glass-text-sm glass-text-primary/70">
           System configuration
         </div>
       </div>
-    )
-  }
+    ),
+  },
 ];
 
 const meta = {
-  title: 'Surfaces/App Shells + Layout/Glass Island Layout',
+  title: "Surfaces/App Shells + Layout/Glass Island Layout",
   component: GlassIslandLayout,
   parameters: {
-    layout: 'fullscreen',
-    previewSurface: 'app',
+    layout: "fullscreen",
+    previewSurface: "app",
   },
   decorators: [
     (Story) => (
       <div
         className="glass-flex glass-min-h-screen glass-w-full glass-items-start glass-justify-center glass-overflow-auto glass-p-8"
-        style={{ boxSizing: 'border-box' }}
+        style={{ boxSizing: "border-box" }}
       >
         <Story />
       </div>
     ),
   ],
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   args: {
-    className: 'glass-overflow-auto overflow-auto',
+    className: "glass-overflow-hidden",
   },
   argTypes: {
     showMinimap: {
-      control: 'boolean',
+      control: "boolean",
     },
     showConnections: {
-      control: 'boolean',
+      control: "boolean",
     },
     showGrid: {
-      control: 'boolean',
+      control: "boolean",
     },
     showStats: {
-      control: 'boolean',
+      control: "boolean",
     },
     enablePhysics: {
-      control: 'boolean',
+      control: "boolean",
     },
     enableDragging: {
-      control: 'boolean',
+      control: "boolean",
     },
     enableResizing: {
-      control: 'boolean',
+      control: "boolean",
     },
     enableZooming: {
-      control: 'boolean',
+      control: "boolean",
     },
     zoomLevel: {
-      control: { type: 'range', min: 0.2, max: 3.0, step: 0.1 },
+      control: { type: "range", min: 0.2, max: 3.0, step: 0.1 },
     },
     centerOnLoad: {
-      control: 'boolean',
+      control: "boolean",
     },
   },
 } satisfies Meta<typeof GlassIslandLayout>;
@@ -271,8 +297,8 @@ export const Default: Story = {
       repulsionStrength: 100,
       enablePhysics: false,
       enableAutoArrange: false,
-      enableCollisionDetection: true
-    }
+      enableCollisionDetection: true,
+    },
   },
 };
 
@@ -294,7 +320,7 @@ export const PhysicsEnabled: Story = {
       repulsionStrength: 150,
       enablePhysics: true,
       animationSpeed: 0.8,
-    }
+    },
   },
 };
 
@@ -362,7 +388,7 @@ export const AutoArranged: Story = {
     config: {
       enableAutoArrange: true,
       islandSpacing: 120,
-    }
+    },
   },
 };
 
@@ -414,19 +440,19 @@ export const DenseLayout: Story = {
     connections: [
       ...mockConnections,
       {
-        from: 'reports',
-        to: 'dashboard',
-        type: 'solid',
-        color: '#8b5cf6',
-        strength: 1
+        from: "reports",
+        to: "dashboard",
+        type: "solid",
+        color: "#8b5cf6",
+        strength: 1,
       },
       {
-        from: 'settings',
-        to: 'notes',
-        type: 'dashed',
-        color: '#06b6d4',
-        strength: 0.7
-      }
+        from: "settings",
+        to: "notes",
+        type: "dashed",
+        color: "#06b6d4",
+        strength: 0.7,
+      },
     ],
     showMinimap: true,
     showConnections: true,
@@ -439,7 +465,7 @@ export const DenseLayout: Story = {
       islandSpacing: 80,
       gravityStrength: 0.03,
       repulsionStrength: 120,
-    }
+    },
   },
 };
 
@@ -457,7 +483,7 @@ export const SparseLayout: Story = {
     config: {
       islandSpacing: 200,
       containerPadding: 100,
-    }
+    },
   },
 };
 
@@ -483,26 +509,26 @@ export const AllConnections: Story = {
     connections: [
       ...mockConnections,
       {
-        from: 'dashboard',
-        to: 'chat',
-        type: 'solid',
-        color: 'hsl(var(--glass-color-success))',
-        strength: 0.8
+        from: "dashboard",
+        to: "chat",
+        type: "solid",
+        color: "hsl(var(--glass-color-success))",
+        strength: 0.8,
       },
       {
-        from: 'calendar',
-        to: 'notes',
-        type: 'dotted',
-        color: 'hsl(var(--glass-color-warning))',
-        strength: 0.6
+        from: "calendar",
+        to: "notes",
+        type: "dotted",
+        color: "hsl(var(--glass-color-warning))",
+        strength: 0.6,
       },
       {
-        from: 'tasks',
-        to: 'notes',
-        type: 'animated',
-        color: 'hsl(var(--glass-color-danger))',
-        strength: 0.7
-      }
+        from: "tasks",
+        to: "notes",
+        type: "animated",
+        color: "hsl(var(--glass-color-danger))",
+        strength: 0.7,
+      },
     ],
     showMinimap: true,
     showConnections: true,
@@ -532,15 +558,15 @@ export const PhysicsWithConnections: Story = {
       repulsionStrength: 200,
       animationSpeed: 0.6,
       enableCollisionDetection: true,
-    }
+    },
   },
 };
 
 export const PinnedIslands: Story = {
   args: {
-    islands: mockIslands.map(island => ({ 
-      ...island, 
-      pinned: island.id === 'dashboard' || island.id === 'calendar' 
+    islands: mockIslands.map((island) => ({
+      ...island,
+      pinned: island.id === "dashboard" || island.id === "calendar",
     })),
     connections: mockConnections,
     showMinimap: true,
@@ -555,9 +581,9 @@ export const PinnedIslands: Story = {
 
 export const MinimizedIslands: Story = {
   args: {
-    islands: mockIslands.map(island => ({ 
-      ...island, 
-      minimized: island.id === 'notes' || island.id === 'metrics' 
+    islands: mockIslands.map((island) => ({
+      ...island,
+      minimized: island.id === "notes" || island.id === "metrics",
     })),
     connections: mockConnections,
     showMinimap: true,
@@ -572,11 +598,16 @@ export const MinimizedIslands: Story = {
 export const CategorizedIslands: Story = {
   args: {
     islands: mockIslands,
-    connections: mockConnections.filter(conn => 
-      (mockIslands.find(i => i.id === conn.from)?.category === 'analytics' && 
-       mockIslands.find(i => i.id === conn.to)?.category === 'analytics') ||
-      (mockIslands.find(i => i.id === conn.from)?.category === 'productivity' && 
-       mockIslands.find(i => i.id === conn.to)?.category === 'productivity')
+    connections: mockConnections.filter(
+      (conn) =>
+        (mockIslands.find((i) => i.id === conn.from)?.category ===
+          "analytics" &&
+          mockIslands.find((i) => i.id === conn.to)?.category ===
+            "analytics") ||
+        (mockIslands.find((i) => i.id === conn.from)?.category ===
+          "productivity" &&
+          mockIslands.find((i) => i.id === conn.to)?.category ===
+            "productivity")
     ),
     showMinimap: true,
     showConnections: true,
@@ -592,33 +623,41 @@ export const LargeScale: Story = {
     islands: [
       ...largeIslands,
       {
-        id: 'monitoring',
+        id: "monitoring",
         x: 150,
         y: 800,
         width: 300,
         height: 180,
-        category: 'system',
-        content: <div className="glass-p-4"><h3 className="glass-text-primary/90">System Monitoring</h3></div>
+        category: "system",
+        content: (
+          <div className="glass-p-4">
+            <h3 className="glass-text-primary/90">System Monitoring</h3>
+          </div>
+        ),
       },
       {
-        id: 'logs',
+        id: "logs",
         x: 600,
         y: 750,
         width: 250,
         height: 160,
-        category: 'system',
-        content: <div className="glass-p-4"><h3 className="glass-text-primary/90">Log Viewer</h3></div>
-      }
+        category: "system",
+        content: (
+          <div className="glass-p-4">
+            <h3 className="glass-text-primary/90">Log Viewer</h3>
+          </div>
+        ),
+      },
     ],
     connections: [
       ...mockConnections,
       {
-        from: 'monitoring',
-        to: 'logs',
-        type: 'solid',
-        color: '#ec4899',
-        strength: 0.9
-      }
+        from: "monitoring",
+        to: "logs",
+        type: "solid",
+        color: "#ec4899",
+        strength: 0.9,
+      },
     ],
     showMinimap: true,
     showConnections: true,
@@ -640,13 +679,13 @@ export const PerformanceTest: Story = {
       y: 100 + Math.floor(i / 5) * 150,
       width: 180,
       height: 120,
-      category: i % 2 === 0 ? 'system' : 'data',
+      category: i % 2 === 0 ? "system" : "data",
       content: (
         <div className="glass-p-4">
           <h4 className="glass-text-primary/90">Island {i + 1}</h4>
           <p className="glass-text-primary/60 glass-text-sm">Test content</p>
         </div>
-      )
+      ),
     })),
     showMinimap: true,
     showConnections: true,

@@ -185,8 +185,12 @@ export const GlassResponsiveNav = forwardRef<
     };
 
     const desktopItems = navigation.flatMap((section) => section.items ?? []);
+    // "sidebar" tablet mode reuses the desktop nav as its visible surface so
+    // tablet viewports never render an empty container.
+    const isTabletSidebarMode =
+      screenSize === "tablet" && tabletNavType === "sidebar";
     const shouldShowDesktopNav =
-      screenSize === "desktop" &&
+      (screenSize === "desktop" || isTabletSidebarMode) &&
       !children &&
       (desktopItems.length > 0 || bottomNavItems.length > 0);
     const renderedDesktopItems =
@@ -202,7 +206,10 @@ export const GlassResponsiveNav = forwardRef<
     return (
       <div
         ref={ref}
-        className={cn("glass-relative glass-w-full", className)}
+        className={cn(
+          "glass-relative glass-w-full glass-surface-subtle glass-radius-xl",
+          className
+        )}
         id={navId}
         role="navigation"
         aria-label={ariaLabel || "Responsive navigation"}

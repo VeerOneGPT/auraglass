@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { LiquidGlassInspectorPanel } from "./LiquidGlassInspectorPanel";
 
 const meta: Meta<typeof LiquidGlassInspectorPanel> = {
-  title: 'Navigation/Liquid Glass Inspector Panel',
+  title: "Navigation/Liquid Glass Inspector Panel",
   component: LiquidGlassInspectorPanel,
   parameters: { layout: "fullscreen", previewSurface: "app" },
 };
@@ -15,8 +15,8 @@ const inspectorPanelStoryCss = `
     --inspector-story-muted: #334155;
     --inspector-story-border: rgba(15, 23, 42, 0.1);
     --inspector-story-panel:
-      linear-gradient(135deg, rgba(255,255,255,0.86), rgba(219,234,254,0.5)),
-      radial-gradient(circle at 18% 18%, rgba(96,165,250,0.24), transparent 30%);
+      linear-gradient(135deg, rgba(255,255,255,0.88), rgba(236,238,240,0.58)),
+      radial-gradient(circle at 18% 18%, rgba(255,255,255,0.28), rgba(255,255,255,0.08) 30%);
     min-height: 100vh;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
@@ -46,14 +46,17 @@ const inspectorPanelStoryCss = `
   }
 
   .liquid-inspector-story .liquid-glass-inspector-panel button {
-    border: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid rgba(255,255,255,.28);
     border-radius: 999px;
     background: rgba(15,23,42,.08);
     color: inherit;
     cursor: pointer;
     font: inherit;
     line-height: 1;
-    min-width: 28px;
+    min-width: 44px;
+    min-height: 44px;
     padding: 6px 10px;
   }
 
@@ -63,7 +66,7 @@ const inspectorPanelStoryCss = `
     --inspector-story-border: rgba(226, 232, 240, 0.22);
     --inspector-story-panel:
       linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.72)),
-      radial-gradient(circle at 18% 18%, rgba(96,165,250,0.18), transparent 30%);
+      radial-gradient(circle at 18% 18%, rgba(255,255,255,0.12), rgba(255,255,255,0.02) 30%);
   }
 
   [data-storybook-preview-mode="dark"] .liquid-inspector-story .liquid-glass-inspector-panel button {
@@ -72,8 +75,8 @@ const inspectorPanelStoryCss = `
 
   [data-storybook-preview-mode="liquid"] .liquid-inspector-story {
     --inspector-story-panel:
-      linear-gradient(135deg, rgba(255,255,255,0.72), rgba(236,253,245,0.42)),
-      radial-gradient(circle at 20% 20%, rgba(29,78,216,0.2), transparent 30%);
+      linear-gradient(135deg, rgba(255,255,255,0.76), rgba(236,238,240,0.46)),
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,0.24), rgba(255,255,255,0.08) 30%);
   }
 
   [data-storybook-preview-mode="high-contrast"] .liquid-inspector-story {
@@ -95,14 +98,33 @@ export const Default: Story = {
       <style>{inspectorPanelStoryCss}</style>
       <div className="liquid-inspector-work-area">
         <h2 style={{ margin: 0 }}>Selected photo</h2>
-        <p className="liquid-inspector-muted">The inspector is anchored to a composed work area with readable surrounding content.</p>
+        <p className="liquid-inspector-muted">
+          The inspector is anchored to a composed work area with readable
+          surrounding content.
+        </p>
       </div>
       <LiquidGlassInspectorPanel
         open
         selectionLabel="Hero image - final crop"
         sections={[
-          { id: "properties", title: "Properties", content: <div className="liquid-inspector-muted">1200 x 900, sRGB, approved</div> },
-          { id: "access", title: "Access", content: <div className="liquid-inspector-muted">Shared with design review</div> },
+          {
+            id: "properties",
+            title: "Properties",
+            content: (
+              <div className="liquid-inspector-muted">
+                1200 x 900, sRGB, approved
+              </div>
+            ),
+          },
+          {
+            id: "access",
+            title: "Access",
+            content: (
+              <div className="liquid-inspector-muted">
+                Shared with design review
+              </div>
+            ),
+          },
         ]}
         style={{ width: "100%", minHeight: 520 }}
       />

@@ -265,13 +265,15 @@ export const GlassGrid = forwardRef<HTMLDivElement, GlassGridProps>(
         ].filter(Boolean)
       : [];
 
+    // Inline gridTemplateColumns would override responsive media queries
+    // (e.g. the Storybook shim's collapse rules for `.grid-cols-3/4`), so
+    // only set it for auto-fit layouts. Fixed column counts rely on the
+    // `grid-cols-N` utility classes, which remain responsive via CSS.
     const gridStyle = autoFit
       ? {
           gridTemplateColumns: `repeat(auto-fit, minmax(${minColWidth}, 1fr))`,
         }
-      : {
-          gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
-        };
+      : undefined;
 
     const layoutStyle: React.CSSProperties = {
       display: "grid",
@@ -492,9 +494,10 @@ export const GlassGridItem = forwardRef<HTMLDivElement, GlassGridItemProps>(
       ...(role && { role }),
     };
 
+    // Keep spans class-based so responsive overrides (e.g. collapsing to a
+    // single column on small viewports) can take effect instead of being
+    // frozen by inline grid-column/grid-row declarations.
     const itemStyle: React.CSSProperties = {
-      ...(colSpan !== "auto" ? { gridColumn: spanValue(colSpan) } : {}),
-      ...(rowSpan !== "auto" ? { gridRow: rowSpanValue(rowSpan) } : {}),
       ...(colStart !== "auto" ? { gridColumnStart: colStart } : {}),
       ...(colEnd !== "auto" ? { gridColumnEnd: colEnd } : {}),
       ...(rowStart !== "auto" ? { gridRowStart: rowStart } : {}),

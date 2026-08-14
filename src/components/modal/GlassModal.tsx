@@ -772,8 +772,7 @@ export const GlassModal = forwardRef<HTMLDivElement, GlassModalProps>(
             ? "relative flex w-full"
             : cn(
                 "fixed inset-0 flex",
-                variantClasses[variant],
-                backdropBlurClasses[backdropBlur]
+                variantClasses[variant]
               ),
           consciousness && "consciousness-modal-container",
           adaptive &&
@@ -782,7 +781,12 @@ export const GlassModal = forwardRef<HTMLDivElement, GlassModalProps>(
           eyeTracking && "consciousness-eye-trackable",
           className
         )}
-        style={isContained ? undefined : { zIndex }}
+        style={
+          {
+            ...(isContained ? {} : { zIndex }),
+            "--glass-specular-intensity": 0.18,
+          } as React.CSSProperties
+        }
         data-contained={isContained ? "true" : undefined}
         data-consciousness-modal="true"
         data-consciousness-active={String(!!consciousness)}
@@ -798,10 +802,13 @@ export const GlassModal = forwardRef<HTMLDivElement, GlassModalProps>(
             <Motion
               preset="fadeIn"
               duration={prefersReducedMotion ? 0 : undefined}
-              className="glass-absolute glass-inset-0 glass-surface-dark/50"
+              className={cn(
+                "glass-absolute glass-inset-0",
+                backdropBlurClasses[backdropBlur]
+              )}
               style={{
-                backgroundColor:
-                  "color-mix(in srgb, var(--glass-black) 40%, transparent)",
+                background:
+                  "linear-gradient(rgba(255,255,255,0.08), rgba(255,255,255,0.08)), linear-gradient(rgba(15,23,42,0.24), rgba(15,23,42,0.24))",
               }}
               onClick={handleBackdropClick}
               aria-hidden="true"
@@ -939,7 +946,7 @@ export const GlassModal = forwardRef<HTMLDivElement, GlassModalProps>(
                 tabIndex={-1}
                 {...a11yProps}
                 className={cn(
-                  "w-full flex flex-col glass-overlay-noise glass-edge glass-overlay-specular glass-typography-reset",
+                  "w-full flex flex-col glass-overlay-noise glass-edge glass-overlay-specular glass-typography-reset glass-on-light",
                   "focus:outline-none",
                   isContained
                     ? "overflow-hidden"

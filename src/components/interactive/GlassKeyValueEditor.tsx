@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React from "react";
 import { GlassButton } from "../button/GlassButton";
 import { cn } from "../../lib/utilsComprehensive";
@@ -11,14 +11,14 @@ export interface GlassKeyValueEditorProps {
   value: Pair[];
   onChange: (pairs: Pair[]) => void;
   className?: string;
-  'data-testid'?: string;
+  "data-testid"?: string;
 }
 
 export function GlassKeyValueEditor({
   value,
   onChange,
   className,
-  'data-testid': dataTestId,
+  "data-testid": dataTestId,
 }: GlassKeyValueEditorProps) {
   const update = (i: number, patch: Partial<Pair>) => {
     const next = value.slice();
@@ -31,10 +31,10 @@ export function GlassKeyValueEditor({
   return (
     <div
       data-glass-component
-      className={cn("glass-gap-2", className)}
+      className={cn("glass-flex glass-flex-col glass-gap-2", className)}
       role="group"
       aria-label="Key-value pair editor"
-      data-testid={dataTestId || 'glasskeyvalueeditor'}
+      data-testid={dataTestId || "glasskeyvalueeditor"}
     >
       {value.map((p, i) => (
         <div
@@ -48,14 +48,14 @@ export function GlassKeyValueEditor({
             onChange={(e) => update(i, { key: e.target.value })}
             placeholder="Key"
             aria-label={`Key for pair ${i + 1}`}
-            className='glass-flex-1 glass-bg-transparent glass-border glass-border-white/20 glass-radius-lg glass-px-2 glass-py-1 glass-text-sm glass-outline-none glass-focus glass-touch-target glass-contrast-guard'
+            className="glass-flex-1 glass-bg-transparent glass-border glass-border-white/20 glass-radius-lg glass-px-2 glass-py-1 glass-text-sm glass-outline-none glass-focus glass-touch-target glass-contrast-guard"
           />
           <input
             value={p.value}
             onChange={(e) => update(i, { value: e.target.value })}
             placeholder="Value"
             aria-label={`Value for pair ${i + 1}`}
-            className='glass-flex-1 glass-bg-transparent glass-border glass-border-white/20 glass-radius-lg glass-px-2 glass-py-1 glass-text-sm glass-outline-none glass-focus glass-touch-target glass-contrast-guard'
+            className="glass-flex-1 glass-bg-transparent glass-border glass-border-white/20 glass-radius-lg glass-px-2 glass-py-1 glass-text-sm glass-outline-none glass-focus glass-touch-target glass-contrast-guard"
           />
           <GlassButton
             size="sm"

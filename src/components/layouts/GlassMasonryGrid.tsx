@@ -584,6 +584,10 @@ export const GlassMasonryGrid = forwardRef<
           className
         )}
         style={{
+          "--glass-text-primary": "rgba(15, 23, 42, 0.94)",
+          "--glass-text-secondary": "rgba(15, 23, 42, 0.76)",
+          "--glass-text-tertiary": "rgba(15, 23, 42, 0.64)",
+          color: "rgba(15, 23, 42, 0.94)",
           width: compact ? "100%" : "min(1120px, calc(100vw - 48px))",
           maxWidth: "100%",
           maxHeight:

@@ -2,7 +2,6 @@
 // Typography tokens available via typography.css (imported in index.css)
 import React from "react";
 import { cn } from "../../../lib/utilsComprehensive";
-import { glassTokenUtils } from "../../../tokens/glass";
 
 export interface TabItemProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> {
@@ -105,14 +104,10 @@ const TabItemComponent: React.FC<TabItemProps> = ({
         minWidth: 0,
         gap: "6px",
         padding: "8px 16px",
-        background: active
-          ? glassTokenUtils.getSurface("neutral", "level1").surface.base
-          : "transparent",
+        background: active ? "rgba(255, 255, 255, 0.28)" : "transparent",
         border: "none",
         borderRadius: "6px",
-        color: active
-          ? "var(--glass-white)"
-          : glassTokenUtils.getSurface("neutral", "level1").text.secondary,
+        color: active ? "rgba(15, 23, 42, 0.92)" : "rgba(15, 23, 42, 0.72)",
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.5 : 1,
         fontSize: "0.875rem", // body text
@@ -144,8 +139,8 @@ const TabItemComponent: React.FC<TabItemProps> = ({
         <span
           aria-label={`${badge} notifications`}
           style={{
-            background: "hsl(var(--glass-color-danger))",
-            color: "white",
+            background: "rgba(255, 255, 255, 0.3)",
+            color: "rgba(15, 23, 42, 0.92)",
             borderRadius: "10px",
             padding: "2px 6px",
             fontSize: "0.625rem",

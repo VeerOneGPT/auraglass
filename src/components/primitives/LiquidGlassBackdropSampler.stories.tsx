@@ -22,13 +22,12 @@ export const Default: Story = {
       }}
     >
       <div
+        className="glass-neutral-level1"
         style={{
           minHeight: 320,
           borderRadius: 28,
           padding: 28,
           color: "#0f172a",
-          background:
-            "linear-gradient(135deg, rgba(255,255,255,0.82), rgba(219,234,254,0.72)), radial-gradient(circle at 20% 20%, rgba(59,130,246,0.22), transparent 28%), radial-gradient(circle at 82% 72%, rgba(20,184,166,0.22), transparent 32%)",
           boxShadow: "0 24px 80px rgba(15,23,42,0.16)",
         }}
       >
@@ -45,8 +44,10 @@ export const Default: Story = {
                 overflow: "auto",
                 borderRadius: 18,
                 padding: 16,
-                background: "rgba(15,23,42,0.78)",
-                color: "#e0f2fe",
+                border: "1px solid rgba(80,102,130,0.18)",
+                background: "rgba(255,255,255,0.28)",
+                color: "#172033",
+                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.28)",
                 fontSize: 12,
               }}
             >

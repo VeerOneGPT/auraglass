@@ -38,7 +38,9 @@ export const GlassMenuPrimitiveRoot = React.forwardRef<
       performanceMode="medium"
       className={cn(
         "relative glass-backdrop-blur-md ring-1 ring-white/10 bg-white/5",
-        orientation === "horizontal" ? "flex flex-row" : "flex flex-col",
+        orientation === "horizontal"
+          ? "flex flex-row gap-2"
+          : "flex flex-col gap-2",
         disabled && "opacity-50 pointer-events-none",
         className
       )}
@@ -72,6 +74,7 @@ export const GlassMenuPrimitiveContent = React.forwardRef<
       open = true,
       onDismiss,
       positionStrategy = "absolute",
+      style,
       ...props
     },
     ref
@@ -86,9 +89,10 @@ export const GlassMenuPrimitiveContent = React.forwardRef<
         onDismiss={onDismiss}
         className={cn(
           "glass-backdrop-blur-lg bg-white/10 border border-white/20 shadow-2xl",
-          "min-w-48 glass-py-1",
+          "min-w-48 glass-p-1 glass-flex glass-flex-col glass-gap-2",
           className
         )}
+        style={{ display: "grid", gridAutoFlow: "row", rowGap: 8, ...style }}
         {...props}
       >
         <FocusScope loop>{children}</FocusScope>
@@ -107,24 +111,45 @@ export interface GlassMenuPrimitiveItemProps
 export const GlassMenuPrimitiveItem = React.forwardRef<
   HTMLButtonElement,
   GlassMenuPrimitiveItemProps
->(({ children, className, inset = false, type = "button", ...props }, ref) => (
-  <button
-    ref={ref}
-    type={type}
-    className={cn(
-      "relative flex items-center justify-between w-full",
-      "glass-text-primary/80 hover:glass-text-primary transition-colors duration-200",
-      "hover:bg-white/10 glass-radius-md glass-hover--translate-y-0-5",
-      "focus:outline-none focus:ring-2 glass-focus-ring-white-opacity-30 focus:ring-offset-2 focus:ring-offset-transparent",
-      "disabled:opacity-50 glass-disabled-cursor-not-allowed",
-      inset && "glass-pl-8",
-      className
-    )}
-    {...props}
-  >
-    {children}
-  </button>
-));
+>(
+  (
+    { children, className, inset = false, type = "button", style, ...props },
+    ref
+  ) => (
+    <button
+      ref={ref}
+      type={type}
+      className={cn(
+        "relative flex items-center justify-between w-full",
+        "glass-text-primary hover:glass-text-primary transition-colors duration-200",
+        "min-h-11 px-3 py-2 appearance-none text-left",
+        "glass-radius-md glass-hover--translate-y-0-5",
+        "focus:outline-none focus:ring-2 glass-focus-ring-white-opacity-30 focus:ring-offset-2 focus:ring-offset-transparent",
+        "disabled:opacity-50 glass-disabled-cursor-not-allowed",
+        inset && "glass-pl-8",
+        className
+      )}
+      style={{
+        appearance: "none",
+        WebkitAppearance: "none",
+        minHeight: 44,
+        padding: "8px 12px",
+        marginBottom: 8,
+        border: "1px solid rgba(255, 255, 255, 0.3)",
+        borderRadius: 12,
+        background: "rgba(255, 255, 255, 0.18)",
+        boxShadow:
+          "0 6px 18px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255,255,255,0.28)",
+        color: "rgba(15, 23, 42, 0.9)",
+        font: "inherit",
+        ...style,
+      }}
+      {...props}
+    >
+      {children}
+    </button>
+  )
+);
 
 GlassMenuPrimitiveItem.displayName = "GlassMenuPrimitiveItem";
 

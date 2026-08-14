@@ -127,14 +127,15 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
               {description && (
                 <Typography
                   variant="p"
-                  className="glass-text-xs glass-text-secondary glass-line-clamp-2"
+                  className="glass-text-xs glass-text-primary glass-line-clamp-2"
+                  style={{ color: "rgba(15, 23, 42, 0.94)" }}
                 >
                   {description}
                 </Typography>
               )}
             </div>
             <div className="glass-flex glass-gap-1 glass-shrink-0">
-              {["#7dd3fc", "#a78bfa", "#34d399"].map((color) => (
+              {["#f8fafc", "#cbd5e1", "#64748b"].map((color) => (
                 <span
                   key={color}
                   aria-hidden

@@ -436,7 +436,7 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
           {/* Center section */}
           <div className="glass-flex-1 glass-flex glass-justify-center glass-px-4">
             {search && (
-              <div className="glass-relative glass-w-full glass-max-w-md">
+              <div className="glass-relative glass-hidden sm:glass-block glass-w-full glass-max-w-md">
                 <GlassInput
                   placeholder={search.placeholder || "Search..."}
                   value={searchQuery}
@@ -572,6 +572,36 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
 
           {/* Right section */}
           <div className="glass-flex glass-items-center glass-gap-2">
+            {/* Mobile search access */}
+            {search && (
+              <IconButton
+                icon={
+                  <svg
+                    className="glass-w-4 glass-h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                }
+                intent="neutral"
+                size="sm"
+                aria-label="Search"
+                onClick={() => {
+                  const searchInput = document.querySelector<HTMLInputElement>(
+                    'input[type="search"], input[placeholder*="Search" i]'
+                  );
+                  searchInput?.focus();
+                }}
+                className="sm:glass-hidden glass-focus"
+              />
+            )}
             {/* Actions */}
             {(actions || []).map((action) => (
               <NotificationButton key={action.id} action={action} />
@@ -588,16 +618,21 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
     return (
       <OptimizedGlass
         {...commonProps}
-        intent="primary"
+        intent="neutral"
         elevation={elevation}
         intensity="medium"
         depth={2}
-        tint="lavender"
+        tint="neutral"
         border={variant === "floating" ? "gradient" : "subtle"}
         animation="none"
         performanceMode="medium"
         role="navigation"
         aria-label={commonProps["aria-label"] || "Main navigation"}
+        style={{
+          background: "rgba(255,255,255,0.12)",
+          boxShadow:
+            "0 8px 32px rgba(15,23,42,.12), inset 0 1px 0 rgba(255,255,255,.28), inset 0 0 12px rgba(255,255,255,.12)",
+        }}
       >
         {/* Removed extra color overlay to follow global background */}
         {/* Left section */}
@@ -645,9 +680,9 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
         </div>
 
         {/* Center section */}
-        <div className="glass-flex-1 glass-flex glass-justify-center glass-px-4">
-          {search && (
-            <div className="glass-relative glass-w-full glass-max-w-md">
+          <div className="glass-flex-1 glass-flex glass-justify-center glass-px-4">
+            {search && (
+            <div className="glass-relative glass-hidden sm:glass-block glass-w-full glass-max-w-md">
               <GlassInput
                 placeholder={search.placeholder || "Search..."}
                 value={searchQuery}
@@ -780,6 +815,36 @@ export const GlassHeader = forwardRef<HTMLDivElement, GlassHeaderProps>(
 
         {/* Right section */}
         <div className="glass-flex glass-items-center glass-gap-2">
+          {/* Mobile search access */}
+          {search && (
+            <IconButton
+              icon={
+                <svg
+                  className="glass-w-4 glass-h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              }
+              intent="neutral"
+              size="sm"
+              aria-label="Search"
+              onClick={() => {
+                const searchInput = document.querySelector<HTMLInputElement>(
+                  'input[type="search"], input[placeholder*="Search" i]'
+                );
+                searchInput?.focus();
+              }}
+              className="sm:glass-hidden glass-focus"
+            />
+          )}
           {/* Actions */}
           {(actions || []).map((action) => (
             <NotificationButton key={action.id} action={action} />

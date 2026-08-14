@@ -20,13 +20,21 @@ const posterDataUri = (label: string) =>
     `<svg xmlns='http://www.w3.org/2000/svg' width='640' height='360'>` +
       `<defs>` +
         `<linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>` +
-          `<stop offset='0%' stop-color='#0066cc'/>` +
-          `<stop offset='100%' stop-color='#004a99'/>` +
+          `<stop offset='0%' stop-color='#e9edf1'/>` +
+          `<stop offset='48%' stop-color='#cdd5dc'/>` +
+          `<stop offset='100%' stop-color='#aeb8c2'/>` +
         `</linearGradient>` +
+        `<radialGradient id='shine' cx='32%' cy='24%' r='64%'>` +
+          `<stop offset='0%' stop-color='#ffffff' stop-opacity='.78'/>` +
+          `<stop offset='100%' stop-color='#ffffff' stop-opacity='0'/>` +
+        `</radialGradient>` +
       `</defs>` +
       `<rect width='100%' height='100%' fill='url(#g)'/>` +
+      `<rect width='100%' height='100%' fill='url(#shine)'/>` +
+      `<circle cx='320' cy='150' r='42' fill='#ffffff' fill-opacity='.48' stroke='#ffffff' stroke-opacity='.8'/>` +
+      `<path d='M307 126l38 24-38 24z' fill='#334155' fill-opacity='.8'/>` +
       `<text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle'` +
-            ` font-size='28' font-family='Inter, Arial, Helvetica, sans-serif' fill='#ffffff' opacity='0.9'>` +
+            ` dy='78' font-size='24' font-family='Aeonik, Arial, Helvetica, sans-serif' fill='#1e293b' opacity='0.86'>` +
         label +
       `</text>` +
     `</svg>`

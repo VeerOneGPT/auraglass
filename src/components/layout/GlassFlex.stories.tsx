@@ -38,7 +38,7 @@ export const Default: Story = {
   render: (args) => (
     <GlassFlex
       {...args}
-      className="glass-w-full glass-max-w-4xl glass-rounded-2xl glass-bg-white/55 glass-p-5 glass-shadow-xl"
+      className="glass-neutral-level1 glass-w-full glass-max-w-4xl glass-rounded-2xl glass-p-5 glass-shadow-xl"
       aria-label="Operations metric row"
     >
       {tiles.map(([label, value, note]) => (

@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { LiquidGlassNowPlayingBar } from "./LiquidGlassNowPlayingBar";
 
 const meta: Meta<typeof LiquidGlassNowPlayingBar> = {
-  title: 'Media/Liquid Glass Now Playing Bar',
+  title: "Media/Liquid Glass Now Playing Bar",
   component: LiquidGlassNowPlayingBar,
-  parameters: { layout: "fullscreen", previewSurface: "media" },
+  parameters: { layout: "fullscreen", previewSurface: "component" },
 };
 export default meta;
 type Story = StoryObj<typeof LiquidGlassNowPlayingBar>;
@@ -13,19 +13,25 @@ export const Default: Story = {
   render: () => (
     <div
       className="ag-now-playing-stage"
-      style={{ minHeight: "100vh", display: "grid", placeItems: "center", padding: 32, boxSizing: "border-box" }}
+      style={{
+        minHeight: "100vh",
+        display: "grid",
+        placeItems: "center",
+        padding: 32,
+        boxSizing: "border-box",
+      }}
     >
       <style>
         {`
           .ag-now-playing-stage .liquid-glass-now-playing-bar,
           .ag-now-playing-stage .liquid-glass-now-playing-bar button {
-            color: #f8fafc;
+            color: #0f172a;
             -webkit-text-fill-color: currentColor;
           }
 
           .ag-now-playing-stage .liquid-glass-now-playing-bar .glass-text-secondary {
-            color: #dbeafe !important;
-            -webkit-text-fill-color: #dbeafe;
+            color: rgba(15,23,42,.72) !important;
+            -webkit-text-fill-color: rgba(15,23,42,.72);
           }
 
           .ag-now-playing-stage .liquid-glass-now-playing-bar button[aria-label] {
@@ -44,15 +50,23 @@ export const Default: Story = {
           boxSizing: "border-box",
           borderRadius: 32,
           background:
-            "radial-gradient(circle at 24% 24%, rgba(147,197,253,.58), transparent 26%), radial-gradient(circle at 78% 66%, rgba(45,212,191,.44), transparent 28%), linear-gradient(135deg, #0f172a, #1d4ed8 48%, #0f766e)",
-          boxShadow: "0 28px 90px rgba(2,6,23,.34)",
+            "radial-gradient(circle at 24% 24%, rgba(255,255,255,.72), transparent 26%), radial-gradient(circle at 78% 66%, rgba(160,160,160,.12), transparent 28%), linear-gradient(135deg, #dedede, #fafafa 48%, #d2d2d2)",
+          boxShadow: "0 28px 90px rgba(15,23,42,.18)",
         }}
       >
         <LiquidGlassNowPlayingBar
           title="Liquid Study"
           subtitle="Aura System"
           progress={0.42}
-          artwork={<div style={{ width: "100%", height: "100%", background: "linear-gradient(135deg, #1d4ed8, #14b8a6)" }} />}
+          artwork={
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                background: "linear-gradient(135deg, #d2d2d2, #fafafa)",
+              }}
+            />
+          }
         />
       </div>
     </div>

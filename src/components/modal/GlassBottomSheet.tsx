@@ -188,7 +188,8 @@ export const GlassBottomSheet = forwardRef<
           <OptimizedGlass
             ref={ref}
             elevation="level3"
-            className={cn("h-full rounded-t-2xl glass-p-4")}
+            className={cn("h-full rounded-t-2xl glass-p-4 glass-overflow-y-auto glass-on-light")}
+            style={{ boxSizing: "border-box" }}
             tabIndex={-1}
           >
             {/* Handle indicator */}

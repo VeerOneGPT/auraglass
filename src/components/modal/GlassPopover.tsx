@@ -387,19 +387,19 @@ export const GlassPopover = forwardRef<HTMLDivElement, GlassPopoverProps>(
         case "top":
         case "top-start":
         case "top-end":
-          return `${base} -bottom-1 border-t-0 border-l-0`;
+          return `${base} bottom-0 border-t-0 border-l-0`;
         case "right":
         case "right-start":
         case "right-end":
-          return `${base} -left-1 border-r-0 border-b-0`;
+          return `${base} left-0 border-r-0 border-b-0`;
         case "bottom":
         case "bottom-start":
         case "bottom-end":
-          return `${base} -top-1 border-b-0 border-r-0`;
+          return `${base} top-0 border-b-0 border-r-0`;
         case "left":
         case "left-start":
         case "left-end":
-          return `${base} -right-1 border-l-0 border-t-0`;
+          return `${base} right-0 border-l-0 border-t-0`;
         default:
           return base;
       }
@@ -451,6 +451,8 @@ export const GlassPopover = forwardRef<HTMLDivElement, GlassPopoverProps>(
     const triggerElement = children
       ? React.cloneElement(children as any, {
           ref: triggerRef,
+          "aria-expanded": isOpen,
+          "aria-haspopup": "dialog",
           onClick: (e: MouseEvent) => {
             (children as any).props?.onClick?.(e);
             handleClick();
@@ -482,6 +484,8 @@ export const GlassPopover = forwardRef<HTMLDivElement, GlassPopoverProps>(
           <div
             className="glass-fixed glass-inset-0 glass-pointer-events-none"
             style={{ zIndex }}
+            role="dialog"
+            aria-label="Popover content"
           >
             <Motion
               preset={getAnimationPreset()}
@@ -556,7 +560,7 @@ export const GlassPopover = forwardRef<HTMLDivElement, GlassPopoverProps>(
                     performanceMode="medium"
                     ref={popoverRef}
                     className={cn(
-                      "relative max-w-xs glass-lift glass-sheen",
+                      "relative max-w-xs glass-lift glass-sheen glass-overflow-y-auto glass-on-light",
                       radialReveal && "glass-radial-reveal",
                       "bg-background/95 glass-backdrop-blur-md",
                       "border border-border/20 shadow-lg",

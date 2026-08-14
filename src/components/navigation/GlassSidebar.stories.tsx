@@ -39,7 +39,7 @@ const SidebarFrame = (args: ComponentProps<typeof GlassSidebar>) => {
   const [collapsed, setCollapsed] = useState(args.collapsed ?? false);
 
   return (
-    <div className="glass-flex glass-min-h-screen glass-w-full glass-gap-5 glass-p-4">
+    <div className="glass-flex glass-min-h-screen glass-w-full glass-min-w-0 glass-flex-col lg:glass-flex-row glass-gap-5 glass-p-4">
       <GlassSidebar
         {...args}
         collapsed={collapsed}
@@ -47,7 +47,7 @@ const SidebarFrame = (args: ComponentProps<typeof GlassSidebar>) => {
         header={<div className="glass-text-base glass-font-semibold glass-text-primary">Aura Ops</div>}
         footer={<div className="glass-text-xs glass-text-secondary">Workspace online</div>}
       />
-      <main className="glass-min-w-0 glass-flex-1 glass-rounded-3xl glass-border glass-border-white/25 glass-bg-white/35 glass-p-6 glass-shadow-xl glass-backdrop-blur-xl">
+      <main className="glass-min-w-0 glass-w-full lg:glass-flex-1 glass-overflow-x-auto glass-rounded-3xl glass-border glass-border-white/25 glass-bg-white/35 glass-p-6 glass-shadow-xl glass-backdrop-blur-xl">
         <h2 className="glass-m-0 glass-text-2xl glass-font-semibold glass-text-primary">Project operations</h2>
         <p className="glass-mt-2 glass-max-w-2xl glass-text-sm glass-text-secondary">
           The sidebar is shown with adjacent app content so width, scrolling, and collapsed states are easy to inspect.

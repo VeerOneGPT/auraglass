@@ -3,6 +3,7 @@
 import React, { forwardRef } from "react";
 import { AlertCircle, AlertTriangle, CheckCircle, Info } from "../../icons";
 import { cn } from "../../lib/utilsComprehensive";
+import { OptimizedGlass } from "../../primitives";
 
 export interface GlassValidationMessageProps
   extends React.HTMLAttributes<HTMLParagraphElement> {
@@ -11,16 +12,16 @@ export interface GlassValidationMessageProps
 }
 
 const toneConfig = {
-  error: { icon: AlertCircle, role: "alert", className: "glass-text-red-300" },
+  error: { icon: AlertCircle, role: "alert", className: "text-red-800" },
   warning: {
     icon: AlertTriangle,
     role: "status",
-    className: "glass-text-amber-300",
+    className: "text-amber-900",
   },
   success: {
     icon: CheckCircle,
     role: "status",
-    className: "glass-text-green-300",
+    className: "text-emerald-800",
   },
   info: { icon: Info, role: "status", className: "glass-text-secondary" },
 };
@@ -33,11 +34,15 @@ export const GlassValidationMessage = forwardRef<
   const Icon = config.icon;
 
   return (
-    <p
+    <OptimizedGlass
+      as="p"
+      elevation="level1"
+      intensity="subtle"
+      border="subtle"
       ref={ref}
       role={config.role}
       className={cn(
-        "glass-flex glass-items-start glass-gap-1.5 glass-text-xs",
+        "glass-flex glass-items-start glass-gap-1.5 glass-rounded-lg glass-px-3 glass-py-2 glass-text-xs",
         config.className,
         className
       )}
@@ -47,7 +52,7 @@ export const GlassValidationMessage = forwardRef<
         {icon ?? <Icon size={14} />}
       </span>
       <span>{children}</span>
-    </p>
+    </OptimizedGlass>
   );
 });
 

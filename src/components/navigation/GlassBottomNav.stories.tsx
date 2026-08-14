@@ -48,10 +48,15 @@ const renderCleanItem: React.ComponentProps<typeof GlassBottomNav>['renderItem']
     style={{
       width: '100%',
       minHeight: 52,
-      border: 0,
+      appearance: 'none',
+      WebkitAppearance: 'none',
+      border: '1px solid rgba(255,255,255,0.3)',
       borderRadius: 14,
-      background: active ? '#bfdbfe' : 'transparent',
-      color: active ? '#0f172a' : '#cbd5e1',
+      background: active ? 'rgba(255,255,255,0.32)' : 'rgba(255,255,255,0.14)',
+      boxShadow: active
+        ? '0 8px 24px rgba(0,0,0,0.09), inset 0 1px 0 rgba(255,255,255,0.5)'
+        : 'inset 0 1px 0 rgba(255,255,255,0.34)',
+      color: '#0f172a',
       font: 'inherit',
       display: 'grid',
       placeItems: 'center',
@@ -70,8 +75,8 @@ const renderCleanItem: React.ComponentProps<typeof GlassBottomNav>['renderItem']
           minWidth: 18,
           height: 18,
           borderRadius: 999,
-          background: '#ef4444',
-          color: '#fff',
+          background: 'rgba(255,255,255,0.3)',
+          color: '#0f172a',
           fontSize: 11,
           lineHeight: '18px',
         }}
@@ -84,15 +89,14 @@ const renderCleanItem: React.ComponentProps<typeof GlassBottomNav>['renderItem']
 
 const PhoneFrame = (props: React.ComponentProps<typeof GlassBottomNav>) => (
   <div
-    data-bg="dark"
+    data-bg="light"
     style={{
       minHeight: '100vh',
       display: 'grid',
       placeItems: 'center',
       padding: 16,
       boxSizing: 'border-box',
-      background:
-        'linear-gradient(135deg, rgba(15,23,42,0.96) 0%, rgba(30,41,59,0.92) 48%, rgba(8,47,73,0.9) 100%)',
+      background: 'linear-gradient(145deg, #fafafa 0%, #f0f0f0 52%, #e6e6e6 100%)',
     }}
   >
   <div
@@ -101,22 +105,22 @@ const PhoneFrame = (props: React.ComponentProps<typeof GlassBottomNav>) => (
       width: '100%',
       maxWidth: 390,
       minHeight: 560,
-      background: 'rgba(15,23,42,0.78)',
-      color: '#f8fafc',
+      background: 'rgba(255,255,255,0.24)',
+      color: '#0f172a',
     }}
   >
     <div className="glass-flex-1 glass-space-y-4 glass-p-5">
       <div>
-        <p className="glass-text-xs glass-font-semibold glass-uppercase glass-tracking-wide" style={{ color: '#cbd5e1' }}>
+        <p className="glass-text-xs glass-font-semibold glass-uppercase glass-tracking-wide" style={{ color: 'rgba(15,23,42,.7)' }}>
           Mobile shell
         </p>
-        <h3 className="glass-text-xl glass-font-semibold" style={{ color: '#f8fafc' }}>Daily overview</h3>
+        <h3 className="glass-text-xl glass-font-semibold" style={{ color: '#0f172a' }}>Daily overview</h3>
       </div>
       {['Pipeline review', 'Saved accounts', 'Profile updates'].map((item) => (
         <div
           key={item}
           className="glass-rounded-xl glass-p-4 glass-text-sm"
-          style={{ background: 'rgba(255,255,255,0.1)', color: '#f8fafc' }}
+          style={{ background: 'rgba(255,255,255,0.24)', color: '#0f172a' }}
         >
           {item}
         </div>

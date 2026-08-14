@@ -41,9 +41,15 @@ export default meta;
 type Story = StoryObj<typeof GlassInlineEdit>;
 
 export const Default: Story = {
+  render: (args) => (
+    <div className="glass-neutral-level1 glass-rounded-3xl glass-p-6">
+      <GlassInlineEdit {...args} />
+    </div>
+  ),
   args: {
     value: 'Edit this text inline',
     placeholder: 'Click to edit...',
+    className: '',
     onChange: fn(),
   },
 };

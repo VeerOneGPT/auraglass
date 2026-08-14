@@ -505,8 +505,7 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
         height: "clamp(200px, 32vw, 300px)",
         maxWidth: "100%",
         boxSizing: "border-box",
-        background:
-          "var(--glass-primary-level3-surface)",
+        background: "var(--glass-primary-level3-surface)",
       }}
     >
       {/* Toolbar */}
@@ -528,7 +527,7 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
 
       {/* Mini-map */}
       {showMinimap && (
-        <div className="glass-absolute glass-bottom-4 glass-right-4 glass-z-10 glass-w-32 glass-h-24 glass-surface-dark/20 glass-radius-md glass-border glass-border-white/20">
+        <div className="glass-absolute glass-bottom-4 glass-right-4 glass-z-10 glass-w-32 glass-h-24 glass-box-border glass-overflow-auto glass-surface-dark/20 glass-radius-md glass-border glass-border-white/20">
           <svg className="glass-w-full glass-h-full" viewBox="0 0 320 240">
             {positionedNodes.map((node: any) => (
               <circle
@@ -555,8 +554,7 @@ export const GlassMindMap: React.FC<GlassMindMapProps> = ({
           minWidth: 0,
           minHeight: 0,
           cursor: isPanning ? "grabbing" : "grab",
-          background:
-            "var(--glass-neutral-level2-surface)",
+          background: "var(--glass-neutral-level2-surface)",
         }}
       >
         <svg

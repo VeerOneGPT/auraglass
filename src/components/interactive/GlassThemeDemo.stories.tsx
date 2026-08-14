@@ -1,27 +1,27 @@
-import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { GlassThemeDemo } from './GlassThemeDemo';
-import { cn } from '../../lib/utils';
+import React from "react";
+import type { Meta, StoryObj } from "@storybook/react";
+import { GlassThemeDemo } from "./GlassThemeDemo";
+import { cn } from "../../lib/utils";
 
 const meta: Meta<typeof GlassThemeDemo> = {
-  title: 'Effects + Advanced/Glass Theme Demo',
+  title: "Effects + Advanced/Glass Theme Demo",
   component: GlassThemeDemo,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
-        component: 'A glass morphism glassthemedemo component.',
+        component: "A glass morphism glassthemedemo component.",
       },
     },
   },
   argTypes: {
     className: {
-      control: 'text',
-      description: 'className prop',
+      control: "text",
+      description: "className prop",
     },
   },
   args: {
-    className: ''
+    className: "",
   },
 };
 
@@ -30,19 +30,17 @@ type Story = StoryObj<typeof GlassThemeDemo>;
 
 export const Default: Story = {
   args: {
-    
+    minimal: true,
+    contained: true,
+    maxHeight: "min(560px, calc(100vh - 32px))",
   },
 };
 
 export const Variants: Story = {
   render: (args: any) => (
     <div className="glass-flex glass-flex-wrap glass-gap-4">
-      <GlassThemeDemo {...args}>
-        Default
-      </GlassThemeDemo>
+      <GlassThemeDemo {...args}>Default</GlassThemeDemo>
     </div>
   ),
-  args: {
-    
-  },
+  args: {},
 };

@@ -28,7 +28,7 @@ const items: MenuItem[] = [
 ];
 
 const meta: Meta<typeof GlassMenubar> = {
-  title: 'Navigation/Glass Menubar',
+  title: "Navigation/Glass Menubar",
   component: GlassMenubar,
   parameters: {
     layout: "fullscreen",
@@ -42,8 +42,10 @@ const meta: Meta<typeof GlassMenubar> = {
   },
   args: {
     items,
-    orientation: "horizontal",
+    orientation: "vertical",
     size: "md",
+    contained: true,
+    defaultOpenMenuId: "file",
   },
 };
 
@@ -55,9 +57,12 @@ const MenubarFrame = (args: ComponentProps<typeof GlassMenubar>) => (
     <div className="glass-w-full glass-max-w-4xl glass-rounded-3xl glass-border glass-border-white/25 glass-bg-white/35 glass-p-5 glass-shadow-2xl glass-backdrop-blur-xl">
       <GlassMenubar {...args} />
       <section className="glass-mt-5 glass-rounded-2xl glass-border glass-border-white/20 glass-bg-white/25 glass-p-5">
-        <h2 className="glass-m-0 glass-text-xl glass-font-semibold glass-text-primary">Document workspace</h2>
+        <h2 className="glass-m-0 glass-text-xl glass-font-semibold glass-text-primary">
+          Document workspace
+        </h2>
         <p className="glass-mt-2 glass-text-sm glass-text-secondary">
-          Dropdown content opens from a realistic toolbar surface with room to inspect menu alignment.
+          Dropdown content opens from a realistic toolbar surface with room to
+          inspect menu alignment.
         </p>
       </section>
     </div>

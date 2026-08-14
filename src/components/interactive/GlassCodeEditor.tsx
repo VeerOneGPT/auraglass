@@ -281,6 +281,10 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
       )}
       style={{
         ...createGlassStyle({ intent: "neutral", elevation: "level2" }),
+        "--glass-theme-text": "rgba(15, 23, 42, 0.94)",
+        "--glass-text-primary": "rgba(15, 23, 42, 0.94)",
+        "--glass-text-secondary": "rgba(15, 23, 42, 0.76)",
+        color: "rgba(15, 23, 42, 0.94)",
         maxHeight: effectiveMaxHeight,
         minHeight: effectiveMinHeight,
         minWidth: 0,
@@ -372,6 +376,11 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
           <code
             dangerouslySetInnerHTML={{ __html: highlightedCode || placeholder }}
             className={cn(currentValue ? "" : "glass-text-primary-30")}
+            style={{
+              color: currentValue
+                ? "rgba(15, 23, 42, 0.94)"
+                : "rgba(15, 23, 42, 0.64)",
+            }}
           />
         </pre>
 

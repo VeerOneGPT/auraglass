@@ -43,6 +43,9 @@ export const LiquidGlassSegmentedControl = forwardRef<
         "liquid-glass-segmented-control glass-inline-flex",
         className
       )}
+      style={{
+        background: "linear-gradient(145deg, rgba(255,255,255,.28), rgba(255,255,255,.14))",
+      }}
       data-density={density}
       {...props}
     >
@@ -61,8 +64,13 @@ export const LiquidGlassSegmentedControl = forwardRef<
               className={cn(
                 "glass-flex glass-items-center glass-gap-1 glass-radius-full glass-px-3 glass-py-1 glass-text-sm glass-text-secondary",
                 selected &&
-                  "glass-surface-subtle/20 glass-border-white/30 glass-text-primary"
+                  "glass-bg-white/28 glass-border-white/30 glass-text-primary"
               )}
+              style={{
+                border: "1px solid rgba(255,255,255,0.3)",
+                background: selected ? "rgba(255,255,255,0.28)" : "transparent",
+                color: "rgba(15,23,42,0.82)",
+              }}
               onClick={() => onValueChange?.(segment.id)}
             >
               {segment.icon}

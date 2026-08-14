@@ -184,20 +184,20 @@ const getTabColors = (
     baseColors?.[color || "primary"][isDarkMode ? "dark" : "light"];
 
   return {
-    activeColor: selectedColor,
-    activeBg: isDarkMode ? `${selectedColor}22` : `${selectedColor}11`,
+    activeColor: "rgba(15, 23, 42, 0.88)",
+    activeBg: "rgba(255, 255, 255, 0.28)",
     activeText: highContrast
       ? isDarkMode
         ? "var(--glass-white)"
         : "var(--glass-black)"
-      : selectedColor,
+      : "rgba(15, 23, 42, 0.92)",
     inactiveText: isDarkMode
       ? highContrast
         ? "color-mix(in srgb, var(--glass-white) 80%, transparent)"
-        : "color-mix(in srgb, var(--glass-white) 60%, transparent)"
+        : "rgba(255, 255, 255, 0.82)"
       : highContrast
         ? "var(--glass-text-secondary-dark)"
-        : "var(--glass-text-tertiary-dark)",
+        : "rgba(15, 23, 42, 0.72)",
     hoverBg: isDarkMode
       ? "color-mix(in srgb, var(--glass-white) 5%, transparent)"
       : "color-mix(in srgb, var(--glass-black) 3%, transparent)",

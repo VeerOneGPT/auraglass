@@ -77,11 +77,13 @@ export interface SearchSuggestion {
 
 export interface IntelligentSearchProps {
   data?: SearchResult[];
+  initialQuery?: string;
   onSearch?: (query: string, filters: SearchFilters) => void;
   onResultClick?: (result: SearchResult) => void;
   placeholder?: string;
   showFilters?: boolean;
   showSuggestions?: boolean;
+  suggestionsInitiallyOpen?: boolean;
   enableNLP?: boolean;
   enableVoiceSearch?: boolean;
   maxResults?: number;
@@ -452,11 +454,13 @@ const generateSuggestions = (
 
 export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
   data = [],
+  initialQuery = "",
   onSearch,
   onResultClick,
   placeholder = "Search with natural language...",
   showFilters = true,
   showSuggestions = true,
+  suggestionsInitiallyOpen = false,
   enableNLP = true,
   enableVoiceSearch = false,
   maxResults = 50,
@@ -464,11 +468,15 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
   "aria-label": ariaLabel,
   "data-testid": dataTestId,
 }) => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialQuery);
   const [results, setResults] = useState<SearchResult[]>([]);
-  const [suggestions, setSuggestions] = useState<SearchSuggestion[]>([]);
+  const [suggestions, setSuggestions] = useState<SearchSuggestion[]>(() =>
+    initialQuery ? generateSuggestions(initialQuery, data, []) : []
+  );
   const [filters, setFilters] = useState<SearchFilters>({});
-  const [showSuggestionsList, setShowSuggestionsList] = useState(false);
+  const [showSuggestionsList, setShowSuggestionsList] = useState(
+    suggestionsInitiallyOpen
+  );
   const [isSearching, setIsSearching] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [searchAnalysis, setSearchAnalysis] = useState<QueryAnalysis | null>(
@@ -770,49 +778,140 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
     >
       <style>{`
         .glass-intelligent-search-panel {
-          background: var(--glass-neutral-level3-surface) !important;
-          border-color: var(--glass-neutral-level3-border-color) !important;
-          color: var(--glass-neutral-level3-text-primary) !important;
-          box-shadow: var(--glass-neutral-level3-shadow);
+          background:
+            linear-gradient(145deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.2)),
+            rgba(255, 255, 255, 0.2) !important;
+          border-color: rgba(15, 23, 42, 0.13) !important;
+          color: rgba(15, 23, 42, 0.92) !important;
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.82),
+            0 18px 48px rgba(15, 23, 42, 0.12);
+          backdrop-filter: blur(24px) saturate(1.5) brightness(1.04) contrast(1.04);
+          -webkit-backdrop-filter: blur(24px) saturate(1.5) brightness(1.04) contrast(1.04);
         }
 
         .glass-intelligent-search-panel label,
-        .glass-intelligent-search-panel p,
-        .glass-intelligent-search-panel span {
-          color: inherit;
+        .glass-intelligent-search-panel h3 {
+          color: rgba(15, 23, 42, 0.9) !important;
+        }
+
+        .glass-intelligent-search-panel p {
+          color: rgba(15, 23, 42, 0.7) !important;
         }
 
         .glass-intelligent-search-panel button {
-          background-color: rgba(var(--glass-color-white) / 0.1) !important;
-          border: 1px solid var(--glass-border-default) !important;
-          color: var(--glass-text-primary) !important;
-          border-radius: var(--glass-radius-md);
+          min-height: 44px;
+          background:
+            linear-gradient(145deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.22)),
+            rgba(255, 255, 255, 0.26) !important;
+          border: 1px solid rgba(15, 23, 42, 0.14) !important;
+          color: rgba(15, 23, 42, 0.9) !important;
+          border-radius: 14px;
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.84), 0 6px 18px rgba(15, 23, 42, 0.08);
         }
 
         .glass-intelligent-search-panel .glass-search-primary-action {
-          background: var(--glass-primary-level3-surface) !important;
-          border-color: var(--glass-primary-level3-border-color);
-          color: var(--glass-primary-level3-text-primary) !important;
+          background:
+            linear-gradient(145deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.22)),
+            rgba(255, 255, 255, 0.3) !important;
+          border-color: rgba(15, 23, 42, 0.2) !important;
+          color: rgba(15, 23, 42, 0.94) !important;
+          font-weight: 650;
         }
 
         .glass-intelligent-search-dropdown {
-          background: var(--glass-neutral-level4-surface) !important;
+          background: rgba(255, 255, 255, 0.3) !important;
+          background-image: none !important;
+          border: 1px solid rgba(15, 23, 42, 0.14);
           backdrop-filter: blur(var(--glass-neutral-level4-blur)) var(--glass-filter-base);
           -webkit-backdrop-filter: blur(var(--glass-neutral-level4-blur)) var(--glass-filter-base);
+        }
+
+        .glass-intelligent-search-dropdown--fixture {
+          position: relative !important;
+          inset: auto !important;
+          margin: 0 16px 16px !important;
+          max-height: none !important;
+          overflow: visible !important;
+          padding: 8px !important;
+        }
+
+        .glass-intelligent-search-dropdown [role="option"] {
+          margin-bottom: 8px;
+        }
+
+        .glass-intelligent-search-dropdown [role="option"]:last-child {
+          margin-bottom: 0;
         }
 
         .glass-intelligent-search input[type="text"] {
           appearance: none;
           -webkit-appearance: none;
-          background: rgba(var(--glass-color-white) / 0.08);
-          color: var(--glass-text-primary);
-          border-color: var(--glass-border-default);
-          box-shadow: inset 0 1px 0 rgba(var(--glass-color-white) / 0.12);
+          min-height: 44px;
+          padding-left: 44px !important;
+          background: rgba(255, 255, 255, 0.32) !important;
+          color: rgba(15, 23, 42, 0.92) !important;
+          border-color: rgba(15, 23, 42, 0.16) !important;
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         .glass-intelligent-search input[type="text"]::placeholder {
-          color: var(--glass-text-tertiary);
+          color: rgba(15, 23, 42, 0.58) !important;
         }
+
+        .glass-search-input-row {
+          display: grid;
+          grid-template-columns: minmax(0, 1fr) auto auto;
+          align-items: center;
+          gap: 12px;
+          padding: 16px;
+        }
+
+        .glass-search-input-wrap { position: relative; min-width: 0; }
+        .glass-search-leading-icon {
+          position: absolute;
+          left: 13px;
+          top: 50%;
+          transform: translateY(-50%);
+          display: grid;
+          width: 20px;
+          height: 20px;
+          place-items: center;
+          color: rgba(15, 23, 42, 0.76) !important;
+          pointer-events: none;
+        }
+
+        .glass-search-leading-icon span { color: inherit !important; line-height: 1; }
+
+        .glass-search-filters-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 24px;
+        }
+
+        .glass-search-filter-options {
+          display: grid;
+          gap: 8px;
+          max-height: 176px;
+          overflow-y: auto;
+          padding-right: 4px;
+        }
+
+        .glass-search-filter-option {
+          display: grid !important;
+          grid-template-columns: 18px minmax(0, 1fr) auto;
+          align-items: center !important;
+          gap: 10px !important;
+          min-height: 36px;
+          color: rgba(15, 23, 42, 0.8) !important;
+        }
+
+        .glass-search-filter-label,
+        .glass-search-filter-count {
+          color: rgba(15, 23, 42, 0.76) !important;
+        }
+
+        .glass-search-filter-count { font-variant-numeric: tabular-nums; }
 
         .glass-search-checkbox {
           appearance: none;
@@ -822,25 +921,23 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
           flex: 0 0 1rem;
           margin-top: 0.125rem;
           border-radius: 0.375rem;
-          border: 1px solid rgba(148, 163, 184, 0.6);
+          border: 1px solid rgba(15, 23, 42, 0.28);
           background:
-            linear-gradient(135deg, rgba(30, 41, 59, 0.88), rgba(15, 23, 42, 0.74)),
-            rgba(15, 23, 42, 0.82);
+            linear-gradient(135deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.24));
           box-shadow:
-            inset 0 1px 1px rgba(255, 255, 255, 0.12),
-            0 4px 12px rgba(2, 6, 23, 0.22);
+            inset 0 1px 1px rgba(255, 255, 255, 0.18),
+            0 4px 12px rgba(15, 23, 42, 0.1);
           cursor: pointer;
         }
 
         .glass-search-checkbox:checked {
-          border-color: rgba(56, 189, 248, 0.9);
+          border-color: rgba(15, 23, 42, 0.58);
           background:
-            linear-gradient(135deg, rgba(56, 189, 248, 0.96), rgba(37, 99, 235, 0.9)),
-            rgba(255, 255, 255, 0.76);
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m3.5 8.3 2.8 2.8 6.2-6.2' fill='none' stroke='%230f172a' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 13px 13px no-repeat,
+            rgba(255, 255, 255, 0.35);
           box-shadow:
-            inset 0 0 0 3px rgba(255, 255, 255, 0.82),
-            0 0 0 1px rgba(125, 211, 252, 0.34),
-            0 8px 18px rgba(14, 165, 233, 0.22);
+            0 0 0 1px rgba(15, 23, 42, 0.18),
+            0 8px 18px rgba(15, 23, 42, 0.14);
         }
 
         .glass-search-range {
@@ -850,7 +947,7 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
           border-radius: 999px;
           border: 1px solid rgba(148, 163, 184, 0.42);
           background:
-            linear-gradient(90deg, rgba(56, 189, 248, 0.9), rgba(125, 211, 252, 0.44)),
+            linear-gradient(90deg, rgba(226, 232, 240, 0.96), rgba(203, 213, 225, 0.82)),
             rgba(255, 255, 255, 0.72);
           box-shadow:
             inset 0 1px 2px rgba(2, 6, 23, 0.28),
@@ -865,8 +962,8 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
           height: 1.125rem;
           border-radius: 999px;
           border: 2px solid rgba(248, 250, 252, 0.96);
-          background: #38bdf8;
-          box-shadow: 0 6px 18px rgba(14, 165, 233, 0.4);
+          background: #94a3b8;
+          box-shadow: 0 6px 18px rgba(15, 23, 42, 0.24);
         }
 
         .glass-search-range::-moz-range-thumb {
@@ -874,14 +971,48 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
           height: 1.125rem;
           border-radius: 999px;
           border: 2px solid rgba(248, 250, 252, 0.96);
-          background: #38bdf8;
-          box-shadow: 0 6px 18px rgba(14, 165, 233, 0.4);
+          background: #94a3b8;
+          box-shadow: 0 6px 18px rgba(15, 23, 42, 0.24);
+        }
+
+        .glass-search-voice-ready {
+          margin-top: 16px;
+          padding: clamp(24px, 5vw, 44px);
+          text-align: center;
+        }
+
+        .glass-search-voice-ready-icon {
+          display: grid;
+          width: 58px;
+          height: 58px;
+          margin: 0 auto 14px;
+          place-items: center;
+          border: 1px solid rgba(15, 23, 42, 0.14);
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.3);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,.82), 0 12px 28px rgba(15,23,42,.1);
+          font-size: 24px;
+        }
+
+        .glass-search-voice-ready h3 { margin: 0 0 8px; font-size: 1.1rem; }
+        .glass-search-voice-ready p { max-width: 34rem; margin: 0 auto; line-height: 1.55; }
+
+        @media (max-width: 720px) {
+          .glass-search-input-row { grid-template-columns: minmax(0, 1fr) auto; }
+          .glass-search-primary-action { grid-column: 1 / -1; width: 100%; }
+          .glass-search-filters-grid { grid-template-columns: 1fr; }
+          .glass-search-filter-options { max-height: none; overflow-y: visible; }
+        }
+
+        @media (max-width: 390px) {
+          .glass-search-input-row { padding: 12px; gap: 10px; }
+          .glass-search-input-row > button:not(.glass-search-primary-action) { width: 44px; padding-inline: 0 !important; }
         }
       `}</style>
       {/* Search Input */}
       <Glass className="glass-relative glass-intelligent-search-panel">
-        <div className="glass-flex glass-flex-wrap glass-items-center glass-gap-3 glass-p-4">
-          <div className="glass-relative glass-flex-1">
+        <div className="glass-search-input-row">
+          <div className="glass-search-input-wrap">
             <input
               ref={searchInputRef}
               type="text"
@@ -901,7 +1032,7 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
               aria-busy={isSearching}
             />
 
-            <div className="glass-absolute glass-left-3 glass-top-1/2 glass-transform glass--translate-y-1-2">
+            <div className="glass-search-leading-icon">
               {isSearching ? (
                 <div
                   className={cn(
@@ -912,7 +1043,7 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
                   aria-label="Searching"
                 />
               ) : (
-                <span className="glass-text-secondary glass-text-lg">🔍</span>
+                <span className="glass-text-lg">🔍</span>
               )}
             </div>
           </div>
@@ -940,7 +1071,7 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
           <button
             onClick={handleSearchSubmit}
             className={cn(
-              "glass-search-primary-action glass-px-6 glass-py-3 glass-surface-blue glass-text-primary glass-radius-lg hover:glass-surface-blue glass-focus glass-touch-target glass-contrast-guard",
+              "glass-search-primary-action glass-px-6 glass-py-3 glass-text-primary glass-radius-lg glass-focus glass-touch-target glass-contrast-guard",
               !prefersReducedMotion && "glass-transition-colors"
             )}
           >
@@ -951,7 +1082,11 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
         {/* Suggestions Dropdown */}
         {showSuggestionsList && suggestions.length > 0 && (
           <div
-            className="glass-intelligent-search-panel glass-intelligent-search-dropdown glass-absolute glass-top-full glass-left-0 glass-right-0 glass-mt-2 glass-surface-subtle glass-border glass-border-subtle glass-radius-lg glass-shadow-lg glass-z-50 glass-max-h-60 glass-overflow-y-auto glass-contrast-guard"
+            className={cn(
+              "glass-intelligent-search-dropdown glass-absolute glass-top-full glass-left-0 glass-right-0 glass-mt-2 glass-border glass-border-subtle glass-radius-lg glass-shadow-lg glass-z-50 glass-max-h-60 glass-overflow-y-auto glass-contrast-guard",
+              suggestionsInitiallyOpen &&
+                "glass-intelligent-search-dropdown--fixture"
+            )}
             role="listbox"
           >
             {suggestions.map((suggestion, index) => (
@@ -1057,7 +1192,7 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
             )}
           </div>
 
-          <div className="glass-grid glass-grid-cols-1 md:glass-grid-cols-3 glass-gap-4">
+          <div className="glass-search-filters-grid">
             {availableFilters.map((filter) => (
               <div key={filter.id}>
                 <label className="glass-block glass-text-sm glass-font-medium glass-text-secondary glass-mb-2">
@@ -1065,11 +1200,11 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
                 </label>
 
                 {filter.type === "multiselect" && (
-                  <div className="glass-space-y-2 glass-max-h-32 glass-overflow-y-auto">
+                  <div className="glass-search-filter-options">
                     {filter.options?.map((option) => (
                       <label
                         key={option.value}
-                        className="glass-flex glass-items-start glass-gap-2 glass-text-sm glass-touch-target glass-contrast-guard"
+                        className="glass-search-filter-option glass-text-sm glass-touch-target glass-contrast-guard"
                       >
                         <input
                           type="checkbox"
@@ -1097,10 +1232,10 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
                           }}
                           className="glass-search-checkbox glass-radius glass-border-subtle glass-text-primary glass-focus-ring-blue-500 glass-focus glass-contrast-guard"
                         />
-                        <span className="glass-flex-1 glass-min-w-0 glass-break-words">
+                        <span className="glass-search-filter-label glass-min-w-0 glass-break-words">
                           {option.label}
                         </span>
-                        <span className="glass-text-secondary glass-text-xs">
+                        <span className="glass-search-filter-count glass-text-xs">
                           ({option.count})
                         </span>
                       </label>
@@ -1148,6 +1283,18 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
 
       {/* Results */}
       <div className="glass-mt-6">
+        {enableVoiceSearch && !showFilters && !query.trim() && (
+          <Glass className="glass-intelligent-search-panel glass-search-voice-ready glass-contrast-guard">
+            <div className="glass-search-voice-ready-icon" aria-hidden="true">
+              🎤
+            </div>
+            <h3>Voice search is ready</h3>
+            <p>
+              Use the microphone button or type a request above. Spoken queries
+              are transcribed locally by your browser before search begins.
+            </p>
+          </Glass>
+        )}
         {query.trim() || Object.keys(filters).length > 0 ? (
           <div
             className="glass-mb-4 glass-text-sm glass-text-secondary glass-break-words"

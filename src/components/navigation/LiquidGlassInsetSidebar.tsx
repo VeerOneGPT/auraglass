@@ -3,7 +3,6 @@
 import React, { forwardRef, type CSSProperties } from "react";
 import { cn } from "../../lib/utilsComprehensive";
 import { LiquidGlassMaterial } from "../../primitives/LiquidGlassMaterial";
-import { LiquidGlassScrollEdge } from "../../primitives/LiquidGlassScrollEdge";
 
 export interface LiquidGlassSidebarItem {
   id: string;
@@ -28,8 +27,8 @@ export interface LiquidGlassInsetSidebarProps
 
 const sidebarButtonStyle = (selected: boolean): CSSProperties => ({
   border: 0,
-  background: selected ? "rgba(59, 130, 246, 0.14)" : "transparent",
-  color: "inherit",
+  background: selected ? "rgba(255, 255, 255, 0.28)" : "transparent",
+  color: "rgba(15, 23, 42, 0.88)",
   cursor: "pointer",
   font: "inherit",
   width: "100%",
@@ -72,13 +71,13 @@ export const LiquidGlassInsetSidebar = forwardRef<
         variant={materialVariant}
         radius="2xl"
         className="glass-h-full"
+        style={{
+          background: "linear-gradient(145deg, rgba(255,255,255,.28), rgba(255,255,255,.14))",
+        }}
       >
-        {scrollEdge && (
-          <LiquidGlassScrollEdge edge="top" styleMode={scrollEdge} active />
-        )}
         <nav
           aria-label={props["aria-label"] || "Sidebar"}
-          className="glass-flex glass-flex-col glass-gap-1 glass-p-2"
+          className="glass-flex glass-flex-col glass-gap-2 glass-p-2"
         >
           {items.map((item) => {
             const selected = item.id === selectedId;
@@ -91,7 +90,7 @@ export const LiquidGlassInsetSidebar = forwardRef<
                 aria-label={collapsed ? item.label : undefined}
                 className={cn(
                   "glass-flex glass-items-center glass-gap-2 glass-radius-lg glass-px-3 glass-py-2 glass-text-left",
-                  selected && "glass-surface-primary glass-text-primary"
+                  selected && "glass-text-primary"
                 )}
                 style={sidebarButtonStyle(selected)}
                 onClick={() => onSelect?.(item.id)}

@@ -15,8 +15,8 @@ const insetSidebarStoryCss = `
     --inset-story-muted: #334155;
     --inset-story-border: rgba(15, 23, 42, 0.1);
     --inset-story-panel:
-      linear-gradient(135deg, rgba(255,255,255,0.86), rgba(219,234,254,0.54)),
-      radial-gradient(circle at 90% 18%, rgba(45,212,191,0.24), transparent 28%);
+      linear-gradient(135deg, rgba(255,255,255,0.88), rgba(236,238,240,0.60)),
+      radial-gradient(circle at 90% 18%, rgba(255,255,255,0.28), rgba(255,255,255,0.08) 28%);
     min-height: 100vh;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
@@ -50,13 +50,13 @@ const insetSidebarStoryCss = `
     --inset-story-border: rgba(226, 232, 240, 0.22);
     --inset-story-panel:
       linear-gradient(135deg, rgba(15,23,42,0.9), rgba(30,41,59,0.72)),
-      radial-gradient(circle at 90% 18%, rgba(45,212,191,0.18), transparent 30%);
+      radial-gradient(circle at 90% 18%, rgba(255,255,255,0.12), rgba(255,255,255,0.02) 30%);
   }
 
   [data-storybook-preview-mode="liquid"] .liquid-inset-sidebar-story {
     --inset-story-panel:
-      linear-gradient(135deg, rgba(255,255,255,0.74), rgba(236,253,245,0.44)),
-      radial-gradient(circle at 88% 20%, rgba(29,78,216,0.22), transparent 28%);
+      linear-gradient(135deg, rgba(255,255,255,0.76), rgba(236,238,240,0.48)),
+      radial-gradient(circle at 88% 20%, rgba(255,255,255,0.24), rgba(255,255,255,0.08) 28%);
   }
 
   [data-storybook-preview-mode="high-contrast"] .liquid-inset-sidebar-story {

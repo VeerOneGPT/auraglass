@@ -32,7 +32,7 @@ export const Default: Story = {
   render: (args) => (
     <Box
       {...args}
-      className="glass-w-[360px] glass-rounded-xl glass-border glass-border-white/30 glass-bg-white/70 glass-p-5 glass-shadow-lg"
+      className="glass-neutral-level1 glass-w-[360px] glass-rounded-xl glass-border glass-border-white/30 glass-p-5 glass-shadow-lg"
       role="region"
       aria-label="Release status card"
     >
@@ -77,8 +77,8 @@ export const Variants: Story = {
           {...args}
           className={[
             'glass-min-h-32 glass-rounded-xl glass-p-4 glass-shadow-md',
-            index === 0 && 'glass-bg-white/55',
-            index === 1 && 'glass-bg-white/75 glass-shadow-xl',
+            index === 0 && 'glass-neutral-level1',
+            index === 1 && 'glass-neutral-level2 glass-shadow-xl',
             index === 2 && 'glass-border glass-border-white/40 glass-bg-transparent',
           ].filter(Boolean).join(' ')}
         >

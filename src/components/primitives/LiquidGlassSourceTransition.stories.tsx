@@ -21,7 +21,7 @@ export const SourceToSheet: Story = {
       `}</style>
       <LiquidGlassTransitionProvider>
         <div
-          className="liquid-source-transition-story"
+          className="glass-neutral-level1 liquid-source-transition-story"
           style={{
             width: "min(820px, 100%)",
             display: "grid",
@@ -29,9 +29,8 @@ export const SourceToSheet: Story = {
             gap: 20,
             borderRadius: 30,
             padding: 28,
-            background:
-              "radial-gradient(circle at 18% 20%, rgba(96,165,250,.30), transparent 28%), radial-gradient(circle at 82% 72%, rgba(45,212,191,.24), transparent 30%), rgba(255,255,255,0.78)",
-            boxShadow: "0 24px 80px rgba(15,23,42,.14)",
+            boxShadow:
+              "0 24px 80px rgba(15,23,42,.14), inset 0 0 14px rgba(255,255,255,.14), inset 0 1px 0 rgba(255,255,255,.18)",
             color: "#0f172a",
           }}
         >

@@ -11,9 +11,9 @@ type BlurStrength = "none" | "light" | "standard" | "heavy";
 
 const BLUR_MAP: Record<BlurStrength, string> = {
   none: "0px",
-  light: "var(--glass-blur-sm, 6px)",
-  standard: "var(--glass-blur-md, 12px)",
-  heavy: "var(--glass-blur-lg, 20px)",
+  light: "var(--glass-blur-sm, 16px)",
+  standard: "var(--glass-blur-md, 24px)",
+  heavy: "var(--glass-blur-lg, 32px)",
 };
 
 const toDimension = (value?: string | number): string | undefined => {
@@ -160,7 +160,7 @@ export const TabSelector = forwardRef<HTMLDivElement, TabSelectorProps>(
     };
 
     selectorStyle["--ag-selector-blur"] =
-      "var(--ag-tabbar-blur, var(--glass-blur-md, 12px))";
+      "var(--ag-tabbar-blur, var(--glass-blur-md, 24px))";
 
     if (variant === "underline") {
       selectorStyle.borderRadius = "9999px";

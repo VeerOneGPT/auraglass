@@ -112,7 +112,7 @@ function parseColorToRgb(
 
 function getReadableTextColor(color: string | undefined) {
   const rgb = parseColorToRgb(color);
-  if (!rgb) return "rgba(248,250,252,0.96)";
+  if (!rgb) return "rgba(15,23,42,0.92)";
   const normalize = (channel: number) => {
     const c = channel / 255;
     return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
@@ -448,8 +448,8 @@ export const GlassTessellation = forwardRef<
       const tileFill =
         tile.color ??
         (isHovered || isSelected
-          ? "rgba(125,211,252,0.44)"
-          : "rgba(125,211,252,0.30)");
+          ? "rgba(255,255,255,0.34)"
+          : "rgba(255,255,255,0.22)");
       const tileStroke =
         isHovered || isSelected
           ? "rgba(248,250,252,0.72)"
@@ -583,8 +583,8 @@ export const GlassTessellation = forwardRef<
                 ? `${boundedHeight}px`
                 : boundedHeight
               : undefined,
-          minWidth: isCompactLike ? undefined : Math.min(containerWidth, 320),
-          overflowX: isCompactLike ? "hidden" : "auto",
+          minWidth: 0,
+          overflowX: "hidden",
           overflowY: isCompactLike ? "hidden" : "auto",
           boxSizing: "border-box",
           ...style,
@@ -605,9 +605,9 @@ export const GlassTessellation = forwardRef<
           ref={containerRef}
           className="glass-relative"
           style={{
-            width: effectiveContainerWidth,
+            width: "100%",
             height: effectiveContainerHeight,
-            minWidth: isCompactLike ? undefined : effectiveContainerWidth,
+            minWidth: 0,
             minHeight: isCompactLike ? undefined : effectiveContainerHeight,
             overflow: "visible",
           }}
@@ -643,7 +643,7 @@ export const GlassTessellation = forwardRef<
 
           {/* Tessellation tiles */}
           <svg
-            width={effectiveContainerWidth}
+            width="100%"
             height={effectiveContainerHeight}
             viewBox={svgViewBox}
             className="glass-absolute glass-inset-0 glass-overflow-visible"

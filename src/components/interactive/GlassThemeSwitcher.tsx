@@ -138,7 +138,7 @@ export const GlassThemeSwitcher: React.FC<GlassThemeSwitcherProps> = ({
             name: "System",
             icon: Monitor,
             preview: {
-              primary: "#8b5cf6",
+              primary: "#cbd5e1",
               secondary: "#64748b",
               background: "#f8fafc",
               text: "#1e293b",
@@ -406,14 +406,17 @@ export const GlassThemeSwitcher: React.FC<GlassThemeSwitcherProps> = ({
                         {key}
                       </label>
                       <div className="glass-flex glass-gap-2">
-                        <input
-                          type="color"
-                          value={normalizeColorInputValue(value)}
-                          onChange={(e) =>
-                            handleCustomColorChange(key, e.target.value)
-                          }
-                          className="glass-w-10 glass-h-8 glass-radius-md glass-ring-1 glass-ring-white-opacity-10 glass-cursor-pointer glass-focus glass-touch-target glass-contrast-guard"
-                        />
+                        <label className="glass-theme-color-control glass-flex glass-h-10 glass-w-10 glass-shrink-0 glass-items-center glass-justify-center glass-radius-full glass-border glass-border-white/30 glass-bg-white/20">
+                          <span className="glass-sr-only">{key} color</span>
+                          <input
+                            type="color"
+                            value={normalizeColorInputValue(value)}
+                            onChange={(e) =>
+                              handleCustomColorChange(key, e.target.value)
+                            }
+                            className="glass-theme-color-input glass-cursor-pointer glass-focus"
+                          />
+                        </label>
                         <input
                           type="text"
                           value={value}

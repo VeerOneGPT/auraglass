@@ -1,27 +1,31 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
-import { GlassButton } from '../button/GlassButton';
+import type { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
+import { GlassButton } from "../button/GlassButton";
 import {
-    GlassDropdownMenu,
-    GlassDropdownMenuCheckboxItem,
-    GlassDropdownMenuContent,
-    GlassDropdownMenuItem,
-    GlassDropdownMenuLabel,
-    GlassDropdownMenuRadioGroup,
-    GlassDropdownMenuRadioItem,
-    GlassDropdownMenuSeparator,
-    GlassDropdownMenuShortcut,
-    GlassDropdownMenuTrigger,
-} from './GlassDropdownMenu';
+  GlassDropdownMenu,
+  GlassDropdownMenuCheckboxItem,
+  GlassDropdownMenuContent,
+  GlassDropdownMenuItem,
+  GlassDropdownMenuLabel,
+  GlassDropdownMenuRadioGroup,
+  GlassDropdownMenuRadioItem,
+  GlassDropdownMenuSeparator,
+  GlassDropdownMenuShortcut,
+  GlassDropdownMenuSub,
+  GlassDropdownMenuSubContent,
+  GlassDropdownMenuSubTrigger,
+  GlassDropdownMenuTrigger,
+} from "./GlassDropdownMenu";
 
 const meta: Meta<typeof GlassDropdownMenu> = {
-  title: 'Navigation/Glass Dropdown Menu',
+  title: "Navigation/Glass Dropdown Menu",
   component: GlassDropdownMenu,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
-        component: 'A glass morphism dropdown menu system with various menu item types.',
+        component:
+          "A glass morphism dropdown menu system with various menu item types.",
       },
     },
   },
@@ -32,16 +36,19 @@ type Story = StoryObj<typeof GlassDropdownMenu>;
 
 const BasicDropdown = () => {
   const [showStatusBar, setShowStatusBar] = useState(true);
-  const [showActivityBar, setShowActivityBar] = useState(false);
-  const [theme, setTheme] = useState('system');
+  const [theme, setTheme] = useState("system");
 
   return (
-    <GlassDropdownMenu>
+    <GlassDropdownMenu defaultOpen className="glass-relative glass-w-56">
       <GlassDropdownMenuTrigger asChild>
         <GlassButton variant="outline">Open Menu</GlassButton>
       </GlassDropdownMenuTrigger>
 
-      <GlassDropdownMenuContent className="w-56">
+      <GlassDropdownMenuContent
+        className="glass-w-56"
+        contained
+        portalled={false}
+      >
         <GlassDropdownMenuLabel>My Account</GlassDropdownMenuLabel>
         <GlassDropdownMenuSeparator />
 
@@ -50,20 +57,17 @@ const BasicDropdown = () => {
           <GlassDropdownMenuShortcut>⇧⌘P</GlassDropdownMenuShortcut>
         </GlassDropdownMenuItem>
 
-        <GlassDropdownMenuItem>
-          Billing
-          <GlassDropdownMenuShortcut>⌘B</GlassDropdownMenuShortcut>
-        </GlassDropdownMenuItem>
-
-        <GlassDropdownMenuItem>
-          Settings
-          <GlassDropdownMenuShortcut>⌘S</GlassDropdownMenuShortcut>
-        </GlassDropdownMenuItem>
-
-        <GlassDropdownMenuItem>
-          Keyboard shortcuts
-          <GlassDropdownMenuShortcut>⌘K</GlassDropdownMenuShortcut>
-        </GlassDropdownMenuItem>
+        <GlassDropdownMenuSub defaultOpen>
+          <GlassDropdownMenuSubTrigger>More tools</GlassDropdownMenuSubTrigger>
+          <GlassDropdownMenuSubContent
+            contained
+            portalled={false}
+            className="glass-mt-2 glass-w-full"
+            style={{ position: "relative", left: 0, top: 0, transform: "none" }}
+          >
+            <GlassDropdownMenuItem>Import workspace</GlassDropdownMenuItem>
+          </GlassDropdownMenuSubContent>
+        </GlassDropdownMenuSub>
 
         <GlassDropdownMenuSeparator />
 
@@ -74,13 +78,6 @@ const BasicDropdown = () => {
           Status Bar
         </GlassDropdownMenuCheckboxItem>
 
-        <GlassDropdownMenuCheckboxItem
-          checked={showActivityBar}
-          onCheckedChange={setShowActivityBar}
-        >
-          Activity Bar
-        </GlassDropdownMenuCheckboxItem>
-
         <GlassDropdownMenuSeparator />
 
         <GlassDropdownMenuLabel>Theme</GlassDropdownMenuLabel>
@@ -89,20 +86,10 @@ const BasicDropdown = () => {
           <GlassDropdownMenuRadioItem value="light">
             Light
           </GlassDropdownMenuRadioItem>
-          <GlassDropdownMenuRadioItem value="dark">
-            Dark
-          </GlassDropdownMenuRadioItem>
           <GlassDropdownMenuRadioItem value="system">
             System
           </GlassDropdownMenuRadioItem>
         </GlassDropdownMenuRadioGroup>
-
-        <GlassDropdownMenuSeparator />
-
-        <GlassDropdownMenuItem>
-          Log out
-          <GlassDropdownMenuShortcut>⇧⌘Q</GlassDropdownMenuShortcut>
-        </GlassDropdownMenuItem>
       </GlassDropdownMenuContent>
     </GlassDropdownMenu>
   );

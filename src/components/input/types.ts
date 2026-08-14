@@ -107,6 +107,8 @@ export interface MultiSelectProps<T extends string | number = string> {
     input: string
   ) => MultiSelectOption<T>[];
   autoFocus?: boolean;
+  /** Open the options panel on initial render. Useful for controlled previews. */
+  defaultOpen?: boolean;
   ariaLabel?: string;
   openUp?: boolean;
   physics?: unknown;

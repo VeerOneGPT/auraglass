@@ -7,6 +7,7 @@ import {
   ContrastGuard,
   TextWithContrast,
 } from "@/components/accessibility/ContrastGuard";
+import { createGlassStyle } from "../../core/mixins/glassMixins";
 
 export interface GlassSplitPaneProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -175,6 +176,7 @@ export const GlassSplitPane = forwardRef<HTMLDivElement, GlassSplitPaneProps>(
           className
         )}
         style={{
+          ...createGlassStyle({ intent: "neutral", elevation: "level2" }),
           // @ts-ignore custom var
           ["--a" as any]: `${pct}%`,
           display: "grid",
@@ -205,7 +207,7 @@ export const GlassSplitPane = forwardRef<HTMLDivElement, GlassSplitPaneProps>(
         <ContrastGuard
           as="div"
           level="AA"
-          className="glass-min-w-0 glass-min-h-0 glass-overflow-auto"
+          className="glass-min-w-0 glass-min-h-0 glass-overflow-auto glass-bg-white/10 glass-backdrop-blur-md glass-border glass-border-white/20 glass-radius-lg glass-on-light"
           role="region"
           aria-labelledby={leftPaneLabelId}
         >
@@ -250,7 +252,7 @@ export const GlassSplitPane = forwardRef<HTMLDivElement, GlassSplitPaneProps>(
         <ContrastGuard
           as="div"
           level="AA"
-          className="glass-min-w-0 glass-min-h-0 glass-overflow-auto"
+          className="glass-min-w-0 glass-min-h-0 glass-overflow-auto glass-bg-white/10 glass-backdrop-blur-md glass-border glass-border-white/20 glass-radius-lg glass-on-light"
           role="region"
           aria-labelledby={rightPaneLabelId}
         >

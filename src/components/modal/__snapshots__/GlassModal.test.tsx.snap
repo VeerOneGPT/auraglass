@@ -2,16 +2,16 @@
 
 exports[`GlassModal matches snapshot 1`] = `
 <div
-  class="fixed inset-0 flex items-center justify-center glass-p-4 glass-backdrop-blur-md"
+  class="fixed inset-0 flex items-center justify-center glass-p-4"
   data-consciousness-active="false"
   data-consciousness-modal="true"
   data-glass-component="true"
   data-modal-role="dialog"
-  style="z-index: 50;"
+  style="z-index: 50; --glass-specular-intensity: 0.18;"
 >
   <div
     aria-hidden="true"
-    class="motion-primitive glass-absolute glass-inset-0 glass-surface-dark/50"
+    class="motion-primitive glass-absolute glass-inset-0 glass-backdrop-blur-md"
   />
   <div
     class="motion-primitive relative w-full max-w-md max-h-full"
@@ -28,10 +28,10 @@ exports[`GlassModal matches snapshot 1`] = `
       <div
         aria-label="Modal"
         aria-modal="true"
-        class="optimized-glass-surface glass-neutral-level4 glass-tier-high w-full flex flex-col glass-overlay-noise glass-edge glass-overlay-specular glass-typography-reset focus:outline-none max-h-full overflow-hidden"
+        class="optimized-glass-surface glass-neutral-level4 glass-tier-high w-full flex flex-col glass-overlay-noise glass-edge glass-overlay-specular glass-typography-reset glass-on-light focus:outline-none max-h-full overflow-hidden"
         data-performance-mode="medium"
         role="dialog"
-        style="background-color: rgba(15, 23, 42, 0.26); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 16px 48px 0px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.28), inset 0 0 20px rgba(255,255,255,0.16); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+        style="background-color: rgba(255, 255, 255, 0.16); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 16px 48px 0px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.28), inset 0 0 20px rgba(255,255,255,0.16); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
         tabindex="-1"
       >
         <div
@@ -52,7 +52,7 @@ exports[`GlassModal matches snapshot 1`] = `
               >
                 <button
                   aria-label="Close modal"
-                  class="inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden h-8 w-8 p-0 glass-accent-primary glass-text-secondary hover:glass-text-primary glass-elev-0 glass-radius-md glass-magnet glass-ripple glass-press bg-transparent border-0 shadow-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  class="inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden box-border h-8 w-8 p-0 glass-accent-primary glass-text-secondary hover:glass-text-primary glass-elev-0 glass-radius-md glass-magnet glass-ripple glass-press bg-transparent border-0 shadow-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                   data-button-size="sm"
                   data-button-variant="ghost"
                   data-consciousness-close="true"

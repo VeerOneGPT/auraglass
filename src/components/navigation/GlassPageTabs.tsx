@@ -2,6 +2,7 @@
 
 import React, { forwardRef, useId, useState } from "react";
 import { cn } from "../../lib/utilsComprehensive";
+import styles from "./GlassPageTabs.module.css";
 
 export interface GlassPageTab {
   value: string;
@@ -48,7 +49,6 @@ export const GlassPageTabs = forwardRef<HTMLDivElement, GlassPageTabsProps>(
       tabs.findIndex((tab) => tab.value === selectedValue)
     );
     const selectedTab = tabs[selectedIndex];
-
     const selectTab = (nextValue: string) => {
       if (value === undefined) setInternalValue(nextValue);
       onChange?.(nextValue);
@@ -80,11 +80,12 @@ export const GlassPageTabs = forwardRef<HTMLDivElement, GlassPageTabsProps>(
       <div
         ref={ref}
         data-glass-component
+        data-glass-page-tabs="true"
+        data-orientation={orientation}
         className={cn(
           "glass-page-tabs",
-          orientation === "vertical"
-            ? "glass-grid glass-grid-cols-[minmax(160px,220px)_1fr] glass-gap-4"
-            : "glass-space-y-4",
+          styles.root,
+          orientation === "vertical" ? styles.vertical : styles.horizontal,
           className
         )}
         {...props}
@@ -93,8 +94,11 @@ export const GlassPageTabs = forwardRef<HTMLDivElement, GlassPageTabsProps>(
           role="tablist"
           aria-orientation={orientation}
           className={cn(
-            "glass-flex glass-gap-1 glass-rounded-lg glass-border glass-border-white/10 glass-bg-white/8 glass-p-1",
-            orientation === "vertical" ? "glass-flex-col" : "glass-flex-row"
+            "glass-page-tabs__list",
+            styles.tabList,
+            orientation === "vertical"
+              ? styles.verticalList
+              : styles.horizontalList
           )}
         >
           {tabs.map((tab, index) => {
@@ -109,12 +113,11 @@ export const GlassPageTabs = forwardRef<HTMLDivElement, GlassPageTabsProps>(
                 aria-controls={`${generatedId}-panel-${tab.value}`}
                 tabIndex={selected ? 0 : -1}
                 disabled={tab.disabled}
+                data-state={selected ? "active" : "inactive"}
                 className={cn(
-                  "glass-inline-flex glass-min-h-9 glass-items-center glass-justify-center glass-gap-2 glass-rounded-md glass-px-3 glass-text-sm glass-font-medium glass-transition-colors",
-                  selected
-                    ? "glass-bg-white/18 glass-text-primary"
-                    : "glass-text-secondary hover:glass-bg-white/10 hover:glass-text-primary",
-                  tab.disabled && "glass-cursor-not-allowed glass-opacity-45"
+                  "glass-page-tabs__trigger",
+                  styles.trigger,
+                  selected && styles.selected
                 )}
                 onClick={() => !tab.disabled && selectTab(tab.value)}
                 onKeyDown={(event) => {
@@ -148,11 +151,9 @@ export const GlassPageTabs = forwardRef<HTMLDivElement, GlassPageTabsProps>(
                   }
                 }}
               >
-                <span>{tab.label}</span>
+                <span className={styles.triggerLabel}>{tab.label}</span>
                 {tab.badge ? (
-                  <span className="glass-rounded-full glass-bg-white/12 glass-px-2 glass-py-0.5 glass-text-xs">
-                    {tab.badge}
-                  </span>
+                  <span className={styles.badge}>{tab.badge}</span>
                 ) : null}
               </button>
             );
@@ -164,7 +165,7 @@ export const GlassPageTabs = forwardRef<HTMLDivElement, GlassPageTabsProps>(
             role="tabpanel"
             aria-labelledby={`${generatedId}-tab-${selectedTab.value}`}
             tabIndex={0}
-            className="glass-rounded-lg glass-border glass-border-white/10 glass-bg-white/6 glass-p-4"
+            className={cn("glass-page-tabs__panel", styles.panel)}
           >
             {selectedTab.panel}
           </div>

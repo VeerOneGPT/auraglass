@@ -108,35 +108,51 @@ export const GlassGoldenRatioGrid = forwardRef<
       width: containerWidth,
       height: containerHeight,
     });
-    const containerRef = useRef<HTMLDivElement>(null);
+    const hostRef = useRef<HTMLDivElement>(null);
+    const canvasRef = useRef<HTMLDivElement>(null);
 
     const { prefersReducedMotion } = useMotionPreference();
     const gridId = useA11yId();
     const { play } = useGlassSound();
     const effectiveWidth = compact ? 360 : containerWidth;
     const effectiveHeight = compact ? 220 : containerHeight;
-    const effectiveLevels = compact
-      ? Math.min(subdivisionLevels, 3)
-      : subdivisionLevels;
-    const effectiveShowGrid = compact ? false : showGrid;
-    const effectiveShowRatioLines = compact ? false : showRatioLines;
+    const narrowResponsive = responsive && dimensions.width < 560;
+    const effectiveLevels =
+      compact || narrowResponsive
+        ? Math.min(subdivisionLevels, dimensions.width < 400 ? 2 : 3)
+        : subdivisionLevels;
+    const effectiveShowGrid = compact || narrowResponsive ? false : showGrid;
+    const effectiveShowRatioLines =
+      compact || narrowResponsive ? false : showRatioLines;
+    const effectiveSpacing = narrowResponsive ? Math.min(spacing, 5) : spacing;
     const boundedHeight =
       maxHeight ?? (compact || contained ? effectiveHeight : undefined);
 
     // Responsive dimension handling
     useEffect(() => {
-      if (!responsive || !containerRef.current) return;
+      if (!responsive || !hostRef.current) return;
 
       const resizeObserver = new ResizeObserver((entries) => {
         for (let entry of entries) {
-          const { width, height } = entry.contentRect;
-          setDimensions({ width, height });
+          const width = Math.max(1, entry.contentRect.width);
+          const height = Math.max(
+            320,
+            Math.min(
+              containerHeight,
+              width * (containerHeight / containerWidth)
+            )
+          );
+          setDimensions((current) =>
+            current.width === width && current.height === height
+              ? current
+              : { width, height }
+          );
         }
       });
 
-      resizeObserver.observe(containerRef.current);
+      resizeObserver.observe(hostRef.current);
       return () => resizeObserver.disconnect();
-    }, [responsive]);
+    }, [responsive, containerHeight, containerWidth]);
 
     // Generate golden ratio subdivisions
     const generateGoldenSections = useCallback((): GoldenRatioSection[] => {
@@ -355,17 +371,29 @@ export const GlassGoldenRatioGrid = forwardRef<
 
     return (
       <OptimizedGlass
-        ref={ref}
+        ref={(node: HTMLDivElement | null) => {
+          (hostRef as React.MutableRefObject<HTMLDivElement | null>).current =
+            node;
+          if (typeof ref === "function") ref(node);
+          else if (ref)
+            (ref as React.MutableRefObject<HTMLDivElement | null>).current =
+              node;
+        }}
         className={`glass-golden-ratio-grid relative overflow-auto ${className}`}
         style={{
           width: responsive ? "100%" : effectiveWidth,
+          maxWidth: responsive ? effectiveWidth : undefined,
           minWidth: responsive || compact ? undefined : effectiveWidth,
           height: compact
             ? effectiveHeight
             : responsive
-              ? "100%"
+              ? dimensions.height
               : effectiveHeight,
-          minHeight: compact ? effectiveHeight : effectiveHeight,
+          minHeight: compact
+            ? effectiveHeight
+            : responsive
+              ? 320
+              : effectiveHeight,
           maxHeight:
             typeof boundedHeight === "number"
               ? `${boundedHeight}px`
@@ -387,7 +415,7 @@ export const GlassGoldenRatioGrid = forwardRef<
         {...props}
       >
         <div
-          ref={containerRef}
+          ref={canvasRef}
           className="glass-absolute glass-inset-0"
           style={{
             width: compact ? effectiveWidth : dimensions.width,
@@ -449,10 +477,10 @@ export const GlassGoldenRatioGrid = forwardRef<
                     ${hasItem ? "cursor-pointer" : "cursor-default"}
                   `}
                   style={{
-                    left: section.x + spacing / 2,
-                    top: section.y + spacing / 2,
-                    width: section.width - spacing,
-                    height: section.height - spacing,
+                    left: section.x + effectiveSpacing / 2,
+                    top: section.y + effectiveSpacing / 2,
+                    width: Math.max(0, section.width - effectiveSpacing),
+                    height: Math.max(0, section.height - effectiveSpacing),
                     boxSizing: "border-box",
                   }}
                   custom={index}
@@ -471,7 +499,8 @@ export const GlassGoldenRatioGrid = forwardRef<
                     <div
                       className={`
                                           w-full h-full box-border glass-surface rounded-lg border border-white/20
-                                          glass-backdrop-blur-md transition-all duration-200 p-3
+                                          glass-backdrop-blur-md transition-all duration-200
+                                          ${narrowResponsive ? "p-1" : "p-3"}
                                           flex min-w-0 min-h-0 items-center justify-center text-center
                                           ${
                                             isHovered || isSelected
@@ -518,7 +547,7 @@ export const GlassGoldenRatioGrid = forwardRef<
                   {/* Golden ratio indicator */}
                   {Math.abs(section.ratio - goldenRatio) < 0.1 && (
                     <div
-                      className="glass-absolute glass-top-1 glass-right-1 glass-w-2 glass-h-2 glass-surface-yellow glass-radius-full glass-opacity-70"
+                      className="glass-absolute glass-top-1 glass-right-1 glass-w-2 glass-h-2 glass-surface-overlay glass-radius-full"
                       data-glass-overlay="true"
                     />
                   )}
@@ -529,7 +558,7 @@ export const GlassGoldenRatioGrid = forwardRef<
         </div>
 
         {/* Statistics panel */}
-        {!compact && (
+        {!compact && !narrowResponsive && (
           <div className="glass-absolute glass-bottom-4 glass-left-4 glass-flex glass-flex-col glass-gap-1 glass-text-xs glass-text-primary-opacity-70">
             <div className="glass-surface-dark/20 glass-px-2 glass-py-1 glass-radius glass-backdrop-blur-sm glass-contrast-guard">
               Sections: {sections.length}
@@ -547,19 +576,18 @@ export const GlassGoldenRatioGrid = forwardRef<
         )}
 
         {/* Legend */}
-        {!compact && (
+        {!compact && !narrowResponsive && (
           <div className="glass-absolute glass-top-4 glass-right-4 glass-flex glass-flex-col glass-gap-1 glass-text-xs glass-text-primary-opacity-70">
             <div className="glass-flex glass-items-center glass-gap-2 glass-surface-dark/20 glass-px-2 glass-py-1 glass-radius glass-backdrop-blur-sm glass-contrast-guard">
-              <div className="glass-w-2 glass-h-2 glass-surface-yellow glass-radius-full" />
+              <div className="glass-w-2 glass-h-2 glass-surface-overlay glass-radius-full" />
               Golden Ratio
             </div>
             {effectiveShowRatioLines && (
               <div className="glass-flex glass-items-center glass-gap-2 glass-surface-dark/20 glass-px-2 glass-py-1 glass-radius glass-backdrop-blur-sm glass-contrast-guard">
                 <div
-                  className="glass-w-4 glass-h-0-5 glass-surface-yellow glass-opacity-50"
+                  className="glass-w-4 glass-h-0-5 glass-surface-overlay"
                   style={{
-                    background:
-                      "repeating-linear-gradient(to right, var(--glass-color-warning-light) 0, var(--glass-color-warning-light) 3px, transparent 3px, transparent 6px)",
+                    background: "rgba(255, 255, 255, 0.24)",
                   }}
                 />
                 Spiral

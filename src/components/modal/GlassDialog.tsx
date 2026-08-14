@@ -572,7 +572,11 @@ export const GlassDialog = forwardRef<HTMLDivElement, GlassDialogProps>(
           eyeTracking && "consciousness-eye-trackable",
           className
         )}
-        style={{ ...style, zIndex }}
+        style={{
+          ...style,
+          zIndex,
+          "--glass-specular-intensity": 0.18,
+        } as React.CSSProperties}
         data-testid={dataTestId}
         onClick={handleBackdropClick}
         role="dialog"
@@ -593,12 +597,12 @@ export const GlassDialog = forwardRef<HTMLDivElement, GlassDialogProps>(
           preset="fadeIn"
           duration={prefersReducedMotion ? 0 : 200}
           className={cn(
-            "absolute inset-0 glass-surface-dark/50",
+            "absolute inset-0",
             backdropBlur && "glass-backdrop-blur-md"
           )}
           style={{
-            backgroundColor:
-              "color-mix(in srgb, var(--glass-black) 40%, transparent)",
+            background:
+              "linear-gradient(rgba(255,255,255,0.08), rgba(255,255,255,0.08)), linear-gradient(rgba(15,23,42,0.24), rgba(15,23,42,0.24))",
           }}
           aria-hidden="true"
         />
@@ -721,7 +725,7 @@ export const GlassDialog = forwardRef<HTMLDivElement, GlassDialogProps>(
               liftOnHover
               hoverSheen
               className={cn(
-                "w-full overflow-hidden border border-border/20 glass-radial-reveal",
+                "w-full overflow-hidden border border-border/20 glass-radial-reveal glass-on-light",
                 variant === "fullscreen" && "h-full rounded-none",
                 consciousness && "consciousness-dialog-glass",
                 eyeTracking && "consciousness-eye-trackable-content",

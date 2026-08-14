@@ -9,7 +9,6 @@ import React, {
 import { cn } from "../../lib/utilsComprehensive";
 import { LiquidGlassEffectGroup } from "../../primitives/LiquidGlassEffectGroup";
 import { LiquidGlassMaterial } from "../../primitives/LiquidGlassMaterial";
-import { LiquidGlassScrollEdge } from "../../primitives/LiquidGlassScrollEdge";
 
 export interface LiquidGlassTabItem {
   id: string;
@@ -34,8 +33,8 @@ export interface LiquidGlassTabBarProps
 
 const tabButtonStyle = (selected: boolean): CSSProperties => ({
   border: 0,
-  background: selected ? "rgba(59, 130, 246, 0.14)" : "transparent",
-  color: "inherit",
+  background: selected ? "rgba(255, 255, 255, 0.28)" : "transparent",
+  color: "rgba(15, 23, 42, 0.88)",
   cursor: "pointer",
   font: "inherit",
 });
@@ -96,11 +95,14 @@ export const LiquidGlassTabBar = forwardRef<
         {bottomAccessory && accessoryPlacement !== "collapsed" && (
           <div className="glass-mb-2">{bottomAccessory}</div>
         )}
-        <LiquidGlassScrollEdge edge="bottom" styleMode="soft" active />
         <LiquidGlassMaterial
           material="liquid"
           variant={materialVariant}
           radius="full"
+          style={{
+            background: "linear-gradient(145deg, rgba(255,255,255,.28), rgba(255,255,255,.14))",
+            color: "rgba(15,23,42,.94)",
+          }}
         >
           <LiquidGlassEffectGroup className="glass-flex glass-max-w-full glass-items-center glass-gap-1 glass-overflow-x-auto glass-p-1">
             {tabs.map((tab) => {
@@ -115,7 +117,7 @@ export const LiquidGlassTabBar = forwardRef<
                   disabled={tab.disabled}
                   className={cn(
                     "glass-flex glass-min-w-max glass-flex-shrink-0 glass-items-center glass-gap-1 glass-radius-full glass-px-3 glass-py-2",
-                    selected && "glass-surface-primary glass-text-primary",
+                    selected && "glass-text-primary",
                     minimized && !selected && "glass-px-2"
                   )}
                   style={tabButtonStyle(selected)}

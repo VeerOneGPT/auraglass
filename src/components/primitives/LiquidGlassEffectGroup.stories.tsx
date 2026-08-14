@@ -22,9 +22,8 @@ export const GroupedButtons: Story = {
 
         [data-storybook-preview-mode="dark"] .liquid-effect-group-story {
           background:
-            radial-gradient(circle at 20% 20%, rgba(96,165,250,.22), transparent 28%),
-            radial-gradient(circle at 82% 72%, rgba(45,212,191,.18), transparent 30%),
-            #0f172a !important;
+            linear-gradient(145deg, rgba(255,255,255,.12), rgba(255,255,255,.08)),
+            rgba(17,17,19,.98) !important;
           border: 1px solid rgba(226,232,240,.22);
           box-shadow: 0 24px 80px rgba(0,0,0,.34) !important;
           color: #f8fafc !important;
@@ -58,7 +57,12 @@ export const GroupedButtons: Story = {
           borderRadius: 30,
           padding: 28,
           background:
-            "radial-gradient(circle at 20% 20%, rgba(96,165,250,.30), transparent 28%), radial-gradient(circle at 82% 72%, rgba(45,212,191,.24), transparent 30%), rgba(255,255,255,0.78)",
+            "linear-gradient(145deg, rgba(255,255,255,.34), rgba(255,255,255,.16))",
+          border: "1px solid rgba(15,23,42,.12)",
+          backdropFilter:
+            "blur(32px) saturate(140%) brightness(1.04) contrast(1.02)",
+          WebkitBackdropFilter:
+            "blur(32px) saturate(140%) brightness(1.04) contrast(1.02)",
           boxShadow: "0 24px 80px rgba(15,23,42,.14)",
           color: "#0f172a",
         }}

@@ -1,39 +1,39 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
-import { GlassVirtualList } from './GlassVirtualList';
-import { cn } from '../../lib/utils';
+import type { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
+import { GlassVirtualList } from "./GlassVirtualList";
+import { cn } from "../../lib/utils";
 
 const meta: Meta<typeof GlassVirtualList> = {
-  title: 'Effects + Advanced/Glass Virtual List',
+  title: "Effects + Advanced/Glass Virtual List",
   component: GlassVirtualList,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
-        component: 'A glass morphism glassvirtuallist component.',
+        component: "A glass morphism glassvirtuallist component.",
       },
     },
   },
   argTypes: {
     className: {
-      control: 'text',
-      description: 'Additional CSS classes',
+      control: "text",
+      description: "Additional CSS classes",
     },
     height: {
-      control: 'number',
-      description: 'Container height',
+      control: "number",
+      description: "Container height",
     },
     itemHeight: {
-      control: 'number',
-      description: 'Item height (uniform)',
+      control: "number",
+      description: "Item height (uniform)",
     },
     smoothScroll: {
-      control: 'boolean',
-      description: 'Enable smooth scrolling',
+      control: "boolean",
+      description: "Enable smooth scrolling",
     },
   },
   args: {
-    className: '',
+    className: "",
     height: 300,
     itemHeight: 50,
     smoothScroll: true,
@@ -44,17 +44,26 @@ export default meta;
 type Story = StoryObj<typeof GlassVirtualList>;
 
 export const Default: Story = {
+  render: (args) => (
+    <div
+      className="glass-neutral-level1 glass-rounded-3xl glass-p-4 glass-box-border glass-overflow-auto"
+      style={{ width: "min(560px, calc(100vw - 64px))" }}
+    >
+      <GlassVirtualList {...args} />
+    </div>
+  ),
   args: {
     items: Array.from({ length: 100 }, (_, i) => ({
       id: `item-${i}`,
       height: 50,
       component: ({ index }: { index: number }) => (
-        <div className="glass-p-3 glass-border-b glass-border-white/10">
+        <div className="glass-p-3 glass-border-b glass-border-white/10 glass-text-sm glass-text-primary">
           Item {index + 1}
         </div>
       ),
       props: { index: i },
     })),
+    className: "",
     onEndReached: fn(),
   },
 };

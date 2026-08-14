@@ -30,6 +30,11 @@ export default meta;
 type Story = StoryObj<typeof GlassReactionBar>;
 
 export const Default: Story = {
+  render: (args) => (
+    <div className="glass-neutral-level1 glass-rounded-3xl glass-p-6">
+      <GlassReactionBar {...args} />
+    </div>
+  ),
   args: {
     reactions: [
       { key: 'like', label: '👍', count: 12 },
@@ -38,6 +43,7 @@ export const Default: Story = {
       { key: 'wow', label: '😮', count: 3 },
       { key: 'sad', label: '😢', count: 1 },
     ],
+    className: '',
     onReact: fn(),
   },
 };

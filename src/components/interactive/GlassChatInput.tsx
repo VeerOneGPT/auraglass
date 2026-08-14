@@ -626,7 +626,8 @@ export const GlassChatInput: React.FC<GlassChatInputProps> = ({
               {/* Send button */}
               <GlassButton
                 variant="primary"
-                size="sm"
+                size="md"
+                iconOnly
                 onClick={handleSendMessage}
                 disabled={
                   (!message.trim() && attachments.length === 0) ||
@@ -634,7 +635,7 @@ export const GlassChatInput: React.FC<GlassChatInputProps> = ({
                   loading ||
                   isRecording
                 }
-                className="glass-p-2"
+                className="glass-shrink-0"
                 aria-label={loading ? "Sending message" : "Send message"}
               >
                 {loading ? (

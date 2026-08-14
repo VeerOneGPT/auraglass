@@ -8,6 +8,7 @@ import { useGlassSound } from "../../utils/soundDesign";
 import { useA11yId } from "../../utils/a11y";
 import { useMotionPreference } from "../../hooks/useMotionPreference";
 import { createGlassStyle } from "../../utils/createGlassStyle";
+import { Mic, MicOff } from "@/icons";
 
 export interface VoiceParticipant {
   id: string;
@@ -280,8 +281,8 @@ export const GlassVoiceWaveform = forwardRef<
                 style={{
                   background:
                     activityLevel > level * 0.2
-                      ? "rgba(74, 222, 128, 0.92)"
-                      : "rgba(255, 255, 255, 0.2)",
+                      ? "rgba(71,85,105,.84)"
+                      : "rgba(148,163,184,.22)",
                   transition: "all 300ms ease",
                 }}
               />
@@ -444,7 +445,14 @@ export const GlassVoiceWaveform = forwardRef<
     );
 
     const renderWaveform = (participant: VoiceParticipant) => {
-      const data = audioData[participant.id] || new Array(maxBars).fill(0);
+      const data =
+        audioData[participant.id] ||
+        Array.from({ length: maxBars }, (_, index) => {
+          const phase = (index / Math.max(1, maxBars - 1)) * Math.PI * 3;
+          const envelope = 0.28 + Math.sin((index / maxBars) * Math.PI) * 0.72;
+          const signal = 0.22 + Math.abs(Math.sin(phase)) * 0.7;
+          return Math.min(1, signal * envelope * Math.max(.28, participant.audioLevel));
+        });
 
       switch (waveformStyle) {
         case "waves":
@@ -470,113 +478,121 @@ export const GlassVoiceWaveform = forwardRef<
         style={{
           background: createGlassStyle({ blur: "sm", opacity: 0.8 }).background,
           boxShadow: participant.isSpeaking
-            ? "0 0 0 2px color-mix(in srgb, var(--glass-color-success, #22c55e) 55%, transparent)"
-            : undefined,
+            ? "0 0 0 1px rgba(71,85,105,.42), 0 12px 30px rgba(15,23,42,.1)"
+            : "0 10px 24px rgba(15,23,42,.07)",
+          border: "1px solid rgba(148,163,184,.25)",
           transitionDuration: "200ms",
         }}
-        onClick={() => onParticipantClick?.(participant.id)}
         whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
       >
-        {showAvatars && (
-          <div className="glass-relative">
-            <div
-              className={cn(
-                "glass-radius-full glass-flex glass-items-center glass-justify-center glass-text-primary glass-font-semibold glass-overflow-hidden",
-                compactMode ? "glass-w-8 glass-h-8" : "glass-w-12 glass-h-12"
-              )}
-              style={{
-                background: createGlassStyle({ blur: "sm", opacity: 0.8 })
-                  .background,
-              }}
-            >
-              {participant.avatar ? (
-                <img
-                  src={participant.avatar}
-                  alt={participant.name}
-                  className="glass-w-full glass-h-full glass-radius-full glass-object-cover"
-                />
-              ) : (
-                participant.name.charAt(0).toUpperCase()
-              )}
-            </div>
-
-            {/* Connection status */}
-            {showConnectionStatus && (
+        <button
+          type="button"
+          onClick={() => onParticipantClick?.(participant.id)}
+          className="glass-flex glass-flex-1 glass-min-w-0 glass-items-center glass-space-x-3 glass-bg-transparent glass-border-0 glass-p-0 glass-text-left glass-focus"
+          aria-label={`Select ${participant.name}`}
+        >
+          {showAvatars && (
+            <div className="glass-relative">
               <div
                 className={cn(
-                  "glass-absolute glass-w-3 glass-h-3 glass-radius-full glass-border-2 glass-border-white",
-                  participant.isConnected
-                    ? "glass-surface-success"
-                    : "glass-surface-danger"
+                  "glass-radius-full glass-flex glass-items-center glass-justify-center glass-text-primary glass-font-semibold glass-overflow-hidden",
+                  compactMode ? "glass-w-8 glass-h-8" : "glass-w-12 glass-h-12"
                 )}
-                style={{ right: -4, bottom: -4 }}
-              />
-            )}
-
-            {/* Speaking indicator */}
-            {participant.isSpeaking && (
-              <motion.div
-                className="glass-absolute glass-top-1 glass-w-4 glass-h-4 glass-surface-success glass-radius-full"
-                style={{ right: -4 }}
-                animate={prefersReducedMotion ? {} : { scale: [1, 1.2, 1] }}
-                transition={
-                  shouldAnimate
-                    ? {
-                        duration: 0.8,
-                        repeat: Infinity,
-                      }
-                    : { duration: 0 }
-                }
-              />
-            )}
-          </div>
-        )}
-
-        <div className="glass-flex-1 glass-min-w-0">
-          {showNames && (
-            <div className="glass-flex glass-items-center glass-space-x-2">
-              <p
-                className={cn(
-                  "glass-font-medium glass-text-primary glass-truncate",
-                  compactMode ? "glass-text-sm" : "glass-text-base"
-                )}
+                style={{
+                  background: createGlassStyle({ blur: "sm", opacity: 0.8 })
+                    .background,
+                }}
               >
-                {participant.name}
-                {participant.id === currentUserId && " (You)"}
-              </p>
+                {participant.avatar ? (
+                  <img
+                    src={participant.avatar}
+                    alt={participant.name}
+                    className="glass-w-full glass-h-full glass-radius-full glass-object-cover"
+                  />
+                ) : (
+                  participant.name.charAt(0).toUpperCase()
+                )}
+              </div>
 
-              {showMuteStatus && participant.isMuted && (
-                <span className="glass-text-primary glass-text-xs">🔇</span>
+              {/* Connection status */}
+              {showConnectionStatus && (
+                <div
+                  className={cn(
+                    "glass-absolute glass-w-3 glass-h-3 glass-radius-full glass-border-2 glass-border-white"
+                  )}
+                  style={{
+                    right: -4,
+                    bottom: -4,
+                    background: participant.isConnected
+                      ? "rgba(71,85,105,.88)"
+                      : "rgba(148,163,184,.62)",
+                  }}
+                />
+              )}
+
+              {/* Speaking indicator */}
+              {participant.isSpeaking && (
+                <motion.div
+                  className="glass-absolute glass-top-1 glass-w-4 glass-h-4 glass-radius-full"
+                  style={{ right: -4, background: "rgba(71,85,105,.88)" }}
+                  animate={prefersReducedMotion ? {} : { scale: [1, 1.2, 1] }}
+                  transition={
+                    shouldAnimate
+                      ? {
+                          duration: 0.8,
+                          repeat: Infinity,
+                        }
+                      : { duration: 0 }
+                  }
+                />
               )}
             </div>
           )}
 
-          {showVoiceActivity && !compactMode && (
-            <VoiceActivityIndicator participant={participant} />
-          )}
-        </div>
+          <div className="glass-flex-1 glass-min-w-0">
+            {showNames && (
+              <div className="glass-flex glass-items-center glass-space-x-2">
+                <p
+                  className={cn(
+                    "glass-font-medium glass-text-primary glass-truncate",
+                    compactMode ? "glass-text-sm" : "glass-text-base"
+                  )}
+                >
+                  {participant.name}
+                  {participant.id === currentUserId && " (You)"}
+                </p>
 
-        <div className="glass-flex glass-items-center glass-space-x-2">
+                {showMuteStatus && participant.isMuted && (
+                  <MicOff className="glass-h-3.5 glass-w-3.5" aria-label="Muted" />
+                )}
+              </div>
+            )}
+
+            {showVoiceActivity && !compactMode && (
+              <VoiceActivityIndicator participant={participant} />
+            )}
+          </div>
+
           {renderWaveform(participant)}
+        </button>
 
-          {showMuteStatus && !compactMode && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onMuteToggle?.(participant.id);
-              }}
-              className={cn(
-                "glass-p-1 glass-radius glass-text-sm glass-transition-colors glass-focus glass-touch-target glass-contrast-guard",
-                participant.isMuted
-                  ? "glass-text-danger"
-                  : "glass-text-secondary"
-              )}
-            >
-              {participant.isMuted ? "🔇" : "🎤"}
-            </button>
-          )}
-        </div>
+        {showMuteStatus && !compactMode && (
+          <button
+            type="button"
+            onClick={() => onMuteToggle?.(participant.id)}
+            className={cn(
+              "glass-p-1 glass-radius glass-text-sm glass-transition-colors glass-focus glass-touch-target glass-contrast-guard glass-flex-shrink-0",
+              "glass-text-primary"
+            )}
+            aria-label={`${participant.isMuted ? "Unmute" : "Mute"} ${participant.name}`}
+          >
+            {participant.isMuted ? (
+              <MicOff className="glass-h-4 glass-w-4" aria-hidden="true" />
+            ) : (
+              <Mic className="glass-h-4 glass-w-4" aria-hidden="true" />
+            )}
+          </button>
+        )}
       </motion.div>
     );
 
@@ -592,6 +608,13 @@ export const GlassVoiceWaveform = forwardRef<
         ref={ref}
         intensity="subtle"
         className={cn("glass-p-4 glass-space-y-4", className)}
+        style={{
+          background: "rgba(255,255,255,.3)",
+          border: "1px solid rgba(148,163,184,.3)",
+          boxShadow:
+            "0 24px 64px rgba(15,23,42,.14), inset 0 1px 0 rgba(255,255,255,.92)",
+          color: "rgba(15,23,42,.94)",
+        }}
         {...props}
       >
         <div className="glass-flex glass-items-center glass-justify-between">

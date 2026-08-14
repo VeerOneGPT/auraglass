@@ -89,16 +89,12 @@ const tools: readonly ToolDefinition[] = [
 ];
 
 const colors = [
-  "var(--glass-black)",
-  "#FF0000",
-  "#00FF00",
-  "#0000FF",
-  "#FFFF00",
-  "#FF00FF",
-  "#00FFFF",
-  "#FF8000",
-  "#8000FF",
-  "#FF0080",
+  "rgba(255, 255, 255, 0.32)",
+  "rgba(248, 250, 252, 0.3)",
+  "rgba(241, 245, 249, 0.28)",
+  "rgba(226, 232, 240, 0.26)",
+  "rgba(203, 213, 225, 0.24)",
+  "rgba(255, 255, 255, 0.2)",
 ];
 
 const sizes = [2, 4, 8, 12, 16, 24] as const;
@@ -243,8 +239,15 @@ export const GlassSharedWhiteboard = forwardRef<
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
+      const token = backgroundColor.match(/var\((--[^,\s)]+)/)?.[1];
+      const resolvedBackground = token
+        ? getComputedStyle(canvas.parentElement ?? document.documentElement)
+            .getPropertyValue(token)
+            .trim() || "#f8fafc"
+        : backgroundColor;
+
       // Clear canvas
-      ctx.fillStyle = backgroundColor;
+      ctx.fillStyle = resolvedBackground;
       ctx.fillRect(0, 0, width, height);
 
       // Draw grid if visible
@@ -431,9 +434,19 @@ export const GlassSharedWhiteboard = forwardRef<
       <motion.div
         className="glass-absolute glass-pointer-events-none glass-z-20"
         style={{
-          left: user.cursorX,
-          top: user.cursorY,
+          // Cursor coordinates are authored against the logical canvas size;
+          // percentage positioning keeps them aligned after the canvas scales
+          // down on tablet/mobile and prevents horizontal overflow.
+          left: `${Math.min(
+            100,
+            Math.max(0, (user.cursorX / Math.max(width, 1)) * 100)
+          )}%`,
+          top: `${Math.min(
+            100,
+            Math.max(0, (user.cursorY / Math.max(height, 1)) * 100)
+          )}%`,
           transform: "translate(-2px, -2px)",
+          maxWidth: "calc(100% - 4px)",
         }}
         animate={
           prefersReducedMotion
@@ -470,7 +483,7 @@ export const GlassSharedWhiteboard = forwardRef<
       <OptimizedGlass
         ref={ref}
         intensity="subtle"
-        className={cn("glass-relative", className)}
+        className={cn("glass-shared-whiteboard glass-relative", className)}
         {...props}
       >
         <div className="glass-flex glass-flex-col glass-space-y-4">
@@ -480,15 +493,15 @@ export const GlassSharedWhiteboard = forwardRef<
               className="glass-flex glass-items-center glass-justify-between glass-p-3 glass-radius-lg glass-flex-wrap glass-gap-3"
               style={createGlassStyle({ variant: "default", radius: "lg" })}
             >
-              <div className="glass-flex glass-items-center glass-flex-wrap glass-gap-3">
+              <div className="glass-flex glass-items-center glass-flex-wrap glass-gap-3 glass-min-w-0 glass-max-w-full">
                 {/* Tools */}
-                <div className="glass-flex glass-space-x-2">
+                <div className="glass-flex glass-flex-wrap glass-gap-2">
                   {tools.map((tool) => (
                     <button
                       key={tool.id}
                       onClick={() => setSelectedTool(tool.id)}
                       className={cn(
-                        "glass-p-2 glass-radius glass-text-sm glass-font-medium glass-transition-colors glass-focus glass-touch-target glass-contrast-guard",
+                        "glass-p-2 glass-radius-full glass-border glass-border-white/20 glass-bg-white/15 glass-text-sm glass-font-medium glass-transition-colors glass-focus glass-touch-target glass-contrast-guard",
                         selectedTool === tool.id
                           ? "glass-surface-subtle/20 glass-text-primary"
                           : "glass-text-secondary"
@@ -501,7 +514,7 @@ export const GlassSharedWhiteboard = forwardRef<
                 </div>
 
                 {/* Colors */}
-                <div className="glass-flex glass-space-x-1">
+                <div className="glass-flex glass-flex-wrap glass-gap-2">
                   {colors.map((color, i) => (
                     <button
                       key={`${color}-${i}`}
@@ -514,8 +527,10 @@ export const GlassSharedWhiteboard = forwardRef<
                       )}
                       style={{
                         backgroundColor: color,
-                        transform:
-                          selectedColor === color ? "scale(1.1)" : undefined,
+                        boxShadow:
+                          selectedColor === color
+                            ? "0 0 0 2px rgba(15, 23, 42, 0.78)"
+                            : undefined,
                       }}
                       aria-label={`Select color ${color}`}
                     />
@@ -523,7 +538,7 @@ export const GlassSharedWhiteboard = forwardRef<
                 </div>
 
                 {/* Sizes */}
-                <div className="glass-flex glass-space-x-1">
+                <div className="glass-flex glass-flex-wrap glass-gap-2">
                   {sizes.map((size) => (
                     <button
                       key={size}
@@ -580,7 +595,7 @@ export const GlassSharedWhiteboard = forwardRef<
 
           <div className="glass-flex glass-flex-wrap glass-gap-4">
             {/* Whiteboard Canvas */}
-            <div className="glass-relative glass-flex-1 glass-min-w-0">
+            <div className="glass-shared-whiteboard-canvas glass-relative glass-flex-1 glass-min-w-0 glass-max-w-full glass-overflow-hidden">
               <canvas
                 ref={canvasRef}
                 width={width}
@@ -627,7 +642,7 @@ export const GlassSharedWhiteboard = forwardRef<
             {/* User List */}
             {showUserList && (
               <div
-                className="glass-w-48 glass-p-3 glass-radius-lg glass-space-y-2"
+                className="glass-shared-whiteboard-user-list glass-p-3 glass-radius-lg glass-space-y-2"
                 style={createGlassStyle({ variant: "default", radius: "lg" })}
               >
                 <h3 className="glass-text-sm glass-font-medium glass-text-primary-glass-opacity-90 glass-mb-3">

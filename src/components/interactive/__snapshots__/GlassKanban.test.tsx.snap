@@ -7,7 +7,7 @@ exports[`GlassKanban matches snapshot 1`] = `
   data-testid="glasskanban"
 >
   <div
-    class="grid glass-gap-4 glass-p-4"
+    class="glass-kanban-grid grid glass-gap-4 glass-p-4"
     data-adaptive="false"
     data-consciousness-active="false"
     data-consciousness-kanban="true"

@@ -282,7 +282,7 @@ export const GlassActionSheet = forwardRef<
               </div>
             )}
 
-            <div className='glass-max-h-96 glass-overflow-y-auto'>
+            <div className='glass-max-h-96 glass-overflow-y-auto glass-flex glass-flex-col glass-gap-2 glass-p-2'>
               {actions.map((action, index) => (
                 <button
                   key={index}
@@ -292,7 +292,7 @@ export const GlassActionSheet = forwardRef<
                     "w-full glass-p-4 flex items-center justify-center gap-3",
                     "glass-text-base font-medium",
                     "transition-all duration-200",
-                    "border-b glass-border-subtle last:border-b-0",
+                    "glass-radius-lg glass-border glass-border-subtle",
                     "hover:bg-white/5 active:bg-white/10",
                     "disabled:opacity-50 glass-disabled-cursor-not-allowed",
                     action.variant === "destructive" && "text-red-500",

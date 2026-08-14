@@ -459,7 +459,7 @@ export const GlassProbabilityCloud = forwardRef<
       >
         <div className='glass-p-4 glass-space-y-4'>
           {/* Header */}
-          <div className="glass-flex glass-items-center glass-justify-between">
+          <div className="glass-flex glass-items-start glass-justify-between glass-flex-wrap glass-gap-3">
             <div>
               <h2
                 className={cn(
@@ -473,7 +473,7 @@ export const GlassProbabilityCloud = forwardRef<
               </p>
             </div>
 
-            <div className='glass-flex glass-items-center glass-space-x-4'>
+            <div className='glass-flex glass-items-center glass-flex-wrap glass-gap-3'>
               <button
                 onClick={() => setIsObserved(!isObserved)}
                 className={`
@@ -490,7 +490,7 @@ export const GlassProbabilityCloud = forwardRef<
                 {isObserved ? "👁️ Observing" : "👁️‍🗨️ Observe"}
               </button>
 
-              <div className={cn("glass-text-sm glass-text-muted")}>
+              <div className={cn("glass-text-sm glass-text-secondary")}>
                 t: {quantumTime.toFixed(1)}
               </div>
             </div>
@@ -637,11 +637,11 @@ export const GlassProbabilityCloud = forwardRef<
           {/* Controls */}
           <div
             className={cn(
-              "glass-flex glass-items-center glass-justify-between glass-text-sm glass-text-muted"
+              "glass-flex glass-items-start glass-justify-between glass-flex-wrap glass-gap-3 glass-text-sm glass-text-secondary"
             )}
           >
             <span>Click particles to measure • Hover to observe</span>
-            <div className='glass-flex glass-items-center glass-space-x-4'>
+            <div className='glass-flex glass-items-center glass-flex-wrap glass-gap-3'>
               {uncertaintyPrinciple && (
                 <span className='glass-flex glass-items-center glass-space-x-1'>
                   <span>⚛</span>

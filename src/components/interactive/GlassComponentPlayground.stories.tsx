@@ -49,7 +49,15 @@ const meta: Meta<typeof GlassComponentPlayground> = {
         description: "A basic button component",
         category: "buttons",
         component: ({ children }) => (
-          <button className="glass-px-4 glass-py-2 glass-surface-blue glass-text-primary glass-radius-md">
+          <button
+            className="glass-px-4 glass-py-2 glass-text-primary glass-radius-md"
+            style={{
+              appearance: "none",
+              border: "1px solid rgba(148,163,184,.32)",
+              background: "rgba(255,255,255,.2)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,.34)",
+            }}
+          >
             {children || "Button"}
           </button>
         ),
@@ -88,7 +96,15 @@ export const Default: Story = {
         description: "A basic button component",
         category: "buttons",
         component: ({ children }) => (
-          <button className="glass-px-4 glass-py-2 glass-surface-blue glass-text-primary glass-radius-md">
+          <button
+            className="glass-px-4 glass-py-2 glass-text-primary glass-radius-md"
+            style={{
+              appearance: "none",
+              border: "1px solid rgba(148,163,184,.32)",
+              background: "rgba(255,255,255,.2)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,.34)",
+            }}
+          >
             {children || "Button"}
           </button>
         ),

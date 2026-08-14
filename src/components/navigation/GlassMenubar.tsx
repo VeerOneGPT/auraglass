@@ -54,6 +54,8 @@ export interface GlassMenubarProps {
   "data-testid"?: string;
   positionStrategy?: "absolute" | "contained";
   contained?: boolean;
+  /** Menu id rendered open on first paint. */
+  defaultOpenMenuId?: string;
 }
 
 export interface GlassMenubarContentProps {
@@ -135,10 +137,13 @@ export const GlassMenubar: React.FC<GlassMenubarProps> = ({
   disabled = false,
   positionStrategy = "absolute",
   contained = false,
+  defaultOpenMenuId,
   "aria-label": ariaLabel = "Menu bar",
   "data-testid": dataTestId,
 }) => {
-  const [openMenus, setOpenMenus] = useState<Set<string>>(new Set());
+  const [openMenus, setOpenMenus] = useState<Set<string>>(
+    () => new Set(defaultOpenMenuId ? [defaultOpenMenuId] : [])
+  );
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   const handleItemClick = (item: MenuItem) => {
@@ -223,10 +228,16 @@ export const GlassMenubar: React.FC<GlassMenubarProps> = ({
               onClose={() => setOpenMenus(new Set())}
               positionStrategy={contained ? "contained" : positionStrategy}
               className={cn(
-                "absolute glass-z-9999",
+                contained
+                  ? "glass-relative glass-z-10"
+                  : "absolute glass-z-9999",
                 orientation === "horizontal"
-                  ? "top-full left-0 glass-mt-1"
-                  : "top-0 left-full glass-ml-1"
+                  ? contained
+                    ? "glass-mt-2 glass-w-full"
+                    : "top-full left-0 glass-mt-1"
+                  : contained
+                    ? "glass-ml-4 glass-mt-2"
+                    : "top-0 left-full glass-ml-1"
               )}
             >
               <GlassMenubar

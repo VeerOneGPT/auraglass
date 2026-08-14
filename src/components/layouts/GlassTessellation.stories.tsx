@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useEffect, useState, type ComponentProps } from 'react';
 import { fn } from '@storybook/test';
 import {
     Bell,
@@ -28,14 +29,14 @@ import { GlassTessellation, type TessellationTile } from './GlassTessellation';
 
 // Basic geometric tiles
 const basicTiles: TessellationTile[] = [
-  { id: 'home', content: <Home size={16} />, shape: 'hexagon', color: 'hsl(var(--glass-color-primary))' },
-  { id: 'user', content: <User size={14} />, shape: 'triangle', color: 'hsl(var(--glass-color-danger))' },
-  { id: 'settings', content: <Settings size={14} />, shape: 'square', color: 'hsl(var(--glass-color-success))' },
-  { id: 'mail', content: <Mail size={12} />, shape: 'rhombus', color: 'hsl(var(--glass-color-warning))' },
-  { id: 'search', content: <Search size={14} />, shape: 'pentagon', color: 'var(--glass-color-secondary)' },
-  { id: 'bell', content: <Bell size={12} />, shape: 'hexagon', color: 'var(--glass-color-secondary)' },
-  { id: 'heart', content: <Heart size={12} />, shape: 'triangle', color: 'hsl(var(--glass-color-danger))' },
-  { id: 'share', content: <Share size={12} />, shape: 'square', color: 'hsl(var(--glass-color-info))' },
+  { id: 'home', content: <Home size={16} />, shape: 'hexagon', color: 'rgba(255,255,255,.34)' },
+  { id: 'user', content: <User size={14} />, shape: 'triangle', color: 'rgba(236,240,244,.38)' },
+  { id: 'settings', content: <Settings size={14} />, shape: 'square', color: 'rgba(255,255,255,.28)' },
+  { id: 'mail', content: <Mail size={12} />, shape: 'rhombus', color: 'rgba(224,230,236,.40)' },
+  { id: 'search', content: <Search size={14} />, shape: 'pentagon', color: 'rgba(255,255,255,.32)' },
+  { id: 'bell', content: <Bell size={12} />, shape: 'hexagon', color: 'rgba(232,237,242,.38)' },
+  { id: 'heart', content: <Heart size={12} />, shape: 'triangle', color: 'rgba(255,255,255,.26)' },
+  { id: 'share', content: <Share size={12} />, shape: 'square', color: 'rgba(220,226,233,.40)' },
 ];
 
 // Elemental themed tiles
@@ -153,14 +154,43 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const ResponsiveTessellation = (args: ComponentProps<typeof GlassTessellation>) => {
+  const [viewportWidth, setViewportWidth] = useState(
+    typeof window === 'undefined' ? 800 : window.innerWidth
+  );
+
+  useEffect(() => {
+    const update = () => setViewportWidth(window.innerWidth);
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
+
+  const narrow = viewportWidth <= 480;
+  const width = Math.min(args.containerWidth ?? 800, Math.max(240, viewportWidth - (narrow ? 64 : 112)));
+
+  return (
+    <GlassTessellation
+      {...args}
+      containerWidth={width}
+      containerHeight={narrow ? 420 : args.containerHeight}
+      tileSize={narrow ? 42 : args.tileSize}
+      spacing={Math.max(8, args.spacing ?? 8)}
+      animatePattern={false}
+      style={{ width, maxWidth: '100%' }}
+    />
+  );
+};
+
 export const Default: Story = {
+  render: (args) => <ResponsiveTessellation {...args} />,
   args: {
     tiles: basicTiles,
     tessellationType: 'hexagonal',
     containerWidth: 800,
     containerHeight: 600,
     tileSize: 60,
-    spacing: 2,
+    spacing: 8,
     animatePattern: true,
     morphPattern: false,
     showGrid: false,
