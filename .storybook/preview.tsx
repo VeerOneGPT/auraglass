@@ -126,7 +126,7 @@ const preview: Preview = {
         },
         {
           name: 'media',
-          value: 'linear-gradient(135deg, #0f172a 0%, #1d4ed8 46%, #0f766e 100%)',
+          value: 'linear-gradient(145deg, #ffffff 0%, #f4f6f8 46%, #e7ebef 100%)',
         },
         {
           name: 'transparent',

@@ -512,6 +512,59 @@ npm run lint:check
 npm run audit:components
 ```
 
+### Tightened glass certification audit
+
+The headless certification contract is documented in [`reports/audit/certification-audit-spec.md`](./reports/audit/certification-audit-spec.md). Use that spec when changing glass surfaces, stories, recipes, or audit tooling; it is the durable source of truth for the inventory, token, runtime, and layout gates.
+
+The audit is intentionally mechanical and exit-code gated. The authoritative public scope is **470 visual component-like exports + 1 explicitly nonvisual public state engine (`QuantumNeuromorphicEngine`) + 28 recipes = 499 total**. The screenshot-required visual scope is **498 items** (470 exports + 28 recipes), or **1,494 PNG/JSON pairs** across three viewports. Derive counts dynamically from the generated inventory; exclude `nonVisual` entries from screenshot gates only after their dedicated API/behavior tests pass. If a task or older report says “439 exports/components and recipes,” record the **471-vs-439 discrepancy** in the final summary rather than silently changing the inventory.
+
+Start every audit by regenerating the public inventory and API report:
+
+```bash
+# Equivalent direct commands (the npm aliases below invoke these scripts):
+node scripts/audit/public-export-audit.js
+node scripts/audit/api-surface-audit.js
+npm run audit:exports
+npm run audit:api
+```
+
+These commands must produce `reports/public-export-audit.json` and `reports/public-export-audit.md`; do not substitute a hand-counted story list.
+
+Every real glass surface must satisfy these invariants at 1440x900, 768x1024, and 390x844:
+
+- Both computed `backdrop-filter` and `-webkit-backdrop-filter` are present and non-`none`.
+- Blur is exactly one of **16px, 24px, 32px, 40px, or 48px**. The canonical chain is `blur(<px>) saturate(1.8) brightness(1.05) contrast(1.05)` (with the documented minimum/range checks in the spec).
+- **Every** white-frost gradient stop, including the midpoint and any additional stops, has alpha **0.08–0.35 inclusive**; a single passing lightest stop is insufficient. Canonical start/mid/end stops are L1 `0.12/0.08/0.08`, L2 `0.14/0.08/0.10`, L3 `0.16/0.08/0.11`, L4 `0.18/0.08/0.12`, and L5 `0.20/0.08/0.14`. Dark/navy surface fills at or above 0.50 fail.
+- There is no document or non-scroll-surface horizontal overflow, no zero-size surface, and no interactive-element overlap beyond **2px**.
+
+The checks apply to every individual rendered surface. Generic `CertificationCase` or placeholder stories, shared shell screenshots, and smoke-gate results are not certification evidence. Every recipe needs real evidence at all three viewports and cannot auto-pass from `npm run test:recipes:render` alone.
+
+Run the static gates in this order:
+
+```bash
+npm run lint:tokens
+npm run lint:styles
+npm run glass:validate-persona-css
+npm run glass:validate
+node scripts/glass-violation-scanner.js
+node scripts/ci/audit-css-var-coverage.js
+npm run test:recipes:render
+npm run audit:components
+```
+
+With Storybook serving port 6006, run the runtime and matrix gates, then regenerate evidence:
+
+```bash
+STORYBOOK_URL=http://localhost:6006 npx playwright test tests/visual/design-system/token-purity-layout-audit.spec.ts --config=playwright.visual-ci.config.ts --workers=1 --reporter=list
+CAPTURE_ALL_VISUALS=1 STORYBOOK_URL=http://localhost:6006 npx playwright test --config=playwright.visual-ci.config.ts tests/visual/design-system/token-purity-layout-audit.spec.ts --workers=1 --reporter=list
+npm run audit:visual:evidence
+npm run test:visual:ci
+npm run test:visual:matrix
+STORYBOOK_URL=http://localhost:6006 node scripts/audit/storybook-visual-certification.mjs
+```
+
+`CAPTURE_ALL_VISUALS=1` writes independent desktop/tablet/mobile PNGs and computed-style records for the 498 visual items under `reports/audit/visual-all/`; `npm run audit:visual:evidence` must report `PASS: 498/498` (or the equivalent dynamically derived visual count) and is a required visual proof gate, not an optional snapshot. `QuantumNeuromorphicEngine` is separately API/behavior-tested and never represented by a generated screenshot placeholder. The final evidence must include `reports/audit/audit-summary.json`, `reports/audit/audit-summary.md`, `reports/audit/triage.md`, and `reports/audit/visual-all/visual-summary.{json,md}`; the certification JSON must report `missingStoryCount: 0` and all evaluated desktop/mobile entries as passed. Do not edit source, stories, or decorators merely to silence a finding: classify evidence-only hits in `triage.md`, and remediate only proven shipped-component invariant violations.
+
 Useful scripts:
 
 | Command | Purpose |

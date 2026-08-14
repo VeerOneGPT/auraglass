@@ -12,6 +12,8 @@ export default defineConfig({
   testMatch: [
     "visual/design-system/storybook-visual-certification.spec.ts",
     "visual/design-system/glass-audit-coverage.spec.ts",
+    "visual/design-system/accessibility-story-quality.spec.ts",
+    "visual/design-system/token-purity-layout-audit.spec.ts",
     "visual/liquid-glass/liquid-glass-showcase.spec.ts",
   ],
   fullyParallel: true,

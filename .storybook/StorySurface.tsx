@@ -13,7 +13,7 @@ interface StorySurfaceProps {
 const surfaceByMode: Record<StoryPreviewMode, React.CSSProperties> = {
   light: {
     background:
-      "linear-gradient(180deg, #f8fafc 0%, #eef2f7 48%, #e5e7eb 100%)",
+      "linear-gradient(180deg, #ffffff 0%, #f4f4f4 52%, #e9e9e9 100%)",
     color: "#111827",
   },
   dark: {
@@ -23,7 +23,7 @@ const surfaceByMode: Record<StoryPreviewMode, React.CSSProperties> = {
   },
   liquid: {
     background:
-      "linear-gradient(135deg, #f8fafc 0%, #e7f0ff 34%, #f6efff 66%, #eefcf8 100%)",
+      "linear-gradient(145deg, #ffffff 0%, #f5f5f5 42%, #eaeaea 100%)",
     color: "#111827",
   },
   "high-contrast": {
@@ -45,8 +45,8 @@ const sceneByKind: Record<StorySurfaceKind, React.CSSProperties> = {
     alignItems: "center",
     justifyContent: "center",
     background:
-      "linear-gradient(135deg, #0f172a 0%, #1d4ed8 46%, #0f766e 100%)",
-    color: "#fff",
+      "linear-gradient(145deg, #ffffff 0%, #f4f4f4 46%, #e9e9e9 100%)",
+    color: "#111827",
   },
   plain: {
     alignItems: "stretch",
@@ -65,7 +65,7 @@ function LiquidBackdrop() {
         overflow: "hidden",
         pointerEvents: "none",
         background:
-          "linear-gradient(120deg, rgba(59, 130, 246, 0.10), transparent 36%, rgba(20, 184, 166, 0.10) 72%, transparent), linear-gradient(180deg, rgba(255, 255, 255, 0.42), transparent 46%, rgba(15, 23, 42, 0.04))",
+          "radial-gradient(circle at 18% 12%, rgba(255, 255, 255, 0.92), transparent 34%), linear-gradient(180deg, rgba(255, 255, 255, 0.38), transparent 48%, rgba(15, 23, 42, 0.035))",
       }}
     />
   );

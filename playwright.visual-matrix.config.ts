@@ -13,6 +13,7 @@ export default defineConfig({
   testMatch: [
     "visual/design-system/storybook-visual-certification.spec.ts",
     "visual/design-system/glass-audit-coverage.spec.ts",
+    "visual/design-system/token-purity-layout-audit.spec.ts",
   ],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,

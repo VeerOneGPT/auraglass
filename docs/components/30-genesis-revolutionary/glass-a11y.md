@@ -189,7 +189,7 @@ function CustomStyledApp() {
 .custom-accessibility-theme {
   --glass-background: rgba(0, 0, 0, 0.9);
   --glass-border: rgba(255, 255, 255, 0.3);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Aeonik', sans-serif;
 }
 ```
 
@@ -374,4 +374,3 @@ export default CompleteApp;
 ```
 
 This comprehensive accessibility system documents an advanced approach to web accessibility, transforming it from compliance requirements into user-empowering features.
-
