@@ -15,6 +15,7 @@ import { GlassGrid, GlassGridItem } from "../../../components/layout/GlassGrid";
 import { GlassCard } from "../../../components/card/GlassCard";
 import { GlassInput } from "../../../components/input/GlassInput";
 import { cn } from "@/lib/utils";
+import "../templateNeutral.css";
 
 export type ListCellValue = unknown;
 export type ListComparableValue = string | number | Date;
@@ -722,7 +723,7 @@ export const GlassListView = forwardRef<HTMLDivElement, GlassListViewProps>(
     return (
       <div
         ref={ref}
-        className={cn("w-full space-y-6", className)}
+        className={cn("w-full space-y-6 glass-template-neutral", className)}
         role="region"
         aria-label={ariaLabel || title || "List View"}
         data-testid={dataTestId}

@@ -90,6 +90,16 @@ export interface PersonaConfig {
   tokens?: Record<string, string | number | CSSProperties>;
 }
 
+/**
+ * Persona identity belongs on the canvas, content accents, and state cues—not
+ * in the glass material itself. Every persona therefore shares one neutral,
+ * luminous white-channel surface. Keeping every stop inside the 0.08–0.35
+ * alpha band prevents a persona from turning a liquid-glass panel into an
+ * opaque navy or chromatic card while still allowing its canvas to vary.
+ */
+export const PERSONA_GLASS_SURFACE =
+  "linear-gradient(135deg, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.18) 48%, rgba(255,255,255,0.10) 100%)";
+
 export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
   "midnight-slate": {
     meta: {
@@ -120,7 +130,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
     colors: {
       background: {
         canvas: "#090B1A",
-        surface: "rgba(18,20,43,0.72)",
+        surface: PERSONA_GLASS_SURFACE,
       },
       text: {
         primary: "#F2F5FF",
@@ -135,7 +145,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
         error: "#FF4D8D",
       },
       shadow: {
-        panel: "0 24px 60px -30px rgba(79,214,255,0.45)",
+        panel: "0 24px 60px -30px rgba(24,24,24,0.28)",
       },
       focus: {
         ring: "0 0 0 3px rgba(79,214,255,0.32)",
@@ -212,7 +222,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
     colors: {
       background: {
         canvas: "#081418",
-        surface: "rgba(9,21,24,0.68)",
+        surface: PERSONA_GLASS_SURFACE,
       },
       text: {
         primary: "#F3F9F9",
@@ -227,7 +237,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
         error: "#FF5A65",
       },
       shadow: {
-        panel: "0 18px 46px -28px rgba(52,210,180,0.38)",
+        panel: "0 18px 46px -28px rgba(24,24,24,0.24)",
       },
       focus: {
         ring: "0 0 0 3px rgba(52,210,180,0.30)",
@@ -307,7 +317,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
     colors: {
       background: {
         canvas: "#0D1324",
-        surface: "rgba(17,23,38,0.70)",
+        surface: PERSONA_GLASS_SURFACE,
       },
       text: {
         primary: "#F9F4EC",
@@ -322,7 +332,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
         error: "#FF4A4A",
       },
       shadow: {
-        panel: "0 28px 64px -32px rgba(255,181,69,0.42)",
+        panel: "0 28px 64px -32px rgba(24,24,24,0.28)",
       },
       focus: {
         ring: "0 0 0 3px rgba(255,181,69,0.35)",
@@ -398,7 +408,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
     colors: {
       background: {
         canvas: "#08091C",
-        surface: "rgba(16,18,44,0.68)",
+        surface: PERSONA_GLASS_SURFACE,
       },
       text: {
         primary: "#F5F3FF",
@@ -413,7 +423,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
         error: "#FF5FB7",
       },
       shadow: {
-        panel: "0 30px 70px -34px rgba(192,108,255,0.45)",
+        panel: "0 30px 70px -34px rgba(24,24,24,0.28)",
       },
       focus: {
         ring: "0 0 0 3px rgba(192,108,255,0.35)",
@@ -493,7 +503,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
     colors: {
       background: {
         canvas: "#0A1026",
-        surface: "rgba(10,16,38,0.70)",
+        surface: PERSONA_GLASS_SURFACE,
       },
       text: {
         primary: "#E9FBFF",
@@ -508,7 +518,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
         error: "#FF6F8C",
       },
       shadow: {
-        panel: "0 26px 62px -28px rgba(62,242,161,0.38)",
+        panel: "0 26px 62px -28px rgba(24,24,24,0.26)",
       },
       focus: {
         ring: "0 0 0 3px rgba(62,242,161,0.30)",
@@ -588,7 +598,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
     colors: {
       background: {
         canvas: "#10141F",
-        surface: "rgba(16,20,31,0.74)",
+        surface: PERSONA_GLASS_SURFACE,
       },
       text: {
         primary: "#FFF3E4",
@@ -603,7 +613,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
         error: "#FF5A3C",
       },
       shadow: {
-        panel: "0 30px 66px -30px rgba(255,132,80,0.44)",
+        panel: "0 30px 66px -30px rgba(24,24,24,0.28)",
       },
       focus: {
         ring: "0 0 0 3px rgba(255,132,80,0.32)",
@@ -675,7 +685,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
     colors: {
       background: {
         canvas: "#071220",
-        surface: "rgba(9,20,36,0.72)",
+        surface: PERSONA_GLASS_SURFACE,
       },
       text: {
         primary: "#F0FAFF",
@@ -690,7 +700,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
         error: "#FF6B7D",
       },
       shadow: {
-        panel: "0 26px 60px -30px rgba(91,225,255,0.40)",
+        panel: "0 26px 60px -30px rgba(24,24,24,0.26)",
       },
       focus: {
         ring: "0 0 0 3px rgba(91,225,255,0.32)",
@@ -769,7 +779,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
     colors: {
       background: {
         canvas: "#120E1A",
-        surface: "rgba(24,16,32,0.74)",
+        surface: PERSONA_GLASS_SURFACE,
       },
       text: {
         primary: "#FFEFE6",
@@ -784,7 +794,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
         error: "#FF5C3C",
       },
       shadow: {
-        panel: "0 28px 64px -30px rgba(248,105,58,0.42)",
+        panel: "0 28px 64px -30px rgba(24,24,24,0.28)",
       },
       focus: {
         ring: "0 0 0 3px rgba(248,105,58,0.34)",
@@ -864,7 +874,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
     colors: {
       background: {
         canvas: "#0C0B1C",
-        surface: "rgba(14,13,30,0.72)",
+        surface: PERSONA_GLASS_SURFACE,
       },
       text: {
         primary: "#FFF4FB",
@@ -879,7 +889,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
         error: "#FF6CA8",
       },
       shadow: {
-        panel: "0 30px 70px -32px rgba(199,155,255,0.45)",
+        panel: "0 30px 70px -32px rgba(24,24,24,0.28)",
       },
       focus: {
         ring: "0 0 0 3px rgba(199,155,255,0.32)",
@@ -959,7 +969,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
     colors: {
       background: {
         canvas: "#060B1C",
-        surface: "rgba(10,20,46,0.68)",
+        surface: PERSONA_GLASS_SURFACE,
       },
       text: {
         primary: "#F4F8FF",
@@ -974,7 +984,7 @@ export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
         error: "#FF5B82",
       },
       shadow: {
-        panel: "0 24px 60px -28px rgba(91,213,255,0.32)",
+        panel: "0 24px 60px -28px rgba(24,24,24,0.24)",
       },
       focus: {
         ring: "0 0 0 3px rgba(91,213,255,0.26)",

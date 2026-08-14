@@ -44,4 +44,28 @@ describe("ThemeProvider + PersonaPicker integration", () => {
     expect(updatedActive).not.toBe(initialActive);
     expect(updatedName).not.toBe(initialName);
   });
+
+  it("keeps persona identity out of card material and text roles", () => {
+    render(
+      <ThemeProvider>
+        <PersonaPicker />
+      </ThemeProvider>
+    );
+
+    for (const card of screen.getAllByRole("button")) {
+      const element = card as HTMLButtonElement;
+
+      expect(element.style.background).toBe("");
+      expect(element.style.color).toBe("");
+      expect(element.style.borderRadius).toBe("");
+      expect(element.style.boxShadow).toBe("");
+      expect(element.style.getPropertyValue("--card-accent")).toBe("");
+    }
+
+    const swatches = document.querySelectorAll(".persona-picker-card__swatch");
+    expect(swatches).toHaveLength(screen.getAllByRole("button").length * 2);
+    for (const swatch of swatches) {
+      expect((swatch as HTMLElement).style.background).toBe("");
+    }
+  });
 });

@@ -139,7 +139,7 @@ export const LiquidGlassScrollEdge = forwardRef<
             background:
               styleMode === "hard"
                 ? "var(--liquid-glass-scroll-edge-hard-background, rgba(255,255,255,0.18))"
-                : `linear-gradient(${gradientDirection}, var(--liquid-glass-scroll-edge-soft-background, rgba(255,255,255,0.2)), transparent)`,
+                : `linear-gradient(${gradientDirection}, var(--liquid-glass-scroll-edge-soft-background, rgba(255,255,255,0.2)), rgba(255,255,255,0.08))`,
             transition:
               "opacity var(--liquid-glass-scroll-edge-transition, 160ms ease)",
             ...(shouldRenderContainer ? edgeStyle : style),

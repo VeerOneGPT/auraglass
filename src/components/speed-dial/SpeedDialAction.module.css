@@ -12,8 +12,9 @@
       var(--aura-motion-easing-standard),
     box-shadow var(--aura-motion-duration-fast)
       var(--aura-motion-easing-standard);
-  color: var(--aura-color-global-text-on-primary);
+  color: rgba(var(--glass-color-black) / var(--glass-opacity-90));
   cursor: pointer;
+  overflow: hidden;
 }
 
 .actionGlass {
@@ -24,8 +25,11 @@
   );
   border: 1px solid
     color-mix(in srgb, var(--aura-color-global-border-soft) 80%, transparent);
-  backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur));
-  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur));
+  backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur))
+    var(--glass-filter-base);
+  box-shadow: var(--glass-elev-3);
 }
 
 .actionSolid {
@@ -90,8 +94,11 @@
   padding: 0.3rem 0.5rem;
   font-size: 0.75rem;
   border-radius: var(--aura-radius-md);
-  background: var(--aura-color-overlay-surface-strong);
-  color: var(--aura-color-global-text-primary);
+  background: var(--glass-neutral-level2-surface);
+  color: rgba(var(--glass-color-black) / var(--glass-opacity-95));
+  border: 1px solid var(--glass-border-default);
+  backdrop-filter: var(--glass-backdrop-blur) var(--glass-filter-base);
+  -webkit-backdrop-filter: var(--glass-backdrop-blur) var(--glass-filter-base);
   box-shadow: var(--aura-shadow-elevation-sm);
   opacity: 0;
   transform: translate3d(0, 0, 0);

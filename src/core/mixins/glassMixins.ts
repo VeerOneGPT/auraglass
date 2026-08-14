@@ -32,10 +32,6 @@ interface NavigatorWithConnection extends Navigator {
   };
 }
 
-type MutableGlassStyle = CSSProperties & {
-  WebkitBackdropFilter?: string;
-};
-
 /**
  * SINGLE PUBLIC API - Creates glass styles from canonical tokens
  *
@@ -58,17 +54,10 @@ export function createGlassStyle(opts: GlassOptions = {}): CSSProperties {
     intent,
     elevation,
     tier
-  ) as MutableGlassStyle;
+  ) as CSSProperties;
 
-  if (!styles.backdropFilter) {
-    const surface = glassTokenUtils.getSurface(intent, elevation);
-    const fallbackFilter = glassTokenUtils.buildBackdropFilter(
-      surface.backdropBlur.px,
-      tier
-    );
-    styles.backdropFilter = fallbackFilter;
-    styles.WebkitBackdropFilter = fallbackFilter;
-  }
+  // buildSurfaceStyles is the canonical factory and always authors both
+  // backdrop-filter spellings; rebuilding either spelling here could drift.
 
   if (!styles.background) {
     const surface = glassTokenUtils.getSurface(intent, elevation);

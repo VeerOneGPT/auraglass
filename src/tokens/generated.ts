@@ -41,7 +41,7 @@ export const auraTokens = {
       colors: {
         global: {
           "background-base": "#0f172a",
-          "background-surface": "rgba(15, 23, 42, 0.85)",
+          "background-surface": "rgba(255, 255, 255, 0.18)",
           "background-glass": "rgba(255, 255, 255, 0.08)",
           "border-strong": "rgba(255, 255, 255, 0.35)",
           "border-soft": "rgba(255, 255, 255, 0.18)",
@@ -72,7 +72,7 @@ export const auraTokens = {
             muted: "#e2e8f0",
             "muted-foreground": "#475569",
             highlight: "rgba(99, 102, 241, 0.12)",
-            "glass-surface": "rgba(255, 255, 255, 0.6)",
+            "glass-surface": "rgba(255, 255, 255, 0.3)",
             "glass-border": "rgba(15, 23, 42, 0.12)",
             "glass-shadow": "0 8px 32px rgba(15, 23, 42, 0.12)",
           },
@@ -82,7 +82,7 @@ export const auraTokens = {
             muted: "#1e293b",
             "muted-foreground": "#94a3b8",
             highlight: "rgba(99, 102, 241, 0.2)",
-            "glass-surface": "rgba(15, 23, 42, 0.65)",
+            "glass-surface": "rgba(255, 255, 255, 0.22)",
             "glass-border": "rgba(148, 163, 184, 0.22)",
             "glass-shadow": "0 12px 40px rgba(15, 23, 42, 0.45)",
           },
@@ -90,7 +90,7 @@ export const auraTokens = {
       },
       typography: {
         families: {
-          sans: "'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+          sans: "'Aeonik', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
           mono: "'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace",
         },
         scale: {
@@ -275,7 +275,7 @@ export const auraTokens = {
           gradient:
             "conic-gradient(from 180deg, rgba(34, 211, 238, 0.92), rgba(99, 102, 241, 0.94), rgba(236, 72, 153, 0.9), rgba(34, 211, 238, 0.92))",
           glow: "0 28px 90px rgba(99, 102, 241, 0.42)",
-          insetHighlight: "inset 0 1px 24px rgba(255, 255, 255, 0.34)",
+          insetHighlight: "inset 0 1px 24px rgba(255, 255, 255, 0.3)",
         },
         displayText: {
           heroSize: "clamp(3rem, 9vw, 7.5rem)",
@@ -285,18 +285,19 @@ export const auraTokens = {
         },
         surface: {
           showcaseBackground:
-            "linear-gradient(145deg, rgba(15, 23, 42, 0.62), rgba(30, 41, 59, 0.34))",
+            "linear-gradient(145deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15))",
           showcaseBorder: "rgba(255, 255, 255, 0.18)",
           showcaseGlow:
-            "0 24px 80px rgba(15, 23, 42, 0.42), 0 0 44px rgba(99, 102, 241, 0.16)",
+            "0 24px 80px rgba(0, 0, 0, 0.28), 0 0 44px rgba(255, 255, 255, 0.1)",
           highlight:
             "linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent)",
         },
         button: {
           auroraBackground:
-            "linear-gradient(135deg, rgba(34, 211, 238, 0.94) 0%, rgba(99, 102, 241, 0.94) 42%, rgba(236, 72, 153, 0.92) 100%)",
-          auroraGlow: "0 16px 42px rgba(99, 102, 241, 0.38)",
-          auroraText: "#ffffff",
+            "linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.15) 100%)",
+          auroraGlow:
+            "0 16px 42px rgba(0, 0, 0, 0.24), 0 0 0 1px rgba(255, 255, 255, 0.18) inset",
+          auroraText: "rgba(15, 23, 42, 0.92)",
         },
       },
       glass: {
@@ -336,7 +337,7 @@ export const auraTokens = {
                 px: 24,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(148,163,184,0.15) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.10) 100%)",
               },
               border: {
                 color: "rgba(255,255,255,0.14)",
@@ -462,7 +463,7 @@ export const auraTokens = {
                 px: 16,
               },
               surface: {
-                base: "linear-gradient(135deg, hsl(var(--glass-color-primary)/0.3) 0%, hsl(var(--glass-color-primary)/0.22) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.08) 100%)",
               },
               border: {
                 color: "hsl(var(--glass-color-primary)/0.5)",
@@ -488,7 +489,7 @@ export const auraTokens = {
                 px: 24,
               },
               surface: {
-                base: "linear-gradient(135deg, hsl(var(--glass-color-primary)/0.4) 0%, hsl(var(--glass-color-primary)/0.28) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.10) 100%)",
               },
               border: {
                 color: "hsl(var(--glass-color-primary)/0.6)",
@@ -519,7 +520,7 @@ export const auraTokens = {
                 px: 32,
               },
               surface: {
-                base: "linear-gradient(135deg, hsl(var(--glass-color-primary)/0.48) 0%, hsl(var(--glass-color-primary)/0.34) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.11) 100%)",
               },
               border: {
                 color: "hsl(var(--glass-color-primary)/0.7)",
@@ -550,7 +551,7 @@ export const auraTokens = {
                 px: 40,
               },
               surface: {
-                base: "linear-gradient(135deg, hsl(var(--glass-color-primary)/0.56) 0%, hsl(var(--glass-color-primary)/0.4) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.12) 100%)",
               },
               border: {
                 color: "hsl(var(--glass-color-primary)/0.78)",
@@ -581,7 +582,7 @@ export const auraTokens = {
                 px: 48,
               },
               surface: {
-                base: "linear-gradient(135deg, hsl(var(--glass-color-primary)/0.64) 0%, hsl(var(--glass-color-primary)/0.45) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.14) 100%)",
               },
               border: {
                 color: "hsl(var(--glass-color-primary)/0.85)",
@@ -614,7 +615,7 @@ export const auraTokens = {
                 px: 16,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(34,197,94,0.25) 0%, rgba(22,163,74,0.18) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.08) 100%)",
               },
               border: {
                 color: "rgba(34,197,94,0.4)",
@@ -640,7 +641,7 @@ export const auraTokens = {
                 px: 24,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(34,197,94,0.32) 0%, rgba(22,163,74,0.24) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.10) 100%)",
               },
               border: {
                 color: "rgba(34,197,94,0.5)",
@@ -671,7 +672,7 @@ export const auraTokens = {
                 px: 32,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(34,197,94,0.4) 0%, rgba(22,163,74,0.28) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.11) 100%)",
               },
               border: {
                 color: "rgba(34,197,94,0.6)",
@@ -702,7 +703,7 @@ export const auraTokens = {
                 px: 40,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(34,197,94,0.48) 0%, rgba(22,163,74,0.34) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.12) 100%)",
               },
               border: {
                 color: "rgba(34,197,94,0.7)",
@@ -733,7 +734,7 @@ export const auraTokens = {
                 px: 48,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(34,197,94,0.56) 0%, rgba(22,163,74,0.4) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.14) 100%)",
               },
               border: {
                 color: "rgba(34,197,94,0.78)",
@@ -766,7 +767,7 @@ export const auraTokens = {
                 px: 16,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(245,158,11,0.28) 0%, rgba(254,215,88,0.18) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.08) 100%)",
               },
               border: {
                 color: "rgba(245,158,11,0.4)",
@@ -792,7 +793,7 @@ export const auraTokens = {
                 px: 24,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(245,158,11,0.35) 0%, rgba(254,215,88,0.24) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.10) 100%)",
               },
               border: {
                 color: "rgba(245,158,11,0.5)",
@@ -823,7 +824,7 @@ export const auraTokens = {
                 px: 32,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(245,158,11,0.44) 0%, rgba(254,215,88,0.3) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.11) 100%)",
               },
               border: {
                 color: "rgba(245,158,11,0.6)",
@@ -854,7 +855,7 @@ export const auraTokens = {
                 px: 40,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(245,158,11,0.52) 0%, rgba(254,215,88,0.36) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.12) 100%)",
               },
               border: {
                 color: "rgba(245,158,11,0.68)",
@@ -885,7 +886,7 @@ export const auraTokens = {
                 px: 48,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(245,158,11,0.6) 0%, rgba(254,215,88,0.42) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.14) 100%)",
               },
               border: {
                 color: "rgba(245,158,11,0.75)",
@@ -918,7 +919,7 @@ export const auraTokens = {
                 px: 16,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(239,68,68,0.28) 0%, rgba(248,113,113,0.18) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.08) 100%)",
               },
               border: {
                 color: "rgba(239,68,68,0.4)",
@@ -944,7 +945,7 @@ export const auraTokens = {
                 px: 24,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(239,68,68,0.36) 0%, rgba(248,113,113,0.24) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.10) 100%)",
               },
               border: {
                 color: "rgba(239,68,68,0.5)",
@@ -975,7 +976,7 @@ export const auraTokens = {
                 px: 32,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(239,68,68,0.44) 0%, rgba(248,113,113,0.3) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.11) 100%)",
               },
               border: {
                 color: "rgba(239,68,68,0.6)",
@@ -1006,7 +1007,7 @@ export const auraTokens = {
                 px: 40,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(239,68,68,0.52) 0%, rgba(248,113,113,0.36) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.12) 100%)",
               },
               border: {
                 color: "rgba(239,68,68,0.68)",
@@ -1037,7 +1038,7 @@ export const auraTokens = {
                 px: 48,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(239,68,68,0.6) 0%, rgba(248,113,113,0.42) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.14) 100%)",
               },
               border: {
                 color: "rgba(239,68,68,0.75)",
@@ -1070,7 +1071,7 @@ export const auraTokens = {
                 px: 16,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(14,165,233,0.28) 0%, rgba(56,189,248,0.18) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.08) 100%)",
               },
               border: {
                 color: "rgba(14,165,233,0.4)",
@@ -1096,7 +1097,7 @@ export const auraTokens = {
                 px: 24,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(14,165,233,0.36) 0%, rgba(56,189,248,0.24) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.10) 100%)",
               },
               border: {
                 color: "rgba(14,165,233,0.5)",
@@ -1127,7 +1128,7 @@ export const auraTokens = {
                 px: 32,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(14,165,233,0.44) 0%, rgba(56,189,248,0.3) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.11) 100%)",
               },
               border: {
                 color: "rgba(14,165,233,0.6)",
@@ -1158,7 +1159,7 @@ export const auraTokens = {
                 px: 40,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(14,165,233,0.52) 0%, rgba(56,189,248,0.36) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.12) 100%)",
               },
               border: {
                 color: "rgba(14,165,233,0.68)",
@@ -1189,7 +1190,7 @@ export const auraTokens = {
                 px: 48,
               },
               surface: {
-                base: "linear-gradient(135deg, rgba(14,165,233,0.6) 0%, rgba(56,189,248,0.42) 100%)",
+                base: "linear-gradient(135deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.14) 100%)",
               },
               border: {
                 color: "rgba(14,165,233,0.75)",

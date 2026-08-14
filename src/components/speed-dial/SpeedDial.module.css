@@ -37,7 +37,7 @@
       var(--aura-motion-easing-standard),
     box-shadow var(--aura-motion-duration-fast)
       var(--aura-motion-easing-standard);
-  color: var(--aura-color-global-text-on-primary);
+  color: rgba(var(--glass-color-black) / var(--glass-opacity-90));
 }
 
 .fab:not(.fabDisabled):hover {
@@ -57,8 +57,10 @@
   );
   border: 1px solid
     color-mix(in srgb, var(--aura-color-global-border-soft) 80%, transparent);
-  backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur));
-  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur));
+  backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur))
+    var(--glass-filter-base);
 }
 
 .fabSolidPrimary {
@@ -145,11 +147,9 @@
 .backdrop {
   position: fixed;
   inset: 0;
-  background: color-mix(
-    in srgb,
-    var(--aura-color-overlay-surface-strong) 50%,
-    transparent
-  );
+  background: var(--glass-bg-hover);
+  backdrop-filter: var(--glass-backdrop-blur) var(--glass-filter-base);
+  -webkit-backdrop-filter: var(--glass-backdrop-blur) var(--glass-filter-base);
   opacity: 0;
   pointer-events: none;
   transition: opacity var(--aura-motion-duration-fast)

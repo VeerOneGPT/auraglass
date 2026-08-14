@@ -3,21 +3,27 @@ import VoiceGlassControl from "./VoiceGlassControl";
 
 const voiceStoryStyles = `
   .ag-voice-story {
-    --glass-text-primary: #f8fafc;
-    --glass-text-secondary: #e2e8f0;
-    --glass-text-tertiary: #cbd5e1;
-    --typography-text-primary: #f8fafc;
-    --typography-text-secondary: #e2e8f0;
+    --glass-text-primary: rgba(15, 23, 42, 0.92);
+    --glass-text-secondary: rgba(15, 23, 42, 0.72);
+    --glass-text-tertiary: rgba(15, 23, 42, 0.6);
+    --typography-text-primary: rgba(15, 23, 42, 0.92);
+    --typography-text-secondary: rgba(15, 23, 42, 0.72);
+    --glass-color-primary: 0 0% 38%;
+    --glass-color-secondary: 0 0% 52%;
+    --glass-color-success: 0 0% 42%;
+    --glass-color-info: 0 0% 48%;
     height: 100vh;
     min-height: 100vh;
     width: 100%;
     overflow: auto;
+    isolation: isolate;
     box-sizing: border-box;
+    background-color: #e9e9e9 !important;
     background:
-      radial-gradient(circle at 16% 12%, rgba(236, 72, 153, 0.24), transparent 32%),
-      radial-gradient(circle at 82% 18%, rgba(20, 184, 166, 0.24), transparent 28%),
-      linear-gradient(135deg, #0f172a 0%, #312e81 48%, #0f766e 100%);
-    color: #f8fafc;
+      radial-gradient(circle at 20% 12%, rgba(255,255,255,.86), transparent 30%),
+      radial-gradient(circle at 82% 24%, rgba(150,150,150,.12), transparent 34%),
+      linear-gradient(145deg, #e8e8e8 0%, #f7f7f7 48%, #dcdcdc 100%) !important;
+    color: rgba(15, 23, 42, 0.92);
     padding: clamp(16px, 4vw, 32px);
   }
 
@@ -36,25 +42,43 @@ const voiceStoryStyles = `
   .ag-voice-story p,
   .ag-voice-story span,
   .ag-voice-story div {
-    color: #f8fafc !important;
+    color: rgba(15, 23, 42, 0.92) !important;
   }
 
   .ag-voice-story .glass-surface-subtle\\/10 {
-    background: rgba(15, 23, 42, 0.78) !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: rgba(15, 23, 42, 0.92) !important;
   }
 
   .ag-voice-story .glass-surface-subtle\\/20 {
-    background: rgba(30, 41, 59, 0.82) !important;
+    background: rgba(255, 255, 255, 0.28) !important;
+    color: rgba(15, 23, 42, 0.92) !important;
   }
 
   .ag-voice-story .glass-contrast-guard {
-    color: #f8fafc !important;
+    color: rgba(15, 23, 42, 0.92) !important;
   }
 
   .ag-voice-story button {
-    background: rgba(15, 23, 42, 0.88) !important;
-    color: #f8fafc !important;
-    border-color: rgba(226, 232, 240, 0.24) !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.66), rgba(244,244,244,.48)) !important;
+    color: rgba(15, 23, 42, 0.92) !important;
+    border-color: rgba(32,32,32,.14) !important;
+  }
+
+  .ag-voice-story > div > .glass-grid > div,
+  .ag-voice-story > div > .glass-surface-subtle\/10 {
+    background: linear-gradient(145deg, rgba(255,255,255,.7), rgba(244,244,244,.5)) !important;
+    border: 1px solid rgba(128,128,128,.28) !important;
+    box-shadow: 0 18px 44px rgba(0,0,0,.1), inset 0 1px 0 rgba(255,255,255,.9);
+  }
+
+  .ag-voice-story [class~="glass-surface-green"],
+  .ag-voice-story [class~="glass-surface-blue"],
+  .ag-voice-story [class~="glass-surface-primary"],
+  .ag-voice-story [class~="glass-surface-yellow"] {
+    background: rgba(255,255,255,.28) !important;
+    border: 1px solid rgba(64,64,64,.42) !important;
+    box-shadow: inset 0 0 0 1px rgba(64,64,64,.18) !important;
   }
 
   .ag-voice-story .glass-grid-cols-1 {
@@ -79,7 +103,7 @@ const voiceStoryStyles = `
 
   .ag-voice-story [data-testid="voiceglasscontrol"] {
     max-width: calc(100vw - 32px);
-    color: #f8fafc !important;
+    color: rgba(15, 23, 42, 0.92) !important;
   }
 
   .ag-voice-story [data-testid="voiceglasscontrol"] .glass-w-80,

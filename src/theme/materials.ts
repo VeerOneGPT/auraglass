@@ -9,9 +9,12 @@ export type GlassMaterialPreset =
 
 export interface GlassMaterialTokens {
   backdropBlur: string;
+  backdropFilter: string;
+  WebkitBackdropFilter: string;
   background: string;
   border: string;
   shadow: string;
+  sheen: string;
 }
 
 export const glassMaterialPresets: Record<
@@ -19,33 +22,48 @@ export const glassMaterialPresets: Record<
   GlassMaterialTokens
 > = {
   clear: {
-    backdropBlur: "18px",
-    background: "rgba(255, 255, 255, 0.06)",
+    backdropBlur: "16px",
+    backdropFilter: "blur(16px) saturate(150%) brightness(1.06) contrast(1.03)",
+    WebkitBackdropFilter: "blur(16px) saturate(150%) brightness(1.06) contrast(1.03)",
+    background: "linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.08) 100%)",
     border: "rgba(255, 255, 255, 0.16)",
-    shadow: "0 18px 50px rgba(0, 0, 0, 0.18)",
+    shadow: "0 18px 50px rgba(15, 23, 42, 0.18)",
+    sheen: "inset 0 1px 0 rgba(255, 255, 255, 0.12)",
   },
   regular: {
-    backdropBlur: "28px",
-    background: "rgba(8, 14, 28, 0.44)",
-    border: "rgba(255, 255, 255, 0.14)",
-    shadow: "0 24px 70px rgba(0, 0, 0, 0.28)",
+    backdropBlur: "24px",
+    backdropFilter: "blur(24px) saturate(160%) brightness(1.08) contrast(1.04)",
+    WebkitBackdropFilter: "blur(24px) saturate(160%) brightness(1.08) contrast(1.04)",
+    background: "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)",
+    border: "rgba(255, 255, 255, 0.20)",
+    shadow: "0 24px 70px rgba(15, 23, 42, 0.24)",
+    sheen: "inset 0 1px 0 rgba(255, 255, 255, 0.16)",
   },
   dense: {
-    backdropBlur: "36px",
-    background: "rgba(5, 10, 22, 0.68)",
-    border: "rgba(255, 255, 255, 0.12)",
-    shadow: "0 30px 90px rgba(0, 0, 0, 0.36)",
+    backdropBlur: "40px",
+    backdropFilter: "blur(40px) saturate(170%) brightness(1.1) contrast(1.05)",
+    WebkitBackdropFilter: "blur(40px) saturate(170%) brightness(1.1) contrast(1.05)",
+    background: "linear-gradient(135deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.18) 100%)",
+    border: "rgba(255, 255, 255, 0.28)",
+    shadow: "0 30px 90px rgba(15, 23, 42, 0.28)",
+    sheen: "inset 0 1px 0 rgba(255, 255, 255, 0.20)",
   },
   luminous: {
     backdropBlur: "32px",
-    background: "rgba(125, 211, 252, 0.12)",
-    border: "rgba(125, 211, 252, 0.34)",
-    shadow: "0 24px 84px rgba(56, 189, 248, 0.2)",
+    backdropFilter: "blur(32px) saturate(175%) brightness(1.12) contrast(1.04)",
+    WebkitBackdropFilter: "blur(32px) saturate(175%) brightness(1.12) contrast(1.04)",
+    background: "linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.16) 100%)",
+    border: "rgba(255, 255, 255, 0.32)",
+    shadow: "0 24px 84px rgba(15, 23, 42, 0.22)",
+    sheen: "inset 0 1px 0 rgba(255, 255, 255, 0.24)",
   },
   inset: {
-    backdropBlur: "22px",
-    background: "rgba(255, 255, 255, 0.04)",
-    border: "rgba(255, 255, 255, 0.1)",
-    shadow: "inset 0 1px 0 rgba(255,255,255,0.08)",
+    backdropBlur: "24px",
+    backdropFilter: "blur(24px) saturate(150%) brightness(1.06) contrast(1.03)",
+    WebkitBackdropFilter: "blur(24px) saturate(150%) brightness(1.06) contrast(1.03)",
+    background: "linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.09) 100%)",
+    border: "rgba(255, 255, 255, 0.16)",
+    shadow: "inset 0 1px 0 rgba(255, 255, 255, 0.14)",
+    sheen: "inset 0 -1px 0 rgba(255, 255, 255, 0.10)",
   },
 };

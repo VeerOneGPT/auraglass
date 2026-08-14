@@ -7,6 +7,7 @@ exports[`VoiceGlassControl matches snapshot 1`] = `
 >
   <div
     class="glass-backdrop-blur-lg glass-border glass-border-red/20 glass-surface-red/10 glass-p-3 glass-radius-lg glass-contrast-guard"
+    style="background-color: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255,255,255,.3);"
   >
     <div
       class="glass-flex glass-items-center glass-gap-2 glass-text-primary"

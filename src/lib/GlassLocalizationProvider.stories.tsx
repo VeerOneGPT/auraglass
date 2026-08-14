@@ -33,7 +33,7 @@ const LocalizationStoryFrame = ({ children }: { children: React.ReactNode }) => 
       overflowX: 'hidden',
       backgroundColor: 'rgba(248, 250, 252, 0.72)',
       backgroundImage:
-        'linear-gradient(135deg, rgba(255,255,255,0.88) 0%, rgba(219,234,254,0.7) 46%, rgba(204,251,241,0.62) 100%)',
+        'linear-gradient(135deg, rgba(255,255,255,0.94) 0%, rgba(245,246,247,0.88) 48%, rgba(236,238,240,0.84) 100%)',
       color: '#0f172a',
       backdropFilter: 'blur(24px)',
     }}

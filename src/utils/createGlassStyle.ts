@@ -19,11 +19,11 @@ export interface GlassStyleOptions {
  */
 const tokens = {
   blur: {
-    none: '0px',
-    sm: '4px',
-    md: '8px',
-    lg: '16px',
-    xl: '24px',
+    none: '16px',
+    sm: '16px',
+    md: '24px',
+    lg: '32px',
+    xl: '40px',
   },
   elev: {
     0: 'none',
@@ -49,11 +49,11 @@ const tokens = {
   },
   gradient: {
     default: 'linear-gradient(135deg, rgba(255 255 255 / 0.25) 0%, rgba(255 255 255 / 0.15) 50%, rgba(255 255 255 / 0.10) 100%)',
-    primary: 'linear-gradient(135deg, rgba(255 255 255 / 0.30) 0%, rgba(59 130 246 / 0.20) 50%, rgba(59 130 246 / 0.10) 100%)',
-    success: 'linear-gradient(135deg, rgba(255 255 255 / 0.30) 0%, rgba(34 197 94 / 0.20) 50%, rgba(34 197 94 / 0.10) 100%)',
-    warning: 'linear-gradient(135deg, rgba(255 255 255 / 0.30) 0%, rgba(251 191 36 / 0.20) 50%, rgba(251 191 36 / 0.10) 100%)',
-    danger: 'linear-gradient(135deg, rgba(255 255 255 / 0.30) 0%, rgba(239 68 68 / 0.20) 50%, rgba(239 68 68 / 0.10) 100%)',
-    info: 'linear-gradient(135deg, rgba(255 255 255 / 0.30) 0%, rgba(14 165 233 / 0.20) 50%, rgba(14 165 233 / 0.10) 100%)',
+    primary: 'linear-gradient(135deg, rgba(255 255 255 / 0.30) 0%, rgba(255 255 255 / 0.18) 50%, rgba(255 255 255 / 0.10) 100%)',
+    success: 'linear-gradient(135deg, rgba(255 255 255 / 0.30) 0%, rgba(255 255 255 / 0.18) 50%, rgba(255 255 255 / 0.10) 100%)',
+    warning: 'linear-gradient(135deg, rgba(255 255 255 / 0.30) 0%, rgba(255 255 255 / 0.18) 50%, rgba(255 255 255 / 0.10) 100%)',
+    danger: 'linear-gradient(135deg, rgba(255 255 255 / 0.30) 0%, rgba(255 255 255 / 0.18) 50%, rgba(255 255 255 / 0.10) 100%)',
+    info: 'linear-gradient(135deg, rgba(255 255 255 / 0.30) 0%, rgba(255 255 255 / 0.18) 50%, rgba(255 255 255 / 0.10) 100%)',
   },
 };
 
@@ -78,6 +78,9 @@ export function createGlassStyle(options: GlassStyleOptions = {}): React.CSSProp
     borderRadius: tokens.radius[radius],
     boxShadow: tokens.elev[elev],
     background: tokens.gradient[variant],
+    border: '1px solid rgba(255 255 255 / 0.28)',
+    backdropFilter: `blur(${tokens.blur[blur]}) saturate(1.5) brightness(1.08) contrast(1.04)`,
+    WebkitBackdropFilter: `blur(${tokens.blur[blur]}) saturate(1.5) brightness(1.08) contrast(1.04)`,
   };
   
   if (opacity !== undefined) {

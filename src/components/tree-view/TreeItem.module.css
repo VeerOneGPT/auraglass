@@ -1,7 +1,7 @@
 .root {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 0 var(--aura-space-2);
   outline: 0;
   width: 100%;
   display: flex;
@@ -16,7 +16,7 @@
   border-radius: var(--aura-radius-lg);
   cursor: pointer;
   user-select: none;
-  color: var(--aura-color-global-text-secondary);
+  color: rgba(var(--glass-color-black) / var(--glass-opacity-95));
   background: transparent;
   transition:
     background var(--aura-motion-duration-fast)
@@ -48,13 +48,12 @@
 }
 
 .glass {
-  background: color-mix(
-    in srgb,
-    var(--aura-color-glass-surface) 40%,
-    transparent
-  );
-  border: 1px solid
-    color-mix(in srgb, var(--aura-color-glass-border) 80%, transparent);
+  background: var(--glass-neutral-level1-surface);
+  border: 1px solid var(--glass-border-default);
+  backdrop-filter: blur(var(--aura-glass-neutral-level1-backdrop-blur))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level1-backdrop-blur))
+    var(--glass-filter-base);
 }
 
 .glass:not(.disabled):hover {
@@ -67,7 +66,7 @@
 
 .selected {
   background: var(--tree-view-selected-bg, var(--aura-color-highlight));
-  color: var(--tree-view-color, var(--aura-color-global-text-primary));
+  color: rgba(var(--glass-color-black) / var(--glass-opacity-95));
   font-weight: var(--aura-font-weight-medium);
 }
 
@@ -118,12 +117,16 @@
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: rgba(var(--glass-color-black) / var(--glass-opacity-95)) !important;
 }
 
 .children {
   list-style: none;
   margin: 0;
-  padding: 0 0 0 var(--aura-space-4);
+  padding: var(--aura-space-2) 0 0 var(--aura-space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--aura-space-2);
   overflow: hidden;
   transform-origin: top;
 }

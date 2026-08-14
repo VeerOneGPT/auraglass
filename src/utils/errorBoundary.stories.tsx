@@ -53,7 +53,7 @@ const ErrorStoryFrame = ({ children }: { children: React.ReactNode }) => (
       placeItems: 'center',
       backgroundColor: '#f8fafc',
       backgroundImage:
-        'linear-gradient(135deg, #f8fafc 0%, #e7f0ff 44%, #f6efff 100%)',
+        'linear-gradient(135deg, #ffffff 0%, #f5f6f7 48%, #eceef0 100%)',
       color: '#0f172a',
     }}
   >

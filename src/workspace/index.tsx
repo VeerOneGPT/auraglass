@@ -38,15 +38,20 @@ export const GlassWorkspace = React.forwardRef<
     {commandDock}
     <div
       className={cn(
-        "glass-grid glass-min-h-0 glass-flex-1 glass-gap-3",
-        inspector
-          ? "glass-grid-cols-[minmax(0,1fr)_minmax(18rem,22rem)]"
-          : "glass-grid-cols-1"
+        "glass-grid glass-min-h-0 glass-flex-1 glass-gap-3 glass-grid-cols-1"
       )}
+      style={
+        inspector
+          ? {
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(min(100%, 28rem), 1fr))",
+            }
+          : undefined
+      }
     >
       <div className="glass-min-w-0 glass-overflow-auto">{children}</div>
       {inspector ? (
-        <aside className="glass-min-h-0 glass-overflow-auto glass-rounded-xl glass-border glass-border-white/12 glass-bg-white/5 glass-p-3">
+        <aside className="glass-min-h-0 glass-min-w-0 glass-overflow-auto glass-rounded-xl glass-border glass-border-white/12 glass-bg-white/10 glass-p-3 glass-backdrop-blur-xl">
           {inspector}
         </aside>
       ) : null}
@@ -91,7 +96,7 @@ export const GlassWorkspaceTabs = React.forwardRef<
     ref={ref}
     role="tablist"
     className={cn(
-      "glass-workspace-tabs glass-inline-flex glass-rounded-xl glass-border glass-border-white/12 glass-bg-white/5 glass-p-1",
+      "glass-workspace-tabs glass-inline-flex glass-rounded-xl glass-border glass-border-white/12 glass-bg-white/10 glass-p-1 glass-backdrop-blur-xl",
       className
     )}
     {...props}
@@ -119,7 +124,7 @@ export const GlassWorkspaceTab = React.forwardRef<
       "glass-rounded-lg glass-px-3 glass-py-1.5 glass-text-sm glass-transition-colors",
       "focus-visible:glass-outline-none focus-visible:glass-ring-2 focus-visible:glass-ring-sky-300",
       active
-        ? "glass-bg-sky-300/15 glass-text-sky-100"
+        ? "glass-surface-primary/15 glass-border glass-border-sky-300/40 glass-text-primary"
         : "glass-text-secondary hover:glass-bg-white/10 hover:glass-text-primary",
       className
     )}
@@ -140,7 +145,7 @@ export const GlassWorkspacePanel = React.forwardRef<
   <section
     ref={ref}
     className={cn(
-      "glass-workspace-panel glass-rounded-xl glass-border glass-border-white/12 glass-bg-white/5 glass-backdrop-blur-xl",
+      "glass-workspace-panel glass-rounded-xl glass-border glass-border-white/12 glass-bg-white/10 glass-backdrop-blur-xl",
       className
     )}
     {...props}
@@ -168,7 +173,7 @@ export const GlassInspectorPanel = React.forwardRef<
     ref={ref}
     className={cn(
       "glass-inspector-panel glass-flex glass-min-h-0 glass-flex-col glass-rounded-xl",
-      "glass-border glass-border-white/15 glass-bg-white/6 glass-backdrop-blur-xl",
+      "glass-border glass-border-white/15 glass-bg-white/10 glass-backdrop-blur-xl",
       className
     )}
     {...props}
@@ -197,7 +202,7 @@ export const GlassCanvasArea = React.forwardRef<
     ref={ref}
     className={cn(
       "glass-canvas-area glass-grid glass-min-h-[24rem] glass-place-items-center glass-rounded-xl",
-      "glass-border glass-border-white/12 glass-bg-white/4 glass-p-4",
+      "glass-border glass-border-white/12 glass-bg-white/10 glass-p-4 glass-backdrop-blur-xl",
       className
     )}
     {...props}
@@ -218,7 +223,7 @@ export const GlassTimelineRail = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "glass-timeline-rail glass-rounded-xl glass-border glass-border-white/12 glass-bg-white/5 glass-p-3",
+      "glass-timeline-rail glass-rounded-xl glass-border glass-border-white/12 glass-bg-white/10 glass-p-3 glass-backdrop-blur-xl",
       className
     )}
     {...props}

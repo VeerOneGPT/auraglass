@@ -29,18 +29,20 @@ type Story = StoryObj<typeof StateIndicator>;
 
 export const Default: Story = {
   render: (args: any) => (
-    <StateIndicator
-      {...args}
-      state="success"
-      blend={false}
-      intensity={0.9}
-      className="glass-rounded-xl glass-border glass-border-slate-300 glass-bg-white glass-p-4 glass-text-slate-950"
-    >
-      <div className="glass-text-sm glass-font-semibold">Sync complete</div>
-      <div className="glass-text-xs glass-text-slate-700">
-        Saved 24 component updates.
-      </div>
-    </StateIndicator>
+    <div className="glass-neutral-level1 glass-rounded-3xl glass-p-6">
+      <StateIndicator
+        {...args}
+        state="success"
+        blend={false}
+        intensity={0.9}
+        className="glass-rounded-xl glass-border glass-border-slate-300 glass-bg-white glass-p-4 glass-text-slate-950"
+      >
+        <div className="glass-text-sm glass-font-semibold">Sync complete</div>
+        <div className="glass-text-xs glass-text-slate-700">
+          Saved 24 component updates.
+        </div>
+      </StateIndicator>
+    </div>
   ),
   args: {},
 };

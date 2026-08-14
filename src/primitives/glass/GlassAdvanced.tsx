@@ -212,7 +212,7 @@ export const GlassAdvanced = forwardRef<HTMLDivElement, GlassProps>(
       preview ? 3 : elev,
       1
     )}` as GlassElevation;
-    const defaultSurfaceStyle: React.CSSProperties = {
+    const defaultSurfaceStyle = {
       ...createGlassStyle({
         intent: glassIntent,
         elevation: glassElevation,
@@ -221,12 +221,16 @@ export const GlassAdvanced = forwardRef<HTMLDivElement, GlassProps>(
         focusRing: isClickable || interactive,
       }),
       position: "relative",
+      "--glass-theme-text": "rgba(15, 23, 42, 0.94)",
+      "--glass-text-primary": "rgba(15, 23, 42, 0.94)",
+      "--glass-text-secondary": "rgba(15, 23, 42, 0.88)",
+      color: "rgba(15, 23, 42, 0.94)",
       overflow: "hidden",
       minHeight:
         resolvedMinHeight ??
         (preview ? (compact ? "96px" : "128px") : undefined),
       ...style,
-    };
+    } as React.CSSProperties;
 
     return React.createElement(
       Component,

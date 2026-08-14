@@ -8,6 +8,7 @@ import { GlassButton, IconButton } from "../../button/GlassButton";
 import { PageHeader } from "../../layout/GlassAppShell";
 import { VStack, HStack } from "../../layout/GlassStack";
 import { cn } from "@/lib/utils";
+import "../templateNeutral.css";
 
 export interface DashboardTableRow {
   name?: React.ReactNode;
@@ -419,7 +420,7 @@ export const GlassDashboard = forwardRef<HTMLDivElement, GlassDashboardProps>(
       <div
         ref={ref}
         className={cn(
-          "w-full glass-auto-gap",
+          "w-full glass-auto-gap glass-template-neutral",
           compact ? "glass-auto-gap-md" : "glass-auto-gap-2xl",
           contained && "glass-contained",
           className

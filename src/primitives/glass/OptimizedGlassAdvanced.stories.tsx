@@ -28,9 +28,9 @@ type Story = StoryObj<typeof OptimizedGlassAdvanced>;
 export const Default: Story = {
   args: {
     children: (
-      <div className="p-4 text-center">
-        <h3 className="text-lg font-semibold mb-2">OptimizedGlassAdvanced</h3>
-        <p className="text-sm opacity-80">This is the default optimizedglassadvanced component.</p>
+      <div className="glass-neutral-level1 glass-rounded-2xl glass-p-4 text-center">
+        <h3 className="glass-text-primary text-lg font-semibold mb-2">OptimizedGlassAdvanced</h3>
+        <p className="glass-text-secondary text-sm opacity-80">This is the default optimizedglassadvanced component.</p>
       </div>
     ),
   },

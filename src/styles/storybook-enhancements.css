@@ -19,12 +19,7 @@
 .sb-story .glass-base,
 .sb-story [class*="glass-"] {
   /* Only enhance typography, DON'T override glass styles */
-  font-family:
-    "Geist",
-    "Inter",
-    -apple-system,
-    BlinkMacSystemFont,
-    sans-serif !important;
+  font-family: var(--aura-font-sans) !important;
   font-feature-settings:
     "rlig" 1,
     "calt" 1,

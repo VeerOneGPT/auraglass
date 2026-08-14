@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test("liquid glass showcase story renders", async ({ page }) => {
-  await page.goto("/iframe.html?id=showcase-liquidglassshowcase--app-experience");
+  await page.goto("/iframe.html?id=showcases-liquid-glass-showcase--app-experience");
   const title = page.getByText("Aura Liquid Glass").first();
   const openButton = page.getByRole("button", { name: "Open" });
   await expect(title).toBeVisible();

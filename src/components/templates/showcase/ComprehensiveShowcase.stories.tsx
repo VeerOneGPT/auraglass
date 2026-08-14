@@ -31,7 +31,7 @@ const ShowcaseStoryFrame = ({ children }: { children: React.ReactNode }) => (
       minHeight: 0,
       overflow: 'hidden',
       contain: 'layout paint size',
-      background: 'linear-gradient(135deg, #eff6ff 0%, #f8fafc 45%, #ecfeff 100%)',
+      background: 'linear-gradient(135deg, #ffffff 0%, #f5f6f7 48%, #eceef0 100%)',
     }}
   >
     <div

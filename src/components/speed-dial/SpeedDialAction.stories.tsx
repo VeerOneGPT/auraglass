@@ -4,7 +4,7 @@ import { Download, MessageSquare, Share2 } from "@/icons";
 import SpeedDialAction from "./SpeedDialAction";
 
 const meta: Meta<typeof SpeedDialAction> = {
-  title: 'Controls/Buttons/Speed Dial Action',
+  title: "Controls/Buttons/Speed Dial Action",
   component: SpeedDialAction,
   parameters: {
     layout: "centered",
@@ -36,7 +36,9 @@ export const Default: Story = {
       className="glass-relative glass-radius-2xl glass-border glass-border-subtle glass-surface-overlay glass-p-8"
       style={{ width: "min(360px, calc(100vw - 64px))", minHeight: 180 }}
     >
-      <SpeedDialAction {...args} />
+      <div style={{ position: "absolute", left: "50%", bottom: 52 }}>
+        <SpeedDialAction {...args} />
+      </div>
     </div>
   ),
 };
@@ -48,15 +50,26 @@ export const Variants: Story = {
       style={{ width: "min(640px, calc(100vw - 64px))", minHeight: 180 }}
     >
       {[
-        { icon: <Share2 size={18} aria-hidden="true" />, tooltipTitle: "Share" },
-        { icon: <Download size={18} aria-hidden="true" />, tooltipTitle: "Export" },
+        {
+          icon: <Share2 size={18} aria-hidden="true" />,
+          tooltipTitle: "Share",
+        },
+        {
+          icon: <Download size={18} aria-hidden="true" />,
+          tooltipTitle: "Export",
+        },
         {
           icon: <MessageSquare size={18} aria-hidden="true" />,
           tooltipTitle: "Comment",
         },
       ].map((action, index) => (
         <div key={action.tooltipTitle} className="glass-relative glass-h-24">
-          <SpeedDialAction {...args} {...action} index={index} totalActions={3} />
+          <SpeedDialAction
+            {...args}
+            {...action}
+            index={index}
+            totalActions={3}
+          />
         </div>
       ))}
     </div>

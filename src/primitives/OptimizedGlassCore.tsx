@@ -224,6 +224,11 @@ const OptimizedGlassCore = forwardRef<
   // Add border radius and any custom styles
   const combinedStyles = {
     ...glassStyles,
+    "--glass-theme-text": "rgba(15, 23, 42, 0.94)",
+    "--glass-text-primary": "rgba(15, 23, 42, 0.94)",
+    "--glass-text-secondary": "rgba(15, 23, 42, 0.76)",
+    "--glass-text-tertiary": "rgba(15, 23, 42, 0.64)",
+    color: "rgba(15, 23, 42, 0.94)",
     borderRadius:
       rounded === "none"
         ? "0px"
@@ -239,7 +244,7 @@ const OptimizedGlassCore = forwardRef<
                   ? "9999px"
                   : "8px",
     ...style,
-  };
+  } as React.CSSProperties;
 
   // Ensure no custom props leak into the DOM element
   const {

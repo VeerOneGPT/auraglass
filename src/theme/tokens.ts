@@ -20,7 +20,7 @@ export const colors = {
 
 export const typography = {
   fontFamily:
-    'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    'Aeonik, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
   fontSize: {
     xs: "0.75rem",
     sm: "0.875rem",

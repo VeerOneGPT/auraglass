@@ -2,7 +2,7 @@
 
 exports[`GlassDashboard matches snapshot 1`] = `
 <div
-  class="w-full glass-auto-gap glass-auto-gap-2xl"
+  class="w-full glass-auto-gap glass-template-neutral glass-auto-gap-2xl"
   data-glass-component="true"
 >
   <div
@@ -32,7 +32,7 @@ exports[`GlassDashboard matches snapshot 1`] = `
   </div>
   <div
     class="grid grid-cols-4 glass-gap-4 grid-flow-row items-stretch justify-start motion-safe:transition-all motion-reduce:transition-none glass-min-glass-h-96"
-    style="display: grid; grid-auto-flow: row; align-items: stretch; justify-content: flex-start; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: var(--glass-space-4, 1rem); row-gap: var(--glass-space-4, 1rem);"
+    style="display: grid; grid-auto-flow: row; align-items: stretch; justify-content: flex-start; column-gap: var(--glass-space-4, 1rem); row-gap: var(--glass-space-4, 1rem);"
   />
 </div>
 `;

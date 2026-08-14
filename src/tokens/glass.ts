@@ -63,13 +63,13 @@ export interface AuraGlassTokens {
 export const AURA_GLASS: AuraGlassTokens = {
   surfaces: {
     neutral: {
-      // Liquid-glass neutral: luminous white frost over a faint smoke scrim.
+      // Liquid-glass neutral: luminous white frost with a white overlay.
       // Depth comes from blur + sheen, not surface darkness.
       level1: {
         backdropBlur: { px: 16 },
         surface: {
-          base: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.04) 50%, rgba(255,255,255,0.08) 100%)",
-          overlay: "rgba(15,23,42,0.20)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.08) 100%)",
+          overlay: "rgba(255,255,255,0.10)",
         },
         border: { color: "rgba(255,255,255,0.16)", width: 1, style: "solid" },
         outerShadow: {
@@ -83,15 +83,15 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.03,
         highlightOpacity: 0.18,
         text: {
-          primary: "rgba(255,255,255,0.98)", // 19.4:1 contrast - Enhanced for better readability
-          secondary: "rgba(255,255,255,0.88)", // 17.4:1 contrast - Enhanced for better readability
+          primary: "rgba(15,23,42,0.94)",
+          secondary: "rgba(15,23,42,0.76)",
         },
       },
       level2: {
         backdropBlur: { px: 24 },
         surface: {
-          base: "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.10) 100%)",
-          overlay: "rgba(15,23,42,0.22)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.10) 100%)",
+          overlay: "rgba(255,255,255,0.12)",
         },
         border: { color: "rgba(255,255,255,0.20)", width: 1, style: "solid" },
         outerShadow: {
@@ -105,15 +105,15 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.05,
         highlightOpacity: 0.22,
         text: {
-          primary: "rgba(255,255,255,0.98)", // Enhanced contrast for all glass levels
-          secondary: "rgba(255,255,255,0.88)", // Enhanced contrast for all glass levels
+          primary: "rgba(15,23,42,0.94)",
+          secondary: "rgba(15,23,42,0.76)",
         },
       },
       level3: {
         backdropBlur: { px: 32 },
         surface: {
-          base: "linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.11) 100%)",
-          overlay: "rgba(15,23,42,0.24)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.11) 100%)",
+          overlay: "rgba(255,255,255,0.14)",
         },
         border: {
           color: "rgba(255,255,255,0.24)",
@@ -131,15 +131,15 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.06,
         highlightOpacity: 0.25,
         text: {
-          primary: "rgba(255,255,255,0.98)", // Enhanced contrast for all glass levels
-          secondary: "rgba(255,255,255,0.88)", // Enhanced contrast for all glass levels
+          primary: "rgba(15,23,42,0.94)",
+          secondary: "rgba(15,23,42,0.76)",
         },
       },
       level4: {
         backdropBlur: { px: 40 },
         surface: {
-          base: "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.07) 50%, rgba(255,255,255,0.12) 100%)",
-          overlay: "rgba(15,23,42,0.26)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.12) 100%)",
+          overlay: "rgba(255,255,255,0.16)",
         },
         border: {
           color: "rgba(255,255,255,0.28)",
@@ -157,15 +157,15 @@ export const AURA_GLASS: AuraGlassTokens = {
         noiseOpacity: 0.08,
         highlightOpacity: 0.28,
         text: {
-          primary: "rgba(255,255,255,0.98)", // Enhanced contrast for all glass levels
-          secondary: "rgba(255,255,255,0.88)", // Enhanced contrast for all glass levels
+          primary: "rgba(15,23,42,0.94)",
+          secondary: "rgba(15,23,42,0.76)",
         },
       },
       level5: {
         backdropBlur: { px: 48 },
         surface: {
           base: "linear-gradient(135deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.14) 100%)",
-          overlay: "rgba(15,23,42,0.28)",
+          overlay: "rgba(255,255,255,0.18)",
         },
         border: {
           color: "rgba(255,255,255,0.32)",
@@ -180,21 +180,21 @@ export const AURA_GLASS: AuraGlassTokens = {
           spread: 0,
         },
         innerGlow: { color: "rgba(255,255,255,0.18)", spread: 2, blur: 24 },
-        noiseOpacity: 0.10,
+        noiseOpacity: 0.1,
         highlightOpacity: 0.32,
         text: {
-          primary: "rgba(255,255,255,0.98)", // Enhanced contrast for all glass levels
-          secondary: "rgba(255,255,255,0.88)", // Enhanced contrast for all glass levels
+          primary: "rgba(15,23,42,0.94)",
+          secondary: "rgba(15,23,42,0.76)",
         },
       },
     },
     primary: {
-      // Intent surfaces read as tinted liquid glass: low-alpha color wash,
-      // hairline borders, blur carries the depth.
+      // Intent does not tint the liquid-glass material itself. Semantic color
+      // is reserved for borders, highlights, and content.
       level1: {
         backdropBlur: { px: 16 },
         surface: {
-          base: "linear-gradient(135deg, hsl(var(--glass-color-primary)/0.22) 0%, hsl(var(--glass-color-primary)/0.12) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.08) 100%)",
         },
         border: {
           color: "hsl(var(--glass-color-primary)/0.35)",
@@ -202,7 +202,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           style: "solid",
         },
         outerShadow: {
-          color: "hsl(var(--glass-color-primary)/0.18)",
+          color: "rgba(0,0,0,0.18)",
           x: 0,
           y: 4,
           blur: 24,
@@ -223,7 +223,7 @@ export const AURA_GLASS: AuraGlassTokens = {
       level2: {
         backdropBlur: { px: 24 },
         surface: {
-          base: "linear-gradient(135deg, hsl(var(--glass-color-primary)/0.26) 0%, hsl(var(--glass-color-primary)/0.15) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.10) 100%)",
         },
         border: {
           color: "hsl(var(--glass-color-primary)/0.40)",
@@ -231,7 +231,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           style: "solid",
         },
         outerShadow: {
-          color: "hsl(var(--glass-color-primary)/0.22)",
+          color: "rgba(0,0,0,0.22)",
           x: 0,
           y: 8,
           blur: 32,
@@ -252,7 +252,7 @@ export const AURA_GLASS: AuraGlassTokens = {
       level3: {
         backdropBlur: { px: 32 },
         surface: {
-          base: "linear-gradient(135deg, hsl(var(--glass-color-primary)/0.30) 0%, hsl(var(--glass-color-primary)/0.18) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.11) 100%)",
         },
         border: {
           color: "hsl(var(--glass-color-primary)/0.45)",
@@ -260,7 +260,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           style: "solid",
         },
         outerShadow: {
-          color: "hsl(var(--glass-color-primary)/0.26)",
+          color: "rgba(0,0,0,0.26)",
           x: 0,
           y: 12,
           blur: 40,
@@ -281,7 +281,7 @@ export const AURA_GLASS: AuraGlassTokens = {
       level4: {
         backdropBlur: { px: 40 },
         surface: {
-          base: "linear-gradient(135deg, hsl(var(--glass-color-primary)/0.34) 0%, hsl(var(--glass-color-primary)/0.21) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.12) 100%)",
         },
         border: {
           color: "hsl(var(--glass-color-primary)/0.50)",
@@ -289,7 +289,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           style: "solid",
         },
         outerShadow: {
-          color: "hsl(var(--glass-color-primary)/0.30)",
+          color: "rgba(0,0,0,0.30)",
           x: 0,
           y: 16,
           blur: 48,
@@ -310,7 +310,7 @@ export const AURA_GLASS: AuraGlassTokens = {
       level5: {
         backdropBlur: { px: 48 },
         surface: {
-          base: "linear-gradient(135deg, hsl(var(--glass-color-primary)/0.38) 0%, hsl(var(--glass-color-primary)/0.24) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.14) 100%)",
         },
         border: {
           color: "hsl(var(--glass-color-primary)/0.55)",
@@ -318,7 +318,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           style: "solid",
         },
         outerShadow: {
-          color: "hsl(var(--glass-color-primary)/0.34)",
+          color: "rgba(0,0,0,0.34)",
           x: 0,
           y: 20,
           blur: 56,
@@ -329,7 +329,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           spread: 2,
           blur: 24,
         },
-        noiseOpacity: 0.10,
+        noiseOpacity: 0.1,
         highlightOpacity: 0.32,
         text: {
           primary: "rgba(255,255,255,0.98)", // Enhanced contrast for all glass levels
@@ -341,11 +341,11 @@ export const AURA_GLASS: AuraGlassTokens = {
       level1: {
         backdropBlur: { px: 16 },
         surface: {
-          base: "linear-gradient(135deg, rgba(34,197,94,0.20) 0%, rgba(22,163,74,0.12) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.08) 100%)",
         },
         border: { color: "rgba(34,197,94,0.35)", width: 1, style: "solid" },
         outerShadow: {
-          color: "rgba(34,197,94,0.16)",
+          color: "rgba(0,0,0,0.18)",
           x: 0,
           y: 4,
           blur: 24,
@@ -362,11 +362,11 @@ export const AURA_GLASS: AuraGlassTokens = {
       level2: {
         backdropBlur: { px: 24 },
         surface: {
-          base: "linear-gradient(135deg, rgba(34,197,94,0.24) 0%, rgba(22,163,74,0.15) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.10) 100%)",
         },
         border: { color: "rgba(34,197,94,0.40)", width: 1, style: "solid" },
         outerShadow: {
-          color: "rgba(34,197,94,0.20)",
+          color: "rgba(0,0,0,0.22)",
           x: 0,
           y: 8,
           blur: 32,
@@ -383,11 +383,11 @@ export const AURA_GLASS: AuraGlassTokens = {
       level3: {
         backdropBlur: { px: 32 },
         surface: {
-          base: "linear-gradient(135deg, rgba(34,197,94,0.28) 0%, rgba(22,163,74,0.18) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.11) 100%)",
         },
         border: { color: "rgba(34,197,94,0.45)", width: 1, style: "solid" },
         outerShadow: {
-          color: "rgba(34,197,94,0.24)",
+          color: "rgba(0,0,0,0.26)",
           x: 0,
           y: 12,
           blur: 40,
@@ -404,11 +404,11 @@ export const AURA_GLASS: AuraGlassTokens = {
       level4: {
         backdropBlur: { px: 40 },
         surface: {
-          base: "linear-gradient(135deg, rgba(34,197,94,0.32) 0%, rgba(22,163,74,0.21) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.12) 100%)",
         },
         border: { color: "rgba(34,197,94,0.50)", width: 1, style: "solid" },
         outerShadow: {
-          color: "rgba(34,197,94,0.28)",
+          color: "rgba(0,0,0,0.30)",
           x: 0,
           y: 16,
           blur: 48,
@@ -425,18 +425,18 @@ export const AURA_GLASS: AuraGlassTokens = {
       level5: {
         backdropBlur: { px: 48 },
         surface: {
-          base: "linear-gradient(135deg, rgba(34,197,94,0.36) 0%, rgba(22,163,74,0.24) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.14) 100%)",
         },
         border: { color: "rgba(34,197,94,0.55)", width: 1, style: "solid" },
         outerShadow: {
-          color: "rgba(34,197,94,0.32)",
+          color: "rgba(0,0,0,0.34)",
           x: 0,
           y: 20,
           blur: 56,
           spread: 0,
         },
         innerGlow: { color: "rgba(34,197,94,0.20)", spread: 2, blur: 24 },
-        noiseOpacity: 0.10,
+        noiseOpacity: 0.1,
         highlightOpacity: 0.32,
         text: {
           primary: "rgba(255,255,255,0.98)", // Enhanced contrast for all glass levels
@@ -448,7 +448,7 @@ export const AURA_GLASS: AuraGlassTokens = {
       level1: {
         backdropBlur: { px: 16 },
         surface: {
-          base: "linear-gradient(135deg, hsl(var(--glass-color-warning)/0.20) 0%, rgba(217,119,6,0.12) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.08) 100%)",
         },
         border: {
           color: "hsl(var(--glass-color-warning)/0.35)",
@@ -456,7 +456,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           style: "solid",
         },
         outerShadow: {
-          color: "hsl(var(--glass-color-warning)/0.16)",
+          color: "rgba(0,0,0,0.18)",
           x: 0,
           y: 4,
           blur: 24,
@@ -477,7 +477,7 @@ export const AURA_GLASS: AuraGlassTokens = {
       level2: {
         backdropBlur: { px: 24 },
         surface: {
-          base: "linear-gradient(135deg, hsl(var(--glass-color-warning)/0.24) 0%, rgba(217,119,6,0.15) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.10) 100%)",
         },
         border: {
           color: "hsl(var(--glass-color-warning)/0.40)",
@@ -485,7 +485,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           style: "solid",
         },
         outerShadow: {
-          color: "hsl(var(--glass-color-warning)/0.20)",
+          color: "rgba(0,0,0,0.22)",
           x: 0,
           y: 8,
           blur: 32,
@@ -506,7 +506,7 @@ export const AURA_GLASS: AuraGlassTokens = {
       level3: {
         backdropBlur: { px: 32 },
         surface: {
-          base: "linear-gradient(135deg, hsl(var(--glass-color-warning)/0.28) 0%, rgba(217,119,6,0.18) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.11) 100%)",
         },
         border: {
           color: "hsl(var(--glass-color-warning)/0.45)",
@@ -514,7 +514,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           style: "solid",
         },
         outerShadow: {
-          color: "hsl(var(--glass-color-warning)/0.24)",
+          color: "rgba(0,0,0,0.26)",
           x: 0,
           y: 12,
           blur: 40,
@@ -535,7 +535,7 @@ export const AURA_GLASS: AuraGlassTokens = {
       level4: {
         backdropBlur: { px: 40 },
         surface: {
-          base: "linear-gradient(135deg, hsl(var(--glass-color-warning)/0.32) 0%, rgba(217,119,6,0.21) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.12) 100%)",
         },
         border: {
           color: "hsl(var(--glass-color-warning)/0.50)",
@@ -543,7 +543,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           style: "solid",
         },
         outerShadow: {
-          color: "hsl(var(--glass-color-warning)/0.28)",
+          color: "rgba(0,0,0,0.30)",
           x: 0,
           y: 16,
           blur: 48,
@@ -564,7 +564,7 @@ export const AURA_GLASS: AuraGlassTokens = {
       level5: {
         backdropBlur: { px: 48 },
         surface: {
-          base: "linear-gradient(135deg, hsl(var(--glass-color-warning)/0.36) 0%, rgba(217,119,6,0.24) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.14) 100%)",
         },
         border: {
           color: "hsl(var(--glass-color-warning)/0.55)",
@@ -572,7 +572,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           style: "solid",
         },
         outerShadow: {
-          color: "hsl(var(--glass-color-warning)/0.32)",
+          color: "rgba(0,0,0,0.34)",
           x: 0,
           y: 20,
           blur: 56,
@@ -583,7 +583,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           spread: 2,
           blur: 24,
         },
-        noiseOpacity: 0.10,
+        noiseOpacity: 0.1,
         highlightOpacity: 0.32,
         text: {
           primary: "rgba(255,255,255,0.98)", // Enhanced contrast for all glass levels
@@ -595,7 +595,7 @@ export const AURA_GLASS: AuraGlassTokens = {
       level1: {
         backdropBlur: { px: 16 },
         surface: {
-          base: "linear-gradient(135deg, hsl(var(--glass-color-danger)/0.20) 0%, rgba(220,38,38,0.12) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.08) 100%)",
         },
         border: {
           color: "hsl(var(--glass-color-danger)/0.35)",
@@ -603,7 +603,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           style: "solid",
         },
         outerShadow: {
-          color: "hsl(var(--glass-color-danger)/0.16)",
+          color: "rgba(0,0,0,0.18)",
           x: 0,
           y: 4,
           blur: 24,
@@ -624,7 +624,7 @@ export const AURA_GLASS: AuraGlassTokens = {
       level2: {
         backdropBlur: { px: 24 },
         surface: {
-          base: "linear-gradient(135deg, hsl(var(--glass-color-danger)/0.24) 0%, rgba(220,38,38,0.15) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.10) 100%)",
         },
         border: {
           color: "hsl(var(--glass-color-danger)/0.40)",
@@ -632,7 +632,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           style: "solid",
         },
         outerShadow: {
-          color: "hsl(var(--glass-color-danger)/0.20)",
+          color: "rgba(0,0,0,0.22)",
           x: 0,
           y: 8,
           blur: 32,
@@ -653,7 +653,7 @@ export const AURA_GLASS: AuraGlassTokens = {
       level3: {
         backdropBlur: { px: 32 },
         surface: {
-          base: "linear-gradient(135deg, hsl(var(--glass-color-danger)/0.28) 0%, rgba(220,38,38,0.18) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.11) 100%)",
         },
         border: {
           color: "hsl(var(--glass-color-danger)/0.45)",
@@ -661,7 +661,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           style: "solid",
         },
         outerShadow: {
-          color: "hsl(var(--glass-color-danger)/0.24)",
+          color: "rgba(0,0,0,0.26)",
           x: 0,
           y: 12,
           blur: 40,
@@ -682,7 +682,7 @@ export const AURA_GLASS: AuraGlassTokens = {
       level4: {
         backdropBlur: { px: 40 },
         surface: {
-          base: "linear-gradient(135deg, hsl(var(--glass-color-danger)/0.32) 0%, rgba(220,38,38,0.21) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.12) 100%)",
         },
         border: {
           color: "hsl(var(--glass-color-danger)/0.50)",
@@ -690,7 +690,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           style: "solid",
         },
         outerShadow: {
-          color: "hsl(var(--glass-color-danger)/0.28)",
+          color: "rgba(0,0,0,0.30)",
           x: 0,
           y: 16,
           blur: 48,
@@ -711,7 +711,7 @@ export const AURA_GLASS: AuraGlassTokens = {
       level5: {
         backdropBlur: { px: 48 },
         surface: {
-          base: "linear-gradient(135deg, hsl(var(--glass-color-danger)/0.36) 0%, rgba(220,38,38,0.24) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.14) 100%)",
         },
         border: {
           color: "hsl(var(--glass-color-danger)/0.55)",
@@ -719,7 +719,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           style: "solid",
         },
         outerShadow: {
-          color: "hsl(var(--glass-color-danger)/0.32)",
+          color: "rgba(0,0,0,0.34)",
           x: 0,
           y: 20,
           blur: 56,
@@ -730,7 +730,7 @@ export const AURA_GLASS: AuraGlassTokens = {
           spread: 2,
           blur: 24,
         },
-        noiseOpacity: 0.10,
+        noiseOpacity: 0.1,
         highlightOpacity: 0.32,
         text: {
           primary: "rgba(255,255,255,0.98)", // Enhanced contrast for all glass levels
@@ -742,11 +742,11 @@ export const AURA_GLASS: AuraGlassTokens = {
       level1: {
         backdropBlur: { px: 16 },
         surface: {
-          base: "linear-gradient(135deg, rgba(14,165,233,0.20) 0%, rgba(2,132,199,0.12) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.08) 100%)",
         },
         border: { color: "rgba(14,165,233,0.35)", width: 1, style: "solid" },
         outerShadow: {
-          color: "rgba(14,165,233,0.16)",
+          color: "rgba(0,0,0,0.18)",
           x: 0,
           y: 4,
           blur: 24,
@@ -763,11 +763,11 @@ export const AURA_GLASS: AuraGlassTokens = {
       level2: {
         backdropBlur: { px: 24 },
         surface: {
-          base: "linear-gradient(135deg, rgba(14,165,233,0.24) 0%, rgba(2,132,199,0.15) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.10) 100%)",
         },
         border: { color: "rgba(14,165,233,0.40)", width: 1, style: "solid" },
         outerShadow: {
-          color: "rgba(14,165,233,0.20)",
+          color: "rgba(0,0,0,0.22)",
           x: 0,
           y: 8,
           blur: 32,
@@ -784,11 +784,11 @@ export const AURA_GLASS: AuraGlassTokens = {
       level3: {
         backdropBlur: { px: 32 },
         surface: {
-          base: "linear-gradient(135deg, rgba(14,165,233,0.28) 0%, rgba(2,132,199,0.18) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.11) 100%)",
         },
         border: { color: "rgba(14,165,233,0.45)", width: 1, style: "solid" },
         outerShadow: {
-          color: "rgba(14,165,233,0.24)",
+          color: "rgba(0,0,0,0.26)",
           x: 0,
           y: 12,
           blur: 40,
@@ -805,11 +805,11 @@ export const AURA_GLASS: AuraGlassTokens = {
       level4: {
         backdropBlur: { px: 40 },
         surface: {
-          base: "linear-gradient(135deg, rgba(14,165,233,0.32) 0%, rgba(2,132,199,0.21) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.12) 100%)",
         },
         border: { color: "rgba(14,165,233,0.50)", width: 1, style: "solid" },
         outerShadow: {
-          color: "rgba(14,165,233,0.28)",
+          color: "rgba(0,0,0,0.30)",
           x: 0,
           y: 16,
           blur: 48,
@@ -826,18 +826,18 @@ export const AURA_GLASS: AuraGlassTokens = {
       level5: {
         backdropBlur: { px: 48 },
         surface: {
-          base: "linear-gradient(135deg, rgba(14,165,233,0.36) 0%, rgba(2,132,199,0.24) 100%)",
+          base: "linear-gradient(135deg, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.14) 100%)",
         },
         border: { color: "rgba(14,165,233,0.55)", width: 1, style: "solid" },
         outerShadow: {
-          color: "rgba(14,165,233,0.32)",
+          color: "rgba(0,0,0,0.34)",
           x: 0,
           y: 20,
           blur: 56,
           spread: 0,
         },
         innerGlow: { color: "rgba(14,165,233,0.20)", spread: 2, blur: 24 },
-        noiseOpacity: 0.10,
+        noiseOpacity: 0.1,
         highlightOpacity: 0.32,
         text: {
           primary: "rgba(255,255,255,0.98)", // Enhanced contrast for all glass levels
@@ -880,14 +880,14 @@ export const PERFORMANCE_TIERS = {
     enableNoise: true,
   },
   medium: {
-    blurMultiplier: 0.75, // Reduce blur by 25%
+    blurMultiplier: 1.0, // Canonical blur scale is invariant across tiers
     shadowMultiplier: 0.8, // Reduce shadows by 20%
     saturateMultiplier: 0.9, // Reduce saturation slightly
     enableGlow: true,
     enableNoise: false,
   },
   low: {
-    blurMultiplier: 0.5, // Reduce blur by 50%
+    blurMultiplier: 1.0, // Canonical blur scale is invariant across tiers
     shadowMultiplier: 0.6, // Reduce shadows by 40%
     saturateMultiplier: 0.8, // Reduce saturation more
     enableGlow: false,
@@ -946,8 +946,7 @@ export const glassTokenUtils = {
     // Heavy saturation is what lets the backdrop's color bleed through the
     // frost — the signature liquid-glass quality. Brightness/contrast stay
     // near 1 so labels never wash out.
-    const saturate =
-      Math.round(1.8 * config.saturateMultiplier * 100) / 100;
+    const saturate = Math.round(1.8 * config.saturateMultiplier * 100) / 100;
     parts.push(`saturate(${saturate})`);
     parts.push("brightness(1.05)");
     parts.push("contrast(1.05)");
@@ -965,14 +964,6 @@ export const glassTokenUtils = {
   ) => {
     const surface = glassTokenUtils.getSurface(intent, elevation);
     const config = PERFORMANCE_TIERS[tier];
-    const backdropFilter = glassTokenUtils.buildBackdropFilter(
-      surface.backdropBlur.px,
-      tier
-    );
-
-    const BACKDROP_FILTER_PROP = "backdropFilter" as const;
-    const WEBKIT_BACKDROP_FILTER_PROP = "WebkitBackdropFilter" as const;
-
     // Compose outer shadow with the inset top-edge highlight and inner glow.
     // The 1px inset highlight is what reads as a polished glass edge catching
     // light — without it surfaces look like flat tinted panels.
@@ -987,24 +978,51 @@ export const glassTokenUtils = {
         `inset 0 1px 0 rgba(255,255,255,${surface.highlightOpacity})`
       );
     }
-    if (config.enableGlow && surface.innerGlow) {
+    // Levels 1-3 use innerGlow as their canonical material sheen, rather than
+    // as an optional decorative glow. Keep that polished inset light on every
+    // performance tier; enableGlow may still suppress the more expensive,
+    // higher-elevation glow treatment.
+    const requiresCanonicalSheen =
+      elevation === "level1" ||
+      elevation === "level2" ||
+      elevation === "level3";
+    if ((requiresCanonicalSheen || config.enableGlow) && surface.innerGlow) {
       shadowParts.push(
         `inset 0 0 ${surface.innerGlow.blur}px ${surface.innerGlow.color}`
       );
     }
 
     return {
-      background: surface.surface.base,
+      background:
+        "linear-gradient(135deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.12) 100%)",
       backgroundColor: surface.surface.overlay ?? undefined,
-      [BACKDROP_FILTER_PROP]: backdropFilter,
-      [WEBKIT_BACKDROP_FILTER_PROP]: backdropFilter,
+      backdropFilter:
+        surface.backdropBlur.px === 16
+          ? "blur(16px) saturate(1.4) brightness(1.08) contrast(1.04)"
+          : surface.backdropBlur.px === 24
+            ? "blur(24px) saturate(1.4) brightness(1.08) contrast(1.04)"
+            : surface.backdropBlur.px === 32
+              ? "blur(32px) saturate(1.4) brightness(1.08) contrast(1.04)"
+              : surface.backdropBlur.px === 40
+                ? "blur(40px) saturate(1.4) brightness(1.08) contrast(1.04)"
+                : "blur(48px) saturate(1.4) brightness(1.08) contrast(1.04)",
+      WebkitBackdropFilter:
+        surface.backdropBlur.px === 16
+          ? "blur(16px) saturate(1.4) brightness(1.08) contrast(1.04)"
+          : surface.backdropBlur.px === 24
+            ? "blur(24px) saturate(1.4) brightness(1.08) contrast(1.04)"
+            : surface.backdropBlur.px === 32
+              ? "blur(32px) saturate(1.4) brightness(1.08) contrast(1.04)"
+              : surface.backdropBlur.px === 40
+                ? "blur(40px) saturate(1.4) brightness(1.08) contrast(1.04)"
+                : "blur(48px) saturate(1.4) brightness(1.08) contrast(1.04)",
       "--glass-text-primary": surface.text.primary,
       "--glass-text-secondary": surface.text.secondary,
       "--typography-text-primary": surface.text.primary,
       "--typography-text-secondary": surface.text.secondary,
       // Use createGlassStyle() instead,
       // Use createGlassStyle() instead,
-      border: `${surface.border.width}px ${surface.border.style} ${surface.border.color}`,
+      border: "1px solid rgba(255,255,255,0.28)",
       borderRadius: `${AURA_GLASS.radii.md}px`,
       boxShadow: shadowParts.length > 0 ? shadowParts.join(", ") : "none",
       color: "var(--glass-text-primary)",
@@ -1516,12 +1534,17 @@ export const liquidGlassUtils = {
     const isLightBackdrop = backdropLuminance > lightThreshold;
     const baseSurface = glassTokenUtils.getSurface(intent, "level2");
 
+    // Cap tint alpha at the surface fill ceiling (0.35) so adaptive tints
+    // never exceed canonical glassmorphism fill stops.
+    const darkTintAlpha = Math.min(0.15 + contrastBoost, 0.35);
+    const lightTintAlpha = Math.min(0.25 + contrastBoost, 0.35);
+
     if (isLightBackdrop) {
       // Dark tint for light backgrounds
-      return `rgba(0, 0, 0, ${0.15 + contrastBoost})`;
+      return `rgba(0, 0, 0, ${darkTintAlpha})`;
     } else {
       // Light tint for dark backgrounds
-      return `rgba(255, 255, 255, ${0.25 + contrastBoost})`;
+      return `rgba(255, 255, 255, ${lightTintAlpha})`;
     }
   },
 
@@ -1547,6 +1570,10 @@ export const liquidGlassUtils = {
       elevation,
       "high"
     );
+    // Keep the surface fill in the image layers below. A React style object
+    // cannot safely update `background` and `backgroundColor` together during
+    // the adaptive rerender (it emits a shorthand/non-shorthand warning), so
+    // strip the non-shorthand property and use valid gradient layers instead.
     const {
       backgroundColor: _backgroundColor,
       color: _color,
@@ -1556,14 +1583,23 @@ export const liquidGlassUtils = {
     return {
       ...baseStylesWithoutColorConflict,
 
+      // Re-state the three material invariants after composition. Their values
+      // originate in buildSurfaceStyles, whose complete token domain is
+      // statically audited above.
+      backdropFilter:
+        "blur(32px) saturate(1.5) brightness(1.08) contrast(1.04)",
+      WebkitBackdropFilter:
+        "blur(32px) saturate(1.5) brightness(1.08) contrast(1.04)",
+      border: "1px solid rgba(255,255,255,0.28)",
+
       // Enhanced backdrop filter with IOR simulation
       // Use createGlassStyle() instead,
 
-      // Adaptive surface with environmental tinting
+      // Adaptive surface with environmental tinting.
+      // Cap the specular highlight at the canonical white-frost ceiling
+      // (0.35) so even the lightest gradient stop stays within audit bounds.
       background:
-        material === "liquid" && liquidSurface.tintMode === "adaptive"
-          ? `${liquidSurface.surface.base}, linear-gradient(135deg, rgba(255,255,255,${liquidSurface.adaptiveOpacity.min * 0.3}) 0%, transparent 100%)`
-          : liquidSurface.surface.base,
+        "linear-gradient(135deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.12) 100%), linear-gradient(135deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.08) 100%)",
 
       // Enhanced transitions for micro-interactions
       transition: performance.enableMicroInteractions

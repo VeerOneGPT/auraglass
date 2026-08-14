@@ -46,8 +46,12 @@ export default meta;
 type Story = StoryObj<typeof GlassLinkButton>;
 
 export const Default: Story = {
+  render: (args) => (
+    <div className="glass-neutral-level1 glass-rounded-3xl glass-p-8">
+      <GlassLinkButton {...args}>GlassLinkButton</GlassLinkButton>
+    </div>
+  ),
   args: {
-    children: 'GlassLinkButton',
     href: '#',
   },
 };

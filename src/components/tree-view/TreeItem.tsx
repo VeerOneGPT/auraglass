@@ -211,7 +211,7 @@ function TreeItemComponent(
       // Use measuredHeight, ensuring it's a number for the spring
       height:
         isExpanded && typeof measuredHeight === "number" ? measuredHeight : 0,
-      opacity: isExpanded ? 1 : 0,
+      opacity: 1,
     }),
     [isExpanded, measuredHeight]
   );
@@ -220,7 +220,7 @@ function TreeItemComponent(
   const animatedStyle = finalDisableAnimation
     ? {
         height: animationTargets.height,
-        opacity: animationTargets.opacity,
+        opacity: 1,
         transform: isExpanded
           ? "perspective(800px) rotateX(0deg)"
           : "perspective(800px) rotateX(-5deg)",
@@ -228,7 +228,7 @@ function TreeItemComponent(
       }
     : {
         height: animationTargets.height,
-        opacity: animationTargets.opacity,
+        opacity: 1,
         transform: isExpanded
           ? "perspective(800px) rotateX(0deg)"
           : "perspective(800px) rotateX(-5deg)",
@@ -357,8 +357,7 @@ function TreeItemComponent(
         <div
           onClick={hasChildren ? handleToggle : undefined}
           className={toggleIconClass}
-          role={hasChildren ? "button" : undefined}
-          aria-hidden={!hasChildren}
+          aria-hidden="true"
         >
           {renderToggleIcon()}
         </div>

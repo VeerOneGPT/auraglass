@@ -505,9 +505,9 @@ const GlassWipeSliderComponent = ({
   // Memoized handle size variants to prevent recreation
   const handleSizes = React.useMemo(
     () => ({
-      sm: "w-10 h-10",
-      md: "w-12 h-12",
-      lg: "w-14 glass-h-14",
+      sm: "glass-w-10 glass-h-10",
+      md: "glass-w-12 glass-h-12",
+      lg: "glass-w-14 glass-h-14",
     }),
     []
   );
@@ -525,6 +525,15 @@ const GlassWipeSliderComponent = ({
   // Memoized dynamic styles based on props
   const containerStyles = React.useMemo(
     () => ({
+      position: "relative" as const,
+      // A percentage inside CSS min() has no definite basis when this
+      // component is mounted in a shrink-to-fit story or popover. That made
+      // the comparison surface collapse to its 2px border. Own a definite
+      // fluid width and constrain it independently instead.
+      width: "100%",
+      minWidth: 0,
+      boxSizing: "border-box" as const,
+      overflow: "hidden",
       height:
         typeof effectiveHeight === "string"
           ? effectiveHeight
@@ -535,7 +544,7 @@ const GlassWipeSliderComponent = ({
           : `${minHeight}px`
         : undefined,
       maxHeight: resolvedMaxHeight ?? (bounded ? "220px" : undefined),
-      maxWidth: resolvedMaxWidth ?? (bounded ? "320px" : undefined),
+      maxWidth: resolvedMaxWidth ?? (bounded ? "320px" : "48rem"),
     }),
     [effectiveHeight, minHeight, resolvedMaxHeight, resolvedMaxWidth, bounded]
   );
@@ -569,7 +578,7 @@ const GlassWipeSliderComponent = ({
     <div
       ref={containerRef}
       className={cn(
-        "relative w-full overflow-hidden glass-radius-lg select-none glass-card-motion-aware",
+        "glass-relative glass-w-full glass-overflow-hidden glass-radius-lg glass-card-motion-aware glass-border glass-border-subtle",
         bounded && "glass-w-full",
         cursorClass,
         {
@@ -606,7 +615,10 @@ const GlassWipeSliderComponent = ({
       {...containerProps}
     >
       {/* Before content (background layer) */}
-      <div className="glass-absolute glass-inset-0 glass-w-full glass-h-full">
+      <div
+        className="glass-absolute glass-inset-0 glass-w-full glass-h-full"
+        style={{ width: "100%", height: "100%" }}
+      >
         {beforeContent}
       </div>
 
@@ -635,8 +647,7 @@ const GlassWipeSliderComponent = ({
                   right: 0,
                   height: "20px",
                   transform: "translateY(-50%)",
-                  background:
-                    "var(--glass-primary-level2-surface)",
+                  background: "var(--glass-primary-level2-surface)",
                 }
               : {
                   left: `${position}%`,
@@ -644,8 +655,7 @@ const GlassWipeSliderComponent = ({
                   bottom: 0,
                   width: "20px",
                   transform: "translateX(-50%)",
-                  background:
-                    "var(--glass-primary-level2-surface)",
+                  background: "var(--glass-primary-level2-surface)",
                 }),
             opacity: isHovered || isDragging ? 0.5 : 0.2,
           }}
@@ -655,21 +665,13 @@ const GlassWipeSliderComponent = ({
       {/* Glass divider line */}
       <div
         className={cn(
-          `absolute glass-backdrop-blur-md shadow-lg transition-all duration-[${ANIMATION.DURATION.fast}ms] ease-out`,
+          `glass-absolute glass-backdrop-blur-md glass-shadow-lg glass-transition-all glass-duration-[${ANIMATION.DURATION.fast}ms] glass-ease-out`,
           {
             // Horizontal orientation
-            "top-0 bottom-0 bg-gradient-to-b from-white/40 via-white/60 to-white/40":
-              !isVertical,
-            "w-0.5": !isVertical && trackStyle === "minimal",
-            "w-1": !isVertical && trackStyle === "default",
-            "w-2": !isVertical && trackStyle === "bold",
+            "glass-top-0 glass-bottom-0": !isVertical,
 
             // Vertical orientation
-            "left-0 right-0 bg-gradient-to-r from-white/40 via-white/60 to-white/40":
-              isVertical,
-            "h-0.5": isVertical && trackStyle === "minimal",
-            "h-1": isVertical && trackStyle === "default",
-            "h-2": isVertical && trackStyle === "bold",
+            "glass-left-0 glass-right-0": isVertical,
           }
         )}
         style={{
@@ -677,37 +679,45 @@ const GlassWipeSliderComponent = ({
             ? {
                 top: `${position}%`,
                 transform: "translateY(-50%)",
+                height:
+                  trackStyle === "minimal" ? 2 : trackStyle === "bold" ? 8 : 4,
+                background:
+                  "linear-gradient(90deg, rgba(255,255,255,.28), rgba(255,255,255,.14), rgba(255,255,255,.28))",
               }
             : {
                 left: `${position}%`,
                 transform: "translateX(-50%)",
+                width:
+                  trackStyle === "minimal" ? 2 : trackStyle === "bold" ? 8 : 4,
+                background:
+                  "linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.14), rgba(255,255,255,.28))",
               }),
           boxShadow:
             isDragging || isHovered
-              ? '0 0 20px ${glassStyles.borderColor || "hsl(var(--glass-color-primary)/0.6)"}'
-              : '0 0 10px ${glassStyles.borderColor || "var(--glass-bg-hover)"}',
+              ? "0 0 18px rgba(71,85,105,.28)"
+              : "0 0 10px rgba(71,85,105,.16)",
         }}
       >
         {/* Glass effect overlay */}
         <div
           className={cn(
-            "absolute inset-0",
+            "glass-absolute glass-inset-0",
             isVertical
-              ? "bg-gradient-to-t from-transparent via-white/20 to-transparent"
-              : "bg-gradient-to-r from-transparent via-white/20 to-transparent"
+              ? "glass-bg-gradient-to-t glass-from-transparent glass-via-white/20 glass-to-transparent"
+              : "glass-bg-gradient-to-r glass-from-transparent glass-via-white/20 glass-to-transparent"
           )}
         />
 
         {/* Active glow effect */}
         <div
           className={cn(
-            `absolute inset-0 transition-opacity duration-[${ANIMATION.DURATION.normal}ms]`,
-            isVertical
-              ? "bg-gradient-to-t from-cyan-500/20 via-blue-500/30 to-cyan-500/20"
-              : "bg-gradient-to-r from-cyan-500/20 via-blue-500/30 to-cyan-500/20"
+            `glass-absolute glass-inset-0 glass-transition-opacity glass-duration-[${ANIMATION.DURATION.normal}ms]`
           )}
           style={{
             opacity: isDragging || isHovered ? 0.8 : 0,
+            background: isVertical
+              ? "linear-gradient(0deg, rgba(255,255,255,.08), rgba(71,85,105,.22), rgba(255,255,255,.08))"
+              : "linear-gradient(90deg, rgba(255,255,255,.08), rgba(71,85,105,.22), rgba(255,255,255,.08))",
           }}
         />
       </div>
@@ -716,7 +726,7 @@ const GlassWipeSliderComponent = ({
       <motion.div
         ref={handleRef}
         className={cn(
-          "absolute cursor-grab glass-active-cursor-grabbing touch-target z-20",
+          "glass-absolute glass-cursor-grab glass-active-cursor-grabbing glass-touch-target glass-z-20",
           handleSizes?.[effectiveHandleSize],
           {
             "top-1/2 -translate-y-1/2": !isVertical,
@@ -744,10 +754,10 @@ const GlassWipeSliderComponent = ({
           animate: {
             boxShadow:
               isDragging || isFocused
-                ? '0 0 30px ${glassStyles.borderColor || "hsl(var(--glass-color-primary)/0.6)"}'
+                ? "0 0 26px rgba(71,85,105,.3)"
                 : isHovered
                   ? "0 0 25px var(--glass-border-default)"
-                  : '0 0 20px ${glassStyles.borderColor || "var(--glass-bg-hover)"}',
+                  : "0 0 18px rgba(71,85,105,.18)",
           },
         })}
         transition={getTransition(duration / 1000)}
@@ -778,19 +788,24 @@ const GlassWipeSliderComponent = ({
 
           {/* Multi-layer glow effects */}
           <div
-            className={`glass-absolute glass-inset-0 glass-radius-full glass-gradient-primary glass-gradient-primary glass-gradient-primary glass-opacity-0 glass-group-glass-hover-opacity-100 glass-transition-opacity glass-duration-[${ANIMATION.DURATION.normal}ms]`}
+            className={`glass-absolute glass-inset-0 glass-radius-full glass-opacity-0 glass-group-glass-hover-opacity-100 glass-transition-opacity glass-duration-[${ANIMATION.DURATION.normal}ms]`}
+            style={{ background: "rgba(255,255,255,.2)" }}
           />
 
           <div
-            className={`glass-absolute glass-inset-0 glass-radius-full glass-gradient-primary glass-gradient-primary glass-gradient-primary glass-transition-opacity glass-duration-[${ANIMATION.DURATION.fast}ms]`}
+            className={`glass-absolute glass-inset-0 glass-radius-full glass-transition-opacity glass-duration-[${ANIMATION.DURATION.fast}ms]`}
             style={{
               opacity: isDragging ? 0.7 : 0,
+              background: "rgba(71,85,105,.16)",
             }}
           />
 
           {/* Focus ring */}
           {isFocused && (
-            <div className="glass-absolute glass--inset-1 glass-radius-full glass-border-2 glass-border-blue/50 glass-animate-pulse" />
+            <div
+              className="glass-absolute glass--inset-1 glass-radius-full glass-border-2 glass-animate-pulse"
+              style={{ borderColor: "rgba(71,85,105,.58)" }}
+            />
           )}
 
           {/* Ripple effect for interactions */}
@@ -808,12 +823,12 @@ const GlassWipeSliderComponent = ({
       {effectiveShowLabels && (
         <>
           <motion.div
-            className={cn(
-              "absolute chip chip-muted glass-text-sm pointer-events-none z-10",
+            className="glass-absolute chip chip-muted glass-text-sm glass-pointer-events-none glass-z-10"
+            style={
               isVertical
-                ? "top-4 left-1/2 transform -translate-x-1/2"
-                : "top-4 left-4"
-            )}
+                ? { top: 16, left: "50%", transform: "translateX(-50%)" }
+                : { top: 16, left: 16 }
+            }
             {...getAnimationProps({
               initial: { opacity: 0, scale: 0.9 },
               animate: { opacity: 1, scale: 1 },
@@ -829,12 +844,12 @@ const GlassWipeSliderComponent = ({
           </motion.div>
 
           <motion.div
-            className={cn(
-              "absolute chip chip-muted glass-text-sm pointer-events-none z-10",
+            className="glass-absolute chip chip-muted glass-text-sm glass-pointer-events-none glass-z-10"
+            style={
               isVertical
-                ? "bottom-4 left-1/2 transform -translate-x-1/2"
-                : "top-4 right-4"
-            )}
+                ? { bottom: 16, left: "50%", transform: "translateX(-50%)" }
+                : { top: 16, right: 16 }
+            }
             {...getAnimationProps({
               initial: { opacity: 0, scale: 0.9 },
               animate: { opacity: 1, scale: 1 },
@@ -854,12 +869,12 @@ const GlassWipeSliderComponent = ({
       {/* Progress indicator */}
       {effectiveShowProgress && (
         <motion.div
-          className={cn(
-            "absolute chip chip-muted glass-text-xs pointer-events-none z-10",
+          className="glass-absolute chip chip-muted glass-text-xs glass-pointer-events-none glass-z-10"
+          style={
             isVertical
-              ? "bottom-4 right-4"
-              : "bottom-4 left-1/2 transform -translate-x-1/2"
-          )}
+              ? { bottom: 16, right: 16 }
+              : { bottom: 16, left: "50%", transform: "translateX(-50%)" }
+          }
           {...getAnimationProps({
             initial: { opacity: 0, y: 10 },
             animate: { opacity: 1, y: 0 },
@@ -883,21 +898,19 @@ const GlassWipeSliderComponent = ({
           {Object.entries(SLIDER_PRESETS).map(([key, value]) => (
             <div
               key={key}
-              className={cn(
-                "absolute w-2 h-2 glass-radius-full bg-white/30 glass-backdrop-blur-md border border-white/20 transition-all duration-200",
-                Math.abs(position - value) <= snapThreshold
-                  ? "glass-surface-primary/60 scale-125"
-                  : ""
-              )}
+              className="glass-absolute glass-w-2 glass-h-2 glass-radius-full glass-backdrop-blur-md glass-border glass-border-soft glass-transition-all glass-duration-200"
               style={{
+                background: "rgba(255, 255, 255, 0.24)",
+                scale:
+                  Math.abs(position - value) <= snapThreshold ? "1.25" : "1",
                 ...(isVertical
                   ? {
-                      top: `${value}%`,
+                      top: `clamp(4px, ${value}%, calc(100% - 4px))`,
                       left: "50%",
                       transform: "translateX(-50%) translateY(-50%)",
                     }
                   : {
-                      left: `${value}%`,
+                      left: `clamp(4px, ${value}%, calc(100% - 4px))`,
                       top: "50%",
                       transform: "translateX(-50%) translateY(-50%)",
                     }),

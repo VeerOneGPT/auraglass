@@ -31,7 +31,7 @@ const CoreGallery = () => (
 );
 
 const styles: Record<string, React.CSSProperties> = {
-  page: { minHeight: '100dvh', padding: 32, color: '#0f172a', boxSizing: 'border-box', background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 46%, #ecfdf5 100%)' },
+  page: { minHeight: '100dvh', padding: 32, color: '#0f172a', boxSizing: 'border-box', background: 'linear-gradient(145deg, #ffffff 0%, #f3f5f7 48%, #e7ebef 100%)' },
   header: { maxWidth: 1120, margin: '0 auto 24px', display: 'grid', gap: 8 },
   kicker: { fontSize: 12, fontWeight: 800, letterSpacing: 0, textTransform: 'uppercase', color: '#0369a1' },
   title: { margin: 0, fontSize: 36, lineHeight: 1.08, letterSpacing: 0 },

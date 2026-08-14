@@ -71,7 +71,7 @@ export const HeatGlass = forwardRef<HTMLDivElement, HeatGlassProps>(
       blurStrength = "standard",
       borderRadius = "md",
       interactive = true,
-      heatColor = "rgba(255, 100, 50, 0.7)",
+      heatColor = "hsl(var(--glass-color-warning) / var(--glass-opacity-35))",
       animate = true,
       backgroundColor,
       ...rest
@@ -127,7 +127,7 @@ export const HeatGlass = forwardRef<HTMLDivElement, HeatGlassProps>(
         >
           <OptimizedGlass
             ref={ref}
-            intent="danger"
+            intent="neutral"
             elevation={getElevationLevel(elevation)}
             intensity={intensityMap[blurStrength]}
             depth={3}
@@ -161,6 +161,17 @@ export const HeatGlass = forwardRef<HTMLDivElement, HeatGlassProps>(
               className
             )}
             style={{
+              // The centered Storybook frame is shrink-to-fit; explicit
+              // token-backed dimensions keep HeatGlass a real surface rather
+              // than collapsing around an empty child.
+              // Do not derive the base size from 100%: a centered,
+              // shrink-to-fit parent with an empty child would make that
+              // percentage resolve to its own 34px min-content width.
+              width: "var(--glass-space-80, 20rem)",
+              minWidth: "var(--glass-space-48, 12rem)",
+              maxWidth: "100%",
+              minHeight: "var(--glass-space-24, 6rem)",
+              boxSizing: "border-box",
               // Heat glow box shadow
               boxShadow: `0 0 20px 5px ${heatColor}`,
               backgroundColor,

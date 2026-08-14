@@ -14,12 +14,12 @@
   --shadow-strong: 0 20px 56px rgba(0, 0, 0, 0.28);
   --shadow-glow: 0 0 24px hsl(var(--glass-color-primary) / 0.35);
 
-  /* Design blur levels (non-glass elements) */
-  --design-blur-xs: blur(6px);
-  --design-blur-sm: blur(var(--glass-blur-md));
-  --design-blur-md: blur(var(--glass-blur-lg));
-  --design-blur-lg: blur(var(--glass-blur-xl));
-  --design-blur-xl: blur(36px);
+  /* Canonical blur levels */
+  --design-blur-xs: blur(16px);
+  --design-blur-sm: blur(24px);
+  --design-blur-md: blur(32px);
+  --design-blur-lg: blur(40px);
+  --design-blur-xl: blur(48px);
 
   /* Gradient stops (semantic) */
   --grad-primary-from: #22d3ee; /* cyan-400 */
@@ -81,19 +81,24 @@
 }
 
 .design-blur-xs {
-  backdrop-filter: var(--design-blur-xs);
+  backdrop-filter: var(--design-blur-xs) var(--glass-filter-base);
+  -webkit-backdrop-filter: var(--design-blur-xs) var(--glass-filter-base);
 }
 .design-blur-sm {
-  backdrop-filter: var(--design-blur-sm);
+  backdrop-filter: var(--design-blur-sm) var(--glass-filter-base);
+  -webkit-backdrop-filter: var(--design-blur-sm) var(--glass-filter-base);
 }
 .design-blur-md {
-  backdrop-filter: var(--design-blur-md);
+  backdrop-filter: var(--design-blur-md) var(--glass-filter-base);
+  -webkit-backdrop-filter: var(--design-blur-md) var(--glass-filter-base);
 }
 .design-blur-lg {
-  backdrop-filter: var(--design-blur-lg);
+  backdrop-filter: var(--design-blur-lg) var(--glass-filter-base);
+  -webkit-backdrop-filter: var(--design-blur-lg) var(--glass-filter-base);
 }
 .design-blur-xl {
-  backdrop-filter: var(--design-blur-xl);
+  backdrop-filter: var(--design-blur-xl) var(--glass-filter-base);
+  -webkit-backdrop-filter: var(--design-blur-xl) var(--glass-filter-base);
 }
 
 /* REMOVED - No conflicts with unified glass system */

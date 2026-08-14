@@ -21,9 +21,8 @@ const TREE_COLOR_MAP: Record<
   { accent: string; highlight: string }
 > = {
   default: {
-    accent: "color-mix(in srgb, var(--glass-gray-50) 90%, transparent)",
-    highlight:
-      "color-mix(in srgb, hsl(var(--glass-color-primary)) 14%, transparent)",
+    accent: "rgba(15, 23, 42, 0.94)",
+    highlight: "rgba(255, 255, 255, 0.24)",
   },
   primary: {
     accent:
@@ -200,11 +199,8 @@ function TreeViewComponent(
   const containerVars = useMemo<React.CSSProperties>(
     () =>
       ({
-        "--tree-view-color": (TREE_COLOR_MAP[color] ?? TREE_COLOR_MAP.default)
-          .accent,
-        "--tree-view-selected-bg": (
-          TREE_COLOR_MAP[color] ?? TREE_COLOR_MAP.default
-        ).highlight,
+        "--tree-view-color": "rgba(15, 23, 42, 0.94)",
+        "--tree-view-selected-bg": "rgba(255, 255, 255, 0.24)",
       }) as React.CSSProperties,
     [color]
   );

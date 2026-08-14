@@ -16,29 +16,39 @@ export interface LiquidGlassBackdropSamplerProps
   onSample?: (sample: LiquidGlassBackdropSample) => void;
 }
 
-export const LiquidGlassBackdropSampler = forwardRef<HTMLDivElement, LiquidGlassBackdropSamplerProps>(
-  ({ children, onSample, ...options }, ref) => {
-    const localRef = useRef<HTMLDivElement>(null);
-    useImperativeHandle(ref, () => localRef.current as HTMLDivElement);
-    const sample = useLiquidGlassBackdrop(localRef, options);
+export const LiquidGlassBackdropSampler = forwardRef<
+  HTMLDivElement,
+  LiquidGlassBackdropSamplerProps
+>(({ children, onSample, className, style, ...options }, ref) => {
+  const localRef = useRef<HTMLDivElement>(null);
+  useImperativeHandle(ref, () => localRef.current as HTMLDivElement);
+  const sample = useLiquidGlassBackdrop(localRef, options);
 
-    React.useEffect(() => {
-      onSample?.(sample);
-    }, [onSample, sample]);
+  React.useEffect(() => {
+    onSample?.(sample);
+  }, [onSample, sample]);
 
-    const renderedChildren = typeof children === "function" ? children(sample) : children;
+  const renderedChildren =
+    typeof children === "function" ? children(sample) : children;
 
-    return (
-      <div
-        ref={localRef}
-        data-liquid-glass-backdrop-sampler="true"
-        data-contrast-hint={sample.contrastHint}
-        data-requires-dimming={sample.requiresDimming ? "true" : "false"}
-      >
-        {renderedChildren}
-      </div>
-    );
-  }
-);
+  return (
+    <div
+      ref={localRef}
+      className={["liquid-glass-backdrop-sampler", className]
+        .filter(Boolean)
+        .join(" ")}
+      style={{
+        color: "rgba(15, 23, 42, 0.94)",
+        boxShadow: "inset 0 0 8px rgba(255, 255, 255, 0.12)",
+        ...style,
+      }}
+      data-liquid-glass-backdrop-sampler="true"
+      data-contrast-hint={sample.contrastHint}
+      data-requires-dimming={sample.requiresDimming ? "true" : "false"}
+    >
+      {renderedChildren}
+    </div>
+  );
+});
 
 LiquidGlassBackdropSampler.displayName = "LiquidGlassBackdropSampler";

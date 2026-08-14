@@ -34,9 +34,7 @@ export type GlassAuditCertificationCoverage = GlassAuditCoverageMetric & {
   markdownReportPath: string;
 };
 
-export type GlassAuditGeneratedStoryCoverage = GlassAuditCoverageMetric & {
-  storyPath: string;
-};
+export type GlassAuditGeneratedStoryCoverage = GlassAuditCoverageMetric;
 
 export type GlassAuditPriorityGap = {
   severity: "Critical" | "High" | "Medium";
@@ -73,7 +71,6 @@ export const glassmorphismAuditCoverage = {
       covered: 0,
       total: 0,
       percent: 0,
-      storyPath: "src/stories/GlassMissingInventoryCertification.stories.tsx",
     } satisfies GlassAuditGeneratedStoryCoverage,
     directDocsCoverage: {
       covered: 356,

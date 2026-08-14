@@ -12,6 +12,7 @@ import { PageHeader } from "../../../components/layout/GlassAppShell";
 import { VStack, HStack } from "../../../components/layout/GlassStack";
 import { GlassCard } from "../../../components/card/GlassCard";
 import { cn } from "../../../lib/utilsComprehensive";
+import "../templateNeutral.css";
 
 export interface FormStep {
   id: string;
@@ -467,7 +468,7 @@ export const GlassFormTemplate = forwardRef<
       <div
         ref={ref}
         className={cn(
-          "w-full",
+          "w-full glass-template-neutral",
           isCompactMode
             ? "glass-auto-gap glass-auto-gap-md"
             : "glass-auto-gap glass-auto-gap-3xl",

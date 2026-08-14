@@ -14,7 +14,7 @@ const actions = [
 ];
 
 const meta: Meta<typeof SpeedDial> = {
-  title: 'Controls/Buttons/Speed Dial',
+  title: "Controls/Buttons/Speed Dial",
   component: SpeedDial,
   parameters: {
     layout: "fullscreen",
@@ -37,7 +37,15 @@ const meta: Meta<typeof SpeedDial> = {
     },
     color: {
       control: { type: "select" },
-      options: ["default", "primary", "secondary", "success", "warning", "error", "info"],
+      options: [
+        "default",
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+        "error",
+        "info",
+      ],
     },
   },
   args: {
@@ -47,6 +55,7 @@ const meta: Meta<typeof SpeedDial> = {
     color: "primary",
     glass: true,
     glassActions: true,
+    showBackdrop: false,
     showTooltips: true,
     ariaLabel: "Create or share",
     icon: <Plus size={22} aria-hidden="true" />,

@@ -169,7 +169,7 @@ const styles = {
     boxSizing: "border-box",
     color: "var(--glass-theme-text, #0f172a)",
     background:
-      "linear-gradient(135deg, #f8fafc 0%, #dbeafe 38%, #ecfdf5 100%)",
+      "linear-gradient(135deg, #ffffff 0%, #f5f6f7 48%, #eceef0 100%)",
   },
   header: {
     maxWidth: 1180,

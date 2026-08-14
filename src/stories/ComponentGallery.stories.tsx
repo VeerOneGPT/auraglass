@@ -80,7 +80,7 @@ const styles: Record<string, React.CSSProperties> = {
     padding: 32,
     boxSizing: 'border-box',
     color: '#0f172a',
-    background: 'linear-gradient(135deg, #f8fafc 0%, #dbeafe 48%, #ecfdf5 100%)',
+    background: 'linear-gradient(145deg, #ffffff 0%, #f3f5f7 48%, #e7ebef 100%)',
   },
   header: {
     maxWidth: 1180,

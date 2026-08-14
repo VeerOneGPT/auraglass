@@ -509,14 +509,21 @@
   overflow: hidden;
 }
 
-.glass-ripple::after {
+.glass-ripple:not(.glass-overlay-specular)::after {
   content: "";
   position: absolute;
   border-radius: 50%;
   background: var(--glass-bg-hover);
   transform: scale(0);
+  opacity: 0;
   animation: ripple-expand 0.6s ease-out;
+  animation-play-state: paused;
+  animation-timeline: auto;
   pointer-events: none;
+}
+
+.glass-ripple:not(.glass-overlay-specular):active::after {
+  animation-play-state: running;
 }
 
 /* Reduced Motion Support */

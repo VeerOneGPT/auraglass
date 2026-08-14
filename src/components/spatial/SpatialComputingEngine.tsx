@@ -584,11 +584,16 @@ export const SpatialComputingEngine: React.FC<SpatialComputingEngineProps> = ({
       ref={containerRef}
       className={`spatial-computing-container ${className}`}
       style={{
+        "--glass-theme-text": "rgba(15, 23, 42, 0.94)",
+        "--glass-theme-text-secondary": "rgba(15, 23, 42, 0.76)",
+        "--glass-theme-text-tertiary": "rgba(15, 23, 42, 0.64)",
+        "--glass-text-tertiary": "rgba(15, 23, 42, 0.64)",
+        color: "rgba(15, 23, 42, 0.94)",
         position: "relative",
         transformStyle: "preserve-3d",
         perspective: "1000px",
         ...transform3D,
-      }}
+      } as React.CSSProperties}
       animate={controls}
     >
       {/* Spatial bounds visualization */}

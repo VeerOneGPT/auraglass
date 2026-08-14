@@ -28,7 +28,7 @@ const shellStyle = {
   overflowY: "auto",
   color: "#102033",
   background:
-    "linear-gradient(135deg, #f8fafc 0%, #eaf3ff 34%, #f4fbf7 100%)",
+    "linear-gradient(135deg, #ffffff 0%, #f5f6f7 48%, #eceef0 100%)",
 } satisfies CSSProperties;
 
 const pageStyle = {

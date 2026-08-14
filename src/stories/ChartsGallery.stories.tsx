@@ -38,7 +38,7 @@ const styles: Record<string, React.CSSProperties> = {
     minHeight: '100dvh',
     padding: '32px',
     color: '#0f172a',
-    background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 46%, #ecfdf5 100%)',
+    background: 'linear-gradient(145deg, #ffffff 0%, #f3f5f7 46%, #e7ebef 100%)',
     boxSizing: 'border-box',
   },
   header: { maxWidth: 1120, margin: '0 auto 24px', display: 'grid', gap: 8 },

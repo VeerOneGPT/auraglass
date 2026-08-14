@@ -1,4 +1,4 @@
-'use client';
+"use client";
 /**
  * WidgetGlass Component
  *
@@ -118,7 +118,7 @@ export const WidgetGlass = React.memo(
       return (
         <Motion
           preset={shouldAnimate ? "bounceIn" : "none"}
-          className='glass-relative'
+          className="glass-relative"
         >
           <OptimizedGlass
             ref={ref}
@@ -142,8 +142,7 @@ export const WidgetGlass = React.memo(
               widgetType === "panel" &&
                 "bg-gradient-to-r from-white/8 to-white/12",
               widgetType === "container" && "bg-white/5",
-              widgetType === "overlay" &&
-                "bg-white/20 glass-backdrop-blur",
+              widgetType === "overlay" && "bg-white/20 glass-backdrop-blur",
 
               // Size
               fullWidth && "w-full",
@@ -199,10 +198,9 @@ export const WidgetGlass = React.memo(
             {/* Widget highlight overlay */}
             {highlightOnHover && isHovered && interactive && (
               <div
-                className='glass-absolute glass-inset-0 glass-pointer-events-none glass-radius-inherit glass-transition-opacity glass-duration-200'
+                className="glass-absolute glass-inset-0 glass-pointer-events-none glass-radius-inherit glass-transition-opacity glass-duration-200"
                 style={{
-                  background:
-                    "var(--glass-primary-level2-surface)",
+                  background: "var(--glass-primary-level2-surface)",
                   opacity: 0.6,
                 }}
               />
@@ -211,9 +209,9 @@ export const WidgetGlass = React.memo(
             {/* Pulse animation for high priority widgets */}
             {priority === "high" && shouldAnimate && (
               <div
-                className='glass-absolute glass-inset-0 glass-pointer-events-none glass-radius-inherit glass-animate-pulse'
+                className="glass-absolute glass-inset-0 glass-pointer-events-none glass-radius-inherit glass-animate-pulse"
                 style={{
-                  boxShadow: "0 0 0 2px rgba(99, 102, 241, 0.2)",
+                  boxShadow: "0 0 0 2px rgba(80, 80, 80, 0.16)",
                   opacity: isHovered ? 0.6 : 0.3,
                   transition: "opacity 300ms ease",
                 }}
@@ -221,7 +219,7 @@ export const WidgetGlass = React.memo(
             )}
 
             {/* Content */}
-            <div className='glass-relative glass-z-10'>{children}</div>
+            <div className="glass-relative glass-z-10">{children}</div>
           </OptimizedGlass>
         </Motion>
       );

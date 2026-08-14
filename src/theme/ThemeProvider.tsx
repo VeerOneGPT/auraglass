@@ -115,6 +115,19 @@ const PERSONA_STORAGE_KEY = "glass-ui-persona-id";
 const isPersonaId = (value: string): value is PersonaId =>
   Object.prototype.hasOwnProperty.call(DESIGN_MATRIX, value);
 
+/**
+ * Canonical Aura glass theme id emitted into data-aura-theme.
+ *
+ * The token manifest (tokens/index.json) defines exactly one canonical persona
+ * ("auraglass-default") whose CSS block in variables.css carries the full Aura
+ * glass token surface (backdrop blur, fills, borders, shadows). Runtime
+ * personas from the design matrix are appearance/semantic variations and are
+ * preserved separately on data-persona. Writing the persona id into
+ * data-aura-theme leaves the canonical glass variables undefined, which breaks
+ * backdrop-filter and glass fills for every CSS-module surface.
+ */
+const AURA_THEME_ATTR_VALUE = "auraglass-default";
+
 const LEGACY_THEME_VARIANT_TO_PERSONA: Record<string, PersonaId | null> = {
   default: DEFAULT_PERSONA_ID,
   compact: "midnight-meridian",
@@ -737,9 +750,10 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
     if (isolateTheme) {
       const host = themeHostRef.current;
       if (host) {
-        host.setAttribute("data-aura-theme", resolvedPersonaId);
+        host.setAttribute("data-aura-theme", AURA_THEME_ATTR_VALUE);
         host.setAttribute("data-aura-mode", resolvedMode);
         host.setAttribute("data-theme", resolvedMode);
+        host.setAttribute("data-persona", resolvedPersonaId);
         host.classList.toggle("dark", resolvedMode === "dark");
       }
       return;
@@ -757,7 +771,7 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
     const previousDataTheme = el.getAttribute("data-theme");
     const hadDarkClass = el.classList.contains("dark");
 
-    el.setAttribute("data-aura-theme", resolvedPersonaId);
+    el.setAttribute("data-aura-theme", AURA_THEME_ATTR_VALUE);
     el.setAttribute("data-aura-mode", resolvedMode);
     el.setAttribute("data-theme", resolvedMode);
     el.setAttribute("data-persona", resolvedPersonaId);
@@ -920,12 +934,14 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
       const glowValue = getGlowIntensity("medium");
 
       // Build styles based on glass variant
+      // The material itself is intentionally invariant across theme modes:
+      // themes may change content/accent color, never the neutral glass fill.
       const baseStyles = `
       position: relative;
-      background-color: ${backgroundColor};
-      backdrop-filter: blur(${blurValue});
-      -webkit-backdrop-filter: blur(${blurValue});
-      border: 1px solid ${borderColor};
+      background-color: rgba(255, 255, 255, 0.20);
+      backdrop-filter: blur(24px) saturate(1.4) brightness(1.08) contrast(1.04);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4) brightness(1.08) contrast(1.04);
+      border: 1px solid rgba(255, 255, 255, 0.28);
       box-shadow: 0 4px 12px ${shadowColor};
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     `;
@@ -951,10 +967,10 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
           blurAdjusted = blurNumber * 1.5;
 
           variantStyles = `
-          background-color: rgba(255, 255, 255, ${bgOpacityAdjusted});
-          backdrop-filter: blur(${blurAdjusted}px);
-          -webkit-backdrop-filter: blur(${blurAdjusted}px);
-          border-width: 1px;
+          background-color: rgba(255, 255, 255, 0.14);
+          backdrop-filter: blur(32px) saturate(1.4) brightness(1.08) contrast(1.04);
+          -webkit-backdrop-filter: blur(32px) saturate(1.4) brightness(1.08) contrast(1.04);
+          border: 1px solid rgba(255, 255, 255, 0.28);
         `;
           break;
         case "crystal":
@@ -1407,7 +1423,7 @@ const UnifiedThemeProvider: React.FC<ThemeProviderProps> = ({
   const themedChildren = isolateTheme ? (
     <div
       ref={themeHostRef}
-      data-aura-theme={resolvedPersonaId}
+      data-aura-theme={AURA_THEME_ATTR_VALUE}
       data-aura-mode={resolvedMode}
       data-theme={resolvedMode}
       data-persona={resolvedPersonaId}

@@ -44,7 +44,7 @@ const proof = [
 ];
 
 const MarketingLaunch = () => (
-  <main style={styles.page}>
+  <main className="ag-marketing-launch-kit" style={styles.page}>
     <section style={styles.hero}>
       <AuroraBackground
         particles={14}
@@ -128,8 +128,8 @@ const MarketingLaunch = () => (
 const styles = {
   page: {
     minHeight: "100dvh",
-    color: "var(--glass-marketing-text-primary, #f8fafc)",
-    background: "var(--ag-marketing-bg-0, #07111f)",
+    color: "rgba(15, 23, 42, 0.92)",
+    background: "linear-gradient(145deg, #f8fafc, #eef2f7)",
   },
   hero: {
     position: "relative",
@@ -150,7 +150,7 @@ const styles = {
   heroCopy: {
     maxWidth: 760,
     margin: 0,
-    color: "var(--glass-marketing-text-secondary, rgba(226,232,240,0.82))",
+    color: "rgba(15, 23, 42, 0.90)",
     fontSize: 18,
     lineHeight: 1.55,
   },
@@ -174,7 +174,7 @@ const styles = {
   },
   sectionCopy: {
     margin: 0,
-    color: "var(--glass-marketing-text-secondary, rgba(226,232,240,0.82))",
+    color: "rgba(15, 23, 42, 0.90)",
     lineHeight: 1.55,
   },
   grid: {
@@ -193,7 +193,7 @@ const styles = {
   list: {
     margin: "16px 0 0",
     paddingLeft: 20,
-    color: "var(--glass-marketing-text-secondary, rgba(226,232,240,0.82))",
+    color: "rgba(15, 23, 42, 0.90)",
     lineHeight: 1.6,
   },
   proofGrid: {
@@ -204,11 +204,12 @@ const styles = {
   },
   proofItem: {
     borderRadius: 8,
-    border: "1px solid var(--glass-marketing-glass-border, rgba(255,255,255,0.12))",
+    border:
+      "1px solid var(--glass-marketing-glass-border, rgba(255,255,255,0.12))",
     background:
       "var(--glass-marketing-glass-bg-subtle, rgba(255,255,255,0.07))",
     padding: "10px 12px",
-    color: "var(--glass-marketing-text-primary, #f8fafc)",
+    color: "rgba(15, 23, 42, 0.92)",
     fontWeight: 700,
   },
 } satisfies Record<string, CSSProperties>;

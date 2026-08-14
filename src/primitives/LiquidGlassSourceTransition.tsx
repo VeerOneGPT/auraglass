@@ -97,7 +97,13 @@ export const LiquidGlassSource = forwardRef<HTMLDivElement, LiquidGlassSourcePro
     if (asChild && React.isValidElement(children)) {
       return React.cloneElement(children as React.ReactElement<any>, {
         ref: setRef,
+        className: cn(
+          "liquid-glass-transition-source",
+          (children.props as { className?: string }).className,
+          className
+        ),
         onClick: handleClick,
+        "data-liquid-glass-material": "true",
         "data-liquid-glass-transition-source": id,
       });
     }
@@ -107,6 +113,7 @@ export const LiquidGlassSource = forwardRef<HTMLDivElement, LiquidGlassSourcePro
         ref={setRef}
         className={cn("liquid-glass-transition-source", className)}
         onClick={handleClick}
+        data-liquid-glass-material="true"
         data-liquid-glass-transition-source={id}
         {...props}
       >
@@ -158,6 +165,7 @@ export const LiquidGlassDestination = forwardRef<HTMLDivElement, LiquidGlassDest
             : "transform var(--liquid-glass-source-transition-duration, 220ms) var(--liquid-glass-source-transition-easing, cubic-bezier(.2,.8,.2,1)), opacity 160ms ease",
           ...style,
         }}
+        data-liquid-glass-material="true"
         data-liquid-glass-transition-destination={id}
         data-liquid-glass-transition-active={isActive ? "true" : "false"}
         {...props}

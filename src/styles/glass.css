@@ -31,14 +31,13 @@
 .glass,
 .glass-foundation-complete {
   position: relative;
-  --glass-backdrop-blur: blur(
-    var(--glass-theme-overlay-blur, var(--glass-blur-xl))
-  );
+  --glass-backdrop-blur: blur(32px);
   backdrop-filter: var(--glass-backdrop-blur) var(--glass-filter-base);
   -webkit-backdrop-filter: var(--glass-backdrop-blur) var(--glass-filter-base);
-  background: var(
-    --glass-theme-background-surface,
-    var(--glass-gradient-default)
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.1) 100%
   );
   --glass-text-primary: var(
     --glass-theme-text,
@@ -65,12 +64,36 @@
   color: var(--glass-theme-text, var(--glass-text-primary));
 }
 
+/* Light-context glass uses the luminous persona surface override, and the
+   `glass`/`glass-foundation-complete` class can appear on the same element as
+   a light variant (e.g. `glass-surface-translucent`, `glass-surface-subtle`,
+   `glass-surface-overlay`). Those variant classes intentionally do not set a
+   background so the foundation token keeps a single source of truth. */
+[data-theme="light"] .glass,
+[data-theme="light"] .glass-foundation-complete {
+  background: var(
+    --glass-theme-background-surface,
+    var(--glass-gradient-default)
+  );
+}
+
 [data-bg="light"] .glass,
 [data-bg="light"] .glass-foundation-complete,
 [data-bg="light"] .liquid-glass-material,
 .glass-on-light .glass,
 .glass-on-light .glass-foundation-complete,
 .glass-on-light .liquid-glass-material {
+  /* The active persona is allowed to shape spacing and motion, but it must not
+     leak its dark-canvas white text into a luminous glass surface. Keep these
+     aliases local to the light material so typography utilities that consult
+     --glass-theme-text resolve to the same accessible role colors. */
+  --glass-theme-text: rgba(var(--glass-color-black) / var(--glass-opacity-90));
+  --glass-theme-text-secondary: rgba(
+    var(--glass-color-black) / var(--glass-opacity-70)
+  );
+  --glass-theme-text-tertiary: rgba(
+    var(--glass-color-black) / var(--glass-opacity-50)
+  );
   --glass-text-primary: rgba(
     var(--glass-color-black) / var(--glass-opacity-90)
   );
@@ -78,7 +101,7 @@
     var(--glass-color-black) / var(--glass-opacity-70)
   );
   --glass-text-tertiary: rgba(
-    var(--glass-color-black) / var(--glass-opacity-60)
+    var(--glass-color-black) / var(--glass-opacity-50)
   );
   --typography-text-primary: var(--glass-text-primary);
   --typography-text-secondary: var(--glass-text-secondary);
@@ -112,41 +135,49 @@
 
 /* Backdrop filter utilities */
 .glass-blur-backdrop {
-  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-lg)));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-lg)))
+    var(--glass-filter-base);
   -webkit-backdrop-filter: var(
-    --glass-backdrop-blur,
-    blur(var(--glass-blur-lg))
-  );
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-lg))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-backdrop-blur {
-  backdrop-filter: blur(var(--glass-blur-md, 24px));
-  -webkit-backdrop-filter: blur(var(--glass-blur-md, 24px));
+  backdrop-filter: blur(var(--glass-blur-md, 24px)) var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--glass-blur-md, 24px))
+    var(--glass-filter-base);
 }
 
 .glass-backdrop-blur-sm {
-  backdrop-filter: blur(var(--glass-blur-sm, 16px));
-  -webkit-backdrop-filter: blur(var(--glass-blur-sm, 16px));
+  backdrop-filter: blur(var(--glass-blur-sm, 16px)) var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm, 16px))
+    var(--glass-filter-base);
 }
 
 .glass-backdrop-blur-md {
-  backdrop-filter: blur(var(--glass-blur-md, 24px));
-  -webkit-backdrop-filter: blur(var(--glass-blur-md, 24px));
+  backdrop-filter: blur(var(--glass-blur-md, 24px)) var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--glass-blur-md, 24px))
+    var(--glass-filter-base);
 }
 
 .glass-backdrop-blur-lg {
-  backdrop-filter: blur(var(--glass-blur-lg, 32px));
-  -webkit-backdrop-filter: blur(var(--glass-blur-lg, 32px));
+  backdrop-filter: blur(var(--glass-blur-lg, 32px)) var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg, 32px))
+    var(--glass-filter-base);
 }
 
 .glass-backdrop-blur-xl {
-  backdrop-filter: blur(var(--glass-blur-xl, 40px));
-  -webkit-backdrop-filter: blur(var(--glass-blur-xl, 40px));
+  backdrop-filter: blur(var(--glass-blur-xl, 40px)) var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--glass-blur-xl, 40px))
+    var(--glass-filter-base);
 }
 
 .glass-backdrop-blur-2xl {
-  backdrop-filter: blur(var(--glass-blur-2xl, 48px));
-  -webkit-backdrop-filter: blur(var(--glass-blur-2xl, 48px));
+  backdrop-filter: blur(var(--glass-blur-2xl, 48px)) var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--glass-blur-2xl, 48px))
+    var(--glass-filter-base);
 }
 
 /* ========================================
@@ -205,6 +236,187 @@
 
 .glass-border-white {
   border-color: var(--glass-border-strong);
+}
+
+/* Background fill utilities (glass-bg-white / glass-bg-black) */
+.glass-bg-white\/4 {
+  background-color: rgba(var(--glass-color-white) / 0.04);
+}
+
+.glass-bg-white\/5 {
+  background-color: rgba(var(--glass-color-white) / 0.1);
+}
+
+.glass-bg-white\/6 {
+  background-color: rgba(var(--glass-color-white) / 0.06);
+}
+
+.glass-bg-white\/8 {
+  background-color: rgba(var(--glass-color-white) / 0.08);
+}
+
+.glass-bg-white\/10 {
+  background-color: rgba(var(--glass-color-white) / 0.1);
+}
+
+.glass-bg-white\/12 {
+  background-color: rgba(var(--glass-color-white) / 0.12);
+}
+
+.glass-bg-white\/15 {
+  background-color: rgba(var(--glass-color-white) / 0.15);
+}
+
+.glass-bg-white\/18 {
+  background-color: rgba(var(--glass-color-white) / 0.18);
+}
+
+.glass-bg-white\/20 {
+  background-color: rgba(var(--glass-color-white) / 0.2);
+}
+
+.glass-bg-white\/25 {
+  background-color: rgba(var(--glass-color-white) / 0.25);
+}
+
+.glass-bg-white\/30 {
+  background-color: rgba(var(--glass-color-white) / 0.3);
+}
+
+.glass-bg-white\/35 {
+  background-color: rgba(var(--glass-color-white) / 0.35);
+}
+
+.glass-bg-white\/45 {
+  background-color: rgba(var(--glass-color-white) / 0.45);
+}
+
+.glass-bg-white\/50 {
+  background-color: rgba(var(--glass-color-white) / 0.5);
+}
+
+.glass-bg-white\/55 {
+  background-color: rgba(var(--glass-color-white) / 0.55);
+}
+
+.glass-bg-white\/60 {
+  background-color: rgba(var(--glass-color-white) / 0.6);
+}
+
+.glass-bg-white\/65 {
+  background-color: rgba(var(--glass-color-white) / 0.65);
+}
+
+.glass-bg-white\/70 {
+  background-color: rgba(var(--glass-color-white) / 0.7);
+}
+
+.glass-bg-white\/75 {
+  background-color: rgba(var(--glass-color-white) / 0.75);
+}
+
+.glass-bg-black\/20 {
+  background-color: rgba(var(--glass-color-black) / 0.2);
+}
+
+.glass-bg-black\/30 {
+  background-color: rgba(var(--glass-color-black) / 0.3);
+}
+
+.glass-bg-black\/35 {
+  background-color: rgba(var(--glass-color-black) / 0.35);
+}
+
+.glass-bg-black\/45 {
+  background-color: rgba(var(--glass-color-black) / 0.45);
+}
+
+/* A black fill utility can still serve as a deliberate non-glass scrim when it
+   stands alone. Once it is paired with a backdrop utility, however, it is a
+   panel and must use the same neutral white-frost material as every other
+   glass surface. */
+:is(
+  .glass-bg-black\/20,
+  .glass-bg-black\/30,
+  .glass-bg-black\/35,
+  .glass-bg-black\/45
+):is(
+  .glass,
+  .glass-foundation-complete,
+  .optimized-glass-surface,
+  .glass-blur-backdrop,
+  .glass-backdrop-blur,
+  .glass-backdrop-blur-sm,
+  .glass-backdrop-blur-md,
+  .glass-backdrop-blur-lg,
+  .glass-backdrop-blur-xl,
+  .glass-backdrop-blur-2xl,
+  .glass-modal,
+  .glass-premium,
+  .glass-ultra-blur
+) {
+  background: rgba(var(--glass-color-white) / 0.12);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+}
+
+/* The neutralized panel also needs dark type when its scene is explicitly
+   light. Standalone black scrims are excluded so their inverse-text behavior
+   remains intact. */
+:is([data-theme="light"], [data-bg="light"], .glass-on-light)
+  :is(
+    .glass-bg-black\/20,
+    .glass-bg-black\/30,
+    .glass-bg-black\/35,
+    .glass-bg-black\/45
+  ):is(
+    .glass,
+    .glass-foundation-complete,
+    .optimized-glass-surface,
+    .glass-blur-backdrop,
+    .glass-backdrop-blur,
+    .glass-backdrop-blur-sm,
+    .glass-backdrop-blur-md,
+    .glass-backdrop-blur-lg,
+    .glass-backdrop-blur-xl,
+    .glass-backdrop-blur-2xl,
+    .glass-modal,
+    .glass-premium,
+    .glass-ultra-blur
+  ),
+:is(
+    .glass-bg-black\/20,
+    .glass-bg-black\/30,
+    .glass-bg-black\/35,
+    .glass-bg-black\/45
+  ):is(
+    .glass,
+    .glass-foundation-complete,
+    .optimized-glass-surface,
+    .glass-blur-backdrop,
+    .glass-backdrop-blur,
+    .glass-backdrop-blur-sm,
+    .glass-backdrop-blur-md,
+    .glass-backdrop-blur-lg,
+    .glass-backdrop-blur-xl,
+    .glass-backdrop-blur-2xl,
+    .glass-modal,
+    .glass-premium,
+    .glass-ultra-blur
+  ):is([data-theme="light"], [data-bg="light"], .glass-on-light) {
+  --glass-text-primary: rgba(
+    var(--glass-color-black) / var(--glass-opacity-90)
+  );
+  --glass-theme-text: rgba(var(--glass-color-black) / var(--glass-opacity-90));
+  --glass-text-secondary: rgba(
+    var(--glass-color-black) / var(--glass-opacity-70)
+  );
+  --glass-text-tertiary: rgba(
+    var(--glass-color-black) / var(--glass-opacity-60)
+  );
+  --typography-text-primary: var(--glass-text-primary);
+  --typography-text-secondary: var(--glass-text-secondary);
+  --typography-text-tertiary: var(--glass-text-tertiary);
+  color: var(--glass-theme-text, var(--glass-text-primary));
 }
 
 /* ========================================
@@ -453,6 +665,76 @@
   }
 }
 
+/* Canonical neutral material contract. Generated utility classes may coexist
+   with story/application classes, so keep the readable light-material roles
+   and polished inset sheen at the utility boundary. */
+.glass-neutral-level1,
+.glass-neutral-level2,
+.glass-neutral-level3 {
+  --glass-theme-text: rgba(15, 23, 42, 0.94);
+  --glass-theme-text-secondary: rgba(15, 23, 42, 0.88);
+  --glass-theme-text-tertiary: rgba(15, 23, 42, 0.64);
+  --glass-text-primary: rgba(15, 23, 42, 0.94);
+  --glass-text-secondary: rgba(15, 23, 42, 0.88);
+  --glass-text-tertiary: rgba(15, 23, 42, 0.64);
+  color: rgba(15, 23, 42, 0.94) !important;
+}
+
+/* Neutral app-shell actions use a translucent polished control, not a solid
+   chromatic fill. This also makes old utility-heavy consumers legible on the
+   luminous material without requiring story-specific overrides. */
+.glass-app-shell-source .glass-bg-blue-600,
+.glass-app-shell-source .glass-bg-slate-900 {
+  background: rgba(255, 255, 255, 0.24) !important;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  box-shadow:
+    0 6px 18px rgba(15, 23, 42, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  color: rgba(15, 23, 42, 0.94) !important;
+}
+
+.glowing-card .glass-text-tertiary {
+  color: rgba(15, 23, 42, 0.64) !important;
+}
+
+.liquid-glass-material .liquid-glass-content .opacity-80,
+.liquid-glass-material .liquid-glass-content .glass-opacity-80 {
+  opacity: 1 !important;
+}
+
+.liquid-glass-backdrop-sampler pre {
+  color: rgba(15, 23, 42, 0.94) !important;
+}
+
+.glass-neutral-level1 .glass-bg-slate-900,
+.glass-neutral-level2 .glass-bg-slate-900,
+.glass-neutral-level3 .glass-bg-slate-900 {
+  background: rgba(255, 255, 255, 0.24) !important;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  color: rgba(15, 23, 42, 0.94) !important;
+}
+
+.glass-neutral-level1 {
+  box-shadow:
+    0 4px 24px rgba(15, 23, 42, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 0 8px rgba(255, 255, 255, 0.12) !important;
+}
+
+.glass-neutral-level2 {
+  box-shadow:
+    0 8px 32px rgba(15, 23, 42, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 0 12px rgba(255, 255, 255, 0.12) !important;
+}
+
+.glass-neutral-level3 {
+  box-shadow:
+    0 12px 40px rgba(15, 23, 42, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    inset 0 0 16px rgba(255, 255, 255, 0.14) !important;
+}
+
 /* ========================================
    STATE UTILITIES
    ======================================== */
@@ -504,141 +786,322 @@
    SEMANTIC SURFACE VARIANTS
    ======================================== */
 
+/* Semantic intent is expressed by a restrained border (or by content/text),
+   never by the panel fill. The shared material is the canonical level-2
+   neutral liquid-glass gradient: white-only, translucent, and theme-safe. */
 .glass-surface-primary {
-  background: var(--glass-gradient-primary);
+  background: var(--glass-gradient-neutral);
   border-color: var(--glass-accent-primary-border);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-transparent {
-  background: transparent;
+  background-color: rgba(var(--glass-color-white) / 0.08);
+  border-color: var(--glass-border-subtle);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-success {
-  background: var(--glass-gradient-success);
+  background: var(--glass-gradient-neutral);
   border-color: var(--glass-accent-success-border);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-warning {
-  background: var(--glass-gradient-warning);
+  background: var(--glass-gradient-neutral);
   border-color: var(--glass-accent-warning-border);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-danger {
-  background: var(--glass-gradient-danger);
+  background: var(--glass-gradient-neutral);
   border-color: var(--glass-accent-danger-border);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-info {
-  background: var(--glass-gradient-info);
+  background: var(--glass-gradient-neutral);
   border-color: var(--glass-accent-info-border);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
-.glass-surface-subtle,
 .glass-surface-subtle\/5 {
-  background-color: rgba(var(--glass-color-white) / 0.05);
+  background-color: rgba(var(--glass-color-white) / 0.1);
+  border: 1px solid rgba(var(--glass-color-white) / 0.2);
   color: var(--glass-text-primary);
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-subtle\/10 {
   background-color: rgba(var(--glass-color-white) / 0.1);
+  border: 1px solid rgba(var(--glass-color-white) / 0.2);
   color: var(--glass-text-primary);
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-subtle\/20 {
   background-color: rgba(var(--glass-color-white) / 0.2);
+  border: 1px solid rgba(var(--glass-color-white) / 0.24);
   color: var(--glass-text-primary);
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-subtle\/30 {
   background-color: rgba(var(--glass-color-white) / 0.3);
+  border: 1px solid rgba(var(--glass-color-white) / 0.28);
   color: var(--glass-text-primary);
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-dark\/20 {
-  background-color: rgba(var(--glass-color-black) / 0.2);
-  color: rgba(var(--glass-color-white) / var(--glass-opacity-95));
+  background-color: rgba(var(--glass-color-white) / 0.18);
+  border: 1px solid rgba(var(--glass-color-white) / 0.22);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-dark\/30 {
-  background-color: rgba(var(--glass-color-black) / 0.3);
-  color: rgba(var(--glass-color-white) / var(--glass-opacity-95));
+  background-color: rgba(var(--glass-color-white) / 0.22);
+  border: 1px solid rgba(var(--glass-color-white) / 0.24);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-dark\/40 {
-  background-color: rgba(var(--glass-color-black) / 0.4);
-  color: rgba(var(--glass-color-white) / var(--glass-opacity-95));
+  background-color: rgba(var(--glass-color-white) / 0.28);
+  border: 1px solid rgba(var(--glass-color-white) / 0.28);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-dark\/50 {
-  background-color: rgba(var(--glass-color-black) / 0.5);
-  color: rgba(var(--glass-color-white) / var(--glass-opacity-95));
+  background-color: rgba(var(--glass-color-white) / 0.3);
+  border: 1px solid rgba(var(--glass-color-white) / 0.3);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-dark {
-  background-color: rgba(var(--glass-color-black) / 0.32);
-  color: rgba(var(--glass-color-white) / var(--glass-opacity-95));
+  background-color: rgba(var(--glass-color-white) / 0.16);
+  border: 1px solid rgba(var(--glass-color-white) / 0.22);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-blue,
 .glass-surface-indigo {
-  background-color: rgba(
-    var(--glass-theme-accent-primary-rgb, 56 189 248) / 0.18
-  );
+  background: var(--glass-gradient-neutral);
   border-color: rgba(var(--glass-theme-accent-primary-rgb, 56 189 248) / 0.32);
-  color: rgba(var(--glass-color-white) / var(--glass-opacity-95));
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-green {
-  background-color: rgba(34 197 94 / 0.16);
+  background: var(--glass-gradient-neutral);
   border-color: rgba(34 197 94 / 0.3);
-  color: rgba(var(--glass-color-white) / var(--glass-opacity-95));
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-red {
-  background-color: rgba(239 68 68 / 0.16);
+  background: var(--glass-gradient-neutral);
   border-color: rgba(239 68 68 / 0.3);
-  color: rgba(var(--glass-color-white) / var(--glass-opacity-95));
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-red\/20 {
-  background-color: rgba(239 68 68 / 0.2);
-  color: rgba(var(--glass-color-white) / var(--glass-opacity-95));
+  background-color: rgba(var(--glass-color-white) / 0.2);
+  border-color: rgba(239 68 68 / 0.3);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-yellow {
-  background-color: rgba(245 158 11 / 0.16);
+  background: var(--glass-gradient-neutral);
   border-color: rgba(245 158 11 / 0.3);
-  color: rgba(var(--glass-color-white) / var(--glass-opacity-95));
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-blue\/20,
 .glass-surface-green\/10,
-.glass-surface-primary\/20,
-.glass-surface-primary\/15,
-.glass-surface-primary\/10,
-.glass-surface-primary\/5 {
-  background-color: rgba(
-    var(--glass-theme-accent-primary-rgb, 59 130 246) / 0.2
-  );
-  color: rgba(var(--glass-color-white) / var(--glass-opacity-95));
+.glass-surface-primary\/20 {
+  background-color: rgba(var(--glass-color-white) / 0.2);
+  border-color: var(--glass-accent-primary-border);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-primary\/15 {
-  background-color: rgba(
-    var(--glass-theme-accent-primary-rgb, 59 130 246) / 0.15
-  );
+  background-color: rgba(var(--glass-color-white) / 0.15);
+  border-color: var(--glass-accent-primary-border);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-primary\/10 {
-  background-color: rgba(
-    var(--glass-theme-accent-primary-rgb, 59 130 246) / 0.1
-  );
+  background-color: rgba(var(--glass-color-white) / 0.1);
+  border-color: var(--glass-accent-primary-border);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-surface-primary\/5 {
-  background-color: rgba(
-    var(--glass-theme-accent-primary-rgb, 59 130 246) / 0.05
-  );
+  background-color: rgba(var(--glass-color-white) / 0.1);
+  border-color: var(--glass-accent-primary-border);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
 .glass-border-blue\/50 {
@@ -698,19 +1161,33 @@
   border-color: rgba(74 222 128 / 0.56);
 }
 
-/* Neutral/light frosted surface intended for controls and pills.
-   Enforces dark text tokens to avoid white-on-white contrast issues. */
+/* Neutral/light frosted surface intended for controls and pills. */
 .glass-surface-secondary,
-.glass-surface-neutral {
+.glass-surface-neutral,
+.glass-surface-subtle {
   background: var(--glass-gradient-neutral);
   border-color: var(--glass-border-subtle);
   color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
 }
 
-/* Override text tokens for neutral/light frosted surfaces in light contexts.
-   Dark mode keeps the dark theme text tokens so tinted surfaces stay readable. */
+/* Neutral white frost needs dark typography over an explicitly light scene.
+   Match actual `glass-surface-*` class tokens without catching prefixed
+   utilities such as `hover:glass-surface-*`. */
+[data-theme="light"] :is([class^="glass-surface-"], [class*=" glass-surface-"]),
+[data-bg="light"] :is([class^="glass-surface-"], [class*=" glass-surface-"]),
+.glass-on-light :is([class^="glass-surface-"], [class*=" glass-surface-"]),
+:is([class^="glass-surface-"], [class*=" glass-surface-"]).glass-on-light,
 [data-theme="light"] .glass-surface-secondary,
 [data-theme="light"] .glass-surface-neutral,
+[data-theme="light"] .glass-surface-subtle,
+.glass-on-light.glass-surface-subtle,
 .glass-on-light.glass-surface-secondary,
 .glass-on-light.glass-surface-neutral {
   --glass-text-primary: rgba(
@@ -733,6 +1210,420 @@
   color: var(--glass-theme-text, var(--glass-text-primary));
 }
 
+/* Additional semantic surface variants (token-purity certified).
+   Every glass surface carries the canonical backdrop chain and keeps its
+   neutral white fill alpha inside [0.08, 0.35]. */
+.glass-surface-muted,
+.glass-surface-background,
+.glass-surface-1 {
+  background-color: rgba(var(--glass-color-white) / 0.1);
+  border: 1px solid rgba(var(--glass-color-white) / 0.2);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-muted\/10 {
+  background-color: rgba(var(--glass-color-white) / 0.1);
+  border: 1px solid rgba(var(--glass-color-white) / 0.2);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-muted\/20 {
+  background-color: rgba(var(--glass-color-white) / 0.2);
+  border: 1px solid rgba(var(--glass-color-white) / 0.24);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-white {
+  background-color: rgba(var(--glass-color-white) / 0.3);
+  border: 1px solid rgba(var(--glass-color-white) / 0.3);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-white-5,
+.glass-surface-white-10 {
+  background-color: rgba(var(--glass-color-white) / 0.1);
+  border: 1px solid rgba(var(--glass-color-white) / 0.2);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-translucent {
+  background-color: rgba(var(--glass-color-white) / 0.15);
+  border: 1px solid rgba(var(--glass-color-white) / 0.22);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-accent,
+.glass-surface-amber,
+.glass-surface-emerald,
+.glass-surface-pink {
+  background-color: rgba(var(--glass-color-white) / 0.18);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-amber\/20,
+.glass-surface-pink\/20 {
+  background-color: rgba(var(--glass-color-white) / 0.2);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-amber\/30,
+.glass-surface-blue\/30,
+.glass-surface-green\/30,
+.glass-surface-red\/30,
+.glass-surface-yellow\/30 {
+  background-color: rgba(var(--glass-color-white) / 0.3);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-primary\/30,
+.glass-surface-primary\/40,
+.glass-surface-primary\/50,
+.glass-surface-primary\/60,
+.glass-surface-primary\/70,
+.glass-surface-primary\/80,
+.glass-surface-primary\/90 {
+  background-color: rgba(var(--glass-color-white) / 0.3);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-green\/40,
+.glass-surface-green\/60 {
+  background-color: rgba(var(--glass-color-white) / 0.3);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-green\/20,
+.glass-surface-red\/10,
+.glass-surface-yellow\/20 {
+  background-color: rgba(var(--glass-color-white) / 0.2);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-danger\/5,
+.glass-surface-danger\/10,
+.glass-surface-success\/5,
+.glass-surface-success\/10,
+.glass-surface-warning\/5,
+.glass-surface-warning\/10,
+.glass-surface-info\/10 {
+  background-color: rgba(var(--glass-color-white) / 0.1);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-danger\/20,
+.glass-surface-success\/20,
+.glass-surface-warning\/20,
+.glass-surface-info\/20 {
+  background-color: rgba(var(--glass-color-white) / 0.2);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-danger\/90,
+.glass-surface-success\/90,
+.glass-surface-warning\/90,
+.glass-surface-info\/90 {
+  background-color: rgba(var(--glass-color-white) / 0.3);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-dark\/0 {
+  background-color: rgba(var(--glass-color-white) / 0.08);
+  border: 1px solid rgba(var(--glass-color-white) / 0.18);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-dark\/5,
+.glass-surface-dark\/10,
+.glass-surface-dark\/45,
+.glass-surface-dark\/70,
+.glass-surface-dark\/80,
+.glass-surface-dark\/90,
+.glass-surface-black-50 {
+  background-color: rgba(var(--glass-color-white) / 0.2);
+  border: 1px solid rgba(var(--glass-color-white) / 0.24);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-subtle\/8,
+.glass-surface-subtle0 {
+  background-color: rgba(var(--glass-color-white) / 0.08);
+  border: 1px solid rgba(var(--glass-color-white) / 0.18);
+  color: var(--glass-text-primary);
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-subtle\/15 {
+  background-color: rgba(var(--glass-color-white) / 0.15);
+  border: 1px solid rgba(var(--glass-color-white) / 0.22);
+  color: var(--glass-text-primary);
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-subtle\/40,
+.glass-surface-subtle\/50,
+.glass-surface-subtle\/60,
+.glass-surface-subtle\/70,
+.glass-surface-subtle\/80 {
+  background-color: rgba(var(--glass-color-white) / 0.3);
+  border: 1px solid rgba(var(--glass-color-white) / 0.3);
+  color: var(--glass-text-primary);
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+.glass-surface-primary-hover,
+.glass-surface-secondary-hover,
+.glass-surface-danger-hover,
+.glass-surface-hover,
+.glass-surface-default,
+.glass-surface-elevated,
+.glass-surface-progressive,
+.glass-surface-adaptive,
+.glass-surface-debug,
+.glass-surface-fallback,
+.glass-surface-placeholder,
+.glass-surface-light,
+.glass-surface-medium,
+.glass-surface-deep,
+.glass-surface-deeper {
+  background-color: rgba(var(--glass-color-white) / 0.12);
+  border: 1px solid rgba(var(--glass-color-white) / 0.2);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
+}
+
+/* Keep status and accent meaning on restrained hairline borders. These
+   declarations intentionally do not alter the shared white-frost fill. */
+:is(
+  .glass-surface-primary,
+  .glass-surface-primary\/5,
+  .glass-surface-primary\/10,
+  .glass-surface-primary\/15,
+  .glass-surface-primary\/20,
+  .glass-surface-primary\/30,
+  .glass-surface-primary\/40,
+  .glass-surface-primary\/50,
+  .glass-surface-primary\/60,
+  .glass-surface-primary\/70,
+  .glass-surface-primary\/80,
+  .glass-surface-primary\/90,
+  .glass-surface-primary-hover,
+  .glass-surface-blue,
+  .glass-surface-blue\/20,
+  .glass-surface-blue\/30,
+  .glass-surface-indigo,
+  .glass-surface-accent,
+  .glass-surface-pink,
+  .glass-surface-pink\/20
+) {
+  border-color: var(--glass-accent-primary-border);
+}
+
+:is(
+  .glass-surface-success,
+  .glass-surface-success\/5,
+  .glass-surface-success\/10,
+  .glass-surface-success\/20,
+  .glass-surface-success\/90,
+  .glass-surface-green,
+  .glass-surface-green\/10,
+  .glass-surface-green\/20,
+  .glass-surface-green\/30,
+  .glass-surface-green\/40,
+  .glass-surface-green\/60,
+  .glass-surface-emerald
+) {
+  border-color: var(--glass-accent-success-border);
+}
+
+:is(
+  .glass-surface-warning,
+  .glass-surface-warning\/5,
+  .glass-surface-warning\/10,
+  .glass-surface-warning\/20,
+  .glass-surface-warning\/90,
+  .glass-surface-yellow,
+  .glass-surface-yellow\/20,
+  .glass-surface-yellow\/30,
+  .glass-surface-amber,
+  .glass-surface-amber\/20,
+  .glass-surface-amber\/30
+) {
+  border-color: var(--glass-accent-warning-border);
+}
+
+:is(
+  .glass-surface-danger,
+  .glass-surface-danger\/5,
+  .glass-surface-danger\/10,
+  .glass-surface-danger\/20,
+  .glass-surface-danger\/90,
+  .glass-surface-danger-hover,
+  .glass-surface-red,
+  .glass-surface-red\/10,
+  .glass-surface-red\/20,
+  .glass-surface-red\/30
+) {
+  border-color: var(--glass-accent-danger-border);
+}
+
+:is(
+  .glass-surface-info,
+  .glass-surface-info\/10,
+  .glass-surface-info\/20,
+  .glass-surface-info\/90
+) {
+  border-color: var(--glass-accent-info-border);
+}
+
+.hover\:glass-surface-primary-hover:hover,
+.hover\:glass-surface-secondary-hover:hover,
+.hover\:glass-surface-danger-hover:hover {
+  background-color: rgba(var(--glass-color-white) / 0.2);
+}
+
 /* Explicit utilities to force contrast-aware text tokens on any element */
 .glass-text-primary {
   color: var(--glass-theme-text, var(--glass-text-primary)) !important;
@@ -747,16 +1638,16 @@
 
 :is(.glass, .glass-foundation-complete, .optimized-glass-surface)
   :is(select, input, textarea):is([class*="glass-"]) {
-  background-color: rgba(15, 23, 42, 0.78);
-  color: rgba(var(--glass-color-white) / var(--glass-opacity-95));
-  border-color: rgba(var(--glass-color-white) / 0.24);
+  background-color: rgba(var(--glass-color-white) / 0.1);
+  color: var(--glass-theme-text, var(--glass-text-primary));
+  border-color: var(--glass-border-subtle);
 }
 
 :is(.glass, .glass-foundation-complete, .optimized-glass-surface)
   :is(select, input, textarea):is([class*="glass-"])
   option {
-  background-color: rgb(15, 23, 42);
-  color: rgba(var(--glass-color-white) / var(--glass-opacity-95));
+  background-color: var(--glass-theme-bg, var(--glass-bg-default));
+  color: var(--glass-theme-text, var(--glass-text-primary));
 }
 
 .liquid-glass-range {
@@ -836,24 +1727,25 @@
   color: var(--glass-theme-text, var(--glass-text-primary));
 }
 
-/* Persona glass surfaces use a dark translucent panel even in light previews.
-   Keep their local text tokens light while the page surface remains dark text. */
+/* Luminous glass in a light context keeps dark role text. A glass foundation
+   no longer implies a dark/navy material; making that assumption produced
+   white-on-white content whenever the actual material was neutral white. */
 [data-bg="light"] .glass-foundation-complete,
 [data-bg="light"] .optimized-glass-surface,
 .glass-on-light .glass-foundation-complete,
 .glass-on-light .optimized-glass-surface {
   --glass-text-primary: rgba(
-    var(--glass-color-white) / var(--glass-opacity-95)
+    var(--glass-color-black) / var(--glass-opacity-90)
   );
-  --glass-theme-text: rgba(var(--glass-color-white) / var(--glass-opacity-95));
+  --glass-theme-text: rgba(var(--glass-color-black) / var(--glass-opacity-90));
   --glass-text-secondary: rgba(
-    var(--glass-color-white) / var(--glass-opacity-80)
+    var(--glass-color-black) / var(--glass-opacity-70)
   );
   --glass-text-tertiary: rgba(
-    var(--glass-color-white) / var(--glass-opacity-60)
+    var(--glass-color-black) / var(--glass-opacity-50)
   );
   --glass-text-disabled: rgba(
-    var(--glass-color-white) / var(--glass-opacity-40)
+    var(--glass-color-black) / var(--glass-opacity-40)
   );
   --typography-text-primary: var(--glass-text-primary);
   --typography-text-secondary: var(--glass-text-secondary);
@@ -1124,7 +2016,7 @@
 
 [data-glass-component] .bg-white\/5,
 [data-glass-component].bg-white\/5 {
-  background: rgba(255, 255, 255, 0.05) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
 }
 
 [data-glass-component] .bg-white\/10,
@@ -1206,28 +2098,24 @@
   border-width: 2px;
 }
 
+/* Neutral, low-emphasis edge for glass cards and control groups. Several
+ * advanced components already consume this public utility; without a
+ * definition their native border inherited currentColor and rendered as an
+ * accidental near-black outline. */
+.glass-border-soft {
+  border-color: rgba(148, 163, 184, 0.32) !important;
+}
+
 .glass-border-primary {
-  border-color: color-mix(
-    in srgb,
-    var(--glass-color-primary, #38bdf8) 72%,
-    rgba(255, 255, 255, 0.28)
-  );
+  border-color: rgba(100, 116, 139, 0.42);
 }
 
 .glass-border-success {
-  border-color: color-mix(
-    in srgb,
-    var(--glass-color-success, #22c55e) 72%,
-    rgba(255, 255, 255, 0.28)
-  );
+  border-color: rgba(100, 116, 139, 0.38);
 }
 
 .glass-border-danger {
-  border-color: color-mix(
-    in srgb,
-    var(--glass-color-danger, #ef4444) 72%,
-    rgba(255, 255, 255, 0.28)
-  );
+  border-color: rgba(100, 116, 139, 0.42);
 }
 .glass-border-dashed {
   border-style: dashed;
@@ -1909,6 +2797,13 @@
   opacity: var(--glass-specular-intensity);
 }
 
+/* Personas may supply a brighter decorative specular token, but a material
+   highlight must remain subordinate to its content.  Cap the shared overlay
+   itself so every consumer observes the same provable <= 0.32 contract. */
+.glass-overlay-specular {
+  --glass-specular-intensity: 0.25;
+}
+
 /* Interactive surface hygiene: internal sheen/gradient/ripple layers must not
    paint outside the visible control radius. This keeps marketing buttons,
    ordinary buttons, selects, switches, and icon controls from showing square
@@ -1921,6 +2816,16 @@
   isolation: isolate;
   overflow: hidden;
   background-clip: padding-box;
+}
+
+/* Controls use the same restrained polished edge as every other neutral
+   material. Keeping this at the actual button surface prevents persona or
+   legacy elevation shadows from turning the top edge into an opaque stripe. */
+[data-button-variant] {
+  box-shadow:
+    0 8px 24px rgba(15, 23, 42, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 0 12px rgba(255, 255, 255, 0.12) !important;
 }
 
 [data-button-variant] > .glass-button-aurora-layer,
@@ -2102,7 +3007,11 @@ svg.glass-touch-target {
   justify-content: center;
   padding: var(--glass-space-3) var(--glass-space-6);
   min-height: var(--glass-touch-target-min);
-  background: var(--glass-gradient-default);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.12) 100%
+  );
   border: 1px solid var(--glass-border-default);
   border-radius: var(--glass-radius-lg);
   color: var(--glass-text-primary);
@@ -2143,7 +3052,7 @@ svg.glass-touch-target {
   width: 100%;
   padding: var(--glass-space-3) var(--glass-space-4);
   min-height: var(--glass-touch-target-min);
-  background: var(--glass-control-bg);
+  background: rgba(255, 255, 255, 0.16);
   border: 1px solid var(--glass-control-border);
   border-radius: var(--glass-radius-md);
   color: var(--glass-text-primary);
@@ -2175,6 +3084,18 @@ svg.glass-touch-target {
   cursor: not-allowed;
 }
 
+.glass-textarea {
+  background: rgba(var(--glass-color-white) / 0.12) !important;
+  border-color: rgba(var(--glass-color-white) / 0.28) !important;
+  color: var(--glass-text-primary) !important;
+  backdrop-filter: blur(var(--glass-blur-sm)) var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm)) var(--glass-filter-base);
+}
+
+.glass-textarea::placeholder {
+  color: var(--glass-text-tertiary);
+}
+
 /* ========================================
    VARIANT UTILITIES
    ======================================== */
@@ -2196,7 +3117,11 @@ svg.glass-touch-target {
    ======================================== */
 
 .glass-modal {
-  background: var(--glass-bg-strong);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.18) 100%
+  );
   backdrop-filter: blur(var(--glass-blur-xl)) var(--glass-filter-base);
   -webkit-backdrop-filter: blur(var(--glass-blur-xl)) var(--glass-filter-base);
   border: 1px solid var(--glass-border-strong);
@@ -2208,8 +3133,8 @@ svg.glass-touch-target {
   position: fixed;
   inset: 0;
   background: var(--glass-overlay-bg);
-  backdrop-filter: blur(var(--glass-blur-sm));
-  -webkit-backdrop-filter: blur(var(--glass-blur-sm));
+  backdrop-filter: blur(var(--glass-blur-sm)) var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--glass-blur-sm)) var(--glass-filter-base);
   z-index: var(--glass-z-40);
 }
 
@@ -2273,6 +3198,96 @@ svg.glass-touch-target {
 @media (min-width: 640px) {
   .sm\:glass-inline {
     display: inline;
+  }
+}
+
+.glass-shared-whiteboard-canvas {
+  isolation: isolate;
+}
+
+.glass-shared-whiteboard-canvas > canvas {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.glass-team-cursors-layer {
+  inset: 88px 16px auto 16px;
+  height: clamp(180px, 28vw, 320px);
+  border-radius: 24px;
+  contain: layout paint;
+}
+
+.glass-gradient-range {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 8px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.82),
+    rgba(148, 163, 184, 0.38)
+  );
+  box-shadow: inset 0 0 0 1px rgba(100, 116, 139, 0.22);
+}
+
+.glass-gradient-range::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.92);
+  background: rgba(100, 116, 139, 0.9);
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.2);
+}
+
+.glass-gradient-color-input {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: transparent;
+}
+
+.glass-gradient-color-input::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+.glass-gradient-color-input::-webkit-color-swatch {
+  border: 0;
+  border-radius: 50%;
+}
+
+.glass-theme-color-control {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.48),
+    0 4px 14px rgba(15, 23, 42, 0.12);
+}
+
+.glass-theme-color-input {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.glass-theme-color-input::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+.glass-theme-color-input::-webkit-color-swatch {
+  border: 0;
+  border-radius: 50%;
+}
+
+@media (max-width: 639px) {
+  .glass-team-cursors-layer {
+    inset: 154px 16px auto 16px;
+    height: 154px;
   }
 }
 .glass-cursor-pointer {
@@ -2370,6 +3385,9 @@ svg.glass-touch-target {
   max-width: 72rem;
 }
 .glass-min-w-0 {
+  min-width: 0;
+}
+.glass-min-glass-w-0 {
   min-width: 0;
 }
 .glass-shrink-0 {
@@ -2482,6 +3500,9 @@ svg.glass-touch-target {
 .glass-w-10 {
   width: var(--glass-space-10);
 }
+.glass-w-11 {
+  width: var(--glass-space-11);
+}
 .glass-w-12 {
   width: var(--glass-space-12);
 }
@@ -2502,6 +3523,28 @@ svg.glass-touch-target {
 }
 .glass-w-48 {
   width: var(--glass-space-48);
+}
+
+/* Responsive user-list rail for GlassSharedWhiteboard. Kept as a named
+ * component utility because responsive `sm:` variants are not emitted by the
+ * package utility stylesheet. */
+.glass-shared-whiteboard-user-list {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+@media (max-width: 639px) {
+  .glass-kanban-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    min-width: 0 !important;
+  }
+}
+
+@media (min-width: 640px) {
+  .glass-shared-whiteboard-user-list {
+    width: var(--glass-space-48);
+  }
 }
 .glass-w-64 {
   width: var(--glass-space-64);
@@ -2703,22 +3746,18 @@ svg.glass-touch-target {
   background: var(--glass-gradient-primary);
 }
 
-/* Surface overlay */
+/* Surface overlays remain glass panels; modal backdrops use `.glass-overlay`
+   and retain their separate dimming scrim semantics. */
 .glass-surface-overlay {
-  background: var(--glass-overlay-bg);
-  --glass-text-primary: rgba(
-    var(--glass-color-white) / var(--glass-opacity-95)
-  );
-  --glass-theme-text: rgba(var(--glass-color-white) / var(--glass-opacity-95));
-  --glass-text-secondary: rgba(
-    var(--glass-color-white) / var(--glass-opacity-80)
-  );
-  --glass-text-tertiary: rgba(
-    var(--glass-color-white) / var(--glass-opacity-60)
-  );
-  --typography-text-primary: var(--glass-text-primary);
-  --typography-text-secondary: var(--glass-text-secondary);
-  --typography-text-tertiary: var(--glass-text-tertiary);
+  background: var(--glass-gradient-neutral);
+  border: 1px solid rgba(var(--glass-color-white) / 0.24);
+  backdrop-filter: var(--glass-backdrop-blur, blur(var(--glass-blur-md)))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: var(
+      --glass-backdrop-blur,
+      blur(var(--glass-blur-md))
+    )
+    var(--glass-filter-base);
   color: var(--glass-theme-text, var(--glass-text-primary));
 }
 
@@ -3102,32 +4141,36 @@ svg.glass-touch-target {
 
 /* Gradient utilities for enhanced aesthetics */
 .bg-gradient-radial {
-  background: radial-gradient(var(--tw-gradient-stops));
+  background: radial-gradient(
+    var(--tw-gradient-stops, transparent, transparent)
+  );
 }
 
 .bg-gradient-conic {
-  background: conic-gradient(var(--tw-gradient-stops));
+  background: conic-gradient(
+    var(--tw-gradient-stops, transparent, transparent)
+  );
 }
 
 /* Enhanced glass morphism layers */
 .glass-ultra-blur {
-  backdrop-filter: blur(var(--glass-blur-xl)) saturate(180%) brightness(105%);
-  -webkit-backdrop-filter: blur(var(--glass-blur-xl)) saturate(180%)
-    brightness(105%);
+  backdrop-filter: blur(var(--glass-blur-xl)) var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--glass-blur-xl)) var(--glass-filter-base);
 }
 
 .glass-premium {
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.12) 0%,
-    rgba(255, 255, 255, 0.06) 100%
+    rgba(255, 255, 255, 0.08) 100%
   );
-  backdrop-filter: blur(var(--glass-blur-lg)) saturate(180%) brightness(105%);
-  border: 1px solid var(--glass-bg-disabled);
+  backdrop-filter: blur(var(--glass-blur-lg)) var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--glass-blur-lg)) var(--glass-filter-base);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow:
     0 8px 32px rgba(var(--glass-color-black) / var(--glass-opacity-10)),
     0 4px 16px rgba(var(--glass-color-black) / var(--glass-opacity-5)),
-    inset 0 1px 0 var(--glass-bg-disabled);
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
 }
 
 /* Sophisticated hover effects */
@@ -3415,7 +4458,7 @@ svg.glass-touch-target {
 }
 
 .liquid-glass-concentric-frame {
-  border-radius: var(--liquid-glass-frame-radius);
+  border-radius: var(--liquid-glass-frame-radius, var(--glass-radius-lg));
 }
 
 .liquid-glass-transition-active {
@@ -3426,6 +4469,31 @@ svg.glass-touch-target {
 
 .liquid-glass-transition-reduced-motion {
   animation: none;
+}
+
+/* Source/destination transition nodes are material primitives in their own
+   right. Keep their default treatment neutral and self-contained so consumers
+   do not need a story or application utility class to supply the glass. The
+   softly blurred inset highlight is the canonical low-elevation edge sheen. */
+.liquid-glass-transition-source,
+.liquid-glass-transition-destination {
+  position: relative;
+  min-width: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.12) 55%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(24px) saturate(1.5) brightness(1.05) contrast(0.95);
+  -webkit-backdrop-filter: blur(24px) saturate(1.5) brightness(1.05)
+    contrast(0.95);
+  box-shadow:
+    0 12px 32px rgba(15, 23, 42, 0.12),
+    inset 0 0 12px rgba(255, 255, 255, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  color: rgba(15, 23, 42, 0.92);
 }
 
 @keyframes liquid-glass-source-pop {

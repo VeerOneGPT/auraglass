@@ -29,17 +29,19 @@ type Story = StoryObj<typeof FocusIndicator>;
 
 export const Default: Story = {
   render: (args: any) => (
-    <FocusIndicator
-      {...args}
-      visible
-      style="glow"
-      thickness={4}
-      className="glass-rounded-lg"
-    >
-      <button className="glass-rounded-lg glass-bg-slate-900 glass-px-4 glass-py-2 glass-text-sm glass-font-medium glass-text-white">
-        Focus target
-      </button>
-    </FocusIndicator>
+    <div className="glass-neutral-level1 glass-rounded-3xl glass-p-8">
+      <FocusIndicator
+        {...args}
+        visible
+        style="glow"
+        thickness={4}
+        className="glass-rounded-lg"
+      >
+        <button className="glass-rounded-lg glass-bg-slate-900 glass-px-4 glass-py-2 glass-text-sm glass-font-medium glass-text-white">
+          Focus target
+        </button>
+      </FocusIndicator>
+    </div>
   ),
   args: {},
 };

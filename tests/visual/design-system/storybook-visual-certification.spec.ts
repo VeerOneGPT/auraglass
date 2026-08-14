@@ -35,7 +35,7 @@ type CertificationReport = {
     covered: number;
     total: number;
     percent: number;
-    storyPath: string;
+    storyPath?: string;
   };
   entries: CertificationEntry[];
 };
@@ -179,9 +179,13 @@ test.describe("Storybook visual certification report guardrails", () => {
       )
     );
 
-    expect(report.generatedCertificationStoryCoverage.storyPath).toBe(
-      "src/stories/GlassMissingInventoryCertification.stories.tsx"
-    );
+    if (componentsMissingDirectStories.length > 0) {
+      expect(report.generatedCertificationStoryCoverage.storyPath).toBe(
+        "src/stories/GlassMissingInventoryCertification.stories.tsx"
+      );
+    } else {
+      expect(report.generatedCertificationStoryCoverage.storyPath).toBeUndefined();
+    }
     expect(report.generatedCertificationStoryCoverage.covered).toBe(
       coveredMissingDirectStories.length
     );

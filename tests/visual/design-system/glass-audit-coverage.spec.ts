@@ -291,7 +291,7 @@ test.describe("glassmorphism audit coverage guardrails", () => {
 
   test("audit matrix story renders in Storybook", async ({ page }) => {
     await page.goto(
-      "/iframe.html?id=audits-glassmorphism-coverage--matrix&viewMode=story"
+      "/iframe.html?id=certification-glass-audit-coverage--matrix&viewMode=story"
     );
     await expect(
       page.getByRole("heading", { name: "Glassmorphism audit coverage matrix" })

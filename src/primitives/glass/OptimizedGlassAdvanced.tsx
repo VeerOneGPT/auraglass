@@ -1,37 +1,73 @@
-'use client';
-import { cn } from '@/design-system/utilsCore';
-import React, { forwardRef, HTMLAttributes, useEffect, useMemo, useState } from 'react';
+"use client";
+import { cn } from "@/design-system/utilsCore";
+import React, {
+  forwardRef,
+  HTMLAttributes,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
 export interface OptimizedGlassProps extends HTMLAttributes<HTMLDivElement> {
-  elevation?: 'level0' | 'level1' | 'level2' | 'level3' | 'level4' | 'float';
-  blur?: 'none' | 'subtle' | 'medium' | 'strong' | 'intense';
+  elevation?: "level0" | "level1" | "level2" | "level3" | "level4" | "float";
+  blur?: "none" | "subtle" | "medium" | "strong" | "intense";
   variant?:
-  | 'default'
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'warning'
-  | 'error'
-  | 'frosted'      // Enhanced frosted glass effect
-  | 'liquid'       // Liquid glass with organic curves
-  | 'crystal'      // Crystal clear sharp glass
-  | 'holographic'  // Holographic rainbow effect
-  | 'neural'       // Neural network pattern
-  | 'ethereal';    // Ethereal floating glass
+    | "default"
+    | "primary"
+    | "secondary"
+    | "success"
+    | "warning"
+    | "error"
+    | "frosted" // Enhanced frosted glass effect
+    | "liquid" // Liquid glass with organic curves
+    | "crystal" // Crystal clear sharp glass
+    | "holographic" // Holographic rainbow effect
+    | "neural" // Neural network pattern
+    | "ethereal"; // Ethereal floating glass
   interactive?: boolean;
-  performanceMode?: 'low' | 'medium' | 'high' | 'ultra';
+  performanceMode?: "low" | "medium" | "high" | "ultra";
   lazyEffects?: boolean;
   activePath?: string;
 
   // Enhanced glass properties
   depth?: 1 | 2 | 3 | 4 | 5;
-  tint?: 'neutral' | 'blue' | 'purple' | 'lavender' | 'green' | 'amber' | 'red' | 'cyan' | 'pink' | 'rainbow';
-  animation?: 'none' | 'float' | 'pulse' | 'shimmer' | 'breathe' | 'morph' | 'ripple' | 'wave';
-  border?: 'none' | 'subtle' | 'glow' | 'gradient' | 'neon' | 'dynamic' | 'particle';
-  intensity?: 'subtle' | 'medium' | 'strong' | 'extreme' | 'ultra';
+  tint?:
+    | "neutral"
+    | "blue"
+    | "purple"
+    | "lavender"
+    | "green"
+    | "amber"
+    | "red"
+    | "cyan"
+    | "pink"
+    | "rainbow";
+  animation?:
+    | "none"
+    | "float"
+    | "pulse"
+    | "shimmer"
+    | "breathe"
+    | "morph"
+    | "ripple"
+    | "wave";
+  border?:
+    | "none"
+    | "subtle"
+    | "glow"
+    | "gradient"
+    | "neon"
+    | "dynamic"
+    | "particle";
+  intensity?: "subtle" | "medium" | "strong" | "extreme" | "ultra";
 
   // Ultra-advanced properties
-  lighting?: 'ambient' | 'directional' | 'volumetric' | 'caustic' | 'iridescent';
+  lighting?:
+    | "ambient"
+    | "directional"
+    | "volumetric"
+    | "caustic"
+    | "iridescent";
   refraction?: boolean;
   caustics?: boolean;
   chromatic?: boolean;
@@ -50,130 +86,130 @@ export interface OptimizedGlassProps extends HTMLAttributes<HTMLDivElement> {
 
 // Pre-computed CSS classes for better performance
 const GLASS_BASE_CLASSES = {
-  base: 'relative overflow-hidden transition-all duration-200 ease-out',
-  interactive: 'hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]',
-  transforms: 'transform-gpu will-change-transform backface-visibility-hidden',
-}
+  base: "relative overflow-hidden transition-all duration-200 ease-out",
+  interactive: "hover:scale-[1.02] hover:shadow-lg active:scale-[0.98]",
+  transforms: "transform-gpu will-change-transform backface-visibility-hidden",
+};
 
 const ELEVATION_CLASSES = {
-  level0: '',
-  level1: 'glass-elev-1',
-  level2: 'glass-elev-2',
-  level3: 'glass-elev-3',
-  level4: 'glass-elev-4',
-  float: 'glass-elev-float'
-}
+  level0: "",
+  level1: "glass-elev-1",
+  level2: "glass-elev-2",
+  level3: "glass-elev-3",
+  level4: "glass-elev-4",
+  float: "glass-elev-float",
+};
 
 // CLASS_PREFIX: Blur classes use 'glass-' prefix
 const BLUR_CLASSES = {
-  none: '',
-  subtle: 'glass-backdrop-blur',    // 4px
-  medium: 'glass-backdrop-blur',    // 8px
-  strong: 'glass-backdrop-blur',    // 16px
-  intense: 'glass-backdrop-blur',   // 24px
-}
+  none: "",
+  subtle: "glass-backdrop-blur", // 4px
+  medium: "glass-backdrop-blur", // 8px
+  strong: "glass-backdrop-blur", // 16px
+  intense: "glass-backdrop-blur", // 24px
+};
 
 const VARIANT_CLASSES = {
-  default: 'bg-transparent border-0',
-  primary: 'bg-transparent border-0',
-  secondary: 'bg-transparent border-0',
-  success: 'bg-transparent border-0',
-  warning: 'bg-transparent border-0',
-  error: 'bg-transparent border-0',
-  frosted: 'bg-transparent border-0',
-  liquid: 'bg-transparent border-0 rounded-3xl',
-  crystal: 'bg-transparent border-0 rounded-sm',
-  holographic: 'bg-transparent border-0',
-  neural: 'bg-transparent border-0',
-  ethereal: 'bg-transparent border-0',
-}
+  default: "bg-transparent border-0",
+  primary: "bg-transparent border-0",
+  secondary: "bg-transparent border-0",
+  success: "bg-transparent border-0",
+  warning: "bg-transparent border-0",
+  error: "bg-transparent border-0",
+  frosted: "bg-transparent border-0",
+  liquid: "bg-transparent border-0 rounded-3xl",
+  crystal: "bg-transparent border-0 rounded-sm",
+  holographic: "bg-transparent border-0",
+  neural: "bg-transparent border-0",
+  ethereal: "bg-transparent border-0",
+};
 
 const TINT_CLASSES = {
-  neutral: '',
-  blue: 'glass-tint-blue',
-  purple: 'glass-tint-purple',
-  lavender: 'glass-tint-lavender',
-  green: 'glass-tint-green',
-  amber: 'glass-tint-amber',
-  red: 'glass-tint-red',
-  cyan: 'glass-tint-cyan',
-  pink: 'glass-tint-pink',
-  rainbow: 'glass-tint-rainbow',
-}
+  neutral: "",
+  blue: "glass-tint-blue",
+  purple: "glass-tint-purple",
+  lavender: "glass-tint-lavender",
+  green: "glass-tint-green",
+  amber: "glass-tint-amber",
+  red: "glass-tint-red",
+  cyan: "glass-tint-cyan",
+  pink: "glass-tint-pink",
+  rainbow: "glass-tint-rainbow",
+};
 
 const ANIMATION_CLASSES = {
-  none: '',
-  float: 'animate-glass-float',
-  pulse: 'animate-glass-pulse',
-  shimmer: 'animate-glass-shimmer',
-  breathe: 'animate-glass-breathe',
-  morph: 'animate-glass-morph',
-  ripple: 'animate-glass-ripple',
-  wave: 'animate-glass-wave',
-}
+  none: "",
+  float: "animate-glass-float",
+  pulse: "animate-glass-pulse",
+  shimmer: "animate-glass-shimmer",
+  breathe: "animate-glass-breathe",
+  morph: "animate-glass-morph",
+  ripple: "animate-glass-ripple",
+  wave: "animate-glass-wave",
+};
 
 const BORDER_CLASSES = {
-  none: '',
-  subtle: 'glass-border-subtle',
-  glow: 'glass-border-glow',
-  gradient: 'glass-border-gradient',
-  neon: 'glass-border-neon',
-  dynamic: 'glass-border-dynamic',
-  particle: 'glass-border-particle',
-}
+  none: "",
+  subtle: "glass-border-subtle",
+  glow: "glass-border-glow",
+  gradient: "glass-border-gradient",
+  neon: "glass-border-neon",
+  dynamic: "glass-border-dynamic",
+  particle: "glass-border-particle",
+};
 
 const LIGHTING_CLASSES = {
-  ambient: '',
-  directional: 'glass-lighting-directional',
-  volumetric: 'glass-lighting-volumetric',
-  caustic: 'glass-caustics',
-  iridescent: 'glass-lighting-iridescent',
-}
+  ambient: "",
+  directional: "glass-lighting-directional",
+  volumetric: "glass-lighting-volumetric",
+  caustic: "glass-caustics",
+  iridescent: "glass-lighting-iridescent",
+};
 
 const ADVANCED_EFFECT_CLASSES = {
-  refraction: 'glass-refraction',
-  caustics: 'glass-caustics',
-  chromatic: 'glass-chromatic',
-  parallax: 'glass-parallax',
-  adaptive: 'glass-adaptive',
-}
+  refraction: "glass-refraction",
+  caustics: "glass-caustics",
+  chromatic: "glass-chromatic",
+  parallax: "glass-parallax",
+  adaptive: "glass-adaptive",
+};
 
 // CSS variables for dynamic performance modes
 const PERFORMANCE_STYLES = {
   low: {
-    '--glass-blur': '2px',
-    '--glass-opacity': '0.03',
-    '--glass-animation-duration': '100ms',
-    '--glass-saturation': '110%',
-    '--glass-brightness': '1.02',
+    "--glass-blur": "2px",
+    "--glass-opacity": "0.03",
+    "--glass-animation-duration": "100ms",
+    "--glass-saturation": "110%",
+    "--glass-brightness": "1.02",
   } as React.CSSProperties,
   medium: {
-    '--glass-blur': '8px',
-    '--glass-opacity': '0.06',
-    '--glass-animation-duration': '200ms',
-    '--glass-saturation': '130%',
-    '--glass-brightness': '1.05',
+    "--glass-blur": "8px",
+    "--glass-opacity": "0.06",
+    "--glass-animation-duration": "200ms",
+    "--glass-saturation": "130%",
+    "--glass-brightness": "1.05",
   } as React.CSSProperties,
   high: {
-    '--glass-blur': '16px',
-    '--glass-opacity': '0.09',
-    '--glass-animation-duration': '300ms',
-    '--glass-saturation': '150%',
-    '--glass-brightness': '1.08',
+    "--glass-blur": "16px",
+    "--glass-opacity": "0.09",
+    "--glass-animation-duration": "300ms",
+    "--glass-saturation": "150%",
+    "--glass-brightness": "1.08",
   } as React.CSSProperties,
   ultra: {
-    '--glass-blur': '24px',
-    '--glass-opacity': '0.12',
-    '--glass-animation-duration': '400ms',
-    '--glass-saturation': '180%',
-    '--glass-brightness': '1.12',
-    '--glass-contrast': '1.1',
+    "--glass-blur": "24px",
+    "--glass-opacity": "0.12",
+    "--glass-animation-duration": "400ms",
+    "--glass-saturation": "180%",
+    "--glass-brightness": "1.12",
+    "--glass-contrast": "1.1",
   } as React.CSSProperties,
-}
+};
 
 /**
  * Advanced Optimized Glass Component - 70% performance improvement over standard Glass
- * 
+ *
  * Key optimizations:
  * - Pre-computed class strings
  * - Reduced blur values (50% less)
@@ -181,21 +217,24 @@ const PERFORMANCE_STYLES = {
  * - CSS variables instead of inline styles
  * - Lazy effect loading
  */
-export const OptimizedGlassAdvanced = forwardRef<HTMLDivElement, OptimizedGlassProps>(
+export const OptimizedGlassAdvanced = forwardRef<
+  HTMLDivElement,
+  OptimizedGlassProps
+>(
   (
     {
-      elevation = 'level1',
-      blur = 'medium',
-      variant = 'default',
+      elevation = "level1",
+      blur = "medium",
+      variant = "default",
       interactive = false,
-      performanceMode = 'medium',
+      performanceMode = "medium",
       lazyEffects = true,
       depth = 2,
-      tint = 'neutral',
-      animation = 'none',
-      border = 'none',
-      intensity = 'medium',
-      lighting = 'ambient',
+      tint = "neutral",
+      animation = "none",
+      border = "none",
+      intensity = "medium",
+      lighting = "ambient",
       refraction = false,
       caustics = false,
       chromatic = false,
@@ -222,13 +261,13 @@ export const OptimizedGlassAdvanced = forwardRef<HTMLDivElement, OptimizedGlassP
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
     useEffect(() => {
-      if (typeof window === 'undefined' || !('matchMedia' in window)) return;
-      const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (typeof window === "undefined" || !("matchMedia" in window)) return;
+      const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
       const update = () => setPrefersReducedMotion(!!mq.matches);
       update();
-      if ('addEventListener' in mq) {
-        mq.addEventListener('change', update);
-        return () => mq.removeEventListener('change', update);
+      if ("addEventListener" in mq) {
+        mq.addEventListener("change", update);
+        return () => mq.removeEventListener("change", update);
       } else {
         // @ts-ignore older Safari
         mq.addListener(update);
@@ -248,20 +287,20 @@ export const OptimizedGlassAdvanced = forwardRef<HTMLDivElement, OptimizedGlassP
         VARIANT_CLASSES[variant],
         TINT_CLASSES[tint],
         // MOTION_RESPECT: Disable long-running animations when reduced motion is preferred
-        prefersReducedMotion ? '' : ANIMATION_CLASSES[animation],
+        prefersReducedMotion ? "" : ANIMATION_CLASSES[animation],
         BORDER_CLASSES[border],
         LIGHTING_CLASSES[lighting],
-        'border-0', // Base border reset
+        "border-0", // Base border reset
         // CONTRAST_GUARD: All glass surfaces need contrast guard
-        'glass-contrast-guard',
+        "glass-contrast-guard",
       ];
 
       if (interactive) {
         classes.push(GLASS_BASE_CLASSES.interactive);
         // INTERACTIVE_FOCUS: Interactive elements need glass-focus class
-        classes.push('glass-focus');
+        classes.push("glass-focus");
         // TOUCH_TARGET: Interactive elements need touch target class
-        classes.push('glass-touch-target');
+        classes.push("glass-touch-target");
       }
 
       // Add depth-specific classes
@@ -270,7 +309,7 @@ export const OptimizedGlassAdvanced = forwardRef<HTMLDivElement, OptimizedGlassP
       }
 
       // Add intensity-specific classes
-      if (intensity !== 'medium') {
+      if (intensity !== "medium") {
         classes.push(`glass-intensity-${intensity}`);
       }
 
@@ -283,23 +322,59 @@ export const OptimizedGlassAdvanced = forwardRef<HTMLDivElement, OptimizedGlassP
 
       // MOTION_RESPECT: Micro-interactions only when motion is enabled
       if (!prefersReducedMotion) {
-        if (hoverSheen) classes.push('glass-sheen');
-        if (liftOnHover) classes.push('glass-lift');
-        if (press) classes.push('glass-press');
-        if (tilt) classes.push('glass-tilt');
-        if (magnet) classes.push('glass-magnet');
-        if (cursorHighlight) classes.push('glass-cursor-highlight');
+        if (hoverSheen) classes.push("glass-sheen");
+        if (liftOnHover) classes.push("glass-lift");
+        if (press) classes.push("glass-press");
+        if (tilt) classes.push("glass-tilt");
+        if (magnet) classes.push("glass-magnet");
+        if (cursorHighlight) classes.push("glass-cursor-highlight");
       }
-      if (activeGlow) classes.push('ring-1 ring-blue-400/20');
+      if (activeGlow) classes.push("ring-1 ring-blue-400/20");
 
-      return classes.filter(Boolean).join(' ');
-    }, [elevation, blur, variant, interactive, tint, animation, border, depth, intensity, lighting, refraction, caustics, chromatic, parallax, adaptive, hoverSheen, liftOnHover, press, tilt, magnet, cursorHighlight, activeGlow, prefersReducedMotion]);
+      return classes.filter(Boolean).join(" ");
+    }, [
+      elevation,
+      blur,
+      variant,
+      interactive,
+      tint,
+      animation,
+      border,
+      depth,
+      intensity,
+      lighting,
+      refraction,
+      caustics,
+      chromatic,
+      parallax,
+      adaptive,
+      hoverSheen,
+      liftOnHover,
+      press,
+      tilt,
+      magnet,
+      cursorHighlight,
+      activeGlow,
+      prefersReducedMotion,
+    ]);
 
     // Combine performance styles with custom styles
-    const combinedStyles = useMemo(() => ({
-      ...PERFORMANCE_STYLES[performanceMode],
-      ...style,
-    }), [performanceMode, style]);
+    const combinedStyles = useMemo(
+      () => ({
+        ...PERFORMANCE_STYLES[performanceMode],
+        background:
+          "linear-gradient(135deg, rgba(255,255,255,0.24), rgba(255,255,255,0.12))",
+        backgroundColor: "rgba(255,255,255,0.12)",
+        border: "1px solid rgba(255,255,255,0.28)",
+        boxShadow:
+          "0 8px 28px rgba(15,23,42,0.14), inset 0 0 12px rgba(255,255,255,0.12)",
+      "--glass-theme-text": "rgba(15,23,42,0.94)",
+      "--glass-text-secondary": "rgba(15,23,42,0.88)",
+        color: "rgba(15,23,42,0.94)",
+        ...style,
+      }),
+      [performanceMode, style]
+    );
 
     // Lazy load complex effects for better initial performance
     const [effectsLoaded, setEffectsLoaded] = React.useState(!lazyEffects);
@@ -316,14 +391,16 @@ export const OptimizedGlassAdvanced = forwardRef<HTMLDivElement, OptimizedGlassP
     const domProps = props;
 
     // Cursor highlight handler (update CSS vars)
-    const [mouseVars, setMouseVars] = React.useState<React.CSSProperties | undefined>(undefined);
+    const [mouseVars, setMouseVars] = React.useState<
+      React.CSSProperties | undefined
+    >(undefined);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
       if (!cursorHighlight || prefersReducedMotion) return;
       const rect = (e.currentTarget as HTMLDivElement).getBoundingClientRect();
       const mx = e.clientX - rect.left;
       const my = e.clientY - rect.top;
-      setMouseVars({ ['--mx' as any]: `${mx}px`, ['--my' as any]: `${my}px` });
+      setMouseVars({ ["--mx" as any]: `${mx}px`, ["--my" as any]: `${my}px` });
     };
 
     return (
@@ -335,11 +412,14 @@ export const OptimizedGlassAdvanced = forwardRef<HTMLDivElement, OptimizedGlassP
           effectsLoaded && [
             // Removed problematic before/after overlays that cause frost rectangles
             // Only use subtle depth effects when needed
-            depth >= 4 && 'shadow-[inset_0_1px_2px_rgba(255,255,255,0.05)]',
+            depth >= 4 && "shadow-[inset_0_1px_2px_rgba(255,255,255,0.05)]",
             // Minimal intensity modifiers
-            intensity === 'extreme' && 'backdrop-saturate-120 backdrop-brightness-105',
-            intensity === 'strong' && 'backdrop-saturate-115 backdrop-brightness-103',
-            intensity === 'subtle' && 'backdrop-saturate-105 backdrop-brightness-101',
+            intensity === "extreme" &&
+              "backdrop-saturate-120 backdrop-brightness-105",
+            intensity === "strong" &&
+              "backdrop-saturate-115 backdrop-brightness-103",
+            intensity === "subtle" &&
+              "backdrop-saturate-105 backdrop-brightness-101",
           ],
           className
         )}
@@ -355,7 +435,7 @@ export const OptimizedGlassAdvanced = forwardRef<HTMLDivElement, OptimizedGlassP
   }
 );
 
-OptimizedGlassAdvanced.displayName = 'OptimizedGlassAdvanced';
+OptimizedGlassAdvanced.displayName = "OptimizedGlassAdvanced";
 
 // Performance monitoring hook
 export function useGlassPerformance() {
@@ -372,7 +452,7 @@ export function useGlassPerformance() {
     setMetrics((prev: any) => ({
       ...prev,
       renderTime,
-      recomputeCount: prev.recomputeCount + 1
+      recomputeCount: prev.recomputeCount + 1,
     }));
   }, []);
 

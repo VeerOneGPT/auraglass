@@ -332,34 +332,43 @@ export const LiquidGlassMaterial = forwardRef<
         }
 
         if (modifications.tint && materialSpec.tintMode === "adaptive") {
-          styles.background = `${styles.background}, ${modifications.tint}`;
+          styles.background = `${styles.background}, linear-gradient(${modifications.tint}, ${modifications.tint})`;
         }
 
         if (modifications.backdropBlur !== undefined) {
-          const currentBlur = materialSpec.backdropBlur.px;
-          const adjustedBlur = currentBlur * modifications.backdropBlur;
           const backdropFilter =
-            typeof styles.backdropFilter === "string"
-              ? styles.backdropFilter.replace(
-                  /blur\([\d.]+px\)/,
-                  `blur(${adjustedBlur}px)`
-                )
-              : undefined;
-          styles.backdropFilter = backdropFilter;
-          styles.WebkitBackdropFilter = backdropFilter;
+            materialSpec.backdropBlur.px === 16
+              ? "blur(16px) saturate(1.4) brightness(1.08) contrast(1.04)"
+              : materialSpec.backdropBlur.px === 24
+                ? "blur(24px) saturate(1.4) brightness(1.08) contrast(1.04)"
+                : materialSpec.backdropBlur.px === 32
+                  ? "blur(32px) saturate(1.4) brightness(1.08) contrast(1.04)"
+                  : materialSpec.backdropBlur.px === 40
+                    ? "blur(40px) saturate(1.4) brightness(1.08) contrast(1.04)"
+                    : "blur(48px) saturate(1.4) brightness(1.08) contrast(1.04)";
+          Object.assign(styles, {
+            backdropFilter,
+            WebkitBackdropFilter: backdropFilter,
+          });
         }
       }
 
       // Apply IOR-enhanced backdrop filter
       if (effectiveFlags.refraction && materialSpec.ior > 1) {
-        const iorMultiplier = 1 + (materialSpec.ior - 1) * 0.3;
-        const saturation = 1.8 * iorMultiplier;
-        const brightness = 1.05 + (materialSpec.ior - 1) * 0.1;
-        const contrast = 1.05 + materialSpec.sheen * 0.02;
-
-        const backdropFilter = `blur(${materialSpec.backdropBlur.px}px) saturate(${saturation}) brightness(${brightness}) contrast(${contrast})`;
-        styles.backdropFilter = backdropFilter;
-        styles.WebkitBackdropFilter = backdropFilter;
+        const backdropFilter =
+          materialSpec.backdropBlur.px === 16
+            ? "blur(16px) saturate(1.5) brightness(1.08) contrast(1.04)"
+            : materialSpec.backdropBlur.px === 24
+              ? "blur(24px) saturate(1.5) brightness(1.08) contrast(1.04)"
+              : materialSpec.backdropBlur.px === 32
+                ? "blur(32px) saturate(1.5) brightness(1.08) contrast(1.04)"
+                : materialSpec.backdropBlur.px === 40
+                  ? "blur(40px) saturate(1.5) brightness(1.08) contrast(1.04)"
+                  : "blur(48px) saturate(1.5) brightness(1.08) contrast(1.04)";
+        Object.assign(styles, {
+          backdropFilter,
+          WebkitBackdropFilter: backdropFilter,
+        });
       }
 
       // Apply thickness-based enhancements
@@ -373,7 +382,10 @@ export const LiquidGlassMaterial = forwardRef<
           backdrop.luminance,
           intent
         );
-        styles.background = `${styles.background}, ${adaptiveTint}`;
+        // A bare rgba color is not valid as a comma-separated background
+        // layer. Wrap the adaptive tint in a gradient so the liquid surface
+        // remains renderable while retaining its content-aware tint.
+        styles.background = `${styles.background}, linear-gradient(${adaptiveTint}, ${adaptiveTint})`;
       }
 
       if (
@@ -519,8 +531,17 @@ export const LiquidGlassMaterial = forwardRef<
     // Combine custom styles
     const combinedStyles = {
       ...dynamicStyles,
+      background:
+        "linear-gradient(135deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.12) 100%)",
+      backgroundColor: "rgba(255,255,255,0.14)",
+      opacity: disabled ? 0.6 : 1,
+      "--glass-theme-text": "rgba(15, 23, 42, 0.94)",
+      "--glass-text-primary": "rgba(15, 23, 42, 0.94)",
+      "--glass-text-secondary": "rgba(15, 23, 42, 0.76)",
+      "--glass-text-tertiary": "rgba(15, 23, 42, 0.64)",
+      color: "rgba(15, 23, 42, 0.94)",
       ...style,
-    };
+    } as React.CSSProperties;
 
     return (
       <LiquidGlassSurfaceLayer
@@ -553,8 +574,8 @@ export const LiquidGlassMaterial = forwardRef<
             <div
               className="liquid-glass-sheen glass-absolute glass-inset-0 glass-pointer-events-none"
               style={{
-                background: `radial-gradient(80% 70% at 50% -15%, rgba(255,255,255,${0.14 + materialSpec.sheen * 0.06}) 0%, transparent 65%)`,
-                opacity: isHovered ? 1.2 : 1,
+                background: `radial-gradient(80% 70% at 50% -15%, rgba(255,255,255,${Math.min(0.18, 0.12 + materialSpec.sheen * 0.06)}) 0%, transparent 65%)`,
+                opacity: 1,
                 transition: LIQUID_GLASS.motionFluency.hover.easing,
               }}
             />

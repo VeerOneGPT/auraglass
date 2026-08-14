@@ -3,29 +3,31 @@
 
 :root {
   /* Premium font stacks */
-  --font-display: 'Geist', 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", system-ui, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', 'Fira Code', 'Monaco', 'Consolas', monospace;
-  
+  --font-display: var(--aura-font-sans);
+  --font-body: var(--aura-font-sans);
+  --font-mono:
+    "JetBrains Mono", "SF Mono", "Cascadia Code", "Fira Code", "Monaco",
+    "Consolas", monospace;
+
   /* Typography scale with perfect proportions */
-  --text-xs: 0.75rem;     /* 12px */
-  --text-sm: 0.875rem;    /* 14px */
-  --text-base: 1rem;      /* 16px */
-  --text-lg: 1.125rem;    /* 18px */
-  --text-xl: 1.25rem;     /* 20px */
-  --text-2xl: 1.5rem;     /* 24px */
-  --text-3xl: 1.875rem;   /* 30px */
-  --text-4xl: 2.25rem;    /* 36px */
-  --text-5xl: 3rem;       /* 48px */
-  --text-6xl: 3.75rem;    /* 60px */
-  
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.25rem; /* 20px */
+  --text-2xl: 1.5rem; /* 24px */
+  --text-3xl: 1.875rem; /* 30px */
+  --text-4xl: 2.25rem; /* 36px */
+  --text-5xl: 3rem; /* 48px */
+  --text-6xl: 3.75rem; /* 60px */
+
   /* Letter spacing for different sizes */
   --tracking-tighter: -0.05em;
   --tracking-tight: -0.025em;
   --tracking-normal: 0;
   --tracking-wide: 0.025em;
   --tracking-wider: 0.05em;
-  
+
   /* Line heights for different use cases */
   --leading-none: 1;
   --leading-tight: 1.25;
@@ -41,14 +43,22 @@ body {
   font-size: var(--text-sm);
   line-height: var(--leading-normal);
   letter-spacing: var(--tracking-tight);
-  font-feature-settings: 'rlig' 1, 'calt' 1, 'kern' 1;
+  font-feature-settings:
+    "rlig" 1,
+    "calt" 1,
+    "kern" 1;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 /* Heading hierarchy with perfect contrast */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
   font-weight: 600;
   line-height: var(--leading-tight);
@@ -90,11 +100,12 @@ h6 {
 /* Perfect text contrast for glass components */
 .glass-text-dark {
   color: var(--glass-text-primary) !important;
-  text-shadow: 0 1px 3px rgba(var(--glass-color-black) / var(--glass-opacity-30));
+  text-shadow: 0 1px 3px
+    rgba(var(--glass-color-black) / var(--glass-opacity-30));
 }
 
 .glass-text-light {
-  color: rgba(0, 0, 0, 0.90) !important;
+  color: rgba(0, 0, 0, 0.9) !important;
   text-shadow: 0 1px 2px var(--glass-bg-hover);
 }
 
@@ -103,14 +114,15 @@ h6 {
 .glass-card,
 [class*="glass-"] {
   color: var(--glass-text-primary) !important;
-  text-shadow: 0 1px 3px rgba(var(--glass-color-black) / var(--glass-opacity-20));
+  text-shadow: 0 1px 3px
+    rgba(var(--glass-color-black) / var(--glass-opacity-20));
 }
 
 /* Light mode adjustments */
 .light .glass-base,
 .light .glass-card,
 .light [class*="glass-"] {
-  color: rgba(0, 0, 0, 0.90) !important;
+  color: rgba(0, 0, 0, 0.9) !important;
   text-shadow: 0 1px 2px var(--glass-border-default);
 }
 
@@ -136,7 +148,7 @@ h6 {
   font-weight: 400;
   letter-spacing: var(--tracking-normal);
   color: inherit;
-  opacity: 0.80;
+  opacity: 0.8;
 }
 
 .glass-caption {
@@ -145,7 +157,7 @@ h6 {
   font-weight: 400;
   letter-spacing: var(--tracking-wide);
   color: inherit;
-  opacity: 0.70;
+  opacity: 0.7;
 }
 
 .glass-code {
@@ -175,15 +187,27 @@ h6 {
 
 /* Responsive typography adjustments */
 @media (min-width: 768px) {
-  h1 { font-size: var(--text-5xl); }
-  h2 { font-size: var(--text-4xl); }
-  h3 { font-size: var(--text-3xl); }
+  h1 {
+    font-size: var(--text-5xl);
+  }
+  h2 {
+    font-size: var(--text-4xl);
+  }
+  h3 {
+    font-size: var(--text-3xl);
+  }
 }
 
 @media (min-width: 1024px) {
-  h1 { font-size: var(--text-6xl); }
-  h2 { font-size: var(--text-5xl); }
-  h3 { font-size: var(--text-4xl); }
+  h1 {
+    font-size: var(--text-6xl);
+  }
+  h2 {
+    font-size: var(--text-5xl);
+  }
+  h3 {
+    font-size: var(--text-4xl);
+  }
 }
 
 /* Enhanced readability */
@@ -196,7 +220,8 @@ p {
 }
 
 /* Code and monospace */
-code, pre {
+code,
+pre {
   font-family: var(--font-mono);
   letter-spacing: 0;
 }
@@ -216,11 +241,12 @@ code, pre {
     color: #ffffff !important;
     text-shadow: 0 0 4px rgba(0, 0, 0, 0.8) !important;
   }
-  
+
   .light .glass-base,
   .light .glass-card,
   .light [class*="glass-"] {
     color: #000000 !important;
-    text-shadow: 0 0 4px rgba(var(--glass-color-white) / var(--glass-opacity-80)) !important;
+    text-shadow: 0 0 4px
+      rgba(var(--glass-color-white) / var(--glass-opacity-80)) !important;
   }
 }

@@ -57,6 +57,13 @@ interface VoiceCommand {
   example?: string;
 }
 
+const voiceSurfaceStyle: React.CSSProperties = {
+  backgroundColor: "rgba(255,255,255,.14)",
+  backgroundImage:
+    "linear-gradient(135deg, rgba(255,255,255,.28), rgba(255,255,255,.14))",
+  border: "1px solid rgba(255,255,255,.3)",
+};
+
 // Mock voice control hook - in real implementation this would use actual Web Speech API
 const useVoiceGlassControl = () => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -467,11 +474,7 @@ export default function VoiceGlassControl({
   };
 
   const getStateColor = () => {
-    if (!state.isSupported) return "border-red-400 bg-red-400/10";
-    if (state.isListening) return "border-blue-400 bg-blue-400/10";
-    if (state.wakeWordDetected) return "border-green-400 bg-green-400/10";
-    if (state.error) return "border-red-400 bg-red-400/10";
-    return "border-gray-400 bg-gray-400/10";
+    return "glass-border glass-border-subtle glass-surface";
   };
 
   const getStateDescription = () => {
@@ -505,6 +508,7 @@ export default function VoiceGlassControl({
       >
         <motion.div
           className="glass-backdrop-blur-lg glass-border glass-border-red/20 glass-surface-red/10 glass-p-3 glass-radius-lg glass-contrast-guard"
+          style={voiceSurfaceStyle}
           whileHover={{ scale: 1.05 }}
         >
           <div className="glass-flex glass-items-center glass-gap-2 glass-text-primary">
@@ -528,6 +532,7 @@ export default function VoiceGlassControl({
             "glass-backdrop-blur-lg border p-3 rounded-lg transition-all duration-300 glass-contrast-guard",
             getStateColor()
           )}
+          style={voiceSurfaceStyle}
           whileHover={{ scale: 1.05 }}
         >
           <div className="glass-flex glass-items-center glass-gap-3">

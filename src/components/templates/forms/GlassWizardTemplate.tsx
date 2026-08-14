@@ -11,6 +11,7 @@ import { HStack, VStack } from "@/components/layout";
 import { Glass } from "@/primitives";
 import { Motion } from "@/primitives";
 import { GlassFormWizardSteps } from "./GlassFormWizardSteps";
+import "../templateNeutral.css";
 
 export interface WizardStep {
   id: string;
@@ -488,7 +489,7 @@ export const GlassWizardTemplate = forwardRef<
     return (
       <div
         ref={ref}
-        className={cn("w-full glass-auto-gap glass-auto-gap-3xl", className)}
+        className={cn("w-full glass-auto-gap glass-auto-gap-3xl glass-template-neutral", className)}
         {...props}
       >
         {layout !== "sidebar" && renderHeader()}

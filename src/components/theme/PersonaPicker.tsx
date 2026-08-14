@@ -79,14 +79,7 @@ export const PersonaPicker: React.FC<PersonaPickerProps> = ({
           const cardStyle: CSSProperties & {
             [key: string]: string | CSSProperties[keyof CSSProperties];
           } = {
-            background: entry.colors.background.surface,
-            color: entry.colors.text.primary,
-            borderRadius: entry.spacing.panelRadius,
-            boxShadow: active
-              ? entry.colors.shadow.panel
-              : "0 20px 45px -30px rgba(6, 12, 20, 0.6)",
             transitionDuration: motionDuration,
-            ["--card-accent" as string]: entry.colors.accent.primary,
             ["--card-hover" as string]: motionDuration,
           };
 
@@ -113,12 +106,10 @@ export const PersonaPicker: React.FC<PersonaPickerProps> = ({
 
               <div className="persona-picker-card__swatches" aria-hidden="true">
                 <span
-                  className="glass-persona-picker-card__swatch glass-persona-picker-card__swatch--primary"
-                  style={{ background: entry.colors.accent.primary }}
+                  className="persona-picker-card__swatch persona-picker-card__swatch--primary"
                 />
                 <span
-                  className="glass-persona-picker-card__swatch glass-persona-picker-card__swatch--secondary"
-                  style={{ background: entry.colors.accent.secondary }}
+                  className="persona-picker-card__swatch persona-picker-card__swatch--secondary"
                 />
               </div>
 

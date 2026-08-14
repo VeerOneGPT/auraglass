@@ -43,7 +43,7 @@ const LayoutGallery = () => (
 );
 
 const styles: Record<string, React.CSSProperties> = {
-  page: { minHeight: '100dvh', padding: 32, boxSizing: 'border-box', color: '#111827', background: 'linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #f0fdf4 100%)' },
+  page: { minHeight: '100dvh', padding: 32, boxSizing: 'border-box', color: '#111827', background: 'linear-gradient(145deg, #ffffff 0%, #f3f5f7 50%, #e7ebef 100%)' },
   hero: { maxWidth: 1180, margin: '0 auto 24px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: 24, alignItems: 'center' },
   kicker: { fontSize: 12, fontWeight: 800, letterSpacing: 0, color: '#047857', textTransform: 'uppercase' },
   title: { margin: '8px 0', fontSize: 36, lineHeight: 1.08, letterSpacing: 0 },

@@ -1,31 +1,66 @@
-import React from "react";
+import type { CSSProperties } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import * as ComponentModule from "./GlassConnectionStatus";
-import {
-  CertificationCase,
-  type MissingComponentName,
-} from "../../stories/GlassMissingInventoryCertification.stories";
+import { GlassConnectionStatus as GlassConnectionStatusComponent } from "./GlassConnectionStatus";
 
-const componentName = "GlassConnectionStatus" satisfies MissingComponentName;
-const Component = (ComponentModule as Record<string, any>)[componentName];
+const frameStyle: CSSProperties = {
+  alignItems: "center",
+  boxSizing: "border-box",
+  display: "flex",
+  justifyContent: "center",
+  maxWidth: "100%",
+  minWidth: 0,
+  padding: "clamp(4px, 2vw, 12px)",
+  width: "min(360px, calc(100vw - 32px))",
+};
+
+const connectionLabels = {
+  offline: "Connection unavailable",
+  online: "Private relay connected",
+  slow: "Limited connection",
+} as const;
 
 const meta = {
-  title: 'Reference/Legacy Components/Glass Connection Status',
-  component: Component,
+  title: "Reference/Legacy Components/Glass Connection Status",
+  component: GlassConnectionStatusComponent,
   parameters: {
     layout: "centered",
+    previewSurface: "component",
+    controls: {
+      exclude: ["onStatusChange"],
+    },
     docs: {
       description: {
         component:
-          "Component-owned Storybook coverage for GlassConnectionStatus. This story renders the certified AuraGlass sample used by the full visual certification suite.",
+          "The real GlassConnectionStatus export in a stable inline state, using a restrained semantic signal over the component's neutral liquid-glass material.",
       },
     },
   },
-} satisfies Meta<typeof Component>;
+  tags: ["autodocs"],
+  args: {
+    animate: false,
+    autoHideDelay: 0,
+    elevation: "level3",
+    labels: connectionLabels,
+    position: "inline",
+    showQuality: false,
+    showText: true,
+    size: "lg",
+    status: "online",
+  },
+} satisfies Meta<typeof GlassConnectionStatusComponent>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  render: () => <CertificationCase name={componentName} />,
+export const GlassConnectionStatus: Story = {
+  name: "GlassConnectionStatus",
+  render: (args) => (
+    <div style={frameStyle}>
+      <GlassConnectionStatusComponent
+        {...args}
+        aria-label="Network connection status"
+        data-testid="glass-connection-status-story"
+      />
+    </div>
+  ),
 };
