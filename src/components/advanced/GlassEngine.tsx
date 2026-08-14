@@ -1,6 +1,6 @@
 "use client";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import React, {
   createContext,
   useCallback,
@@ -13,7 +13,93 @@ import React, {
 import { cn } from "../../lib/utilsComprehensive";
 import { createGlassStyle } from "../../core/mixins/glassMixins";
 import { ContrastGuard } from "../accessibility/ContrastGuard";
-import { ANIMATION, COLORS } from "../../tokens/designConstants";
+import { ANIMATION } from "../../tokens/designConstants";
+
+const MIN_GLASS_ALPHA = 0.08;
+const MAX_GLASS_ALPHA = 0.35;
+
+const CANONICAL_BLUR_LEVELS = [
+  { blur: 16, elevation: "level1" },
+  { blur: 24, elevation: "level2" },
+  { blur: 32, elevation: "level3" },
+  { blur: 40, elevation: "level4" },
+  { blur: 48, elevation: "level5" },
+] as const;
+
+const clampGlassAlpha = (value: number): number =>
+  Math.min(MAX_GLASS_ALPHA, Math.max(MIN_GLASS_ALPHA, value));
+
+const getCanonicalBlurLevel = (requestedBlur: number) =>
+  CANONICAL_BLUR_LEVELS.reduce((closest, candidate) =>
+    Math.abs(candidate.blur - requestedBlur) <
+    Math.abs(closest.blur - requestedBlur)
+      ? candidate
+      : closest
+  );
+
+/**
+ * Builds a neutral white-channel liquid-glass material. Environmental and
+ * content adaptation may change its density, but never its hue.
+ */
+const createNeutralGlassGradient = (requestedAlpha: number): string => {
+  const base = clampGlassAlpha(requestedAlpha);
+  const highlight = clampGlassAlpha(base + 0.04);
+  const midpoint = clampGlassAlpha(base - 0.02);
+
+  return `linear-gradient(135deg, rgba(255, 255, 255, ${highlight.toFixed(3)}) 0%, rgba(255, 255, 255, ${midpoint.toFixed(3)}) 50%, rgba(255, 255, 255, ${base.toFixed(3)}) 100%)`;
+};
+
+const getNeutralTintAlpha = (
+  tintColor: string | undefined,
+  fallbackIntensity: number
+): number => {
+  // A supplied tint can contribute density, but not chroma. This preserves
+  // the API's intensity semantics without contaminating the glass material.
+  const rgbaAlpha = tintColor?.match(
+    /rgba?\([^)]*(?:,|\/)\s*([0-9]*\.?[0-9]+)\s*\)$/i
+  )?.[1];
+  const parsedAlpha = rgbaAlpha === undefined ? NaN : Number(rgbaAlpha);
+
+  return clampGlassAlpha(
+    Number.isFinite(parsedAlpha) ? parsedAlpha : fallbackIntensity
+  );
+};
+
+const withNeutralMaterial = (
+  style: React.CSSProperties,
+  background: string
+): React.CSSProperties => {
+  // Canonical styles expose both a gradient and an optional flat overlay.
+  // A dynamic material replaces the complete paint layer so React never has
+  // to reconcile background shorthand against a stale backgroundColor.
+  const {
+    background: _background,
+    backgroundColor: _backgroundColor,
+    ...rest
+  } = style;
+  return { ...rest, background };
+};
+
+const mergeGlassAndConsumerStyle = (
+  glassStyle: React.CSSProperties,
+  consumerStyle: React.CSSProperties | undefined
+): React.CSSProperties => {
+  if (!consumerStyle) return glassStyle;
+  const safeConsumerStyle = { ...consumerStyle };
+  const protectedMaterialKeys: Array<keyof React.CSSProperties> = [
+    "background",
+    "backgroundColor",
+    "backgroundImage",
+    "backdropFilter",
+    "WebkitBackdropFilter",
+    "filter",
+  ];
+  for (const key of protectedMaterialKeys) delete safeConsumerStyle[key];
+
+  // Consumers may size and position the surface, but its material paint and
+  // optical filters remain canonical and neutral.
+  return { ...glassStyle, ...safeConsumerStyle };
+};
 
 export interface GlassEngineConfig {
   opacity: {
@@ -71,7 +157,7 @@ interface EnvironmentalConditions {
 
 const defaultConfig: GlassEngineConfig = {
   opacity: { base: 0.1, hover: 0.15, active: 0.2 },
-  blur: { base: 20, hover: 15, active: 10 },
+  blur: { base: 24, hover: 16, active: 16 },
   brightness: { base: 1, hover: 1.1, active: 1.2 },
   tinting: { enabled: true, intensity: 0.3, adaptiveColor: true },
   texture: { type: "smooth", intensity: 0.5, animated: false },
@@ -94,41 +180,41 @@ const defaultGlassEngineContext: GlassEngineContextType = {
 };
 
 export const useGlassEngine = () => {
-  const prefersReducedMotion = useReducedMotion();
   const context = useContext(GlassEngineContext);
   return context ?? defaultGlassEngineContext;
 };
 
 const generateTextureCSS = (type: string, intensity: number): string => {
+  const normalizedIntensity = Math.min(1, Math.max(0, intensity));
+  const subtle = clampGlassAlpha(0.08 + normalizedIntensity * 0.02);
+  const sheen = clampGlassAlpha(0.1 + normalizedIntensity * 0.06);
+  const clear = MIN_GLASS_ALPHA;
+
+  // Legacy texture names remain API-compatible, but every pattern is a
+  // restrained white-channel optical layer rather than matte frost or color.
   const patterns = {
-    smooth: `linear-gradient(135deg, rgba(255,255,255,${0.1 * intensity}), transparent)`,
+    smooth: `linear-gradient(135deg, rgba(255,255,255,${sheen}), rgba(255,255,255,${clear}))`,
     frosted: `
-      radial-gradient(circle at 20% 30%, rgba(255,255,255,${0.15 * intensity}) 1px, transparent 1px),
-      radial-gradient(circle at 70% 80%, rgba(255,255,255,${0.1 * intensity}) 1px, transparent 1px),
-      linear-gradient(135deg, rgba(255,255,255,${0.05 * intensity}), transparent)
+      radial-gradient(ellipse at 20% 15%, rgba(255,255,255,${sheen}), rgba(255,255,255,${clear}) 58%),
+      linear-gradient(135deg, rgba(255,255,255,${subtle}), rgba(255,255,255,${clear}))
     `,
     rippled: `
-      repeating-linear-gradient(
-        45deg,
-        rgba(255,255,255,${0.08 * intensity}),
-        rgba(255,255,255,${0.08 * intensity}) 2px,
-        transparent 2px,
-        transparent 8px
-      )
+      radial-gradient(ellipse at 18% 12%, rgba(255,255,255,${sheen}), rgba(255,255,255,${clear}) 62%),
+      radial-gradient(ellipse at 82% 88%, rgba(255,255,255,${subtle}), rgba(255,255,255,${clear}) 68%)
     `,
     crystalline: `
       conic-gradient(from 0deg at 50% 50%,
-        rgba(255,255,255,${0.2 * intensity}) 0deg,
-        transparent 60deg,
-        rgba(255,255,255,${0.1 * intensity}) 120deg,
-        transparent 180deg,
-        rgba(255,255,255,${0.15 * intensity}) 240deg,
-        transparent 300deg
+        rgba(255,255,255,${sheen}) 0deg,
+        rgba(255,255,255,${clear}) 60deg,
+        rgba(255,255,255,${subtle}) 120deg,
+        rgba(255,255,255,${clear}) 180deg,
+        rgba(255,255,255,${sheen}) 240deg,
+        rgba(255,255,255,${clear}) 300deg
       )
     `,
     liquid: `
-      radial-gradient(ellipse at top, rgba(255,255,255,${0.12 * intensity}), transparent),
-      radial-gradient(ellipse at bottom, rgba(255,255,255,${0.08 * intensity}), transparent)
+      radial-gradient(ellipse at top, rgba(255,255,255,${sheen}), rgba(255,255,255,${clear})),
+      radial-gradient(ellipse at bottom, rgba(255,255,255,${subtle}), rgba(255,255,255,${clear}))
     `,
   };
 
@@ -173,7 +259,18 @@ export const GlassEngineProvider: React.FC<{
       const brightnessValue =
         brightness[variant as keyof typeof brightness] || brightness.base;
 
-      return createGlassStyle({ intent: "neutral", elevation: "level2" });
+      const canonicalLevel = getCanonicalBlurLevel(blurValue);
+      const materialAlpha = clampGlassAlpha(
+        opacityValue * Math.min(1.2, Math.max(1, brightnessValue))
+      );
+
+      return withNeutralMaterial(
+        createGlassStyle({
+          intent: "neutral",
+          elevation: canonicalLevel.elevation,
+        }),
+        `${generateTextureCSS(texture.type, texture.intensity)}, ${createNeutralGlassGradient(materialAlpha)}`
+      );
     },
     [config]
   );
@@ -218,11 +315,11 @@ export const GlassEngineProvider: React.FC<{
                 animated: true,
               };
               next.opacity.base = Math.min(0.25, next.opacity.base + 0.05);
-              next.blur.base = Math.max(10, next.blur.base - 5);
+              next.blur.base = getCanonicalBlurLevel(next.blur.base - 8).blur;
               break;
             case "foggy":
               next.opacity.base = Math.max(0.05, next.opacity.base - 0.03);
-              next.blur.base = Math.min(30, next.blur.base + 8);
+              next.blur.base = getCanonicalBlurLevel(next.blur.base + 8).blur;
               break;
             case "snowy":
               next.texture = { ...next.texture, type: "crystalline" };
@@ -241,7 +338,7 @@ export const GlassEngineProvider: React.FC<{
           if (hour >= 20 || hour <= 6) {
             // Night time - more subtle effects
             next.opacity.base = Math.max(0.05, next.opacity.base - 0.02);
-            next.blur.base = Math.min(25, next.blur.base + 3);
+            next.blur.base = getCanonicalBlurLevel(next.blur.base + 8).blur;
           } else if (hour >= 12 && hour <= 16) {
             // Midday - stronger effects
             next.brightness.base = Math.min(1.2, next.brightness.base + 0.05);
@@ -313,6 +410,9 @@ export const AdaptiveGlass: React.FC<AdaptiveGlassProps> = ({
   const prefersReducedMotion = useReducedMotion();
   const { createGlassStyle, config, adaptToEnvironment } = useGlassEngine();
   const [currentVariant, setCurrentVariant] = useState(variant);
+  const consumerStyle = props.style;
+  const forwardedProps = { ...props };
+  delete forwardedProps.style;
 
   const glassStyle = useMemo(() => {
     const customConfig = textureOverride
@@ -341,8 +441,8 @@ export const AdaptiveGlass: React.FC<AdaptiveGlassProps> = ({
 
   return (
     <motion.div
-      className={`relative ${className}`}
-      style={{ ...glassStyle }}
+      className={cn("relative glass-surface", className)}
+      style={mergeGlassAndConsumerStyle(glassStyle, consumerStyle)}
       onMouseEnter={() => setCurrentVariant("hover")}
       onMouseLeave={() => setCurrentVariant(variant)}
       onMouseDown={() => setCurrentVariant("active")}
@@ -352,7 +452,7 @@ export const AdaptiveGlass: React.FC<AdaptiveGlassProps> = ({
           ? { duration: 0 }
           : { duration: ANIMATION.DURATION.fast / 1000 }
       }
-      {...props}
+      {...forwardedProps}
     >
       {children}
     </motion.div>
@@ -372,10 +472,8 @@ export const GlassOpacityEngine: React.FC<{
   trigger = "hover",
   className = "",
 }) => {
-  const { createGlassStyle, updateConfig } = useGlassEngine();
+  const { createGlassStyle } = useGlassEngine();
   const [opacity, setOpacity] = useState(opacityRange[0]);
-  const scrollY = useMotionValue(0);
-  const springOpacity = useSpring(opacity, { stiffness: 300, damping: 30 });
 
   useEffect(() => {
     if (!dynamicOpacity) return;
@@ -395,8 +493,14 @@ export const GlassOpacityEngine: React.FC<{
         break;
       case "scroll":
         const handleScroll = () => {
-          const scrollProgress =
-            window.scrollY / (document.body.scrollHeight - window.innerHeight);
+          const scrollableHeight = Math.max(
+            1,
+            document.body.scrollHeight - window.innerHeight
+          );
+          const scrollProgress = Math.min(
+            1,
+            Math.max(0, window.scrollY / scrollableHeight)
+          );
           const scrollOpacity =
             opacityRange[0] +
             scrollProgress * (opacityRange[1] - opacityRange[0]);
@@ -413,11 +517,11 @@ export const GlassOpacityEngine: React.FC<{
 
   return (
     <motion.div
-      className={className}
-      style={{
-        ...createGlassStyle("base"),
-        backgroundColor: `rgba(var(--glass-color-white) / ${springOpacity})`,
-      }}
+      className={cn("glass-surface", className)}
+      style={withNeutralMaterial(
+        createGlassStyle("base"),
+        createNeutralGlassGradient(opacity)
+      )}
       onMouseEnter={
         trigger === "hover" ? () => setOpacity(opacityRange[1]) : undefined
       }
@@ -444,57 +548,43 @@ export const GlassColorTinting: React.FC<{
   className = "",
 }) => {
   const { createGlassStyle } = useGlassEngine();
-  const [adaptiveTint, setAdaptiveTint] = useState(
-    tintColor || "var(--glass-bg-default)"
+  const [materialAlpha, setMaterialAlpha] = useState(() =>
+    getNeutralTintAlpha(tintColor, intensity)
   );
   const containerRef = useRef<HTMLDivElement>(null);
 
   const analyzeContent = useCallback(() => {
-    if (!contentAware || !containerRef.current) return;
-
-    // Simple content analysis - in production, would be more sophisticated
-    const images = containerRef.current.querySelectorAll("img");
-    if (images.length > 0) {
-      // Simulate extracting dominant color from first image
-      const colors = [
-        COLORS.semantic.primary,
-        COLORS.semantic.error,
-        COLORS.semantic.success,
-        COLORS.semantic.warning,
-        COLORS.semantic.primary,
-      ];
-      const randomColor = colors[Math.floor(Math.random() * colors.length)];
-      // Use CSS variable format for colors
-      if (randomColor.startsWith("var(")) {
-        setAdaptiveTint(
-          `rgba(var(--glass-color-white) / var(--glass-opacity-${Math.round(intensity * 100)}))`
-        );
-      } else {
-        // Fallback for non-variable colors
-        const r = parseInt(randomColor.slice(1, 3), 16);
-        const g = parseInt(randomColor.slice(3, 5), 16);
-        const b = parseInt(randomColor.slice(5, 7), 16);
-        setAdaptiveTint(`rgba(${r}, ${g}, ${b}, ${intensity})`);
-      }
+    const baseAlpha = getNeutralTintAlpha(tintColor, intensity);
+    if (!contentAware || !containerRef.current) {
+      setMaterialAlpha(baseAlpha);
+      return;
     }
-  }, [contentAware, intensity]);
+
+    // Content density increases neutral refraction slightly. Chroma from
+    // images is intentionally never sampled into the material surface.
+    const images = containerRef.current.querySelectorAll("img");
+    setMaterialAlpha(baseAlpha + Math.min(images.length, 3) * 0.02);
+  }, [contentAware, intensity, tintColor]);
 
   useEffect(() => {
-    if (contentAware) {
-      analyzeContent();
-    }
-  }, [analyzeContent, contentAware]);
+    analyzeContent();
+  }, [analyzeContent]);
 
   const tintedStyle = useMemo(
-    () => ({
-      ...createGlassStyle("base"),
-      backgroundColor: adaptiveTint,
-    }),
-    [createGlassStyle, adaptiveTint]
+    () =>
+      withNeutralMaterial(
+        createGlassStyle("base"),
+        createNeutralGlassGradient(materialAlpha)
+      ),
+    [createGlassStyle, materialAlpha]
   );
 
   return (
-    <div ref={containerRef} className={className} style={{ ...tintedStyle }}>
+    <div
+      ref={containerRef}
+      className={cn("glass-surface", className)}
+      style={{ ...tintedStyle }}
+    >
       {children}
     </div>
   );
@@ -506,8 +596,9 @@ export const GlassTextureVariations: React.FC<{
   autoAdapt?: boolean;
   className?: string;
 }> = ({ children, contentType = "text", autoAdapt = true, className = "" }) => {
-  const { createGlassStyle, updateConfig } = useGlassEngine();
-  const [currentTexture, setCurrentTexture] = useState<string>("smooth");
+  const { config, createGlassStyle, updateConfig } = useGlassEngine();
+  const [currentTexture, setCurrentTexture] =
+    useState<GlassTextureType>("smooth");
 
   useEffect(() => {
     if (!autoAdapt) return;
@@ -536,7 +627,14 @@ export const GlassTextureVariations: React.FC<{
   }, [contentType, autoAdapt, updateConfig]);
 
   return (
-    <div className={className} style={{ ...createGlassStyle("base") }}>
+    <div
+      className={cn("glass-surface", className)}
+      style={{
+        ...createGlassStyle("base", {
+          texture: { ...config.texture, type: currentTexture },
+        }),
+      }}
+    >
       {children}
     </div>
   );
@@ -553,7 +651,7 @@ export const EnvironmentalGlass: React.FC<{
   const [conditions, setConditions] = useState<EnvironmentalConditions>({
     weather: "sunny",
     temperature: 20,
-    timeOfDay: new Date().getHours(),
+    timeOfDay: timeSync ? new Date().getHours() : 12,
     humidity: 50,
     season: "spring",
   });
@@ -595,10 +693,12 @@ export const EnvironmentalGlass: React.FC<{
 
   return (
     <motion.div
-      className={className}
+      className={cn("glass-surface", className)}
       style={{ ...createGlassStyle("base") }}
       animate={{
-        filter: `hue-rotate(${conditions.timeOfDay * 15}deg) brightness(${1 + (conditions.timeOfDay > 12 ? (24 - conditions.timeOfDay) / 24 : conditions.timeOfDay / 24) * 0.2})`,
+        // Preserve a restrained, neutral time-of-day response without
+        // rotating the surface hue or tinting the material/content.
+        filter: `brightness(${1 + (conditions.timeOfDay > 12 ? (24 - conditions.timeOfDay) / 24 : conditions.timeOfDay / 24) * 0.12})`,
       }}
       transition={
         prefersReducedMotion
@@ -623,12 +723,12 @@ export const GlassEngineDemo: React.FC = () => {
             <AdaptiveGlass
               key={texture}
               textureOverride={texture}
-              className="glass-p-4 glass-text-center"
+              className="glass-min-w-0 glass-p-3 sm:glass-p-4 glass-text-center glass-overflow-hidden"
             >
               <ContrastGuard>
                 <h3
                   className={cn(
-                    "glass-text-primary glass-font-medium glass-capitalize glass-mb-2"
+                    "glass-text-primary glass-font-medium glass-capitalize glass-mb-2 glass-text-sm sm:glass-text-base glass-break-words"
                   )}
                 >
                   {texture}
@@ -700,7 +800,7 @@ export const GlassEngineDemo: React.FC = () => {
 
       {/* Controls */}
       <div
-        className="glass-p-4"
+        className="glass-surface glass-p-4"
         style={{ ...createGlassStyle("base") }}
         role="region"
         aria-label="Glass engine controls"
@@ -756,18 +856,24 @@ export const GlassEngineDemo: React.FC = () => {
             <input
               id="blur-intensity-slider"
               type="range"
-              min="5"
-              max="30"
+              min="16"
+              max="48"
+              step="8"
               value={config.blur.base}
               onChange={(e) =>
                 updateConfig({
-                  blur: { ...config.blur, base: parseInt(e.target.value) },
+                  blur: {
+                    ...config.blur,
+                    base: getCanonicalBlurLevel(
+                      Number.parseInt(e.target.value, 10)
+                    ).blur,
+                  },
                 })
               }
               className="glass-w-full glass-focus glass-touch-target glass-contrast-guard"
               aria-label="Blur intensity slider"
-              aria-valuemin={5}
-              aria-valuemax={30}
+              aria-valuemin={16}
+              aria-valuemax={48}
               aria-valuenow={config.blur.base}
             />
           </div>

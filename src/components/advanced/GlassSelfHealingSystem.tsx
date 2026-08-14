@@ -15,6 +15,7 @@ import React, {
   useContext,
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { createPortal } from "react-dom";
 import { cn } from "../../lib/utils";
 import { ContrastGuard } from "../accessibility/ContrastGuard";
 import { ANIMATION } from "../../tokens/designConstants";
@@ -1165,14 +1166,17 @@ export function GlassSelfHealingWrapper({
 export function GlassSelfHealingDashboard({
   className,
   showOnlyUnhealthy = false,
+  defaultOpen = false,
 }: {
   className?: string;
   showOnlyUnhealthy?: boolean;
+  /** Opens the diagnostic surface on first render; useful for embedded dashboards. */
+  defaultOpen?: boolean;
 }) {
   const prefersReducedMotion = useReducedMotion();
   const { getAllHealth } = useSelfHealing();
   const [allHealth, setAllHealth] = useState<ComponentHealthCheck[]>([]);
-  const [showDashboard, setShowDashboard] = useState(false);
+  const [showDashboard, setShowDashboard] = useState(defaultOpen);
 
   useEffect(() => {
     const updateHealth = () => {
@@ -1192,6 +1196,88 @@ export function GlassSelfHealingDashboard({
   const criticalCount = allHealth.filter((h) => h.status === "critical").length;
   const warningCount = allHealth.filter((h) => h.status === "warning").length;
   const healingCount = allHealth.filter((h) => h.status === "healing").length;
+  const dashboard = (
+    <AnimatePresence>
+      {showDashboard && (
+        <motion.div
+          className="glass-surface-primary glass-elev-4 glass-radius-lg glass-p-4 glass-gap-3"
+          style={{
+            position: "fixed",
+            zIndex: 51,
+            top: "4.75rem",
+            left: "1rem",
+            width: "min(20rem, calc(100vw - 2rem))",
+            maxWidth: "calc(100vw - 2rem)",
+            maxHeight: "min(24rem, calc(100vh - 5.75rem))",
+            overflowY: "auto",
+            color: "rgba(15,23,42,.94)",
+            background:
+              "linear-gradient(145deg, rgba(255,255,255,.30), rgba(255,255,255,.16))",
+            backgroundColor: "rgba(255,255,255,.18)",
+            border: "1px solid rgba(255,255,255,.28)",
+            boxShadow:
+              "inset 0 1px 0 rgba(255,255,255,.28), 0 18px 48px rgba(20,20,20,.14)",
+            backdropFilter:
+              "blur(24px) saturate(1.4) brightness(1.04) contrast(1.02)",
+            WebkitBackdropFilter:
+              "blur(24px) saturate(1.4) brightness(1.04) contrast(1.02)",
+          }}
+          initial={{ opacity: 0, y: -10, scale: 0.95 }}
+          animate={prefersReducedMotion ? {} : { opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -10, scale: 0.95 }}
+        >
+          <div className="glass-flex glass-items-center glass-justify-between">
+            <h3 className="glass-text-sm glass-font-medium glass-text-primary">
+              Self-Healing Dashboard
+            </h3>
+            <button
+              onClick={() => setShowDashboard(false)}
+              aria-label="Close self-healing dashboard"
+              className="glass-text-xs glass-text-secondary hover:glass-text-primary glass-focus glass-touch-target glass-contrast-guard"
+            >
+              ✕
+            </button>
+          </div>
+          {allHealth.map((health) => (
+            <motion.div
+              key={health.componentId}
+              className="glass-p-3 glass-surface-secondary glass-radius-md"
+              initial={{ opacity: 0, x: -10 }}
+              animate={prefersReducedMotion ? {} : { opacity: 1, x: 0 }}
+            >
+              <div className="glass-flex glass-items-center glass-justify-between">
+                <span className="glass-text-sm glass-text-primary glass-font-medium">
+                  {health.componentType}
+                </span>
+                <div className="glass-flex glass-items-center glass-gap-2">
+                  <div
+                    className="glass-w-3 glass-h-3 glass-radius-full"
+                    style={{
+                      backgroundColor: HEALTH_STATUS_COLORS[health.status],
+                    }}
+                  />
+                  <span className="glass-text-xs glass-text-secondary">
+                    {(health.healthScore * 100).toFixed(0)}%
+                  </span>
+                </div>
+              </div>
+              {health.issues.length > 0 && (
+                <div className="glass-mt-1 glass-text-xs glass-text-tertiary">
+                  {health.issues.length} issue
+                  {health.issues.length !== 1 ? "s" : ""} detected
+                </div>
+              )}
+            </motion.div>
+          ))}
+          {allHealth.length === 0 && (
+            <div className="glass-text-center glass-text-sm glass-text-secondary glass-py-4">
+              All components healthy
+            </div>
+          )}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 
   return (
     <div className={cn("fixed top-4 left-4 z-50", className)}>
@@ -1199,13 +1285,21 @@ export function GlassSelfHealingDashboard({
         className={cn(
           "w-12 h-12 glass-radius-full glass-surface-primary glass-elev-3",
           "flex items-center justify-center glass-text-primary",
-          "transition-all duration-300 glass-hover-scale-105"
+          "transition-all duration-300"
         )}
         onClick={() => setShowDashboard(!showDashboard)}
-        whileHover={{ scale: 1.05 }}
+        aria-label={
+          showDashboard
+            ? "Close self-healing dashboard"
+            : "Open self-healing dashboard"
+        }
+        aria-expanded={showDashboard}
+        whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
         whileTap={{ scale: 0.95 }}
       >
-        🏥
+        <span aria-hidden="true" className="glass-text-lg">
+          ✦
+        </span>
         {criticalCount + warningCount + healingCount > 0 && (
           <motion.div
             className="glass-absolute glass-top-1 glass--right-1 glass-w-3 glass-h-3 glass-surface-red glass-radius-full glass-text-xs glass-text-primary glass-flex glass-items-center glass-justify-center"
@@ -1217,69 +1311,9 @@ export function GlassSelfHealingDashboard({
         )}
       </motion.button>
 
-      <AnimatePresence>
-        {showDashboard && (
-          <motion.div
-            className={cn(
-              "absolute top-14 left-0 w-80 max-h-96 overflow-y-auto",
-              "glass-surface-primary glass-elev-4 glass-radius-lg glass-p-4 glass-gap-3"
-            )}
-            initial={{ opacity: 0, y: -10, scale: 0.95 }}
-            animate={prefersReducedMotion ? {} : { opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.95 }}
-          >
-            <div className="glass-flex glass-items-center glass-justify-between">
-              <h3 className="glass-text-sm glass-font-medium glass-text-primary">
-                Self-Healing Dashboard
-              </h3>
-              <button
-                onClick={() => setShowDashboard(false)}
-                className="glass-text-xs glass-text-secondary hover:glass-text-primary glass-focus glass-touch-target glass-contrast-guard"
-              >
-                ✕
-              </button>
-            </div>
-
-            {allHealth.map((health) => (
-              <motion.div
-                key={health.componentId}
-                className="glass-p-3 glass-surface-secondary glass-radius-md"
-                initial={{ opacity: 0, x: -10 }}
-                animate={prefersReducedMotion ? {} : { opacity: 1, x: 0 }}
-              >
-                <div className="glass-flex glass-items-center glass-justify-between">
-                  <span className="glass-text-sm glass-text-primary glass-font-medium">
-                    {health.componentType}
-                  </span>
-                  <div className="glass-flex glass-items-center glass-gap-2">
-                    <div
-                      className="glass-w-3 glass-h-3 glass-radius-full"
-                      style={{
-                        backgroundColor: HEALTH_STATUS_COLORS[health.status],
-                      }}
-                    />
-                    <span className="glass-text-xs glass-text-secondary">
-                      {(health.healthScore * 100).toFixed(0)}%
-                    </span>
-                  </div>
-                </div>
-                {health.issues.length > 0 && (
-                  <div className="glass-mt-1 glass-text-xs glass-text-tertiary">
-                    {health.issues.length} issue
-                    {health.issues.length !== 1 ? "s" : ""} detected
-                  </div>
-                )}
-              </motion.div>
-            ))}
-
-            {allHealth.length === 0 && (
-              <div className="glass-text-center glass-text-sm glass-text-secondary glass-py-4">
-                All components healthy! 🎉
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {typeof document !== "undefined"
+        ? createPortal(dashboard, document.body)
+        : dashboard}
     </div>
   );
 }

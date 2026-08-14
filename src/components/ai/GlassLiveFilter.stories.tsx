@@ -1,101 +1,103 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { GlassLiveFilter, type FilterEffect } from './GlassLiveFilter';
+import type { Meta, StoryObj } from "@storybook/react";
+import { GlassLiveFilter, type FilterEffect } from "./GlassLiveFilter";
 
 const customFilters: FilterEffect[] = [
   {
-    id: 'grayscale',
-    name: 'Grayscale',
-    description: 'Convert to black and white',
-    category: 'color',
+    id: "grayscale",
+    name: "Grayscale",
+    description: "Convert to black and white",
+    category: "color",
     intensity: 1.0,
-    parameters: { strength: 1.0 }
+    parameters: { strength: 1.0 },
   },
   {
-    id: 'sepia',
-    name: 'Sepia',
-    description: 'Vintage sepia tone effect',
-    category: 'vintage',
+    id: "sepia",
+    name: "Sepia",
+    description: "Vintage sepia tone effect",
+    category: "vintage",
     intensity: 0.8,
-    parameters: { warmth: 0.8 }
+    parameters: { warmth: 0.8 },
   },
   {
-    id: 'blur',
-    name: 'Gaussian Blur',
-    description: 'Smooth blur effect',
-    category: 'blur',
+    id: "blur",
+    name: "Gaussian Blur",
+    description: "Smooth blur effect",
+    category: "blur",
     intensity: 1.0,
-    parameters: { radius: 5 }
+    parameters: { radius: 5 },
   },
   {
-    id: 'brightness',
-    name: 'Brightness',
-    description: 'Adjust image brightness',
-    category: 'color',
+    id: "brightness",
+    name: "Brightness",
+    description: "Adjust image brightness",
+    category: "color",
     intensity: 1.2,
-    parameters: { level: 1.2 }
+    parameters: { level: 1.2 },
   },
   {
-    id: 'contrast',
-    name: 'Contrast',
-    description: 'Adjust image contrast',
-    category: 'color',
+    id: "contrast",
+    name: "Contrast",
+    description: "Adjust image contrast",
+    category: "color",
     intensity: 1.3,
-    parameters: { level: 1.3 }
+    parameters: { level: 1.3 },
   },
   {
-    id: 'edge-detect',
-    name: 'Edge Detection',
-    description: 'Detect and highlight edges',
-    category: 'artistic',
+    id: "edge-detect",
+    name: "Edge Detection",
+    description: "Detect and highlight edges",
+    category: "artistic",
     intensity: 1.0,
-    parameters: { threshold: 0.5 }
+    parameters: { threshold: 0.5 },
   },
   {
-    id: 'vintage',
-    name: 'Vintage Film',
-    description: 'Old film camera effect',
-    category: 'vintage',
+    id: "vintage",
+    name: "Vintage Film",
+    description: "Old film camera effect",
+    category: "vintage",
     intensity: 0.9,
-    parameters: { grain: 0.3, vignette: 0.5 }
+    parameters: { grain: 0.3, vignette: 0.5 },
   },
   {
-    id: 'neon',
-    name: 'Neon Glow',
-    description: 'Cyberpunk neon effect',
-    category: 'modern',
+    id: "neon",
+    name: "Neon Glow",
+    description: "Cyberpunk neon effect",
+    category: "modern",
     intensity: 1.2,
-    parameters: { glow: 1.2, color: '#ff00ff' }
-  }
+    parameters: { glow: 1.2, color: "#ff00ff" },
+  },
 ];
 
 const meta = {
-  title: 'AI + Intelligence/Glass Live Filter',
+  title: "AI + Intelligence/Glass Live Filter",
   component: GlassLiveFilter,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   decorators: [
     (Story) => (
       <div
         style={{
-          width: '100%',
-          minHeight: '100vh',
-          boxSizing: 'border-box',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: 'clamp(12px, 2.5vw, 28px)',
-          overflow: 'hidden',
+          width: "100%",
+          minHeight: "100vh",
+          boxSizing: "border-box",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "clamp(12px, 2.5vw, 28px)",
+          overflow: "hidden",
+          background:
+            "linear-gradient(145deg, #f8f8f8 0%, #eeeeee 52%, #e4e4e4 100%)",
         }}
       >
         <div
           style={{
-            width: 'min(1180px, 100%)',
-            maxHeight: 'calc(100vh - 48px)',
-            overflow: 'auto',
+            width: "min(1180px, 100%)",
+            maxHeight: "calc(100vh - 48px)",
+            overflow: "auto",
             borderRadius: 18,
-            boxSizing: 'border-box',
+            boxSizing: "border-box",
           }}
         >
           <Story />
@@ -105,31 +107,31 @@ const meta = {
   ],
   argTypes: {
     canvasWidth: {
-      control: { type: 'range', min: 400, max: 1200, step: 50 },
+      control: { type: "range", min: 400, max: 1200, step: 50 },
     },
     canvasHeight: {
-      control: { type: 'range', min: 300, max: 800, step: 50 },
+      control: { type: "range", min: 300, max: 800, step: 50 },
     },
     maxFilters: {
-      control: { type: 'range', min: 1, max: 10, step: 1 },
+      control: { type: "range", min: 1, max: 10, step: 1 },
     },
     showFilterLibrary: {
-      control: 'boolean',
+      control: "boolean",
     },
     showPreview: {
-      control: 'boolean',
+      control: "boolean",
     },
     showControls: {
-      control: 'boolean',
+      control: "boolean",
     },
     enableRealTimeProcessing: {
-      control: 'boolean',
+      control: "boolean",
     },
     enableChaining: {
-      control: 'boolean',
+      control: "boolean",
     },
     enableCustomFilters: {
-      control: 'boolean',
+      control: "boolean",
     },
   },
 } satisfies Meta<typeof GlassLiveFilter>;
@@ -140,10 +142,10 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: ['brightness'],
+    selectedFilters: ["brightness"],
     canvasWidth: 800,
     canvasHeight: 600,
-    showFilterLibrary: true,
+    showFilterLibrary: false,
     showPreview: true,
     showControls: true,
     enableRealTimeProcessing: true,
@@ -151,7 +153,7 @@ export const Default: Story = {
     enableCustomFilters: false,
     maxFilters: 5,
     processingSettings: {
-      quality: 'medium',
+      quality: "medium",
       fps: 30,
       enableGPU: true,
       batchSize: 4,
@@ -161,8 +163,8 @@ export const Default: Story = {
 
 export const ColorFilters: Story = {
   args: {
-    availableFilters: customFilters.filter(f => f.category === 'color'),
-    selectedFilters: ['brightness', 'contrast'],
+    availableFilters: customFilters.filter((f) => f.category === "color"),
+    selectedFilters: ["brightness", "contrast"],
     canvasWidth: 800,
     canvasHeight: 600,
     showFilterLibrary: true,
@@ -176,8 +178,8 @@ export const ColorFilters: Story = {
 
 export const ArtisticFilters: Story = {
   args: {
-    availableFilters: customFilters.filter(f => f.category === 'artistic'),
-    selectedFilters: ['edge-detect'],
+    availableFilters: customFilters.filter((f) => f.category === "artistic"),
+    selectedFilters: ["edge-detect"],
     canvasWidth: 800,
     canvasHeight: 600,
     showFilterLibrary: true,
@@ -191,8 +193,8 @@ export const ArtisticFilters: Story = {
 
 export const VintageFilters: Story = {
   args: {
-    availableFilters: customFilters.filter(f => f.category === 'vintage'),
-    selectedFilters: ['sepia', 'vintage'],
+    availableFilters: customFilters.filter((f) => f.category === "vintage"),
+    selectedFilters: ["sepia", "vintage"],
     canvasWidth: 800,
     canvasHeight: 600,
     showFilterLibrary: true,
@@ -206,8 +208,8 @@ export const VintageFilters: Story = {
 
 export const BlurEffects: Story = {
   args: {
-    availableFilters: customFilters.filter(f => f.category === 'blur'),
-    selectedFilters: ['blur'],
+    availableFilters: customFilters.filter((f) => f.category === "blur"),
+    selectedFilters: ["blur"],
     canvasWidth: 800,
     canvasHeight: 600,
     showFilterLibrary: true,
@@ -221,8 +223,8 @@ export const BlurEffects: Story = {
 
 export const ModernEffects: Story = {
   args: {
-    availableFilters: customFilters.filter(f => f.category === 'modern'),
-    selectedFilters: ['neon'],
+    availableFilters: customFilters.filter((f) => f.category === "modern"),
+    selectedFilters: ["neon"],
     canvasWidth: 800,
     canvasHeight: 600,
     showFilterLibrary: true,
@@ -237,7 +239,7 @@ export const ModernEffects: Story = {
 export const HighQualityProcessing: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: ['contrast', 'edge-detect'],
+    selectedFilters: ["contrast", "edge-detect"],
     canvasWidth: 1000,
     canvasHeight: 800,
     showFilterLibrary: true,
@@ -247,7 +249,7 @@ export const HighQualityProcessing: Story = {
     enableChaining: true,
     maxFilters: 8,
     processingSettings: {
-      quality: 'ultra',
+      quality: "ultra",
       fps: 60,
       enableGPU: true,
       batchSize: 8,
@@ -258,7 +260,7 @@ export const HighQualityProcessing: Story = {
 export const LowQualityFast: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: ['grayscale'],
+    selectedFilters: ["grayscale"],
     canvasWidth: 600,
     canvasHeight: 400,
     showFilterLibrary: true,
@@ -268,7 +270,7 @@ export const LowQualityFast: Story = {
     enableChaining: true,
     maxFilters: 3,
     processingSettings: {
-      quality: 'low',
+      quality: "low",
       fps: 15,
       enableGPU: false,
       batchSize: 2,
@@ -279,7 +281,7 @@ export const LowQualityFast: Story = {
 export const MinimalInterface: Story = {
   args: {
     availableFilters: customFilters.slice(0, 4),
-    selectedFilters: ['sepia'],
+    selectedFilters: ["sepia"],
     canvasWidth: 600,
     canvasHeight: 400,
     showFilterLibrary: false,
@@ -294,7 +296,7 @@ export const MinimalInterface: Story = {
 export const PreviewOnly: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: ['vintage', 'blur'],
+    selectedFilters: ["vintage", "blur"],
     canvasWidth: 800,
     canvasHeight: 600,
     showFilterLibrary: false,
@@ -324,7 +326,7 @@ export const FilterLibraryFocus: Story = {
 export const CustomFiltersEnabled: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: ['brightness', 'neon'],
+    selectedFilters: ["brightness", "neon"],
     canvasWidth: 800,
     canvasHeight: 600,
     showFilterLibrary: true,
@@ -340,7 +342,7 @@ export const CustomFiltersEnabled: Story = {
 export const MaxFiltersReached: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: ['grayscale', 'sepia', 'blur', 'brightness', 'contrast'],
+    selectedFilters: ["grayscale", "sepia", "blur", "brightness", "contrast"],
     canvasWidth: 800,
     canvasHeight: 600,
     showFilterLibrary: true,
@@ -355,7 +357,7 @@ export const MaxFiltersReached: Story = {
 export const SingleFilterMode: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: ['edge-detect'],
+    selectedFilters: ["edge-detect"],
     canvasWidth: 800,
     canvasHeight: 600,
     showFilterLibrary: true,
@@ -370,7 +372,7 @@ export const SingleFilterMode: Story = {
 export const ChainedFilters: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: ['brightness', 'contrast', 'sepia', 'vintage'],
+    selectedFilters: ["brightness", "contrast", "sepia", "vintage"],
     canvasWidth: 800,
     canvasHeight: 600,
     showFilterLibrary: true,
@@ -385,7 +387,7 @@ export const ChainedFilters: Story = {
 export const GPUAccelerated: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: ['blur', 'edge-detect', 'neon'],
+    selectedFilters: ["blur", "edge-detect", "neon"],
     canvasWidth: 1000,
     canvasHeight: 800,
     showFilterLibrary: true,
@@ -395,7 +397,7 @@ export const GPUAccelerated: Story = {
     enableChaining: true,
     maxFilters: 5,
     processingSettings: {
-      quality: 'high',
+      quality: "high",
       fps: 60,
       enableGPU: true,
       batchSize: 8,
@@ -406,7 +408,7 @@ export const GPUAccelerated: Story = {
 export const CPUProcessing: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: ['grayscale', 'brightness'],
+    selectedFilters: ["grayscale", "brightness"],
     canvasWidth: 600,
     canvasHeight: 400,
     showFilterLibrary: true,
@@ -416,7 +418,7 @@ export const CPUProcessing: Story = {
     enableChaining: true,
     maxFilters: 3,
     processingSettings: {
-      quality: 'medium',
+      quality: "medium",
       fps: 30,
       enableGPU: false,
       batchSize: 2,
@@ -427,7 +429,7 @@ export const CPUProcessing: Story = {
 export const HighFrameRate: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: ['brightness', 'contrast'],
+    selectedFilters: ["brightness", "contrast"],
     canvasWidth: 800,
     canvasHeight: 600,
     showFilterLibrary: true,
@@ -437,7 +439,7 @@ export const HighFrameRate: Story = {
     enableChaining: true,
     maxFilters: 4,
     processingSettings: {
-      quality: 'medium',
+      quality: "medium",
       fps: 60,
       enableGPU: true,
       batchSize: 6,
@@ -448,7 +450,7 @@ export const HighFrameRate: Story = {
 export const LowFrameRate: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: ['vintage', 'blur', 'edge-detect'],
+    selectedFilters: ["vintage", "blur", "edge-detect"],
     canvasWidth: 800,
     canvasHeight: 600,
     showFilterLibrary: true,
@@ -458,7 +460,7 @@ export const LowFrameRate: Story = {
     enableChaining: true,
     maxFilters: 5,
     processingSettings: {
-      quality: 'high',
+      quality: "high",
       fps: 10,
       enableGPU: true,
       batchSize: 2,
@@ -469,7 +471,7 @@ export const LowFrameRate: Story = {
 export const WideCanvas: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: ['sepia', 'contrast'],
+    selectedFilters: ["sepia", "contrast"],
     canvasWidth: 1200,
     canvasHeight: 400,
     showFilterLibrary: true,
@@ -484,7 +486,7 @@ export const WideCanvas: Story = {
 export const TallCanvas: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: ['brightness', 'edge-detect'],
+    selectedFilters: ["brightness", "edge-detect"],
     canvasWidth: 400,
     canvasHeight: 800,
     showFilterLibrary: true,
@@ -499,7 +501,7 @@ export const TallCanvas: Story = {
 export const SmallCanvas: Story = {
   args: {
     availableFilters: customFilters.slice(0, 6),
-    selectedFilters: ['grayscale'],
+    selectedFilters: ["grayscale"],
     canvasWidth: 400,
     canvasHeight: 300,
     showFilterLibrary: true,
@@ -514,7 +516,7 @@ export const SmallCanvas: Story = {
 export const LargeCanvas: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: ['vintage', 'neon'],
+    selectedFilters: ["vintage", "neon"],
     canvasWidth: 1200,
     canvasHeight: 900,
     showFilterLibrary: true,
@@ -524,7 +526,7 @@ export const LargeCanvas: Story = {
     enableChaining: true,
     maxFilters: 8,
     processingSettings: {
-      quality: 'ultra',
+      quality: "ultra",
       fps: 30,
       enableGPU: true,
       batchSize: 8,
@@ -550,7 +552,7 @@ export const NoFiltersSelected: Story = {
 export const AllFiltersSelected: Story = {
   args: {
     availableFilters: customFilters,
-    selectedFilters: customFilters.map(f => f.id),
+    selectedFilters: customFilters.map((f) => f.id),
     canvasWidth: 800,
     canvasHeight: 600,
     showFilterLibrary: true,

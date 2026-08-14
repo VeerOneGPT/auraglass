@@ -17,6 +17,7 @@ import React, {
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
 import { ContrastGuard } from "../accessibility/ContrastGuard";
+import { Portal } from "../../primitives/Portal";
 import { ANIMATION } from "../../tokens/designConstants";
 
 // Context data types
@@ -550,6 +551,7 @@ class GlassContextualEngineCore {
   private patternRecognizer: ContextPatternRecognizer;
   private currentContext: ContextualState;
   private adaptations: ContextualAdaptation[];
+  private adaptationSequence: number;
   private contextHistory: ContextualState[];
   private sensors: ContextualSensors;
 
@@ -558,6 +560,7 @@ class GlassContextualEngineCore {
     this.patternRecognizer = new ContextPatternRecognizer();
     this.currentContext = this.getDefaultContext();
     this.adaptations = [];
+    this.adaptationSequence = 0;
     this.contextHistory = [];
     this.sensors = new ContextualSensors();
 
@@ -699,7 +702,9 @@ class GlassContextualEngineCore {
     patternId: string,
     context: ContextualState
   ): ContextualAdaptation | null {
-    const adaptationId = `${patternId}-${Date.now()}`;
+    // Multiple sensor ticks can legitimately land in the same millisecond.
+    // Keep React identities deterministic and unique within this engine.
+    const adaptationId = `${patternId}-${Date.now()}-${this.adaptationSequence++}`;
 
     switch (patternId) {
       case "focus-work":
@@ -1256,7 +1261,10 @@ export function GlassContextualDashboard({
   const [showDashboard, setShowDashboard] = useState(false);
 
   return (
-    <div className={cn("fixed top-4 right-4 z-50", className)}>
+    <div
+      className={cn("glass-fixed glass-top-4 glass-right-4 glass-z-50", className)}
+      style={{ maxWidth: "calc(100vw - 2rem)" }}
+    >
       <motion.button
         className={cn(
           "w-12 h-12 glass-radius-full glass-surface-primary glass-elev-3",
@@ -1281,88 +1289,102 @@ export function GlassContextualDashboard({
         )}
       </motion.button>
 
-      <AnimatePresence>
-        {showDashboard && (
-          <motion.div
-            className={cn(
-              "absolute top-14 right-0 w-80 max-h-96 overflow-y-auto",
-              "glass-surface-primary glass-elev-4 glass-radius-lg glass-p-4 glass-gap-3"
-            )}
-            initial={{ opacity: 0, y: -10, scale: 0.95 }}
-            animate={prefersReducedMotion ? {} : { opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -10, scale: 0.95 }}
-            transition={
-              prefersReducedMotion
-                ? { duration: 0 }
-                : { duration: ANIMATION.DURATION.normal / 1000 }
-            }
-            role="dialog"
-            aria-label="Contextual engine dashboard"
-          >
-            <ContrastGuard>
-              <div className="glass-flex glass-items-center glass-justify-between">
-                <h3 className="glass-text-sm glass-font-medium glass-text-primary">
-                  Contextual Engine
-                </h3>
-                <button
-                  onClick={() => setShowDashboard(false)}
-                  className="glass-text-xs glass-text-secondary hover:glass-text-primary glass-focus glass-touch-target"
-                  aria-label="Close contextual engine dashboard"
-                >
-                  ✕
-                </button>
-              </div>
-
-              {/* Current Context */}
-              <div className="glass-gap-2">
-                <h4 className="glass-text-xs glass-font-medium glass-text-secondary glass-uppercase glass-tracking-wide">
-                  Current Context
-                </h4>
-                <div className="glass-grid glass-grid-cols-2 glass-gap-2 glass-text-xs">
-                  <div className="glass-surface-secondary glass-p-2 glass-radius-sm">
-                    <div className="glass-text-tertiary">Environment</div>
-                    <div className="glass-text-primary">
-                      {context.environment?.timeOfDay}
-                    </div>
-                    <div className="glass-text-secondary">
-                      {context.environment?.lightLevel}lx
-                    </div>
-                  </div>
-                  <div className="glass-surface-secondary glass-p-2 glass-radius-sm">
-                    <div className="glass-text-tertiary">Device</div>
-                    <div className="glass-text-primary">
-                      {context.device?.deviceMotion}
-                    </div>
-                    <div className="glass-text-secondary">
-                      {((context.device?.batteryLevel || 0) * 100).toFixed(0)}%
-                    </div>
-                  </div>
+      <Portal>
+        <AnimatePresence>
+          {showDashboard && (
+            <motion.div
+              className={cn(
+                "glass-fixed glass-top-20 glass-right-4 glass-z-50 glass-overflow-y-auto glass-overflow-x-hidden",
+                "glass-surface-primary glass-elev-4 glass-radius-lg glass-p-4 glass-gap-3"
+              )}
+              initial={{ opacity: 0, y: -10, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -10, scale: 0.95 }}
+              transition={
+                prefersReducedMotion
+                  ? { duration: 0 }
+                  : { duration: ANIMATION.DURATION.normal / 1000 }
+              }
+              role="dialog"
+              aria-label="Contextual engine dashboard"
+              style={{
+                boxSizing: "border-box",
+                width: "min(20rem, calc(100vw - 2rem))",
+                maxHeight: "calc(100dvh - 6rem)",
+              }}
+            >
+              <ContrastGuard>
+                <div className="glass-flex glass-items-center glass-justify-between">
+                  <h3 className="glass-text-sm glass-font-medium glass-text-primary">
+                    Contextual Engine
+                  </h3>
+                  <button
+                    onClick={() => setShowDashboard(false)}
+                    className="glass-text-xs glass-text-secondary hover:glass-text-primary glass-focus glass-touch-target"
+                    aria-label="Close contextual engine dashboard"
+                  >
+                    ✕
+                  </button>
                 </div>
-              </div>
 
-              {/* Active Adaptation */}
-              {topAdaptation && (
+                {/* Current Context */}
                 <div className="glass-gap-2">
                   <h4 className="glass-text-xs glass-font-medium glass-text-secondary glass-uppercase glass-tracking-wide">
-                    Active Adaptation
+                    Current Context
                   </h4>
-                  <div className="glass-p-3 glass-surface-secondary glass-radius-md">
-                    <div className="glass-text-sm glass-text-primary glass-font-medium glass-mb-1">
-                      {topAdaptation.id
-                        .split("-")[0]
-                        .replace(/([A-Z])/g, " $1")
-                        .toLowerCase()}
+                  <div
+                    className="glass-grid glass-grid-cols-2 glass-gap-2 glass-text-xs"
+                    style={{ gridTemplateColumns: "repeat(2, minmax(0, 1fr))" }}
+                  >
+                    <div className="glass-surface-secondary glass-p-2 glass-radius-sm glass-min-w-0 glass-overflow-hidden">
+                      <div className="glass-text-tertiary">Environment</div>
+                      <div className="glass-text-primary">
+                        {context.environment?.timeOfDay}
+                      </div>
+                      <div className="glass-text-secondary">
+                        {context.environment?.lightLevel != null
+                          ? `${Math.round(context.environment.lightLevel)}lx`
+                          : "—"}
+                      </div>
                     </div>
-                    <div className="glass-text-xs glass-text-tertiary">
-                      Confidence: {(topAdaptation.confidence * 100).toFixed(0)}%
+                    <div className="glass-surface-secondary glass-p-2 glass-radius-sm glass-min-w-0 glass-overflow-hidden">
+                      <div className="glass-text-tertiary">Device</div>
+                      <div className="glass-text-primary">
+                        {context.device?.deviceMotion}
+                      </div>
+                      <div className="glass-text-secondary">
+                        {((context.device?.batteryLevel || 0) * 100).toFixed(0)}
+                        %
+                      </div>
                     </div>
                   </div>
                 </div>
-              )}
-            </ContrastGuard>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+                {/* Active Adaptation */}
+                {topAdaptation && (
+                  <div className="glass-gap-2">
+                    <h4 className="glass-text-xs glass-font-medium glass-text-secondary glass-uppercase glass-tracking-wide">
+                      Active Adaptation
+                    </h4>
+                    <div className="glass-p-3 glass-surface-secondary glass-radius-md">
+                      <div className="glass-text-sm glass-text-primary glass-font-medium glass-mb-1">
+                        {topAdaptation.id
+                          .split("-")[0]
+                          .replace(/([A-Z])/g, " $1")
+                          .toLowerCase()}
+                      </div>
+                      <div className="glass-text-xs glass-text-tertiary">
+                        Confidence:{" "}
+                        {(topAdaptation.confidence * 100).toFixed(0)}%
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </ContrastGuard>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Portal>
     </div>
   );
 }
@@ -1379,7 +1401,6 @@ export function useContextualAdaptation() {
     return {
       filter: `brightness(${1 + visual.brightness}) contrast(${1 + visual.contrast}) saturate(${1 + visual.saturation})`,
       animationDuration: `${1 / animation.speed}s`,
-      opacity: visual.opacity,
     };
   }, [topAdaptation]);
 
@@ -1472,7 +1493,9 @@ function ContextualEngineSummary() {
             </p>
             <p className="glass-text-xs glass-text-secondary">
               Light{" "}
-              {environment?.lightLevel ? `${environment.lightLevel}lx` : "—"}
+              {environment?.lightLevel != null
+                ? `${Math.round(environment.lightLevel)}lx`
+                : "—"}
             </p>
           </div>
           <div className="glass-surface-subtle glass-radius-xl glass-p-4">

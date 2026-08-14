@@ -337,7 +337,7 @@ export function GlassOrientationEffects({
   if (!isSupported) {
     return (
       <div
-        className={cn("relative", className)}
+        className={cn("glass-relative glass-foundation-complete", className)}
         role="region"
         aria-label="Orientation effects container"
       >
@@ -350,8 +350,8 @@ export function GlassOrientationEffects({
     <motion.div
       ref={containerRef}
       className={cn(
-        "relative OptimizedGlass intensity={0.2} glassBlur={6} overflow-hidden",
-        "transform-gpu will-change-transform",
+        "glass-relative glass-foundation-complete glass-overflow-hidden",
+        "glass-transform-gpu glass-will-change-transform",
         className
       )}
       role="region"
@@ -376,7 +376,7 @@ export function GlassOrientationEffects({
           {/* Background parallax layer */}
           {effectTypes.includes("parallax") && (
             <motion.div
-              className="glass-absolute glass-inset-0 glass-optimized-glass intensity={0.2} glassBlur={6} glass-opacity-30"
+              className="glass-absolute glass-inset-0 glass-backdrop-blur-md glass-opacity-30"
               style={{
                 x: backgroundX,
                 y: backgroundY,
@@ -387,12 +387,12 @@ export function GlassOrientationEffects({
 
           {/* Refraction overlay */}
           {effectTypes.includes("refraction") && (
-            <motion.div className="glass-absolute glass-inset-0 glass-pointer-events-none glass-surface-primary/10" />
+            <motion.div className="glass-absolute glass-inset-0 glass-pointer-events-none" style={{ background: "rgba(255,255,255,.08)" }} />
           )}
 
           {/* Shimmer effect */}
           {effectTypes.includes("shimmer") && (
-            <motion.div className="glass-absolute glass-inset-0 glass-pointer-events-none glass-opacity-20 glass-surface-primary/10" />
+            <motion.div className="glass-absolute glass-inset-0 glass-pointer-events-none glass-opacity-20" style={{ background: "linear-gradient(115deg, transparent 28%, rgba(255,255,255,.38) 50%, transparent 72%)" }} />
           )}
 
           {/* Content */}
@@ -413,11 +413,11 @@ export function GlassOrientationEffects({
           )}
 
           {effectTypes.includes("refraction") && (
-            <motion.div className="glass-absolute glass-inset-0 glass-pointer-events-none glass-surface-primary/10" />
+            <motion.div className="glass-absolute glass-inset-0 glass-pointer-events-none" style={{ background: "rgba(255,255,255,.08)" }} />
           )}
 
           {effectTypes.includes("shimmer") && (
-            <motion.div className="glass-absolute glass-inset-0 glass-pointer-events-none glass-opacity-20 glass-surface-primary/10" />
+            <motion.div className="glass-absolute glass-inset-0 glass-pointer-events-none glass-opacity-20" style={{ background: "linear-gradient(115deg, transparent 28%, rgba(255,255,255,.38) 50%, transparent 72%)" }} />
           )}
 
           <div className="glass-relative glass-z-10">

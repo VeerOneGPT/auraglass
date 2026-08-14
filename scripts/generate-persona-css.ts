@@ -35,6 +35,32 @@ const normalizeValue = (value: string | number): string => {
   return value;
 };
 
+const RGBA_COLOR_PATTERN =
+  /rgba\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*\)/gi;
+
+/**
+ * A persona may own its canvas and accent palette, but never tint or darken
+ * the shared liquid-glass material. Enforce that boundary at generation time
+ * so `glass:validate-persona-css` rejects regressions before they reach a
+ * component or recipe.
+ */
+const assertNeutralGlassSurface = (persona: PersonaConfig): void => {
+  const source = normalizeValue(persona.colors.background.surface);
+  const stops = Array.from(source.matchAll(RGBA_COLOR_PATTERN));
+  const invalidStop = stops.find(([, red, green, blue, alpha]) => {
+    const channels = [Number(red), Number(green), Number(blue)];
+    const opacity = Number(alpha);
+    return channels.some((channel) => channel < 248 || channel > 255) ||
+      opacity < 0.08 || opacity > 0.35;
+  });
+
+  if (stops.length === 0 || invalidStop) {
+    throw new Error(
+      `Persona "${persona.meta.id}" background.surface must use only neutral white rgba stops with alpha 0.08-0.35. Received: ${source}`
+    );
+  }
+};
+
 const hexToRgb = (value: string): string | null => {
   const hex = value.trim();
   if (!hex.startsWith("#")) {
@@ -195,6 +221,10 @@ const formatBlock = (selector: string, variables: Record<string, string>) => {
 
 const generate = () => {
   const blocks: string[] = [HEADER];
+
+  PERSONA_IDS.forEach((id) => {
+    assertNeutralGlassSurface(DESIGN_MATRIX[id as PersonaId]);
+  });
 
   const defaultPersona = DESIGN_MATRIX[DEFAULT_PERSONA_ID];
   if (!defaultPersona) {

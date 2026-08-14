@@ -978,10 +978,14 @@ export function GlassQuantumEntangledPair({
   ]);
 
   return (
-    <div className={cn("flex glass-gap-4", className)}>
-      const prefersReducedMotion = useReducedMotion();
+    <div
+      className={cn(
+        "glass-relative glass-flex glass-min-w-0 glass-flex-col glass-gap-4 sm:glass-flex-row",
+        className
+      )}
+    >
       <motion.div
-        className="glass-flex-1 glass-relative"
+        className="glass-relative glass-min-w-0 glass-flex-1"
         animate={
           prefersReducedMotion
             ? {}
@@ -999,7 +1003,7 @@ export function GlassQuantumEntangledPair({
         {children[0]}
       </motion.div>
       <motion.div
-        className="glass-flex-1 glass-relative"
+        className="glass-relative glass-min-w-0 glass-flex-1"
         animate={
           prefersReducedMotion
             ? {}

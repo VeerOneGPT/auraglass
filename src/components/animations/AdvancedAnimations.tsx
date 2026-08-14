@@ -163,6 +163,15 @@ export interface AdvancedAnimationsProps
   children?: React.ReactNode;
 }
 
+const neutralLightTextContract = {
+  "--glass-theme-text": "rgba(0, 0, 0, 0.9)",
+  "--glass-theme-text-secondary": "rgba(0, 0, 0, 0.7)",
+  "--glass-theme-text-tertiary": "rgba(0, 0, 0, 0.56)",
+  "--glass-text-primary": "rgba(0, 0, 0, 0.9)",
+  "--glass-text-secondary": "rgba(0, 0, 0, 0.7)",
+  "--glass-text-tertiary": "rgba(0, 0, 0, 0.56)",
+} as React.CSSProperties;
+
 const easingSampleKeys = [
   "subtle",
   "smooth",
@@ -175,6 +184,7 @@ export const AdvancedAnimations: React.FC<AdvancedAnimationsProps> = ({
   sampleCount = 4,
   className,
   children,
+  style,
   ...rest
 }) => {
   const prefersReducedMotion = useReducedMotion();
@@ -182,7 +192,18 @@ export const AdvancedAnimations: React.FC<AdvancedAnimationsProps> = ({
 
   return (
     <div
-      className={cn("glass-advanced-animations glass-space-y-6", className)}
+      className={cn(
+        "glass-advanced-animations glass-on-light glass-space-y-6",
+        className
+      )}
+      data-bg="light"
+      style={{
+        ...neutralLightTextContract,
+        width: "100%",
+        minWidth: 0,
+        color: "var(--glass-text-primary)",
+        ...style,
+      }}
       {...rest}
     >
       {children ?? (
@@ -192,7 +213,14 @@ export const AdvancedAnimations: React.FC<AdvancedAnimationsProps> = ({
             return (
               <motion.div
                 key={key}
-                className="glass-surface-primary glass-radius-2xl glass-p-6 glass-space-y-3 glass-border glass-border-white/10"
+                className="glass-foundation-complete glass-on-light glass-surface-primary glass-radius-2xl glass-p-6 glass-space-y-3 glass-border glass-border-subtle"
+                style={{
+                  minWidth: 0,
+                  background: "var(--glass-gradient-neutral)",
+                  color: "var(--glass-text-primary)",
+                  boxShadow:
+                    "0 18px 42px -28px rgba(15, 23, 42, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.74)",
+                }}
                 animate={prefersReducedMotion ? {} : { y: [0, -8, 0] }}
                 transition={
                   prefersReducedMotion
@@ -212,9 +240,20 @@ export const AdvancedAnimations: React.FC<AdvancedAnimationsProps> = ({
                     {key === "glass" ? "Material physics" : "Easing preview"}
                   </h3>
                 </ContrastGuard>
-                <div className="glass-h-2 glass-radius-full glass-surface-subtle">
+                <div
+                  className="glass-h-2 glass-radius-full"
+                  style={{
+                    overflow: "hidden",
+                    background:
+                      "rgba(var(--glass-color-black) / var(--glass-opacity-10))",
+                  }}
+                >
                   <motion.div
-                    className="glass-h-full glass-radius-full glass-gradient-primary"
+                    className="glass-h-full glass-radius-full"
+                    style={{
+                      background:
+                        "rgba(var(--glass-color-black) / var(--glass-opacity-32))",
+                    }}
                     animate={
                       prefersReducedMotion
                         ? {}

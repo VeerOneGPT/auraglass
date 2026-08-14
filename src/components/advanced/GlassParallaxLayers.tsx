@@ -349,9 +349,14 @@ export const GlassParallaxLayers = forwardRef<
         {/* Interactive indicator */}
         {interactive && !prefersReducedMotion && (
           <motion.div
-            className="glass-absolute glass-bottom-4 glass-right-4 glass-text-primary-glass-opacity-60 glass-text-xs glass-surface-dark/20 glass-backdrop-blur-sm glass-p-2 glass-radius-md"
+            className="glass-absolute glass-bottom-4 glass-right-4 glass-text-xs glass-backdrop-blur-sm glass-p-2 glass-radius-md"
+            style={{
+              color: "rgba(15, 23, 42, 0.94)",
+              background: "rgba(255, 255, 255, 0.24)",
+              border: "1px solid rgba(255, 255, 255, 0.42)",
+            }}
             initial={{ opacity: 0 }}
-            animate={{ opacity: isHovered ? 1 : 0.5 }}
+            animate={{ opacity: 1 }}
             role="status"
             aria-live="polite"
           >

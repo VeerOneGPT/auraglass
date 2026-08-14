@@ -345,13 +345,14 @@ export const GlassA11y = React.forwardRef<HTMLDivElement, GlassA11yProps>(
     const resolvedMaxWidth =
       typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth;
     const shouldContain = contained || isCompact;
+    const flowsWithDocument = !shouldContain && position === "relative";
 
     const containerStyles: React.CSSProperties = {
       position: shouldContain ? "relative" : position,
       top: !shouldContain && position === "fixed" ? "20px" : undefined,
       right: !shouldContain && position === "fixed" ? "20px" : undefined,
       zIndex: !shouldContain && position === "fixed" ? 1000 : undefined,
-      maxHeight: resolvedMaxHeight ?? (shouldContain ? "220px" : undefined),
+      maxHeight: shouldContain ? resolvedMaxHeight ?? "220px" : undefined,
       maxWidth: resolvedMaxWidth ?? (shouldContain ? "320px" : undefined),
       width: shouldContain ? "100%" : undefined,
       overflow: shouldContain ? "hidden" : undefined,
@@ -411,9 +412,13 @@ export const GlassA11y = React.forwardRef<HTMLDivElement, GlassA11yProps>(
               }
               className={cn(
                 // Base glass foundation
-                "glass-foundation-complete absolute glass-right-0",
-                isCompact ? "glass-top-11" : "glass-top-16",
-                "glass-w-96 glass-max-h-80vh overflow-hidden glass-shadow-2xl glass-radius-2xl",
+                "glass-foundation-complete glass-w-96 glass-max-h-80vh overflow-hidden glass-shadow-2xl glass-radius-2xl glass-flex glass-flex-col",
+                flowsWithDocument
+                  ? "glass-relative glass-ml-auto glass-mt-3"
+                  : cn(
+                      "glass-absolute glass-right-0",
+                      isCompact ? "glass-top-11" : "glass-top-16"
+                    ),
                 // Conditional styling with glass tokens
                 {
                   "glass-surface-dark glass-border-primary glass-text-primary":
@@ -423,6 +428,10 @@ export const GlassA11y = React.forwardRef<HTMLDivElement, GlassA11yProps>(
                 }
               )}
               style={{
+                position: flowsWithDocument ? "relative" : "absolute",
+                top: flowsWithDocument ? "auto" : undefined,
+                right: flowsWithDocument ? "auto" : undefined,
+                marginLeft: flowsWithDocument ? "auto" : undefined,
                 width: isCompact
                   ? "min(20rem, 100%)"
                   : "min(24rem, calc(100vw - 2rem))",
@@ -430,6 +439,10 @@ export const GlassA11y = React.forwardRef<HTMLDivElement, GlassA11yProps>(
                   resolvedMaxHeight ??
                   (isCompact ? "220px" : "min(80vh, 42rem)"),
               }}
+              data-glass-a11y-panel
+              data-glass-a11y-placement={
+                flowsWithDocument ? "flow" : "popover"
+              }
             >
               {/* Header */}
               <div
@@ -459,7 +472,7 @@ export const GlassA11y = React.forwardRef<HTMLDivElement, GlassA11yProps>(
                         /* Detect system preferences */
                       }}
                       className={`
-                      p-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 glass-focus glass-touch-target glass-contrast-guard
+                      p-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 glass-focus glass-touch-target glass-contrast-guard
                       ${
                         isHighContrast
                           ? "hover:bg-white/20 text-white"
@@ -473,7 +486,7 @@ export const GlassA11y = React.forwardRef<HTMLDivElement, GlassA11yProps>(
                     <button
                       onClick={() => setConfig(defaultAccessibilityConfig)}
                       className={`
-                      p-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 glass-focus glass-touch-target glass-contrast-guard
+                      p-2 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 glass-focus glass-touch-target glass-contrast-guard
                       ${
                         isHighContrast
                           ? "hover:bg-white/20 text-white"
@@ -502,12 +515,12 @@ export const GlassA11y = React.forwardRef<HTMLDivElement, GlassA11yProps>(
                       whileTap={{ scale: isMotionReduced ? 1 : 0.98 }}
                       className={`
                       ${isCompact ? "p-2 text-xs" : "p-3 text-sm"} rounded-lg font-medium transition-all duration-200
-                      border focus:outline-none focus:ring-2 focus:ring-blue-400
+                      border focus:outline-none focus:ring-2 focus:ring-gray-400
                       ${
                         setting.active
                           ? isHighContrast
                             ? "bg-white/30 border-white text-white"
-                            : "bg-blue-500/20 border-blue-500/50 text-blue-700"
+                            : "bg-white/60 border-gray-400/50 text-gray-900"
                           : isHighContrast
                             ? "bg-white/10 border-white/20 text-white/80 hover:bg-white/20"
                             : "bg-white/5 border-white/10 glass-text-secondary hover:bg-white/10"
@@ -526,19 +539,23 @@ export const GlassA11y = React.forwardRef<HTMLDivElement, GlassA11yProps>(
               </div>
 
               {/* Content */}
-              <div className="glass-flex-1 glass-overflow-y-auto">
+              <div
+                className="glass-flex-1 glass-overflow-y-auto"
+                style={{ minHeight: 0 }}
+                data-glass-a11y-scroll-region
+              >
                 {/* Tab Navigation */}
                 <div className="glass-flex glass-border-b glass-border-white/10">
                   <button
                     onClick={() => setActiveTab("overview")}
                     className={`
                     flex-1 ${isCompact ? "px-2 py-2 text-xs" : "px-4 py-3 text-sm"} font-medium transition-colors
-                    focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-inset glass-focus glass-touch-target glass-contrast-guard
+                    focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-inset glass-focus glass-touch-target glass-contrast-guard
                     ${
                       activeTab === "overview"
                         ? isHighContrast
                           ? "bg-white/20 text-white"
-                          : "bg-white/10 text-blue-600"
+                          : "bg-white/60 text-gray-900"
                         : isHighContrast
                           ? "text-white/70 hover:text-white"
                           : "glass-text-secondary hover:glass-text-primary"
@@ -551,12 +568,12 @@ export const GlassA11y = React.forwardRef<HTMLDivElement, GlassA11yProps>(
                     onClick={() => setActiveTab("sections")}
                     className={`
                     flex-1 ${isCompact ? "px-2 py-2 text-xs" : "px-4 py-3 text-sm"} font-medium transition-colors
-                    focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-inset glass-focus glass-touch-target glass-contrast-guard
+                    focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-inset glass-focus glass-touch-target glass-contrast-guard
                     ${
                       activeTab === "sections"
                         ? isHighContrast
                           ? "bg-white/20 text-white"
-                          : "bg-white/10 text-blue-600"
+                          : "bg-white/60 text-gray-900"
                         : isHighContrast
                           ? "text-white/70 hover:text-white"
                           : "glass-text-secondary hover:glass-text-primary"
@@ -570,12 +587,12 @@ export const GlassA11y = React.forwardRef<HTMLDivElement, GlassA11yProps>(
                       onClick={() => setActiveTab("testing")}
                       className={`
                       flex-1 ${isCompact ? "px-2 py-2 text-xs" : "px-4 py-3 text-sm"} font-medium transition-colors
-                      focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-inset glass-focus glass-touch-target glass-contrast-guard
+                      focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-inset glass-focus glass-touch-target glass-contrast-guard
                       ${
                         activeTab === "testing"
                           ? isHighContrast
                             ? "bg-white/20 text-white"
-                            : "bg-white/10 text-blue-600"
+                            : "bg-white/60 text-gray-900"
                           : isHighContrast
                             ? "text-white/70 hover:text-white"
                             : "glass-text-secondary hover:glass-text-primary"
@@ -674,11 +691,11 @@ export const GlassA11y = React.forwardRef<HTMLDivElement, GlassA11yProps>(
 
                       <div
                         className={`
-                      p-4 rounded-lg border-l-4 border-blue-500
+                      p-4 rounded-lg border-l-4 border-gray-500
                       ${
                         isHighContrast
-                          ? "bg-blue-500/20 text-white"
-                          : "bg-blue-50/50 text-blue-800"
+                          ? "bg-white/20 text-white"
+                          : "bg-white/60 text-gray-900"
                       }
                     `}
                       >
@@ -710,7 +727,7 @@ export const GlassA11y = React.forwardRef<HTMLDivElement, GlassA11yProps>(
                             <button
                               onClick={() => toggleSection(section.id)}
                               className={`
-                              w-full p-4 text-left transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 glass-focus glass-touch-target glass-contrast-guard
+                              w-full p-4 text-left transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 glass-focus glass-touch-target glass-contrast-guard
                               ${
                                 isHighContrast
                                   ? "hover:bg-white/10 text-white"
@@ -786,11 +803,11 @@ export const GlassA11y = React.forwardRef<HTMLDivElement, GlassA11yProps>(
                           whileTap={{ scale: isMotionReduced ? 1 : 0.95 }}
                           className={`
                           px-4 py-2 rounded-lg text-sm font-medium transition-colors
-                          focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-50
+                          focus:outline-none focus:ring-2 focus:ring-gray-400 disabled:opacity-50
                           ${
                             isHighContrast
                               ? "bg-white/20 text-white hover:bg-white/30"
-                              : "bg-blue-500/20 text-blue-700 hover:bg-blue-500/30"
+                              : "bg-white/60 text-gray-900 hover:bg-white/75"
                           }
                         `}
                         >
@@ -813,7 +830,7 @@ export const GlassA11y = React.forwardRef<HTMLDivElement, GlassA11yProps>(
                                   ? "border-green-500 bg-green-500/10"
                                   : result.status === "warning"
                                     ? "border-yellow-500 bg-yellow-500/10"
-                                    : "border-blue-500 bg-blue-500/10"
+                                    : "border-gray-500 bg-white/55"
                               }
                             `}
                             >
@@ -890,7 +907,7 @@ export const GlassHighContrast = React.forwardRef<
                 reduceTransparency: !config.reduceTransparency,
               })
             }
-            className={`w-12 h-6 rounded-full transition-colors glass-focus glass-touch-target glass-contrast-guard ${config.reduceTransparency ? "bg-blue-500" : "bg-gray-300"}`}
+            className={`w-12 h-6 rounded-full transition-colors glass-focus glass-touch-target glass-contrast-guard ${config.reduceTransparency ? "bg-gray-700" : "bg-gray-300"}`}
           >
             <div
               className={`w-5 h-5 bg-white rounded-full transition-transform ${config.reduceTransparency ? "translate-x-6" : "translate-x-0.5"}`}
@@ -924,7 +941,15 @@ export const GlassMotionControls = React.forwardRef<
                 motionPreference: e.target.value as GlassMotionPreference,
               })
             }
-            className={`w-full p-2 rounded border glass-focus glass-touch-target glass-contrast-guard ${isMotionReduced ? "bg-white/10 border-white/20 text-white" : "bg-white/5 border-white/10"}`}
+            className="glass-w-full glass-p-2 glass-radius-md glass-focus glass-touch-target glass-contrast-guard"
+            style={{
+              appearance: "none",
+              background:
+                "linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.14))",
+              border: "1px solid rgba(15,23,42,0.16)",
+              color: "rgba(15,23,42,0.92)",
+              opacity: 1,
+            }}
           >
             <option value="full">Full Motion</option>
             <option value="reduced">Reduced Motion</option>
@@ -934,16 +959,34 @@ export const GlassMotionControls = React.forwardRef<
         <div className="glass-flex glass-items-center glass-justify-between">
           <span>Enable Hover Effects</span>
           <button
+            type="button"
+            role="switch"
+            aria-checked={config.enableHoverEffects}
+            aria-label="Enable hover effects"
             onClick={() =>
               updateConfig({
                 ...config,
                 enableHoverEffects: !config.enableHoverEffects,
               })
             }
-            className={`w-12 h-6 rounded-full transition-colors glass-focus glass-touch-target glass-contrast-guard ${config.enableHoverEffects ? "bg-blue-500" : "bg-gray-300"}`}
+            className="glass-relative glass-w-12 glass-h-6 glass-radius-full glass-focus glass-touch-target glass-contrast-guard glass-transition"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.14))",
+              border: `1px solid rgba(15,23,42,${config.enableHoverEffects ? "0.28" : "0.14"})`,
+              boxShadow: config.enableHoverEffects
+                ? "inset 0 1px 6px rgba(255,255,255,0.14), 0 0 0 2px rgba(15,23,42,0.08)"
+                : "inset 0 1px 6px rgba(255,255,255,0.14)",
+            }}
           >
             <div
-              className={`w-5 h-5 bg-white rounded-full transition-transform ${config.enableHoverEffects ? "translate-x-6" : "translate-x-0.5"}`}
+              className="glass-absolute glass-top-0.5 glass-w-5 glass-h-5 glass-radius-full glass-transition"
+              style={{
+                left: config.enableHoverEffects ? "calc(100% - 1.375rem)" : "0.125rem",
+                background: "rgba(255,255,255,0.96)",
+                border: "1px solid rgba(15,23,42,0.16)",
+                boxShadow: "0 2px 6px rgba(15,23,42,0.18)",
+              }}
             />
           </button>
         </div>
@@ -971,7 +1014,7 @@ export const GlassScreenReader = React.forwardRef<
                 provideLongDescriptions: !config.provideLongDescriptions,
               })
             }
-            className={`w-12 h-6 rounded-full transition-colors glass-focus glass-touch-target glass-contrast-guard ${config.provideLongDescriptions ? "bg-blue-500" : "bg-gray-300"}`}
+            className={`w-12 h-6 rounded-full transition-colors glass-focus glass-touch-target glass-contrast-guard ${config.provideLongDescriptions ? "bg-gray-700" : "bg-gray-300"}`}
           >
             <div
               className={`w-5 h-5 bg-white rounded-full transition-transform ${config.provideLongDescriptions ? "translate-x-6" : "translate-x-0.5"}`}
@@ -987,7 +1030,7 @@ export const GlassScreenReader = React.forwardRef<
                 announceStateChanges: !config.announceStateChanges,
               })
             }
-            className={`w-12 h-6 rounded-full transition-colors glass-focus glass-touch-target glass-contrast-guard ${config.announceStateChanges ? "bg-blue-500" : "bg-gray-300"}`}
+            className={`w-12 h-6 rounded-full transition-colors glass-focus glass-touch-target glass-contrast-guard ${config.announceStateChanges ? "bg-gray-700" : "bg-gray-300"}`}
           >
             <div
               className={`w-5 h-5 bg-white rounded-full transition-transform ${config.announceStateChanges ? "translate-x-6" : "translate-x-0.5"}`}
@@ -1012,29 +1055,61 @@ export const GlassKeyboardNav = React.forwardRef<
         <div className="glass-flex glass-items-center glass-justify-between">
           <span>Enhanced Keyboard Navigation</span>
           <button
+            type="button"
+            role="switch"
+            aria-checked={config.enhanceKeyboardNavigation}
+            aria-label="Enhanced keyboard navigation"
             onClick={() =>
               updateConfig({
                 ...config,
                 enhanceKeyboardNavigation: !config.enhanceKeyboardNavigation,
               })
             }
-            className={`w-12 h-6 rounded-full transition-colors glass-focus glass-touch-target glass-contrast-guard ${config.enhanceKeyboardNavigation ? "bg-blue-500" : "bg-gray-300"}`}
+            className="glass-relative glass-w-12 glass-h-6 glass-radius-full glass-focus glass-touch-target glass-contrast-guard glass-transition"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.14))",
+              border: `1px solid rgba(15,23,42,${config.enhanceKeyboardNavigation ? "0.28" : "0.14"})`,
+              boxShadow: "inset 0 1px 6px rgba(255,255,255,0.14)",
+            }}
           >
             <div
-              className={`w-5 h-5 bg-white rounded-full transition-transform ${config.enhanceKeyboardNavigation ? "translate-x-6" : "translate-x-0.5"}`}
+              className="glass-absolute glass-top-0.5 glass-w-5 glass-h-5 glass-radius-full glass-transition"
+              style={{
+                left: config.enhanceKeyboardNavigation ? "calc(100% - 1.375rem)" : "0.125rem",
+                background: "rgba(255,255,255,0.96)",
+                border: "1px solid rgba(15,23,42,0.16)",
+                boxShadow: "0 2px 6px rgba(15,23,42,0.18)",
+              }}
             />
           </button>
         </div>
         <div className="glass-flex glass-items-center glass-justify-between">
           <span>Skip Links</span>
           <button
+            type="button"
+            role="switch"
+            aria-checked={config.showSkipLinks}
+            aria-label="Show skip links"
             onClick={() =>
               updateConfig({ ...config, showSkipLinks: !config.showSkipLinks })
             }
-            className={`w-12 h-6 rounded-full transition-colors glass-focus glass-touch-target glass-contrast-guard ${config.showSkipLinks ? "bg-blue-500" : "bg-gray-300"}`}
+            className="glass-relative glass-w-12 glass-h-6 glass-radius-full glass-focus glass-touch-target glass-contrast-guard glass-transition"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.14))",
+              border: `1px solid rgba(15,23,42,${config.showSkipLinks ? "0.28" : "0.14"})`,
+              boxShadow: "inset 0 1px 6px rgba(255,255,255,0.14)",
+            }}
           >
             <div
-              className={`w-5 h-5 bg-white rounded-full transition-transform ${config.showSkipLinks ? "translate-x-6" : "translate-x-0.5"}`}
+              className="glass-absolute glass-top-0.5 glass-w-5 glass-h-5 glass-radius-full glass-transition"
+              style={{
+                left: config.showSkipLinks ? "calc(100% - 1.375rem)" : "0.125rem",
+                background: "rgba(255,255,255,0.96)",
+                border: "1px solid rgba(15,23,42,0.16)",
+                boxShadow: "0 2px 6px rgba(15,23,42,0.18)",
+              }}
             />
           </button>
         </div>

@@ -493,7 +493,7 @@ export function GlassTrophyCase({
 
     return (
       <motion.div
-        className={`glass-relative glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all ${
+        className={`glass-relative glass-min-w-0 glass-overflow-hidden glass-p-4 sm:glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all ${
           achievement.unlocked
             ? "glass-border-white/40 glass-surface-subtle/10 hover:glass-surface-subtle/20"
             : "glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
@@ -507,13 +507,14 @@ export function GlassTrophyCase({
         whileHover={{ scale: 1.02, y: -2 }}
         whileTap={{ scale: 0.98 }}
         onClick={() => setSelectedAchievement(achievement)}
-        initial={{ opacity: 0, y: 20 }}
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={prefersReducedMotion ? { duration: 0 } : undefined}
         layout
       >
         {/* Tier badge */}
         <div
-          className="glass-absolute glass--top-2 glass--right-2 glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
+          className="glass-absolute glass-top-3 glass-right-3 glass-max-w-full glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
           style={{
             backgroundColor: `${tierColor.primary}20`,
             borderColor: `${tierColor.primary}40`,
@@ -616,7 +617,7 @@ export function GlassTrophyCase({
               <motion.div
                 className="glass-h-full glass-radius-full"
                 style={{ backgroundColor: tierColor.primary }}
-                initial={{ width: 0 }}
+                initial={prefersReducedMotion ? false : { width: 0 }}
                 animate={{ width: `${progressPercentage}%` }}
                 transition={
                   prefersReducedMotion
@@ -629,14 +630,14 @@ export function GlassTrophyCase({
         )}
 
         {/* Points and rarity */}
-        <div className="glass-flex glass-items-center glass-justify-between glass-text-xs">
-          <div className="glass-flex glass-items-center glass-gap-2">
+        <div className="glass-flex glass-min-w-0 glass-flex-wrap glass-items-center glass-justify-between glass-gap-2 glass-text-xs">
+          <div className="glass-flex glass-min-w-0 glass-items-center glass-gap-2">
             <Trophy className="glass-w-4 glass-h-4 glass-text-primary" />
             <span className="glass-text-primary-glass-opacity-60">
               {achievement.points} pts
             </span>
           </div>
-          <div className="glass-flex glass-items-center glass-gap-1">
+          <div className="glass-flex glass-min-w-0 glass-items-center glass-gap-1">
             <Diamond className="glass-w-3 glass-h-3 glass-text-primary-glass-opacity-40" />
             <span className="glass-text-primary-glass-opacity-40">
               {achievement.rarity}% rare
@@ -848,17 +849,21 @@ export function GlassTrophyCase({
           <>
             <motion.div
               className="glass-fixed glass-inset-0 glass-surface-dark/50 glass-backdrop-blur-sm glass-contrast-guard glass-z-50 glass-contrast-guard"
-              initial={{ opacity: 0 }}
-              animate={prefersReducedMotion ? {} : { opacity: 1 }}
+              initial={prefersReducedMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={prefersReducedMotion ? { duration: 0 } : undefined}
               onClick={() => setSelectedAchievement(null)}
             />
 
             <motion.div
               className="glass-fixed glass-inset-0 glass-flex glass-items-center glass-justify-center glass-z-50 glass-p-4"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={prefersReducedMotion ? {} : { opacity: 1, scale: 1 }}
+              initial={
+                prefersReducedMotion ? false : { opacity: 0, scale: 0.9 }
+              }
+              animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
+              transition={prefersReducedMotion ? { duration: 0 } : undefined}
             >
               <div className="glass-max-w-lg glass-w-full glass-backdrop-blur-lg glass-contrast-guard glass-surface-subtle/10 glass-border glass-border-white/20 glass-radius-xl glass-p-8 glass-contrast-guard">
                 <div className="glass-text-center">
@@ -975,8 +980,9 @@ export function GlassTrophyCase({
       {filteredAchievements.length === 0 && (
         <motion.div
           className="glass-text-center glass-py-16"
-          initial={{ opacity: 0 }}
-          animate={prefersReducedMotion ? {} : { opacity: 1 }}
+          initial={prefersReducedMotion ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={prefersReducedMotion ? { duration: 0 } : undefined}
         >
           <Trophy className="glass-w-16 glass-h-16 glass-text-primary-glass-opacity-30 glass-mx-auto glass-mb-4" />
           <div

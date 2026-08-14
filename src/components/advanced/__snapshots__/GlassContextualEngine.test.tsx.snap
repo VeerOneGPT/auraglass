@@ -118,7 +118,8 @@ exports[`GlassContextualEngine matches snapshot 1`] = `
     </span>
   </div>
   <div
-    class="fixed top-4 right-4 z-50"
+    class="glass-fixed glass-top-4 glass-right-4 glass-z-50"
+    style="max-width: calc(100vw - 2rem);"
   >
     <button
       aria-expanded="false"

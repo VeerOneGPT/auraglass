@@ -36,8 +36,10 @@ interface LiveCursor extends CursorUser {
 interface GlassLiveCursorPresenceProps {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   roomId: string;
   currentUser: CursorUser;
+  /** WebSocket base URL. Omit it to render deterministic local presence. */
   connectionUrl?: string;
   maxUsers?: number;
   showTrails?: boolean;
@@ -55,9 +57,10 @@ interface GlassLiveCursorPresenceProps {
 export function GlassLiveCursorPresence({
   children,
   className,
+  style,
   roomId,
   currentUser,
-  connectionUrl = "ws://localhost:8080",
+  connectionUrl,
   maxUsers = 20,
   showTrails = true,
   showLabels = true,
@@ -84,6 +87,11 @@ export function GlassLiveCursorPresence({
 
   // WebSocket connection management
   const connect = useCallback(() => {
+    if (!connectionUrl || typeof WebSocket === "undefined") {
+      setIsConnected(false);
+      return;
+    }
+
     try {
       const ws = new WebSocket(`${connectionUrl}/cursor-presence/${roomId}`);
 
@@ -326,7 +334,7 @@ export function GlassLiveCursorPresence({
 
   // Setup event listeners and connection
   useEffect(() => {
-    connect();
+    if (connectionUrl) connect();
 
     const container = containerRef.current;
     if (container) {
@@ -344,10 +352,10 @@ export function GlassLiveCursorPresence({
         wsRef.current.close();
       }
     };
-  }, [connect, handleMouseMove, handleMouseLeave]);
+  }, [connect, connectionUrl, handleMouseMove, handleMouseLeave]);
 
   return (
-    <div ref={containerRef} className={cn("relative", className)}>
+    <div ref={containerRef} className={cn("relative", className)} style={style}>
       {children}
 
       {/* Live cursors */}

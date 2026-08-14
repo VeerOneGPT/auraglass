@@ -379,12 +379,12 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
     class="glass-grid glass-grid-cols-1 md:glass-grid-cols-2 lg:glass-grid-cols-3 xl:glass-grid-cols-4 glass-gap-6"
   >
     <div
-      class="glass-relative glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/40 glass-surface-subtle/10 hover:glass-surface-subtle/20"
+      class="glass-relative glass-min-w-0 glass-overflow-hidden glass-p-4 sm:glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/40 glass-surface-subtle/10 hover:glass-surface-subtle/20"
       style="box-shadow: 0 0 20px var(--glass-bg-hover)40, inset 0 0 20px var(--glass-border-default)10; opacity: 0; transform: translateY(20px);"
       tabindex="0"
     >
       <div
-        class="glass-absolute glass--top-2 glass--right-2 glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
+        class="glass-absolute glass-top-3 glass-right-3 glass-max-w-full glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
       >
         BRONZE
       </div>
@@ -437,10 +437,10 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
         </p>
       </div>
       <div
-        class="glass-flex glass-items-center glass-justify-between glass-text-xs"
+        class="glass-flex glass-min-w-0 glass-flex-wrap glass-items-center glass-justify-between glass-gap-2 glass-text-xs"
       >
         <div
-          class="glass-flex glass-items-center glass-gap-2"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-2"
         >
           <svg
             aria-hidden="true"
@@ -476,7 +476,7 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
           </span>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-1"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-1"
         >
           <svg
             aria-hidden="true"
@@ -515,12 +515,12 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="glass-relative glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
+      class="glass-relative glass-min-w-0 glass-overflow-hidden glass-p-4 sm:glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
       style="opacity: 0; transform: translateY(20px);"
       tabindex="0"
     >
       <div
-        class="glass-absolute glass--top-2 glass--right-2 glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
+        class="glass-absolute glass-top-3 glass-right-3 glass-max-w-full glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
       >
         SILVER
       </div>
@@ -622,10 +622,10 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="glass-flex glass-items-center glass-justify-between glass-text-xs"
+        class="glass-flex glass-min-w-0 glass-flex-wrap glass-items-center glass-justify-between glass-gap-2 glass-text-xs"
       >
         <div
-          class="glass-flex glass-items-center glass-gap-2"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-2"
         >
           <svg
             aria-hidden="true"
@@ -661,7 +661,7 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
           </span>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-1"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-1"
         >
           <svg
             aria-hidden="true"
@@ -690,12 +690,12 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="glass-relative glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
+      class="glass-relative glass-min-w-0 glass-overflow-hidden glass-p-4 sm:glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
       style="opacity: 0; transform: translateY(20px);"
       tabindex="0"
     >
       <div
-        class="glass-absolute glass--top-2 glass--right-2 glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
+        class="glass-absolute glass-top-3 glass-right-3 glass-max-w-full glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
       >
         GOLD
       </div>
@@ -800,10 +800,10 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="glass-flex glass-items-center glass-justify-between glass-text-xs"
+        class="glass-flex glass-min-w-0 glass-flex-wrap glass-items-center glass-justify-between glass-gap-2 glass-text-xs"
       >
         <div
-          class="glass-flex glass-items-center glass-gap-2"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-2"
         >
           <svg
             aria-hidden="true"
@@ -839,7 +839,7 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
           </span>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-1"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-1"
         >
           <svg
             aria-hidden="true"
@@ -868,12 +868,12 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="glass-relative glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
+      class="glass-relative glass-min-w-0 glass-overflow-hidden glass-p-4 sm:glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
       style="opacity: 0; transform: translateY(20px);"
       tabindex="0"
     >
       <div
-        class="glass-absolute glass--top-2 glass--right-2 glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
+        class="glass-absolute glass-top-3 glass-right-3 glass-max-w-full glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
       >
         GOLD
       </div>
@@ -975,10 +975,10 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="glass-flex glass-items-center glass-justify-between glass-text-xs"
+        class="glass-flex glass-min-w-0 glass-flex-wrap glass-items-center glass-justify-between glass-gap-2 glass-text-xs"
       >
         <div
-          class="glass-flex glass-items-center glass-gap-2"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-2"
         >
           <svg
             aria-hidden="true"
@@ -1014,7 +1014,7 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
           </span>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-1"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-1"
         >
           <svg
             aria-hidden="true"
@@ -1043,12 +1043,12 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="glass-relative glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
+      class="glass-relative glass-min-w-0 glass-overflow-hidden glass-p-4 sm:glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
       style="opacity: 0; transform: translateY(20px);"
       tabindex="0"
     >
       <div
-        class="glass-absolute glass--top-2 glass--right-2 glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
+        class="glass-absolute glass-top-3 glass-right-3 glass-max-w-full glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
       >
         BRONZE
       </div>
@@ -1163,10 +1163,10 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="glass-flex glass-items-center glass-justify-between glass-text-xs"
+        class="glass-flex glass-min-w-0 glass-flex-wrap glass-items-center glass-justify-between glass-gap-2 glass-text-xs"
       >
         <div
-          class="glass-flex glass-items-center glass-gap-2"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-2"
         >
           <svg
             aria-hidden="true"
@@ -1202,7 +1202,7 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
           </span>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-1"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-1"
         >
           <svg
             aria-hidden="true"
@@ -1231,12 +1231,12 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="glass-relative glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
+      class="glass-relative glass-min-w-0 glass-overflow-hidden glass-p-4 sm:glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
       style="opacity: 0; transform: translateY(20px);"
       tabindex="0"
     >
       <div
-        class="glass-absolute glass--top-2 glass--right-2 glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
+        class="glass-absolute glass-top-3 glass-right-3 glass-max-w-full glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
       >
         SILVER
       </div>
@@ -1353,10 +1353,10 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="glass-flex glass-items-center glass-justify-between glass-text-xs"
+        class="glass-flex glass-min-w-0 glass-flex-wrap glass-items-center glass-justify-between glass-gap-2 glass-text-xs"
       >
         <div
-          class="glass-flex glass-items-center glass-gap-2"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-2"
         >
           <svg
             aria-hidden="true"
@@ -1392,7 +1392,7 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
           </span>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-1"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-1"
         >
           <svg
             aria-hidden="true"
@@ -1421,12 +1421,12 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="glass-relative glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
+      class="glass-relative glass-min-w-0 glass-overflow-hidden glass-p-4 sm:glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
       style="opacity: 0; transform: translateY(20px);"
       tabindex="0"
     >
       <div
-        class="glass-absolute glass--top-2 glass--right-2 glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
+        class="glass-absolute glass-top-3 glass-right-3 glass-max-w-full glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
       >
         SILVER
       </div>
@@ -1542,10 +1542,10 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="glass-flex glass-items-center glass-justify-between glass-text-xs"
+        class="glass-flex glass-min-w-0 glass-flex-wrap glass-items-center glass-justify-between glass-gap-2 glass-text-xs"
       >
         <div
-          class="glass-flex glass-items-center glass-gap-2"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-2"
         >
           <svg
             aria-hidden="true"
@@ -1581,7 +1581,7 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
           </span>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-1"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-1"
         >
           <svg
             aria-hidden="true"
@@ -1610,12 +1610,12 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="glass-relative glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
+      class="glass-relative glass-min-w-0 glass-overflow-hidden glass-p-4 sm:glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
       style="opacity: 0; transform: translateY(20px);"
       tabindex="0"
     >
       <div
-        class="glass-absolute glass--top-2 glass--right-2 glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
+        class="glass-absolute glass-top-3 glass-right-3 glass-max-w-full glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
       >
         GOLD
       </div>
@@ -1722,10 +1722,10 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="glass-flex glass-items-center glass-justify-between glass-text-xs"
+        class="glass-flex glass-min-w-0 glass-flex-wrap glass-items-center glass-justify-between glass-gap-2 glass-text-xs"
       >
         <div
-          class="glass-flex glass-items-center glass-gap-2"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-2"
         >
           <svg
             aria-hidden="true"
@@ -1761,7 +1761,7 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
           </span>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-1"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-1"
         >
           <svg
             aria-hidden="true"
@@ -1790,12 +1790,12 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="glass-relative glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
+      class="glass-relative glass-min-w-0 glass-overflow-hidden glass-p-4 sm:glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
       style="opacity: 0; transform: translateY(20px);"
       tabindex="0"
     >
       <div
-        class="glass-absolute glass--top-2 glass--right-2 glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
+        class="glass-absolute glass-top-3 glass-right-3 glass-max-w-full glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
       >
         PLATINUM
       </div>
@@ -1900,10 +1900,10 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="glass-flex glass-items-center glass-justify-between glass-text-xs"
+        class="glass-flex glass-min-w-0 glass-flex-wrap glass-items-center glass-justify-between glass-gap-2 glass-text-xs"
       >
         <div
-          class="glass-flex glass-items-center glass-gap-2"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-2"
         >
           <svg
             aria-hidden="true"
@@ -1939,7 +1939,7 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
           </span>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-1"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-1"
         >
           <svg
             aria-hidden="true"
@@ -1968,12 +1968,12 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="glass-relative glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
+      class="glass-relative glass-min-w-0 glass-overflow-hidden glass-p-4 sm:glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
       style="opacity: 0; transform: translateY(20px);"
       tabindex="0"
     >
       <div
-        class="glass-absolute glass--top-2 glass--right-2 glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
+        class="glass-absolute glass-top-3 glass-right-3 glass-max-w-full glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
       >
         DIAMOND
       </div>
@@ -2075,10 +2075,10 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="glass-flex glass-items-center glass-justify-between glass-text-xs"
+        class="glass-flex glass-min-w-0 glass-flex-wrap glass-items-center glass-justify-between glass-gap-2 glass-text-xs"
       >
         <div
-          class="glass-flex glass-items-center glass-gap-2"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-2"
         >
           <svg
             aria-hidden="true"
@@ -2114,7 +2114,7 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
           </span>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-1"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-1"
         >
           <svg
             aria-hidden="true"
@@ -2143,12 +2143,12 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="glass-relative glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
+      class="glass-relative glass-min-w-0 glass-overflow-hidden glass-p-4 sm:glass-p-6 glass-radius-xl glass-border-2 glass-cursor-pointer glass-transition-all glass-border-white/20 glass-surface-subtle/5 hover:glass-surface-subtle/10 glass-opacity-70"
       style="opacity: 0; transform: translateY(20px);"
       tabindex="0"
     >
       <div
-        class="glass-absolute glass--top-2 glass--right-2 glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
+        class="glass-absolute glass-top-3 glass-right-3 glass-max-w-full glass-px-2 glass-py-1 glass-radius-full glass-text-xs glass-font-bold glass-border"
       >
         BRONZE
       </div>
@@ -2263,10 +2263,10 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="glass-flex glass-items-center glass-justify-between glass-text-xs"
+        class="glass-flex glass-min-w-0 glass-flex-wrap glass-items-center glass-justify-between glass-gap-2 glass-text-xs"
       >
         <div
-          class="glass-flex glass-items-center glass-gap-2"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-2"
         >
           <svg
             aria-hidden="true"
@@ -2302,7 +2302,7 @@ exports[`GlassTrophyCase matches snapshot 1`] = `
           </span>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-1"
+          class="glass-flex glass-min-w-0 glass-items-center glass-gap-1"
         >
           <svg
             aria-hidden="true"

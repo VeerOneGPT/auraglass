@@ -798,16 +798,15 @@ export function GlassMetaEngineProvider({
 }) {
   const prefersReducedMotion = useReducedMotion();
   const engineRef = useRef<GlassMetaEngineCore>();
+  if (!engineRef.current) engineRef.current = new GlassMetaEngineCore();
   const [optimizations, setOptimizations] = useState<SystemOptimization[]>([]);
   const [evolutions, setEvolutions] = useState<SystemEvolution[]>([]);
   const [systemHealth, setSystemHealth] = useState<
     Map<string, GlassSystemHealth>
-  >(new Map());
+  >(() => new Map(engineRef.current?.getSystemHealth() ?? []));
 
   // Initialize engine
   useEffect(() => {
-    engineRef.current = new GlassMetaEngineCore();
-
     // Update state periodically
     const updateInterval = setInterval(() => {
       if (engineRef.current) {
@@ -867,16 +866,22 @@ export function GlassMetaDashboard({
   showQuantumStates = true,
   showEvolutions = true,
   maxOptimizations = 10,
+  defaultOpen = false,
+  inline = false,
 }: {
   className?: string;
   showQuantumStates?: boolean;
   showEvolutions?: boolean;
   maxOptimizations?: number;
+  /** Render the substantive dashboard immediately without requiring interaction. */
+  defaultOpen?: boolean;
+  /** Keep the dashboard in document flow for embedded and responsive surfaces. */
+  inline?: boolean;
 }) {
   const prefersReducedMotion = useReducedMotion();
   const { optimizations, evolutions, systemHealth, engine } =
     useGlassMetaEngine();
-  const [showDashboard, setShowDashboard] = useState(false);
+  const [showDashboard, setShowDashboard] = useState(defaultOpen);
   const [quantumStates, setQuantumStates] = useState<
     Array<{ system: string; coherence: number }>
   >([]);
@@ -896,31 +901,58 @@ export function GlassMetaDashboard({
 
   const topOptimizations = optimizations.slice(0, maxOptimizations);
   const criticalEvolutions = evolutions.filter((evo) => evo.confidence > 0.8);
+  const healthEntries = Array.from(systemHealth.entries());
+  const overview: Array<[string, GlassSystemHealth]> = healthEntries.length
+    ? healthEntries.slice(0, 4)
+    : [
+        ["Rendering", { systemId: "Rendering", healthScore: 0.98, issues: [], recommendations: [], trend: "stable" }],
+        ["Accessibility", { systemId: "Accessibility", healthScore: 1, issues: [], recommendations: [], trend: "stable" }],
+        ["Motion", { systemId: "Motion", healthScore: 0.96, issues: [], recommendations: [], trend: "stable" }],
+      ];
+  const healthLabel = (systemId: string) => {
+    const normalized = systemId.replace("Glass", "").replace("Engine", "");
+    const labels: Record<string, string> = {
+      Physics: "Material physics",
+      Morphing: "Shape transitions",
+      "3D": "Spatial rendering",
+      OrganicAnimation: "Organic motion",
+    };
+    return labels[normalized] ?? normalized.replace(/([a-z])([A-Z])/g, "$1 $2");
+  };
 
   return (
-    <div className={cn("fixed bottom-4 right-4 z-50", className)}>
-      {/* Meta-engine indicator */}
-      <motion.button
+    <div
+      className={cn(
+        inline
+          ? "relative glass-w-full glass-meta-dashboard-inline"
+          : "fixed bottom-4 right-4 z-50",
+        "glass-on-light",
+        className
+      )}
+      data-glass-component
+    >
+      {/* The launcher is reserved for the floating application mode. */}
+      {!inline && <motion.button
         className={cn(
-          "w-14 glass-h-14 glass-radius-full glass-surface-primary glass-elev-4",
+          "glass-radius-full glass-surface-primary glass-elev-4 glass-border glass-border-white/30",
           "flex items-center justify-center glass-text-primary",
-          "transition-all glass-hover-scale-105",
+          "transition-all",
           { transitionDuration: "var(--glass-motion-duration-normal)" },
           "relative overflow-hidden"
         )}
+        style={{ width: 56, height: 56, minWidth: 56, minHeight: 56 }}
         onClick={() => setShowDashboard(!showDashboard)}
-        whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
+        whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
         whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
         transition={{ duration: ANIMATION.DURATION.fast / 1000 }}
         aria-label="Toggle Meta-Engine dashboard"
         aria-expanded={showDashboard}
       >
-        {/* Quantum coherence visualization */}
-        <div className="glass-absolute glass-inset-0 glass-opacity-20">
+        <div className="glass-absolute glass-inset-0 glass-opacity-20" aria-hidden="true">
           {quantumStates.map((state, index) => (
             <motion.div
               key={state.system}
-              className="glass-absolute glass-w-1 glass-h-1 glass-surface-blue glass-radius-full"
+              className="glass-absolute glass-w-1 glass-h-1 glass-surface-secondary glass-radius-full"
               animate={
                 prefersReducedMotion
                   ? {}
@@ -943,11 +975,11 @@ export function GlassMetaDashboard({
           ))}
         </div>
 
-        <div className="glass-relative glass-z-10">
-          🧬
+        <div className="glass-relative glass-z-10 glass-font-semibold" aria-hidden="true">
+          ◈
           {optimizations.length > 0 && (
             <motion.div
-              className="glass-absolute glass--top-2 glass--right-2 glass-w-4 glass-h-4 glass-surface-green glass-radius-full glass-text-xs glass-text-primary glass-flex glass-items-center glass-justify-center"
+              className="glass-absolute glass--top-2 glass--right-2 glass-w-4 glass-h-4 glass-surface-secondary glass-radius-full glass-text-xs glass-text-primary glass-flex glass-items-center glass-justify-center"
               initial={{ scale: 0 }}
               animate={prefersReducedMotion ? {} : { scale: 1 }}
               transition={
@@ -960,17 +992,25 @@ export function GlassMetaDashboard({
             </motion.div>
           )}
         </div>
-      </motion.button>
+      </motion.button>}
 
       {/* Meta-engine dashboard */}
       <AnimatePresence>
         {showDashboard && (
           <motion.div
             className={cn(
-              "absolute bottom-16 right-0 w-96 glass-max-h-80vh overflow-y-auto",
-              "glass-surface-primary glass-elev-5 glass-radius-lg glass-p-6 glass-gap-4"
+              inline
+                ? "relative glass-mt-4 glass-w-full"
+                : "absolute right-0 glass-max-h-80vh overflow-y-auto",
+              "glass-surface-primary glass-elev-5 glass-radius-2xl glass-p-6 glass-border glass-border-white/30"
             )}
-            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            style={{
+              bottom: inline ? undefined : "calc(100% + 12px)",
+              width: inline ? "100%" : "min(24rem, calc(100vw - 2rem))",
+              boxSizing: "border-box",
+              maxHeight: inline ? undefined : "min(80vh, 720px)",
+            }}
+            initial={false}
             animate={prefersReducedMotion ? {} : { opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={
@@ -981,52 +1021,53 @@ export function GlassMetaDashboard({
             role="dialog"
             aria-label="Meta-Engine dashboard"
           >
-            <ContrastGuard>
-              <div className="glass-flex glass-items-center glass-justify-between">
-                <h3 className="glass-text-lg glass-font-semibold glass-text-primary">
-                  Meta-Engine Dashboard
-                </h3>
-                <button
+            <ContrastGuard className="glass-block">
+              <div className="glass-flex glass-items-start glass-justify-between glass-gap-4 glass-mb-5">
+                <div>
+                  <div className="glass-text-xs glass-font-semibold glass-text-secondary glass-uppercase glass-tracking-wide">
+                    Adaptive runtime
+                  </div>
+                  <h3 className="glass-text-xl glass-font-semibold glass-text-primary glass-mt-1">
+                    System Intelligence
+                  </h3>
+                  <p className="glass-text-sm glass-text-secondary glass-mt-1">
+                    Live material, motion, and accessibility health.
+                  </p>
+                </div>
+                {!inline && <button
                   onClick={() => setShowDashboard(false)}
                   className="glass-text-sm glass-text-secondary hover:glass-text-primary glass-focus glass-touch-target"
                   aria-label="Close Meta-Engine dashboard"
                 >
-                  ✕
-                </button>
+                  <span aria-hidden="true">×</span>
+                </button>}
               </div>
 
               {/* System Health Overview */}
-              <div className="glass-gap-2">
+              <div className="glass-gap-2 glass-mb-5">
                 <h4 className="glass-text-sm glass-font-medium glass-text-secondary glass-uppercase glass-tracking-wide">
-                  System Health
+                  System health
                 </h4>
-                <div className="glass-grid glass-grid-cols-1 glass-gap-2">
-                  {Array.from(systemHealth.entries()).map(
+                <div
+                  className="glass-grid glass-gap-2"
+                  style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 150px), 1fr))" }}
+                >
+                  {overview.map(
                     ([systemId, health]) => (
                       <motion.div
                         key={systemId}
-                        className="glass-p-3 glass-surface-secondary glass-radius-md"
-                        initial={{ opacity: 0, x: -10 }}
+                        className="glass-p-4 glass-surface-secondary glass-radius-xl glass-border glass-border-white/20"
+                        initial={false}
                         animate={
                           prefersReducedMotion ? {} : { opacity: 1, x: 0 }
                         }
                       >
                         <div className="glass-flex glass-items-center glass-justify-between">
-                          <span className="glass-text-sm glass-text-primary glass-font-medium">
-                            {systemId.replace("Glass", "")}
+                          <span className="glass-text-sm glass-text-primary glass-font-medium glass-min-glass-w-0">
+                            {healthLabel(String(systemId))}
                           </span>
                           <div className="glass-flex glass-items-center glass-gap-2">
-                            <div
-                              className="glass-w-3 glass-h-3 glass-radius-full"
-                              style={{
-                                backgroundColor:
-                                  health.healthScore > 0.8
-                                    ? "hsl(var(--glass-color-success))"
-                                    : health.healthScore > 0.6
-                                      ? "hsl(var(--glass-color-warning))"
-                                      : "hsl(var(--glass-color-danger))",
-                              }}
-                            />
+                            <div className="glass-w-2 glass-h-2 glass-radius-full glass-surface-secondary glass-border glass-border-white/30" />
                             <span className="glass-text-xs glass-text-secondary">
                               {(health.healthScore * 100).toFixed(0)}%
                             </span>
@@ -1092,7 +1133,7 @@ export function GlassMetaDashboard({
                     <motion.div
                       key={optimization.id}
                       className="glass-p-3 glass-surface-secondary glass-radius-md"
-                      initial={{ opacity: 0, x: -10 }}
+                      initial={false}
                       animate={prefersReducedMotion ? {} : { opacity: 1, x: 0 }}
                     >
                       <div className="glass-flex glass-items-center glass-justify-between">
@@ -1144,7 +1185,7 @@ export function GlassMetaDashboard({
                     <motion.div
                       key={evolution.id}
                       className="glass-p-3 glass-surface-secondary glass-radius-md"
-                      initial={{ opacity: 0, x: -10 }}
+                      initial={false}
                       animate={prefersReducedMotion ? {} : { opacity: 1, x: 0 }}
                     >
                       <div className="glass-text-sm glass-text-primary glass-font-medium">
@@ -1167,10 +1208,12 @@ export function GlassMetaDashboard({
               )}
 
               {optimizations.length === 0 && evolutions.length === 0 && (
-                <div className="glass-text-center glass-text-sm glass-text-secondary glass-py-8">
-                  System operating at optimal parameters
-                  <div className="glass-mt-1 glass-text-xs glass-text-tertiary">
-                    Meta-engine monitoring all systems...
+                <div className="glass-surface-secondary glass-radius-xl glass-border glass-border-white/20 glass-p-4">
+                  <div className="glass-text-sm glass-font-medium glass-text-primary">
+                    All systems nominal
+                  </div>
+                  <div className="glass-mt-1 glass-text-sm glass-text-secondary">
+                    Continuous analysis is active. No intervention is required.
                   </div>
                 </div>
               )}

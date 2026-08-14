@@ -1,82 +1,82 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { GlassGenerativeArt, type ArtPrompt } from './GlassGenerativeArt';
+import type { Meta, StoryObj } from "@storybook/react";
+import { GlassGenerativeArt, type ArtPrompt } from "./GlassGenerativeArt";
 
 const mockArtPrompts: ArtPrompt[] = [
   {
-    id: 'cosmic-abstract',
-    text: 'Cosmic abstract painting with swirling galaxies and nebulae in vibrant colors',
-    style: 'abstract expressionism',
-    category: 'abstract',
-    tags: ['space', 'cosmic', 'vibrant', 'swirling']
+    id: "cosmic-abstract",
+    text: "Cosmic abstract painting with swirling galaxies and nebulae in vibrant colors",
+    style: "abstract expressionism",
+    category: "abstract",
+    tags: ["space", "cosmic", "vibrant", "swirling"],
   },
   {
-    id: 'cyberpunk-city',
-    text: 'Cyberpunk cityscape at night with neon lights reflecting on wet streets',
-    style: 'digital art',
-    category: 'architecture',
-    tags: ['cyberpunk', 'neon', 'city', 'night']
+    id: "cyberpunk-city",
+    text: "Cyberpunk cityscape at night with neon lights reflecting on wet streets",
+    style: "digital art",
+    category: "architecture",
+    tags: ["cyberpunk", "neon", "city", "night"],
   },
   {
-    id: 'ethereal-portrait',
-    text: 'Ethereal portrait of a person made of flowing light and energy',
-    style: 'digital painting',
-    category: 'portrait',
-    tags: ['ethereal', 'light', 'energy', 'flowing']
+    id: "ethereal-portrait",
+    text: "Ethereal portrait of a person made of flowing light and energy",
+    style: "digital painting",
+    category: "portrait",
+    tags: ["ethereal", "light", "energy", "flowing"],
   },
   {
-    id: 'surreal-landscape',
-    text: 'Surreal landscape with floating islands and impossible waterfalls',
-    style: 'surrealism',
-    category: 'landscape',
-    tags: ['surreal', 'floating', 'impossible', 'waterfalls']
+    id: "surreal-landscape",
+    text: "Surreal landscape with floating islands and impossible waterfalls",
+    style: "surrealism",
+    category: "landscape",
+    tags: ["surreal", "floating", "impossible", "waterfalls"],
   },
   {
-    id: 'biomech-fusion',
-    text: 'Biomechanical fusion of organic forms and technological components',
-    style: 'biomechanical art',
-    category: 'surreal',
-    tags: ['biomechanical', 'organic', 'technology', 'fusion']
+    id: "biomech-fusion",
+    text: "Biomechanical fusion of organic forms and technological components",
+    style: "biomechanical art",
+    category: "surreal",
+    tags: ["biomechanical", "organic", "technology", "fusion"],
   },
   {
-    id: 'ocean-depths',
-    text: 'Deep ocean scene with bioluminescent creatures and coral reefs',
-    style: 'photorealistic',
-    category: 'nature',
-    tags: ['ocean', 'bioluminescent', 'coral', 'deep']
-  }
+    id: "ocean-depths",
+    text: "Deep ocean scene with bioluminescent creatures and coral reefs",
+    style: "photorealistic",
+    category: "nature",
+    tags: ["ocean", "bioluminescent", "coral", "deep"],
+  },
 ];
 
 const meta = {
-  title: 'AI + Intelligence/Glass Generative Art',
+  title: "AI + Intelligence/Glass Generative Art",
   component: GlassGenerativeArt,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     prompt: {
-      control: 'text',
+      control: "text",
     },
     showPromptLibrary: {
-      control: 'boolean',
+      control: "boolean",
     },
     showAdvancedSettings: {
-      control: 'boolean',
+      control: "boolean",
     },
     showGenerationHistory: {
-      control: 'boolean',
+      control: "boolean",
     },
     enableIterativeGeneration: {
-      control: 'boolean',
+      control: "boolean",
     },
     enablePromptEnhancement: {
-      control: 'boolean',
+      control: "boolean",
     },
     enableStyleMixing: {
-      control: 'boolean',
+      control: "boolean",
     },
     realTimeGeneration: {
-      control: 'boolean',
+      control: "boolean",
     },
   },
 } satisfies Meta<typeof GlassGenerativeArt>;
@@ -86,11 +86,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    prompt: 'A majestic dragon soaring through a cosmic nebula',
+    prompt: "A majestic dragon soaring through a cosmic nebula",
     suggestions: mockArtPrompts,
-    showPromptLibrary: true,
-    showAdvancedSettings: true,
-    showGenerationHistory: true,
+    showPromptLibrary: false,
+    showAdvancedSettings: false,
+    showGenerationHistory: false,
     enableIterativeGeneration: true,
     enablePromptEnhancement: true,
     enableStyleMixing: false,
@@ -100,7 +100,7 @@ export const Default: Story = {
 
 export const MinimalInterface: Story = {
   args: {
-    prompt: 'Peaceful zen garden with cherry blossoms',
+    prompt: "Peaceful zen garden with cherry blossoms",
     suggestions: mockArtPrompts.slice(0, 3),
     showPromptLibrary: false,
     showAdvancedSettings: false,
@@ -112,7 +112,7 @@ export const MinimalInterface: Story = {
 
 export const PromptLibraryFocus: Story = {
   args: {
-    prompt: '',
+    prompt: "",
     suggestions: mockArtPrompts,
     showPromptLibrary: true,
     showAdvancedSettings: false,
@@ -124,7 +124,7 @@ export const PromptLibraryFocus: Story = {
 
 export const AdvancedMode: Story = {
   args: {
-    prompt: 'Futuristic city with flying cars and holographic displays',
+    prompt: "Futuristic city with flying cars and holographic displays",
     suggestions: mockArtPrompts,
     showPromptLibrary: true,
     showAdvancedSettings: true,
@@ -134,9 +134,9 @@ export const AdvancedMode: Story = {
     enableStyleMixing: true,
     realTimeGeneration: false,
     generationSettings: {
-      model: 'stable-diffusion',
-      style: 'cyberpunk',
-      resolution: '1024x1024',
+      model: "stable-diffusion",
+      style: "cyberpunk",
+      resolution: "1024x1024",
       steps: 30,
       guidance: 8.5,
       iterations: 2,
@@ -146,7 +146,7 @@ export const AdvancedMode: Story = {
 
 export const RealTimeGeneration: Story = {
   args: {
-    prompt: 'Abstract geometric patterns with vibrant colors',
+    prompt: "Abstract geometric patterns with vibrant colors",
     suggestions: mockArtPrompts,
     showPromptLibrary: true,
     showAdvancedSettings: true,
@@ -158,13 +158,13 @@ export const RealTimeGeneration: Story = {
 
 export const AbstractArtFocus: Story = {
   args: {
-    prompt: 'Flowing abstract forms with gradient colors and dynamic movement',
-    suggestions: mockArtPrompts.filter(p => p.category === 'abstract'),
+    prompt: "Flowing abstract forms with gradient colors and dynamic movement",
+    suggestions: mockArtPrompts.filter((p) => p.category === "abstract"),
     showPromptLibrary: true,
     showAdvancedSettings: true,
     enablePromptEnhancement: true,
     generationSettings: {
-      style: 'abstract expressionism',
+      style: "abstract expressionism",
       steps: 25,
       guidance: 7.0,
     },
@@ -173,14 +173,14 @@ export const AbstractArtFocus: Story = {
 
 export const PortraitMode: Story = {
   args: {
-    prompt: 'Portrait of a wise elder with kind eyes and weathered features',
-    suggestions: mockArtPrompts.filter(p => p.category === 'portrait'),
+    prompt: "Portrait of a wise elder with kind eyes and weathered features",
+    suggestions: mockArtPrompts.filter((p) => p.category === "portrait"),
     showPromptLibrary: true,
     showAdvancedSettings: true,
     enablePromptEnhancement: true,
     generationSettings: {
-      style: 'photorealistic',
-      resolution: '768x768',
+      style: "photorealistic",
+      resolution: "768x768",
       steps: 35,
       guidance: 9.0,
     },
@@ -189,14 +189,14 @@ export const PortraitMode: Story = {
 
 export const LandscapeMode: Story = {
   args: {
-    prompt: 'Majestic mountain range at sunset with golden light',
-    suggestions: mockArtPrompts.filter(p => p.category === 'landscape'),
+    prompt: "Majestic mountain range at sunset with golden light",
+    suggestions: mockArtPrompts.filter((p) => p.category === "landscape"),
     showPromptLibrary: true,
     showAdvancedSettings: true,
     enablePromptEnhancement: true,
     generationSettings: {
-      style: 'photorealistic',
-      resolution: '1920x1080',
+      style: "photorealistic",
+      resolution: "1920x1080",
       steps: 30,
       guidance: 7.5,
     },
@@ -205,13 +205,14 @@ export const LandscapeMode: Story = {
 
 export const SurrealArt: Story = {
   args: {
-    prompt: 'Melting clocks in a dreamlike landscape with impossible architecture',
-    suggestions: mockArtPrompts.filter(p => p.category === 'surreal'),
+    prompt:
+      "Melting clocks in a dreamlike landscape with impossible architecture",
+    suggestions: mockArtPrompts.filter((p) => p.category === "surreal"),
     showPromptLibrary: true,
     showAdvancedSettings: true,
     enablePromptEnhancement: true,
     generationSettings: {
-      style: 'surrealism',
+      style: "surrealism",
       steps: 40,
       guidance: 8.0,
     },
@@ -220,14 +221,14 @@ export const SurrealArt: Story = {
 
 export const NatureTheme: Story = {
   args: {
-    prompt: 'Enchanted forest with magical creatures and glowing mushrooms',
-    suggestions: mockArtPrompts.filter(p => p.category === 'nature'),
+    prompt: "Enchanted forest with magical creatures and glowing mushrooms",
+    suggestions: mockArtPrompts.filter((p) => p.category === "nature"),
     showPromptLibrary: true,
     showAdvancedSettings: true,
     enablePromptEnhancement: true,
     generationSettings: {
-      style: 'fantasy art',
-      resolution: '768x768',
+      style: "fantasy art",
+      resolution: "768x768",
       steps: 28,
       guidance: 7.5,
     },
@@ -236,16 +237,16 @@ export const NatureTheme: Story = {
 
 export const HighQualityMode: Story = {
   args: {
-    prompt: 'Detailed architectural interior with ornate decorations',
+    prompt: "Detailed architectural interior with ornate decorations",
     suggestions: mockArtPrompts,
     showPromptLibrary: true,
     showAdvancedSettings: true,
     showGenerationHistory: true,
     enablePromptEnhancement: true,
     generationSettings: {
-      model: 'dall-e',
-      style: 'photorealistic',
-      resolution: '1024x1024',
+      model: "dall-e",
+      style: "photorealistic",
+      resolution: "1024x1024",
       steps: 50,
       guidance: 10.0,
       iterations: 1,
@@ -255,7 +256,7 @@ export const HighQualityMode: Story = {
 
 export const MultipleIterations: Story = {
   args: {
-    prompt: 'Colorful bird in tropical paradise',
+    prompt: "Colorful bird in tropical paradise",
     suggestions: mockArtPrompts,
     showPromptLibrary: true,
     showAdvancedSettings: true,
@@ -271,14 +272,14 @@ export const MultipleIterations: Story = {
 
 export const StyleMixing: Story = {
   args: {
-    prompt: 'Modern city skyline in impressionist painting style',
+    prompt: "Modern city skyline in impressionist painting style",
     suggestions: mockArtPrompts,
     showPromptLibrary: true,
     showAdvancedSettings: true,
     enableStyleMixing: true,
     enablePromptEnhancement: true,
     generationSettings: {
-      style: 'impressionism',
+      style: "impressionism",
       steps: 35,
       guidance: 8.0,
     },
@@ -287,7 +288,7 @@ export const StyleMixing: Story = {
 
 export const PromptEnhancementDisabled: Story = {
   args: {
-    prompt: 'Simple drawing of a cat',
+    prompt: "Simple drawing of a cat",
     suggestions: mockArtPrompts,
     showPromptLibrary: true,
     showAdvancedSettings: true,
@@ -298,15 +299,15 @@ export const PromptEnhancementDisabled: Story = {
 
 export const CustomModel: Story = {
   args: {
-    prompt: 'Anime character with magical powers',
+    prompt: "Anime character with magical powers",
     suggestions: mockArtPrompts,
     showPromptLibrary: true,
     showAdvancedSettings: true,
     enablePromptEnhancement: true,
     generationSettings: {
-      model: 'custom',
-      style: 'anime',
-      resolution: '768x768',
+      model: "custom",
+      style: "anime",
+      resolution: "768x768",
       steps: 30,
       guidance: 8.0,
     },
@@ -315,7 +316,7 @@ export const CustomModel: Story = {
 
 export const HistoryFocus: Story = {
   args: {
-    prompt: 'Generated artwork example',
+    prompt: "Generated artwork example",
     suggestions: mockArtPrompts.slice(0, 2),
     showPromptLibrary: false,
     showAdvancedSettings: false,
@@ -326,14 +327,14 @@ export const HistoryFocus: Story = {
 
 export const WideAspectRatio: Story = {
   args: {
-    prompt: 'Panoramic view of alien planet with multiple moons',
+    prompt: "Panoramic view of alien planet with multiple moons",
     suggestions: mockArtPrompts,
     showPromptLibrary: true,
     showAdvancedSettings: true,
     enablePromptEnhancement: true,
     generationSettings: {
-      resolution: '1920x1080',
-      style: 'sci-fi',
+      resolution: "1920x1080",
+      style: "sci-fi",
       steps: 32,
       guidance: 7.8,
     },
@@ -342,7 +343,7 @@ export const WideAspectRatio: Story = {
 
 export const LowGuidance: Story = {
   args: {
-    prompt: 'Creative interpretation of music as visual art',
+    prompt: "Creative interpretation of music as visual art",
     suggestions: mockArtPrompts,
     showPromptLibrary: true,
     showAdvancedSettings: true,
@@ -350,14 +351,14 @@ export const LowGuidance: Story = {
     generationSettings: {
       guidance: 3.0,
       steps: 40,
-      style: 'abstract expressionism',
+      style: "abstract expressionism",
     },
   },
 };
 
 export const HighGuidance: Story = {
   args: {
-    prompt: 'Precise technical blueprint of futuristic machine',
+    prompt: "Precise technical blueprint of futuristic machine",
     suggestions: mockArtPrompts,
     showPromptLibrary: true,
     showAdvancedSettings: true,
@@ -365,7 +366,7 @@ export const HighGuidance: Story = {
     generationSettings: {
       guidance: 15.0,
       steps: 35,
-      style: 'technical illustration',
+      style: "technical illustration",
     },
   },
 };

@@ -997,7 +997,10 @@ const AchievementNotificationCard = forwardRef<
                 : {
                     duration: ANIMATION.DURATION.slower / 1000,
                     delay: delay / 1000 + 0.5 + i * 0.1,
-                    ease: ANIMATION.EASING.easeOut,
+                    // Motion expects a numeric cubic-bezier tuple here; the CSS
+                    // keyword previously threw at runtime and left the entire
+                    // notification tree stranded at its initial opacity.
+                    ease: [0.16, 1, 0.3, 1],
                   }
             }
           />

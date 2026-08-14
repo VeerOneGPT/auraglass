@@ -64,16 +64,16 @@ const toCanvasRgba = (color: string, alpha: number) => {
     return color.replace("rgb(", "rgba(").replace(")", `, ${alpha})`);
   }
 
-  return `rgba(14, 165, 233, ${alpha})`;
+  return `rgba(255, 255, 255, ${alpha})`;
 };
 
 export function GlassMeshGradient({
   className,
   colors = [
-    COLORS.semantic.primary,
-    COLORS.semantic.primary,
-    COLORS.semantic.primary,
-    COLORS.semantic.warning,
+    "#ffffff",
+    "#f8fafc",
+    "#e2e8f0",
+    "#ffffff",
   ],
   points = 4,
   speed = 0.5,
@@ -282,7 +282,7 @@ export function GlassMeshGradient({
               inset: "-30%",
               filter: `blur(${Math.max(12, Math.round(blur * 0.28))}px)`,
               opacity: Math.min(0.78, Math.max(0.38, opacity * 0.68)),
-              mixBlendMode: variant === "dark" ? "screen" : "plus-lighter",
+              mixBlendMode: "soft-light",
               pointerEvents: "none",
               animation:
                 "ag-glass-mesh-gradient-motion 2.8s ease-in-out infinite alternate",
@@ -291,9 +291,9 @@ export function GlassMeshGradient({
           <style>{`
             .ag-glass-mesh-gradient-motion-layer {
               background:
-                radial-gradient(circle at 22% 32%, rgba(124,211,255,0.72), transparent 28%),
-                radial-gradient(circle at 78% 42%, rgba(216,111,255,0.64), transparent 32%),
-                radial-gradient(circle at 48% 76%, rgba(99,255,218,0.48), transparent 30%);
+                radial-gradient(circle at 22% 32%, rgba(255,255,255,0.30), rgba(255,255,255,0.08) 28%),
+                radial-gradient(circle at 78% 42%, rgba(248,250,252,0.26), rgba(255,255,255,0.08) 32%),
+                radial-gradient(circle at 48% 76%, rgba(226,232,240,0.22), rgba(255,255,255,0.08) 30%);
             }
             @keyframes ag-glass-mesh-gradient-motion {
               0% {

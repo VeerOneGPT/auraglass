@@ -1,38 +1,81 @@
+import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { GlassPredictiveEngineProvider } from "./GlassPredictiveEngine";
-import { StorybookVisualShowcase } from "./StorybookVisualShowcase";
+import { userEvent } from "@storybook/test";
+import {
+  GlassPredictionIndicator as ActualGlassPredictionIndicator,
+  GlassPredictiveEngine as ActualGlassPredictiveEngine,
+  GlassPredictiveEngineProvider as ActualGlassPredictiveEngineProvider,
+} from "./GlassPredictiveEngine";
 
-const meta = {
-  title: 'AI + Intelligence/Glass Predictive Engine',
-  component: GlassPredictiveEngineProvider,
+const StoryStage = ({ children }: { children: ReactNode }) => (
+  <div
+    style={{
+      boxSizing: "border-box",
+      display: "grid",
+      minHeight: "100vh",
+      minWidth: 0,
+      padding: "clamp(24px, 6vw, 72px)",
+      placeItems: "center",
+      width: "100%",
+    }}
+  >
+    <div style={{ minWidth: 0, width: "min(100%, 720px)" }}>{children}</div>
+  </div>
+);
+
+const openPredictionPanel = async (canvasElement: HTMLElement) => {
+  const button = canvasElement.querySelector("button");
+  if (button) await userEvent.click(button);
+};
+
+const meta: Meta = {
+  title: "AI + Intelligence/Glass Predictive Engine",
+  component: ActualGlassPredictiveEngine,
   parameters: {
     layout: "fullscreen",
-    previewSurface: "media",
+    previewSurface: "component",
     docs: {
       description: {
         component:
-          "Presentation-ready Advanced/Consciousness Interface/Predictive Engine stories with deterministic liquid-glass visuals, responsive spacing, and no native browser controls.",
+          "Direct stories for every public visual export in GlassPredictiveEngine: the complete engine, its provider, and the provider-backed prediction indicator.",
       },
     },
   },
   tags: ["autodocs"],
-} satisfies Meta<typeof GlassPredictiveEngineProvider>;
+};
 
 export default meta;
 type Story = StoryObj;
 
-const makeStory = (state: string): Story => ({
+export const GlassPredictiveEngine: Story = {
+  name: "GlassPredictiveEngine",
   render: () => (
-    <StorybookVisualShowcase
-      name={`GlassPredictiveEngine / ${state}`}
-      kind="advanced"
-      summary="Audited responsive scene for desktop, mobile, dark mode, and clear liquid material quality."
-    />
+    <StoryStage>
+      <ActualGlassPredictiveEngine showIndicator={false} />
+    </StoryStage>
   ),
-});
+};
 
-export const Interactive: Story = makeStory("Interactive");
-export const Conservative: Story = makeStory("Conservative");
-export const Aggressive: Story = makeStory("Aggressive");
-export const Experimental: Story = makeStory("Experimental");
-export const PredictionIndicatorOnly: Story = makeStory("Prediction Indicator Only");
+export const GlassPredictiveEngineProvider: Story = {
+  name: "GlassPredictiveEngineProvider",
+  render: () => (
+    <StoryStage>
+      <ActualGlassPredictiveEngineProvider>
+        <ActualGlassPredictionIndicator />
+      </ActualGlassPredictiveEngineProvider>
+    </StoryStage>
+  ),
+  play: async ({ canvasElement }) => openPredictionPanel(canvasElement),
+};
+
+export const GlassPredictionIndicator: Story = {
+  name: "GlassPredictionIndicator",
+  render: () => (
+    <StoryStage>
+      <ActualGlassPredictiveEngineProvider>
+        <ActualGlassPredictionIndicator showInsights maxPredictions={5} />
+      </ActualGlassPredictiveEngineProvider>
+    </StoryStage>
+  ),
+  play: async ({ canvasElement }) => openPredictionPanel(canvasElement),
+};

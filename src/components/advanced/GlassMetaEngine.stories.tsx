@@ -1,30 +1,69 @@
-import React from "react";
+import type { ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import * as ComponentModule from "./GlassMetaEngine";
-import { type MissingComponentName } from "../../stories/GlassMissingInventoryCertification.stories";
-import { StorybookVisualShowcase } from "./StorybookVisualShowcase";
+import {
+  GlassMetaDashboard as ActualGlassMetaDashboard,
+  GlassMetaEngineProvider as ActualGlassMetaEngineProvider,
+} from "./GlassMetaEngine";
 
-const componentName = "GlassMetaEngine" satisfies MissingComponentName;
-const Component = (ComponentModule as Record<string, any>)[componentName];
+const StoryStage = ({ children }: { children: ReactNode }) => (
+  <div
+    style={{
+      boxSizing: "border-box",
+      display: "grid",
+      minHeight: "100vh",
+      minWidth: 0,
+      padding: "clamp(24px, 6vw, 72px)",
+      placeItems: "center",
+      width: "100%",
+    }}
+  >
+    <div style={{ minWidth: 0, width: "min(100%, 720px)" }}>{children}</div>
+  </div>
+);
 
 const meta = {
-  title: 'Effects + Advanced/Glass Meta Engine',
-  component: Component,
+  title: "Effects + Advanced/Glass Meta Engine",
+  component: ActualGlassMetaDashboard,
   parameters: {
     layout: "fullscreen",
-    previewSurface: "media",
+    previewSurface: "component",
     docs: {
       description: {
         component:
-          "Component-owned Storybook coverage for GlassMetaEngine. This story renders the certified AuraGlass sample used by the full visual certification suite.",
+          "Direct stories for the public GlassMetaEngine provider and dashboard exports, with the dashboard mounted under its required runtime context.",
       },
     },
   },
-} satisfies Meta<typeof Component>;
+  tags: ["autodocs"],
+} satisfies Meta<typeof ActualGlassMetaDashboard>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj;
 
-export const Default: Story = {
-  render: () => <StorybookVisualShowcase name={componentName} kind="advanced" />,
+export const GlassMetaEngineProvider: Story = {
+  name: "GlassMetaEngineProvider",
+  render: () => (
+    <StoryStage>
+      <ActualGlassMetaEngineProvider>
+        <ActualGlassMetaDashboard defaultOpen inline showQuantumStates={false} />
+      </ActualGlassMetaEngineProvider>
+    </StoryStage>
+  ),
+};
+
+export const GlassMetaDashboard: Story = {
+  name: "GlassMetaDashboard",
+  render: () => (
+    <StoryStage>
+      <ActualGlassMetaEngineProvider>
+        <ActualGlassMetaDashboard
+          maxOptimizations={6}
+          showEvolutions
+          showQuantumStates={false}
+          defaultOpen
+          inline
+        />
+      </ActualGlassMetaEngineProvider>
+    </StoryStage>
+  ),
 };

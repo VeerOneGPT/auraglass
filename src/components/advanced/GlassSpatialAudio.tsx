@@ -785,7 +785,6 @@ export function GlassAudioReactive({
       className={cn("glass-audio-reactive", className)}
       animate={{
         scale: 1 + audioIntensity * 0.1,
-        opacity: 0.8 + audioIntensity * 0.2,
         backgroundColor: `rgba(255, 255, 255, ${0.1 + audioIntensity * 0.1})`,
       }}
       transition={
@@ -826,16 +825,20 @@ export function GlassSpatialVisualizer({
   return (
     <div
       className={cn(
-        "glass-fixed glass-bottom-4 glass-right-4 glass-w-64 glass-h-64 glass-surface-primary glass-elev-3 glass-radius-lg glass-p-4",
+        "glass-fixed glass-bottom-4 glass-right-4 glass-w-64 glass-h-64 glass-surface-primary glass-elev-3 glass-radius-lg glass-p-4 glass-flex glass-flex-col",
         className
       )}
+      style={{
+        maxWidth: "calc(100vw - 2rem)",
+        maxHeight: "calc(100vh - 2rem)",
+      }}
     >
       <div className="glass-text-xs glass-text-primary glass-mb-2">
         Spatial Audio
       </div>
 
       {/* 3D space visualization */}
-      <div className="glass-relative glass-w-full glass-h-full glass-gradient-primary glass-gradient-primary glass-gradient-primary glass-radius-lg glass-overflow-hidden">
+      <div className="glass-relative glass-w-full glass-flex-1 glass-min-h-0 glass-surface-subtle glass-radius-lg glass-overflow-hidden">
         {/* Grid */}
         <div className="glass-absolute glass-inset-0">
           {Array.from({ length: 8 }, (_, i) => (
@@ -859,8 +862,15 @@ export function GlassSpatialVisualizer({
         </div>
 
         {/* Center point (listener) */}
-        <div className="glass-absolute glass-w-2 glass-h-2 glass-surface-green glass-radius-full glass-top-1-2 glass-left-1-2 glass-translate-x-1/2-neg glass-translate-y-1/2-neg">
-          <div className="glass-absolute glass-w-4 glass-h-4 glass-border glass-border-green glass-radius-full glass-top-1 glass--left-1 glass-animate-pulse" />
+        <div
+          className="glass-absolute glass-w-4 glass-h-4 glass-radius-full"
+          style={{ left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}
+        >
+          <div
+            className="glass-absolute glass-w-2 glass-h-2 glass-surface-primary glass-radius-full"
+            style={{ left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}
+          />
+          <div className="glass-absolute glass-inset-0 glass-border glass-border-subtle glass-radius-full glass-animate-pulse" />
         </div>
 
         {/* Audio sources */}

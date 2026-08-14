@@ -10,7 +10,7 @@ const meta = {
   component: Component,
   parameters: {
     layout: "centered",
-    previewSurface: "media",
+    previewSurface: "component",
     docs: {
       description: {
         component:
@@ -27,17 +27,22 @@ export const Default: Story = {
   render: () => (
     <div
       style={{
-        width: "100%",
+        width: "min(720px, calc(100vw - 40px))",
         maxWidth: 720,
         maxHeight: "min(620px, calc(100vh - 64px))",
         overflow: "auto",
         borderRadius: 20,
-        border: "1px solid rgba(255, 255, 255, 0.24)",
+        border: "1px solid rgba(15, 23, 42, 0.12)",
         background:
-          "linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(30, 64, 175, 0.86))",
-        boxShadow: "0 28px 72px rgba(2, 6, 23, 0.44)",
+          "linear-gradient(145deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.14))",
+        backdropFilter:
+          "blur(32px) saturate(140%) brightness(1.04) contrast(1.02)",
+        WebkitBackdropFilter:
+          "blur(32px) saturate(140%) brightness(1.04) contrast(1.02)",
+        boxShadow:
+          "0 28px 72px rgba(15, 23, 42, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.88)",
         padding: "clamp(18px, 4vw, 30px)",
-        color: "#f8fafc",
+        color: "rgba(15, 23, 42, 0.92)",
       }}
     >
       <style>{`
@@ -47,12 +52,7 @@ export const Default: Story = {
         }
 
         .advanced-animations-story :where(h3, p, span, div) {
-          color: #f8fafc;
           overflow-wrap: anywhere;
-        }
-
-        .advanced-animations-story .glass-text-tertiary {
-          color: #cbd5e1;
         }
 
         .advanced-animations-story :where(.glass-grid) {

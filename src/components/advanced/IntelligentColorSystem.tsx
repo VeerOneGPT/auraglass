@@ -755,8 +755,8 @@ export const ColorAdaptationDemo: React.FC = () => {
         background: `linear-gradient(135deg, ${currentPalette.glassBase}, ${currentPalette.glassTint})`,
         borderColor: currentPalette.border,
       }}
-      initial={{ opacity: 0, y: 20 }}
-      animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={
         prefersReducedMotion
           ? { duration: 0 }
@@ -773,10 +773,15 @@ export const ColorAdaptationDemo: React.FC = () => {
 
         {/* Current Palette Display */}
         <div
-          className={cn("glass-grid glass-grid-cols-4 glass-gap-2 glass-mb-6")}
+          className={cn(
+            "glass-grid glass-grid-cols-2 sm:glass-grid-cols-4 glass-gap-2 glass-mb-6"
+          )}
         >
           {Object.entries(currentPalette).map(([name, color]) => (
-            <div key={name} className={cn("glass-text-center")}>
+            <div
+              key={name}
+              className={cn("glass-min-w-0 glass-text-center")}
+            >
               <div
                 className={cn(
                   "glass-w-full glass-h-12 glass-radius-lg glass-mb-2"
@@ -785,7 +790,7 @@ export const ColorAdaptationDemo: React.FC = () => {
               />
               <ContrastGuard>
                 <div
-                  className={cn("glass-text-xs")}
+                  className={cn("glass-text-xs glass-break-words")}
                   style={{ color: currentPalette.textSecondary }}
                 >
                   {name}
@@ -808,7 +813,7 @@ export const ColorAdaptationDemo: React.FC = () => {
                 Time of Day
               </label>
             </ContrastGuard>
-            <div className={cn("glass-flex glass-space-x-2")}>
+            <div className={cn("glass-flex glass-flex-wrap glass-gap-2")}>
               {["Morning", "Day", "Evening", "Night"].map((time, index) => (
                 <motion.button
                   key={time}
@@ -842,7 +847,7 @@ export const ColorAdaptationDemo: React.FC = () => {
                 Season
               </label>
             </ContrastGuard>
-            <div className={cn("glass-flex glass-space-x-2")}>
+            <div className={cn("glass-flex glass-flex-wrap glass-gap-2")}>
               {(["spring", "summer", "autumn", "winter"] as const).map(
                 (season) => (
                   <motion.button
@@ -878,7 +883,7 @@ export const ColorAdaptationDemo: React.FC = () => {
                 Brand Colors
               </label>
             </ContrastGuard>
-            <div className={cn("glass-flex glass-space-x-2")}>
+            <div className={cn("glass-flex glass-flex-wrap glass-gap-2")}>
               {demoColors.map((color, i) => (
                 <motion.button
                   key={`${color}-${i}`}

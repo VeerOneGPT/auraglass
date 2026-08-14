@@ -213,6 +213,15 @@ const optimizeFormFlow = (fields: FormField[]): string[] => {
   return optimizations;
 };
 
+const readableGlassTextStyle = {
+  "--glass-text-primary": "rgba(15, 23, 42, 0.96)",
+  "--glass-text-secondary": "rgba(30, 41, 59, 0.84)",
+  "--typography-text-primary": "rgba(15, 23, 42, 0.96)",
+  "--typography-text-secondary": "rgba(30, 41, 59, 0.84)",
+  "--glass-theme-text": "rgba(15, 23, 42, 0.96)",
+  color: "rgba(15, 23, 42, 0.96)",
+} as React.CSSProperties;
+
 export const GlassIntelligentFormBuilder: React.FC<
   IntelligentFormBuilderProps
 > = ({
@@ -477,6 +486,7 @@ export const GlassIntelligentFormBuilder: React.FC<
           className
         )}
         style={{
+          ...readableGlassTextStyle,
           ...(boundedHeight !== undefined
             ? {
                 maxHeight:
@@ -508,7 +518,7 @@ export const GlassIntelligentFormBuilder: React.FC<
             <div className="glass-flex glass-flex-col glass-gap-2 glass-shrink-0">
               <button
                 onClick={addField}
-                className="glass-px-3 glass-py-2 glass-surface-blue glass-text-primary glass-radius-lg glass-text-sm glass-focus glass-touch-target glass-contrast-guard"
+                className="glass-px-3 glass-py-2 glass-surface-subtle glass-border glass-border-subtle glass-text-primary glass-radius-lg glass-text-sm glass-focus glass-touch-target glass-contrast-guard"
               >
                 Add
               </button>
@@ -568,6 +578,7 @@ export const GlassIntelligentFormBuilder: React.FC<
         className
       )}
       style={{
+        ...readableGlassTextStyle,
         ...(boundedHeight !== undefined
           ? {
               maxHeight:
@@ -585,7 +596,7 @@ export const GlassIntelligentFormBuilder: React.FC<
         <div className="glass-flex glass-items-center glass-justify-between glass-mb-6">
           <div>
             <h1 className="glass-text-2xl glass-font-bold glass-text-secondary">
-              🤖 Intelligent Form Builder
+              <span aria-hidden="true">◎</span> Intelligent Form Builder
             </h1>
             <p className="glass-text-secondary glass-mt-1">
               AI-powered form creation with real-time optimization
@@ -594,13 +605,13 @@ export const GlassIntelligentFormBuilder: React.FC<
           <div className="glass-flex glass-gap-3">
             <button
               onClick={exportSchema}
-              className="glass-px-4 glass-py-2 glass-surface-blue glass-text-primary glass-radius-lg hover:glass-surface-blue glass-transition-colors glass-focus glass-touch-target glass-contrast-guard glass-focus glass-touch-target glass-contrast-guard"
+              className="glass-px-4 glass-py-2 glass-surface-subtle glass-border glass-border-subtle glass-text-primary glass-radius-lg hover:glass-surface-overlay glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
             >
               Export Schema
             </button>
             <button
               onClick={addField}
-              className="glass-px-4 glass-py-2 glass-surface-green glass-text-primary glass-radius-lg hover:glass-surface-green glass-transition-colors glass-focus glass-touch-target glass-contrast-guard glass-focus glass-touch-target glass-contrast-guard"
+              className="glass-px-4 glass-py-2 glass-surface-subtle glass-border glass-border-subtle glass-text-primary glass-radius-lg hover:glass-surface-overlay glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
             >
               + Add Field
             </button>
@@ -652,10 +663,15 @@ export const GlassIntelligentFormBuilder: React.FC<
 
         {/* AI Analysis Panel */}
         {enableAIAssistance && schema.aiAnalysis && (
-          <div className="glass-gradient-primary glass-gradient-primary glass-gradient-primary glass-radius-xl glass-p-6">
+          <div className="glass-surface-subtle glass-border glass-border-subtle glass-radius-xl glass-p-6">
             <div className="glass-flex glass-items-center glass-gap-3 glass-mb-4">
-              <div className="glass-w-8 glass-h-8 glass-surface-blue glass-radius-full glass-flex glass-items-center glass-justify-center">
-                <span className="glass-text-primary glass-text-sm">🤖</span>
+              <div className="glass-w-8 glass-h-8 glass-surface-subtle glass-border glass-border-subtle glass-radius-full glass-flex glass-items-center glass-justify-center">
+                <span
+                  className="glass-text-primary glass-text-sm"
+                  aria-hidden="true"
+                >
+                  ◎
+                </span>
               </div>
               <div>
                 <h3 className="glass-font-semibold glass-text-secondary">
@@ -702,7 +718,7 @@ export const GlassIntelligentFormBuilder: React.FC<
             {schema.aiAnalysis.recommendations.length > 0 && (
               <div>
                 <h4 className="glass-font-medium glass-text-secondary glass-mb-2">
-                  🎯 AI Recommendations:
+                  AI Recommendations
                 </h4>
                 <ul className="glass-space-y-1">
                   {schema.aiAnalysis.recommendations
@@ -712,7 +728,7 @@ export const GlassIntelligentFormBuilder: React.FC<
                         key={index}
                         className="glass-text-sm glass-text-secondary glass-flex glass-items-center glass-gap-2"
                       >
-                        <span className="glass-w-1.5 glass-h-1.5 glass-surface-blue glass-radius-full"></span>
+                        <span className="glass-w-1.5 glass-h-1.5 glass-surface-subtle glass-border glass-border-subtle glass-radius-full"></span>
                         {rec}
                       </li>
                     ))}
@@ -773,7 +789,7 @@ export const GlassIntelligentFormBuilder: React.FC<
                             key={i}
                             className="glass-px-2 glass-py-1 glass-text-xs glass-surface-subtle glass-text-primary glass-radius"
                           >
-                            💡 {suggestion}
+                            {suggestion}
                           </span>
                         ))}
                     </div>
@@ -783,7 +799,9 @@ export const GlassIntelligentFormBuilder: React.FC<
 
             {schema.fields.length === 0 && (
               <div className="glass-text-center glass-py-8 glass-text-secondary">
-                <div className="glass-text-4xl glass-mb-2">📝</div>
+                <div className="glass-text-4xl glass-mb-2" aria-hidden="true">
+                  ◇
+                </div>
                 <p>No fields yet. Click "Add Field" to get started.</p>
               </div>
             )}
@@ -991,7 +1009,7 @@ export const GlassIntelligentFormBuilder: React.FC<
                     {enableAIAssistance && field.aiSuggestions && (
                       <div className="glass-surface-subtle glass-radius-lg glass-p-4">
                         <h4 className="glass-font-medium glass-text-secondary glass-mb-2">
-                          🤖 AI Suggestions
+                          AI Suggestions
                         </h4>
 
                         {field.aiSuggestions.fieldType.length > 0 && (

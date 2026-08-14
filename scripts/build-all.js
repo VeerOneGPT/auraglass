@@ -158,7 +158,11 @@ for (const [entryPoint, outputBase] of entrypoints) {
 esbuild.buildSync({
   entryPoints: [path.resolve(projectRoot, 'src/styles/index.css')],
   outfile: path.resolve(projectRoot, 'dist/styles/index.css'),
+  assetNames: 'fonts/[name]',
   bundle: true,
+  loader: {
+    '.woff2': 'file',
+  },
   minify: true,
   sourcemap: true,
   logLevel: 'info',

@@ -292,7 +292,7 @@ export function GlassFoldableSupport({
                   : { duration: ANIMATION.DURATION.normal / 1000 }
               }
             >
-              <div className="glass-optimized-glass intensity={0.2} glassBlur={6} glass-w-full glass-h-full">
+              <div className="glass-foundation-complete glass-w-full glass-h-full glass-radius-xl">
                 {React.Children.toArray(children)[index] || children}
               </div>
             </motion.div>
@@ -327,7 +327,7 @@ export function GlassFoldableSupport({
     <motion.div
       ref={containerRef}
       className={cn(
-        "relative OptimizedGlass intensity={0.2} glassBlur={6}",
+        "glass-relative glass-foundation-complete glass-overflow-hidden",
         "transform-gpu will-change-transform",
         foldableInfo.isFoldable && "glass-foldable-supported",
         className
@@ -408,10 +408,10 @@ function HingeBridge({
   return (
     <div
       className={cn(
-        "absolute OptimizedGlass intensity={0.2} glassBlur={6} opacity-50",
-        "pointer-events-none",
-        hinge.position === "vertical" && "top-0 bottom-0",
-        hinge.position === "horizontal" && "left-0 right-0"
+        "glass-absolute glass-backdrop-blur-md glass-opacity-50",
+        "glass-pointer-events-none",
+        hinge.position === "vertical" && "glass-top-0 glass-bottom-0",
+        hinge.position === "horizontal" && "glass-left-0 glass-right-0"
       )}
       style={{
         ...(hinge.position === "vertical"

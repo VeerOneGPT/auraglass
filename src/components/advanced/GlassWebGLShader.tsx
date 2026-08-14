@@ -29,10 +29,13 @@ interface ShaderProps {
 }
 
 const shaderFallbackPanelStyle: React.CSSProperties = {
-  ...createGlassStyle({ intent: "primary", elevation: "level3" }),
+  ...createGlassStyle({ intent: "neutral", elevation: "level3" }),
   minHeight: 220,
-  borderColor: "rgba(226, 232, 240, 0.14)",
-  color: "#e5f4ff",
+  borderColor: "rgba(15, 23, 42, 0.14)",
+  color: "rgba(15, 23, 42, 0.92)",
+  background:
+    "linear-gradient(145deg, rgba(255,255,255,0.34), rgba(255,255,255,0.2))",
+  contain: "layout paint",
 };
 
 const shaderFallbackLineStyle: React.CSSProperties = {
@@ -40,10 +43,10 @@ const shaderFallbackLineStyle: React.CSSProperties = {
 };
 
 const shaderFallbackTileStyle: React.CSSProperties = {
-  ...createGlassStyle({ intent: "primary", elevation: "level3" }),
-  borderColor: "rgba(226,232,240,0.26)",
+  ...createGlassStyle({ intent: "neutral", elevation: "level3" }),
+  borderColor: "rgba(15,23,42,0.14)",
   boxShadow:
-    "0 24px 80px rgba(56,189,248,0.2), inset 0 1px 0 rgba(255,255,255,0.18)",
+    "0 24px 80px rgba(15,23,42,0.12), inset 0 1px 0 rgba(255,255,255,0.28)",
   transform: "translate(-50%, -50%)",
 };
 
@@ -535,18 +538,14 @@ export function GlassWebGLShader({
           className="glass-absolute glass-inset-x-6 glass-top-8 glass-h-px"
           style={{
             ...shaderFallbackLineStyle,
-            animation: shouldAnimate
-              ? "ag-webgl-shader-line 2.8s ease-in-out infinite alternate"
-              : undefined,
+            animation: undefined,
           }}
         />
         <div
           className="glass-absolute glass-left-1/2 glass-top-1/2 glass-h-20 glass-w-20 glass-rounded-2xl glass-border"
           style={{
             ...shaderFallbackTileStyle,
-            animation: shouldAnimate
-              ? "ag-webgl-shader-tile 3.2s ease-in-out infinite alternate"
-              : undefined,
+            animation: undefined,
           }}
         />
         <div
@@ -558,46 +557,31 @@ export function GlassWebGLShader({
             width: "64%",
             height: "48%",
             borderRadius: 999,
-            filter: "blur(18px)",
+            filter: "blur(24px)",
             mixBlendMode: "screen",
             opacity: 0.68,
-            animation: shouldAnimate
-              ? "ag-webgl-shader-orb 2.4s ease-in-out infinite alternate"
-              : undefined,
+            animation: undefined,
           }}
         />
-        {shouldAnimate ? (
-          <style>{`
-            .ag-webgl-shader-orb {
-              background: radial-gradient(circle, rgba(124,211,255,0.74) 0%, rgba(216,111,255,0.44) 42%, transparent 72%);
-            }
-            @keyframes ag-webgl-shader-tile {
-              0% { transform: translate(-68%, -56%) rotate(-10deg) scale(0.86); opacity: 0.45; }
-              50% { transform: translate(-38%, -42%) rotate(13deg) scale(1.18); opacity: 1; }
-              100% { transform: translate(-52%, -64%) rotate(-4deg) scale(0.96); opacity: 0.64; }
-            }
-            @keyframes ag-webgl-shader-line {
-              0% { transform: translateX(-34%); opacity: 0.24; }
-              50% { transform: translateX(46%); opacity: 1; }
-              100% { transform: translateX(8%); opacity: 0.5; }
-            }
-            @keyframes ag-webgl-shader-orb {
-              0% { transform: translate3d(0%, -10%, 0) scale(0.82); opacity: 0.38; }
-              50% { transform: translate3d(86%, 8%, 0) scale(1.16); opacity: 0.9; }
-              100% { transform: translate3d(44%, 38%, 0) scale(0.98); opacity: 0.62; }
-            }
-          `}</style>
-        ) : null}
         <div className="glass-relative glass-z-10 glass-flex glass-h-full glass-min-h-48 glass-flex-col glass-justify-between">
           <div>
-            <p className="glass-text-xs glass-uppercase glass-tracking-widest glass-text-primary-glass-opacity-60">
+            <p
+              className="glass-text-xs glass-uppercase glass-tracking-widest"
+              style={{ color: "rgba(15, 23, 42, 0.72)" }}
+            >
               CSS shader
             </p>
-            <p className="glass-mt-1 glass-text-base glass-font-semibold glass-text-primary">
+            <p
+              className="glass-mt-1 glass-text-base glass-font-semibold"
+              style={{ color: "rgba(15, 23, 42, 0.92)" }}
+            >
               {variant} glass field
             </p>
           </div>
-          <p className="glass-text-sm glass-text-secondary">
+          <p
+            className="glass-text-sm"
+            style={{ color: "rgba(15, 23, 42, 0.76)" }}
+          >
             Lightweight preview mode active.
           </p>
         </div>

@@ -508,7 +508,14 @@ export function AIGlassThemeProvider({
 
   return (
     <AIGlassThemeContext.Provider value={contextValue}>
-      <div className={className} data-testid={dataTestId}>
+      <div
+        className={cn("glass-neutral-level1", className)}
+        data-testid={dataTestId}
+        style={{
+          boxShadow:
+            "0 12px 32px rgba(15, 23, 42, 0.10), inset 0 0 12px rgba(255, 255, 255, 0.14)",
+        }}
+      >
         {children}
       </div>
     </AIGlassThemeContext.Provider>

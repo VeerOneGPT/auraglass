@@ -126,11 +126,14 @@ const defaultSettings: DeepDreamSettings = {
 };
 
 const readableGlassTextStyle: React.CSSProperties = {
-  "--glass-text-primary": "var(--glass-theme-text, rgba(255, 255, 255, 0.95))",
-  "--typography-text-primary":
-    "var(--glass-theme-text, rgba(255, 255, 255, 0.95))",
-  "--glass-theme-text": "var(--glass-theme-text, rgba(255, 255, 255, 0.95))",
-  color: "var(--glass-theme-text, rgba(255, 255, 255, 0.95))",
+  "--glass-text-primary": "rgba(15, 23, 42, 0.96)",
+  "--glass-text-secondary": "rgba(30, 41, 59, 0.84)",
+  "--glass-text-tertiary": "rgba(51, 65, 85, 0.72)",
+  "--typography-text-primary": "rgba(15, 23, 42, 0.96)",
+  "--typography-text-secondary": "rgba(30, 41, 59, 0.84)",
+  "--typography-text-tertiary": "rgba(51, 65, 85, 0.72)",
+  "--glass-theme-text": "rgba(15, 23, 42, 0.96)",
+  color: "rgba(15, 23, 42, 0.96)",
 } as React.CSSProperties;
 
 export const GlassDeepDreamGlass = forwardRef<
@@ -487,27 +490,84 @@ export const GlassDeepDreamGlass = forwardRef<
       }
     }, [settings, enableRealTime, originalImage, generateDeepDream]);
 
+    // Keep empty previews visibly intentional. A transparent black canvas is
+    // indistinguishable from a failed renderer to users and visual tooling.
+    useEffect(() => {
+      if (originalImage) return;
+      const paintEmptyPreview = (
+        canvas: HTMLCanvasElement | null,
+        label: string
+      ) => {
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        const gradient = ctx.createLinearGradient(
+          0,
+          0,
+          canvas.width,
+          canvas.height
+        );
+        gradient.addColorStop(0, "rgba(248, 250, 252, 0.98)");
+        gradient.addColorStop(1, "rgba(226, 232, 240, 0.94)");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = "rgba(100, 116, 139, 0.34)";
+        ctx.lineWidth = 2;
+        for (let y = 48; y < canvas.height; y += 72) {
+          ctx.beginPath();
+          ctx.moveTo(28, y);
+          ctx.bezierCurveTo(
+            canvas.width * 0.3,
+            y - 20,
+            canvas.width * 0.68,
+            y + 20,
+            canvas.width - 28,
+            y
+          );
+          ctx.stroke();
+        }
+        ctx.fillStyle = "rgba(30, 41, 59, 0.82)";
+        ctx.font = "600 18px system-ui, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(label, canvas.width / 2, canvas.height / 2);
+      };
+      paintEmptyPreview(canvasRef.current, "Source preview");
+      paintEmptyPreview(dreamCanvasRef.current, "Dream preview");
+    }, [originalImage, canvasWidth, canvasHeight]);
+
     const LayerSelector = () => (
       <div className="glass-space-y-4">
         <h4 className="glass-text-sm glass-font-medium glass-text-primary-glass-opacity-80">
           Neural Layers
         </h4>
 
-        <div className="glass-space-y-2">
+        <div className="glass-deep-dream-layer-list glass-grid glass-grid-cols-1 glass-gap-2">
           {availableLayers.map((layer) => (
             <motion.div
               key={layer.id}
-              className={`
-                p-3 rounded-lg border cursor-pointer transition-all duration-[${ANIMATION.DURATION.fast}ms]
-                ${
-                  settings.layers.includes(layer.id)
-                    ? "border-blue-400 bg-blue-400/20"
-                    : "border-white/20 hover:border-white/40 bg-white/5"
-                }
-              `}
+              role="checkbox"
+              aria-checked={settings.layers.includes(layer.id)}
+              tabIndex={0}
+              className="glass-deep-dream-layer glass-p-3 glass-radius-lg glass-border glass-cursor-pointer"
+              style={{
+                background: settings.layers.includes(layer.id)
+                  ? "rgba(226, 234, 238, 0.78)"
+                  : "rgba(255, 255, 255, 0.46)",
+                borderColor: settings.layers.includes(layer.id)
+                  ? "rgba(71, 93, 105, 0.42)"
+                  : "rgba(255, 255, 255, 0.68)",
+                boxShadow:
+                  "inset 0 1px 0 rgba(255,255,255,.8), 0 7px 20px rgba(30,41,59,.06)",
+              }}
               whileHover={shouldAnimate ? { scale: 1.01 } : {}}
               whileTap={shouldAnimate ? { scale: 0.99 } : {}}
               onClick={() => toggleLayer(layer.id)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  toggleLayer(layer.id);
+                }
+              }}
             >
               <div className="glass-flex glass-items-start glass-justify-between">
                 <div className="glass-flex-1">
@@ -516,18 +576,11 @@ export const GlassDeepDreamGlass = forwardRef<
                       {layer.name}
                     </h5>
                     <span
-                      className={`
-                      px-2 py-0.5 rounded text-xs font-medium
-                      ${
-                        layer.type === "conv"
-                          ? "bg-green-500/20 text-green-300"
-                          : layer.type === "inception"
-                            ? "bg-purple-500/20 text-purple-300"
-                            : layer.type === "dense"
-                              ? "bg-blue-500/20 text-blue-300"
-                              : "bg-gray-500/20 text-gray-300"
-                      }
-                    `}
+                      className="glass-px-2 glass-py-0.5 glass-radius-full glass-text-xs glass-font-medium"
+                      style={{
+                        background: "rgba(71,85,105,.1)",
+                        color: "rgba(30,41,59,.72)",
+                      }}
                     >
                       {layer.type}
                     </span>
@@ -590,7 +643,7 @@ export const GlassDeepDreamGlass = forwardRef<
           Dream Settings
         </h4>
 
-        <div className="glass-grid glass-grid-cols-1 md:glass-grid-cols-2 glass-gap-4">
+        <div className="glass-grid glass-grid-cols-1 md:glass-grid-cols-2 glass-gap-3">
           <div>
             <label className="glass-block glass-text-xs glass-text-primary-opacity-70 glass-mb-1">
               Iterations: {settings.iterations}
@@ -607,7 +660,7 @@ export const GlassDeepDreamGlass = forwardRef<
                 }))
               }
               aria-label={`Iterations: ${settings.iterations}`}
-              className="glass-w-full glass-h-2 glass-surface-subtle/20 glass-radius-lg glass-appearance-none glass-cursor-pointer"
+              className="glass-deep-dream-range glass-w-full glass-cursor-pointer"
             />
           </div>
 
@@ -628,7 +681,7 @@ export const GlassDeepDreamGlass = forwardRef<
                 }))
               }
               aria-label={`Learning Rate: ${settings.learningRate.toFixed(3)}`}
-              className="glass-w-full glass-h-2 glass-surface-subtle/20 glass-radius-lg glass-appearance-none glass-cursor-pointer"
+              className="glass-deep-dream-range glass-w-full glass-cursor-pointer"
             />
           </div>
 
@@ -648,7 +701,7 @@ export const GlassDeepDreamGlass = forwardRef<
                 }))
               }
               aria-label={`Octaves: ${settings.octaves}`}
-              className="glass-w-full glass-h-2 glass-surface-subtle/20 glass-radius-lg glass-appearance-none glass-cursor-pointer"
+              className="glass-deep-dream-range glass-w-full glass-cursor-pointer"
             />
           </div>
 
@@ -669,7 +722,7 @@ export const GlassDeepDreamGlass = forwardRef<
                 }))
               }
               aria-label={`Octave Scale: ${settings.octaveScale.toFixed(1)}`}
-              className="glass-w-full glass-h-2 glass-surface-subtle/20 glass-radius-lg glass-appearance-none glass-cursor-pointer"
+              className="glass-deep-dream-range glass-w-full glass-cursor-pointer"
             />
           </div>
 
@@ -690,7 +743,7 @@ export const GlassDeepDreamGlass = forwardRef<
                 }))
               }
               aria-label={`Step Size: ${settings.stepSize.toFixed(1)}`}
-              className="glass-w-full glass-h-2 glass-surface-subtle/20 glass-radius-lg glass-appearance-none glass-cursor-pointer"
+              className="glass-deep-dream-range glass-w-full glass-cursor-pointer"
             />
           </div>
 
@@ -711,35 +764,64 @@ export const GlassDeepDreamGlass = forwardRef<
                 }))
               }
               aria-label={`Max Loss: ${settings.maxLoss.toFixed(1)}`}
-              className="glass-w-full glass-h-2 glass-surface-subtle/20 glass-radius-lg glass-appearance-none glass-cursor-pointer"
+              className="glass-deep-dream-range glass-w-full glass-cursor-pointer"
             />
           </div>
         </div>
 
-        <div className="glass-flex glass-items-center glass-space-x-4">
-          <label className="glass-flex glass-items-center glass-space-x-2 glass-cursor-pointer">
-            <input
-              type="checkbox"
-              checked={enableTilingState}
-              onChange={(e) => setEnableTilingState(e.target.checked)}
-              className="glass-w-4 glass-h-4 glass-radius glass-border-white/30"
-            />
-            <span className="glass-text-sm glass-text-primary-glass-opacity-80">
-              Enable Tiling
-            </span>
-          </label>
-
-          <label className="glass-flex glass-items-center glass-space-x-2 glass-cursor-pointer">
-            <input
-              type="checkbox"
-              checked={enableAnimationState}
-              onChange={(e) => setEnableAnimationState(e.target.checked)}
-              className="glass-w-4 glass-h-4 glass-radius glass-border-white/30"
-            />
-            <span className="glass-text-sm glass-text-primary-glass-opacity-80">
-              Animate Result
-            </span>
-          </label>
+        <div className="glass-flex glass-flex-wrap glass-gap-2">
+          {[
+            {
+              label: "Enable Tiling",
+              value: enableTilingState,
+              set: setEnableTilingState,
+            },
+            {
+              label: "Animate Result",
+              value: enableAnimationState,
+              set: setEnableAnimationState,
+            },
+          ].map((control) => (
+            <button
+              key={control.label}
+              type="button"
+              role="switch"
+              aria-checked={control.value}
+              onClick={() => control.set(!control.value)}
+              className="glass-deep-dream-switch glass-flex glass-items-center glass-justify-between glass-gap-3 glass-radius-full glass-px-3 glass-py-2 glass-text-sm"
+              style={{
+                background: "rgba(255,255,255,.5)",
+                border: "1px solid rgba(255,255,255,.72)",
+                color: "rgba(15,23,42,.88)",
+              }}
+            >
+              <span>{control.label}</span>
+              <span
+                aria-hidden="true"
+                className="glass-relative glass-radius-full"
+                style={{
+                  width: 36,
+                  height: 21,
+                  background: control.value
+                    ? "rgba(72,94,106,.84)"
+                    : "rgba(100,116,139,.2)",
+                }}
+              >
+                <span
+                  className="glass-absolute glass-radius-full"
+                  style={{
+                    width: 17,
+                    height: 17,
+                    top: 2,
+                    left: control.value ? 17 : 2,
+                    background: "#fff",
+                    boxShadow: "0 2px 6px rgba(15,23,42,.25)",
+                    transition: "left 160ms ease",
+                  }}
+                />
+              </span>
+            </button>
+          ))}
         </div>
       </div>
     );
@@ -747,18 +829,27 @@ export const GlassDeepDreamGlass = forwardRef<
     return (
       <OptimizedGlass
         ref={ref}
+        id={id}
         variant="frosted"
         data-glass-component
         style={{
           ...readableGlassTextStyle,
-          maxHeight: "100%",
           minWidth: 0,
-          height: compact ? "100%" : undefined,
-          overflow: compact ? "hidden" : undefined,
+          overflow: "visible",
         }}
-        className={`glass-deep-dream-glass ${compact ? "glass-p-3 glass-space-y-3" : "glass-p-4 glass-space-y-4"} glass-max-w-full glass-overflow-auto ${className}`}
+        className={`glass-deep-dream-glass ${compact ? "glass-p-3 glass-space-y-3" : "glass-p-4 glass-space-y-4"} glass-max-w-full ${className}`}
         {...props}
       >
+        <style>{`
+          #${id} .glass-deep-dream-range { appearance:none; height:28px; background:transparent; }
+          #${id} .glass-deep-dream-range::-webkit-slider-runnable-track { height:6px; border-radius:999px; background:rgba(71,85,105,.17); box-shadow:inset 0 1px 2px rgba(15,23,42,.12); }
+          #${id} .glass-deep-dream-range::-webkit-slider-thumb { appearance:none; width:20px; height:20px; margin-top:-7px; border-radius:50%; border:1px solid rgba(255,255,255,.92); background:linear-gradient(145deg,#fff,#dce4e8); box-shadow:0 3px 10px rgba(15,23,42,.24); }
+          #${id} .glass-deep-dream-range::-moz-range-track { height:6px; border-radius:999px; background:rgba(71,85,105,.17); }
+          #${id} .glass-deep-dream-range::-moz-range-thumb { width:20px; height:20px; border-radius:50%; border:1px solid rgba(255,255,255,.92); background:#f8fafc; box-shadow:0 3px 10px rgba(15,23,42,.24); }
+          #${id} :where(button,[role="checkbox"],input,label):focus-visible { outline:3px solid rgba(56,116,145,.34); outline-offset:2px; }
+          @media (min-width: 720px) { #${id} .glass-deep-dream-layer-list { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+          @media (max-width: 480px) { #${id} .glass-deep-dream-layer { padding:10px; } #${id} .glass-deep-dream-switch { width:100%; } }
+        `}</style>
         {/* Header */}
         {showHeader && (
           <div className="glass-flex glass-items-center glass-justify-between">
@@ -808,12 +899,17 @@ export const GlassDeepDreamGlass = forwardRef<
                   ref={canvasRef}
                   width={canvasWidth}
                   height={canvasHeight}
-                  className="glass-w-full glass-h-full glass-object-cover"
+                  className="glass-block glass-w-full glass-h-full glass-object-cover"
                 />
                 {!originalImage && (
                   <div className="glass-absolute glass-inset-0 glass-flex glass-items-center glass-justify-center glass-text-primary-glass-opacity-50">
                     <div className="glass-text-center">
-                      <div className="glass-text-4xl glass-mb-2">🖼️</div>
+                      <div
+                        className="glass-text-4xl glass-mb-2"
+                        aria-hidden="true"
+                      >
+                        ◇
+                      </div>
                       <p>No image loaded</p>
                     </div>
                   </div>
@@ -831,7 +927,7 @@ export const GlassDeepDreamGlass = forwardRef<
                   ref={dreamCanvasRef}
                   width={canvasWidth}
                   height={canvasHeight}
-                  className="glass-w-full glass-h-full glass-object-cover"
+                  className="glass-block glass-w-full glass-h-full glass-object-cover"
                 />
                 {isGenerating && (
                   <div className="glass-absolute glass-inset-0 glass-surface-dark/50 glass-flex glass-items-center glass-justify-center">

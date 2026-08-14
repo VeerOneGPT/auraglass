@@ -58,15 +58,6 @@ const DEFAULT_LAYERS: NeuralWeightMatrix[] = [
 const clamp = (value: number, min: number, max: number) =>
   Math.min(max, Math.max(min, value));
 
-const getWeightColor = (weight: number, threshold: number) => {
-  const magnitude = Math.abs(weight);
-  const normalized = clamp(magnitude / threshold, 0, 1);
-  const hue = weight >= 0 ? 180 : 335; // teal for positive, magenta for negative
-  const saturation = 70 + normalized * 20;
-  const lightness = 45 - normalized * 20;
-  return `hsl(${hue} ${saturation}% ${lightness}%)`;
-};
-
 export function NeuralWeightVisualization({
   layers = DEFAULT_LAYERS,
   className,
@@ -114,8 +105,7 @@ export function NeuralWeightVisualization({
             Neural Weight Visualization
           </h2>
           <p className="glass-text-sm glass-text-primary-opacity-70">
-            Inspect synaptic strengths with polarity-aware colour mapping and
-            activation overlays.
+            Inspect synaptic strength, signed values, and activation overlays.
           </p>
         </header>
       )}
@@ -158,18 +148,18 @@ export function NeuralWeightVisualization({
                         {row.map((weight, columnIndex) => {
                           const magnitude = Math.abs(weight);
                           const strong = magnitude >= highlightThreshold;
-                          const color = getWeightColor(weight, 1);
                           return (
                             <td
                               key={`${layer.id}-${rowIndex}-${columnIndex}`}
                               className={cn(
-                                "px-2 py-3 text-center text-xs font-medium text-white/90 transition",
-                                strong
-                                  ? "shadow-[inset_0_0_0_1px_rgba(255,255,255,0.3)] text-white"
-                                  : "text-white/80"
+                                "px-2 py-3 text-center text-xs font-semibold text-slate-800 transition",
+                                strong &&
+                                  "shadow-[inset_0_0_0_1px_rgba(255,255,255,0.3)]"
                               )}
                               style={{
-                                background: `linear-gradient(135deg, ${color} 0%, rgba(15,23,42,0.75) 100%)`,
+                                background: strong
+                                  ? "linear-gradient(135deg, rgba(255,255,255,0.30) 0%, rgba(226,232,240,0.42) 100%)"
+                                  : "linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(241,245,249,0.32) 100%)",
                               }}
                             >
                               {weight.toFixed(precision)}

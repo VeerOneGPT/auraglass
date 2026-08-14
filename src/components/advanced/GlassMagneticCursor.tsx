@@ -70,7 +70,7 @@ export const GlassMagneticCursor = forwardRef<
     className,
     variant = "default",
     size = 20,
-    color = "hsl(var(--glass-color-primary) / var(--glass-opacity-50))",
+    color = "rgba(255,255,255,0.24)",
     magnetStrength = 0.3,
     magnetRadius = 100,
     showCursor = true,
@@ -318,6 +318,7 @@ export const GlassMagneticCursor = forwardRef<
           className
         )}
         style={{
+          width: "100%",
           height: resolvedMaxHeight ?? "180px",
           maxHeight: resolvedMaxHeight ?? "220px",
           maxWidth: resolvedMaxWidth ?? "320px",
@@ -348,12 +349,12 @@ export const GlassMagneticCursor = forwardRef<
               top: "32%",
               background:
                 variant === "glow"
-                  ? `radial-gradient(circle, ${color} 0%, transparent 70%)`
+                  ? "radial-gradient(circle, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.12) 100%)"
                   : color,
               boxShadow:
                 variant === "glow"
-                  ? `0 0 ${20 * glowIntensity}px ${color}`
-                  : "0 10px 30px rgba(0,0,0,0.2)",
+                  ? `0 0 ${20 * glowIntensity}px rgba(255,255,255,0.24)`
+                  : "0 10px 30px rgba(15,23,42,0.14)",
             }}
             aria-hidden="true"
           />
@@ -412,11 +413,11 @@ export const GlassMagneticCursor = forwardRef<
                 transitionDuration: "var(--glass-motion-duration-fast)",
                 background:
                   variant === "glow"
-                    ? `radial-gradient(circle, ${color} 0%, transparent 70%)`
+                    ? "radial-gradient(circle, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.12) 100%)"
                     : color,
                 boxShadow:
                   variant === "glow"
-                    ? `0 0 ${20 * glowIntensity}px ${color}`
+                    ? `0 0 ${20 * glowIntensity}px rgba(255,255,255,0.24)`
                     : undefined,
               }}
               aria-hidden="true"

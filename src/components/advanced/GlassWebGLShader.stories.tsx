@@ -7,7 +7,7 @@ const componentName = "GlassWebGLShader";
 const Component = (ComponentModule as Record<string, any>)[componentName];
 
 const meta = {
-  title: 'Effects + Advanced/Glass Web GLShader',
+  title: "Effects + Advanced/Glass Web GLShader",
   component: Component,
   parameters: {
     layout: "centered",
@@ -25,7 +25,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   parameters: {
-    previewSurface: "media",
+    previewSurface: "component",
   },
   render: () => (
     <div
@@ -35,13 +35,17 @@ export const Default: Story = {
         width: "100%",
         maxWidth: 800,
         height: "clamp(320px, 58vh, 450px)",
-        overflow: "hidden",
+        overflow: "auto",
+        scrollbarWidth: "none",
         borderRadius: 20,
         border: "1px solid rgba(255, 255, 255, 0.28)",
         background:
-          "linear-gradient(135deg, rgba(15, 23, 42, 0.68) 0%, rgba(22, 78, 99, 0.7) 42%, rgba(76, 29, 149, 0.68) 100%)",
-        backdropFilter: "blur(22px)",
-        boxShadow: "0 28px 72px rgba(15, 23, 42, 0.4)",
+          "linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 42%, rgba(255, 255, 255, 0.14) 100%)",
+        backdropFilter:
+          "blur(24px) saturate(1.8) brightness(1.05) contrast(1.05)",
+        WebkitBackdropFilter:
+          "blur(24px) saturate(1.8) brightness(1.05) contrast(1.05)",
+        boxShadow: "0 28px 72px rgba(20, 20, 20, 0.28)",
       }}
     >
       <GlassWebGLShader
@@ -72,7 +76,7 @@ export const Default: Story = {
           height: "100%",
           alignContent: "end",
           padding: "clamp(20px, 4vw, 34px)",
-          color: "#f8fafc",
+          color: "rgba(15, 23, 42, 0.92)",
         }}
       >
         <div
@@ -80,13 +84,22 @@ export const Default: Story = {
             width: "min(440px, 100%)",
             padding: "clamp(16px, 3vw, 22px)",
             borderRadius: 16,
-            color: "#f8fafc",
-            background: "rgba(15, 23, 42, 0.70)",
+            color: "rgba(15, 23, 42, 0.92)",
+            background: "rgba(255, 255, 255, 0.24)",
             border: "1px solid rgba(255, 255, 255, 0.24)",
-            backdropFilter: "blur(18px)",
+            backdropFilter:
+              "blur(24px) saturate(1.8) brightness(1.05) contrast(1.05)",
+            WebkitBackdropFilter:
+              "blur(24px) saturate(1.8) brightness(1.05) contrast(1.05)",
           }}
         >
-          <div style={{ fontSize: 13, fontWeight: 700, color: "#e2e8f0" }}>
+          <div
+            style={{
+              fontSize: 13,
+              fontWeight: 700,
+              color: "rgba(15, 23, 42, 0.72)",
+            }}
+          >
             GPU GLASS SHADER
           </div>
           <h3
@@ -94,7 +107,7 @@ export const Default: Story = {
               margin: "8px 0 6px",
               fontSize: "clamp(22px, 5vw, 28px)",
               lineHeight: 1.12,
-              color: "#f8fafc",
+              color: "rgba(15, 23, 42, 0.94)",
             }}
           >
             Prism Refraction Preview
@@ -104,7 +117,7 @@ export const Default: Story = {
               margin: 0,
               fontSize: 15,
               lineHeight: 1.55,
-              color: "#f8fafc",
+              color: "rgba(15, 23, 42, 0.78)",
             }}
           >
             The WebGL canvas now fills a framed scene, giving Storybook a

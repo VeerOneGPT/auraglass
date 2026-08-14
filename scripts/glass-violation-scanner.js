@@ -1,224 +1,201 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
-const glob = require('glob');
+/**
+ * Human/CSV/HTML reporting adapter for the authoritative static material gate.
+ *
+ * Classification and invariant checks intentionally live in
+ * scripts/audit/static-glass-material-audit.js. That engine parses CSS with
+ * PostCSS and TS/TSX with Babel; keeping a second collection of regular
+ * expressions here caused ordinary className lines to be reported as glass
+ * and focus violations. This adapter cannot weaken or drift from that gate.
+ *
+ * Scope is shipped source under src/. Tests, stories, snapshots, reports,
+ * docs, scripts, generated output and dependencies are excluded by the shared
+ * isExcludedSourcePath policy. Unresolved authored composition is reported as
+ * blocking triage and exits non-zero, just like a definite violation.
+ */
 
-// Violation patterns to detect
-const violationPatterns = [
-  {
-    name: 'Low Opacity Background',
-    pattern: /bg-white\/([1-9]|1[0-9])/g,
-    severity: 'HIGH',
-    description: 'Background opacity below minimum threshold (≥ 0.22)',
-    fix: 'Use bg-white/25 or higher'
-  },
-  {
-    name: 'Low Opacity Border',
-    pattern: /border-white\/([1-9]|1[0-9])/g,
-    severity: 'MEDIUM',
-    description: 'Border opacity below minimum threshold (≥ 0.20)',
-    fix: 'Use border-white/20 or higher'
-  },
-  {
-    name: 'Low Contrast Text',
-    pattern: /text-white\/([1-5][0-9])/g,
-    severity: 'HIGH',
-    description: 'Text opacity below minimum threshold (≥ 0.70)',
-    fix: 'Use text-white/70 or higher'
-  },
-  {
-    name: 'Missing Backdrop Filter',
-    pattern: /className.*(?!.*backdrop-filter|.*glass-foundation-complete)/g,
-    severity: 'MEDIUM',
-    description: 'Component may be missing backdrop-filter',
-    fix: 'Add glass-foundation-complete class'
-  },
-  {
-    name: 'Missing Focus Visible',
-    pattern: /className.*(?!.*focus-visible)/g,
-    severity: 'MEDIUM',
-    description: 'Interactive element may be missing focus-visible',
-    fix: 'Add focus-visible:ring-2 focus-visible:ring-blue-500/50'
-  },
-  {
-    name: 'Hard-coded Colors',
-    pattern: /rgba\(255,\s*255,\s*255,\s*0\.([0-1][0-9])\)/g,
-    severity: 'LOW',
-    description: 'Hard-coded rgba values instead of tokens',
-    fix: 'Use CSS variables or Tailwind classes'
-  },
-  {
-    name: 'Legacy Glass Classes',
-    pattern: /glass-base(?!.*glass-foundation-complete)/g,
-    severity: 'MEDIUM',
-    description: 'Using legacy glass-base instead of glass-foundation-complete',
-    fix: 'Replace with glass-foundation-complete'
-  },
-  {
-    name: 'Inconsistent Shadow Classes',
-    pattern: /shadow-glass-\d+/g,
-    severity: 'LOW',
-    description: 'Using legacy shadow-glass classes',
-    fix: 'Replace with standard shadow classes'
+const fs = require("node:fs");
+const path = require("node:path");
+const {
+  auditSourceSet,
+  isExcludedSourcePath,
+} = require("./audit/static-glass-material-audit.js");
+
+const REPO_ROOT = path.resolve(__dirname, "..");
+const REPORT_DIRECTORY = path.join(REPO_ROOT, "reports/glass");
+const CSV_REPORT = path.join(REPORT_DIRECTORY, "_auto-findings.csv");
+const HTML_REPORT = path.join(REPORT_DIRECTORY, "_auto-findings.html");
+
+const normalizePath = (filePath) => filePath.split(path.sep).join("/");
+
+function walk(directory, output = []) {
+  if (!fs.existsSync(directory)) return output;
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const absolutePath = path.join(directory, entry.name);
+    if (entry.isDirectory()) walk(absolutePath, output);
+    else output.push(absolutePath);
   }
-];
+  return output;
+}
 
+function repositorySources() {
+  const files = walk(path.join(REPO_ROOT, "src")).filter((absolutePath) => {
+    const relativePath = path.relative(REPO_ROOT, absolutePath);
+    return !isExcludedSourcePath(relativePath);
+  });
+
+  return {
+    cssSources: files
+      .filter((filePath) => filePath.endsWith(".css"))
+      .map((filePath) => ({
+        file: normalizePath(path.relative(REPO_ROOT, filePath)),
+        css: fs.readFileSync(filePath, "utf8"),
+        lineOffset: 0,
+        sourceKind:
+          filePath.includes(".generated.") || normalizePath(filePath).includes("/generated/")
+            ? "generated-css"
+            : "css",
+        label: path.basename(filePath),
+      })),
+    tsSources: files
+      .filter((filePath) => /\.[cm]?tsx?$/.test(filePath))
+      .map((filePath) => ({
+        file: normalizePath(path.relative(REPO_ROOT, filePath)),
+        source: fs.readFileSync(filePath, "utf8"),
+      })),
+  };
+}
+
+function severityFor(finding, disposition) {
+  if (disposition === "BLOCKING_TRIAGE") return "HIGH";
+  if (/^(?:dark-or-chromatic-material-fill|missing-(?:standard|webkit)-backdrop-filter|ts-surface-missing-|noncanonical-blur|white-frost-alpha-outside-contract)/.test(finding.code)) {
+    return "HIGH";
+  }
+  return "MEDIUM";
+}
+
+function fixFor(finding, disposition) {
+  if (disposition === "BLOCKING_TRIAGE") {
+    return "Resolve the authored value/composition statically or document and prove its producer; triage is blocking.";
+  }
+  return "Remediate the named material invariant at the exact source location, then rerun this gate.";
+}
+
+function toReportFinding(finding, disposition) {
+  return {
+    file: finding.file,
+    pattern: finding.code,
+    severity: severityFor(finding, disposition),
+    description: finding.message,
+    fix: fixFor(finding, disposition),
+    match: finding.subject,
+    line: finding.line,
+    disposition,
+    sourceKind: finding.sourceKind,
+  };
+}
+
+function findingsFromReport(report) {
+  return [
+    ...report.violations.map((finding) => toReportFinding(finding, "VIOLATION")),
+    ...report.triage.map((finding) => toReportFinding(finding, "BLOCKING_TRIAGE")),
+  ].sort((a, b) => a.file.localeCompare(b.file) || a.line - b.line || a.pattern.localeCompare(b.pattern));
+}
+
+// Compatibility helper for callers that previously scanned one file. It now
+// uses the same AST/PostCSS classifier and returns no findings for excluded
+// story/test paths.
 function scanFile(filePath) {
-  try {
-    const content = fs.readFileSync(filePath, 'utf8');
-    const violations = [];
-    
-    violationPatterns.forEach(pattern => {
-      const matches = content.match(pattern.pattern);
-      if (matches) {
-        matches.forEach(match => {
-          violations.push({
-            file: filePath,
-            pattern: pattern.name,
-            severity: pattern.severity,
-            description: pattern.description,
-            fix: pattern.fix,
-            match: match,
-            line: getLineNumber(content, match)
-          });
-        });
-      }
-    });
-    
-    return violations;
-  } catch (error) {
-    console.error(`❌ Error scanning ${filePath}:`, error.message);
-    return [];
-  }
+  const absolutePath = path.resolve(REPO_ROOT, filePath);
+  const relativePath = normalizePath(path.relative(REPO_ROOT, absolutePath));
+  if (isExcludedSourcePath(relativePath)) return [];
+  const content = fs.readFileSync(absolutePath, "utf8");
+  const sourceSet = absolutePath.endsWith(".css")
+    ? { cssSources: [{ file: relativePath, css: content, lineOffset: 0, sourceKind: "css", label: path.basename(filePath) }], tsSources: [] }
+    : { cssSources: [], tsSources: [{ file: relativePath, source: content }] };
+  return findingsFromReport(auditSourceSet(sourceSet));
 }
 
-function getLineNumber(content, match) {
-  const lines = content.split('\n');
-  for (let i = 0; i < lines.length; i++) {
-    if (lines[i].includes(match)) {
-      return i + 1;
-    }
-  }
-  return 0;
+function csvCell(value) {
+  return `"${String(value ?? "").replace(/"/g, '""')}"`;
 }
 
-function generateCSVReport(violations) {
-  const csvHeader = 'File,Pattern,Severity,Description,Fix,Match,Line\n';
-  const csvRows = violations.map(v => 
-    `"${v.file}","${v.pattern}","${v.severity}","${v.description}","${v.fix}","${v.match}",${v.line}`
-  ).join('\n');
-  
-  return csvHeader + csvRows;
+function generateCSVReport(findings) {
+  const header = "File,Pattern,Severity,Description,Fix,Match,Line,Disposition,SourceKind\n";
+  return header + findings.map((finding) => [
+    finding.file,
+    finding.pattern,
+    finding.severity,
+    finding.description,
+    finding.fix,
+    finding.match,
+    finding.line,
+    finding.disposition,
+    finding.sourceKind,
+  ].map(csvCell).join(",")).join("\n") + (findings.length ? "\n" : "");
 }
 
-function generateHTMLReport(violations) {
-  const html = `
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Glass Violation Scanner Report</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .header { background: #1a1a1a; color: white; padding: 20px; border-radius: 8px; }
-        .summary { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 20px 0; }
-        .violation { border: 1px solid #ddd; margin: 10px 0; padding: 15px; border-radius: 8px; }
-        .high { border-left: 4px solid #ef4444; }
-        .medium { border-left: 4px solid #f59e0b; }
-        .low { border-left: 4px solid #10b981; }
-        .file { font-weight: bold; color: #3b82f6; }
-        .pattern { font-weight: bold; }
-        .severity { padding: 2px 8px; border-radius: 4px; color: white; font-size: 12px; }
-        .severity.high { background: #ef4444; }
-        .severity.medium { background: #f59e0b; }
-        .severity.low { background: #10b981; }
-    </style>
-</head>
-<body>
-    <div class="header">
-        <h1>🔍 Glass Violation Scanner Report</h1>
-        <p>Automated detection of glass design system violations</p>
-    </div>
-    
-    <div class="summary">
-        <h2>📊 Summary</h2>
-        <p><strong>Total Violations:</strong> ${violations.length}</p>
-        <p><strong>High Severity:</strong> ${violations.filter(v => v.severity === 'HIGH').length}</p>
-        <p><strong>Medium Severity:</strong> ${violations.filter(v => v.severity === 'MEDIUM').length}</p>
-        <p><strong>Low Severity:</strong> ${violations.filter(v => v.severity === 'LOW').length}</p>
-    </div>
-    
-    <h2>🚨 Violations Found</h2>
-    ${violations.map(v => `
-        <div class="violation ${v.severity.toLowerCase()}">
-            <div class="file">${v.file}</div>
-            <div class="pattern">${v.pattern}</div>
-            <span class="severity ${v.severity.toLowerCase()}">${v.severity}</span>
-            <p><strong>Description:</strong> ${v.description}</p>
-            <p><strong>Fix:</strong> ${v.fix}</p>
-            <p><strong>Match:</strong> <code>${v.match}</code> (Line ${v.line})</p>
-        </div>
-    `).join('')}
-</body>
-</html>`;
-  
-  return html;
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function generateHTMLReport(findings, report = null) {
+  const violationCount = findings.filter((finding) => finding.disposition === "VIOLATION").length;
+  const triageCount = findings.filter((finding) => finding.disposition === "BLOCKING_TRIAGE").length;
+  const metrics = report?.metrics
+    ? `${report.metrics.cssFiles} CSS and ${report.metrics.tsFiles} TS/TSX files; ${report.metrics.cssSurfaces} CSS surfaces and ${report.metrics.tsMaterialSpecs + report.metrics.tsStyleObjects} TypeScript material/style records classified.`
+    : "A single source file was classified.";
+  return `<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Glass Violation Scanner Report</title>
+<style>body{font:14px/1.5 system-ui,sans-serif;margin:2rem;color:#171717}.summary{padding:1rem;background:#f5f5f5;border-radius:.5rem}.finding{border:1px solid #ddd;border-left:4px solid #d97706;margin:1rem 0;padding:1rem;border-radius:.4rem}.finding.high{border-left-color:#dc2626}.location{font-weight:700;color:#1d4ed8}.code{font-family:ui-monospace,monospace}.badge{font-size:.75rem;padding:.15rem .4rem;color:white;background:#525252;border-radius:.25rem}code{white-space:pre-wrap}</style></head>
+<body><h1>Glass Violation Scanner Report</h1>
+<div class="summary"><p><strong>Status:</strong> ${findings.length ? "FAIL" : "PASS"}</p><p><strong>Definite violations:</strong> ${violationCount}</p><p><strong>Blocking triage:</strong> ${triageCount}</p><p>${escapeHtml(metrics)}</p><p>Scope: shipped <code>src/</code> sources. Stories, tests, snapshots, reports, docs, scripts, build output, and dependencies are excluded by the shared certification policy.</p></div>
+<h2>Actionable findings</h2>${findings.length ? findings.map((finding) => `
+<article class="finding ${finding.severity.toLowerCase()}"><div class="location">${escapeHtml(finding.file)}:${finding.line}</div><div><span class="badge">${escapeHtml(finding.disposition)}</span> <span class="code">${escapeHtml(finding.pattern)}</span></div><p><strong>Subject:</strong> <code>${escapeHtml(finding.match)}</code></p><p>${escapeHtml(finding.description)}</p><p><strong>Next action:</strong> ${escapeHtml(finding.fix)}</p></article>`).join("") : "<p>No violations or unresolved authored material composition found.</p>"}
+</body></html>\n`;
 }
 
 function main() {
-  console.log('🔍 Starting glass violation scanner...\n');
-  
-  // Get all component files
-  const componentPatterns = [
-    'src/components/**/*.tsx',
-    'src/primitives/**/*.tsx'
-  ];
-  
-  let allViolations = [];
-  let totalFiles = 0;
-  
-  componentPatterns.forEach(pattern => {
-    const files = glob.sync(pattern, { cwd: process.cwd() });
-    
-    files.forEach(file => {
-      totalFiles++;
-      const violations = scanFile(file);
-      allViolations = allViolations.concat(violations);
-    });
-  });
-  
-  // Generate reports
-  const csvReport = generateCSVReport(allViolations);
-  const htmlReport = generateHTMLReport(allViolations);
-  
-  // Write reports
-  fs.writeFileSync('reports/glass/_auto-findings.csv', csvReport);
-  fs.writeFileSync('reports/glass/_auto-findings.html', htmlReport);
-  
-  // Console output
-  console.log(`📊 Scan Results:`);
-  console.log(`   Total files scanned: ${totalFiles}`);
-  console.log(`   Total violations: ${allViolations.length}`);
-  console.log(`   High severity: ${allViolations.filter(v => v.severity === 'HIGH').length}`);
-  console.log(`   Medium severity: ${allViolations.filter(v => v.severity === 'MEDIUM').length}`);
-  console.log(`   Low severity: ${allViolations.filter(v => v.severity === 'LOW').length}`);
-  
-  if (allViolations.length > 0) {
-    console.log(`\n🚨 Violations found:`);
-    allViolations.forEach(v => {
-      console.log(`   ${v.severity}: ${v.file}:${v.line} - ${v.pattern}`);
-    });
+  console.log("Glass violation scanner (AST/PostCSS certification adapter)");
+  console.log("=========================================================");
+  const report = auditSourceSet(repositorySources());
+  const findings = findingsFromReport(report);
+
+  fs.mkdirSync(REPORT_DIRECTORY, { recursive: true });
+  fs.writeFileSync(CSV_REPORT, generateCSVReport(findings));
+  fs.writeFileSync(HTML_REPORT, generateHTMLReport(findings, report));
+
+  console.log(`Status: ${report.status.toUpperCase()}`);
+  console.log(`Scanned: ${report.metrics.cssFiles} CSS files, ${report.metrics.tsFiles} TS/TSX files, ${report.metrics.tsCssTemplates} AST-classified inline CSS templates`);
+  console.log(`Classified: ${report.metrics.cssSurfaces} CSS surfaces, ${report.metrics.tsMaterialSpecs} TS material specs, ${report.metrics.tsStyleObjects} TS style objects`);
+  console.log(`Definite violations: ${report.summary.violationCount}`);
+  console.log(`Blocking triage: ${report.summary.blockingTriageCount}`);
+
+  if (findings.length) {
+    console.log("\nActionable findings:");
+    for (const finding of findings) {
+      console.log(`- ${finding.disposition} ${finding.file}:${finding.line} [${finding.pattern}] (${finding.match}) — ${finding.description}`);
+    }
   } else {
-    console.log(`\n✅ No violations found! All components comply with glass standards.`);
+    console.log("\nNo glass material invariant violations found.");
   }
-  
-  console.log(`\n📄 Reports generated:`);
-  console.log(`   CSV: reports/glass/_auto-findings.csv`);
-  console.log(`   HTML: reports/glass/_auto-findings.html`);
+  console.log(`\nCSV: ${normalizePath(path.relative(REPO_ROOT, CSV_REPORT))}`);
+  console.log(`HTML: ${normalizePath(path.relative(REPO_ROOT, HTML_REPORT))}`);
+  process.exitCode = findings.length ? 1 : 0;
 }
 
-if (require.main === module) {
-  main();
-}
+if (require.main === module) main();
 
-module.exports = { scanFile, violationPatterns, generateCSVReport, generateHTMLReport };
+module.exports = {
+  scanFile,
+  findingsFromReport,
+  generateCSVReport,
+  generateHTMLReport,
+  repositorySources,
+};

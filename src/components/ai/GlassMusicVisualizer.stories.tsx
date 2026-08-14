@@ -63,7 +63,7 @@ export const Default: Story = {
     },
     visualSettings: {
       mode: 'bars',
-      colorScheme: 'rainbow',
+      colorScheme: 'monochrome',
       particleCount: 100,
       sensitivity: 1.0,
       symmetry: false,

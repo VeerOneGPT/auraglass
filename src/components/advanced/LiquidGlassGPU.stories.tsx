@@ -33,16 +33,16 @@ export const Default: Story = {
           border-radius: 32px;
           color: #0f172a;
           background:
-            radial-gradient(circle at 18% 20%, rgba(96, 165, 250, .42), transparent 28%),
-            radial-gradient(circle at 78% 64%, rgba(45, 212, 191, .34), transparent 30%),
-            linear-gradient(135deg, rgba(255,255,255,.64), rgba(219,234,254,.36));
+            radial-gradient(circle at 18% 20%, rgba(255,255,255,.30), rgba(255,255,255,.08) 28%),
+            radial-gradient(circle at 78% 64%, rgba(248,250,252,.28), rgba(255,255,255,.08) 30%),
+            linear-gradient(135deg, rgba(255,255,255,.30), rgba(255,255,255,.18));
           box-shadow: 0 28px 90px rgba(15, 23, 42, .18);
         }
 
         .liquid-glass-gpu-demo {
           min-height: 360px;
           border-radius: 30px;
-          box-shadow: inset 0 0 0 1px rgba(255,255,255,.72), 0 24px 70px rgba(15,23,42,.18);
+          box-shadow: inset 0 0 0 1px rgba(255,255,255,.30), 0 24px 70px rgba(15,23,42,.18);
         }
 
         .liquid-glass-gpu-panel {
@@ -62,7 +62,7 @@ export const Default: Story = {
           border-radius: 18px;
           padding: 14px;
           background: rgba(255,255,255,.58);
-          box-shadow: inset 0 0 0 1px rgba(255,255,255,.64);
+          box-shadow: inset 0 0 0 1px rgba(255,255,255,.30);
         }
 
         @media (max-width: 720px) {

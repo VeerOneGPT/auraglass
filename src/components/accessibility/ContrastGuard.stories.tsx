@@ -1,124 +1,89 @@
-import React from "react";
+import type { CSSProperties } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import * as ComponentModule from "./ContrastGuard";
-import {
-  CertificationCase,
-  type MissingComponentName,
-} from "../../stories/GlassMissingInventoryCertification.stories";
+import { ContrastGuard } from "./ContrastGuard";
 
-const componentName = "ContrastGuard" satisfies MissingComponentName;
-const Component = (ComponentModule as Record<string, any>)[componentName];
+const frameStyle: CSSProperties = {
+  minHeight: "100vh",
+  width: "100%",
+  display: "grid",
+  placeItems: "center",
+  padding: "clamp(20px, 5vw, 64px)",
+  boxSizing: "border-box",
+  background:
+    "radial-gradient(circle at 20% 15%, rgba(255,255,255,0.98), transparent 36%), linear-gradient(145deg, #fafafa 0%, #e9e9e9 52%, #f7f7f7 100%)",
+  color: "#0f172a",
+};
 
-const contrastStoryStyles = `
-  .ag-contrast-story {
-    --glass-text-primary: #0f172a;
-    --glass-text-secondary: #334155;
-    --glass-text-tertiary: #475569;
-    --typography-text-primary: #0f172a;
-    --typography-text-secondary: #334155;
-    height: 100vh;
-    min-height: 100vh;
-    width: 100%;
-    overflow: auto;
-    box-sizing: border-box;
-    display: grid;
-    place-items: center;
-    background:
-      radial-gradient(circle at 18% 14%, rgba(59, 130, 246, 0.2), transparent 30%),
-      radial-gradient(circle at 82% 18%, rgba(20, 184, 166, 0.18), transparent 28%),
-      linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(226, 232, 240, 0.62));
-    color: #0f172a;
-    backdrop-filter: blur(22px);
-    padding: clamp(16px, 4vw, 32px);
-  }
-
-  .ag-contrast-story,
-  .ag-contrast-story *,
-  .ag-contrast-story *::before,
-  .ag-contrast-story *::after {
-    box-sizing: border-box;
-  }
-
-  .ag-contrast-story .glass-text-primary,
-  .ag-contrast-story .glass-text-secondary,
-  .ag-contrast-story p,
-  .ag-contrast-story li {
-    color: #0f172a !important;
-  }
-
-  [data-storybook-preview-mode="dark"] .ag-contrast-story .glass-text-primary,
-  [data-storybook-preview-mode="dark"] .ag-contrast-story .glass-text-secondary,
-  [data-storybook-preview-mode="dark"] .ag-contrast-story p,
-  [data-storybook-preview-mode="dark"] .ag-contrast-story li {
-    color: #f8fafc !important;
-  }
-
-  .ag-contrast-story > div {
-    width: min(960px, calc(100vw - 32px));
-    max-width: calc(100vw - 32px);
-    overflow-x: auto;
-  }
-
-  .ag-contrast-story .glass,
-  .ag-contrast-story .glass-contrast-guard {
-    background: rgba(255, 255, 255, 0.72) !important;
-    color: #0f172a !important;
-  }
-
-  .ag-contrast-story [class*="glass-certification"],
-  .ag-contrast-story .glass-certification-mini-title {
-    background: rgba(255, 255, 255, 0.72) !important;
-    color: #0f172a !important;
-    border-color: rgba(15, 23, 42, 0.16) !important;
-  }
-
-  [data-storybook-preview-mode="dark"] .ag-contrast-story {
-    --glass-text-primary: #f8fafc;
-    --glass-text-secondary: #e2e8f0;
-    --glass-text-tertiary: #cbd5e1;
-    --typography-text-primary: #f8fafc;
-    --typography-text-secondary: #e2e8f0;
-    background:
-      radial-gradient(circle at 18% 14%, rgba(59, 130, 246, 0.28), transparent 30%),
-      radial-gradient(circle at 82% 18%, rgba(20, 184, 166, 0.24), transparent 28%),
-      linear-gradient(135deg, rgba(15, 23, 42, 0.72), rgba(30, 27, 75, 0.62), rgba(22, 78, 99, 0.58));
-    color: #f8fafc;
-  }
-
-  [data-storybook-preview-mode="dark"] .ag-contrast-story .glass,
-  [data-storybook-preview-mode="dark"] .ag-contrast-story .glass-contrast-guard,
-  [data-storybook-preview-mode="dark"] .ag-contrast-story [class*="glass-certification"],
-  [data-storybook-preview-mode="dark"] .ag-contrast-story .glass-certification-mini-title {
-    background: rgba(15, 23, 42, 0.68) !important;
-    color: #f8fafc !important;
-    border-color: rgba(226, 232, 240, 0.22) !important;
-  }
-`;
+const guardStyle: CSSProperties = {
+  width: "min(680px, 100%)",
+  display: "grid",
+  gap: "12px",
+  padding: "clamp(24px, 5vw, 44px)",
+  borderRadius: "32px",
+  background:
+    "linear-gradient(145deg, rgba(255,255,255,0.30), rgba(255,255,255,0.16))",
+  border: "1px solid rgba(255,255,255,0.92)",
+  boxShadow:
+    "inset 0 1px 0 rgba(255,255,255,0.28), 0 28px 64px rgba(20,20,20,0.12)",
+  backdropFilter: "blur(24px) saturate(1.4) brightness(1.05) contrast(1.02)",
+  WebkitBackdropFilter:
+    "blur(24px) saturate(1.4) brightness(1.05) contrast(1.02)",
+};
 
 const meta = {
-  title: 'Foundations/Accessibility/Contrast Guard',
-  component: Component,
+  title: "Foundations/Accessibility/Contrast Guard",
+  component: ContrastGuard,
   parameters: {
     layout: "fullscreen",
     docs: {
       description: {
         component:
-          "Component-owned Storybook coverage for ContrastGuard. This story renders the certified AuraGlass sample used by the full visual certification suite.",
+          "The real ContrastGuard export rendered over a detailed, neutral canvas so its adaptive WCAG text protection can be inspected directly.",
       },
     },
   },
-} satisfies Meta<typeof Component>;
+} satisfies Meta<typeof ContrastGuard>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   render: () => (
-    <div className="ag-contrast-story glass-contrast-guard">
-      <style>{contrastStoryStyles}</style>
-      <div>
-        <CertificationCase name={componentName} />
-      </div>
-    </div>
+    <main style={frameStyle}>
+      <ContrastGuard
+        as="section"
+        level="AAA"
+        minContrast={7}
+        autoAdjust
+        demoBackdrop="busy-light"
+        style={guardStyle}
+        aria-label="Contrast-protected liquid glass content"
+      >
+        <span
+          style={{
+            fontSize: "0.72rem",
+            fontWeight: 700,
+            letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            color: "rgba(15,23,42,0.7)",
+          }}
+        >
+          Accessibility · AAA target
+        </span>
+        <strong
+          style={{
+            fontSize: "clamp(1.65rem, 4vw, 2.75rem)",
+            lineHeight: 1.04,
+            letterSpacing: "-0.04em",
+          }}
+        >
+          Readable through every layer.
+        </strong>
+        <span style={{ color: "rgba(15,23,42,0.72)", lineHeight: 1.65 }}>
+          ContrastGuard measures the rendered backdrop and keeps foreground
+          content legible without flattening the depth of the liquid material.
+        </span>
+      </ContrastGuard>
+    </main>
   ),
 };

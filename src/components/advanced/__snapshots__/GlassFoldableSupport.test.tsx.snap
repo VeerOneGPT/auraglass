@@ -2,7 +2,7 @@
 
 exports[`GlassFoldableSupport matches snapshot 1`] = `
 <div
-  class="relative OptimizedGlass intensity={0.2} glassBlur={6} transform-gpu will-change-transform"
+  class="glass-relative glass-foundation-complete glass-overflow-hidden transform-gpu will-change-transform"
   data-fold-state="unknown"
   data-layout-mode="single"
 >

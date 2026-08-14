@@ -523,7 +523,7 @@ const styles = `body {
     radial-gradient(circle at 84% 30%, rgba(168, 85, 247, 0.28), transparent 35%),
     #07111f;
   color: #f8fafc;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: Aeonik, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 .visual-page {

@@ -3,7 +3,7 @@
 exports[`GlassOrientationEffects matches snapshot 1`] = `
 <div
   aria-label="Orientation effects container"
-  class="relative"
+  class="glass-relative glass-foundation-complete"
   role="region"
 >
   <span

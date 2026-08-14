@@ -8,7 +8,7 @@ import { GlassButton } from "../button/GlassButton";
 import { GlassCard } from "../card/GlassCard";
 
 const meta: Meta<typeof AccessibilityProvider> = {
-  title: 'Foundations/Accessibility/Accessibility Provider',
+  title: "Foundations/Accessibility/Accessibility Provider",
   component: AccessibilityProvider,
   parameters: {
     layout: "fullscreen",
@@ -27,11 +27,11 @@ type Story = StoryObj<typeof meta>;
 
 const accessibilityStoryStyles = `
   .ag-accessibility-story {
-    --glass-text-primary: #f8fafc;
-    --glass-text-secondary: #e2e8f0;
-    --glass-text-tertiary: #cbd5e1;
-    --typography-text-primary: #f8fafc;
-    --typography-text-secondary: #e2e8f0;
+    --glass-text-primary: #0f172a;
+    --glass-text-secondary: #334155;
+    --glass-text-tertiary: #475569;
+    --typography-text-primary: #0f172a;
+    --typography-text-secondary: #334155;
     height: 100vh;
     min-height: 100vh;
     width: 100%;
@@ -41,10 +41,9 @@ const accessibilityStoryStyles = `
     justify-content: center;
     align-items: flex-start;
     background:
-      radial-gradient(circle at 18% 12%, rgba(59, 130, 246, 0.28), transparent 32%),
-      radial-gradient(circle at 84% 20%, rgba(20, 184, 166, 0.22), transparent 30%),
-      linear-gradient(135deg, #0f172a 0%, #1e1b4b 48%, #164e63 100%);
-    color: #f8fafc;
+      radial-gradient(circle at 18% 10%, rgba(255, 255, 255, 0.98), transparent 38%),
+      linear-gradient(145deg, #fafafa 0%, #ececec 100%);
+    color: #0f172a;
     padding: clamp(16px, 4vw, 32px);
   }
 
@@ -60,25 +59,48 @@ const accessibilityStoryStyles = `
   .ag-accessibility-story h2,
   .ag-accessibility-story h3,
   .ag-accessibility-story span {
-    color: #f8fafc !important;
+    color: #0f172a !important;
   }
 
   .ag-accessibility-story pre {
     max-width: 100%;
     overflow-x: auto;
-    color: #f8fafc !important;
-    background: rgba(15, 23, 42, 0.78) !important;
+    color: #0f172a !important;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.16)) !important;
+    background-color: rgba(255, 255, 255, 0.18) !important;
+    border: 1px solid rgba(255, 255, 255, 0.88) !important;
+    backdrop-filter: blur(24px) saturate(1.4) brightness(1.04) contrast(1.02) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(1.4) brightness(1.04) contrast(1.02) !important;
   }
 
   .ag-accessibility-story label,
   .ag-accessibility-story [data-testid="glass-card"],
   .ag-accessibility-story .glass-card {
-    background: rgba(15, 23, 42, 0.72) !important;
-    color: #f8fafc !important;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.16)) !important;
+    background-color: rgba(255, 255, 255, 0.18) !important;
+    border-color: rgba(255, 255, 255, 0.9) !important;
+    backdrop-filter: blur(24px) saturate(1.4) brightness(1.04) contrast(1.02) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(1.4) brightness(1.04) contrast(1.02) !important;
+    color: #0f172a !important;
+  }
+
+  .ag-accessibility-story .glass-foundation-complete {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.32), rgba(255, 255, 255, 0.18)) !important;
+    background-color: rgba(255, 255, 255, 0.20) !important;
+    border-color: rgba(255, 255, 255, 0.92) !important;
+    backdrop-filter: blur(24px) saturate(1.4) brightness(1.04) contrast(1.02) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(1.4) brightness(1.04) contrast(1.02) !important;
   }
 
   .ag-accessibility-story button {
-    color: #f8fafc !important;
+    color: #0f172a !important;
+    min-height: 40px;
+    padding-inline: 16px;
+  }
+
+  .ag-accessibility-story__reset {
+    display: flex;
+    margin-top: 20px;
   }
 
   @media (max-width: 640px) {
@@ -118,8 +140,11 @@ const DemoSwitch = ({
       className="glass-relative glass-inline-flex glass-h-6 glass-w-11 glass-flex-shrink-0 glass-radius-full glass-border glass-border-subtle"
       style={{
         background: checked
-          ? "linear-gradient(135deg, rgba(37,99,235,0.78), rgba(20,184,166,0.72))"
-          : "rgba(255,255,255,0.48)",
+          ? "linear-gradient(135deg, rgba(255,255,255,0.62), rgba(203,213,225,0.54))"
+          : "rgba(255,255,255,0.44)",
+        boxShadow: checked
+          ? "inset 0 1px 0 rgba(255,255,255,0.86), inset 0 0 0 1px rgba(15,23,42,0.16), 0 5px 14px rgba(15,23,42,0.10)"
+          : "inset 0 1px 0 rgba(255,255,255,0.78)",
       }}
     >
       <span
@@ -127,8 +152,8 @@ const DemoSwitch = ({
         style={{
           left: checked ? 21 : 2,
           top: 2,
-          background: "#fff",
-          boxShadow: "0 2px 8px rgba(15,23,42,0.22)",
+          background: checked ? "#26303d" : "#ffffff",
+          boxShadow: "0 2px 8px rgba(15,23,42,0.18)",
           transition: "left 160ms ease",
         }}
       />
@@ -158,7 +183,8 @@ const AccessibilityDemo = () => {
         <div
           className="glass-grid glass-gap-3"
           style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+            gridTemplateColumns:
+              "repeat(auto-fit, minmax(min(220px, 100%), 1fr))",
           }}
         >
           <DemoSwitch
@@ -182,8 +208,13 @@ const AccessibilityDemo = () => {
             onChange={(checked) => updateSettings({ largeText: checked })}
           />
         </div>
-        <div className="mt-4">
-          <GlassButton onClick={resetToDefaults}>Reset to Defaults</GlassButton>
+        <div
+          className="ag-accessibility-story__reset"
+          data-accessibility-reset-row
+        >
+          <GlassButton variant="default" onClick={resetToDefaults}>
+            Reset to Defaults
+          </GlassButton>
         </div>
       </GlassCard>
 

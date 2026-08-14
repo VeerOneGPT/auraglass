@@ -170,11 +170,16 @@ const defaultProcessingSettings: ProcessingSettings = {
 };
 
 const readableGlassTextStyle = {
-  "--glass-text-primary": "var(--glass-theme-text, rgba(255, 255, 255, 0.95))",
-  "--typography-text-primary":
-    "var(--glass-theme-text, rgba(255, 255, 255, 0.95))",
-  "--glass-theme-text": "var(--glass-theme-text, rgba(255, 255, 255, 0.95))",
-  color: "var(--glass-theme-text, rgba(255, 255, 255, 0.95))",
+  "--glass-text-primary": "rgba(15, 23, 42, 0.96)",
+  "--glass-text-secondary": "rgba(30, 41, 59, 0.84)",
+  "--glass-text-tertiary": "rgba(51, 65, 85, 0.72)",
+  "--typography-text-primary": "rgba(15, 23, 42, 0.96)",
+  "--typography-text-secondary": "rgba(30, 41, 59, 0.84)",
+  "--typography-text-tertiary": "rgba(51, 65, 85, 0.72)",
+  "--glass-theme-text": "rgba(15, 23, 42, 0.96)",
+  color: "rgba(15, 23, 42, 0.96)",
+  "--glass-color-primary": "rgba(71, 85, 105, 0.92)",
+  "--glass-color-secondary": "rgba(100, 116, 139, 0.88)",
 } as React.CSSProperties;
 
 export const GlassLiveFilter = forwardRef<HTMLDivElement, GlassLiveFilterProps>(
@@ -715,6 +720,50 @@ export const GlassLiveFilter = forwardRef<HTMLDivElement, GlassLiveFilterProps>(
       }
     }, [activeFilters, enableRealTimeProcessing, originalImageUrl]);
 
+    // The empty state is a meaningful preview, not a blank white canvas. Draw a
+    // neutral calibration plate deterministically until media is supplied.
+    useEffect(() => {
+      if (originalImageUrl || videoSource) return;
+      [canvasRef.current, processedCanvasRef.current].forEach(
+        (canvas, panelIndex) => {
+          if (!canvas) return;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) return;
+          const width = canvas.width;
+          const height = canvas.height;
+          const gradient = ctx.createLinearGradient(0, 0, width, height);
+          gradient.addColorStop(0, "rgba(248, 248, 248, 0.98)");
+          gradient.addColorStop(1, "rgba(214, 214, 214, 0.82)");
+          ctx.fillStyle = gradient;
+          ctx.fillRect(0, 0, width, height);
+          ctx.strokeStyle = "rgba(71, 85, 105, 0.24)";
+          ctx.lineWidth = 2;
+          for (let line = 1; line < 4; line += 1) {
+            const y = (height / 4) * line;
+            ctx.beginPath();
+            ctx.moveTo(width * 0.12, y);
+            ctx.bezierCurveTo(
+              width * 0.34,
+              y - 38 + panelIndex * 8,
+              width * 0.66,
+              y + 38 - panelIndex * 8,
+              width * 0.88,
+              y
+            );
+            ctx.stroke();
+          }
+          ctx.fillStyle = "rgba(15, 23, 42, 0.76)";
+          ctx.font = `600 ${Math.max(15, Math.round(width / 34))}px system-ui`;
+          ctx.textAlign = "center";
+          ctx.fillText(
+            panelIndex === 0 ? "Source preview" : "Filtered preview",
+            width / 2,
+            height / 2
+          );
+        }
+      );
+    }, [canvasWidth, canvasHeight, originalImageUrl, videoSource]);
+
     const processImageData = (
       imageData: ImageData,
       ctx: CanvasRenderingContext2D,
@@ -822,7 +871,7 @@ export const GlassLiveFilter = forwardRef<HTMLDivElement, GlassLiveFilterProps>(
                 glass-p-3 glass-radius-lg glass-border glass-cursor-pointer glass-transition-all duration-[${ANIMATION.DURATION.fast}ms]
                 ${
                   activeFilters.includes(filter.id)
-                    ? "glass-border-blue glass-surface-blue/20"
+                    ? "glass-border-subtle glass-surface-subtle"
                     : "glass-border-white/20 hover:glass-border-white/40 glass-surface-subtle/5"
                 }
               `}
@@ -851,7 +900,7 @@ export const GlassLiveFilter = forwardRef<HTMLDivElement, GlassLiveFilterProps>(
                     filter.category === "artistic"
                       ? "glass-surface-primary/20 glass-text-secondary"
                       : filter.category === "color"
-                        ? "glass-surface-blue/20 glass-text-secondary"
+                        ? "glass-surface-subtle glass-text-secondary"
                         : filter.category === "blur"
                           ? "glass-surface-muted/20 glass-text-secondary"
                           : filter.category === "distortion"
@@ -1012,6 +1061,15 @@ export const GlassLiveFilter = forwardRef<HTMLDivElement, GlassLiveFilterProps>(
         className={`${compact ? "glass-p-3 glass-space-y-3" : "glass-p-4 glass-space-y-4"} glass-max-w-full glass-overflow-auto ${className}`}
         {...props}
       >
+        <style>{`
+          [data-glass-component] input[type="range"] {
+            accent-color: rgb(100, 116, 139);
+          }
+
+          [data-glass-component] input[type="checkbox"] {
+            accent-color: rgb(71, 85, 105);
+          }
+        `}</style>
         {/* Header */}
         {showHeader && (
           <div className="glass-flex glass-items-center glass-justify-between glass-gap-3 glass-min-w-0">
@@ -1027,13 +1085,16 @@ export const GlassLiveFilter = forwardRef<HTMLDivElement, GlassLiveFilterProps>(
             <div className="glass-flex glass-items-center glass-gap-2 glass-flex-shrink-0">
               {enableRealTimeProcessing && (
                 <div className="glass-flex glass-items-center glass-space-x-1 glass-text-primary">
-                  <div className="glass-w-2 glass-h-2 glass-surface-green glass-radius-full glass-animate-pulse" />
+                  <div
+                    className="glass-w-2 glass-h-2 glass-radius-full"
+                    style={{ background: "rgba(71, 85, 105, 0.72)" }}
+                  />
                   <span className="glass-text-xs">Real-time</span>
                 </div>
               )}
               {isProcessing && (
                 <div className="glass-flex glass-items-center glass-space-x-1 glass-text-primary">
-                  <div className="glass-w-4 glass-h-4 glass-border-2 glass-border-blue glass-border-t-transparent glass-radius-full glass-animate-spin" />
+                  <div className="glass-w-4 glass-h-4 glass-border-2 glass-border-subtle glass-border-t-transparent glass-radius-full glass-animate-spin" />
                   <span className="glass-text-xs">Processing</span>
                 </div>
               )}
@@ -1061,7 +1122,7 @@ export const GlassLiveFilter = forwardRef<HTMLDivElement, GlassLiveFilterProps>(
                   ref={canvasRef}
                   width={canvasWidth}
                   height={canvasHeight}
-                  className="glass-w-full glass-h-full glass-object-cover"
+                  className="glass-block glass-w-full glass-h-full glass-object-cover"
                 />
                 {videoSource && (
                   <video
@@ -1085,7 +1146,7 @@ export const GlassLiveFilter = forwardRef<HTMLDivElement, GlassLiveFilterProps>(
                   ref={processedCanvasRef}
                   width={canvasWidth}
                   height={canvasHeight}
-                  className="glass-w-full glass-h-full glass-object-cover"
+                  className="glass-block glass-w-full glass-h-full glass-object-cover"
                 />
                 {isProcessing && (
                   <div className="glass-absolute glass-inset-0 glass-surface-dark/50 glass-flex glass-items-center glass-justify-center">
@@ -1194,7 +1255,7 @@ export const GlassLiveFilter = forwardRef<HTMLDivElement, GlassLiveFilterProps>(
               />
               <motion.label
                 htmlFor="image-upload"
-                className="glass-px-4 glass-py-2 glass-surface-blue hover:glass-surface-blue glass-text-primary glass-radius-lg glass-text-sm glass-font-medium glass-cursor-pointer glass-transition-colors"
+                className="glass-px-4 glass-py-2 glass-surface-subtle hover:glass-surface-overlay glass-text-primary glass-border glass-border-subtle glass-radius-lg glass-text-sm glass-font-medium glass-cursor-pointer glass-transition-colors"
                 whileHover={shouldAnimate ? { scale: 1.02 } : {}}
                 whileTap={shouldAnimate ? { scale: 0.98 } : {}}
               >
@@ -1215,7 +1276,7 @@ export const GlassLiveFilter = forwardRef<HTMLDivElement, GlassLiveFilterProps>(
               <motion.a
                 href={processedImageUrl}
                 download="filtered-image.png"
-                className="glass-px-4 glass-py-2 glass-surface-green hover:glass-surface-green glass-text-primary glass-radius-lg glass-text-sm glass-font-medium glass-transition-colors"
+                className="glass-px-4 glass-py-2 glass-surface-subtle hover:glass-surface-overlay glass-text-primary glass-border glass-border-subtle glass-radius-lg glass-text-sm glass-font-medium glass-transition-colors"
                 whileHover={shouldAnimate ? { scale: 1.02 } : {}}
                 whileTap={shouldAnimate ? { scale: 0.98 } : {}}
               >

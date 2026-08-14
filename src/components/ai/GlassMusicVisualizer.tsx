@@ -11,6 +11,7 @@ import { createGlassStyle } from "../../utils/createGlassStyle";
 import { useGlassSound } from "../../utils/soundDesign";
 import { ANIMATION } from "../../tokens/designConstants";
 import { ContrastGuard } from "../accessibility/ContrastGuard";
+import { Pause, Play, Square } from "@/icons";
 
 export interface AudioSettings {
   volume: number;
@@ -64,7 +65,7 @@ const defaultAudioSettings: AudioSettings = {
 
 const defaultVisualSettings: VisualizationSettings = {
   mode: "bars",
-  colorScheme: "rainbow",
+  colorScheme: "monochrome",
   particleCount: 100,
   sensitivity: 1.0,
   symmetry: false,
@@ -85,14 +86,14 @@ const colorSchemes = {
     "var(--glass-color-secondary)",
   ],
   monochrome: [
-    "var(--glass-white)",
-    "color-mix(in srgb, var(--glass-white) 88%, black)",
-    "color-mix(in srgb, var(--glass-white) 75%, black)",
-    "color-mix(in srgb, var(--glass-white) 63%, black)",
-    "color-mix(in srgb, var(--glass-white) 50%, black)",
-    "color-mix(in srgb, var(--glass-white) 38%, black)",
-    "color-mix(in srgb, var(--glass-white) 25%, black)",
-    "color-mix(in srgb, var(--glass-white) 13%, black)",
+    "rgba(248,250,252,.96)",
+    "rgba(226,232,240,.96)",
+    "rgba(203,213,225,.96)",
+    "rgba(148,163,184,.96)",
+    "rgba(100,116,139,.96)",
+    "rgba(71,85,105,.96)",
+    "rgba(51,65,85,.96)",
+    "rgba(30,41,59,.96)",
   ],
   neon: [
     "#ff00ff",
@@ -138,11 +139,14 @@ const colorSchemes = {
 };
 
 const readableGlassTextStyle: React.CSSProperties = {
-  "--glass-text-primary": "var(--glass-theme-text, rgba(255, 255, 255, 0.95))",
-  "--typography-text-primary":
-    "var(--glass-theme-text, rgba(255, 255, 255, 0.95))",
-  "--glass-theme-text": "var(--glass-theme-text, rgba(255, 255, 255, 0.95))",
-  color: "var(--glass-theme-text, rgba(255, 255, 255, 0.95))",
+  "--glass-text-primary": "rgba(15, 23, 42, 0.96)",
+  "--glass-text-secondary": "rgba(30, 41, 59, 0.84)",
+  "--glass-text-tertiary": "rgba(51, 65, 85, 0.72)",
+  "--typography-text-primary": "rgba(15, 23, 42, 0.96)",
+  "--typography-text-secondary": "rgba(30, 41, 59, 0.84)",
+  "--typography-text-tertiary": "rgba(51, 65, 85, 0.72)",
+  "--glass-theme-text": "rgba(15, 23, 42, 0.96)",
+  color: "rgba(15, 23, 42, 0.96)",
 } as React.CSSProperties;
 
 export const GlassMusicVisualizer = forwardRef<
@@ -225,7 +229,11 @@ export const GlassMusicVisualizer = forwardRef<
     const id = useA11yId("glass-music-visualizer");
     const { shouldAnimate } = useMotionPreference();
     const { play } = useGlassSound();
-    const boundedHeight = maxHeight ?? (compact || contained ? 240 : undefined);
+    // The compact chrome, canvas, and transport controls need slightly more than
+    // 240px once responsive type scaling is applied.  A 320px default keeps the
+    // complete control stack visible instead of turning the material into a
+    // clipped/scrolling card at phone widths.
+    const boundedHeight = maxHeight ?? (compact || contained ? 320 : undefined);
 
     // Initialize audio context and analyser
     const initializeAudio = useCallback(async () => {
@@ -685,17 +693,18 @@ export const GlassMusicVisualizer = forwardRef<
 
     useEffect(() => {
       const canvas = canvasRef.current;
-      if (!canvas || analyserRef.current) return;
+      if (!canvas || (analyserRef.current && isPlaying)) return;
 
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
       const { width, height } = canvas;
       const gradient = ctx.createLinearGradient(0, 0, width, height);
-      gradient.addColorStop(0, "rgba(56, 189, 248, 0.16)");
-      gradient.addColorStop(0.48, "rgba(168, 85, 247, 0.16)");
-      gradient.addColorStop(1, "rgba(244, 63, 94, 0.18)");
-      ctx.fillStyle = "rgba(8, 13, 28, 0.86)";
+      gradient.addColorStop(0, "rgba(255, 255, 255, 0.18)");
+      gradient.addColorStop(0.48, "rgba(255, 255, 255, 0.08)");
+      gradient.addColorStop(1, "rgba(255, 255, 255, 0.12)");
+      ctx.clearRect(0, 0, width, height);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
       ctx.fillRect(0, 0, width, height);
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
@@ -732,7 +741,7 @@ export const GlassMusicVisualizer = forwardRef<
         ctx.lineTo(x, y);
       }
       ctx.stroke();
-    }, [canvasWidth, canvasHeight, compact, visualConfig.colorScheme]);
+    }, [canvasWidth, canvasHeight, compact, isPlaying, visualConfig.colorScheme]);
 
     const Controls = () => (
       <div
@@ -741,39 +750,80 @@ export const GlassMusicVisualizer = forwardRef<
           compact ? "glass-flex-wrap" : "glass-space-x-4"
         )}
       >
+        <style>{`.glass-music-visualizer,
+          .glass-music-visualizer :where(h3, p, label, span, button) {
+            color: rgba(15, 23, 42, 0.96) !important;
+            -webkit-text-fill-color: currentColor;
+          }
+          .glass-music-visualizer :where(button) {
+            background: linear-gradient(180deg, rgba(255,255,255,.34), rgba(248,250,252,.24)) !important;
+            border: 1px solid rgba(148,163,184,.38) !important;
+          }
+          .glass-music-visualizer input[type="range"] {
+            appearance: none;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(255,255,255,.28) !important;
+            box-shadow: inset 0 0 0 1px rgba(71,85,105,.34), inset 0 2px 4px rgba(71,85,105,.14);
+          }
+          .glass-music-visualizer input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(100,116,139,.34);
+            background: rgba(255,255,255,.98);
+            box-shadow: 0 4px 12px rgba(15,23,42,.2);
+          }
+          .glass-music-visualizer input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 999px;
+            border: 1px solid rgba(100,116,139,.34);
+            background: rgba(255,255,255,.98);
+            box-shadow: 0 4px 12px rgba(15,23,42,.2);
+          }`}</style>
         <motion.button
           className={cn(
-            "glass-surface-blue hover:glass-surface-blue glass-text-primary glass-radius-lg glass-transition-colors",
+            "glass-text-primary glass-radius-lg glass-transition-colors",
             compact ? "glass-p-1.5 glass-text-xs" : "glass-p-2"
           )}
           whileHover={shouldAnimate ? { scale: 1.1 } : {}}
           whileTap={shouldAnimate ? { scale: 0.9 } : {}}
           onClick={isPlaying ? handlePause : handlePlay}
+          style={{ color: "rgba(15, 23, 42, 0.96)" }}
+          aria-label={isPlaying ? "Pause visualization" : "Play visualization"}
         >
-          {isPlaying ? "⏸️" : "▶️"}
+          {isPlaying ? (
+            <Pause className="glass-h-4 glass-w-4" aria-hidden="true" />
+          ) : (
+            <Play className="glass-h-4 glass-w-4" aria-hidden="true" />
+          )}
         </motion.button>
 
         <motion.button
           className={cn(
-            "glass-surface-primary hover:glass-surface-primary glass-text-primary glass-radius-lg glass-transition-colors",
+            "glass-text-primary glass-radius-lg glass-transition-colors",
             compact ? "glass-p-1.5 glass-text-xs" : "glass-p-2"
           )}
           whileHover={shouldAnimate ? { scale: 1.1 } : {}}
           whileTap={shouldAnimate ? { scale: 0.9 } : {}}
           onClick={handleStop}
+          style={{ color: "rgba(15, 23, 42, 0.96)" }}
+          aria-label="Stop visualization"
         >
-          ⏹️
+          <Square className="glass-h-4 glass-w-4" aria-hidden="true" />
         </motion.button>
 
         <div className="glass-flex glass-items-center glass-gap-1">
-          <span className="glass-text-xs glass-text-primary-glass-opacity-60">
+          <span className="glass-text-xs" style={{ color: "rgba(30, 41, 59, 0.88)" }}>
             {Math.floor(currentTime / 60)}:
             {Math.floor(currentTime % 60)
               .toString()
               .padStart(2, "0")}
           </span>
-          <span className="glass-text-primary-glass-opacity-40">/</span>
-          <span className="glass-text-xs glass-text-primary-glass-opacity-60">
+          <span style={{ color: "rgba(51, 65, 85, 0.82)" }}>/</span>
+          <span className="glass-text-xs" style={{ color: "rgba(30, 41, 59, 0.88)" }}>
             {Math.floor(duration / 60)}:
             {Math.floor(duration % 60)
               .toString()
@@ -784,30 +834,54 @@ export const GlassMusicVisualizer = forwardRef<
         <div className="glass-flex glass-items-center glass-gap-1">
           <label
             htmlFor={volumeControlId}
-            className="glass-text-xs glass-text-primary-glass-opacity-80"
+            className="glass-text-xs"
+            style={{ color: "rgba(30, 41, 59, 0.92)" }}
           >
             {compact ? "Vol" : "Volume:"}
           </label>
-          <input
-            type="range"
-            min="0"
-            max="1"
-            step="0.1"
-            value={audioConfig.volume}
-            onChange={(e) => {
-              const volume = parseFloat(e.target.value);
-              setAudioConfig((prev: any) => ({ ...prev, volume }));
-              if (audioRef.current) {
-                audioRef.current.volume = volume;
-              }
-            }}
+          <div
             className={cn(
-              "glass-h-2 glass-surface-subtle/20 glass-radius-lg glass-appearance-none glass-cursor-pointer",
+              "glass-relative glass-h-5",
               compact ? "glass-w-12" : "glass-w-16"
             )}
-            aria-label="Volume"
-            id={volumeControlId}
-          />
+          >
+            <span
+              aria-hidden="true"
+              className="glass-absolute glass-left-0 glass-right-0 glass-top-1/2 glass-h-2 glass-radius-full"
+              style={{
+                background: "rgba(255,255,255,.28)",
+                border: "1px solid rgba(71,85,105,.34)",
+                transform: "translateY(-50%)",
+              }}
+            />
+            <span
+              aria-hidden="true"
+              className="glass-absolute glass-top-1/2 glass-h-4 glass-w-4 glass-radius-full"
+              style={{
+                left: `calc(${audioConfig.volume * 100}% - 8px)`,
+                background: "rgba(255,255,255,.98)",
+                border: "1px solid rgba(71,85,105,.4)",
+                boxShadow: "0 3px 9px rgba(15,23,42,.18)",
+                transform: "translateY(-50%)",
+              }}
+            />
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.1"
+              value={audioConfig.volume}
+              onChange={(e) => {
+                const volume = parseFloat(e.target.value);
+                setAudioConfig((prev: any) => ({ ...prev, volume }));
+                if (audioRef.current) audioRef.current.volume = volume;
+              }}
+              className="glass-absolute glass-inset-0 glass-h-full glass-w-full glass-cursor-pointer"
+              style={{ opacity: 0.001 }}
+              aria-label="Volume"
+              id={volumeControlId}
+            />
+          </div>
         </div>
       </div>
     );
@@ -824,6 +898,10 @@ export const GlassMusicVisualizer = forwardRef<
         )}
         style={{
           ...readableGlassTextStyle,
+          background: "rgba(255,255,255,.28)",
+          border: "1px solid rgba(148,163,184,.3)",
+          boxShadow:
+            "0 24px 64px rgba(15,23,42,.14), inset 0 1px 0 rgba(255,255,255,.9)",
           maxHeight:
             boundedHeight !== undefined
               ? typeof boundedHeight === "number"
@@ -840,17 +918,21 @@ export const GlassMusicVisualizer = forwardRef<
           <div className="glass-min-w-0">
             <h3
               className={cn(
-                "glass-font-semibold glass-text-primary-glass-opacity-90 glass-truncate",
+                "glass-font-semibold glass-truncate",
                 compact ? "glass-text-sm" : "glass-text-lg"
               )}
+              style={{ color: "rgba(15, 23, 42, 0.96)" }}
             >
               Music Visualizer
             </h3>
             <p
               className={cn(
-                "glass-text-primary-glass-opacity-60 glass-truncate",
+                compact || contained
+                  ? "glass-whitespace-normal glass-break-words"
+                  : "glass-truncate",
                 compact ? "glass-text-xs" : "glass-text-sm"
               )}
+              style={{ color: "rgba(30, 41, 59, 0.88)" }}
             >
               Real-time audio visualization and analysis
             </p>
@@ -917,13 +999,39 @@ export const GlassMusicVisualizer = forwardRef<
             }
           />
 
+          {!isPlaying && (
+            <div
+              aria-hidden="true"
+              className="glass-pointer-events-none glass-absolute glass-inset-5 glass-flex glass-items-end glass-justify-between glass-gap-1 glass-overflow-hidden"
+            >
+              {Array.from({ length: compact ? 24 : 40 }, (_, index) => {
+                const height =
+                  22 +
+                  Math.abs(Math.sin(index * 0.46)) * 58 +
+                  Math.abs(Math.cos(index * 0.19)) * 26;
+                return (
+                  <span
+                    key={index}
+                    className="glass-flex-1 glass-radius-full"
+                    style={{
+                      height: `${Math.min(96, height)}%`,
+                      background: `rgba(${51 + index * 2}, ${65 + index * 2}, ${85 + index * 2}, .56)`,
+                      minWidth: 2,
+                    }}
+                  />
+                );
+              })}
+            </div>
+          )}
+
           {/* Beat intensity indicator */}
           <div className="glass-absolute glass-top-2 glass-right-2">
             <div
-              className="glass-w-4 glass-h-4 glass-radius-full glass-surface-red"
+              className="glass-w-4 glass-h-4 glass-radius-full"
               style={{
                 opacity: beatIntensity,
                 transform: `scale(${1 + beatIntensity})`,
+                background: "rgba(71,85,105,.84)",
               }}
             />
           </div>

@@ -34,8 +34,6 @@ export const Default: Story = {
         overflow: "auto",
         borderRadius: 20,
         border: "1px solid rgba(15, 23, 42, 0.14)",
-        background:
-          "linear-gradient(135deg, rgba(248, 250, 252, 0.98), rgba(224, 242, 254, 0.92))",
         boxShadow: "0 24px 64px rgba(15, 23, 42, 0.18)",
         padding: "clamp(18px, 4vw, 30px)",
         color: "#0f172a",

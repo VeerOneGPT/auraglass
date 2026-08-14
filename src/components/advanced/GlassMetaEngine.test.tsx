@@ -14,9 +14,9 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
-import userEvent from "@testing-library/user-event";
 import {
   GlassMetaEngine,
+  GlassMetaDashboard,
   GlassMetaEngineProvider,
 } from "@/components/advanced/GlassMetaEngine";
 
@@ -67,6 +67,26 @@ describe("GlassMetaEngine", () => {
       container.firstChild;
 
     expect(element).toHaveClass("custom-class");
+  });
+
+  it("renders a complete inline dashboard without stray controls", () => {
+    render(
+      <GlassMetaEngineProvider>
+        <GlassMetaDashboard defaultOpen inline showQuantumStates={false} />
+      </GlassMetaEngineProvider>
+    );
+
+    expect(
+      screen.getByRole("dialog", { name: "Meta-Engine dashboard" })
+    ).toBeInTheDocument();
+    expect(screen.getByText("System Intelligence")).toBeVisible();
+    expect(screen.getByText("All systems nominal")).toBeVisible();
+    expect(
+      screen.queryByRole("button", { name: "Toggle Meta-Engine dashboard" })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Close Meta-Engine dashboard" })
+    ).not.toBeInTheDocument();
   });
 
   /**

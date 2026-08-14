@@ -47,6 +47,7 @@ interface ReactionType {
 interface GlassReactionsProps {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   reactions?: Reaction[];
   reactionTypes?: ReactionType[];
   maxReactions?: number;
@@ -122,6 +123,7 @@ const defaultReactionTypes: ReactionType[] = [
 export function GlassReactions({
   children,
   className,
+  style,
   reactions = [],
   reactionTypes = defaultReactionTypes,
   maxReactions = 50,
@@ -304,6 +306,7 @@ export function GlassReactions({
     <div
       ref={containerRef}
       className={cn("relative", className)}
+      style={style}
       onClick={handleClick}
       onContextMenu={handleContextMenu}
       role="region"

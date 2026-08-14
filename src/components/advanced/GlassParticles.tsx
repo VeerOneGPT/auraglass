@@ -80,9 +80,9 @@ export const GlassParticles = forwardRef<HTMLDivElement, GlassParticlesProps>(
       mouseRadius = 150,
       colorScheme = "gradient",
       colors = [
-        "rgba(125, 211, 252, 0.95)",
-        "rgba(56, 189, 248, 0.9)",
-        "rgba(139, 92, 246, 0.85)",
+        "rgba(15, 23, 42, 0.62)",
+        "rgba(51, 65, 85, 0.56)",
+        "rgba(100, 116, 139, 0.50)",
       ],
       blur = true,
       glow = true,
@@ -266,10 +266,10 @@ export const GlassParticles = forwardRef<HTMLDivElement, GlassParticlesProps>(
 
         switch (colorScheme) {
           case "monochrome":
-            return `hsla(199, 90%, 72%, ${particle.opacity})`;
+            return `rgba(15, 23, 42, ${Math.min(0.68, particle.opacity)})`;
 
           case "rainbow":
-            return `hsla(${particle.hue}, 70%, 60%, ${particle.opacity})`;
+            return `rgba(51, 65, 85, ${Math.min(0.58, particle.opacity)})`;
 
           case "gradient":
             const colorIndex = Math.floor(
@@ -277,17 +277,17 @@ export const GlassParticles = forwardRef<HTMLDivElement, GlassParticlesProps>(
             );
             return resolveCanvasColor(
               colors[Math.min(colorIndex, colors.length - 1)],
-              `hsla(${195 + colorIndex * 28}, 92%, 70%, ${particle.opacity})`
+              `rgba(15, 23, 42, ${Math.min(0.62, particle.opacity)})`
             );
 
           case "custom":
             return resolveCanvasColor(
               colors[index % colors.length],
-              `hsla(199, 92%, 70%, ${particle.opacity})`
+              `rgba(15, 23, 42, ${Math.min(0.62, particle.opacity)})`
             );
 
           default:
-            return `hsla(220, 70%, 60%, ${particle.opacity})`;
+            return `rgba(15, 23, 42, ${Math.min(0.62, particle.opacity)})`;
         }
       },
       [colorScheme, colors]
@@ -422,81 +422,110 @@ export const GlassParticles = forwardRef<HTMLDivElement, GlassParticlesProps>(
       [behavior, speed, mouseInteraction, mouseRadius, lifetime]
     );
 
-    // Animation loop
-    useAnimationFrame((time) => {
-      if (!shouldAnimate) return; // Skip animation if user prefers reduced motion
+    const drawFrame = useCallback(
+      (advance: boolean) => {
+        const canvas = canvasRef.current;
+        const ctx = canvas?.getContext("2d");
+        if (!canvas || !ctx) return;
 
-      const canvas = canvasRef.current;
-      const ctx = canvas?.getContext("2d");
-      if (!canvas || !ctx) return;
+        if (advance) frame.current += 1;
 
-      frame.current += 1;
+        // Clear canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(248, 250, 252, 0.94)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // Clear canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Apply blur filter if enabled
-      if (blur) {
-        ctx.filter = "blur(0.5px)";
-      }
-
-      // Update and draw particles
-      particles.current.forEach((particle, i) => {
-        updateParticle(particle, canvas);
-
-        // Find connections
-        particle.connections = [];
-        particles.current.forEach((other, j) => {
-          if (i === j) return;
-
-          const dx = particle.x - other.x;
-          const dy = particle.y - other.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < connectionDistance) {
-            particle.connections.push(j);
-
-            // Draw connection
-            const opacity = (1 - distance / connectionDistance) * 0.2;
-            ctx.strokeStyle = `rgba(125, 211, 252, ${Math.min(0.34, opacity + 0.06)})`;
-            ctx.lineWidth = 0.5;
-            ctx.beginPath();
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(other.x, other.y);
-            ctx.stroke();
-          }
-        });
-
-        // Draw particle
-        const color = getParticleColor(particle, i);
-        drawParticle(ctx, particle, color);
-      });
-
-      // Emit new particles
-      if (emitRate > 0 && time - lastEmit.current > 1000 / emitRate) {
-        const newParticle: Particle = {
-          id: particles.current.length,
-          x: canvas.width / 2,
-          y: canvas.height / 2,
-          vx: (Math.random() - 0.5) * speed * 2,
-          vy: (Math.random() - 0.5) * speed * 2,
-          size: minSize + Math.random() * (maxSize - minSize),
-          opacity: 1,
-          hue: Math.random() * 360,
-          life: lifetime || Infinity,
-          maxLife: lifetime || Infinity,
-          connections: [],
-        };
-
-        particles.current.push(newParticle);
-
-        // Remove oldest if too many
-        if (particles.current.length > count * 2) {
-          particles.current.shift();
+        // Apply blur filter if enabled
+        if (blur) {
+          ctx.filter = "blur(0.5px)";
         }
 
-        lastEmit.current = time;
-      }
+        // Update and draw particles
+        particles.current.forEach((particle, i) => {
+          if (advance) updateParticle(particle, canvas);
+
+          // Find connections
+          particle.connections = [];
+          particles.current.forEach((other, j) => {
+            if (i === j) return;
+
+            const dx = particle.x - other.x;
+            const dy = particle.y - other.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < connectionDistance) {
+              particle.connections.push(j);
+
+              // Draw connection
+              const opacity = (1 - distance / connectionDistance) * 0.24;
+              ctx.strokeStyle = `rgba(148, 163, 184, ${Math.min(0.28, opacity + 0.1)})`;
+              ctx.lineWidth = 0.75;
+              ctx.beginPath();
+              ctx.moveTo(particle.x, particle.y);
+              ctx.lineTo(other.x, other.y);
+              ctx.stroke();
+            }
+          });
+
+          // Draw particle
+          const color = getParticleColor(particle, i);
+          drawParticle(ctx, particle, color);
+        });
+
+        // Emit new particles
+        if (
+          advance &&
+          emitRate > 0 &&
+          frame.current - lastEmit.current > 60 / emitRate
+        ) {
+          const newParticle: Particle = {
+            id: particles.current.length,
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            vx: (Math.random() - 0.5) * speed * 2,
+            vy: (Math.random() - 0.5) * speed * 2,
+            size: minSize + Math.random() * (maxSize - minSize),
+            opacity: 1,
+            hue: Math.random() * 360,
+            life: lifetime || Infinity,
+            maxLife: lifetime || Infinity,
+            connections: [],
+          };
+
+          particles.current.push(newParticle);
+
+          // Remove oldest if too many
+          if (particles.current.length > count * 2) {
+            particles.current.shift();
+          }
+
+          lastEmit.current = frame.current;
+        }
+      },
+      [
+        blur,
+        connectionDistance,
+        count,
+        drawParticle,
+        emitRate,
+        getParticleColor,
+        maxSize,
+        minSize,
+        speed,
+        lifetime,
+        updateParticle,
+      ]
+    );
+
+    // Draw an intentional static constellation for reduced-motion users and
+    // immediately after resize. Reduced motion changes movement, not meaning.
+    useEffect(() => {
+      if (dimensions.width > 0 && dimensions.height > 0) drawFrame(false);
+    }, [dimensions, drawFrame]);
+
+    useAnimationFrame(() => {
+      if (!shouldAnimate) return;
+      drawFrame(true);
     });
 
     return (
@@ -520,9 +549,10 @@ export const GlassParticles = forwardRef<HTMLDivElement, GlassParticlesProps>(
           aria-hidden="true"
         />
 
-        {/* Glass overlay */}
+        {/* A quiet edge sheen sits behind no content and must not veil particles. */}
         <OptimizedGlass
-          className="glass-absolute glass-inset-0 glass-pointer-events-none glass-opacity-30"
+          className="glass-absolute glass-inset-0 glass-pointer-events-none"
+          style={{ opacity: 0.08, zIndex: -1 }}
           intent="neutral"
           elevation="level1"
           blur="subtle"

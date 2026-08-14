@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`AccessibilityProvider matches snapshot 1`] = `
-<div>
+<div
+  style="box-sizing: border-box; width: 100%; min-width: 0; max-width: 100%; overflow-x: hidden;"
+>
   <div
     data-testid="host"
   />

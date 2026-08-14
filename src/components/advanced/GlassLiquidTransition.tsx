@@ -27,6 +27,7 @@ import { ANIMATION } from "../../tokens/designConstants";
 export interface LiquidTransitionProps {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   variant?: "morph" | "flow" | "ripple" | "dissolve" | "splash";
   duration?: number;
   stiffness?: number;
@@ -47,6 +48,7 @@ export const GlassLiquidTransition = forwardRef<
     {
       children,
       className,
+      style,
       variant = "morph",
       duration = 1000,
       stiffness = 100,
@@ -288,6 +290,10 @@ export const GlassLiquidTransition = forwardRef<
         role={role}
         aria-label={ariaLabel}
         {...animationProps}
+        style={{
+          ...(animationProps.style ?? {}),
+          ...style,
+        }}
         {...restProps}
       >
         {/* Liquid glass overlay */}
@@ -296,8 +302,9 @@ export const GlassLiquidTransition = forwardRef<
           style={{
             background: `radial-gradient(
             circle at ${50 + mousePos.x * 50}% ${50 + mousePos.y * 50}%,
-            hsl(var(--glass-color-primary) / 0.3) 0%,
-            transparent 70%
+            rgba(255, 255, 255, 0.18) 0%,
+            rgba(255, 255, 255, 0.1) 34%,
+            transparent 72%
           )`,
             x: smoothX,
             y: smoothY,

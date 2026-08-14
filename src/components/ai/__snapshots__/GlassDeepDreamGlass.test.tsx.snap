@@ -2,10 +2,23 @@
 
 exports[`GlassDeepDreamGlass matches snapshot 1`] = `
 <div
-  class="optimized-glass-surface glass-neutral-level2 glass-tier-high glass-deep-dream-glass glass-p-4 glass-space-y-4 glass-max-w-full glass-overflow-auto"
+  class="optimized-glass-surface glass-neutral-level2 glass-tier-high glass-deep-dream-glass glass-p-4 glass-space-y-4 glass-max-w-full"
   data-glass-component="true"
-  style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: var(--glass-theme-text, rgba(255, 255, 255, 0.95)); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: var(--glass-theme-text, rgba(255, 255, 255, 0.95)); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: var(--glass-theme-text, rgba(255, 255, 255, 0.95)); max-height: 100%; min-width: 0;"
+  id="glass-deep-dream-:r3:"
+  style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.96); --glass-text-secondary: rgba(30, 41, 59, 0.84); --typography-text-primary: rgba(15, 23, 42, 0.96); --typography-text-secondary: rgba(30, 41, 59, 0.84); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.96); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.96); --glass-text-tertiary: rgba(51, 65, 85, 0.72); --typography-text-tertiary: rgba(51, 65, 85, 0.72); min-width: 0; overflow: visible;"
 >
+  <style>
+
+          #glass-deep-dream-:r3: .glass-deep-dream-range { appearance:none; height:28px; background:transparent; }
+          #glass-deep-dream-:r3: .glass-deep-dream-range::-webkit-slider-runnable-track { height:6px; border-radius:999px; background:rgba(71,85,105,.17); box-shadow:inset 0 1px 2px rgba(15,23,42,.12); }
+          #glass-deep-dream-:r3: .glass-deep-dream-range::-webkit-slider-thumb { appearance:none; width:20px; height:20px; margin-top:-7px; border-radius:50%; border:1px solid rgba(255,255,255,.92); background:linear-gradient(145deg,#fff,#dce4e8); box-shadow:0 3px 10px rgba(15,23,42,.24); }
+          #glass-deep-dream-:r3: .glass-deep-dream-range::-moz-range-track { height:6px; border-radius:999px; background:rgba(71,85,105,.17); }
+          #glass-deep-dream-:r3: .glass-deep-dream-range::-moz-range-thumb { width:20px; height:20px; border-radius:50%; border:1px solid rgba(255,255,255,.92); background:#f8fafc; box-shadow:0 3px 10px rgba(15,23,42,.24); }
+          #glass-deep-dream-:r3: :where(button,[role="checkbox"],input,label):focus-visible { outline:3px solid rgba(56,116,145,.34); outline-offset:2px; }
+          @media (min-width: 720px) { #glass-deep-dream-:r3: .glass-deep-dream-layer-list { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+          @media (max-width: 480px) { #glass-deep-dream-:r3: .glass-deep-dream-layer { padding:10px; } #glass-deep-dream-:r3: .glass-deep-dream-switch { width:100%; } }
+
+  </style>
   <div
     class="glass-flex glass-items-center glass-justify-between"
   >
@@ -42,7 +55,7 @@ exports[`GlassDeepDreamGlass matches snapshot 1`] = `
         class="glass-relative glass-aspect-video glass-surface-subtle/5 glass-border glass-border-white/20 glass-radius-lg glass-overflow-hidden"
       >
         <canvas
-          class="glass-w-full glass-h-full glass-object-cover"
+          class="glass-block glass-w-full glass-h-full glass-object-cover"
           height="600"
           width="800"
         />
@@ -76,7 +89,7 @@ exports[`GlassDeepDreamGlass matches snapshot 1`] = `
         class="glass-relative glass-aspect-video glass-surface-subtle/5 glass-border glass-border-white/20 glass-radius-lg glass-overflow-hidden"
       >
         <canvas
-          class="glass-w-full glass-h-full glass-object-cover"
+          class="glass-block glass-w-full glass-h-full glass-object-cover"
           height="600"
           width="800"
         />

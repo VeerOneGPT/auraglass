@@ -20,49 +20,50 @@ const LEVELS = {
   level5: { blur: 48, shadow: { y: 20, blur: 56 }, highlight: 0.32, glowBlur: 24 },
 };
 
-// Neutral: luminous white frost over a faint smoke scrim (liquid glass look)
+// Neutral white-frost material shared by every intent. Semantic color is
+// applied only to accents; it never tints the surface fill itself.
+const WHITE_FROST_LEVELS = {
+  level1: [0.12, 0.08, 0.08],
+  level2: [0.14, 0.08, 0.1],
+  level3: [0.16, 0.08, 0.11],
+  level4: [0.18, 0.08, 0.12],
+  level5: [0.2, 0.08, 0.14],
+};
+
+// Neutral-only accents and white overlays (mirrors src/tokens/glass.ts)
 const NEUTRAL_LEVELS = {
-  level1: { stops: [0.12, 0.04, 0.08], scrim: 0.2, border: 0.16, shadowAlpha: 0.18, glow: 0.1 },
-  level2: { stops: [0.14, 0.05, 0.1], scrim: 0.22, border: 0.2, shadowAlpha: 0.22, glow: 0.12 },
-  level3: { stops: [0.16, 0.06, 0.11], scrim: 0.24, border: 0.24, shadowAlpha: 0.26, glow: 0.14 },
-  level4: { stops: [0.18, 0.07, 0.12], scrim: 0.26, border: 0.28, shadowAlpha: 0.3, glow: 0.16 },
-  level5: { stops: [0.2, 0.08, 0.14], scrim: 0.28, border: 0.32, shadowAlpha: 0.34, glow: 0.18 },
+  level1: { overlay: 0.1, border: 0.16, shadowAlpha: 0.18, glow: 0.1 },
+  level2: { overlay: 0.12, border: 0.2, shadowAlpha: 0.22, glow: 0.12 },
+  level3: { overlay: 0.14, border: 0.24, shadowAlpha: 0.26, glow: 0.14 },
+  level4: { overlay: 0.16, border: 0.28, shadowAlpha: 0.3, glow: 0.16 },
+  level5: { overlay: 0.18, border: 0.32, shadowAlpha: 0.34, glow: 0.18 },
 };
 
-// Color intents: low-alpha tinted wash with hairline borders
+// Semantic intents: accent colors for borders, highlights, and content only
 const INTENT_LEVELS = {
-  level1: { start: 0.2, end: 0.12, border: 0.35, shadowAlpha: 0.16, glow: 0.12 },
-  level2: { start: 0.24, end: 0.15, border: 0.4, shadowAlpha: 0.2, glow: 0.14 },
-  level3: { start: 0.28, end: 0.18, border: 0.45, shadowAlpha: 0.24, glow: 0.16 },
-  level4: { start: 0.32, end: 0.21, border: 0.5, shadowAlpha: 0.28, glow: 0.18 },
-  level5: { start: 0.36, end: 0.24, border: 0.55, shadowAlpha: 0.32, glow: 0.2 },
+  level1: { border: 0.35, shadowAlpha: 0.18, glow: 0.12 },
+  level2: { border: 0.4, shadowAlpha: 0.22, glow: 0.14 },
+  level3: { border: 0.45, shadowAlpha: 0.26, glow: 0.16 },
+  level4: { border: 0.5, shadowAlpha: 0.3, glow: 0.18 },
+  level5: { border: 0.55, shadowAlpha: 0.34, glow: 0.2 },
 };
 
-// Color factories: (alpha) => css color string
+// Accent color factories: (alpha) => css color string
 const INTENT_COLORS = {
   primary: {
-    start: (a) => `hsl(var(--glass-color-primary)/${a})`,
-    end: (a) => `hsl(var(--glass-color-primary)/${a})`,
     accent: (a) => `hsl(var(--glass-color-primary)/${a})`,
+    glowAlpha: { level1: 0.14, level2: 0.16, level3: 0.18, level4: 0.2, level5: 0.22 },
   },
   success: {
-    start: (a) => `rgba(34,197,94,${a})`,
-    end: (a) => `rgba(22,163,74,${a})`,
     accent: (a) => `rgba(34,197,94,${a})`,
   },
   warning: {
-    start: (a) => `hsl(var(--glass-color-warning)/${a})`,
-    end: (a) => `rgba(217,119,6,${a})`,
     accent: (a) => `hsl(var(--glass-color-warning)/${a})`,
   },
   danger: {
-    start: (a) => `hsl(var(--glass-color-danger)/${a})`,
-    end: (a) => `rgba(220,38,38,${a})`,
     accent: (a) => `hsl(var(--glass-color-danger)/${a})`,
   },
   info: {
-    start: (a) => `rgba(14,165,233,${a})`,
-    end: (a) => `rgba(2,132,199,${a})`,
     accent: (a) => `rgba(14,165,233,${a})`,
   },
 };
@@ -82,17 +83,25 @@ function buildShadow(level, shadowColor, glowColor, glowAlpha) {
   ].join(", ");
 }
 
+function buildWhiteFrostSurface(level, overlayAlpha) {
+  const [start, midpoint, end] = WHITE_FROST_LEVELS[level];
+  const base =
+    `linear-gradient(135deg, rgba(255,255,255,${start}) 0%, ` +
+    `rgba(255,255,255,${midpoint}) 50%, rgba(255,255,255,${end}) 100%)`;
+
+  return overlayAlpha === undefined
+    ? base
+    : `${base}, linear-gradient(rgba(255,255,255,${overlayAlpha}), rgba(255,255,255,${overlayAlpha}))`;
+}
+
 function buildTokens() {
   const surfaces = {};
 
   surfaces.neutral = {};
   Object.entries(NEUTRAL_LEVELS).forEach(([level, spec]) => {
-    const [a, b, c] = spec.stops;
     surfaces.neutral[level] = {
       backdropBlur: LEVELS[level].blur,
-      surface:
-        `linear-gradient(135deg, rgba(255,255,255,${a}) 0%, rgba(255,255,255,${b}) 50%, rgba(255,255,255,${c}) 100%), ` +
-        `linear-gradient(rgba(15,23,42,${spec.scrim}), rgba(15,23,42,${spec.scrim}))`,
+      surface: buildWhiteFrostSurface(level, spec.overlay),
       border: { color: `rgba(255,255,255,${spec.border})`, width: 1 },
       shadow: buildShadow(
         level,
@@ -108,15 +117,18 @@ function buildTokens() {
   Object.entries(INTENT_COLORS).forEach(([intent, colors]) => {
     surfaces[intent] = {};
     Object.entries(INTENT_LEVELS).forEach(([level, spec]) => {
+      // Primary's canonical highlight ramp is two points stronger than the
+      // shared semantic ramp; the material fill and depth shadow stay neutral.
+      const glowAlpha = colors.glowAlpha?.[level] ?? spec.glow;
       surfaces[intent][level] = {
         backdropBlur: LEVELS[level].blur,
-        surface: `linear-gradient(135deg, ${colors.start(spec.start)} 0%, ${colors.end(spec.end)} 100%)`,
+        surface: buildWhiteFrostSurface(level),
         border: { color: colors.accent(spec.border), width: 1 },
         shadow: buildShadow(
           level,
-          colors.accent(spec.shadowAlpha),
+          `rgba(0,0,0,${spec.shadowAlpha})`,
           colors.accent,
-          spec.glow
+          glowAlpha
         ),
         textPrimary: TEXT_PRIMARY,
         textSecondary: TEXT_SECONDARY,

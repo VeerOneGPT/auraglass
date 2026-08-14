@@ -1,9 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
-import { GlassIntelligentFormBuilder, FormSchema } from './GlassIntelligentFormBuilder';
+import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
+import {
+  GlassIntelligentFormBuilder,
+  FormSchema,
+} from "./GlassIntelligentFormBuilder";
 
 const meta: Meta<typeof GlassIntelligentFormBuilder> = {
-  title: 'AI + Intelligence/Glass Intelligent Form Builder',
+  title: "AI + Intelligence/Glass Intelligent Form Builder",
   component: GlassIntelligentFormBuilder,
   decorators: [
     (Story) => (
@@ -13,10 +16,11 @@ const meta: Meta<typeof GlassIntelligentFormBuilder> = {
     ),
   ],
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     docs: {
       description: {
-        component: 'Revolutionary AI-powered form builder with intelligent field suggestions, real-time optimization, accessibility compliance, and performance monitoring.',
+        component:
+          "Revolutionary AI-powered form builder with intelligent field suggestions, real-time optimization, accessibility compliance, and performance monitoring.",
       },
     },
   },
@@ -28,19 +32,20 @@ type Story = StoryObj<typeof GlassIntelligentFormBuilder>;
 const FormBuilderStoryFrame = ({ children }: { children: React.ReactNode }) => (
   <div
     style={{
-      height: '100vh',
-      maxHeight: '100vh',
-      overflow: 'hidden',
-      background: 'linear-gradient(135deg, #eff6ff 0%, #f8fafc 45%, #ecfeff 100%)',
+      height: "100vh",
+      maxHeight: "100vh",
+      overflow: "hidden",
+      background:
+        "linear-gradient(135deg, #f8fafc 0%, #f3f5f7 48%, #e7ebef 100%)",
     }}
   >
     <div
       style={{
-        height: '100%',
-        overflowY: 'auto',
-        overscrollBehavior: 'contain',
+        height: "100%",
+        overflowY: "auto",
+        overscrollBehavior: "contain",
         padding: 24,
-        boxSizing: 'border-box',
+        boxSizing: "border-box",
       }}
     >
       {children}
@@ -49,108 +54,111 @@ const FormBuilderStoryFrame = ({ children }: { children: React.ReactNode }) => (
 );
 
 const sampleContactSchema: Partial<FormSchema> = {
-  title: 'Contact Support Form',
-  description: 'Get in touch with our support team for assistance',
+  title: "Contact Support Form",
+  description: "Get in touch with our support team for assistance",
   fields: [
     {
-      id: 'name',
-      type: 'text',
-      label: 'Full Name',
-      placeholder: 'Enter your full name',
-      required: true
+      id: "name",
+      type: "text",
+      label: "Full Name",
+      placeholder: "Enter your full name",
+      required: true,
     },
     {
-      id: 'email',
-      type: 'email',
-      label: 'Email Address',
-      placeholder: 'your@email.com',
-      required: true
+      id: "email",
+      type: "email",
+      label: "Email Address",
+      placeholder: "your@email.com",
+      required: true,
     },
     {
-      id: 'issue-type',
-      type: 'select',
-      label: 'Issue Category',
+      id: "issue-type",
+      type: "select",
+      label: "Issue Category",
       required: true,
       options: [
-        { value: 'technical', label: 'Technical Issue' },
-        { value: 'billing', label: 'Billing Question' },
-        { value: 'feature', label: 'Feature Request' },
-        { value: 'other', label: 'Other' }
-      ]
+        { value: "technical", label: "Technical Issue" },
+        { value: "billing", label: "Billing Question" },
+        { value: "feature", label: "Feature Request" },
+        { value: "other", label: "Other" },
+      ],
     },
     {
-      id: 'message',
-      type: 'textarea',
-      label: 'Describe Your Issue',
-      placeholder: 'Please provide as much detail as possible...',
-      required: true
-    }
-  ]
+      id: "message",
+      type: "textarea",
+      label: "Describe Your Issue",
+      placeholder: "Please provide as much detail as possible...",
+      required: true,
+    },
+  ],
 };
 
 const sampleRegistrationSchema: Partial<FormSchema> = {
-  title: 'User Registration',
-  description: 'Create your account to get started',
+  title: "User Registration",
+  description: "Create your account to get started",
   fields: [
     {
-      id: 'first-name',
-      type: 'text',
-      label: 'First Name',
-      placeholder: 'John',
-      required: true
+      id: "first-name",
+      type: "text",
+      label: "First Name",
+      placeholder: "John",
+      required: true,
     },
     {
-      id: 'last-name',
-      type: 'text',
-      label: 'Last Name',
-      placeholder: 'Doe',
-      required: true
+      id: "last-name",
+      type: "text",
+      label: "Last Name",
+      placeholder: "Doe",
+      required: true,
     },
     {
-      id: 'email',
-      type: 'email',
-      label: 'Email Address',
-      placeholder: 'john@example.com',
-      required: true
+      id: "email",
+      type: "email",
+      label: "Email Address",
+      placeholder: "john@example.com",
+      required: true,
     },
     {
-      id: 'phone',
-      type: 'tel',
-      label: 'Phone Number',
-      placeholder: '+1 (555) 123-4567',
-      required: false
+      id: "phone",
+      type: "tel",
+      label: "Phone Number",
+      placeholder: "+1 (555) 123-4567",
+      required: false,
     },
     {
-      id: 'password',
-      type: 'password',
-      label: 'Password',
-      placeholder: 'Create a secure password',
-      required: true
+      id: "password",
+      type: "password",
+      label: "Password",
+      placeholder: "Create a secure password",
+      required: true,
     },
     {
-      id: 'birth-date',
-      type: 'date',
-      label: 'Date of Birth',
-      required: true
+      id: "birth-date",
+      type: "date",
+      label: "Date of Birth",
+      required: true,
     },
     {
-      id: 'terms',
-      type: 'checkbox',
-      label: 'I agree to the Terms and Conditions',
-      required: true
-    }
-  ]
+      id: "terms",
+      type: "checkbox",
+      label: "I agree to the Terms and Conditions",
+      required: true,
+    },
+  ],
 };
 
 export const EmptyBuilder: Story = {
   args: {
+    compact: true,
+    maxHeight: "calc(100vh - 48px)",
     enableAIAssistance: true,
     enableRealTimeOptimization: true,
   },
   parameters: {
     docs: {
       description: {
-        story: 'Start with a clean slate and build your form from scratch. The AI will provide intelligent suggestions as you add and configure fields.',
+        story:
+          "Start with a clean slate and build your form from scratch. The AI will provide intelligent suggestions as you add and configure fields.",
       },
     },
   },
@@ -165,7 +173,8 @@ export const ContactFormDemo: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Pre-configured contact form showing AI analysis and optimization suggestions. Notice how the AI detects the form purpose and provides relevant recommendations.',
+        story:
+          "Pre-configured contact form showing AI analysis and optimization suggestions. Notice how the AI detects the form purpose and provides relevant recommendations.",
       },
     },
   },
@@ -180,7 +189,8 @@ export const RegistrationFormDemo: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Complex registration form demonstrating AI field type suggestions, validation recommendations, and UX optimizations for better conversion rates.',
+        story:
+          "Complex registration form demonstrating AI field type suggestions, validation recommendations, and UX optimizations for better conversion rates.",
       },
     },
   },
@@ -195,7 +205,8 @@ export const WithoutAI: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Traditional form builder without AI assistance. Compare this with the AI-enabled versions to see the difference in functionality and user experience.',
+        story:
+          "Traditional form builder without AI assistance. Compare this with the AI-enabled versions to see the difference in functionality and user experience.",
       },
     },
   },
@@ -204,45 +215,57 @@ export const WithoutAI: Story = {
 export const AIAssistanceDemo: Story = {
   render: () => {
     const [schema, setSchema] = React.useState<FormSchema | undefined>();
-    
+
     return (
       <div className="space-y-8">
         <div className="glass-text-center glass-py-8 glass-gradient-primary glass-gradient-primary glass-gradient-primary glass-radius-xl">
-          <h1 className="glass-text-3xl glass-font-bold glass-text-secondary glass-mb-4">🤖 AI-Powered Form Builder</h1>
+          <h1 className="glass-text-3xl glass-font-bold glass-text-secondary glass-mb-4">
+            🤖 AI-Powered Form Builder
+          </h1>
           <p className="glass-text-lg glass-text-secondary max-w-3xl glass-mx-auto leading-relaxed">
-            Experience the future of form creation with our intelligent form builder. 
-            Watch as AI analyzes your form purpose, suggests optimal field types, 
-            provides accessibility improvements, and optimizes for better conversion rates.
+            Experience the future of form creation with our intelligent form
+            builder. Watch as AI analyzes your form purpose, suggests optimal
+            field types, provides accessibility improvements, and optimizes for
+            better conversion rates.
           </p>
-          
+
           <div className="glass-grid glass-glass-grid-cols-1 md:glass-glass-grid-cols-4 glass-gap-6 mt-8 max-w-4xl glass-mx-auto">
             <div className="glass-text-center">
               <div className="glass-w-12 glass-h-12 glass-surface-blue glass-text-primary glass-radius-full glass-flex glass-items-center glass-justify-center glass-mx-auto glass-mb-3">
                 🧠
               </div>
               <h3 className="glass-font-semibold">Smart Field Detection</h3>
-              <p className="glass-text-sm glass-text-secondary mt-1">AI automatically suggests field types based on labels and context</p>
+              <p className="glass-text-sm glass-text-secondary mt-1">
+                AI automatically suggests field types based on labels and
+                context
+              </p>
             </div>
             <div className="glass-text-center">
               <div className="glass-w-12 glass-h-12 glass-surface-green glass-text-primary glass-radius-full glass-flex glass-items-center glass-justify-center glass-mx-auto glass-mb-3">
                 ✅
               </div>
               <h3 className="glass-font-semibold">Validation Suggestions</h3>
-              <p className="glass-text-sm glass-text-secondary mt-1">Intelligent validation rules and format requirements</p>
+              <p className="glass-text-sm glass-text-secondary mt-1">
+                Intelligent validation rules and format requirements
+              </p>
             </div>
             <div className="glass-text-center">
               <div className="glass-w-12 glass-h-12 glass-surface-primary glass-text-primary glass-radius-full glass-flex glass-items-center glass-justify-center glass-mx-auto glass-mb-3">
                 ♿
               </div>
               <h3 className="glass-font-semibold">Accessibility First</h3>
-              <p className="glass-text-sm glass-text-secondary mt-1">Built-in accessibility compliance and WCAG guidelines</p>
+              <p className="glass-text-sm glass-text-secondary mt-1">
+                Built-in accessibility compliance and WCAG guidelines
+              </p>
             </div>
             <div className="glass-text-center">
               <div className="glass-w-12 glass-h-12 glass-surface-primary glass-text-primary glass-radius-full glass-flex glass-items-center glass-justify-center glass-mx-auto glass-mb-3">
                 📊
               </div>
               <h3 className="glass-font-semibold">Performance Optimized</h3>
-              <p className="glass-text-sm glass-text-secondary mt-1">Real-time performance monitoring and optimization</p>
+              <p className="glass-text-sm glass-text-secondary mt-1">
+                Real-time performance monitoring and optimization
+              </p>
             </div>
           </div>
         </div>
@@ -255,7 +278,9 @@ export const AIAssistanceDemo: Story = {
 
         {schema && (
           <div className="glass-surface-subtle glass-text-primary glass-p-6 glass-radius-lg font-mono glass-text-sm glass-overflow-auto">
-            <h3 className="glass-text-primary glass-font-bold glass-mb-4">Generated Form Schema:</h3>
+            <h3 className="glass-text-primary glass-font-bold glass-mb-4">
+              Generated Form Schema:
+            </h3>
             <pre>{JSON.stringify(schema, null, 2)}</pre>
           </div>
         )}
@@ -265,7 +290,8 @@ export const AIAssistanceDemo: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive demo showcasing all AI capabilities. Try adding fields with different names (like "email", "phone", "password", "birth date") and watch the AI provide intelligent suggestions.',
+        story:
+          'Interactive demo showcasing all AI capabilities. Try adding fields with different names (like "email", "phone", "password", "birth date") and watch the AI provide intelligent suggestions.',
       },
     },
   },
@@ -276,10 +302,14 @@ export const AdvancedFeatures: Story = {
     return (
       <div className="space-y-8">
         <div className="glass-gradient-primary glass-gradient-primary glass-gradient-primary glass-text-primary glass-p-8 glass-radius-xl">
-          <h2 className="glass-text-2xl glass-font-bold glass-mb-4">🚀 Advanced AI Features</h2>
+          <h2 className="glass-text-2xl glass-font-bold glass-mb-4">
+            🚀 Advanced AI Features
+          </h2>
           <div className="glass-grid glass-glass-grid-cols-1 md:glass-glass-grid-cols-2 lg:glass-glass-grid-cols-3 glass-gap-6">
             <div>
-              <h3 className="glass-font-semibold glass-mb-2">🎯 Purpose Detection</h3>
+              <h3 className="glass-font-semibold glass-mb-2">
+                🎯 Purpose Detection
+              </h3>
               <ul className="glass-text-sm space-y-1 glass-opacity-90">
                 <li>• Contact/Support Forms</li>
                 <li>• Registration/Login Forms</li>
@@ -289,7 +319,9 @@ export const AdvancedFeatures: Story = {
               </ul>
             </div>
             <div>
-              <h3 className="glass-font-semibold glass-mb-2">🧠 Field Intelligence</h3>
+              <h3 className="glass-font-semibold glass-mb-2">
+                🧠 Field Intelligence
+              </h3>
               <ul className="glass-text-sm space-y-1 glass-opacity-90">
                 <li>• Auto field type detection</li>
                 <li>• Smart validation rules</li>
@@ -299,7 +331,9 @@ export const AdvancedFeatures: Story = {
               </ul>
             </div>
             <div>
-              <h3 className="glass-font-semibold glass-mb-2">📊 Optimization Engine</h3>
+              <h3 className="glass-font-semibold glass-mb-2">
+                📊 Optimization Engine
+              </h3>
               <ul className="glass-text-sm space-y-1 glass-opacity-90">
                 <li>• Form flow optimization</li>
                 <li>• Conversion rate analysis</li>
@@ -317,14 +351,34 @@ export const AdvancedFeatures: Story = {
         />
 
         <div className="glass-surface-subtle glass-border-l-4 glass-border-yellow glass-p-6 glass-radius-r-lg">
-          <h3 className="glass-font-semibold glass-text-primary glass-mb-2">💡 Pro Tips for AI Form Building</h3>
+          <h3 className="glass-font-semibold glass-text-primary glass-mb-2">
+            💡 Pro Tips for AI Form Building
+          </h3>
           <ul className="glass-text-sm glass-text-primary glass-space-y-2">
-            <li><strong>Descriptive Labels:</strong> Use clear, descriptive field labels like "Business Email Address" instead of just "Email"</li>
-            <li><strong>Context Matters:</strong> Fill in the form title and description - the AI uses this context for better suggestions</li>
-            <li><strong>Field Names:</strong> Try fields with names like "password", "phone", "birth date", "website" to see AI suggestions</li>
-            <li><strong>Validation Rules:</strong> The AI automatically suggests appropriate validation based on field types and context</li>
-            <li><strong>Accessibility:</strong> Watch how the AI provides accessibility tips and compliance scoring</li>
-            <li><strong>Export Schema:</strong> Use the export feature to save your form configuration for use in your applications</li>
+            <li>
+              <strong>Descriptive Labels:</strong> Use clear, descriptive field
+              labels like "Business Email Address" instead of just "Email"
+            </li>
+            <li>
+              <strong>Context Matters:</strong> Fill in the form title and
+              description - the AI uses this context for better suggestions
+            </li>
+            <li>
+              <strong>Field Names:</strong> Try fields with names like
+              "password", "phone", "birth date", "website" to see AI suggestions
+            </li>
+            <li>
+              <strong>Validation Rules:</strong> The AI automatically suggests
+              appropriate validation based on field types and context
+            </li>
+            <li>
+              <strong>Accessibility:</strong> Watch how the AI provides
+              accessibility tips and compliance scoring
+            </li>
+            <li>
+              <strong>Export Schema:</strong> Use the export feature to save
+              your form configuration for use in your applications
+            </li>
           </ul>
         </div>
       </div>
@@ -333,7 +387,8 @@ export const AdvancedFeatures: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Comprehensive overview of all advanced AI features with practical examples and tips for getting the most out of the intelligent form builder.',
+        story:
+          "Comprehensive overview of all advanced AI features with practical examples and tips for getting the most out of the intelligent form builder.",
       },
     },
   },

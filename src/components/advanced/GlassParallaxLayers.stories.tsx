@@ -1,17 +1,40 @@
+import type { CSSProperties, ReactNode } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { GlassParallaxLayers } from "./GlassParallaxLayers";
-import { StorybookVisualShowcase } from "./StorybookVisualShowcase";
+
+const frameStyle: CSSProperties = {
+  minHeight: "100dvh",
+  width: "100%",
+  display: "grid",
+  placeItems: "center",
+  padding: "clamp(20px, 5vw, 64px)",
+  boxSizing: "border-box",
+  background:
+    "radial-gradient(circle at 18% 14%, #ffffff 0%, transparent 30%), linear-gradient(145deg, #efefed, #cfceca)",
+};
+
+const layerCardStyle: CSSProperties = {
+  minHeight: "130px",
+  display: "grid",
+  alignContent: "center",
+  gap: "8px",
+  padding: "24px",
+  color: "#0f172a",
+};
 
 const meta = {
-  title: 'Effects + Advanced/Glass Parallax Layers',
+  title: "Effects + Advanced/Glass Parallax Layers",
   component: GlassParallaxLayers,
+  args: {
+    layers: [],
+  },
   parameters: {
     layout: "fullscreen",
-    previewSurface: "media",
+    previewSurface: "component",
     docs: {
       description: {
         component:
-          "Presentation-ready Advanced/GlassParallaxLayers stories with deterministic liquid-glass visuals, responsive spacing, and no native browser controls.",
+          "The actual GlassParallaxLayers export with real depth layers, bounded motion, and neutral liquid surfaces.",
       },
     },
   },
@@ -19,20 +42,85 @@ const meta = {
 } satisfies Meta<typeof GlassParallaxLayers>;
 
 export default meta;
-type Story = StoryObj;
+type Story = StoryObj<typeof meta>;
 
-const makeStory = (state: string): Story => ({
+function LayerContent({ eyebrow, title }: { eyebrow: string; title: string }) {
+  return (
+    <div style={layerCardStyle}>
+      <span className="glass-text-xs glass-font-semibold glass-uppercase glass-tracking-wide glass-text-tertiary">
+        {eyebrow}
+      </span>
+      <strong className="glass-text-xl glass-font-semibold glass-text-primary">
+        {title}
+      </strong>
+    </div>
+  );
+}
+
+function ParallaxScene({
+  autoRotate = false,
+  debug = false,
+  content,
+}: {
+  autoRotate?: boolean;
+  debug?: boolean;
+  content?: ReactNode;
+}) {
+  const layers = [
+    {
+      depth: 8,
+      blur: "lg" as const,
+      opacity: 1,
+      scale: 0.88,
+      content: content ?? (
+        <LayerContent eyebrow="Atmosphere" title="Far material" />
+      ),
+    },
+    {
+      depth: 4,
+      blur: "md" as const,
+      opacity: 1,
+      scale: 0.94,
+      content: <LayerContent eyebrow="Context" title="Middle material" />,
+    },
+    {
+      depth: 0,
+      blur: "sm" as const,
+      content: <LayerContent eyebrow="Focus" title="Front material" />,
+    },
+  ];
+
+  return (
+    <main style={frameStyle}>
+      <div style={{ width: "min(760px, 100%)", height: "460px" }}>
+        <GlassParallaxLayers
+          layers={layers}
+          mouseIntensity={0.24}
+          scrollIntensity={0.1}
+          perspective={1400}
+          autoRotate={autoRotate}
+          rotateSpeed={0.08}
+          interactive
+          debug={debug}
+          aria-label="Interactive liquid glass depth composition"
+        />
+      </div>
+    </main>
+  );
+}
+
+export const HeroSection: Story = { render: () => <ParallaxScene /> };
+export const CardStack: Story = { render: () => <ParallaxScene /> };
+export const AutoRotating: Story = {
+  render: () => <ParallaxScene autoRotate />,
+};
+export const DataVisualization: Story = {
   render: () => (
-    <StorybookVisualShowcase
-      name={`GlassParallaxLayers / ${state}`}
-      kind="advanced"
-      summary="Audited responsive scene for desktop, mobile, dark mode, and clear liquid material quality."
+    <ParallaxScene
+      content={<LayerContent eyebrow="Signals" title="Depth telemetry" />}
     />
   ),
-});
-
-export const HeroSection: Story = makeStory("Hero Section");
-export const CardStack: Story = makeStory("Card Stack");
-export const AutoRotating: Story = makeStory("Auto Rotating");
-export const DataVisualization: Story = makeStory("Data Visualization");
-export const InteractiveDebug: Story = makeStory("Interactive Debug");
+};
+export const InteractiveDebug: Story = {
+  render: () => <ParallaxScene debug />,
+};

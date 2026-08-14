@@ -203,7 +203,20 @@ export function AccessibilityProvider({
 
   return (
     <AccessibilityContext.Provider value={contextValue}>
-      <div className={className} data-testid={dataTestId}>
+      <div
+        className={className}
+        data-testid={dataTestId}
+        style={{
+          // Keep provider boundaries shrinkable inside flex/grid shells. This
+          // prevents a wide child (for example, a code sample or data table)
+          // from expanding the application viewport on narrow screens.
+          boxSizing: "border-box",
+          width: "100%",
+          minWidth: 0,
+          maxWidth: "100%",
+          overflowX: "hidden",
+        }}
+      >
         {children}
       </div>
     </AccessibilityContext.Provider>

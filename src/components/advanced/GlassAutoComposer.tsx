@@ -244,8 +244,8 @@ class AILayoutGenerator {
         <motion.div
           key={index}
           className="glass-surface-secondary glass-elev-2 glass-radius-lg glass-p-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={prefersReducedMotion ? { duration: 0 } : { duration: ${normalDuration} }}
         >
           <div className="glass-text-2xl glass-font-bold glass-text-primary">{stat.value}</div>
@@ -332,8 +332,8 @@ class AILayoutGenerator {
     <motion.div
       key={item.id}
       className="glass-surface-secondary glass-elev-2 glass-radius-lg glass-overflow-hidden"
-      initial={{ opacity: 0, y: 20 }}
-      animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={prefersReducedMotion ? { duration: 0 } : { duration: ${ANIMATION.DURATION.normal / 1000} }}
       whileHover={{ scale: 1.02 }}
     >
@@ -381,8 +381,8 @@ class AILayoutGenerator {
       <motion.div
         key={item.id}
         className="glass-p-4 hover:glass-surface-secondary glass-transition-colors"
-        initial={{ opacity: 0, x: -20 }}
-        animate={prefersReducedMotion ? {} : { opacity: 1, x: 0 }}
+        initial={prefersReducedMotion ? false : { opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={prefersReducedMotion ? { duration: 0 } : { duration: ${ANIMATION.DURATION.normal / 1000} }}
       >
         <div className="glass-flex glass-items-center glass-justify-between">
@@ -455,23 +455,30 @@ class AILayoutGenerator {
 
     const baseCSS = `
 .generated-component {
-  /* Base glassmorphism styles */
-  backdrop-filter: var(--glass-backdrop-blur);
-  -webkit-backdrop-filter: var(--glass-backdrop-blur);
-  background: var(--glass-bg-default);
-  border: 1px solid var(--glass-border-default);
+  /* Canonical neutral liquid-glass material. Keep both filter spellings in
+     generated output because consumers may render outside AuraGlass CSS. */
+  backdrop-filter: blur(24px) saturate(160%) brightness(1.08) contrast(1.04);
+  -webkit-backdrop-filter: blur(24px) saturate(160%) brightness(1.08) contrast(1.04);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.24);
   border-radius: var(--glass-radius-xl);
-  box-shadow: var(--glass-elev-2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), var(--glass-elev-2);
 }
 
 .generated-component .glass-surface-primary {
-  background: var(--glass-bg-default);
-  backdrop-filter: var(--glass-backdrop-blur);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.14) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(24px) saturate(160%) brightness(1.08) contrast(1.04);
+  -webkit-backdrop-filter: blur(24px) saturate(160%) brightness(1.08) contrast(1.04);
 }
 
 .generated-component .glass-surface-secondary {
-  background: var(--glass-bg-default);
-  backdrop-filter: var(--glass-backdrop-blur);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.10) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(24px) saturate(160%) brightness(1.08) contrast(1.04);
+  -webkit-backdrop-filter: blur(24px) saturate(160%) brightness(1.08) contrast(1.04);
 }
 
 .generated-component .glass-text-primary {
@@ -515,7 +522,7 @@ class AILayoutGenerator {
   --glass-blur: var(--glass-blur-2xl);
   --glass-opacity: var(--glass-opacity-20);
   --animation-duration: var(--glass-motion-duration-slower);
-  background: var(--glass-bg-default);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0.14) 100%);
   animation: glowPulse var(--glass-motion-duration-slowest) var(--glass-motion-ease-in-out) infinite alternate;
 }
 

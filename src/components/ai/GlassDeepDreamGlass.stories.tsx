@@ -68,7 +68,7 @@ const mockNeuralLayers: NeuralLayer[] = [
 ];
 
 const meta = {
-  title: 'AI + Intelligence/Glass Deep Dream Glass',
+  title: "AI + Intelligence/Glass Deep Dream Glass",
   component: GlassDeepDreamGlass,
   parameters: {
     layout: "fullscreen",
@@ -114,7 +114,7 @@ const meta = {
         className="glass-on-light"
         style={{
           width: "100%",
-          minHeight: "100vh",
+          height: "100vh",
           display: "flex",
           alignItems: "center",
           overflowX: "hidden",
@@ -122,7 +122,7 @@ const meta = {
           padding: "clamp(16px, 3vw, 32px)",
           backgroundColor: "#f8fafc",
           backgroundImage:
-            "linear-gradient(135deg, #f8fafc 0%, #e7f0ff 42%, #f4f0ff 100%)",
+            "linear-gradient(135deg, #f8fafc 0%, #f3f5f7 48%, #e7ebef 100%)",
           color: "#0f172a",
         }}
       >
@@ -134,16 +134,16 @@ const meta = {
 
           .deep-dream-story-card {
             width: 100%;
-            max-width: 960px;
+            max-width: 900px;
+            height: calc(100vh - 32px);
+            overflow: hidden;
             margin: 0 auto;
             color: #0f172a;
           }
 
           .deep-dream-story-frame {
             width: 100%;
-            max-height: min(760px, calc(100vh - 64px));
-            overflow: auto;
-            border-radius: 20px;
+            overflow: visible;
           }
 
           .deep-dream-story-card > div:first-child,
@@ -196,9 +196,9 @@ const meta = {
           }
 
           .deep-dream-story-card label.glass-surface-blue {
-            background: #1d4ed8 !important;
-            border: 1px solid rgba(30, 64, 175, 0.42) !important;
-            color: #ffffff !important;
+            background: rgba(255, 255, 255, 0.24) !important;
+            border: 1px solid rgba(255, 255, 255, 0.32) !important;
+            color: rgba(15, 23, 42, 0.85) !important;
           }
 
           [data-storybook-preview-mode="dark"] .deep-dream-story-card :where(h3, h4, h5, p, button, a, label, span) {
@@ -217,12 +217,8 @@ const meta = {
           }
 
           @media (max-width: 640px) {
-            .deep-dream-story-frame {
-              max-height: calc(100vh - 40px);
-            }
-
             .deep-dream-story-card {
-              padding: 16px !important;
+              padding: 12px !important;
             }
 
             .deep-dream-story-card > div:first-child {
@@ -253,13 +249,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    compact: true,
     availableLayers: mockNeuralLayers,
     selectedLayers: ["mixed3a"],
-    canvasWidth: 800,
-    canvasHeight: 600,
-    showLayerSelector: true,
+    canvasWidth: 640,
+    canvasHeight: 360,
+    showLayerSelector: false,
     showPreview: true,
-    showSettings: true,
+    showSettings: false,
     enableRealTime: false,
     enableAnimation: true,
     enableTiling: true,

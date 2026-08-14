@@ -299,7 +299,11 @@ export function LazyGlassLoading({
   );
 
   return (
-    <div ref={containerRef} className={className}>
+    <div
+      ref={containerRef}
+      className={cn("glass-lazy-loading glass-relative", className)}
+      style={{ minHeight: 100 }}
+    >
       <AnimatePresence mode="wait">
         {!isLoaded ? (
           <motion.div
@@ -314,7 +318,7 @@ export function LazyGlassLoading({
         ) : (
           <motion.div
             key="content"
-            initial={{ opacity: 0, y: 10 }}
+            initial={false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
@@ -562,10 +566,13 @@ export function GlassPerformanceMonitor({
   return (
     <motion.div
       className={cn(
-        "glass-performance-monitor glass-fixed glass-top-10 glass-right-10 glass-z-max",
+        "glass-performance-monitor glass-fixed glass-top-10 glass-right-10 glass-z-max glass-text-primary",
         className
       )}
-      style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
+      style={{
+        ...createGlassStyle({ intent: "neutral", elevation: "level2" }),
+        color: "rgba(15, 23, 42, 0.94)",
+      }}
       initial={{ opacity: 0, x: 50 }}
       animate={{ opacity: 1, x: 0 }}
     >

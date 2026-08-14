@@ -528,7 +528,7 @@ const main = async () => {
         generatedTotal === 0
           ? 0
           : Number(((generatedEntries.length / generatedTotal) * 100).toFixed(1)),
-      storyPath: generatedCertificationStoryPath,
+      ...(generatedTotal > 0 ? { storyPath: generatedCertificationStoryPath } : {}),
     },
     generatedAt: new Date().toISOString(),
     entries: reportEntries,

@@ -786,10 +786,11 @@ export const LiquidGlassGPURenderer: React.FC<LiquidGlassGPUProps> = ({
           className
         )}
         style={{
-          // Use createGlassStyle() instead,
-          // Use createGlassStyle() instead,
-          background: `linear-gradient(135deg, rgba(255,255,255,${0.15 + sheen * 0.05}) 0%, rgba(255,255,255,${0.05 + sheen * 0.02}) 100%)`,
-          border: `1px solid rgba(255,255,255,${0.3 + sheen * 0.1})`,
+          background:
+            "linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.12) 100%)",
+          border: "1px solid rgba(255,255,255,0.28)",
+          backdropFilter: "blur(24px) saturate(1.5) brightness(1.05) contrast(1.05)",
+          WebkitBackdropFilter: "blur(24px) saturate(1.5) brightness(1.05) contrast(1.05)",
         }}
       >
         {children}

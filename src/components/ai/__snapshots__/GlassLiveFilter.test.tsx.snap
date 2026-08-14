@@ -4,8 +4,19 @@ exports[`GlassLiveFilter matches snapshot 1`] = `
 <div
   class="optimized-glass-surface glass-neutral-level2 glass-tier-high glass-p-4 glass-space-y-4 glass-max-w-full glass-overflow-auto"
   data-glass-component="true"
-  style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: var(--glass-theme-text, rgba(255, 255, 255, 0.95)); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: var(--glass-theme-text, rgba(255, 255, 255, 0.95)); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: var(--glass-theme-text, rgba(255, 255, 255, 0.95)); max-height: 100%; min-width: 0;"
+  style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.96); --glass-text-secondary: rgba(30, 41, 59, 0.84); --typography-text-primary: rgba(15, 23, 42, 0.96); --typography-text-secondary: rgba(30, 41, 59, 0.84); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.96); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.96); --glass-text-tertiary: rgba(51, 65, 85, 0.72); --typography-text-tertiary: rgba(51, 65, 85, 0.72); --glass-color-primary: rgba(71, 85, 105, 0.92); --glass-color-secondary: rgba(100, 116, 139, 0.88); max-height: 100%; min-width: 0;"
 >
+  <style>
+
+          [data-glass-component] input[type="range"] {
+            accent-color: rgb(100, 116, 139);
+          }
+
+          [data-glass-component] input[type="checkbox"] {
+            accent-color: rgb(71, 85, 105);
+          }
+
+  </style>
   <div
     class="glass-flex glass-items-center glass-justify-between glass-gap-3 glass-min-w-0"
   >
@@ -42,7 +53,7 @@ exports[`GlassLiveFilter matches snapshot 1`] = `
         class="glass-relative glass-aspect-video glass-surface-subtle/5 glass-border glass-border-white/20 glass-radius-lg glass-overflow-hidden"
       >
         <canvas
-          class="glass-w-full glass-h-full glass-object-cover"
+          class="glass-block glass-w-full glass-h-full glass-object-cover"
           height="360"
           width="640"
         />
@@ -60,7 +71,7 @@ exports[`GlassLiveFilter matches snapshot 1`] = `
         class="glass-relative glass-aspect-video glass-surface-subtle/5 glass-border glass-border-white/20 glass-radius-lg glass-overflow-hidden"
       >
         <canvas
-          class="glass-w-full glass-h-full glass-object-cover"
+          class="glass-block glass-w-full glass-h-full glass-object-cover"
           height="360"
           width="640"
         />
@@ -101,7 +112,7 @@ exports[`GlassLiveFilter matches snapshot 1`] = `
           <span
             class="
                   glass-px-2 glass-py-0.5 glass-radius glass-text-xs glass-font-medium
-                  glass-surface-blue/20 glass-text-secondary
+                  glass-surface-subtle glass-text-secondary
                 "
           >
             color
@@ -221,7 +232,7 @@ exports[`GlassLiveFilter matches snapshot 1`] = `
           <span
             class="
                   glass-px-2 glass-py-0.5 glass-radius glass-text-xs glass-font-medium
-                  glass-surface-blue/20 glass-text-secondary
+                  glass-surface-subtle glass-text-secondary
                 "
           >
             color
@@ -251,7 +262,7 @@ exports[`GlassLiveFilter matches snapshot 1`] = `
           <span
             class="
                   glass-px-2 glass-py-0.5 glass-radius glass-text-xs glass-font-medium
-                  glass-surface-blue/20 glass-text-secondary
+                  glass-surface-subtle glass-text-secondary
                 "
           >
             color
@@ -281,7 +292,7 @@ exports[`GlassLiveFilter matches snapshot 1`] = `
           <span
             class="
                   glass-px-2 glass-py-0.5 glass-radius glass-text-xs glass-font-medium
-                  glass-surface-blue/20 glass-text-secondary
+                  glass-surface-subtle glass-text-secondary
                 "
           >
             color
@@ -311,7 +322,7 @@ exports[`GlassLiveFilter matches snapshot 1`] = `
           <span
             class="
                   glass-px-2 glass-py-0.5 glass-radius glass-text-xs glass-font-medium
-                  glass-surface-blue/20 glass-text-secondary
+                  glass-surface-subtle glass-text-secondary
                 "
           >
             color
@@ -453,7 +464,7 @@ exports[`GlassLiveFilter matches snapshot 1`] = `
         type="file"
       />
       <label
-        class="glass-px-4 glass-py-2 glass-surface-blue hover:glass-surface-blue glass-text-primary glass-radius-lg glass-text-sm glass-font-medium glass-cursor-pointer glass-transition-colors"
+        class="glass-px-4 glass-py-2 glass-surface-subtle hover:glass-surface-overlay glass-text-primary glass-border glass-border-subtle glass-radius-lg glass-text-sm glass-font-medium glass-cursor-pointer glass-transition-colors"
         for="image-upload"
         tabindex="0"
       >

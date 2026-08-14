@@ -108,7 +108,7 @@ function demoBackdropStyle(
   if (demoBackdrop === "busy-light") {
     return {
       ...createGlassStyle({
-        intent: "info",
+        intent: "neutral",
         elevation: "level1",
         tier: "high",
       }),

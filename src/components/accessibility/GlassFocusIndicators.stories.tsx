@@ -7,15 +7,29 @@ import { GlassFocusIndicators } from './GlassFocusIndicators';
 
 const focusStoryStyles = `
   .ag-focus-story {
-    --glass-text-primary: #f8fafc;
-    --glass-text-secondary: #e2e8f0;
-    --glass-text-tertiary: #cbd5e1;
-    --typography-text-primary: #f8fafc;
-    --typography-text-secondary: #e2e8f0;
+    --glass-text-primary: #0f172a;
+    --glass-text-secondary: #334155;
+    --glass-text-tertiary: #475569;
+    --typography-text-primary: #0f172a;
+    --typography-text-secondary: #334155;
     width: min(620px, 100%);
     max-width: 100%;
     overflow: visible;
-    color: #f8fafc;
+    color: #0f172a;
+    --glass-focus-shadow-primary: 0 0 14px rgba(28, 28, 30, 0.18);
+    --glass-focus-shadow-interactive: 0 0 18px rgba(28, 28, 30, 0.2);
+    --glass-focus-shadow-navigation: 0 0 14px rgba(28, 28, 30, 0.18);
+    --glass-focus-shadow-form: 0 0 14px rgba(28, 28, 30, 0.18);
+  }
+
+  .ag-focus-story::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 24% 14%, rgba(255, 255, 255, 0.98), transparent 38%),
+      linear-gradient(145deg, #fafafa, #e9e9e9);
   }
 
   .ag-focus-story,
@@ -31,7 +45,7 @@ const focusStoryStyles = `
   .ag-focus-story p,
   .ag-focus-story label,
   .ag-focus-story span {
-    color: #f8fafc !important;
+    color: #0f172a !important;
   }
 
   .ag-focus-story [data-testid="glass-card"],
@@ -39,6 +53,19 @@ const focusStoryStyles = `
     width: 100% !important;
     max-width: 100% !important;
     overflow: visible !important;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.16)) !important;
+    background-color: rgba(255, 255, 255, 0.18) !important;
+    border-color: rgba(255, 255, 255, 0.28) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 0 12px rgba(255,255,255,0.12), 0 20px 48px rgba(20,20,20,0.12) !important;
+    backdrop-filter: blur(24px) saturate(1.4) brightness(1.04) contrast(1.02) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(1.4) brightness(1.04) contrast(1.02) !important;
+  }
+
+  .ag-focus-story label {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.16)) !important;
+    background-color: rgba(255, 255, 255, 0.18) !important;
+    border-color: rgba(255, 255, 255, 0.28) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.28), inset 0 0 10px rgba(255,255,255,0.12), 0 8px 22px rgba(20,20,20,0.08) !important;
   }
 
   .ag-focus-story button,
@@ -46,10 +73,25 @@ const focusStoryStyles = `
     max-width: 100%;
   }
 
-  .ag-focus-story button {
-    background: rgba(15, 23, 42, 0.86) !important;
-    color: #f8fafc !important;
-    border-color: rgba(226, 232, 240, 0.26) !important;
+  .ag-focus-story button:not([data-button-variant='ghost']) {
+    min-height: 40px;
+    padding-inline: 16px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.14)) !important;
+    background-color: rgba(255, 255, 255, 0.16) !important;
+    color: #0f172a !important;
+    border-color: rgba(255, 255, 255, 0.48) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 10px rgba(255, 255, 255, 0.14), 0 10px 28px rgba(20, 20, 20, 0.12) !important;
+    backdrop-filter: blur(24px) saturate(1.4) brightness(1.04) contrast(1.02) !important;
+    -webkit-backdrop-filter: blur(24px) saturate(1.4) brightness(1.04) contrast(1.02) !important;
+  }
+
+  .ag-focus-story button[data-button-variant='ghost'] {
+    min-height: 40px;
+    padding-inline: 16px;
+    background: rgba(255, 255, 255, 0.16) !important;
+    color: #0f172a !important;
+    border-color: rgba(255, 255, 255, 0.24) !important;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 0 0 10px rgba(255, 255, 255, 0.12) !important;
   }
 
   @media (max-width: 640px) {
@@ -120,7 +162,7 @@ const GlassChoice = ({
           width: type === 'radio' ? 8 : 10,
           height: type === 'radio' ? 8 : 10,
           borderRadius: type === 'radio' ? '999px' : 3,
-          background: 'linear-gradient(135deg, #2563eb, #14b8a6)',
+          background: '#26303d',
         }}
       />
     </span>
@@ -151,7 +193,7 @@ const DemoForm = () => (
       />
       
       <div className="glass-flex glass-flex-wrap glass-gap-3">
-        <GlassButton>Primary Button</GlassButton>
+        <GlassButton variant="default">Primary Button</GlassButton>
         <GlassButton variant="secondary">Secondary Button</GlassButton>
         <GlassButton variant="ghost">Ghost Button</GlassButton>
       </div>

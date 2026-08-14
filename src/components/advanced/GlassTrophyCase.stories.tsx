@@ -1,30 +1,39 @@
-import React from "react";
+import type { CSSProperties } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import * as ComponentModule from "./GlassTrophyCase";
-import { type MissingComponentName } from "../../stories/GlassMissingInventoryCertification.stories";
-import { StorybookVisualShowcase } from "./StorybookVisualShowcase";
-
-const componentName = "GlassTrophyCase" satisfies MissingComponentName;
-const Component = (ComponentModule as Record<string, any>)[componentName];
+import { GlassTrophyCase as GlassTrophyCaseComponent } from "./GlassTrophyCase";
 
 const meta = {
-  title: 'Effects + Advanced/Glass Trophy Case',
-  component: Component,
+  title: "Effects + Advanced/Glass Trophy Case",
+  component: GlassTrophyCaseComponent,
   parameters: {
     layout: "fullscreen",
-    previewSurface: "media",
+    previewSurface: "component",
     docs: {
       description: {
         component:
-          "Component-owned Storybook coverage for GlassTrophyCase. This story renders the certified AuraGlass sample used by the full visual certification suite.",
+          "The actual GlassTrophyCase export with its built-in deterministic achievement collection, responsive controls, and optional audio disabled.",
       },
     },
   },
-} satisfies Meta<typeof Component>;
+  tags: ["autodocs"],
+} satisfies Meta<typeof GlassTrophyCaseComponent>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  render: () => <StorybookVisualShowcase name={componentName} kind="advanced" />,
+const stageStyle: CSSProperties = {
+  boxSizing: "border-box",
+  minHeight: "100vh",
+  minWidth: 0,
+  padding: "clamp(20px, 5vw, 64px)",
+  width: "100%",
+};
+
+export const GlassTrophyCase: Story = {
+  name: "GlassTrophyCase",
+  render: () => (
+    <div style={stageStyle}>
+      <GlassTrophyCaseComponent enableSound={false} showProgress />
+    </div>
+  ),
 };

@@ -1,30 +1,53 @@
-import React from "react";
+import type { CSSProperties } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import * as ComponentModule from "./GlassMagneticCursor";
-import { type MissingComponentName } from "../../stories/GlassMissingInventoryCertification.stories";
-import { StorybookVisualShowcase } from "./StorybookVisualShowcase";
+import { GlassMagneticCursor } from "./GlassMagneticCursor";
 
-const componentName = "GlassMagneticCursor" satisfies MissingComponentName;
-const Component = (ComponentModule as Record<string, any>)[componentName];
+const frameStyle: CSSProperties = {
+  minHeight: "100dvh",
+  width: "100%",
+  display: "grid",
+  placeItems: "center",
+  padding: "clamp(20px, 5vw, 64px)",
+  boxSizing: "border-box",
+  background:
+    "radial-gradient(circle at 18% 16%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.08) 32%), linear-gradient(145deg, #f6f6f5, #dfdedb)",
+};
 
-const meta = {
-  title: 'Effects + Advanced/Glass Magnetic Cursor',
-  component: Component,
+const meta: Meta = {
+  title: "Effects + Advanced/Glass Magnetic Cursor",
+  component: GlassMagneticCursor,
   parameters: {
     layout: "fullscreen",
-    previewSurface: "media",
+    previewSurface: "component",
     docs: {
       description: {
         component:
-          "Component-owned Storybook coverage for GlassMagneticCursor. This story renders the certified AuraGlass sample used by the full visual certification suite.",
+          "The real GlassMagneticCursor export in its contained, accessible preview mode.",
       },
     },
   },
-} satisfies Meta<typeof Component>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj;
 
 export const Default: Story = {
-  render: () => <StorybookVisualShowcase name={componentName} kind="advanced" />,
+  render: () => (
+    <main style={frameStyle}>
+      <div style={{ width: "min(440px, calc(100vw - 40px))" }}>
+        <GlassMagneticCursor
+          contained
+          compact
+          variant="glow"
+          color="rgba(255,255,255,0.24)"
+          size={26}
+          maxWidth={440}
+          maxHeight={240}
+          magnetStrength={0.36}
+          magnetRadius={92}
+          aria-label="Contained magnetic cursor material preview"
+        />
+      </div>
+    </main>
+  ),
 };

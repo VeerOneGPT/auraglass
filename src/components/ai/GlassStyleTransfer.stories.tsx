@@ -1,96 +1,96 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { GlassStyleTransfer, type StyleModel } from './GlassStyleTransfer';
+import type { Meta, StoryObj } from "@storybook/react";
+import { GlassStyleTransfer, type StyleModel } from "./GlassStyleTransfer";
 
 const mockStyleModels: StyleModel[] = [
   {
-    id: 'van-gogh',
-    name: 'Van Gogh Starry Night',
-    description: 'Impressionistic swirls and bold brushstrokes',
-    previewUrl: '/styles/van-gogh.jpg',
+    id: "van-gogh",
+    name: "Van Gogh Starry Night",
+    description: "Impressionistic swirls and bold brushstrokes",
+    previewUrl: "/styles/van-gogh.jpg",
     strength: 0.8,
-    category: 'artistic'
+    category: "artistic",
   },
   {
-    id: 'picasso',
-    name: 'Picasso Cubism',
-    description: 'Geometric fragmentation and multiple perspectives',
-    previewUrl: '/styles/picasso.jpg',
+    id: "picasso",
+    name: "Picasso Cubism",
+    description: "Geometric fragmentation and multiple perspectives",
+    previewUrl: "/styles/picasso.jpg",
     strength: 0.7,
-    category: 'artistic'
+    category: "artistic",
   },
   {
-    id: 'monet',
-    name: 'Monet Water Lilies',
-    description: 'Soft impressionistic light and color',
-    previewUrl: '/styles/monet.jpg',
+    id: "monet",
+    name: "Monet Water Lilies",
+    description: "Soft impressionistic light and color",
+    previewUrl: "/styles/monet.jpg",
     strength: 0.6,
-    category: 'artistic'
+    category: "artistic",
   },
   {
-    id: 'film-noir',
-    name: 'Film Noir',
-    description: 'High contrast black and white cinematography',
-    previewUrl: '/styles/film-noir.jpg',
+    id: "film-noir",
+    name: "Film Noir",
+    description: "High contrast black and white cinematography",
+    previewUrl: "/styles/film-noir.jpg",
     strength: 0.9,
-    category: 'photographic'
+    category: "photographic",
   },
   {
-    id: 'synthwave',
-    name: 'Synthwave',
-    description: 'Retro-futuristic neon aesthetics',
-    previewUrl: '/styles/synthwave.jpg',
+    id: "synthwave",
+    name: "Synthwave",
+    description: "Retro-futuristic neon aesthetics",
+    previewUrl: "/styles/synthwave.jpg",
     strength: 0.8,
-    category: 'modern'
+    category: "modern",
   },
   {
-    id: 'kandinsky',
-    name: 'Kandinsky Abstract',
-    description: 'Geometric abstraction with vibrant colors',
-    previewUrl: '/styles/kandinsky.jpg',
+    id: "kandinsky",
+    name: "Kandinsky Abstract",
+    description: "Geometric abstraction with vibrant colors",
+    previewUrl: "/styles/kandinsky.jpg",
     strength: 0.7,
-    category: 'abstract'
-  }
+    category: "abstract",
+  },
 ];
 
 const meta = {
-  title: 'AI + Intelligence/Glass Style Transfer',
+  title: "AI + Intelligence/Glass Style Transfer",
   component: GlassStyleTransfer,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     transferStrength: {
-      control: { type: 'range', min: 0, max: 1, step: 0.1 },
+      control: { type: "range", min: 0, max: 1, step: 0.1 },
     },
     realTimePreview: {
-      control: 'boolean',
+      control: "boolean",
     },
     showProgressIndicator: {
-      control: 'boolean',
+      control: "boolean",
     },
     showStyleLibrary: {
-      control: 'boolean',
+      control: "boolean",
     },
     showAdvancedControls: {
-      control: 'boolean',
+      control: "boolean",
     },
     preserveColors: {
-      control: 'boolean',
+      control: "boolean",
     },
     enhanceDetails: {
-      control: 'boolean',
+      control: "boolean",
     },
     blendMode: {
-      control: { 
-        type: 'select', 
-        options: ['normal', 'multiply', 'screen', 'overlay', 'soft-light'] 
+      control: {
+        type: "select",
+        options: ["normal", "multiply", "screen", "overlay", "soft-light"],
       },
     },
     resolution: {
-      control: { 
-        type: 'select', 
-        options: ['low', 'medium', 'high', 'ultra'] 
+      control: {
+        type: "select",
+        options: ["low", "medium", "high", "ultra"],
       },
     },
   },
@@ -101,24 +101,25 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    compact: true,
     styleModels: mockStyleModels,
-    selectedStyle: 'van-gogh',
+    selectedStyle: "van-gogh",
     transferStrength: 0.7,
     realTimePreview: true,
     showProgressIndicator: true,
-    showStyleLibrary: true,
-    showAdvancedControls: true,
+    showStyleLibrary: false,
+    showAdvancedControls: false,
     preserveColors: false,
     enhanceDetails: true,
-    blendMode: 'normal',
-    resolution: 'medium',
+    blendMode: "normal",
+    resolution: "medium",
   },
 };
 
 export const ArtisticStyles: Story = {
   args: {
-    styleModels: mockStyleModels.filter(s => s.category === 'artistic'),
-    selectedStyle: 'van-gogh',
+    styleModels: mockStyleModels.filter((s) => s.category === "artistic"),
+    selectedStyle: "van-gogh",
     transferStrength: 0.8,
     realTimePreview: true,
     showStyleLibrary: true,
@@ -128,8 +129,8 @@ export const ArtisticStyles: Story = {
 
 export const PhotographicStyles: Story = {
   args: {
-    styleModels: mockStyleModels.filter(s => s.category === 'photographic'),
-    selectedStyle: 'film-noir',
+    styleModels: mockStyleModels.filter((s) => s.category === "photographic"),
+    selectedStyle: "film-noir",
     transferStrength: 0.9,
     realTimePreview: true,
     showStyleLibrary: true,
@@ -140,8 +141,8 @@ export const PhotographicStyles: Story = {
 
 export const AbstractStyles: Story = {
   args: {
-    styleModels: mockStyleModels.filter(s => s.category === 'abstract'),
-    selectedStyle: 'kandinsky',
+    styleModels: mockStyleModels.filter((s) => s.category === "abstract"),
+    selectedStyle: "kandinsky",
     transferStrength: 0.7,
     realTimePreview: true,
     showStyleLibrary: true,
@@ -152,7 +153,7 @@ export const AbstractStyles: Story = {
 export const HighStrengthTransfer: Story = {
   args: {
     styleModels: mockStyleModels,
-    selectedStyle: 'picasso',
+    selectedStyle: "picasso",
     transferStrength: 1.0,
     realTimePreview: true,
     showProgressIndicator: true,
@@ -165,7 +166,7 @@ export const HighStrengthTransfer: Story = {
 export const LowStrengthTransfer: Story = {
   args: {
     styleModels: mockStyleModels,
-    selectedStyle: 'monet',
+    selectedStyle: "monet",
     transferStrength: 0.3,
     realTimePreview: true,
     showProgressIndicator: true,
@@ -178,7 +179,7 @@ export const LowStrengthTransfer: Story = {
 export const ColorPreservation: Story = {
   args: {
     styleModels: mockStyleModels,
-    selectedStyle: 'van-gogh',
+    selectedStyle: "van-gogh",
     transferStrength: 0.6,
     realTimePreview: true,
     preserveColors: true,
@@ -190,9 +191,9 @@ export const ColorPreservation: Story = {
 export const HighResolution: Story = {
   args: {
     styleModels: mockStyleModels,
-    selectedStyle: 'synthwave',
+    selectedStyle: "synthwave",
     transferStrength: 0.8,
-    resolution: 'ultra',
+    resolution: "ultra",
     realTimePreview: false,
     showProgressIndicator: true,
     showAdvancedControls: true,
@@ -202,9 +203,9 @@ export const HighResolution: Story = {
 export const MultiplyBlendMode: Story = {
   args: {
     styleModels: mockStyleModels,
-    selectedStyle: 'film-noir',
+    selectedStyle: "film-noir",
     transferStrength: 0.7,
-    blendMode: 'multiply',
+    blendMode: "multiply",
     realTimePreview: true,
     showAdvancedControls: true,
   },
@@ -213,9 +214,9 @@ export const MultiplyBlendMode: Story = {
 export const OverlayBlendMode: Story = {
   args: {
     styleModels: mockStyleModels,
-    selectedStyle: 'kandinsky',
+    selectedStyle: "kandinsky",
     transferStrength: 0.6,
-    blendMode: 'overlay',
+    blendMode: "overlay",
     realTimePreview: true,
     showAdvancedControls: true,
   },
@@ -224,7 +225,7 @@ export const OverlayBlendMode: Story = {
 export const MinimalInterface: Story = {
   args: {
     styleModels: mockStyleModels,
-    selectedStyle: 'monet',
+    selectedStyle: "monet",
     transferStrength: 0.7,
     showStyleLibrary: false,
     showAdvancedControls: false,
@@ -236,7 +237,7 @@ export const MinimalInterface: Story = {
 export const StyleLibraryOnly: Story = {
   args: {
     styleModels: mockStyleModels,
-    selectedStyle: '',
+    selectedStyle: "",
     transferStrength: 0.7,
     showStyleLibrary: true,
     showAdvancedControls: false,
@@ -248,7 +249,7 @@ export const StyleLibraryOnly: Story = {
 export const AdvancedControlsOnly: Story = {
   args: {
     styleModels: mockStyleModels,
-    selectedStyle: 'van-gogh',
+    selectedStyle: "van-gogh",
     transferStrength: 0.7,
     showStyleLibrary: false,
     showAdvancedControls: true,
@@ -260,7 +261,7 @@ export const AdvancedControlsOnly: Story = {
 export const ProcessingState: Story = {
   args: {
     styleModels: mockStyleModels,
-    selectedStyle: 'picasso',
+    selectedStyle: "picasso",
     transferStrength: 0.8,
     realTimePreview: false,
     showProgressIndicator: true,
@@ -272,20 +273,20 @@ export const ProcessingState: Story = {
 export const DisabledRealTime: Story = {
   args: {
     styleModels: mockStyleModels,
-    selectedStyle: 'van-gogh',
+    selectedStyle: "van-gogh",
     transferStrength: 0.7,
     realTimePreview: false,
     showProgressIndicator: true,
     showStyleLibrary: true,
     showAdvancedControls: true,
-    resolution: 'high',
+    resolution: "high",
   },
 };
 
 export const DetailEnhancement: Story = {
   args: {
     styleModels: mockStyleModels,
-    selectedStyle: 'synthwave',
+    selectedStyle: "synthwave",
     transferStrength: 0.7,
     enhanceDetails: true,
     preserveColors: false,
@@ -297,9 +298,9 @@ export const DetailEnhancement: Story = {
 export const SoftLightBlend: Story = {
   args: {
     styleModels: mockStyleModels,
-    selectedStyle: 'monet',
+    selectedStyle: "monet",
     transferStrength: 0.8,
-    blendMode: 'soft-light',
+    blendMode: "soft-light",
     preserveColors: true,
     enhanceDetails: true,
     showAdvancedControls: true,
@@ -309,9 +310,9 @@ export const SoftLightBlend: Story = {
 export const ScreenBlendMode: Story = {
   args: {
     styleModels: mockStyleModels,
-    selectedStyle: 'kandinsky',
+    selectedStyle: "kandinsky",
     transferStrength: 0.6,
-    blendMode: 'screen',
+    blendMode: "screen",
     realTimePreview: true,
     showAdvancedControls: true,
   },
@@ -320,9 +321,9 @@ export const ScreenBlendMode: Story = {
 export const LowResolutionFast: Story = {
   args: {
     styleModels: mockStyleModels,
-    selectedStyle: 'van-gogh',
+    selectedStyle: "van-gogh",
     transferStrength: 0.7,
-    resolution: 'low',
+    resolution: "low",
     realTimePreview: true,
     showProgressIndicator: true,
     showAdvancedControls: true,
@@ -334,15 +335,15 @@ export const CustomStyleModel: Story = {
     styleModels: [
       ...mockStyleModels,
       {
-        id: 'custom-style',
-        name: 'Custom Neural Style',
-        description: 'User-uploaded style reference',
-        previewUrl: '/styles/custom.jpg',
+        id: "custom-style",
+        name: "Custom Neural Style",
+        description: "User-uploaded style reference",
+        previewUrl: "/styles/custom.jpg",
         strength: 0.8,
-        category: 'modern'
-      }
+        category: "modern",
+      },
     ],
-    selectedStyle: 'custom-style',
+    selectedStyle: "custom-style",
     transferStrength: 0.8,
     showStyleLibrary: true,
     showAdvancedControls: true,

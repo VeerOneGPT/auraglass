@@ -204,7 +204,8 @@ const showcaseStyles = `
   color: #115e59;
   background: rgba(255,255,255,0.58);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.72);
-  backdrop-filter: blur(16px) saturate(1.8);
+  backdrop-filter: blur(24px) saturate(1.8) brightness(1.05) contrast(1.05);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8) brightness(1.05) contrast(1.05);
   font-size: 13px;
   font-weight: 700;
 }
@@ -224,7 +225,8 @@ const showcaseStyles = `
   box-shadow:
     0 24px 70px rgba(15, 23, 42, 0.14),
     inset 0 1px 0 rgba(255,255,255,0.76);
-  backdrop-filter: blur(24px) saturate(1.8);
+  backdrop-filter: blur(24px) saturate(1.8) brightness(1.05) contrast(1.05);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8) brightness(1.05) contrast(1.05);
 }
 .ag-story-scene {
   position: relative;

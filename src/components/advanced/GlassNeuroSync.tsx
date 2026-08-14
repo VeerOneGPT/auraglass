@@ -818,15 +818,28 @@ export function GlassNeuroSyncProvider({
   onMetricsUpdate,
   onAdaptationChange,
   autoConnect = false,
+  initialMetrics,
 }: {
   children: React.ReactNode;
   onMetricsUpdate?: (metrics: NeuroMetrics) => void;
   onAdaptationChange?: (adaptation: NeuroAdaptation | null) => void;
   autoConnect?: boolean;
+  /** Deterministic seed for previews, tests, or persisted device sessions. */
+  initialMetrics?: Partial<NeuroMetrics>;
 }) {
   const prefersReducedMotion = useReducedMotion();
   const systemRef = useRef<NeuroSyncSystem>();
-  const [metrics, setMetrics] = useState<NeuroMetrics>({} as NeuroMetrics);
+  const [metrics, setMetrics] = useState<NeuroMetrics>(() => ({
+    attention: 0,
+    relaxation: 0,
+    meditation: 0,
+    engagement: 0,
+    cognitiveLoad: 0,
+    fatigue: 0,
+    stress: 0,
+    flow: 0,
+    ...initialMetrics,
+  }));
   const [adaptation, setAdaptation] = useState<NeuroAdaptation | null>(null);
   const [isConnected, setIsConnected] = useState(false);
   const [deviceInfo, setDeviceInfo] = useState<{
@@ -924,69 +937,83 @@ export function useNeuroSync() {
 export function GlassNeuroMetricsDashboard({
   className,
   showBrainwaves = true,
+  contained = false,
+  defaultOpen = false,
 }: {
   className?: string;
   showBrainwaves?: boolean;
+  /** Render as a bounded in-flow panel instead of an app-corner HUD. */
+  contained?: boolean;
+  /** Open the dashboard on first render. */
+  defaultOpen?: boolean;
 }) {
   const prefersReducedMotion = useReducedMotion();
   const { metrics, adaptation, isConnected, deviceInfo } = useNeuroSync();
-  const [showDashboard, setShowDashboard] = useState(false);
+  const [showDashboard, setShowDashboard] = useState(defaultOpen || contained);
 
   const metricsArray = Object.entries(metrics).map(([name, value]) => ({
     name: name.charAt(0).toUpperCase() + name.slice(1),
     value: value || 0,
-    color:
-      {
-        attention: "hsl(var(--glass-color-primary))",
-        relaxation: "hsl(var(--glass-color-success))",
-        meditation: "#8b5cf6",
-        engagement: "hsl(var(--glass-color-warning))",
-        cognitiveLoad: "hsl(var(--glass-color-danger))",
-        fatigue: "var(--glass-gray-500)",
-        stress: "var(--glass-color-danger-dark)",
-        flow: "#06b6d4",
-      }[name] || "var(--glass-gray-500)",
+    color: "rgba(15, 23, 42, 0.72)",
   }));
 
   return (
     <div
       className={cn(
-        "glass-fixed glass-bottom-4 glass-left-4 glass-z-50",
+        contained
+          ? "glass-relative glass-w-full"
+          : "glass-fixed glass-bottom-4 glass-left-4 glass-z-50",
         className
       )}
+      style={contained ? { position: "relative", width: "100%" } : undefined}
     >
-      <motion.button
-        className={cn(
-          "w-14 glass-h-14 glass-radius-full glass-surface-primary glass-elev-4",
-          "flex items-center justify-center glass-text-primary",
-          "transition-all glass-hover-scale-105",
-          { transitionDuration: "var(--glass-motion-duration-normal)" },
-          isConnected ? "animate-pulse" : ""
-        )}
-        onClick={() => setShowDashboard(!showDashboard)}
-        whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
-        whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
-        transition={{ duration: ANIMATION.DURATION.fast / 1000 }}
-        aria-label="Toggle NeuroSync dashboard"
-        aria-expanded={showDashboard}
-      >
-        🧠
-        <div
+      {!contained && (
+        <motion.button
           className={cn(
-            "glass-absolute glass--top-1 glass-right-1 glass-w-4 glass-h-4 glass-radius-full",
-            isConnected ? "glass-surface-success" : "glass-surface-danger"
+            "glass-w-14 glass-h-14 glass-radius-full glass-surface-primary glass-elev-4",
+            "glass-flex glass-items-center glass-justify-center glass-text-primary",
+            "glass-transition glass-hover-scale-105",
+            { transitionDuration: "var(--glass-motion-duration-normal)" },
+            isConnected ? "animate-pulse" : ""
           )}
-          style={{ opacity: 0.8 }}
-        />
-      </motion.button>
+          onClick={() => setShowDashboard(!showDashboard)}
+          whileHover={prefersReducedMotion ? {} : { scale: 1.05 }}
+          whileTap={prefersReducedMotion ? {} : { scale: 0.95 }}
+          transition={{ duration: ANIMATION.DURATION.fast / 1000 }}
+          aria-label="Toggle NeuroSync dashboard"
+          aria-expanded={showDashboard}
+        >
+          🧠
+          <div
+            className={cn(
+              "glass-absolute glass--top-1 glass-right-1 glass-w-4 glass-h-4 glass-radius-full",
+              isConnected ? "glass-surface-success" : "glass-surface-subtle"
+            )}
+            style={{ opacity: 0.8 }}
+          />
+        </motion.button>
+      )}
 
       <AnimatePresence>
         {showDashboard && (
           <motion.div
             className={cn(
-              "absolute bottom-16 left-0 w-96 glass-max-h-80vh overflow-y-auto",
-              "glass-surface-primary glass-elev-5 glass-radius-lg glass-p-6 glass-gap-4"
+              "glass-surface-primary glass-elev-5 glass-radius-lg glass-p-6 glass-gap-4",
+              contained
+                ? "glass-relative glass-w-full glass-overflow-y-auto"
+                : "glass-absolute glass-bottom-16 glass-left-0 glass-w-96 glass-max-h-80vh glass-overflow-y-auto"
             )}
+            style={
+              contained
+                ? {
+                    position: "relative",
+                    width: "100%",
+                    maxHeight: "min(680px, calc(100vh - 48px))",
+                    overflowY: "auto",
+                    boxSizing: "border-box",
+                  }
+                : undefined
+            }
             initial={{ opacity: 0, y: 10, scale: 0.95 }}
             animate={prefersReducedMotion ? {} : { opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
@@ -1003,13 +1030,15 @@ export function GlassNeuroMetricsDashboard({
                 <h3 className="glass-text-lg glass-font-semibold glass-text-primary">
                   NeuroSync Dashboard
                 </h3>
-                <button
-                  onClick={() => setShowDashboard(false)}
-                  className="glass-text-sm glass-text-secondary hover:glass-text-primary glass-focus glass-touch-target"
-                  aria-label="Close NeuroSync dashboard"
-                >
-                  ✕
-                </button>
+                {!contained && (
+                  <button
+                    onClick={() => setShowDashboard(false)}
+                    className="glass-text-sm glass-text-secondary hover:glass-text-primary glass-focus glass-touch-target"
+                    aria-label="Close NeuroSync dashboard"
+                  >
+                    ✕
+                  </button>
+                )}
               </div>
 
               {/* Device Status */}
@@ -1026,9 +1055,7 @@ export function GlassNeuroMetricsDashboard({
                       <div
                         className={cn(
                           "glass-w-2 glass-h-2 glass-radius-full",
-                          isConnected
-                            ? "glass-surface-success"
-                            : "glass-surface-danger"
+                          "glass-surface-subtle"
                         )}
                       />
                       <span className="glass-text-xs glass-text-secondary">
@@ -1146,16 +1173,23 @@ export function GlassNeuroFeedback({
         {type}
       </div>
       <div className="glass-flex-1 glass-relative">
-        <div className="glass-w-full glass-h-4 glass-surface-subtle glass-radius-full glass-overflow-hidden">
+        <div
+          className="glass-w-full glass-h-4 glass-radius-full glass-overflow-hidden"
+          style={{
+            background: "rgba(15, 23, 42, 0.1)",
+            border: "1px solid rgba(15, 23, 42, 0.12)",
+            boxSizing: "border-box",
+          }}
+        >
           <motion.div
             className="glass-h-full glass-radius-full"
             ref={(el) => {
               if (!el) return;
               el.style.backgroundColor = isOnTarget
-                ? "hsl(var(--glass-color-success))"
+                ? "rgba(15, 23, 42, 0.82)"
                 : difference > 0
-                  ? "hsl(var(--glass-color-primary))"
-                  : "hsl(var(--glass-color-warning))";
+                  ? "rgba(15, 23, 42, 0.74)"
+                  : "rgba(15, 23, 42, 0.62)";
             }}
             animate={{ width: `${currentValue * 100}%` }}
             transition={

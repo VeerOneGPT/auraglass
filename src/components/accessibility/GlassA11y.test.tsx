@@ -79,6 +79,33 @@ describe("GlassA11y", () => {
     const root = screen.getByTestId("glassa11y");
     expect(root).toHaveStyle({ maxHeight: "220px", maxWidth: "320px" });
     expect(container.querySelector(".glass-top-11")).toBeInTheDocument();
+    expect(
+      container.querySelector('[data-glass-a11y-placement="popover"]')
+    ).toBeInTheDocument();
+  });
+
+  it("keeps the open panel in document flow for relative mode", () => {
+    render(
+      <GlassA11y
+        position="relative"
+        defaultOpen
+        data-testid="glassa11y-relative"
+      />
+    );
+
+    const panel = document.querySelector<HTMLElement>(
+      '[data-glass-a11y-panel][data-glass-a11y-placement="flow"]'
+    );
+    expect(panel).toBeInTheDocument();
+    expect(panel).toHaveStyle({
+      position: "relative",
+      top: "auto",
+      marginLeft: "auto",
+    });
+    expect(panel).toHaveClass("glass-mt-3", "glass-flex", "glass-flex-col");
+    expect(
+      panel?.querySelector("[data-glass-a11y-scroll-region]")
+    ).toHaveStyle({ minHeight: 0 });
   });
 
   /**
