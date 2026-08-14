@@ -6,21 +6,19 @@
   height: 100%;
   padding: var(--aura-space-4);
   border-radius: var(--aura-radius-2xl);
-  background: color-mix(
-    in srgb,
-    var(--aura-color-glass-surface) 92%,
-    transparent
-  );
+  background: var(--glass-neutral-level2-surface);
   border: 1px solid
     color-mix(in srgb, var(--aura-color-global-border-soft) 80%, transparent);
-  color: var(--aura-color-global-text-primary);
+  color: rgba(var(--glass-color-black) / var(--glass-opacity-95));
   backdrop-filter: var(
     --glass-data-chart-backdrop-filter,
     blur(var(--aura-glass-neutral-level2-backdrop-blur))
+      var(--glass-filter-base)
   );
   -webkit-backdrop-filter: var(
     --glass-data-chart-backdrop-filter,
     blur(var(--aura-glass-neutral-level2-backdrop-blur))
+      var(--glass-filter-base)
   );
   box-shadow: var(
     --glass-elev-chart-data-container,
@@ -46,18 +44,14 @@
   margin: 0;
   font-size: var(--aura-font-size-xl);
   font-weight: var(--aura-font-weight-semibold);
-  color: var(--aura-color-global-text-primary);
+  color: rgba(var(--glass-color-black) / var(--glass-opacity-95));
   overflow-wrap: anywhere;
 }
 
 .subtitle {
   margin: 0;
   font-size: var(--aura-font-size-sm);
-  color: color-mix(
-    in srgb,
-    var(--aura-color-global-text-secondary) 80%,
-    transparent
-  );
+  color: rgba(var(--glass-color-black) / var(--glass-opacity-75));
   overflow-wrap: anywhere;
 }
 
@@ -94,13 +88,12 @@
 }
 
 .legendGlass {
-  backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur));
-  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur));
-  background: color-mix(
-    in srgb,
-    var(--aura-color-glass-overlay) 65%,
-    transparent
-  );
+  backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur))
+    var(--glass-filter-base);
+  background: var(--glass-neutral-level2-surface);
+  border: 1px solid var(--glass-border-default);
   border-radius: var(--aura-radius-xl);
 }
 
@@ -135,11 +128,7 @@
 .legendLabel {
   font-size: var(--aura-font-size-sm);
   font-weight: var(--aura-font-weight-medium);
-  color: color-mix(
-    in srgb,
-    var(--aura-color-global-text-secondary) 85%,
-    transparent
-  );
+  color: rgba(var(--glass-color-black) / var(--glass-opacity-75));
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -156,13 +145,11 @@
     --glass-elev-chart-tooltip,
     0 20px 48px rgba(15, 23, 42, 0.32)
   );
-  backdrop-filter: blur(var(--aura-glass-neutral-level3-backdrop-blur));
-  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level3-backdrop-blur));
-  background: color-mix(
-    in srgb,
-    var(--aura-color-glass-overlay) 90%,
-    var(--glass-chart-tooltip-base, rgba(8, 16, 32, 0.72))
-  );
+  backdrop-filter: blur(var(--aura-glass-neutral-level3-backdrop-blur))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level3-backdrop-blur))
+    var(--glass-filter-base);
+  background: var(--glass-neutral-level3-surface);
   border: 1px solid
     color-mix(in srgb, var(--aura-color-global-border-soft) 70%, transparent);
   color: var(--aura-color-global-text-inverse);

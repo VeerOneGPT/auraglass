@@ -10,17 +10,18 @@ exports[`GlassPageBuilder matches snapshot 1`] = `
     data-glass-component="true"
   >
     <div
-      class="h-screen flex flex-col overflow-auto glass-surface-subtle"
+      class="h-screen flex flex-col glass-overflow-auto glass-surface-subtle"
     >
       <div
-        class="glass-flex glass-items-center glass-justify-between glass-p-4 glass-surface-subtle glass-border-b glass-border-subtle"
+        class="glass-flex glass-items-center glass-justify-between glass-flex-wrap glass-p-4 glass-surface-subtle glass-border-b glass-border-subtle"
         data-glass-component="true"
+        style="row-gap: 8px;"
       >
         <div
-          class="glass-flex glass-items-center glass-gap-4"
+          class="glass-flex glass-items-center glass-gap-4 glass-flex-wrap"
         >
           <div
-            class="glass-flex glass-items-center glass-gap-2"
+            class="glass-flex glass-items-center glass-gap-2 glass-flex-wrap"
           >
             <h1
               class="glass-text-xl glass-font-bold glass-text-secondary"
@@ -37,7 +38,7 @@ exports[`GlassPageBuilder matches snapshot 1`] = `
             class="glass-w-px glass-h-6 glass-surface-subtle"
           />
           <div
-            class="glass-flex glass-items-center glass-gap-2"
+            class="glass-flex glass-items-center glass-gap-2 glass-flex-wrap"
           >
             <button
               class="glass-flex glass-items-center glass-gap-2 glass-px-3 glass-py-2 glass-text-sm glass-text-secondary hover:glass-surface-subtle glass-radius-md glass-transition-colors glass-focus glass-touch-target glass-contrast-guard glass-focus glass-touch-target glass-contrast-guard"
@@ -68,7 +69,7 @@ exports[`GlassPageBuilder matches snapshot 1`] = `
             class="glass-w-px glass-h-6 glass-surface-subtle"
           />
           <div
-            class="glass-flex glass-items-center glass-gap-1"
+            class="glass-flex glass-items-center glass-gap-1 glass-flex-wrap"
           >
             <button
               class="p-2 rounded-md transition-colors glass-text-disabled cursor-not-allowed"
@@ -87,7 +88,7 @@ exports[`GlassPageBuilder matches snapshot 1`] = `
           </div>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-2 glass-surface-subtle glass-radius-lg glass-p-1"
+          class="glass-flex glass-items-center glass-gap-2 glass-surface-subtle glass-radius-lg glass-p-1 glass-flex-wrap"
         >
           <button
             class="flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors bg-white/15 glass-text-primary shadow-sm"
@@ -118,13 +119,13 @@ exports[`GlassPageBuilder matches snapshot 1`] = `
           </button>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-4"
+          class="glass-flex glass-items-center glass-gap-4 glass-flex-wrap"
         >
           <div
-            class="glass-flex glass-items-center glass-gap-2"
+            class="glass-flex glass-items-center glass-gap-2 glass-flex-wrap"
           >
             <button
-              class="flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors glass-text-secondary hover:bg-white/10"
+              class="flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors glass-text-secondary hover:glass-surface-subtle"
             >
               <span>
                 ⊞
@@ -132,7 +133,7 @@ exports[`GlassPageBuilder matches snapshot 1`] = `
               Grid
             </button>
             <button
-              class="flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors bg-blue-500/20 text-blue-200"
+              class="flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors glass-cms-control-frost glass-text-primary glass-shadow-sm"
             >
               <span>
                 🧲
@@ -144,10 +145,10 @@ exports[`GlassPageBuilder matches snapshot 1`] = `
             class="glass-w-px glass-h-6 glass-surface-subtle"
           />
           <div
-            class="glass-flex glass-items-center glass-gap-2"
+            class="glass-flex glass-items-center glass-gap-2 glass-flex-wrap"
           >
             <button
-              class="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors bg-white/10 glass-text-secondary hover:bg-white/15"
+              class="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors glass-cms-control-frost glass-text-secondary hover:glass-text-primary"
             >
               <span>
                 ✏️
@@ -155,7 +156,7 @@ exports[`GlassPageBuilder matches snapshot 1`] = `
               Preview
             </button>
             <button
-              class="glass-flex glass-items-center glass-gap-2 glass-px-4 glass-py-2 glass-text-sm glass-font-medium glass-surface-blue glass-text-primary hover:glass-surface-blue glass-radius-md glass-transition-colors"
+              class="glass-flex glass-items-center glass-gap-2 glass-px-4 glass-py-2 glass-text-sm glass-font-medium glass-cms-control-frost glass-text-primary glass-shadow-sm glass-radius-md glass-transition-colors"
             >
               <span>
                 🚀
@@ -173,9 +174,10 @@ exports[`GlassPageBuilder matches snapshot 1`] = `
         >
           <div
             class="glass-w-12 glass-surface-subtle glass-border-r glass-border-subtle glass-flex glass-flex-col"
+            style="gap: 8px; padding-block: 8px;"
           >
             <button
-              class="flex flex-col items-center gap-1 p-3 text-xs transition-colors bg-blue-500/20 text-blue-200"
+              class="flex flex-col items-center gap-1 p-3 text-xs transition-colors glass-cms-control-frost glass-text-primary glass-shadow-sm"
               title="Components"
             >
               <span
@@ -186,7 +188,7 @@ exports[`GlassPageBuilder matches snapshot 1`] = `
               Comp
             </button>
             <button
-              class="flex flex-col items-center gap-1 p-3 text-xs transition-colors glass-text-secondary hover:bg-white/10"
+              class="flex flex-col items-center gap-1 p-3 text-xs transition-colors glass-text-secondary hover:glass-surface-subtle"
               title="Structure"
             >
               <span
@@ -207,7 +209,7 @@ exports[`GlassPageBuilder matches snapshot 1`] = `
             >
               <div
                 class="glass-foundation-basic glass-h-full glass-flex glass-flex-col glass-contrast-guard"
-                style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+                style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
               >
                 <div
                   class="glass-flex glass-items-center glass-justify-between glass-p-4 glass-border-b glass-border-subtle"
@@ -597,12 +599,12 @@ exports[`GlassPageBuilder matches snapshot 1`] = `
         </div>
         <div
           aria-label="Page canvas for drag and drop editing"
-          class="flex-1 h-full flex flex-col overflow-hidden"
+          class="flex-1 h-full flex flex-col overflow-hidden min-w-0"
           role="main"
         >
           <div
             class="glass-foundation-basic glass-flex-1 glass-flex glass-flex-col glass-contrast-guard"
-            style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+            style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
           >
             <div
               class="glass-flex glass-items-center glass-justify-between glass-p-4 glass-border-b glass-border-subtle"
@@ -632,7 +634,7 @@ exports[`GlassPageBuilder matches snapshot 1`] = `
             </div>
             <div
               class="glass-flex-1 glass-overflow-auto glass-p-6 glass-surface-subtle glass-contrast-guard"
-              style="background-image: none; background-size: auto;"
+              style="background-color: rgba(255, 255, 255, 0.18); background-image: none; background-size: auto;"
             >
               <div
                 class="glass-mx-auto glass-surface-subtle glass-min-glass-h-full glass-shadow-sm glass-transition-all glass-duration-[300ms] glass-contrast-guard"
@@ -690,7 +692,7 @@ exports[`GlassPageBuilder matches snapshot 1`] = `
           >
             <div
               class="glass-foundation-basic glass-h-full glass-flex glass-flex-col glass-contrast-guard"
-              style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+              style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
             >
               <div
                 class="glass-flex glass-items-center glass-justify-between glass-p-4 glass-border-b glass-border-subtle"

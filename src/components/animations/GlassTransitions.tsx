@@ -358,11 +358,15 @@ export function SwipeableGlassCards({
           dragElastic={0.3}
           onDragEnd={(_, info) => handleDragEnd(info)}
           className={cn(
-            "glass-foundation-complete glass-surface-primary glass-border glass-border-primary glass-radius-xl glass-p-6 glass-cursor-grab active:glass-cursor-grabbing"
+            "glass-foundation-complete glass-on-light glass-surface-primary glass-border glass-border-subtle glass-radius-xl glass-p-6 glass-cursor-grab active:glass-cursor-grabbing"
           )}
           style={{
+            ...neutralLightTextContract,
             background:
-              cards[currentIndex].background || "var(--glass-bg-default)",
+              cards[currentIndex].background || "var(--glass-gradient-neutral)",
+            color: "var(--glass-text-primary)",
+            boxShadow:
+              "0 18px 42px -28px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.28)",
           }}
         >
           {cards[currentIndex].content}
@@ -381,13 +385,35 @@ export function SwipeableGlassCards({
               setCurrentIndex(index);
             }}
             className={cn(
-              "glass-w-2 glass-h-2 glass-radius-full glass-transition-all glass-duration-300 glass-focus glass-touch-target glass-contrast-guard",
-              index === currentIndex
-                ? "glass-surface-white glass-scale-125"
-                : "glass-surface-muted hover:glass-surface-secondary"
+              "glass-radius-full glass-transition-all glass-duration-300 glass-focus glass-contrast-guard"
             )}
+            style={{
+              display: "grid",
+              placeItems: "center",
+              width: 44,
+              height: 44,
+              padding: 0,
+              border: 0,
+              background: "transparent",
+            }}
             aria-label={`Go to slide ${index + 1}${index === currentIndex ? " (current)" : ""}`}
-          />
+          >
+            <span
+              aria-hidden="true"
+              style={{
+                display: "block",
+                width: index === currentIndex ? 10 : 8,
+                height: index === currentIndex ? 10 : 8,
+                borderRadius: "999px",
+                background:
+                  index === currentIndex
+                    ? "rgba(var(--glass-color-black) / var(--glass-opacity-52))"
+                    : "rgba(var(--glass-color-black) / var(--glass-opacity-20))",
+                boxShadow:
+                  "inset 0 1px 0 rgba(var(--glass-color-white) / var(--glass-opacity-60))",
+              }}
+            />
+          </button>
         ))}
       </div>
     </div>
@@ -576,7 +602,7 @@ export function GlassModal({
             variant={variant}
             className={cn(
               "glass-relative glass-max-w-lg glass-w-full glass-max-h-90vh glass-overflow-auto",
-              "glass-foundation-complete glass-surface-primary glass-border glass-border-primary glass-radius-xl",
+              "glass-foundation-complete glass-surface-primary glass-border glass-border-subtle glass-radius-xl",
               className
             )}
           >
@@ -698,13 +724,22 @@ interface GlassTransitionsProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
 }
 
+const neutralLightTextContract = {
+  "--glass-theme-text": "rgba(0, 0, 0, 0.9)",
+  "--glass-theme-text-secondary": "rgba(0, 0, 0, 0.7)",
+  "--glass-theme-text-tertiary": "rgba(0, 0, 0, 0.68)",
+  "--glass-text-primary": "rgba(0, 0, 0, 0.9)",
+  "--glass-text-secondary": "rgba(0, 0, 0, 0.7)",
+  "--glass-text-tertiary": "rgba(0, 0, 0, 0.68)",
+} as React.CSSProperties;
+
 const demoCards = [
   {
     id: "insight",
     content: (
       <ContrastGuard>
         <div>
-          <p className="glass-text-xs glass-text-tertiary glass-uppercase glass-tracking-wide">
+          <p className="glass-transitions-tertiary glass-text-xs glass-text-tertiary glass-uppercase glass-tracking-wide">
             Insight
           </p>
           <h3 className="glass-text-xl glass-text-primary glass-font-semibold">
@@ -722,7 +757,7 @@ const demoCards = [
     content: (
       <ContrastGuard>
         <div>
-          <p className="glass-text-xs glass-text-tertiary glass-uppercase glass-tracking-wide">
+          <p className="glass-transitions-tertiary glass-text-xs glass-text-tertiary glass-uppercase glass-tracking-wide">
             Motion
           </p>
           <h3 className="glass-text-xl glass-text-primary glass-font-semibold">
@@ -740,7 +775,7 @@ const demoCards = [
     content: (
       <ContrastGuard>
         <div>
-          <p className="glass-text-xs glass-text-tertiary glass-uppercase glass-tracking-wide">
+          <p className="glass-transitions-tertiary glass-text-xs glass-text-tertiary glass-uppercase glass-tracking-wide">
             Layers
           </p>
           <h3 className="glass-text-xl glass-text-primary glass-font-semibold">
@@ -759,6 +794,7 @@ const GlassTransitionsComponent: React.FC<GlassTransitionsProps> = ({
   variant = "liquid",
   className,
   children,
+  style,
   ...rest
 }) => {
   const [panelIndex, setPanelIndex] = useState(0);
@@ -781,18 +817,41 @@ const GlassTransitionsComponent: React.FC<GlassTransitionsProps> = ({
 
   return (
     <div
-      className={cn("glass-transitions-demo glass-space-y-6", className)}
+      className={cn(
+        "glass-transitions-demo glass-on-light glass-space-y-6",
+        className
+      )}
+      data-bg="light"
+      style={{
+        ...neutralLightTextContract,
+        width: "100%",
+        minWidth: 0,
+        color: "var(--glass-text-primary)",
+        ...style,
+      }}
       {...rest}
     >
+      <style>{`
+        .glass-transitions-demo .glass-transitions-tertiary {
+          color: rgba(0, 0, 0, 0.68) !important;
+        }
+      `}</style>
       {children ?? (
         <>
           <GlassPageTransition variant={variant}>
             <motion.div
               key={panels[panelIndex].id}
-              className="glass-surface-primary glass-radius-3xl glass-p-8 glass-border glass-border-white/10"
+              className="glass-foundation-complete glass-on-light glass-surface-primary glass-radius-3xl glass-p-8 glass-border glass-border-subtle"
+              style={{
+                minWidth: 0,
+                background: "var(--glass-gradient-neutral)",
+                color: "var(--glass-text-primary)",
+                boxShadow:
+                  "0 18px 42px -28px rgba(0, 0, 0, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.28)",
+              }}
             >
               <ContrastGuard>
-                <p className="glass-text-xs glass-text-tertiary glass-uppercase glass-tracking-wide glass-mb-2">
+                <p className="glass-transitions-tertiary glass-text-xs glass-text-tertiary glass-uppercase glass-tracking-wide glass-mb-2">
                   {panels[panelIndex].title}
                 </p>
                 <h2 className="glass-text-2xl glass-text-primary glass-font-semibold">
@@ -801,7 +860,14 @@ const GlassTransitionsComponent: React.FC<GlassTransitionsProps> = ({
                 <button
                   type="button"
                   onClick={nextPanel}
-                  className="glass-mt-6 glass-text-sm glass-text-secondary glass-focus glass-touch-target"
+                  className="glass-mt-6 glass-text-sm glass-text-primary glass-focus glass-touch-target glass-radius-full glass-border glass-border-subtle"
+                  style={{
+                    padding: "0.65rem 1rem",
+                    background:
+                      "rgba(var(--glass-color-white) / var(--glass-opacity-24))",
+                    boxShadow:
+                      "inset 0 1px 0 rgba(var(--glass-color-white) / var(--glass-opacity-72))",
+                  }}
                   aria-label="Cycle to next transition panel"
                 >
                   Cycle transition

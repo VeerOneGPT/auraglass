@@ -16,7 +16,7 @@ const meta = {
   decorators: [
     (Story) => (
       <ImageProcessingProvider>
-        <div style={{ minHeight: '600px', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', padding: '2rem' }}>
+        <div style={{ minHeight: '600px', background: 'linear-gradient(145deg, #ffffff 0%, #eef1f5 100%)', padding: '2rem' }}>
           <Story />
         </div>
       </ImageProcessingProvider>
@@ -45,4 +45,3 @@ export const BasicUploader: Story = {
     },
   },
 };
-

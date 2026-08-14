@@ -7,27 +7,28 @@ exports[`GlassDiffViewer matches snapshot 1`] = `
 >
   <div
     class="optimized-glass-surface glass-neutral-level1 glass-tier-high glass-radius-lg glass-border glass-border-white/15 glass-overflow-hidden"
-    style="background-color: rgba(15, 23, 42, 0.2); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; box-shadow: 0px 4px 24px 0px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.18), inset 0 0 8px rgba(255,255,255,0.10); transition: all 200ms ease-out; position: relative; transform: translateZ(0); padding: 0.5rem;"
+    style="background: rgba(255, 255, 255, 0.24); background-color: rgba(255, 255, 255, 0.1); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255, 255, 255, 0.68); border-radius: 8px; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.30), inset 0 0 16px rgba(255, 255, 255, 0.14); color: rgba(15, 23, 42, 0.92); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64); padding: 0.5rem; min-width: 0;"
   >
     <table
       aria-label="Code diff"
       role="table"
-      style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 0.78rem; line-height: 1.5;"
+      style="width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 0.78rem; line-height: 1.5; color: rgba(15, 23, 42, 0.92);"
     >
       <tbody>
         <tr
           aria-label="Removed line"
           data-diff-kind="removed"
+          style="background: rgba(15, 23, 42, 0.055); box-shadow: inset 3px 0 0 rgba(15, 23, 42, 0.72);"
         >
           <td
             aria-hidden="true"
-            style="width: 26px; padding: 2px 6px; text-align: center; user-select: none;"
+            style="width: 26px; padding: 2px 6px; text-align: center; color: rgba(15, 23, 42, 0.72); user-select: none;"
           >
             -
           </td>
           <td
             aria-hidden="true"
-            style="width: 56px; padding: 2px 6px; user-select: none; white-space: nowrap;"
+            style="width: 56px; padding: 2px 6px; color: rgba(15, 23, 42, 0.62); user-select: none; white-space: nowrap;"
           >
             1
              
@@ -47,16 +48,17 @@ exports[`GlassDiffViewer matches snapshot 1`] = `
         <tr
           aria-label="Added line"
           data-diff-kind="added"
+          style="background: rgba(255, 255, 255, 0.22); box-shadow: inset 3px 0 0 rgba(15, 23, 42, 0.48);"
         >
           <td
             aria-hidden="true"
-            style="width: 26px; padding: 2px 6px; text-align: center; user-select: none;"
+            style="width: 26px; padding: 2px 6px; text-align: center; color: rgba(15, 23, 42, 0.72); user-select: none;"
           >
             +
           </td>
           <td
             aria-hidden="true"
-            style="width: 56px; padding: 2px 6px; user-select: none; white-space: nowrap;"
+            style="width: 56px; padding: 2px 6px; color: rgba(15, 23, 42, 0.62); user-select: none; white-space: nowrap;"
           >
              
             1

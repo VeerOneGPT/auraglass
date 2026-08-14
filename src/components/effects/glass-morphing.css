@@ -28,13 +28,14 @@
   border-radius: inherit;
 }
 
-/* Base layer — token-friendly gradient using CSS vars */
+/* Base layer — neutral white refraction. Environmental values adjust the
+   intensity and movement without tinting the material itself. */
 .glass-layer.glass-base {
   background: linear-gradient(
     45deg,
-    hsl(var(--gm-hue) 70% 80% / calc(var(--gm-opacity) * 0.1)),
-    hsl(calc(var(--gm-hue) + 60) 60% 75% / calc(var(--gm-opacity) * 0.1)),
-    hsl(calc(var(--gm-hue) + 120) 80% 85% / calc(var(--gm-iridescence) * 0.3))
+    rgba(255 255 255 / calc(var(--gm-opacity) * 0.1)),
+    rgba(255 255 255 / calc(var(--gm-reflection) * 0.16)),
+    rgba(255 255 255 / calc(var(--gm-iridescence) * 0.18))
   );
 }
 
@@ -69,14 +70,16 @@
   );
 }
 
-/* Chromatic aberration layer */
+/* Edge separation remains spatial, but uses neutral luminance rather than
+   pink/cyan chromatic aberration. */
 .glass-layer.glass-chromatic {
   background: linear-gradient(
     90deg,
-    hsl(calc(var(--gm-hue) - 40) 80% 70% / calc(var(--gm-chromatic) * 0.15)),
-    hsl(calc(var(--gm-hue) + 40) 80% 70% / calc(var(--gm-chromatic) * 0.15))
+    rgba(255 255 255 / calc(var(--gm-chromatic) * 0.1)),
+    transparent 46%,
+    rgba(255 255 255 / calc(var(--gm-chromatic) * 0.14))
   );
-  mix-blend-mode: multiply;
+  mix-blend-mode: screen;
 }
 
 /* Crystalline shapes — polygon with CSS math */

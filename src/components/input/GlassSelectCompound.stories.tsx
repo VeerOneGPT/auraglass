@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import GlassSelectCompound from "./GlassSelectCompound";
 
 const meta: Meta<typeof GlassSelectCompound> = {
-  title: 'Controls/Inputs/Glass Select Compound',
+  title: "Controls/Inputs/Glass Select Compound",
   component: GlassSelectCompound,
   parameters: {
     layout: "centered",
@@ -24,26 +24,35 @@ const SelectFrame = () => (
     <label className="glass-mb-2 glass-block glass-text-sm glass-font-medium glass-text-primary">
       Deployment region
     </label>
-    <GlassSelectCompound defaultValue="iad">
+    <GlassSelectCompound defaultValue="iad" defaultOpen>
       <GlassSelectCompound.Trigger>
         <GlassSelectCompound.Value placeholder="Choose a region" />
       </GlassSelectCompound.Trigger>
       <GlassSelectCompound.Content sideOffset={8}>
         <GlassSelectCompound.Group>
           <GlassSelectCompound.Label>North America</GlassSelectCompound.Label>
-          <GlassSelectCompound.Item value="iad">US East - Virginia</GlassSelectCompound.Item>
-          <GlassSelectCompound.Item value="sfo">US West - San Francisco</GlassSelectCompound.Item>
+          <GlassSelectCompound.Item value="iad">
+            US East - Virginia
+          </GlassSelectCompound.Item>
+          <GlassSelectCompound.Item value="sfo">
+            US West - San Francisco
+          </GlassSelectCompound.Item>
         </GlassSelectCompound.Group>
         <GlassSelectCompound.Separator />
         <GlassSelectCompound.Group>
           <GlassSelectCompound.Label>Europe</GlassSelectCompound.Label>
-          <GlassSelectCompound.Item value="dub">Europe - Dublin</GlassSelectCompound.Item>
-          <GlassSelectCompound.Item value="fra">Europe - Frankfurt</GlassSelectCompound.Item>
+          <GlassSelectCompound.Item value="dub">
+            Europe - Dublin
+          </GlassSelectCompound.Item>
+          <GlassSelectCompound.Item value="fra">
+            Europe - Frankfurt
+          </GlassSelectCompound.Item>
         </GlassSelectCompound.Group>
       </GlassSelectCompound.Content>
     </GlassSelectCompound>
     <p className="glass-mt-3 glass-text-sm glass-text-secondary">
-      Portal content is offset from the trigger so it is readable and not clipped by the story frame.
+      Portal content is offset from the trigger so it is readable and not
+      clipped by the story frame.
     </p>
   </div>
 );
@@ -61,9 +70,15 @@ export const Minimal: Story = {
         </GlassSelectCompound.Trigger>
         <GlassSelectCompound.Content sideOffset={8}>
           <GlassSelectCompound.Group>
-            <GlassSelectCompound.Item value="personal">Personal workspace</GlassSelectCompound.Item>
-            <GlassSelectCompound.Item value="team">Team workspace</GlassSelectCompound.Item>
-            <GlassSelectCompound.Item value="enterprise">Enterprise workspace</GlassSelectCompound.Item>
+            <GlassSelectCompound.Item value="personal">
+              Personal workspace
+            </GlassSelectCompound.Item>
+            <GlassSelectCompound.Item value="team">
+              Team workspace
+            </GlassSelectCompound.Item>
+            <GlassSelectCompound.Item value="enterprise">
+              Enterprise workspace
+            </GlassSelectCompound.Item>
           </GlassSelectCompound.Group>
         </GlassSelectCompound.Content>
       </GlassSelectCompound>

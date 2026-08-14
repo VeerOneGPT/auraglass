@@ -71,6 +71,35 @@ describe("GlassDataTable", () => {
     expect(element).toHaveClass("custom-class");
   });
 
+  it("renders labelled mobile rows and preserves long values", () => {
+    render(
+      <GlassDataTable
+        columns={[
+          { id: "name", header: "Name", accessorKey: "name" },
+          { id: "email", header: "Email", accessorKey: "email" },
+          { id: "role", header: "Role", accessorKey: "role" },
+        ]}
+        data={[
+          {
+            name: "John Doe",
+            email: "john.long.address@example.com",
+            role: "Developer",
+          },
+        ]}
+        searchable={false}
+        pagination={false}
+      />
+    );
+
+    const mobile = screen.getByTestId("glass-data-table-mobile");
+    expect(mobile).toHaveTextContent("Name:");
+    expect(mobile).toHaveTextContent("Email:");
+    expect(mobile).toHaveTextContent("john.long.address@example.com");
+    expect(mobile.querySelector("dd")).toHaveStyle({
+      overflowWrap: "anywhere",
+    });
+  });
+
   it("does not sort a column that explicitly opts out of sorting", () => {
     render(
       <GlassDataTable
@@ -133,7 +162,7 @@ describe("GlassDataTable", () => {
       />
     );
 
-    expect(screen.getByRole("status")).toHaveTextContent("Loading...");
+    expect(screen.getAllByRole("status")[0]).toHaveTextContent("Loading...");
 
     rerender(
       <GlassDataTable
@@ -144,7 +173,7 @@ describe("GlassDataTable", () => {
       />
     );
 
-    expect(screen.getByText("No customers")).toBeInTheDocument();
+    expect(screen.getAllByText("No customers").length).toBeGreaterThan(0);
     expect(
       screen.getByRole("button", { name: "New customer" })
     ).toBeInTheDocument();

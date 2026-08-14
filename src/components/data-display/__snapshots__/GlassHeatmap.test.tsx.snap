@@ -4,7 +4,7 @@ exports[`GlassHeatmap matches snapshot 1`] = `
 <div
   class="optimized-glass-surface glass-neutral-level1 glass-tier-high glass-heatmap glass-radius-lg glass-backdrop-blur-md glass-border glass-border-white/10 glass-overflow-hidden glass-w-full glass-min-w-0 glass-surface-dark/40"
   id="glass-heatmap-:r4:"
-  style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(148, 163, 184, 0.22); border-radius: 16px; box-shadow: 0 12px 30px rgba(2, 6, 23, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.07); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+  style="background-color: rgba(255, 255, 255, 0.1); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(30, 41, 59, 0.78); --typography-text-primary: rgba(15, 23, 42, 0.94); --typography-text-secondary: rgba(30, 41, 59, 0.78); border: 1px solid rgba(148, 163, 184, 0.22); border-radius: 8px; box-shadow: 0 12px 30px rgba(15, 23, 42, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 12px rgba(255, 255, 255, 0.14); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
 >
   <div
     class="motion-primitive glass-relative glass-w-full glass-min-w-0"
@@ -19,7 +19,7 @@ exports[`GlassHeatmap matches snapshot 1`] = `
       >
         <div
           class="optimized-glass-surface glass-neutral-level2 glass-tier-high glass-heatmap-legend glass-p-3 glass-radius-lg glass-backdrop-blur-md glass-border glass-flex glass-flex-col glass-gap-2"
-          style="background-color: rgba(15, 23, 42, 0.24); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(124, 211, 255, 0.14); border-radius: 16px; box-shadow: 0 10px 24px rgba(2, 6, 23, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06); color: rgba(248, 250, 252, 0.9); transition: all 200ms ease-out; position: relative; transform: translateZ(0); max-width: 100%; min-width: 0;"
+          style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(30, 41, 59, 0.82); --typography-text-primary: rgba(15, 23, 42, 0.94); --typography-text-secondary: rgba(30, 41, 59, 0.82); border: 1px solid rgba(148, 163, 184, 0.20); border-radius: 8px; box-shadow: 0 10px 24px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 10px rgba(255, 255, 255, 0.14); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64); --glass-theme-text-secondary: rgba(30, 41, 59, 0.82); max-width: 100%; min-width: 0;"
         >
           <div
             class="glass-flex glass-items-center glass-justify-between glass-gap-2"
@@ -32,7 +32,7 @@ exports[`GlassHeatmap matches snapshot 1`] = `
             >
               <div
                 class="glass-text-xs glass-font-medium"
-                style="color: rgba(248, 250, 252, 0.82); letter-spacing: 0.02em;"
+                style="color: rgba(15, 23, 42, 0.94); letter-spacing: 0.02em;"
               >
                 Legend
               </div>
@@ -44,7 +44,7 @@ exports[`GlassHeatmap matches snapshot 1`] = `
             >
               <div
                 class="glass-text-xs"
-                style="color: rgba(203, 213, 225, 0.72); white-space: nowrap;"
+                style="color: rgba(30, 41, 59, 0.78); white-space: nowrap;"
               >
                 0.0
                  -
@@ -63,7 +63,7 @@ exports[`GlassHeatmap matches snapshot 1`] = `
             >
               <div
                 class="glass-text-xs"
-                style="color: rgba(203, 213, 225, 0.72); min-width: 28px; text-align: right; white-space: nowrap;"
+                style="color: rgba(30, 41, 59, 0.78); min-width: 28px; text-align: right; white-space: nowrap;"
               >
                 0.0
               </div>
@@ -74,83 +74,83 @@ exports[`GlassHeatmap matches snapshot 1`] = `
             >
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(56, 189, 248);"
+                style="background-color: rgb(238, 242, 246);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(66, 182, 240);"
+                style="background-color: rgb(234, 239, 243);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(76, 176, 232);"
+                style="background-color: rgb(231, 236, 240);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(86, 169, 224);"
+                style="background-color: rgb(227, 232, 238);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(96, 162, 216);"
+                style="background-color: rgb(224, 229, 235);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(105, 156, 207);"
+                style="background-color: rgb(220, 226, 232);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(115, 149, 199);"
+                style="background-color: rgb(217, 223, 229);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(125, 143, 191);"
+                style="background-color: rgb(213, 220, 226);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(135, 136, 183);"
+                style="background-color: rgb(209, 216, 224);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(145, 129, 175);"
+                style="background-color: rgb(206, 213, 221);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(155, 123, 167);"
+                style="background-color: rgb(202, 210, 218);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(165, 116, 159);"
+                style="background-color: rgb(199, 207, 215);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(175, 109, 151);"
+                style="background-color: rgb(195, 203, 213);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(185, 103, 143);"
+                style="background-color: rgb(191, 200, 210);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(195, 96, 135);"
+                style="background-color: rgb(188, 197, 207);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(204, 90, 126);"
+                style="background-color: rgb(184, 194, 204);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(214, 83, 118);"
+                style="background-color: rgb(181, 191, 201);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(224, 76, 110);"
+                style="background-color: rgb(177, 187, 199);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(234, 70, 102);"
+                style="background-color: rgb(174, 184, 196);"
               />
               <div
                 class="glass-flex-1 glass-h-4"
-                style="background-color: rgb(244, 63, 94);"
+                style="background-color: rgb(170, 181, 193);"
               />
             </div>
             <span
@@ -160,7 +160,7 @@ exports[`GlassHeatmap matches snapshot 1`] = `
             >
               <div
                 class="glass-text-xs"
-                style="color: rgba(203, 213, 225, 0.72); min-width: 32px; white-space: nowrap;"
+                style="color: rgba(30, 41, 59, 0.78); min-width: 32px; white-space: nowrap;"
               >
                 0.0
               </div>
@@ -170,7 +170,7 @@ exports[`GlassHeatmap matches snapshot 1`] = `
       </div>
       <div
         class="glass-flex-1 glass-overflow-auto glass-min-w-0 glass-radius-lg glass-p-3"
-        style="background-color: rgba(15, 23, 42, 0.2); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(148, 163, 184, 0.14); border-radius: 16px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05); transition: all 200ms ease-out; position: relative; transform: translateZ(0); max-width: 100%;"
+        style="background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(148, 163, 184, 0.18); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.26), inset 0 0 10px rgba(255, 255, 255, 0.12); max-width: 100%;"
       >
         <span
           class="contrast-guard"

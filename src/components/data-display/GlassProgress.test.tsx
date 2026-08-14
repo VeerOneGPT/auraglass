@@ -1,4 +1,4 @@
-'use client';
+"use client";
 /**
  * GlassProgress Component Tests
  *
@@ -11,21 +11,21 @@
  * - ✅ Reduced motion support
  */
 
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
-import userEvent from '@testing-library/user-event';
-import { GlassProgress } from '@/components/data-display/GlassProgress';
-import { MotionPreferenceProvider } from '@/contexts/MotionPreferenceContext';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
+import userEvent from "@testing-library/user-event";
+import { GlassProgress } from "@/components/data-display/GlassProgress";
+import { MotionPreferenceProvider } from "@/contexts/MotionPreferenceContext";
 
 // Extend Jest matchers
 expect.extend(toHaveNoViolations);
 
-describe('GlassProgress', () => {
+describe("GlassProgress", () => {
   /**
    * Smoke Test: Component renders without crashing
    */
-  it('renders without crashing', () => {
+  it("renders without crashing", () => {
     const { container } = render(<GlassProgress />);
     expect(container).toBeInTheDocument();
   });
@@ -33,37 +33,35 @@ describe('GlassProgress', () => {
   /**
    * Accessibility Test: No axe violations
    */
-  it('has no accessibility violations', async () => {
+  it("has no accessibility violations", async () => {
     const { container } = render(<GlassProgress />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
-  
   /**
    * ARIA Tests: Component has accessible name and description
    */
-  describe('ARIA Attributes', () => {
-    it('supports aria-label', () => {
-      const { container } = render(<GlassProgress aria-label="Test component" />);
+  describe("ARIA Attributes", () => {
+    it("supports aria-label", () => {
+      const { container } = render(
+        <GlassProgress aria-label="Test component" />
+      );
       const element = container.querySelector('[aria-label="Test component"]');
       expect(element).toBeInTheDocument();
     });
   });
 
-  
-
-  
   /**
    * Reduced Motion Tests
    */
-  describe('Reduced Motion Support', () => {
-    it('respects prefers-reduced-motion', () => {
+  describe("Reduced Motion Support", () => {
+    it("respects prefers-reduced-motion", () => {
       // Mock matchMedia for reduced motion
-      Object.defineProperty(window, 'matchMedia', {
+      Object.defineProperty(window, "matchMedia", {
         writable: true,
-        value: jest.fn().mockImplementation(query => ({
-          matches: query === '(prefers-reduced-motion: reduce)',
+        value: jest.fn().mockImplementation((query) => ({
+          matches: query === "(prefers-reduced-motion: reduce)",
           media: query,
           onchange: null,
           addListener: jest.fn(),
@@ -75,16 +73,21 @@ describe('GlassProgress', () => {
       });
 
       const { container } = render(
-        <MotionPreferenceProvider initialMotionPolicy="auto" initialPrefersReducedMotion={true}>
+        <MotionPreferenceProvider
+          initialMotionPolicy="auto"
+          initialPrefersReducedMotion={true}
+        >
           <GlassProgress value={50} />
         </MotionPreferenceProvider>
       );
 
       // Check that the progress fill has transitionDuration set to 0ms when reduced motion is preferred
-      const progressFill = container.querySelector('[role="progressbar"] > div');
+      const progressFill = container.querySelector(
+        '[role="progressbar"] > div'
+      );
       if (progressFill) {
         const styles = window.getComputedStyle(progressFill);
-        const transitionDuration = parseFloat(styles.transitionDuration || '0');
+        const transitionDuration = parseFloat(styles.transitionDuration || "0");
         // When reduced motion is preferred, transitionDuration should be 0ms
         expect(transitionDuration).toBeLessThan(0.1);
       }
@@ -94,24 +97,30 @@ describe('GlassProgress', () => {
   /**
    * Props Validation: Accepts and renders with custom props
    */
-  it('accepts and renders with custom props', () => {
+  it("accepts and renders with custom props", () => {
     const { container } = render(
-      <GlassProgress
-        className="custom-class"
-        data-testid="glassprogress"
-      />
+      <GlassProgress className="custom-class" data-testid="glassprogress" />
     );
 
-    const element = container.querySelector('[data-testid="glassprogress"]')
-      || container.firstChild;
+    const element =
+      container.querySelector('[data-testid="glassprogress"]') ||
+      container.firstChild;
 
-    expect(element).toHaveClass('custom-class');
+    expect(element).toHaveClass("custom-class");
+  });
+
+  it("keeps the neutral fill perceptually distinct from its track", () => {
+    const { container } = render(<GlassProgress value={65} animated={false} />);
+    const track = screen.getByRole("progressbar");
+    const fill = track.firstElementChild as HTMLElement;
+    expect(track.getAttribute("style")).toContain("rgba(255, 255, 255, 0.18)");
+    expect(fill.style.backgroundColor).toBe("rgba(71, 85, 105, 0.88)");
   });
 
   /**
    * Snapshot Test: Matches snapshot
    */
-  it('matches snapshot', () => {
+  it("matches snapshot", () => {
     const { container } = render(<GlassProgress />);
     expect(container.firstChild).toMatchSnapshot();
   });

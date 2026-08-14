@@ -232,6 +232,7 @@ export const GlassColorPicker: React.FC<GlassColorPickerProps> = ({
   const [inputValue, setInputValue] = useState(currentColor);
 
   const triggerRef = useRef<HTMLDivElement>(null);
+  const triggerSwatchRef = useRef<HTMLSpanElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
   const swatchRef = useRef<HTMLDivElement>(null);
   const hueRef = useRef<HTMLInputElement>(null);
@@ -240,8 +241,8 @@ export const GlassColorPicker: React.FC<GlassColorPickerProps> = ({
   const alphaRef = useRef<HTMLInputElement>(null);
   // apply trigger color without JSX style attr
   useEffect(() => {
-    if (triggerRef.current) {
-      triggerRef.current.style.backgroundColor = currentColor;
+    if (triggerSwatchRef.current) {
+      triggerSwatchRef.current.style.backgroundColor = currentColor;
     }
     if (swatchRef.current) {
       swatchRef.current.style.backgroundColor = currentColor;
@@ -407,7 +408,7 @@ export const GlassColorPicker: React.FC<GlassColorPickerProps> = ({
       <div
         ref={triggerRef}
         className={cn(
-          "glass-radius-lg glass-border-2 glass-border-white/20 glass-cursor-pointer",
+          "glass-flex glass-items-center glass-justify-center glass-radius-xl glass-border glass-border-white/30 glass-bg-white/25 glass-cursor-pointer glass-shadow-lg glass-backdrop-blur-xl",
           "glass-focus",
           config.trigger,
           disabled && "glass-opacity-50",
@@ -427,7 +428,13 @@ export const GlassColorPicker: React.FC<GlassColorPickerProps> = ({
           }
         }}
         {...props}
-      />
+      >
+        <span
+          ref={triggerSwatchRef}
+          aria-hidden="true"
+          className="glass-block glass-h-4 glass-w-4 glass-rounded-full glass-border glass-border-white/60 glass-shadow-sm"
+        />
+      </div>
 
       {/* Color Picker Popover */}
       {isOpen && (
@@ -708,19 +715,23 @@ export const GlassColorPicker: React.FC<GlassColorPickerProps> = ({
                         <button
                           key={`${color}-${i}`}
                           className={cn(
-                            "glass-w-8 glass-h-8 glass-radius-lg glass-border-2 glass-focus",
+                            "glass-flex glass-w-8 glass-h-8 glass-items-center glass-justify-center glass-radius-lg glass-border glass-bg-white/22 glass-focus glass-backdrop-blur-md",
                             currentColor === color
                               ? "glass-border-white glass-scale-110"
                               : "glass-border-white/20"
                           )}
-                          ref={(el) => {
-                            if (el) el.style.backgroundColor = color;
-                          }}
                           onClick={(e) => handleColorChange(color)}
                           aria-label={`Select color ${color}`}
                           aria-pressed={currentColor === color}
                           title={color}
                         >
+                          <span
+                            aria-hidden="true"
+                            className="glass-block glass-h-4 glass-w-4 glass-rounded-full glass-border glass-border-white/60"
+                            ref={(el) => {
+                              if (el) el.style.backgroundColor = color;
+                            }}
+                          />
                           {currentColor === color && (
                             <Check
                               className="glass-w-4 glass-h-4 glass-text-primary glass-mx-auto"
@@ -750,14 +761,19 @@ export const GlassColorPicker: React.FC<GlassColorPickerProps> = ({
                       {materialPalette.slice(0, 10).map((color, i) => (
                         <button
                           key={`${color}-${i}`}
-                          className="glass-w-8 glass-h-8 glass-radius-lg glass-border-2 glass-border-white/20 hover:glass-border-white/40 glass-transition-all glass-duration-200 glass-focus"
-                          ref={(el) => {
-                            if (el) el.style.backgroundColor = color;
-                          }}
+                          className="glass-flex glass-w-8 glass-h-8 glass-items-center glass-justify-center glass-radius-lg glass-border glass-border-white/30 glass-bg-white/22 hover:glass-bg-white/30 glass-transition-all glass-duration-200 glass-focus glass-backdrop-blur-md"
                           onClick={(e) => handleColorChange(color)}
                           aria-label={`Select color ${color}`}
                           title={color}
-                        />
+                        >
+                          <span
+                            aria-hidden="true"
+                            className="glass-block glass-h-4 glass-w-4 glass-rounded-full glass-border glass-border-white/60"
+                            ref={(el) => {
+                              if (el) el.style.backgroundColor = color;
+                            }}
+                          />
+                        </button>
                       ))}
                     </div>
                   </div>
@@ -827,18 +843,23 @@ export const GlassColorPalette: React.FC<GlassColorPaletteProps> = ({
         <button
           key={`${color}-${i}`}
           className={cn(
-            "glass-radius-lg glass-border-2",
+            "glass-flex glass-items-center glass-justify-center glass-radius-lg glass-border glass-border-white/30 glass-bg-white/22 glass-backdrop-blur-md",
             sizeConfigs[size],
             selectedColor === color
               ? "glass-border-white glass-scale-110 glass-ring-2 glass-ring-white/50"
               : "glass-border-white/20 glass-hover-scale-105"
           )}
-          ref={(el) => {
-            if (el) el.style.backgroundColor = color;
-          }}
           onClick={(e) => onColorSelect?.(color)}
           title={color}
-        />
+        >
+          <span
+            aria-hidden="true"
+            className="glass-block glass-h-4 glass-w-4 glass-rounded-full glass-border glass-border-white/60"
+            ref={(el) => {
+              if (el) el.style.backgroundColor = color;
+            }}
+          />
+        </button>
       ))}
     </div>
   );

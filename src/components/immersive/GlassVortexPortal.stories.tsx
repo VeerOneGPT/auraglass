@@ -1,36 +1,36 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { GlassVortexPortal } from './GlassVortexPortal';
+import type { Meta, StoryObj } from "@storybook/react";
+import { GlassVortexPortal } from "./GlassVortexPortal";
 
 const meta = {
-  title: 'Effects + Advanced/Glass Vortex Portal',
+  title: "Effects + Advanced/Glass Vortex Portal",
   component: GlassVortexPortal,
   parameters: {
-    layout: 'centered',
+    layout: "padded",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     width: {
-      control: { type: 'range', min: 400, max: 800, step: 50 },
+      control: { type: "range", min: 400, max: 800, step: 50 },
     },
     height: {
-      control: { type: 'range', min: 400, max: 800, step: 50 },
+      control: { type: "range", min: 400, max: 800, step: 50 },
     },
     radius: {
-      control: { type: 'range', min: 50, max: 300, step: 10 },
+      control: { type: "range", min: 50, max: 300, step: 10 },
     },
     intensity: {
-      control: { type: 'range', min: 0, max: 1, step: 0.1 },
+      control: { type: "range", min: 0, max: 1, step: 0.1 },
     },
     rotationSpeed: {
-      control: { type: 'range', min: 0.1, max: 3, step: 0.1 },
+      control: { type: "range", min: 0.1, max: 3, step: 0.1 },
     },
     type: {
-      control: { type: 'select' },
-      options: ['dimensional', 'energy', 'void', 'quantum', 'temporal'],
+      control: { type: "select" },
+      options: ["dimensional", "energy", "void", "quantum", "temporal"],
     },
     colorScheme: {
-      control: { type: 'select' },
-      options: ['blue', 'purple', 'green', 'red', 'gold', 'cosmic'],
+      control: { type: "select" },
+      options: ["blue", "purple", "green", "red", "gold", "cosmic"],
     },
   },
 } satisfies Meta<typeof GlassVortexPortal>;
@@ -39,6 +39,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  render: (args) => (
+    <div style={{ width: "min(720px, 100%)", margin: "auto" }}>
+      <GlassVortexPortal {...args} />
+    </div>
+  ),
   args: {
     width: 600,
     height: 600,
@@ -53,8 +58,8 @@ export const DimensionalPortal: Story = {
   args: {
     width: 500,
     height: 500,
-    type: 'dimensional',
-    colorScheme: 'blue',
+    type: "dimensional",
+    colorScheme: "blue",
     radius: 120,
     intensity: 0.9,
     pulsing: true,
@@ -66,8 +71,8 @@ export const EnergyVortex: Story = {
   args: {
     width: 600,
     height: 600,
-    type: 'energy',
-    colorScheme: 'gold',
+    type: "energy",
+    colorScheme: "gold",
     radius: 180,
     rotationSpeed: 2,
     energyLevel: 1.5,
@@ -79,8 +84,8 @@ export const VoidPortal: Story = {
   args: {
     width: 400,
     height: 400,
-    type: 'void',
-    colorScheme: 'purple',
+    type: "void",
+    colorScheme: "purple",
     radius: 100,
     intensity: 0.7,
     showEventHorizon: true,
@@ -92,8 +97,8 @@ export const QuantumTunnel: Story = {
   args: {
     width: 700,
     height: 500,
-    type: 'quantum',
-    colorScheme: 'cosmic',
+    type: "quantum",
+    colorScheme: "cosmic",
     radius: 200,
     ringCount: 12,
     pulsing: true,
@@ -105,8 +110,8 @@ export const TemporalRift: Story = {
   args: {
     width: 550,
     height: 550,
-    type: 'temporal',
-    colorScheme: 'green',
+    type: "temporal",
+    colorScheme: "green",
     radius: 160,
     depth: 15,
     showDistortion: true,
@@ -118,7 +123,7 @@ export const RedVortex: Story = {
   args: {
     width: 500,
     height: 500,
-    colorScheme: 'red',
+    colorScheme: "red",
     radius: 140,
     intensity: 0.8,
     rotationSpeed: 1.5,
@@ -133,7 +138,7 @@ export const OpeningPortal: Story = {
     height: 600,
     opening: true,
     radius: 150,
-    colorScheme: 'blue',
+    colorScheme: "blue",
     showControls: false,
   },
 };
@@ -144,7 +149,7 @@ export const ClosingPortal: Story = {
     height: 600,
     closing: true,
     radius: 150,
-    colorScheme: 'red',
+    colorScheme: "red",
     showControls: false,
   },
 };
@@ -186,7 +191,7 @@ export const InteractivePlayground: Story = {
     debug: true,
     pulsing: true,
     showDistortion: true,
-    colorScheme: 'cosmic',
+    colorScheme: "cosmic",
   },
 };
 

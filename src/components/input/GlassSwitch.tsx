@@ -273,7 +273,9 @@ export const GlassSwitch = forwardRef<HTMLButtonElement, GlassSwitchProps>(
           )}
           style={{
             ...config.thumb,
-            transform: `translateX(${isChecked ? config.translateX : 2}px)`,
+            transform: `translateX(${
+              isChecked ? config.translateX - 2 : 2
+            }px)`,
           }}
         >
           {thumbContent ?? (isChecked ? icons?.checked : icons?.unchecked)}

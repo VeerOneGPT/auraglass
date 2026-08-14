@@ -11,21 +11,11 @@
   background: var(--aura-color-glass-surface);
   backdrop-filter: var(
     --glass-cookie-backdrop-filter,
-    blur(
-      calc(
-        var(--aura-glass-neutral-level2-backdrop-blur) *
-          var(--cookie-blur-scale)
-      )
-    )
+    blur(var(--glass-blur-md, 24px)) var(--glass-filter-base)
   );
   -webkit-backdrop-filter: var(
     --glass-cookie-backdrop-filter,
-    blur(
-      calc(
-        var(--aura-glass-neutral-level2-backdrop-blur) *
-          var(--cookie-blur-scale)
-      )
-    )
+    blur(var(--glass-blur-md, 24px)) var(--glass-filter-base)
   );
   border: 1px solid var(--aura-color-glass-border);
   box-shadow: var(--cookie-box-shadow);

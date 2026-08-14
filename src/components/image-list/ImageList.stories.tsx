@@ -29,8 +29,22 @@ export default meta;
 type Story = StoryObj<typeof ImageList>;
 
 export const Default: Story = {
+  render: (args) => (
+    <div className="glass-neutral-level1 glass-rounded-3xl glass-p-6">
+      <ImageList {...args}>
+        {['Launch grid', 'Review queue', 'Published set'].map((label) => (
+          <div
+            key={label}
+            className="glass-rounded-xl glass-bg-white/70 glass-p-4 glass-text-sm glass-text-primary"
+          >
+            {label}
+          </div>
+        ))}
+      </ImageList>
+    </div>
+  ),
   args: {
-    
+    className: '',
   },
 };
 

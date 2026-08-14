@@ -29,8 +29,22 @@ export default meta;
 type Story = StoryObj<typeof ImageListItem>;
 
 export const Default: Story = {
+  render: (args) => (
+    <div className="glass-neutral-level1 glass-rounded-3xl glass-p-6">
+      <ImageListItem {...args}>
+        <div className="glass-rounded-xl glass-bg-white/70 glass-p-4">
+          <div className="glass-text-sm glass-font-semibold glass-text-primary">
+            Featured asset
+          </div>
+          <div className="glass-text-xs glass-text-secondary">
+            List items keep media rows scannable.
+          </div>
+        </div>
+      </ImageListItem>
+    </div>
+  ),
   args: {
-    
+    className: '',
   },
 };
 

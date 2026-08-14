@@ -15,6 +15,7 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../lib/utils";
+import styles from "./EnhancementShowcase.module.css";
 
 // Import all enhanced components and systems
 import {
@@ -39,6 +40,7 @@ import { useAIPersonalization } from "../../utils/aiPersonalization";
 interface ShowcaseSection {
   id: string;
   title: string;
+  navigationLabel: string;
   description: string;
   component: React.ReactNode;
   features: string[];
@@ -81,6 +83,7 @@ export const EnhancementShowcase: React.FC = () => {
     {
       id: "overview",
       title: "AuraGlass Enhancement Overview",
+      navigationLabel: "Overview",
       description:
         "Next-generation glassmorphism with consciousness interface technology",
       features: [
@@ -122,6 +125,7 @@ export const EnhancementShowcase: React.FC = () => {
     {
       id: "physics",
       title: "Physics-Based Glass Effects",
+      navigationLabel: "Physics",
       description:
         "Realistic glass interactions with particle systems and physics simulation",
       features: [
@@ -154,6 +158,7 @@ export const EnhancementShowcase: React.FC = () => {
     {
       id: "morphing",
       title: "Environmental Glass Morphing",
+      navigationLabel: "Morphing",
       description:
         "Glass effects that adapt to time, weather, user activity, and content type",
       features: [
@@ -214,6 +219,7 @@ export const EnhancementShowcase: React.FC = () => {
     {
       id: "spatial3d",
       title: "Immersive 3D Glass Effects",
+      navigationLabel: "Immersive 3D",
       description:
         "Layered depth perception with parallax, holographic overlays, and interactive distortions",
       features: [
@@ -273,6 +279,7 @@ export const EnhancementShowcase: React.FC = () => {
     {
       id: "organic",
       title: "Organic Animation Engine",
+      navigationLabel: "Organic Motion",
       description:
         "Natural motion patterns with emotional context and physics-based behavior",
       features: [
@@ -315,6 +322,7 @@ export const EnhancementShowcase: React.FC = () => {
     {
       id: "intelligence",
       title: "Emotional Intelligence & AI Personalization",
+      navigationLabel: "Intelligence",
       description:
         "Adaptive UI that learns from user behavior and emotional state",
       features: [
@@ -448,6 +456,7 @@ export const EnhancementShowcase: React.FC = () => {
     {
       id: "spatial",
       title: "Spatial Computing Foundations",
+      navigationLabel: "Spatial",
       description:
         "AR/VR ready components with gesture recognition and spatial anchoring",
       features: [
@@ -497,6 +506,7 @@ export const EnhancementShowcase: React.FC = () => {
     {
       id: "integration",
       title: "Complete System Integration",
+      navigationLabel: "Integration",
       description:
         "All enhancement systems working together in perfect harmony",
       features: [
@@ -601,20 +611,29 @@ export const EnhancementShowcase: React.FC = () => {
       {/* Header */}
       <div className="glass-surface-subtle/5 glass-backdrop-blur-lg glass-border-b glass-border-white/10 glass-contrast-guard">
         <div className="glass-max-w-7xl glass-mx-auto glass-px-4 sm:glass-px-6 lg:glass-px-8">
-          <div className="glass-flex glass-items-center glass-justify-between glass-h-16">
-            <div className="glass-flex glass-items-center glass-gap-4">
-              <div className="glass-w-8 glass-h-8 glass-gradient-primary glass-gradient-primary glass-gradient-primary glass-radius-lg" />
-              <h1 className="glass-text-primary glass-text-xl glass-font-bold">
+          <div className={styles.headerContent}>
+            <div className={styles.brand}>
+              <div
+                aria-hidden="true"
+                className={`${styles.brandMark} glass-w-8 glass-h-8 glass-gradient-primary glass-gradient-primary glass-gradient-primary glass-radius-lg`}
+              />
+              <h1
+                className={`${styles.title} glass-text-primary glass-text-xl glass-font-bold`}
+              >
                 AuraGlass Enhancement Showcase
               </h1>
             </div>
-            <div className="glass-flex glass-items-center glass-gap-4">
-              <div className="glass-text-primary-opacity-70 glass-text-sm">
+            <div className={styles.headerActions}>
+              <div
+                className={`${styles.interactionCount} glass-text-primary-opacity-70 glass-text-sm`}
+              >
                 Interactions: {demoState.interactionCount}
               </div>
               <button
-                onClick={() => setIsFullDemo(!isFullDemo)}
-                className="glass-px-4 glass-py-2 glass-surface-subtle/10 hover:glass-surface-subtle/20 glass-text-primary glass-radius-lg glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
+                type="button"
+                onClick={() => setIsFullDemo((isActive) => !isActive)}
+                aria-pressed={isFullDemo}
+                className={`${styles.demoButton} glass-px-4 glass-py-2 glass-surface-subtle/10 hover:glass-surface-subtle/20 glass-text-primary glass-radius-lg glass-transition-colors glass-focus glass-touch-target glass-contrast-guard`}
               >
                 {isFullDemo ? "Exit Full Demo" : "Full Demo Mode"}
               </button>
@@ -626,18 +645,27 @@ export const EnhancementShowcase: React.FC = () => {
       {/* Navigation */}
       <div className="glass-surface-subtle/5 glass-backdrop-blur-sm glass-contrast-guard">
         <div className="glass-max-w-7xl glass-mx-auto glass-px-4 sm:glass-px-6 lg:glass-px-8">
-          <nav className="glass-flex glass-space-x-8 glass-overflow-x-auto glass-py-4">
+          <nav
+            aria-label="Enhancement showcase sections"
+            className={styles.sectionNavigation}
+          >
             {showcaseSections.map((section) => (
               <button
                 key={section.id}
+                type="button"
                 onClick={() => setActiveSection(section.id)}
-                className={`whitespace-nowrap pb-2 glass-px-1 border-b-2 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard ${
+                aria-label={section.title}
+                aria-current={activeSection === section.id ? "page" : undefined}
+                className={`${styles.sectionTab} glass-px-1 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard ${
                   activeSection === section.id
-                    ? "border-white glass-text-primary"
-                    : "border-transparent glass-text-primary/60 hover:glass-text-primary/80 hover:border-white/30"
+                    ? `${styles.activeSectionTab} glass-text-primary`
+                    : "glass-text-primary/60 hover:glass-text-primary/80"
                 }`}
               >
-                {section.title}
+                {section.navigationLabel}
+                <span aria-hidden="true" className={styles.fullSectionTitle}>
+                  {section.title}
+                </span>
               </button>
             ))}
           </nav>

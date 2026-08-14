@@ -100,4 +100,18 @@ describe("GlassCalendar", () => {
 
     expect(dateButtons).toHaveLength(21);
   });
+
+  it("uses compact weekday labels without losing their accessible names", () => {
+    render(
+      <GlassCalendar
+        compact
+        selectedDate={new Date(2026, 4, 10)}
+        weeksToShow={4}
+      />
+    );
+
+    const mondayHeader = screen.getByLabelText("Mon");
+    expect(mondayHeader).toHaveTextContent("M");
+    expect(mondayHeader).not.toHaveTextContent("Mon");
+  });
 });

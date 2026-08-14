@@ -40,8 +40,10 @@
   border: 1px solid var(--aura-color-glass-border);
   border-radius: var(--aura-radius-xl);
   box-shadow: var(--aura-color-glass-shadow);
-  backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur));
-  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur));
+  backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur))
+    var(--glass-filter-base);
 }
 
 .radiusMd {

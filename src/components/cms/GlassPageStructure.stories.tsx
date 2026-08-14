@@ -1,31 +1,42 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import * as ComponentModule from "./GlassPageStructure";
-import {
-  CertificationCase,
-  type MissingComponentName,
-} from "../../stories/GlassMissingInventoryCertification.stories";
+import { GlassPageStructure as GlassPageStructureComponent } from "./GlassPageStructure";
+import { GlassDragDropProvider } from "./GlassDragDropProvider";
 
-const componentName = "GlassPageStructure" satisfies MissingComponentName;
-const Component = (ComponentModule as Record<string, any>)[componentName];
-
-const meta = {
-  title: 'Workflows/Glass Page Structure',
-  component: Component,
+const meta: Meta = {
+  title: "Workflows/Glass Page Structure",
+  component: GlassPageStructureComponent,
   parameters: {
     layout: "centered",
+    previewSurface: "app",
     docs: {
       description: {
         component:
-          "Component-owned Storybook coverage for GlassPageStructure. This story renders the certified AuraGlass sample used by the full visual certification suite.",
+          "The real page-structure navigator mounted against a live drag-and-drop context.",
       },
     },
   },
-} satisfies Meta<typeof Component>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj;
 
-export const Default: Story = {
-  render: () => <CertificationCase name={componentName} />,
+export const GlassPageStructure: Story = {
+  render: () => (
+    <div
+      style={{
+        width: "min(352px, calc(100vw - 32px))",
+        height: "min(620px, calc(100vh - 32px))",
+        minWidth: 0,
+        minHeight: 420,
+        overflow: "hidden",
+      }}
+    >
+      <GlassDragDropProvider style={{ width: "100%", height: "100%" }}>
+        <GlassPageStructureComponent
+          className="glass-max-w-full"
+          data-testid="glass-page-structure-story"
+        />
+      </GlassDragDropProvider>
+    </div>
+  ),
 };

@@ -7,13 +7,7 @@ const meta: Meta<typeof div> = {
   component: div,
   parameters: {
     layout: 'centered',
-    backgrounds: {
-      default: 'dark',
-      values: [
-        { name: 'dark', value: '#0a0a0a' },
-        { name: 'glass', value: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
-      ],
-    },
+    previewSurface: 'component',
   },
   argTypes: {
     // Add common glass props

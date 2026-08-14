@@ -52,14 +52,27 @@ export const LiquidGlassBadgeCluster = forwardRef<
     return (
       <LiquidGlassMaterial
         ref={ref}
-        material="liquid"
+        material="standard"
         variant={materialVariant}
+        intent="neutral"
+        sheen={0}
+        tintMode="light"
+        adaptToContent={false}
+        enableRefraction={false}
+        enableReflection={false}
+        enableParallax={false}
         radius="full"
         className={cn(
           "liquid-glass-badge-cluster glass-inline-flex",
           className
         )}
         data-selection-mode={selectionMode}
+        style={
+          {
+            "--glass-theme-text": "rgba(15, 23, 42, 0.92)",
+            color: "rgba(15, 23, 42, 0.92)",
+          } as React.CSSProperties
+        }
         {...props}
       >
         <LiquidGlassEffectGroup className="glass-flex glass-items-center glass-gap-1 glass-p-1">
@@ -68,9 +81,15 @@ export const LiquidGlassBadgeCluster = forwardRef<
               key={item.id}
               aria-pressed={item.selected}
               className={cn(
-                "glass-radius-full glass-px-2 glass-py-1 glass-text-xs",
-                item.selected && "glass-surface-primary"
+                "glass-radius-full glass-border glass-border-black/10 glass-px-2 glass-py-1 glass-text-xs glass-font-medium",
+                item.selected && "glass-border-black/25"
               )}
+              style={{
+                background: item.selected
+                  ? "rgba(255, 255, 255, 0.32)"
+                  : "rgba(255, 255, 255, 0.14)",
+                color: "rgba(15, 23, 42, 0.92)",
+              }}
             >
               {item.label}
             </span>

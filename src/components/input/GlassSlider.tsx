@@ -399,88 +399,99 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
           orientation === "horizontal"
             ? { left: `${percentage}%` }
             : { bottom: `${percentage}%` };
+        const isHorizontal = orientation === "horizontal";
 
         return (
-          <OptimizedGlass
-            key={index}
-            elevation="level3"
-            intensity="strong"
-            depth={2}
-            tint="neutral"
-            border="glow"
-            animation={
-              shouldAnimate && respectMotionPreference ? "float" : "none"
-            }
-            performanceMode="high"
-            liftOnHover={!disabled}
-            press
-            className={cn(
-              "glass-slider-thumb glass-absolute glass-flex glass-items-center glass-justify-center",
-              "glass-radius-full glass-cursor-pointer glass-transition-all glass-duration-200 glass-focus",
-              colors.thumb,
-
-              // Size
-              config.thumb,
-
-              // States
-              disabled && "glass-opacity-50",
-              isDragging &&
-                dragIndex === index &&
-                (shouldAnimate && respectMotionPreference
-                  ? "glass-scale-110"
-                  : ""),
-
-              // Position
-              orientation === "horizontal" ? "glass-top-1-2" : "glass-left-1-2"
-            )}
-            style={{
-              ...position,
-              transform: "translate(-50%, -50%)",
-              background:
-                "var(--glass-neutral-level3-surface)",
-            }}
-            onPointerDown={(e: React.PointerEvent) =>
-              handlePointerDown(e, index)
-            }
-            role="slider"
-            aria-valuemin={min}
-            aria-valuemax={max}
-            aria-valuenow={val}
-            aria-valuetext={formatValue(val)}
-            aria-invalid={isInvalid || undefined}
-            aria-label={
-              ariaLabel ||
-              label ||
-              (isRange
-                ? `Range slider ${index === 0 ? "minimum" : "maximum"}`
-                : "Slider")
-            }
-            aria-labelledby={ariaLabelledBy || (label ? labelId : undefined)}
-            aria-describedby={
-              ariaDescribedBy ||
-              (description ? descriptionId : undefined) ||
-              (error ? errorId : undefined)
-            }
-            tabIndex={disabled ? -1 : 0}
-          >
-            {thumbContent}
-
+          <React.Fragment key={index}>
             {showValue && (
               <div
                 className={cn(
-                  "glass-absolute glass-whitespace-nowrap glass-px-2 glass-py-1 glass-radius-md",
+                  "glass-slider-value glass-absolute glass-whitespace-nowrap glass-px-2 glass-py-1 glass-radius-md",
                   "glass-surface-subtle glass-border glass-border-white/20",
                   "glass-text-primary glass-font-medium glass-backdrop-blur-md",
-                  config.label,
-                  orientation === "horizontal"
-                    ? "glass-slider-value-top"
-                    : "glass-slider-value-left"
+                  config.label
                 )}
+                style={
+                  isHorizontal
+                    ? {
+                        left: `clamp(2rem, ${percentage}%, calc(100% - 4rem))`,
+                        bottom: "calc(100% + 0.375rem)",
+                        transform: "translateX(-50%)",
+                      }
+                    : {
+                        bottom: `clamp(2rem, ${percentage}%, calc(100% - 4rem))`,
+                        right: "calc(100% + 0.375rem)",
+                        transform: "translateY(50%)",
+                      }
+                }
               >
                 {formatValue(val)}
               </div>
             )}
-          </OptimizedGlass>
+
+            <OptimizedGlass
+              elevation="level3"
+              intensity="strong"
+              depth={2}
+              tint="neutral"
+              border="glow"
+              animation={
+                shouldAnimate && respectMotionPreference ? "float" : "none"
+              }
+              performanceMode="high"
+              liftOnHover={!disabled}
+              press
+              className={cn(
+                "glass-slider-thumb glass-absolute glass-flex glass-items-center glass-justify-center",
+                "glass-radius-full glass-cursor-pointer glass-transition-all glass-duration-200 glass-focus",
+                colors.thumb,
+
+                // Size
+                config.thumb,
+
+                // States
+                disabled && "glass-opacity-50",
+                isDragging &&
+                  dragIndex === index &&
+                  (shouldAnimate && respectMotionPreference
+                    ? "glass-scale-110"
+                    : ""),
+
+                // Position
+                isHorizontal ? "glass-top-1-2" : "glass-left-1-2"
+              )}
+              style={{
+                ...position,
+                transform: "translate(-50%, -50%)",
+                background: "var(--glass-neutral-level3-surface)",
+              }}
+              onPointerDown={(e: React.PointerEvent) =>
+                handlePointerDown(e, index)
+              }
+              role="slider"
+              aria-valuemin={min}
+              aria-valuemax={max}
+              aria-valuenow={val}
+              aria-valuetext={formatValue(val)}
+              aria-invalid={isInvalid || undefined}
+              aria-label={
+                ariaLabel ||
+                label ||
+                (isRange
+                  ? `Range slider ${index === 0 ? "minimum" : "maximum"}`
+                  : "Slider")
+              }
+              aria-labelledby={ariaLabelledBy || (label ? labelId : undefined)}
+              aria-describedby={
+                ariaDescribedBy ||
+                (description ? descriptionId : undefined) ||
+                (error ? errorId : undefined)
+              }
+              tabIndex={disabled ? -1 : 0}
+            >
+              {thumbContent}
+            </OptimizedGlass>
+          </React.Fragment>
         );
       });
     };
@@ -523,6 +534,10 @@ export const GlassSlider = forwardRef<HTMLDivElement, GlassSliderProps>(
             disabled && "glass-opacity-50",
             error && "glass-ring-2 glass-ring-danger glass-radius-lg"
           )}
+          style={{
+            overflowX: orientation === "horizontal" ? "clip" : "visible",
+            overflowY: orientation === "horizontal" ? "visible" : "clip",
+          }}
           {...a11yProps}
           role={isRange ? undefined : "group"}
         >

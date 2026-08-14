@@ -2,20 +2,15 @@
 import React from "react";
 import { OptimizedGlass } from "../../primitives";
 import { cn } from "../../lib/utilsComprehensive";
-import {
-  ContrastGuard,
-  TextWithContrast,
-} from "@/components/accessibility/ContrastGuard";
-import { ANIMATION } from "../../tokens/designConstants";
-import { useReducedMotion } from "../../hooks/useReducedMotion";
-import { createGlassStyle } from "../../core/mixins/glassMixins";
-
 const codeSurfaceStyle: React.CSSProperties = {
-  ...createGlassStyle({ intent: "neutral", elevation: "level2" }),
-  border: "1px solid rgba(124, 211, 255, 0.18)",
+  background: "rgba(255, 255, 255, 0.24)",
+  backdropFilter: "blur(24px) saturate(1.5) brightness(1.05) contrast(1.02)",
+  WebkitBackdropFilter:
+    "blur(24px) saturate(1.5) brightness(1.05) contrast(1.02)",
+  border: "1px solid rgba(255, 255, 255, 0.68)",
   boxShadow:
-    "0 12px 28px rgba(2, 6, 23, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.06)",
-  color: "rgba(248, 250, 252, 0.92)",
+    "0 14px 34px rgba(15, 23, 42, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.30), inset 0 0 18px rgba(255, 255, 255, 0.14)",
+  color: "rgba(15, 23, 42, 0.92)",
   maxWidth: "100%",
   minWidth: 0,
 };
@@ -58,26 +53,24 @@ export function GlassJSONViewer({
           : null),
       }}
     >
-      <ContrastGuard>
-        <pre
-          className={cn(
-            compact ? "glass-text-[11px]" : "glass-text-xs",
-            "glass-whitespace-pre-wrap"
-          )}
-          style={{
-            margin: 0,
-            color: "rgba(248, 250, 252, 0.9)",
-            whiteSpace: "pre-wrap",
-            overflowWrap: "break-word",
-            wordBreak: "normal",
-            lineHeight: 1.55,
-            fontFamily:
-              "var(--glass-font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace)",
-          }}
-        >
-          {JSON.stringify(value, null, 2)}
-        </pre>
-      </ContrastGuard>
+      <pre
+        className={cn(
+          compact ? "glass-text-[11px]" : "glass-text-xs",
+          "glass-whitespace-pre-wrap"
+        )}
+        style={{
+          margin: 0,
+          color: "rgba(15, 23, 42, 0.92)",
+          whiteSpace: "pre-wrap",
+          overflowWrap: "break-word",
+          wordBreak: "normal",
+          lineHeight: 1.55,
+          fontFamily:
+            "var(--glass-font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace)",
+        }}
+      >
+        {JSON.stringify(value, null, 2)}
+      </pre>
     </OptimizedGlass>
   );
 }

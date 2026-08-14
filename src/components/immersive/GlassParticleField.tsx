@@ -154,7 +154,7 @@ export const GlassParticleField = forwardRef<
 >(
   (
     {
-      emitters = defaultParticleEmitters,
+      emitters,
       forces = [],
       maxParticles = 1000,
       physics = true,
@@ -194,6 +194,7 @@ export const GlassParticleField = forwardRef<
       ? !prefersReducedMotion
       : true;
     const particleFieldId = useA11yId("glass-particle-field");
+    const resolvedEmitters = emitters ?? defaultParticleEmitters;
 
     const [particles, setParticles] = useState<Particle[]>([]);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -230,7 +231,7 @@ export const GlassParticleField = forwardRef<
       neon: ["#39FF14", "#FF073A", "#FF4081", "#00FFFF", "#FF10F0"],
     };
 
-    const colors = colorSchemes[colorScheme];
+    const colors = useMemo(() => colorSchemes[colorScheme], [colorScheme]);
 
     // Generate unique particle ID
     const generateParticleId = useCallback(() => {
@@ -281,6 +282,75 @@ export const GlassParticleField = forwardRef<
       },
       [generateParticleId, trails]
     );
+
+    // A particle field must still communicate its state before the first RAF and
+    // when reduced motion is enabled. Seed a small, deterministic constellation
+    // around every enabled emitter; the animation loop can then evolve it.
+    useEffect(() => {
+      const enabledEmitters = resolvedEmitters.filter(
+        (emitter) => emitter.enabled
+      );
+      const seedCount = Math.min(
+        maxParticles,
+        Math.max(12, enabledEmitters.length * 18)
+      );
+      if (enabledEmitters.length === 0) {
+        setParticles([]);
+        setParticleCount(0);
+        return;
+      }
+
+      const seeded = Array.from({ length: seedCount }, (_, index) => {
+        const emitter = enabledEmitters[index % enabledEmitters.length];
+        const angle = (index * 2.399963229728653) % (Math.PI * 2);
+        const radius = 10 + ((index * 17) % 74);
+        const sizeRange = emitter.size.max - emitter.size.min;
+        const size = emitter.size.min + (((index * 7) % 10) / 10) * sizeRange;
+        const life = emitter.life.max;
+        const suppliedColor = emitter.colors[index % emitter.colors.length];
+        const schemeColor = colors[index % colors.length];
+        const color = resolveCanvasColor(
+          colorScheme === "monochrome" ? schemeColor : suppliedColor,
+          "rgba(51, 65, 85, 0.68)"
+        );
+
+        return {
+          id: `particle-seed-${emitter.id}-${index}`,
+          x: Math.max(
+            0,
+            Math.min(bounds.width, emitter.x + Math.cos(angle) * radius)
+          ),
+          y: Math.max(
+            0,
+            Math.min(bounds.height, emitter.y + Math.sin(angle) * radius)
+          ),
+          z: ((index % 9) - 4) * 3,
+          vx: Math.cos(angle) * emitter.velocity.min,
+          vy: Math.sin(angle) * emitter.velocity.min,
+          vz: 0,
+          size,
+          life,
+          maxLife: life,
+          color,
+          opacity: 0.74 + (index % 4) * 0.07,
+          type: "sphere" as const,
+          mass: size * 0.1,
+          charge: 0,
+          trail: trails,
+        };
+      });
+
+      setParticles(seeded);
+      setParticleCount(seeded.length);
+    }, [
+      resolvedEmitters,
+      maxParticles,
+      bounds.width,
+      bounds.height,
+      colors,
+      colorScheme,
+      trails,
+    ]);
 
     // Apply force to particle
     const applyForce = useCallback(
@@ -464,7 +534,7 @@ export const GlassParticleField = forwardRef<
             .filter((particle): particle is Particle => particle !== null);
 
           // Emit new particles
-          const newParticles = emitters.reduce((acc, emitter) => {
+          const newParticles = resolvedEmitters.reduce((acc, emitter) => {
             return [
               ...acc,
               ...emitParticles(emitter, deltaTime, updatedParticles),
@@ -490,7 +560,7 @@ export const GlassParticleField = forwardRef<
         isPlaying,
         paused,
         updateParticle,
-        emitters,
+        resolvedEmitters,
         emitParticles,
         forces,
         onForceApply,
@@ -646,7 +716,7 @@ export const GlassParticleField = forwardRef<
         ctx.fillText(`Particles: ${particles.length}`, 10, 20);
         ctx.fillText(`FPS: ${frameRate}`, 10, 40);
         ctx.fillText(
-          `Emitters: ${emitters.filter((e: any) => e.enabled).length}`,
+          `Emitters: ${resolvedEmitters.filter((e: any) => e.enabled).length}`,
           10,
           60
         );
@@ -664,7 +734,7 @@ export const GlassParticleField = forwardRef<
       renderParticleToCanvas,
       debug,
       frameRate,
-      emitters,
+      resolvedEmitters,
       forces,
     ]);
 
@@ -686,8 +756,7 @@ export const GlassParticleField = forwardRef<
           width: typeof style?.width === "undefined" ? "100%" : style.width,
           maxWidth: bounds.width,
           height: bounds.height,
-          background:
-            "var(--glass-primary-level3-surface)",
+          background: "rgba(255, 255, 255, 0.22)",
           ...(style || {}),
         }}
         onMouseMove={handleMouseMove}
@@ -732,7 +801,10 @@ export const GlassParticleField = forwardRef<
           )}
 
           {/* Controls */}
-          <div className="glass-absolute glass-bottom-4 glass--left-1-2 glass-transform glass--translate-x-1-2">
+          <div
+            className="glass-absolute glass-bottom-4"
+            style={{ left: "50%", transform: "translateX(-50%)", zIndex: 2 }}
+          >
             <OptimizedGlass
               elevation="level3"
               intensity="strong"

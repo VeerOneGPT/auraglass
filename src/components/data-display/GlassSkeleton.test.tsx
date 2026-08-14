@@ -1,4 +1,4 @@
-'use client';
+"use client";
 /**
  * GlassSkeleton Component Tests
  *
@@ -11,20 +11,23 @@
  * - ⏭️  Reduced motion (not applicable)
  */
 
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
-import userEvent from '@testing-library/user-event';
-import { GlassSkeleton } from '@/components/data-display/GlassSkeleton';
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
+import userEvent from "@testing-library/user-event";
+import {
+  GlassSkeleton,
+  GlassSkeletonAvatar,
+} from "@/components/data-display/GlassSkeleton";
 
 // Extend Jest matchers
 expect.extend(toHaveNoViolations);
 
-describe('GlassSkeleton', () => {
+describe("GlassSkeleton", () => {
   /**
    * Smoke Test: Component renders without crashing
    */
-  it('renders without crashing', () => {
+  it("renders without crashing", () => {
     const { container } = render(<GlassSkeleton />);
     expect(container).toBeInTheDocument();
   });
@@ -32,39 +35,43 @@ describe('GlassSkeleton', () => {
   /**
    * Accessibility Test: No axe violations
    */
-  it('has no accessibility violations', async () => {
+  it("has no accessibility violations", async () => {
     const { container } = render(<GlassSkeleton />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
-  
-
-  
-
-  
-
   /**
    * Props Validation: Accepts and renders with custom props
    */
-  it('accepts and renders with custom props', () => {
+  it("accepts and renders with custom props", () => {
     const { container } = render(
-      <GlassSkeleton
-        className="custom-class"
-        data-testid="glassskeleton"
-      />
+      <GlassSkeleton className="custom-class" data-testid="glassskeleton" />
     );
 
-    const element = container.querySelector('[data-testid="glassskeleton"]')
-      || container.firstChild;
+    const element =
+      container.querySelector('[data-testid="glassskeleton"]') ||
+      container.firstChild;
 
-    expect(element).toHaveClass('custom-class');
+    expect(element).toHaveClass("custom-class");
+  });
+
+  it("renders avatar presets as explicit circles", () => {
+    const { container } = render(<GlassSkeletonAvatar size="lg" />);
+    const avatar = container.querySelector(
+      '[data-skeleton-variant="circular"]'
+    );
+    expect(avatar).toHaveStyle({
+      width: "48px",
+      height: "48px",
+      borderRadius: "50%",
+    });
   });
 
   /**
    * Snapshot Test: Matches snapshot
    */
-  it('matches snapshot', () => {
+  it("matches snapshot", () => {
     const { container } = render(<GlassSkeleton />);
     expect(container.firstChild).toMatchSnapshot();
   });

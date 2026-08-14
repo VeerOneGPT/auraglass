@@ -1,31 +1,40 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import * as ComponentModule from "./GlassCanvas";
-import {
-  CertificationCase,
-  type MissingComponentName,
-} from "../../stories/GlassMissingInventoryCertification.stories";
+import { GlassCanvas as GlassCanvasComponent } from "./GlassCanvas";
+import { GlassDragDropProvider } from "./GlassDragDropProvider";
 
-const componentName = "GlassCanvas" satisfies MissingComponentName;
-const Component = (ComponentModule as Record<string, any>)[componentName];
-
-const meta = {
-  title: 'Workflows/Glass Canvas',
-  component: Component,
+const meta: Meta = {
+  title: "Workflows/Glass Canvas",
+  component: GlassCanvasComponent,
   parameters: {
     layout: "centered",
+    previewSurface: "app",
     docs: {
       description: {
         component:
-          "Component-owned Storybook coverage for GlassCanvas. This story renders the certified AuraGlass sample used by the full visual certification suite.",
+          "The real GlassCanvas mounted inside its drag-and-drop provider at a bounded, responsive editing size.",
       },
     },
   },
-} satisfies Meta<typeof Component>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj;
 
-export const Default: Story = {
-  render: () => <CertificationCase name={componentName} />,
+export const GlassCanvas: Story = {
+  render: () => (
+    <div
+      style={{
+        width: "min(920px, calc(100vw - 32px))",
+        height: "min(620px, calc(100vh - 32px))",
+        minWidth: 0,
+        minHeight: 360,
+        display: "flex",
+        overflow: "hidden",
+      }}
+    >
+      <GlassDragDropProvider style={{ width: "100%", minWidth: 0 }}>
+        <GlassCanvasComponent data-testid="glass-canvas-story" />
+      </GlassDragDropProvider>
+    </div>
+  ),
 };

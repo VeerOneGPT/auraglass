@@ -1,31 +1,26 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import * as ComponentModule from "./EnhancementShowcase";
-import {
-  CertificationCase,
-  type MissingComponentName,
-} from "../../stories/GlassMissingInventoryCertification.stories";
-
-const componentName = "EnhancementShowcase" satisfies MissingComponentName;
-const Component = (ComponentModule as Record<string, any>)[componentName];
+import { EnhancementShowcase as EnhancementShowcaseComponent } from "./EnhancementShowcase";
 
 const meta = {
-  title: 'Reference/Legacy Components/Enhancement Showcase',
-  component: Component,
+  title: "Reference/Legacy Components/Enhancement Showcase",
+  component: EnhancementShowcaseComponent,
   parameters: {
-    layout: "centered",
+    layout: "fullscreen",
+    previewSurface: "app",
     docs: {
       description: {
         component:
-          "Component-owned Storybook coverage for EnhancementShowcase. This story renders the certified AuraGlass sample used by the full visual certification suite.",
+          "A direct rendering of the complete EnhancementShowcase export without certification substitutes or story-level component overrides.",
       },
     },
   },
-} satisfies Meta<typeof Component>;
+  tags: ["autodocs"],
+} satisfies Meta<typeof EnhancementShowcaseComponent>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  render: () => <CertificationCase name={componentName} />,
+export const EnhancementShowcase: Story = {
+  name: "EnhancementShowcase",
+  render: () => <EnhancementShowcaseComponent />,
 };

@@ -62,6 +62,12 @@ interface GlassPhysicsEngineProps {
   triggerDelay?: number;
   /** Whether to honor reduced-motion settings for animation. */
   respectMotionPreference?: boolean;
+  /**
+   * Opt out of the wrapper's keyboard stop when it decorates an existing
+   * interactive child. This prevents two focus targets for one control while
+   * retaining the physics effect for pointer interaction.
+   */
+  tabIndex?: number;
   onInteractionStart?: (type: GlassInteraction) => void;
   onInteractionEnd?: (type: GlassInteraction) => void;
 }
@@ -86,6 +92,7 @@ export const GlassPhysicsEngine: React.FC<GlassPhysicsEngineProps> = ({
   autoRepeat = false,
   triggerDelay = 2000,
   respectMotionPreference = true,
+  tabIndex,
   onInteractionStart,
   onInteractionEnd,
 }) => {
@@ -475,25 +482,31 @@ export const GlassPhysicsEngine: React.FC<GlassPhysicsEngineProps> = ({
       className={cn("glass-relative glass-overflow-hidden", className)}
       style={{
         ...{
+          boxSizing: "border-box",
+          contain: "paint",
+          maxWidth: "100%",
           perspective: "1000px",
           transformStyle: "preserve-3d",
         },
       }}
       animate={controls}
+      tabIndex={tabIndex}
       onMouseMove={handleMouseMove}
       onClick={handleClick}
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
+      whileHover={enabled && shouldAnimate ? { scale: 1.01 } : undefined}
+      whileTap={enabled && shouldAnimate ? { scale: 0.99 } : undefined}
     >
       {/* Particle canvas */}
-      <canvas
-        ref={canvasRef}
-        data-glass-overlay="true"
-        className={cn(
-          "glass-absolute glass-inset-0 glass-pointer-events-none glass-z-10"
-        )}
-        style={{ ...{ mixBlendMode: "screen" } }}
-      />
+      {enabled && (
+        <canvas
+          ref={canvasRef}
+          data-glass-overlay="true"
+          className={cn(
+            "glass-absolute glass-inset-0 glass-pointer-events-none glass-z-10"
+          )}
+          style={{ ...{ mixBlendMode: "screen" } }}
+        />
+      )}
 
       {/* Glass content */}
       <motion.div

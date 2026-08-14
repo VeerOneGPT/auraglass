@@ -1,16 +1,16 @@
-import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { GlassDataTable } from './GlassDataTable';
-import { cn } from '../../lib/utils';
+import React from "react";
+import type { Meta, StoryObj } from "@storybook/react";
+import { GlassDataTable } from "./GlassDataTable";
+import { cn } from "../../lib/utils";
 
 const meta: Meta<typeof GlassDataTable> = {
-  title: 'Data + Visualization/Glass Data Table',
+  title: "Data + Visualization/Glass Data Table",
   component: GlassDataTable,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
-        component: 'A glass morphism glassdatatable component.',
+        component: "A glass morphism glassdatatable component.",
       },
     },
   },
@@ -26,54 +26,73 @@ const meta: Meta<typeof GlassDataTable> = {
   ],
   argTypes: {
     className: {
-      control: 'text',
-      description: 'Additional CSS classes',
+      control: "text",
+      description: "Additional CSS classes",
     },
     variant: {
-      control: { type: 'select' },
-      options: ['default', 'striped', 'bordered', 'minimal'],
-      description: 'Table variant',
+      control: { type: "select" },
+      options: ["default", "striped", "bordered", "minimal"],
+      description: "Table variant",
     },
     size: {
-      control: { type: 'select' },
-      options: ['sm', 'md', 'lg'],
-      description: 'Table size',
+      control: { type: "select" },
+      options: ["sm", "md", "lg"],
+      description: "Table size",
     },
     sortable: {
-      control: 'boolean',
-      description: 'Enable column sorting',
+      control: "boolean",
+      description: "Enable column sorting",
     },
     filterable: {
-      control: 'boolean',
-      description: 'Enable column filtering',
+      control: "boolean",
+      description: "Enable column filtering",
     },
     searchable: {
-      control: 'boolean',
-      description: 'Enable search functionality',
+      control: "boolean",
+      description: "Enable search functionality",
     },
     pagination: {
-      control: 'boolean',
-      description: 'Enable pagination',
+      control: "boolean",
+      description: "Enable pagination",
     },
   },
   args: {
-    className: '',
-    variant: 'default',
-    size: 'md',
+    className: "",
+    variant: "default",
+    size: "md",
     sortable: true,
     filterable: true,
     searchable: true,
     pagination: true,
+    initialPageSize: 2,
     data: [
-      { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Developer', status: 'Active' },
-      { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'Designer', status: 'Active' },
-      { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Manager', status: 'Inactive' },
+      {
+        id: 1,
+        name: "John Doe",
+        email: "john@example.com",
+        role: "Developer",
+        status: "Active",
+      },
+      {
+        id: 2,
+        name: "Jane Smith",
+        email: "jane@example.com",
+        role: "Designer",
+        status: "Active",
+      },
+      {
+        id: 3,
+        name: "Bob Johnson",
+        email: "bob@example.com",
+        role: "Manager",
+        status: "Inactive",
+      },
     ],
     columns: [
-      { header: 'Name', accessorKey: 'name', sortable: true },
-      { header: 'Email', accessorKey: 'email', sortable: true },
-      { header: 'Role', accessorKey: 'role', filterable: true },
-      { header: 'Status', accessorKey: 'status', filterable: true },
+      { header: "Name", accessorKey: "name", sortable: true },
+      { header: "Email", accessorKey: "email", sortable: true },
+      { header: "Role", accessorKey: "role", filterable: true },
+      { header: "Status", accessorKey: "status", filterable: true },
     ],
   },
 };

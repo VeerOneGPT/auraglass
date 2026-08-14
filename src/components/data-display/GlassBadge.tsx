@@ -131,16 +131,15 @@ export const GlassBadge = forwardRef<HTMLSpanElement, GlassBadgeProps>(
     };
 
     const variantClasses = {
-      default: "bg-muted/50 glass-text-secondary glass-border-0",
-      primary: "glass-surface-primary/10 glass-text-primary glass-border-0",
-      secondary: "bg-secondary/10 glass-text-primary/90 glass-border-0",
-      success: "glass-surface-success/10 glass-text-success glass-border-0",
-      warning: "glass-surface-warning/10 glass-text-primary glass-border-0",
-      error: "glass-surface-danger/10 glass-text-danger glass-border-0",
-      info: "glass-surface-info/10 glass-text-primary glass-border-0",
-      outline:
-        "bg-transparent glass-text-primary glass-border glass-border-white/10",
-      ghost: "bg-transparent glass-text-primary/70 glass-border-0",
+      default: "glass-border glass-border-black/10",
+      primary: "glass-border glass-border-black/12",
+      secondary: "glass-border glass-border-black/10",
+      success: "glass-border glass-border-black/10",
+      warning: "glass-border glass-border-black/10",
+      error: "glass-border glass-border-black/10",
+      info: "glass-border glass-border-black/10",
+      outline: "bg-transparent glass-border glass-border-black/15",
+      ghost: "bg-transparent glass-border-0",
     };
 
     const dotVariantClasses = {
@@ -210,6 +209,12 @@ export const GlassBadge = forwardRef<HTMLSpanElement, GlassBadgeProps>(
         performanceMode="medium"
         ref={ref as any}
         id={badgeId}
+        style={
+          {
+            "--glass-theme-text": "rgba(15, 23, 42, 0.92)",
+            color: "rgba(15, 23, 42, 0.92)",
+          } as React.CSSProperties
+        }
         className={cn(
           "glass-inline-flex glass-items-center glass-gap-1 glass-font-medium",
           `transition-all duration-[${ANIMATION.DURATION.fast}ms]`,

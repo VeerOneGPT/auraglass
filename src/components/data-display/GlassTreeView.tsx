@@ -12,13 +12,7 @@ import { cn } from "../../lib/utilsComprehensive";
 import { useA11yId } from "../../utils/a11y";
 import { useMotionPreference } from "../../hooks/useMotionPreference";
 import { useGlassSound } from "../../utils/soundDesign";
-import {
-  ContrastGuard,
-  TextWithContrast,
-} from "@/components/accessibility/ContrastGuard";
 import { ANIMATION } from "../../tokens/designConstants";
-import { useReducedMotion } from "../../hooks/useReducedMotion";
-import { createGlassStyle } from "../../core/mixins/glassMixins";
 
 export interface GlassTreeNode {
   id: string;
@@ -392,17 +386,21 @@ const GlassTreeNodeComponent = ({ node, level }: GlassTreeNodeProps) => {
           )}
           style={{
             paddingLeft: `${level * indentation}px`,
-            background:
-              variant === "filled"
-                ? "rgba(5, 11, 24, 0.28)"
-                : "rgba(5, 11, 24, 0.12)",
+            minHeight: size === "lg" ? 52 : 48,
+            height: "auto",
+            marginBottom: 8,
+            background: isSelected
+              ? "rgba(255, 255, 255, 0.34)"
+              : variant === "filled"
+                ? "rgba(255, 255, 255, 0.28)"
+                : "rgba(255, 255, 255, 0.20)",
             borderColor: isSelected
-              ? "rgba(124, 211, 255, 0.44)"
-              : "rgba(148, 163, 184, 0.18)",
+              ? "rgba(255, 255, 255, 0.86)"
+              : "rgba(255, 255, 255, 0.58)",
             boxShadow: isSelected
-              ? "inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 8px 18px rgba(2, 6, 23, 0.22)"
-              : "inset 0 1px 0 rgba(255, 255, 255, 0.035)",
-            color: "var(--glass-text-primary, rgba(248, 250, 252, 0.9))",
+              ? "0 10px 24px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.30), inset 0 0 14px rgba(255, 255, 255, 0.14)"
+              : "0 6px 18px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.26), inset 0 0 12px rgba(255, 255, 255, 0.12)",
+            color: "rgba(15, 23, 42, 0.92)",
           }}
           onClick={handleNodeClick}
           onDragStart={handleDragStart}
@@ -438,15 +436,18 @@ const GlassTreeNodeComponent = ({ node, level }: GlassTreeNodeProps) => {
 
           {/* Expand/collapse button */}
           <div
-            className={cn(
-              "glass-flex glass-items-center glass-justify-center glass-flex-shrink-0 glass-mr-1",
-              config.expandIcon
-            )}
+            className="glass-flex glass-items-center glass-justify-center glass-flex-shrink-0 glass-mr-2"
+            style={{ width: 32, height: 32 }}
           >
             {hasChildren ? (
               <button
                 onClick={handleToggle}
-                className="glass-p-1 glass-radius-md hover:glass-surface-overlay glass-transition-colors glass-focus glass-touch-target glass-contrast-guard glass-focus glass-touch-target glass-contrast-guard"
+                className="glass-p-1 glass-radius-md hover:glass-surface-overlay glass-transition-colors glass-focus glass-contrast-guard"
+                style={{
+                  width: 32,
+                  height: 32,
+                  color: "rgba(15, 23, 42, 0.78)",
+                }}
                 aria-label={isExpanded ? "Collapse" : "Expand"}
               >
                 {isExpanded
@@ -481,9 +482,12 @@ const GlassTreeNodeComponent = ({ node, level }: GlassTreeNodeProps) => {
           )}
 
           {/* Label */}
-          <ContrastGuard>
-            <span className="glass-flex-1 glass-truncate">{node.label}</span>
-          </ContrastGuard>
+          <span
+            className="glass-flex-1 glass-truncate"
+            style={{ color: "rgba(15, 23, 42, 0.92)" }}
+          >
+            {node.label}
+          </span>
 
           {/* Drag indicator */}
           {isDragOver && (
@@ -674,12 +678,16 @@ export const GlassTreeView = forwardRef<HTMLDivElement, GlassTreeViewProps>(
             className
           )}
           style={{
-            ...createGlassStyle({ intent: "neutral", elevation: "level2" }),
             maxHeight: "100%",
-            borderColor: "rgba(148, 163, 184, 0.22)",
+            background: "rgba(255, 255, 255, 0.22)",
+            backdropFilter:
+              "blur(24px) saturate(1.5) brightness(1.05) contrast(1.02)",
+            WebkitBackdropFilter:
+              "blur(24px) saturate(1.5) brightness(1.05) contrast(1.02)",
+            borderColor: "rgba(255, 255, 255, 0.70)",
             boxShadow:
-              "inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 12px 28px rgba(2, 6, 23, 0.24)",
-            color: "var(--glass-text-primary, rgba(248, 250, 252, 0.9))",
+              "0 14px 34px rgba(15, 23, 42, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.30), inset 0 0 18px rgba(255, 255, 255, 0.14)",
+            color: "rgba(15, 23, 42, 0.92)",
           }}
           role="tree"
           aria-multiselectable={selectionMode === "multiple"}

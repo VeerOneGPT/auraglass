@@ -286,11 +286,29 @@ export const DynamicAtmosphere = forwardRef<
       containerStyle,
       createGlassStyle({ intent: "neutral", elevation: "level2" })
     );
-    // Clamp to the canonical blur range (level1-level5) so arbitrary props
-    // cannot produce off-scale or negative blur values.
-    const clampedBlur = Math.max(0, Math.min(48, blurStrength));
-    containerStyle.backdropFilter = `blur(${clampedBlur}px)`;
-    (containerStyle as any).WebkitBackdropFilter = `blur(${clampedBlur}px)`;
+    // Keep custom blur requests on the canonical Liquid Glass scale. The
+    // complete filter chain is preserved instead of dropping to bare blur().
+    const blurLevels = [16, 24, 32, 40, 48] as const;
+    const requestedBlur = Math.max(0, Number(blurStrength) || 0);
+    const clampedBlur = blurLevels.reduce((closest, level) =>
+      Math.abs(level - requestedBlur) < Math.abs(closest - requestedBlur)
+        ? level
+        : closest
+    );
+    const canonicalFilter =
+      clampedBlur === 16
+        ? "blur(16px) saturate(1.4) brightness(1.08) contrast(1.04)"
+        : clampedBlur === 24
+          ? "blur(24px) saturate(1.4) brightness(1.08) contrast(1.04)"
+          : clampedBlur === 32
+            ? "blur(32px) saturate(1.4) brightness(1.08) contrast(1.04)"
+            : clampedBlur === 40
+              ? "blur(40px) saturate(1.4) brightness(1.08) contrast(1.04)"
+              : "blur(48px) saturate(1.4) brightness(1.08) contrast(1.04)";
+    Object.assign(containerStyle, {
+      backdropFilter: canonicalFilter,
+      WebkitBackdropFilter: canonicalFilter,
+    });
   }
 
   const effectStyle: React.CSSProperties & Record<string, string | number> = {

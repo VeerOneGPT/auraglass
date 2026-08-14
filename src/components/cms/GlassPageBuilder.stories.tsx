@@ -113,7 +113,7 @@ const sampleLandingPageData = {
       type: 'container',
       props: {
         padding: '60px 20px',
-        backgroundColor: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        backgroundColor: 'linear-gradient(145deg, #ffffff 0%, #eef1f5 100%)',
         borderRadius: '0px',
         maxWidth: '100%',
         display: 'block'

@@ -79,6 +79,18 @@ describe("GlassVirtualTable", () => {
     expect(screen.getByRole("table")).toBeInTheDocument();
   });
 
+  it("renders populated virtual rows", () => {
+    render(
+      <GlassVirtualTable
+        columns={[{ id: "name", header: "Name", accessorKey: "name" }]}
+        rows={[{ id: "aurora", name: "Aurora workspace" }]}
+        searchable={false}
+        pagination={false}
+      />
+    );
+    expect(screen.getAllByText("Aurora workspace").length).toBeGreaterThan(0);
+  });
+
   /**
    * Snapshot Test: Matches snapshot
    */

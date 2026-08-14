@@ -29,6 +29,14 @@ export default meta;
 type Story = StoryObj<typeof GlassStatusDot>;
 
 export const Default: Story = {
+  render: (args) => (
+    <div className="glass-neutral-level1 glass-rounded-2xl glass-p-6">
+      <div className="glass-flex glass-items-center glass-gap-3">
+        <GlassStatusDot {...args} />
+        <span className="glass-text-sm glass-text-primary">Service operational</span>
+      </div>
+    </div>
+  ),
   args: {
     status: 'ok',
     size: 12,

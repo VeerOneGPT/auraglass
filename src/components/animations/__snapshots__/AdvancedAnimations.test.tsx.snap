@@ -2,13 +2,16 @@
 
 exports[`AdvancedAnimations matches snapshot 1`] = `
 <div
-  class="glass-advanced-animations glass-space-y-6"
+  class="glass-advanced-animations glass-on-light glass-space-y-6"
+  data-bg="light"
+  style="--glass-theme-text: rgba(0, 0, 0, 0.9); --glass-theme-text-secondary: rgba(0, 0, 0, 0.7); --glass-theme-text-tertiary: rgba(0, 0, 0, 0.56); --glass-text-primary: rgba(0, 0, 0, 0.9); --glass-text-secondary: rgba(0, 0, 0, 0.7); --glass-text-tertiary: rgba(0, 0, 0, 0.56); width: 100%; min-width: 0;"
 >
   <div
     class="glass-grid sm:glass-grid-cols-2 glass-gap-4"
   >
     <div
-      class="glass-surface-primary glass-radius-2xl glass-p-6 glass-space-y-3 glass-border glass-border-white/10"
+      class="glass-foundation-complete glass-on-light glass-surface-primary glass-radius-2xl glass-p-6 glass-space-y-3 glass-border glass-border-subtle"
+      style="min-width: 0; box-shadow: 0 18px 42px -28px rgba(15, 23, 42, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.74);"
     >
       <span
         class="contrast-guard"
@@ -27,15 +30,17 @@ exports[`AdvancedAnimations matches snapshot 1`] = `
         </h3>
       </span>
       <div
-        class="glass-h-2 glass-radius-full glass-surface-subtle"
+        class="glass-h-2 glass-radius-full"
+        style="overflow: hidden;"
       >
         <div
-          class="glass-h-full glass-radius-full glass-gradient-primary"
+          class="glass-h-full glass-radius-full"
         />
       </div>
     </div>
     <div
-      class="glass-surface-primary glass-radius-2xl glass-p-6 glass-space-y-3 glass-border glass-border-white/10"
+      class="glass-foundation-complete glass-on-light glass-surface-primary glass-radius-2xl glass-p-6 glass-space-y-3 glass-border glass-border-subtle"
+      style="min-width: 0; box-shadow: 0 18px 42px -28px rgba(15, 23, 42, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.74);"
     >
       <span
         class="contrast-guard"
@@ -54,15 +59,17 @@ exports[`AdvancedAnimations matches snapshot 1`] = `
         </h3>
       </span>
       <div
-        class="glass-h-2 glass-radius-full glass-surface-subtle"
+        class="glass-h-2 glass-radius-full"
+        style="overflow: hidden;"
       >
         <div
-          class="glass-h-full glass-radius-full glass-gradient-primary"
+          class="glass-h-full glass-radius-full"
         />
       </div>
     </div>
     <div
-      class="glass-surface-primary glass-radius-2xl glass-p-6 glass-space-y-3 glass-border glass-border-white/10"
+      class="glass-foundation-complete glass-on-light glass-surface-primary glass-radius-2xl glass-p-6 glass-space-y-3 glass-border glass-border-subtle"
+      style="min-width: 0; box-shadow: 0 18px 42px -28px rgba(15, 23, 42, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.74);"
     >
       <span
         class="contrast-guard"
@@ -81,15 +88,17 @@ exports[`AdvancedAnimations matches snapshot 1`] = `
         </h3>
       </span>
       <div
-        class="glass-h-2 glass-radius-full glass-surface-subtle"
+        class="glass-h-2 glass-radius-full"
+        style="overflow: hidden;"
       >
         <div
-          class="glass-h-full glass-radius-full glass-gradient-primary"
+          class="glass-h-full glass-radius-full"
         />
       </div>
     </div>
     <div
-      class="glass-surface-primary glass-radius-2xl glass-p-6 glass-space-y-3 glass-border glass-border-white/10"
+      class="glass-foundation-complete glass-on-light glass-surface-primary glass-radius-2xl glass-p-6 glass-space-y-3 glass-border glass-border-subtle"
+      style="min-width: 0; box-shadow: 0 18px 42px -28px rgba(15, 23, 42, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.74);"
     >
       <span
         class="contrast-guard"
@@ -108,10 +117,11 @@ exports[`AdvancedAnimations matches snapshot 1`] = `
         </h3>
       </span>
       <div
-        class="glass-h-2 glass-radius-full glass-surface-subtle"
+        class="glass-h-2 glass-radius-full"
+        style="overflow: hidden;"
       >
         <div
-          class="glass-h-full glass-radius-full glass-gradient-primary"
+          class="glass-h-full glass-radius-full"
         />
       </div>
     </div>

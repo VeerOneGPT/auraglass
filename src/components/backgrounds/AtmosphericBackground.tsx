@@ -17,10 +17,10 @@ import styles from "./AtmosphericBackground.module.css";
 
 // Default gradient colors
 const defaultGradientColors = [
-  "color-mix(in srgb, hsl(var(--glass-color-primary)) 50%, transparent)", // Blue
-  "color-mix(in srgb, var(--glass-color-secondary) 50%, transparent)", // Indigo
-  "color-mix(in srgb, var(--glass-color-accent) 50%, transparent)", // Purple
-  "color-mix(in srgb, hsl(var(--glass-color-info)) 50%, transparent)", // Pink
+  "rgba(255, 255, 255, 0.28)",
+  "rgba(241, 245, 249, 0.22)",
+  "rgba(226, 232, 240, 0.18)",
+  "rgba(255, 255, 255, 0.12)",
 ];
 
 /**
@@ -34,7 +34,7 @@ const AtmosphericBackgroundComponent = (
     children,
     className,
     style,
-    baseColor = "color-mix(in srgb, var(--glass-black) 80%, transparent)",
+    baseColor = "rgba(226, 232, 240, 0.72)",
     gradientColors = defaultGradientColors,
     intensity = 0.7,
     animate = true,

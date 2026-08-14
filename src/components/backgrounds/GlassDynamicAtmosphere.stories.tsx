@@ -6,7 +6,7 @@ const meta: Meta<typeof DynamicAtmosphere> = {
   component: DynamicAtmosphere,
   parameters: {
     layout: 'fullscreen',
-    previewSurface: 'media',
+    previewSurface: 'component',
     docs: {
       description: {
         component: 'Dynamic atmospheric layer shown as a bounded media composition.',

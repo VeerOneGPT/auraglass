@@ -32,11 +32,11 @@ type Story = StoryObj<typeof GlassMultiStepForm>;
 const PersonalInfoStep = () => (
   <div className="glass-gap-4">
     <div>
-      <label className="glass-block glass-text-sm glass-font-medium glass-text-primary/80 glass-mb-1">First Name</label>
+      <label className="glass-block glass-text-sm glass-font-medium text-slate-800 glass-mb-1">First Name</label>
       <input className="glass-w-full glass-px-3 glass-py-2 glass-surface-subtle/10 glass-border glass-border-white/20 glass-radius-lg glass-text-primary glass-touch-target glass-contrast-guard" />
     </div>
     <div>
-      <label className="glass-block glass-text-sm glass-font-medium glass-text-primary/80 glass-mb-1">Last Name</label>
+      <label className="glass-block glass-text-sm glass-font-medium text-slate-800 glass-mb-1">Last Name</label>
       <input className="glass-w-full glass-px-3 glass-py-2 glass-surface-subtle/10 glass-border glass-border-white/20 glass-radius-lg glass-text-primary glass-touch-target glass-contrast-guard" />
     </div>
   </div>
@@ -45,11 +45,11 @@ const PersonalInfoStep = () => (
 const ContactDetailsStep = () => (
   <div className="glass-gap-4">
     <div>
-      <label className="glass-block glass-text-sm glass-font-medium glass-text-primary/80 glass-mb-1">Email</label>
+      <label className="glass-block glass-text-sm glass-font-medium text-slate-800 glass-mb-1">Email</label>
       <input type="email" className="glass-w-full glass-px-3 glass-py-2 glass-surface-subtle/10 glass-border glass-border-white/20 glass-radius-lg glass-text-primary glass-touch-target glass-contrast-guard" />
     </div>
     <div>
-      <label className="glass-block glass-text-sm glass-font-medium glass-text-primary/80 glass-mb-1">Phone</label>
+      <label className="glass-block glass-text-sm glass-font-medium text-slate-800 glass-mb-1">Phone</label>
       <input type="tel" className="glass-w-full glass-px-3 glass-py-2 glass-surface-subtle/10 glass-border glass-border-white/20 glass-radius-lg glass-text-primary glass-touch-target glass-contrast-guard" />
     </div>
   </div>
@@ -75,7 +75,7 @@ export const Default: Story = {
 const Step1Component = () => (
   <div className="glass-gap-4">
     <div>
-      <label className="glass-block glass-text-sm glass-font-medium glass-text-primary/80 glass-mb-1">Name</label>
+      <label className="glass-block glass-text-sm glass-font-medium text-slate-800 glass-mb-1">Name</label>
       <input className="glass-w-full glass-px-3 glass-py-2 glass-surface-subtle/10 glass-border glass-border-white/20 glass-radius-lg glass-text-primary glass-touch-target glass-contrast-guard" />
     </div>
   </div>
@@ -84,7 +84,7 @@ const Step1Component = () => (
 const Step2Component = () => (
   <div className="glass-gap-4">
     <div>
-      <label className="glass-block glass-text-sm glass-font-medium glass-text-primary/80 glass-mb-1">Email</label>
+      <label className="glass-block glass-text-sm glass-font-medium text-slate-800 glass-mb-1">Email</label>
       <input type="email" className="glass-w-full glass-px-3 glass-py-2 glass-surface-subtle/10 glass-border glass-border-white/20 glass-radius-lg glass-text-primary glass-touch-target glass-contrast-guard" />
     </div>
   </div>

@@ -180,10 +180,10 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
             {/* Tabs */}
             <div className="glass-flex glass-border-b glass-border-subtle">
               {[
-                { key: "basic", label: "Basic", icon: "⚙️" },
-                { key: "filters", label: "Filters", icon: "🎨" },
-                { key: "ai", label: "AI", icon: "🤖" },
-                { key: "templates", label: "Templates", icon: "📐" },
+                { key: "basic", label: "Basic", icon: "○" },
+                { key: "filters", label: "Filters", icon: "◐" },
+                { key: "ai", label: "AI", icon: "◎" },
+                { key: "templates", label: "Templates", icon: "◇" },
               ].map((tab: any) => (
                 <button
                   key={tab.key}
@@ -333,16 +333,16 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
                       disabled={isProcessing}
                       className="glass-w-full glass-py-3 glass-surface-primary glass-text-primary glass-radius hover:glass-surface-subtle disabled:glass-opacity-50 glass-transition-colors glass-flex glass-items-center glass-justify-center glass-gap-2 glass-focus glass-touch-target glass-contrast-guard glass-focus glass-touch-target glass-contrast-guard"
                     >
-                      <span>🤖</span>
+                      <span aria-hidden="true">◎</span>
                       AI Auto-Enhance
                     </button>
 
                     <button
                       onClick={handleRemoveBackground}
                       disabled={isProcessing}
-                      className="glass-w-full glass-py-3 glass-surface-green glass-text-primary glass-radius hover:glass-surface-green disabled:glass-opacity-50 glass-transition-colors glass-flex glass-items-center glass-justify-center glass-gap-2 glass-focus glass-touch-target glass-contrast-guard glass-focus glass-touch-target glass-contrast-guard"
+                      className="glass-w-full glass-py-3 glass-surface-subtle glass-border glass-border-subtle glass-text-primary glass-radius hover:glass-surface-overlay disabled:glass-opacity-50 glass-transition-colors glass-flex glass-items-center glass-justify-center glass-gap-2 glass-focus glass-touch-target glass-contrast-guard"
                     >
-                      <span>✂️</span>
+                      <span aria-hidden="true">⌁</span>
                       Remove Background
                     </button>
 
@@ -351,16 +351,16 @@ const ImageEditor: React.FC<ImageEditorProps> = ({
                       disabled={isProcessing}
                       className="glass-w-full glass-py-3 glass-surface-primary glass-text-primary glass-radius hover:glass-surface-subtle disabled:glass-opacity-50 glass-transition-colors glass-flex glass-items-center glass-justify-center glass-gap-2"
                     >
-                      <span>👤</span>
+                      <span aria-hidden="true">○</span>
                       Detect Faces
                     </button>
 
                     <button
                       onClick={() => smartCrop(image.id, 1.0)}
                       disabled={isProcessing}
-                      className="glass-w-full glass-py-3 glass-surface-indigo glass-text-primary glass-radius glass-hover-bg-indigo-700 disabled:glass-opacity-50 glass-transition-colors glass-flex glass-items-center glass-justify-center glass-gap-2"
+                      className="glass-w-full glass-py-3 glass-surface-subtle glass-border glass-border-subtle glass-text-primary glass-radius hover:glass-surface-overlay disabled:glass-opacity-50 glass-transition-colors glass-flex glass-items-center glass-justify-center glass-gap-2"
                     >
-                      <span>🎯</span>
+                      <span aria-hidden="true">⌖</span>
                       Smart Crop
                     </button>
                   </div>
@@ -570,7 +570,7 @@ export const GlassIntelligentImageUploader: React.FC<
         >
           <div className="glass-min-w-0">
             <h2 className="glass-text-lg glass-font-semibold glass-text-primary glass-leading-tight">
-              🤖 Intelligent Image Uploader
+              <span aria-hidden="true">◎</span> Intelligent Image Uploader
             </h2>
             <p className="glass-text-secondary glass-mt-1 glass-text-sm">
               AI-powered image optimization and editing
@@ -582,7 +582,7 @@ export const GlassIntelligentImageUploader: React.FC<
               onClick={() => setShowStats(!showStats)}
               className="glass-px-3 glass-py-2 glass-surface-subtle glass-text-primary glass-radius-lg hover:glass-surface-subtle glass-transition-colors"
             >
-              📊 Stats
+              Stats
             </button>
           )}
         </div>
@@ -627,7 +627,7 @@ export const GlassIntelligentImageUploader: React.FC<
           className={cn(
             "glass-relative glass-border glass-border-dashed glass-radius-lg glass-p-4 glass-text-center glass-transition-colors glass-overflow-hidden",
             dragActive
-              ? "glass-border-blue glass-surface-blue"
+              ? "glass-border-secondary glass-surface-subtle"
               : "glass-border-white/20 glass-surface-subtle/5 hover:glass-border-white/30"
           )}
           style={{
@@ -647,7 +647,7 @@ export const GlassIntelligentImageUploader: React.FC<
               className="glass-text-2xl"
               style={{ fontSize: compact ? 22 : undefined }}
             >
-              📸
+              ⇧
             </div>
             <div>
               <h3 className="glass-text-base glass-font-medium glass-text-primary glass-leading-snug">
@@ -660,14 +660,14 @@ export const GlassIntelligentImageUploader: React.FC<
 
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="glass-px-3 glass-py-1.5 glass-surface-blue glass-text-primary glass-radius-lg hover:glass-surface-blue glass-transition-colors glass-text-sm"
+              className="glass-px-3 glass-py-1.5 glass-surface-subtle glass-border glass-border-subtle glass-text-primary glass-radius-lg hover:glass-surface-overlay glass-transition-colors glass-text-sm"
             >
               Choose Files
             </button>
 
             {showOptimization && autoOptimize && (
               <div className="glass-flex glass-items-center glass-justify-center glass-gap-2 glass-text-xs glass-text-secondary">
-                <span>✅</span>
+                <span aria-hidden="true">✓</span>
                 <span>Auto-optimization enabled</span>
               </div>
             )}
@@ -751,7 +751,7 @@ export const GlassIntelligentImageUploader: React.FC<
                           className="glass-p-2 glass-surface-subtle glass-radius-full glass-text-secondary hover:glass-text-primary glass-transition-colors"
                           title="Edit Image"
                         >
-                          ✏️
+                          Edit
                         </button>
                       )}
                       <button
@@ -759,7 +759,7 @@ export const GlassIntelligentImageUploader: React.FC<
                         className="glass-p-2 glass-surface-subtle glass-radius-full glass-text-secondary hover:glass-text-primary glass-transition-colors"
                         title="Remove Image"
                       >
-                        🗑️
+                        Remove
                       </button>
                     </div>
                   </div>
@@ -774,7 +774,7 @@ export const GlassIntelligentImageUploader: React.FC<
                       {(image.size / 1024).toFixed(1)}KB
                     </div>
                     {image.optimizedAt && (
-                      <div className="glass-text-primary">✅ Optimized</div>
+                      <div className="glass-text-primary">✓ Optimized</div>
                     )}
                   </div>
                 </div>
@@ -787,7 +787,9 @@ export const GlassIntelligentImageUploader: React.FC<
         {showAIFeatures && (
           <div className="glass-grid glass-grid-cols-1 md:glass-grid-cols-3 glass-gap-4">
             <div className="glass-text-center glass-p-4 glass-surface-subtle glass-radius-lg">
-              <div className="glass-text-2xl glass-mb-2">🤖</div>
+              <div className="glass-text-2xl glass-mb-2" aria-hidden="true">
+                ◎
+              </div>
               <h3 className="glass-font-medium glass-text-primary">
                 AI Enhancement
               </h3>
@@ -796,7 +798,9 @@ export const GlassIntelligentImageUploader: React.FC<
               </p>
             </div>
             <div className="glass-text-center glass-p-4 glass-surface-subtle glass-radius-lg">
-              <div className="glass-text-2xl glass-mb-2">✂️</div>
+              <div className="glass-text-2xl glass-mb-2" aria-hidden="true">
+                ⌁
+              </div>
               <h3 className="glass-font-medium glass-text-primary">
                 Smart Tools
               </h3>
@@ -805,7 +809,9 @@ export const GlassIntelligentImageUploader: React.FC<
               </p>
             </div>
             <div className="glass-text-center glass-p-4 glass-surface-subtle glass-radius-lg">
-              <div className="glass-text-2xl glass-mb-2">⚡</div>
+              <div className="glass-text-2xl glass-mb-2" aria-hidden="true">
+                ↯
+              </div>
               <h3 className="glass-font-medium glass-text-primary">
                 Optimization
               </h3>

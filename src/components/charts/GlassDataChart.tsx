@@ -345,15 +345,15 @@ const getContainerBackground = (variant?: string, color?: string) => {
     case "clear":
       return "transparent";
     case "dynamic":
-      return "color-mix(in srgb, var(--aura-color-glass-overlay) 65%, color-mix(in srgb, rgb(12, 18, 32) 45%, transparent))";
+      return "var(--glass-neutral-level2-surface)";
     case "tinted":
       return color
-        ? `color-mix(in srgb, ${color} 18%, color-mix(in srgb, rgb(12, 18, 32) 65%, transparent))`
+        ? `linear-gradient(135deg, color-mix(in srgb, ${color} 18%, rgba(255,255,255,0.14)) 0%, color-mix(in srgb, ${color} 8%, rgba(255,255,255,0.05)) 50%, color-mix(in srgb, ${color} 12%, rgba(255,255,255,0.1)) 100%), linear-gradient(rgba(15,23,42,0.22), rgba(15,23,42,0.22))`
         : `color-mix(in srgb, ${COLORS.semantic.secondary} 14%, transparent)`;
     case "luminous":
-      return "color-mix(in srgb, var(--aura-color-semantic-primary) 12%, color-mix(in srgb, var(--glass-white) 8%, transparent))";
+      return "linear-gradient(135deg, color-mix(in srgb, var(--aura-color-semantic-primary) 12%, rgba(255,255,255,0.14)) 0%, color-mix(in srgb, var(--aura-color-semantic-primary) 6%, rgba(255,255,255,0.05)) 50%, color-mix(in srgb, var(--aura-color-semantic-primary) 10%, rgba(255,255,255,0.1)) 100%), linear-gradient(rgba(15,23,42,0.22), rgba(15,23,42,0.22))";
     default:
-      return "color-mix(in srgb, var(--aura-color-glass-surface) 94%, color-mix(in srgb, rgb(12, 18, 32) 20%, transparent))";
+      return "var(--glass-neutral-level2-surface)";
   }
 };
 
@@ -362,11 +362,11 @@ const getBlurStrength = (value?: string) => {
     case "none":
       return "none";
     case "light":
-      return "blur(var(--aura-glass-neutral-level1-backdrop-blur))";
+      return `blur(var(--aura-glass-neutral-level1-backdrop-blur)) var(--glass-filter-base)`;
     case "heavy":
-      return "blur(var(--aura-glass-neutral-level3-backdrop-blur))";
+      return `blur(var(--aura-glass-neutral-level3-backdrop-blur)) var(--glass-filter-base)`;
     default:
-      return "blur(var(--aura-glass-neutral-level2-backdrop-blur))";
+      return `blur(var(--aura-glass-neutral-level2-backdrop-blur)) var(--glass-filter-base)`;
   }
 };
 
@@ -481,7 +481,7 @@ interface ChartLegendProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const ChartLegend = forwardRef<HTMLDivElement, ChartLegendProps>(
-  ({ $position, $glassEffect, className, style, ...props }, ref) => (
+  ({ $position, $glassEffect, $style, className, style, ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
@@ -493,7 +493,7 @@ const ChartLegend = forwardRef<HTMLDivElement, ChartLegendProps>(
         $glassEffect && chartStyles.legendGlass,
         className
       )}
-      style={{ ...(style ?? {}) }}
+      style={{ ...(style ?? {}), ...($style ? { background: $style } : {}) }}
       {...props}
     />
   )
@@ -508,7 +508,10 @@ interface LegendItemProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const LegendItem: React.FC<LegendItemProps> = ({
   $active = true,
+  $style,
+  $color,
   className,
+  style,
   ...props
 }) => (
   <div
@@ -517,6 +520,7 @@ const LegendItem: React.FC<LegendItemProps> = ({
       !$active && chartStyles.legendItemInactive,
       className
     )}
+    style={{ ...(style ?? {}), ...($style ? { background: $style } : {}) }}
     {...props}
   />
 );
@@ -715,7 +719,7 @@ if (defaults?.plugins?.tooltip) {
 }
 if (defaults?.font) {
   defaults.font.family =
-    "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+    "'Aeonik', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
 }
 // Set colors safely
 defaults.color =
@@ -1680,7 +1684,7 @@ const GlassDataChartComponent = React.forwardRef<
       exportContext.textBaseline = "middle";
 
       if (title) {
-        exportContext.font = `bold ${16 * devicePixelRatio}px Inter, sans-serif`;
+        exportContext.font = `bold ${16 * devicePixelRatio}px Aeonik, sans-serif`;
         exportContext.fillStyle = "#ffffff";
         exportContext.fillText(
           title,
@@ -1690,7 +1694,7 @@ const GlassDataChartComponent = React.forwardRef<
       }
 
       if (subtitle) {
-        exportContext.font = `${14 * devicePixelRatio}px Inter, sans-serif`;
+        exportContext.font = `${14 * devicePixelRatio}px Aeonik, sans-serif`;
         exportContext.fillStyle = "rgba(255, 255, 255, 0.76)";
         exportContext.fillText(
           subtitle,

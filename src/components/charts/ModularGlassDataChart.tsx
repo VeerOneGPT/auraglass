@@ -768,13 +768,13 @@ export const ModularGlassDataChart = React.forwardRef<
     // Add title if needed
     if (exportOptions.includeTitle && title) {
       ctx.fillStyle = "#ffffff";
-      ctx.font = "bold 16px Inter, sans-serif";
+      ctx.font = "bold 16px Aeonik, sans-serif";
       ctx.textAlign = "center";
       ctx.fillText(title, tempCanvas.width / 2, 25);
 
       if (subtitle) {
         ctx.fillStyle = "rgba(226, 232, 240, 0.72)";
-        ctx.font = "12px Inter, sans-serif";
+        ctx.font = "12px Aeonik, sans-serif";
         ctx.fillText(subtitle, tempCanvas.width / 2, 45);
       }
     }

@@ -32,13 +32,13 @@ const variantIcon = {
 const EmptyAction = ({ action }: { action: GlassEmptyStateAction }) => {
   if (action.href) {
     return (
-      <GlassButton asChild size="sm">
+      <GlassButton asChild size="sm" intensity="subtle" glassVariant="clear" tint="neutral">
         <a href={action.href}>{action.label}</a>
       </GlassButton>
     );
   }
   return (
-    <GlassButton type="button" size="sm" onClick={action.onClick}>
+    <GlassButton type="button" size="sm" intensity="subtle" glassVariant="clear" tint="neutral" onClick={action.onClick}>
       {action.label}
     </GlassButton>
   );
@@ -78,6 +78,12 @@ export const GlassEmptyState = forwardRef<HTMLDivElement, GlassEmptyStateProps>(
           compact ? "glass-p-4" : "glass-min-h-[220px] glass-p-8",
           className
         )}
+        style={
+          {
+            "--glass-theme-text": "rgba(15, 23, 42, 0.92)",
+            color: "rgba(15, 23, 42, 0.92)",
+          } as React.CSSProperties
+        }
         {...props}
       >
         <div

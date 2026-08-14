@@ -273,20 +273,20 @@ const GlassSelectTrigger = React.forwardRef<
 
     const variantConfig = {
       default: cn(
-        "bg-background/50 border border-border/20",
+        "glass-surface-subtle/10 glass-border glass-border-subtle",
         "focus:border-primary focus:ring-1 focus:ring-primary"
       ),
       filled: cn(
-        "bg-muted/50 border border-transparent",
-        "focus:bg-background/50 focus:border-primary"
+        "glass-surface-subtle/10 glass-border glass-border-transparent",
+        "focus:glass-border-primary"
       ),
       outlined: cn(
-        "bg-transparent border-2 border-border/20",
-        "focus:border-primary"
+        "glass-bg-transparent glass-border-2 glass-border-subtle",
+        "focus:glass-border-primary"
       ),
       minimal: cn(
-        "bg-transparent border-0 border-b border-border/20 rounded-none",
-        "focus:border-primary"
+        "glass-bg-transparent glass-border-0 glass-border-b glass-border-subtle glass-radius-none",
+        "focus:glass-border-primary"
       ),
     };
 
@@ -387,6 +387,7 @@ const GlassSelectContent = React.forwardRef<
       positionStrategy = "fixed",
       contained = false,
       sideOffset = 4,
+      style,
       ...props
     },
     ref
@@ -413,7 +414,7 @@ const GlassSelectContent = React.forwardRef<
             role="listbox"
             onDismiss={() => context.setOpen(false)}
             className={cn(
-              "glass-select-content relative z-50 max-h-96 min-w-[8rem] overflow-hidden",
+              "glass-select-content relative z-50 max-h-96 min-w-[8rem]",
               "glass-backdrop-blur-lg bg-white/10 ring-1 ring-white/15",
               "glass-radius-xl shadow-2xl shadow-black/40",
               "text-foreground",
@@ -433,17 +434,23 @@ const GlassSelectContent = React.forwardRef<
             data-position-strategy={
               isContained ? "contained" : positionStrategy
             }
+            style={{
+              boxSizing: "border-box",
+              maxWidth: "100%",
+              overflowX: "hidden",
+              overflowY: "auto",
+              ...style,
+            }}
             {...props}
           >
             <GlassSelectScrollUpButton />
             <div
-              className={cn(
-                "glass-p-1",
-                position === "popper" && [
-                  "h-[var(--radix-select-trigger-height)] w-full",
-                  "min-w-[var(--radix-select-trigger-width)]",
-                ]
-              )}
+              className="glass-p-1"
+              style={{
+                boxSizing: "border-box",
+                minWidth: 0,
+                width: "100%",
+              }}
             >
               {children}
             </div>
@@ -542,13 +549,14 @@ GlassSelectItem.displayName = "GlassSelectItem";
 const GlassSelectLabel = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+>(({ className, style, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      "glass-select-label glass-py-1.5 pl-8 pr-2 glass-text-sm font-semibold glass-text-secondary",
+      "glass-select-label glass-py-1.5 pl-8 pr-2 glass-text-sm font-semibold",
       className
     )}
+    style={{ color: "rgba(15, 23, 42, 0.72)", ...style }}
     {...props}
   />
 ));

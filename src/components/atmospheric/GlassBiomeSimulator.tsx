@@ -186,6 +186,8 @@ export const GlassBiomeSimulator = forwardRef<
     const [biomeLayers, setBiomeLayers] = useState<BiomeLayer[]>([]);
     const [animationTime, setAnimationTime] = useState(0);
     const [cameraOffset, setCameraOffset] = useState({ x: 0, y: 0 });
+    const [dayNightEnabled, setDayNightEnabled] = useState(dayNightCycle);
+    const [parallaxActive, setParallaxActive] = useState(parallaxEnabled);
 
     // Biome configurations (memoized to prevent re-creation each render)
     // Re-creating this object every render invalidated callbacks that depend on it
@@ -194,9 +196,9 @@ export const GlassBiomeSimulator = forwardRef<
       () => ({
         forest: {
           colors: {
-            sky: ["#87CEEB", "#98FB98"],
-            ground: [34, 139, 34],
-            accent: [139, 69, 19],
+            sky: ["#dfe8eb", "#b8c8c3"],
+            ground: [72, 91, 82],
+            accent: [111, 104, 91],
           },
           particles: ["leaf", "pollen", "insect"],
           elements: ["tree", "grass", "flower"],
@@ -204,9 +206,9 @@ export const GlassBiomeSimulator = forwardRef<
         },
         ocean: {
           colors: {
-            sky: ["#87CEEB", "#E0F6FF"],
-            ground: [25, 25, 112],
-            accent: [255, 255, 255],
+            sky: ["#dfe9ee", "#afc1ca"],
+            ground: [65, 89, 104],
+            accent: [225, 231, 233],
           },
           particles: ["water", "droplet"],
           elements: ["water", "cloud"],
@@ -214,9 +216,9 @@ export const GlassBiomeSimulator = forwardRef<
         },
         desert: {
           colors: {
-            sky: ["#FFD700", "#FFA500"],
-            ground: [238, 203, 173],
-            accent: [160, 82, 45],
+            sky: ["#ede7df", "#cbbdac"],
+            ground: [157, 137, 112],
+            accent: [126, 105, 86],
           },
           particles: ["dust", "sand"],
           elements: ["rock", "cactus"],
@@ -224,9 +226,9 @@ export const GlassBiomeSimulator = forwardRef<
         },
         tundra: {
           colors: {
-            sky: ["#B0C4DE", "#F0F8FF"],
-            ground: [248, 248, 255],
-            accent: [70, 130, 180],
+            sky: ["#e8edf0", "#c6d0d7"],
+            ground: [211, 219, 224],
+            accent: [107, 126, 139],
           },
           particles: ["snow", "ice"],
           elements: ["ice", "rock"],
@@ -234,9 +236,9 @@ export const GlassBiomeSimulator = forwardRef<
         },
         grassland: {
           colors: {
-            sky: ["#87CEEB", "#98FB98"],
-            ground: [124, 252, 0],
-            accent: [255, 215, 0],
+            sky: ["#e5e9e3", "#bdc8b9"],
+            ground: [102, 117, 91],
+            accent: [151, 139, 99],
           },
           particles: ["pollen", "grass"],
           elements: ["grass", "flower"],
@@ -244,9 +246,9 @@ export const GlassBiomeSimulator = forwardRef<
         },
         rainforest: {
           colors: {
-            sky: ["#228B22", "#90EE90"],
-            ground: [0, 100, 0],
-            accent: [255, 69, 0],
+            sky: ["#d9e3df", "#a9bab1"],
+            ground: [55, 79, 68],
+            accent: [119, 101, 82],
           },
           particles: ["water", "leaf", "spore"],
           elements: ["tree", "vine", "flower"],
@@ -254,9 +256,9 @@ export const GlassBiomeSimulator = forwardRef<
         },
         mountain: {
           colors: {
-            sky: ["#4682B4", "#E0F6FF"],
-            ground: [105, 105, 105],
-            accent: [255, 255, 255],
+            sky: ["#e2e8ec", "#b7c4cc"],
+            ground: [103, 108, 111],
+            accent: [222, 227, 230],
           },
           particles: ["snow", "cloud"],
           elements: ["mountain", "rock", "snow"],
@@ -264,9 +266,9 @@ export const GlassBiomeSimulator = forwardRef<
         },
         swamp: {
           colors: {
-            sky: ["#696969", "#A9A9A9"],
-            ground: [85, 107, 47],
-            accent: [255, 140, 0],
+            sky: ["#d7dcda", "#a9b1ad"],
+            ground: [73, 83, 73],
+            accent: [136, 118, 91],
           },
           particles: ["fog", "insect", "bubble"],
           elements: ["water", "tree", "fog"],
@@ -302,7 +304,7 @@ export const GlassBiomeSimulator = forwardRef<
               y: height * 0.3 + Math.random() * 50,
               width: 60 + Math.random() * 40,
               height: 80 + Math.random() * 60,
-              color: [34, 100, 34],
+              color: [74, 91, 82],
               opacity: 0.6,
               id: `far-tree-${i}`,
             });
@@ -341,7 +343,7 @@ export const GlassBiomeSimulator = forwardRef<
               y: height * 0.7 + Math.random() * height * 0.2,
               width: 10 + Math.random() * 20,
               height: 20 + Math.random() * 30,
-              color: [124, 252, 0],
+              color: [101, 116, 91],
               opacity: 0.8,
               id: `grass-${i}`,
             });
@@ -353,7 +355,7 @@ export const GlassBiomeSimulator = forwardRef<
             y: height * 0.6,
             width: width,
             height: height * 0.4,
-            color: [25, 25, 112],
+            color: [66, 91, 105],
             opacity: 0.8,
             animation: "wave",
             id: "ocean-water",
@@ -379,7 +381,7 @@ export const GlassBiomeSimulator = forwardRef<
               y: height * 0.2,
               width: 80 + Math.random() * 60,
               height: 120 + Math.random() * 80,
-              color: [34, 139, 34],
+              color: [65, 84, 73],
               opacity: 1,
               id: `near-tree-${i}`,
             });
@@ -643,7 +645,7 @@ export const GlassBiomeSimulator = forwardRef<
     // Get day/night colors
     const getDayNightColors = useCallback(
       (timeOfDay: number, baseColors: string[]) => {
-        if (!dayNightCycle) return baseColors;
+        if (!dayNightEnabled) return baseColors;
 
         const isDay = timeOfDay >= 6 && timeOfDay <= 18;
         const lightIntensity = isDay
@@ -664,7 +666,7 @@ export const GlassBiomeSimulator = forwardRef<
           return `rgb(${newR}, ${newG}, ${newB})`;
         });
       },
-      [dayNightCycle]
+      [dayNightEnabled]
     );
 
     // Render biome
@@ -688,13 +690,36 @@ export const GlassBiomeSimulator = forwardRef<
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
 
+      // A softly refracted horizon gives the scene material depth without
+      // turning the biome into a saturated illustration.
+      const groundGradient = ctx.createLinearGradient(0, height * 0.5, 0, height);
+      const [groundR, groundG, groundB] = config.colors.ground;
+      groundGradient.addColorStop(0, `rgba(${groundR}, ${groundG}, ${groundB}, 0.12)`);
+      groundGradient.addColorStop(1, `rgba(${groundR}, ${groundG}, ${groundB}, 0.72)`);
+      ctx.fillStyle = groundGradient;
+      ctx.fillRect(0, height * 0.52, width, height * 0.48);
+
+      const atmosphere = ctx.createRadialGradient(
+        width * 0.72,
+        height * 0.18,
+        0,
+        width * 0.72,
+        height * 0.18,
+        Math.max(width, height) * 0.68
+      );
+      atmosphere.addColorStop(0, "rgba(255, 255, 255, 0.42)");
+      atmosphere.addColorStop(0.48, "rgba(255, 255, 255, 0.08)");
+      atmosphere.addColorStop(1, "rgba(255, 255, 255, 0)");
+      ctx.fillStyle = atmosphere;
+      ctx.fillRect(0, 0, width, height);
+
       // Draw atmospheric layers
       if (showAtmosphericLayers) {
         biomeLayers.forEach((layer: any) => {
           ctx.save();
           ctx.globalAlpha = layer.opacity;
 
-          const parallaxOffset = parallaxEnabled
+          const parallaxOffset = parallaxActive
             ? cameraOffset.x * layer.parallaxSpeed
             : 0;
 
@@ -995,28 +1020,43 @@ export const GlassBiomeSimulator = forwardRef<
       // Biome info overlay
       if (showBiomeInfo) {
         ctx.save();
-        ctx.fillStyle = "var(--glass-text-secondary-dark)";
-        ctx.fillRect(10, 10, 250, 140);
+        const infoWidth = Math.min(246, width - 24);
+        ctx.fillStyle = "rgba(248, 250, 252, 0.72)";
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.7)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        const roundedContext = ctx as CanvasRenderingContext2D & {
+          roundRect?: (x: number, y: number, width: number, height: number, radii: number) => void;
+        };
+        if (typeof roundedContext.roundRect === "function") {
+          roundedContext.roundRect(12, 12, infoWidth, 136, 18);
+          ctx.fill();
+          ctx.stroke();
+        } else {
+          ctx.fillRect(12, 12, infoWidth, 136);
+        }
 
-        ctx.fillStyle = "white";
-        ctx.font = "14px sans-serif";
-        ctx.fillText(`Biome: ${currentBiome.type}`, 20, 30);
-        ctx.fillText(`Season: ${currentBiome.season}`, 20, 50);
-        ctx.fillText(`Temperature: ${currentBiome.temperature}°C`, 20, 70);
+        ctx.fillStyle = "rgba(15, 23, 42, 0.9)";
+        ctx.font = "600 13px -apple-system, BlinkMacSystemFont, sans-serif";
+        ctx.fillText(currentBiome.type.replace(/^./, (letter) => letter.toUpperCase()), 24, 35);
+        ctx.font = "12px -apple-system, BlinkMacSystemFont, sans-serif";
+        ctx.fillStyle = "rgba(30, 41, 59, 0.76)";
+        ctx.fillText(`Season · ${currentBiome.season}`, 24, 56);
+        ctx.fillText(`Temperature · ${currentBiome.temperature}°C`, 24, 77);
         ctx.fillText(
-          `Humidity: ${Math.round(currentBiome.humidity * 100)}%`,
-          20,
-          90
+          `Humidity · ${Math.round(currentBiome.humidity * 100)}%`,
+          24,
+          98
         );
         ctx.fillText(
-          `Wind: ${Math.round(currentBiome.windSpeed)} km/h`,
-          20,
-          110
+          `Wind · ${Math.round(currentBiome.windSpeed)} km/h`,
+          24,
+          119
         );
         ctx.fillText(
-          `Time: ${Math.floor(currentBiome.timeOfDay)}:${String(Math.floor((currentBiome.timeOfDay % 1) * 60)).padStart(2, "0")}`,
-          20,
-          130
+          `Local time · ${Math.floor(currentBiome.timeOfDay)}:${String(Math.floor((currentBiome.timeOfDay % 1) * 60)).padStart(2, "0")}`,
+          24,
+          140
         );
         ctx.restore();
       }
@@ -1028,7 +1068,7 @@ export const GlassBiomeSimulator = forwardRef<
       getDayNightColors,
       showAtmosphericLayers,
       biomeLayers,
-      parallaxEnabled,
+      parallaxActive,
       cameraOffset,
       animationTime,
       particles,
@@ -1080,6 +1120,37 @@ export const GlassBiomeSimulator = forwardRef<
     const renderControls = () => {
       if (!showControls) return null;
 
+      const controlSurface: React.CSSProperties = {
+        minHeight: 40,
+        border: "1px solid rgba(255, 255, 255, 0.72)",
+        background: "linear-gradient(180deg, rgba(255,255,255,.74), rgba(241,245,249,.48))",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,.82), 0 8px 24px rgba(30,41,59,.08)",
+        color: "rgba(15, 23, 42, 0.9)",
+      };
+
+      const Toggle = ({ checked, onChange, children }: { checked: boolean; onChange: () => void; children: React.ReactNode }) => (
+        <button
+          type="button"
+          role="switch"
+          aria-checked={checked}
+          onClick={onChange}
+          className="glass-biome-toggle glass-flex glass-items-center glass-justify-between glass-gap-3 glass-radius-full glass-px-3 glass-text-sm"
+          style={controlSurface}
+        >
+          <span>{children}</span>
+          <span
+            aria-hidden="true"
+            className="glass-relative glass-block glass-radius-full"
+            style={{ width: 38, height: 22, background: checked ? "rgba(73, 94, 105, 0.82)" : "rgba(100, 116, 139, 0.2)", boxShadow: "inset 0 0 0 1px rgba(15,23,42,.1)" }}
+          >
+            <span
+              className="glass-absolute glass-radius-full"
+              style={{ width: 18, height: 18, left: checked ? 18 : 2, top: 2, background: "rgba(255,255,255,.96)", boxShadow: "0 2px 6px rgba(15,23,42,.22)", transition: "left 160ms ease" }}
+            />
+          </span>
+        </button>
+      );
+
       return (
         <OptimizedGlass
           elevation="level2"
@@ -1087,11 +1158,12 @@ export const GlassBiomeSimulator = forwardRef<
           depth={1}
           tint="neutral"
           border="subtle"
-          className="glass-biome-controls glass-flex glass-flex-wrap glass-items-center glass-gap-4 glass-p-4 glass-radius-lg glass-backdrop-blur-md glass-border glass-border-glass-border/20 glass-contrast-guard"
+          className="glass-biome-controls glass-grid glass-gap-3 glass-p-3 glass-radius-lg glass-backdrop-blur-md glass-border glass-border-glass-border/20 glass-contrast-guard"
+          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 150px), 1fr))", background: "rgba(248,250,252,.52)", color: "rgba(15,23,42,.92)" }}
         >
-          <div className="glass-flex glass-items-center glass-gap-2">
-            <label className="glass-text-sm" htmlFor="biome-select">
-              Biome:
+          <div className="glass-flex glass-flex-col glass-gap-1">
+            <label className="glass-text-xs glass-font-medium" htmlFor="biome-select">
+              Biome
             </label>
             <select
               id="biome-select"
@@ -1104,7 +1176,8 @@ export const GlassBiomeSimulator = forwardRef<
                 setCurrentBiome(newBiome);
                 onBiomeChange?.(newBiome);
               }}
-              className="glass-px-2 glass-py-1 glass-radius-md glass-surface-overlay glass-border glass-border-glass-border/20 glass-contrast-guard"
+              className="glass-w-full glass-appearance-none glass-px-3 glass-py-2 glass-radius-lg glass-contrast-guard"
+              style={controlSurface}
               aria-label="Select biome type"
             >
               <option value="forest">Forest</option>
@@ -1118,9 +1191,9 @@ export const GlassBiomeSimulator = forwardRef<
             </select>
           </div>
 
-          <div className="glass-flex glass-items-center glass-gap-2">
-            <label className="glass-text-sm" htmlFor="biome-season-select">
-              Season:
+          <div className="glass-flex glass-flex-col glass-gap-1">
+            <label className="glass-text-xs glass-font-medium" htmlFor="biome-season-select">
+              Season
             </label>
             <select
               id="biome-season-select"
@@ -1133,7 +1206,8 @@ export const GlassBiomeSimulator = forwardRef<
                 setCurrentBiome(newBiome);
                 onSeasonChange?.(e.target.value as any);
               }}
-              className="glass-px-2 glass-py-1 glass-radius-md glass-surface-overlay glass-border glass-border-glass-border/20 glass-contrast-guard"
+              className="glass-w-full glass-appearance-none glass-px-3 glass-py-2 glass-radius-lg glass-contrast-guard"
+              style={controlSurface}
               aria-label="Select season"
             >
               <option value="spring">Spring</option>
@@ -1143,9 +1217,9 @@ export const GlassBiomeSimulator = forwardRef<
             </select>
           </div>
 
-          <div className="glass-flex glass-items-center glass-gap-2">
-            <label className="glass-text-sm" htmlFor="biome-time-range">
-              Time:
+          <div className="glass-flex glass-flex-col glass-gap-1">
+            <label className="glass-flex glass-justify-between glass-text-xs glass-font-medium" htmlFor="biome-time-range">
+              <span>Local time</span><span>{String(Math.floor(currentBiome.timeOfDay)).padStart(2, "0")}:00</span>
             </label>
             <input
               id="biome-time-range"
@@ -1162,30 +1236,14 @@ export const GlassBiomeSimulator = forwardRef<
                 }));
                 onTimeChange?.(newTime);
               }}
-              className="glass-w-20"
+              className="glass-biome-range glass-w-full glass-cursor-pointer"
               aria-label="Adjust time of day"
             />
           </div>
 
-          <div className="glass-flex glass-items-center glass-gap-2">
-            <label className="glass-text-sm">
-              <input
-                type="checkbox"
-                checked={dayNightCycle}
-                onChange={(e) => {}}
-                className="glass-mr-1"
-              />
-              Day/Night
-            </label>
-            <label className="glass-text-sm">
-              <input
-                type="checkbox"
-                checked={parallaxEnabled}
-                onChange={(e) => {}}
-                className="glass-mr-1"
-              />
-              Parallax
-            </label>
+          <div className="glass-grid glass-gap-2">
+            <Toggle checked={dayNightEnabled} onChange={() => setDayNightEnabled((value) => !value)}>Day / Night</Toggle>
+            <Toggle checked={parallaxActive} onChange={() => setParallaxActive((value) => !value)}>Parallax</Toggle>
           </div>
         </OptimizedGlass>
       );
@@ -1206,19 +1264,27 @@ export const GlassBiomeSimulator = forwardRef<
         )}
         {...props}
       >
+        <style>{`
+          #${biomeSimulatorId} .glass-biome-range { appearance: none; height: 28px; background: transparent; }
+          #${biomeSimulatorId} .glass-biome-range::-webkit-slider-runnable-track { height: 6px; border-radius: 999px; background: rgba(71,85,105,.18); box-shadow: inset 0 1px 2px rgba(15,23,42,.12); }
+          #${biomeSimulatorId} .glass-biome-range::-webkit-slider-thumb { appearance: none; width: 20px; height: 20px; margin-top: -7px; border-radius: 50%; border: 1px solid rgba(255,255,255,.9); background: linear-gradient(145deg,#fff,#dfe6e9); box-shadow: 0 3px 10px rgba(15,23,42,.25); }
+          #${biomeSimulatorId} .glass-biome-range::-moz-range-track { height: 6px; border-radius: 999px; background: rgba(71,85,105,.18); }
+          #${biomeSimulatorId} .glass-biome-range::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; border: 1px solid rgba(255,255,255,.9); background: #f8fafc; box-shadow: 0 3px 10px rgba(15,23,42,.25); }
+          #${biomeSimulatorId} :where(select,button,input):focus-visible { outline: 3px solid rgba(56, 116, 145, .36); outline-offset: 2px; }
+        `}</style>
         <Motion
           preset={isMotionSafe && respectMotionPreference ? "fadeIn" : "none"}
           className="glass-flex glass-flex-col glass-gap-4 glass-p-4"
         >
           {renderControls()}
 
-          <div className="glass-relative">
+          <div className="glass-relative glass-overflow-hidden glass-radius-lg" style={{ boxShadow: "inset 0 1px 0 rgba(255,255,255,.8), 0 18px 45px rgba(30,41,59,.14)" }}>
             <canvas
               ref={canvasRef}
               width={width}
               height={height}
-              className="glass-border glass-border-glass-border/20 glass-radius-md"
-              style={{ width, height }}
+              className="glass-block glass-border glass-border-glass-border/20 glass-radius-lg"
+              style={{ width: "100%", maxWidth: width, height: "auto", aspectRatio: `${width} / ${height}` }}
             />
           </div>
         </Motion>

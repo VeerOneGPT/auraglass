@@ -3,12 +3,36 @@ import React, { forwardRef } from "react";
 import { cn } from "../../lib/utilsComprehensive";
 import { OptimizedGlass } from "../../primitives";
 import { useA11yId } from "../../utils/a11y";
-import {
-  ContrastGuard,
-  TextWithContrast,
-} from "@/components/accessibility/ContrastGuard";
-import { ANIMATION } from "../../tokens/designConstants";
-import { useReducedMotion } from "../../hooks/useReducedMotion";
+import { ContrastGuard } from "@/components/accessibility/ContrastGuard";
+
+const timelineInk: React.CSSProperties = {
+  "--glass-text-primary": "rgba(15, 23, 42, 0.94)",
+  "--glass-text-secondary": "rgba(15, 23, 42, 0.72)",
+  color: "rgba(15, 23, 42, 0.94)",
+} as React.CSSProperties;
+
+const timelineCard: React.CSSProperties = {
+  ...timelineInk,
+  background:
+    "linear-gradient(145deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.13))",
+  border: "1px solid rgba(15, 23, 42, 0.14)",
+  boxShadow:
+    "inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 10px 28px rgba(15, 23, 42, 0.1)",
+};
+
+const timelineLayoutStyles = `.glass-timeline { width: 100%; max-width: 100%; box-sizing: border-box; }
+.glass-timeline-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
+.glass-timeline-item { padding-left: 34px; min-width: 0; }
+.glass-timeline-line { top: 18px; bottom: 18px; left: 10px; width: 2px; border-radius: 999px; }
+.glass-timeline-dot { left: 5px; top: 18px; z-index: 2; box-sizing: border-box; }
+.glass-timeline-card { min-width: 0; overflow: hidden; }
+@media (max-width: 480px) {
+  .glass-timeline-item { padding-left: 28px; }
+  .glass-timeline-line { left: 8px; }
+  .glass-timeline-dot { left: 3px; }
+  .glass-timeline-card-row { display: grid; gap: 8px; }
+  .glass-timeline-time { white-space: normal; }
+}`;
 
 export interface TimelineItem {
   /**
@@ -113,9 +137,9 @@ export const GlassTimeline = forwardRef<HTMLDivElement, GlassTimelineProps>(
     const timelineId = useA11yId("timeline");
     const sizeClasses = {
       sm: {
-        container: "pl-4",
-        dot: "glass-w-2 glass-h-2 -glass-ml-1",
-        line: "left-1.5 w-px",
+        container: "",
+        dot: "glass-w-2 glass-h-2",
+        line: "",
         content: "glass-p-2 glass-text-sm",
         title: "glass-text-sm",
         subtitle: "glass-text-xs",
@@ -123,9 +147,9 @@ export const GlassTimeline = forwardRef<HTMLDivElement, GlassTimelineProps>(
         gap: "glass-gap-3",
       },
       md: {
-        container: "pl-6",
-        dot: "glass-w-3 glass-h-3 -glass-ml-1.5",
-        line: "left-2 w-px",
+        container: "",
+        dot: "glass-w-3 glass-h-3",
+        line: "",
         content: "glass-p-3 glass-text-base",
         title: "glass-text-base",
         subtitle: "glass-text-sm",
@@ -133,9 +157,9 @@ export const GlassTimeline = forwardRef<HTMLDivElement, GlassTimelineProps>(
         gap: "glass-gap-4",
       },
       lg: {
-        container: "pl-8",
-        dot: "glass-w-4 glass-h-4 -glass-ml-2",
-        line: "left-3 w-px",
+        container: "",
+        dot: "glass-w-4 glass-h-4",
+        line: "",
         content: "glass-p-4 glass-text-lg",
         title: "glass-text-lg",
         subtitle: "glass-text-base",
@@ -159,17 +183,18 @@ export const GlassTimeline = forwardRef<HTMLDivElement, GlassTimelineProps>(
           ref={ref}
           id={timelineId}
           className={cn(
-            "glass-flex glass-items-start glass-gap-4 glass-overflow-x-auto",
+            "glass-timeline glass-timeline-horizontal glass-relative glass-flex glass-items-start glass-gap-4 glass-overflow-x-auto",
             className
           )}
+          style={timelineInk}
           role="list"
           aria-label={ariaLabel || "Timeline"}
           {...props}
         >
           {showLine && (
             <div
-              className="glass-absolute glass-top-8 glass-left-0 glass-right-0 glass-h-px glass-bg-glass-border-glass-opacity-20"
-              style={{ backgroundColor: lineColor }}
+              className="glass-absolute glass-top-8 glass-left-0 glass-right-0 glass-h-px"
+              style={{ backgroundColor: lineColor || "rgba(15, 23, 42, 0.2)" }}
             />
           )}
           {items.map((item, index) => (
@@ -181,10 +206,14 @@ export const GlassTimeline = forwardRef<HTMLDivElement, GlassTimelineProps>(
               {/* Dot */}
               <div
                 className={cn(
-                  "glass-absolute top-6 left-1/2 -translate-x-1/2 glass-radius-full bg-primary shadow-lg",
+                  "glass-absolute top-6 left-1/2 -translate-x-1/2 glass-radius-full",
                   config.dot
                 )}
-                style={{ backgroundColor: dotColor }}
+                style={{
+                  backgroundColor: dotColor || "rgba(15, 23, 42, 0.82)",
+                  border: "2px solid rgba(255, 255, 255, 0.9)",
+                  boxShadow: "0 0 0 3px rgba(15, 23, 42, 0.12)",
+                }}
               />
 
               {/* Content */}
@@ -198,10 +227,11 @@ export const GlassTimeline = forwardRef<HTMLDivElement, GlassTimelineProps>(
                   animation="none"
                   performanceMode="medium"
                   className={cn(
-                    "glass-radius-lg max-w-xs",
+                    "glass-radius-lg max-w-xs glass-min-w-48",
                     config.content,
                     variantClasses[variant]
                   )}
+                  style={timelineCard}
                 >
                   <div className="glass-min-w-0">
                     <div
@@ -250,36 +280,35 @@ export const GlassTimeline = forwardRef<HTMLDivElement, GlassTimelineProps>(
         ref={ref}
         id={timelineId}
         data-testid={dataTestId || "glasstimeline"}
-        className={cn("glass-relative", config.container, className)}
+        className={cn("glass-timeline glass-relative", config.container, className)}
+        style={timelineInk}
         aria-label={ariaLabel || "Timeline"}
         {...props}
       >
         {/* Connecting line */}
         {showLine && (
           <div
-            className={cn(
-              "glass-absolute top-0 bottom-0",
-              config.line,
-              "bg-glass-border/20"
-            )}
-            style={{ backgroundColor: lineColor }}
+            className={cn("glass-timeline-line glass-absolute top-0 bottom-0", config.line)}
+            style={{ backgroundColor: lineColor || "rgba(15, 23, 42, 0.2)" }}
           />
         )}
 
         {/* Timeline items */}
-        <ul className={cn("glass-relative", config.gap)} role="list">
-          {items.map((item, index) => {
-            const isLast = index === items.length - 1;
-
+        <ul className={cn("glass-timeline-list glass-relative", config.gap)} role="list">
+          {items.map((item) => {
             return (
-              <li key={item.id} className="glass-relative" role="listitem">
+              <li key={item.id} className="glass-timeline-item glass-relative" role="listitem">
                 {/* Dot */}
                 <span
                   className={cn(
-                    "glass-absolute top-2 glass-radius-full bg-primary shadow-lg",
+                    "glass-timeline-dot glass-absolute glass-radius-full",
                     config.dot
                   )}
-                  style={{ backgroundColor: dotColor }}
+                  style={{
+                    backgroundColor: dotColor || "rgba(15, 23, 42, 0.82)",
+                    border: "2px solid rgba(255, 255, 255, 0.92)",
+                    boxShadow: "0 0 0 3px rgba(15, 23, 42, 0.12)",
+                  }}
                 />
 
                 {/* Content */}
@@ -292,12 +321,13 @@ export const GlassTimeline = forwardRef<HTMLDivElement, GlassTimelineProps>(
                   animation="none"
                   performanceMode="medium"
                   className={cn(
-                    "glass-radius-lg",
+                    "glass-timeline-card glass-radius-lg",
                     config.content,
                     variantClasses[variant]
                   )}
+                  style={timelineCard}
                 >
-                  <div className="glass-flex glass-items-start glass-justify-between glass-gap-4">
+                  <div className="glass-timeline-card-row glass-flex glass-items-start glass-justify-between glass-gap-4">
                     <div className="glass-flex glass-items-start glass-gap-3 glass-min-w-0 glass-flex-1">
                       {item.icon && (
                         <div className="glass-flex-shrink-0 glass-text-secondary glass-mt-0-5">
@@ -332,7 +362,7 @@ export const GlassTimeline = forwardRef<HTMLDivElement, GlassTimelineProps>(
                     {item.time && timePosition === "right" && (
                       <div
                         className={cn(
-                          "glass-text-secondary glass-whitespace-nowrap",
+                          "glass-timeline-time glass-text-secondary glass-whitespace-nowrap",
                           config.time
                         )}
                       >
@@ -359,6 +389,7 @@ export const GlassTimeline = forwardRef<HTMLDivElement, GlassTimelineProps>(
             );
           })}
         </ul>
+        <style>{timelineLayoutStyles}</style>
       </div>
     );
   }

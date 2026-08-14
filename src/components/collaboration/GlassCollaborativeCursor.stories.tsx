@@ -2,6 +2,7 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { GlassCollaborativeCursor as Component } from "./GlassCollaborativeCursor";
 import { GlassCollaborationProvider as Provider } from "./GlassCollaborationProvider";
+import { OptimizedGlass } from "../../primitives";
 
 const meta: Meta = {
   title: 'Workflows/Glass Collaborative Cursor',
@@ -41,13 +42,16 @@ const previewUsers = [
 
 export const Default: Story = {
   render: () => (
-    <div className="glass-relative glass-h-32 glass-w-96 glass-overflow-hidden glass-radius-lg glass-surface-subtle">
+    <OptimizedGlass
+      className="glass-relative glass-w-96 glass-max-w-full glass-radius-lg glass-p-2"
+      style={{ minHeight: 160 }}
+    >
       <Provider roomId="storybook-owned-cursor" enableRealTime={false}>
         <Component
           className="glass-absolute glass-inset-0"
           previewUsers={previewUsers}
         />
       </Provider>
-    </div>
+    </OptimizedGlass>
   ),
 };

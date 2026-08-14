@@ -85,15 +85,15 @@ function buildUnifiedRows(left: string, right: string): DiffRow[] {
 function rowStyle(kind: DiffKind): React.CSSProperties {
   if (kind === "added") {
     return {
-      background:
-        "color-mix(in srgb, var(--glass-color-success, #22c55e) 16%, transparent)",
+      background: "rgba(255, 255, 255, 0.22)",
+      boxShadow: "inset 3px 0 0 rgba(15, 23, 42, 0.48)",
     };
   }
 
   if (kind === "removed") {
     return {
-      background:
-        "color-mix(in srgb, var(--glass-color-danger, #ef4444) 16%, transparent)",
+      background: "rgba(15, 23, 42, 0.055)",
+      boxShadow: "inset 3px 0 0 rgba(15, 23, 42, 0.72)",
     };
   }
 
@@ -131,6 +131,7 @@ function DiffTable({
         tableLayout: "fixed",
         fontSize: compact ? "0.72rem" : "0.78rem",
         lineHeight: compact ? 1.35 : 1.5,
+        color: "rgba(15, 23, 42, 0.92)",
       }}
     >
       <tbody>
@@ -147,12 +148,7 @@ function DiffTable({
                 width: compact ? 22 : 26,
                 padding: compact ? "1px 4px" : "2px 6px",
                 textAlign: "center",
-                color:
-                  row.kind === "added"
-                    ? "var(--glass-color-success, #22c55e)"
-                    : row.kind === "removed"
-                      ? "var(--glass-color-danger, #ef4444)"
-                      : "color-mix(in srgb, currentColor 45%, transparent)",
+                color: "rgba(15, 23, 42, 0.72)",
                 userSelect: "none",
               }}
             >
@@ -164,7 +160,7 @@ function DiffTable({
                 style={{
                   width: compact ? 44 : 56,
                   padding: compact ? "1px 4px" : "2px 6px",
-                  color: "color-mix(in srgb, currentColor 45%, transparent)",
+                  color: "rgba(15, 23, 42, 0.62)",
                   userSelect: "none",
                   whiteSpace: "nowrap",
                 }}
@@ -203,7 +199,15 @@ function CodePanel({
     <OptimizedGlass
       elevation={"level1"}
       className="glass-radius-lg glass-border glass-border-white/15 glass-overflow-auto"
-      style={{ padding: compact ? "0.5rem" : "0.75rem" }}
+      style={{
+        padding: compact ? "0.5rem" : "0.75rem",
+        minWidth: 0,
+        background: "rgba(255, 255, 255, 0.24)",
+        border: "1px solid rgba(255, 255, 255, 0.68)",
+        color: "rgba(15, 23, 42, 0.92)",
+        boxShadow:
+          "0 12px 30px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.30), inset 0 0 16px rgba(255, 255, 255, 0.14)",
+      }}
     >
       <div
         style={{
@@ -211,7 +215,7 @@ function CodePanel({
           fontSize: compact ? "0.62rem" : "0.68rem",
           letterSpacing: "0.08em",
           textTransform: "uppercase",
-          color: "var(--glass-text-muted, rgba(255,255,255,0.56))",
+          color: "rgba(15, 23, 42, 0.64)",
         }}
       >
         {label}
@@ -224,6 +228,7 @@ function CodePanel({
           lineHeight: compact ? 1.35 : 1.5,
           whiteSpace: "pre-wrap",
           overflowWrap: "anywhere",
+          color: "rgba(15, 23, 42, 0.92)",
         }}
       >
         <code>{code}</code>
@@ -265,7 +270,9 @@ export function GlassDiffViewer({
         <div
           className="glass-grid glass-gap-3"
           style={{
-            gridTemplateColumns: compact ? "1fr" : "repeat(2, minmax(0, 1fr))",
+            gridTemplateColumns: compact
+              ? "1fr"
+              : "repeat(auto-fit, minmax(min(18rem, 100%), 1fr))",
           }}
         >
           <CodePanel label="Before" code={left} compact={compact} />
@@ -275,7 +282,15 @@ export function GlassDiffViewer({
         <OptimizedGlass
           elevation={"level1"}
           className="glass-radius-lg glass-border glass-border-white/15 glass-overflow-hidden"
-          style={{ padding: compact ? "0.35rem" : "0.5rem" }}
+          style={{
+            padding: compact ? "0.35rem" : "0.5rem",
+            minWidth: 0,
+            background: "rgba(255, 255, 255, 0.24)",
+            border: "1px solid rgba(255, 255, 255, 0.68)",
+            color: "rgba(15, 23, 42, 0.92)",
+            boxShadow:
+              "0 12px 30px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.30), inset 0 0 16px rgba(255, 255, 255, 0.14)",
+          }}
         >
           <DiffTable
             rows={rows}

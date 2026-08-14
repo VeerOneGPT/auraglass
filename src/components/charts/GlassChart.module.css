@@ -14,8 +14,10 @@
     --glass-elev-chart-container,
     0 18px 48px rgba(var(--glass-color-black) / var(--glass-opacity-25))
   );
-  backdrop-filter: blur(var(--aura-glass-neutral-level3-backdrop-blur));
-  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level3-backdrop-blur));
+  backdrop-filter: blur(var(--aura-glass-neutral-level3-backdrop-blur))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level3-backdrop-blur))
+    var(--glass-filter-base);
   overflow: hidden;
   transition:
     transform var(--aura-motion-duration-medium)

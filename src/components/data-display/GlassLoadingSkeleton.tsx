@@ -82,8 +82,8 @@ export const GlassLoadingSkeleton = forwardRef<
     // Consistent glassmorphism styling for all skeleton elements
     const getSkeletonStyle = () => ({
       background: `
-        linear-gradient(135deg, rgba(71, 85, 105, 0.58) 0%, rgba(30, 41, 59, 0.48) 50%, rgba(71, 85, 105, 0.52) 100%),
-        linear-gradient(135deg, rgba(15, 23, 42, 0.72) 0%, rgba(8, 13, 25, 0.68) 100%)
+        linear-gradient(135deg, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0.12) 50%, rgba(255, 255, 255, 0.2) 100%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.08) 100%)
       `,
       border: "1px solid rgba(148, 163, 184, 0.18)",
       boxShadow:

@@ -62,6 +62,7 @@ interface GlassProperties {
 interface GlassMorphingEngineProps {
   children: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   environmentalContext?: Partial<EnvironmentalContext>;
   userActivity?: UserActivity;
   contentType?: ContentType;
@@ -267,6 +268,7 @@ const defaultGlassProperties: GlassProperties = {
 export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
   children,
   className = "",
+  style,
   environmentalContext = {},
   userActivity = "browsing",
   contentType = "text",
@@ -751,6 +753,7 @@ export const GlassMorphingEngine: React.FC<GlassMorphingEngineProps> = ({
     <motion.div
       ref={containerRef}
       className={cn("glass-morphing-container", className)}
+      style={style}
       animate={controls}
     >
       {/* Dynamic glass layers */}

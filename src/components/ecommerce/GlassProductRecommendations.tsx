@@ -41,6 +41,16 @@ interface ProductCardProps {
   onAddToWishlist: (productId: string) => void;
 }
 
+const productFallbackArtwork = (size: number) =>
+  `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`
+    <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 120 120">
+      <rect width="120" height="120" rx="24" fill="#f1f5f9"/>
+      <rect x="28" y="34" width="64" height="52" rx="14" fill="#ffffff" stroke="#94a3b8" stroke-width="3"/>
+      <circle cx="48" cy="60" r="7" fill="#cbd5e1"/>
+      <path d="M38 78l14-14 10 9 10-12 12 17" fill="none" stroke="#64748b" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `)}`;
+
 const ProductCard: React.FC<ProductCardProps> = ({
   recommendation,
   variant,
@@ -94,7 +104,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <img
         src={
           imageError
-            ? "https://via.placeholder.com/60x60?text=No+Image"
+            ? productFallbackArtwork(60)
             : product.thumbnail || product.images[0]
         }
         alt={product.name}
@@ -152,7 +162,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       <img
         src={
           imageError
-            ? "https://via.placeholder.com/120x120?text=No+Image"
+            ? productFallbackArtwork(120)
             : product.thumbnail || product.images[0]
         }
         alt={product.name}
@@ -259,7 +269,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <img
           src={
             imageError
-              ? "https://via.placeholder.com/300x300?text=No+Image"
+              ? productFallbackArtwork(300)
               : product.thumbnail || product.images[0]
           }
           alt={product.name}
@@ -351,7 +361,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
                   className={
                     i < Math.floor(product.rating)
                       ? "text-yellow-400"
-                      : "text-white/30"
+                      : "glass-text-tertiary"
                   }
                 >
                   ★
@@ -566,13 +576,13 @@ export const GlassProductRecommendations: React.FC<
 
   if (currentRecommendations.length === 0) {
     return (
-      <Glass className={cn("p-6", className)} data-testid={dataTestId}>
-        <div className="glass-text-center glass-py-12">
+      <Glass className={cn("glass-p-4", className)} data-testid={dataTestId}>
+        <div className="glass-text-center glass-py-6">
           <div className="glass-text-4xl glass-mb-4">🤖</div>
-          <h3 className="glass-text-lg glass-font-medium glass-text-secondary glass-mb-2">
+          <h3 className="glass-text-lg glass-font-medium glass-text-primary glass-mb-2">
             No recommendations available
           </h3>
-          <p className="glass-text-secondary">
+          <p className="glass-text-primary">
             We're still learning about your preferences. Check back later!
           </p>
         </div>
@@ -581,7 +591,7 @@ export const GlassProductRecommendations: React.FC<
   }
 
   return (
-    <Glass className={cn("p-6", className)} data-testid={dataTestId}>
+    <Glass className={cn("glass-p-4", className)} data-testid={dataTestId}>
       {/* Header */}
       <div className="glass-flex glass-items-center glass-justify-between glass-mb-6">
         <div>
@@ -686,7 +696,18 @@ export const GlassProductRecommendations: React.FC<
       {/* AI Insights */}
       <div className="glass-mt-6 glass-p-4 glass-surface-subtle glass-radius-lg">
         <div className="glass-flex glass-items-start glass-gap-3">
-          <div className="glass-text-2xl">🤖</div>
+          <div
+            className="glass-flex glass-h-8 glass-w-8 glass-flex-shrink-0 glass-items-center glass-justify-center glass-text-2xl"
+            aria-hidden="true"
+            style={{
+              color: "#334155",
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: "0.04em",
+            }}
+          >
+            AI
+          </div>
           <div>
             <h3 className="glass-font-medium glass-text-primary glass-mb-1">
               AI Insights

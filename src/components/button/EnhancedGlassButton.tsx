@@ -377,6 +377,9 @@ export const EnhancedGlassButton = forwardRef<
             interaction={features.physics.interaction as any}
             intensity={features.physics.intensity}
             enabled={features.physics.enabled}
+            // The native button is the sole keyboard target. The engine is a
+            // visual/pointer decorator and must not create a duplicate stop.
+            tabIndex={-1}
           >
             {buttonElement}
           </GlassPhysicsEngine>

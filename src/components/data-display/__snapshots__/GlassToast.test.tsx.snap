@@ -6,15 +6,16 @@ exports[`GlassToast matches snapshot 1`] = `
   data-glass-component="true"
 >
   <div
-    class="optimized-glass-surface glass-neutral-level4 glass-lift-on-hover glass-tier-high glass-relative glass-w-full glass-max-w-full glass-p-4 glass-backdrop-blur-md glass-border glass-border-white/20 shadow-2xl bg-blue-500/10"
+    class="optimized-glass-surface glass-neutral-level4 glass-lift-on-hover glass-tier-high glass-relative glass-w-full glass-max-w-full glass-p-4 glass-backdrop-blur-md glass-border"
     data-performance-mode="medium"
-    style="background-color: rgba(15, 23, 42, 0.26); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 16px 48px 0px rgba(0,0,0,0.30), inset 0 1px 0 rgba(255,255,255,0.28), inset 0 0 20px rgba(255,255,255,0.16); transition: all 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0);"
+    style="background: rgba(255, 255, 255, 0.3); background-color: rgba(255, 255, 255, 0.16); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255, 255, 255, 0.62); border-radius: 8px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 12px 32px rgba(15, 23, 42, 0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64); max-width: calc(100vw - 2rem);"
   >
     <div
       class="glass-flex glass-items-start glass-gap-3 glass-min-w-0"
     >
       <div
         class="glass-flex-shrink-0 glass-mt-0-5"
+        style="color: rgba(15, 23, 42, 0.82);"
       >
         <svg
           aria-hidden="true"
@@ -45,46 +46,33 @@ exports[`GlassToast matches snapshot 1`] = `
       <div
         class="glass-flex-1 glass-min-w-0"
       />
-      <div
-        class="glass-inline-glass-block"
-        data-glass-component="true"
+      <button
+        aria-label="Close toast"
+        class="glass-flex-shrink-0 glass-flex glass-items-center glass-justify-center glass-radius-full glass-transition-colors glass-duration-[150ms] glass-focus"
+        style="width: 44px; height: 44px; color: rgba(15, 23, 42, 0.76);"
+        type="button"
       >
-        <button
-          aria-label="Close toast"
-          class="optimized-glass-surface glass-neutral-level2 glass-interactive glass-lift-on-hover glass-hover-sheen glass-press glass-tier-high inline-flex items-center justify-center font-medium transition-all duration-[300ms] ease-out glass-focus disabled:pointer-events-none disabled:opacity-50 relative overflow-hidden glass-overlay-specular glass-parallax h-10 px-4 text-sm glass-accent-primary glass-text-primary hover:glass-text-secondary glass-radius-md glass-ripple glass-magnet glass-flex-shrink-0 glass-p-1 glass-radius-md hover:glass-surface-subtle/10 glass-transition-colors glass-duration-[150ms]"
-          data-button-size="md"
-          data-button-variant="default"
-          data-magnet="true"
-          data-performance-mode="ultra"
-          id="glass-button-:r6:"
-          style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out, transform 200ms ease-out, transform 200ms ease-out, box-shadow 200ms ease-out, transform 200ms ease-out; position: relative; transform: translateZ(0); cursor: pointer; user-select: none;"
+        <svg
+          aria-hidden="true"
+          class="glass-w-4 glass-h-4"
+          fill="none"
+          height="24"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <span
-            class="glass-relative glass-z-10"
-          >
-            <svg
-              aria-hidden="true"
-              class="glass-w-4 glass-h-4 glass-text-primary-glass-opacity-60 hover:glass-text-primary"
-              fill="none"
-              height="24"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              width="24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M18 6 6 18"
-              />
-              <path
-                d="m6 6 12 12"
-              />
-            </svg>
-          </span>
-        </button>
-      </div>
+          <path
+            d="M18 6 6 18"
+          />
+          <path
+            d="m6 6 12 12"
+          />
+        </svg>
+      </button>
     </div>
   </div>
 </div>

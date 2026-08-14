@@ -527,9 +527,14 @@ function registerGlassWorklets() {
 // Global CSS styles for Houdini glass effects
 const houdiniGlassStyles = `
   .houdini-glass {
-    background: var(--glass-background, var(--glass-bg-default));
-    backdrop-filter: var(--glass-backdrop-blur);
-    border: 1px solid var(--glass-border, color-mix(in srgb, var(--glass-white) 20%, transparent));
+    background: linear-gradient(
+      145deg,
+      rgba(255 255 255 / 0.28),
+      rgba(255 255 255 / 0.12)
+    );
+    backdrop-filter: blur(24px) saturate(1.5) brightness(1.08) contrast(1.04);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5) brightness(1.08) contrast(1.04);
+    border: 1px solid rgba(255 255 255 / 0.28);
     box-shadow: var(--glass-elev-2);
     transition: all calc(${ANIMATION.DURATION.normal}ms * var(--glass-animation-speed, 1));
   }
@@ -551,7 +556,8 @@ const houdiniGlassStyles = `
   .houdini-glass-performance {
     --glass-blur: 10px;
     --glass-animation-speed: 0.5;
-    backdrop-filter: var(--glass-backdrop-blur);
+    backdrop-filter: blur(16px) saturate(1.4) brightness(1.06) contrast(1.03);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4) brightness(1.06) contrast(1.03);
     transition: all ${ANIMATION.DURATION.fast}ms;
   }
 

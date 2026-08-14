@@ -196,7 +196,7 @@ const ConnectionStatus: React.FC = () => {
       case "reconnecting":
         return "glass-text-warning";
       case "disconnected":
-        return "glass-text-danger";
+        return "glass-text-secondary";
       default:
         return "glass-text-secondary";
     }
@@ -210,7 +210,7 @@ const ConnectionStatus: React.FC = () => {
       case "reconnecting":
         return "🟡";
       case "disconnected":
-        return "🔴";
+        return "○";
       default:
         return "⚫";
     }

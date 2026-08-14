@@ -216,17 +216,17 @@ export const AnimatedCounter: Story = {
     <div className="glass-grid glass-grid-cols-1 md:glass-grid-cols-2 glass-gap-6">
       <GlassCard>
         <div className="glass-p-6 glass-text-center">
-          <h4 className="glass-text-sm glass-font-medium glass-mb-4">Simple Counter</h4>
+          <h4 className="glass-text-sm glass-font-medium glass-mb-4" style={{ color: "rgba(15, 23, 42, 0.92)" }}>Simple Counter</h4>
           <GlassAnimatedCounter value={42} />
-          <p className="glass-text-xs opacity-80 glass-mt-2">Items in cart</p>
+          <p className="glass-text-xs glass-mt-2" style={{ color: "rgba(15, 23, 42, 0.78)" }}>Items in cart</p>
         </div>
       </GlassCard>
 
       <GlassCard>
         <div className="glass-p-6 glass-text-center">
-          <h4 className="glass-text-sm glass-font-medium glass-mb-4">Score Counter</h4>
+          <h4 className="glass-text-sm glass-font-medium glass-mb-4" style={{ color: "rgba(15, 23, 42, 0.92)" }}>Score Counter</h4>
           <GlassAnimatedCounter value={15420} />
-          <p className="glass-text-xs opacity-80 glass-mt-2">Total score</p>
+          <p className="glass-text-xs glass-mt-2" style={{ color: "rgba(15, 23, 42, 0.78)" }}>Total score</p>
         </div>
       </GlassCard>
     </div>

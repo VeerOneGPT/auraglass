@@ -7,7 +7,8 @@ const meta: Meta<typeof GlassTimeline> = {
   title: 'Data + Visualization/Glass Timeline',
   component: GlassTimeline,
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
+    previewSurface: 'component',
     docs: {
       description: {
         component: 'A glass morphism glasstimeline component.',
@@ -29,6 +30,13 @@ export default meta;
 type Story = StoryObj<typeof GlassTimeline>;
 
 export const Default: Story = {
+  decorators: [
+    (Story) => (
+      <main style={{ minHeight: '100dvh', boxSizing: 'border-box', display: 'grid', placeItems: 'center', padding: 'clamp(16px, 5vw, 56px)' }}>
+        <div style={{ width: 'min(680px, 100%)', minWidth: 0 }}><Story /></div>
+      </main>
+    ),
+  ],
   args: {
     items: [
       {

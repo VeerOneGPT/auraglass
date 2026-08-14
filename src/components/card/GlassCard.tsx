@@ -152,6 +152,13 @@ export const GlassCard = forwardRef<HTMLDivElement, GlassCardProps>(
       "--liquid-glass-card-density": variant === "minimal" ? "0.8" : "0.92",
       "--liquid-glass-hover-lift": hoverable ? "8px" : "0px",
       "--liquid-glass-interaction-depth": isInteractive ? "1.05" : "1.0",
+      "--glass-theme-text": "rgba(15, 23, 42, 0.94)",
+      "--glass-theme-text-secondary": "rgba(15, 23, 42, 0.76)",
+      "--glass-theme-text-tertiary": "rgba(15, 23, 42, 0.64)",
+      "--glass-text-primary": "rgba(15, 23, 42, 0.94)",
+      "--glass-text-secondary": "rgba(15, 23, 42, 0.76)",
+      "--glass-text-tertiary": "rgba(15, 23, 42, 0.64)",
+      color: "rgba(15, 23, 42, 0.94)",
     } as React.CSSProperties;
 
     return material === "liquid" ? (

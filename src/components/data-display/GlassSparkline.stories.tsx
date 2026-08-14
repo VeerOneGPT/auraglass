@@ -29,8 +29,15 @@ export default meta;
 type Story = StoryObj<typeof GlassSparkline>;
 
 export const Default: Story = {
+  render: (args) => (
+    <div className="glass-neutral-level1 glass-rounded-2xl glass-p-6">
+      <GlassSparkline {...args} />
+    </div>
+  ),
   args: {
     data: [10, 15, 8, 20, 12, 18, 25, 16, 22, 19],
+    width: 220,
+    height: 60,
   },
 };
 

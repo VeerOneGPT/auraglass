@@ -314,7 +314,7 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
                 "var(--glass-primary-level3-surface)",
               border: "1px solid rgba(148, 163, 184, 0.24)",
               boxShadow:
-                "0 8px 22px rgba(2, 6, 23, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08)",
+                "0 8px 22px rgba(15, 23, 42, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 0 0 12px rgba(255, 255, 255, 0.12)",
             }}
             data-liquid-glass-input="true"
             data-input-state={currentState}
@@ -434,7 +434,7 @@ export const GlassInput = forwardRef<HTMLInputElement, GlassInputProps>(
                 "var(--glass-primary-level3-surface)",
               border: "1px solid rgba(148, 163, 184, 0.24)",
               boxShadow:
-                "0 8px 22px rgba(2, 6, 23, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08)",
+                "0 8px 22px rgba(15, 23, 42, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 0 0 12px rgba(255, 255, 255, 0.12)",
             }}
             className={cn(
               "glass-relative glass-flex glass-items-center glass-transition-all glass-duration-200 glass-radius-2xl glass-surface-dark/30 glass-border glass-border-white/10",

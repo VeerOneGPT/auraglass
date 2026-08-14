@@ -6,7 +6,7 @@ exports[`GlassTreeView matches snapshot 1`] = `
   class="optimized-glass-surface glass-neutral-level1 glass-tier-high glass-tree-view glass-p-2 glass-radius-lg glass-backdrop-blur-md glass-w-full glass-min-w-0 glass-overflow-auto glass-border glass-border-white/10"
   id="glass-tree-:ri:"
   role="tree"
-  style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 16px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 12px 28px rgba(2, 6, 23, 0.24); transition: all 200ms ease-out; position: relative; transform: translateZ(0); max-height: 100%; border-color: rgba(148, 163, 184, 0.22);"
+  style="background: rgba(255, 255, 255, 0.22); background-color: rgba(255, 255, 255, 0.1); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0 14px 34px rgba(15, 23, 42, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.30), inset 0 0 18px rgba(255, 255, 255, 0.14); color: rgba(15, 23, 42, 0.92); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64); max-height: 100%; border-color: rgba(255, 255, 255, 0.70);"
 >
   <div
     class="motion-primitive"
@@ -22,15 +22,17 @@ exports[`GlassTreeView matches snapshot 1`] = `
         draggable="false"
         id="tree-node-:rj:"
         role="treeitem"
-        style="background: rgba(5, 11, 24, 0.12); background-color: rgba(15, 23, 42, 0.2); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035); transition: all 200ms ease-out; position: relative; transform: translateZ(0); padding-left: 0px; border-color: rgba(148, 163, 184, 0.18);"
+        style="background: rgba(255, 255, 255, 0.2); background-color: rgba(255, 255, 255, 0.1); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.26), inset 0 0 12px rgba(255, 255, 255, 0.12); color: rgba(15, 23, 42, 0.92); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64); padding-left: 0px; min-height: 48px; height: auto; margin-bottom: 8px; border-color: rgba(255, 255, 255, 0.58);"
         tabindex="0"
       >
         <div
-          class="glass-flex glass-items-center glass-justify-center glass-flex-shrink-0 glass-mr-1 glass-w-4 glass-h-4"
+          class="glass-flex glass-items-center glass-justify-center glass-flex-shrink-0 glass-mr-2"
+          style="width: 32px; height: 32px;"
         >
           <button
             aria-label="Expand"
-            class="glass-p-1 glass-radius-md hover:glass-surface-overlay glass-transition-colors glass-focus glass-touch-target glass-contrast-guard glass-focus glass-touch-target glass-contrast-guard"
+            class="glass-p-1 glass-radius-md hover:glass-surface-overlay glass-transition-colors glass-focus glass-contrast-guard"
+            style="width: 32px; height: 32px; color: rgba(15, 23, 42, 0.78);"
           >
             <svg
               class="glass-w-full glass-h-full glass-transition-transform glass-duration-[150ms]"
@@ -48,15 +50,10 @@ exports[`GlassTreeView matches snapshot 1`] = `
           </button>
         </div>
         <span
-          class="contrast-guard"
-          data-contrast-level="AA"
-          data-glass-component="true"
+          class="glass-flex-1 glass-truncate"
+          style="color: rgba(15, 23, 42, 0.92);"
         >
-          <span
-            class="glass-flex-1 glass-truncate"
-          >
-            Overview
-          </span>
+          Overview
         </span>
       </div>
     </div>
@@ -75,15 +72,17 @@ exports[`GlassTreeView matches snapshot 1`] = `
         draggable="false"
         id="tree-node-:rk:"
         role="treeitem"
-        style="background: rgba(5, 11, 24, 0.12); background-color: rgba(15, 23, 42, 0.2); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.16); border-radius: 8px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035); transition: all 200ms ease-out; position: relative; transform: translateZ(0); padding-left: 0px; border-color: rgba(148, 163, 184, 0.18);"
+        style="background: rgba(255, 255, 255, 0.2); background-color: rgba(255, 255, 255, 0.1); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.26), inset 0 0 12px rgba(255, 255, 255, 0.12); color: rgba(15, 23, 42, 0.92); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64); padding-left: 0px; min-height: 48px; height: auto; margin-bottom: 8px; border-color: rgba(255, 255, 255, 0.58);"
         tabindex="0"
       >
         <div
-          class="glass-flex glass-items-center glass-justify-center glass-flex-shrink-0 glass-mr-1 glass-w-4 glass-h-4"
+          class="glass-flex glass-items-center glass-justify-center glass-flex-shrink-0 glass-mr-2"
+          style="width: 32px; height: 32px;"
         >
           <button
             aria-label="Expand"
-            class="glass-p-1 glass-radius-md hover:glass-surface-overlay glass-transition-colors glass-focus glass-touch-target glass-contrast-guard glass-focus glass-touch-target glass-contrast-guard"
+            class="glass-p-1 glass-radius-md hover:glass-surface-overlay glass-transition-colors glass-focus glass-contrast-guard"
+            style="width: 32px; height: 32px; color: rgba(15, 23, 42, 0.78);"
           >
             <svg
               class="glass-w-full glass-h-full glass-transition-transform glass-duration-[150ms]"
@@ -101,15 +100,10 @@ exports[`GlassTreeView matches snapshot 1`] = `
           </button>
         </div>
         <span
-          class="contrast-guard"
-          data-contrast-level="AA"
-          data-glass-component="true"
+          class="glass-flex-1 glass-truncate"
+          style="color: rgba(15, 23, 42, 0.92);"
         >
-          <span
-            class="glass-flex-1 glass-truncate"
-          >
-            Settings
-          </span>
+          Settings
         </span>
       </div>
     </div>

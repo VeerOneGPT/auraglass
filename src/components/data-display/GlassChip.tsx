@@ -86,7 +86,7 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
 
     const sizeConfig = {
       xs: {
-        height: "glass-h-6",
+        minHeight: 28,
         padding: "glass-px-2",
         text: "glass-text-xs",
         iconSize: "glass-w-3 glass-h-3",
@@ -94,7 +94,7 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
         gap: "glass-gap-1",
       },
       sm: {
-        height: "glass-h-8",
+        minHeight: 34,
         padding: "glass-px-3",
         text: "glass-text-sm",
         iconSize: "glass-w-4 glass-h-4",
@@ -102,7 +102,7 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
         gap: "glass-gap-1.5",
       },
       md: {
-        height: "glass-h-8",
+        minHeight: 36,
         padding: "glass-px-3",
         text: "glass-text-sm",
         iconSize: "glass-w-4 glass-h-4",
@@ -110,7 +110,7 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
         gap: "glass-gap-2",
       },
       lg: {
-        height: "glass-h-10",
+        minHeight: 42,
         padding: "glass-px-4",
         text: "glass-text-base",
         iconSize: "glass-w-5 glass-h-5",
@@ -119,55 +119,53 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
       },
     };
 
+    // Semantic variants retain their meaning through labels and icons. The
+    // shell remains neutral so chips do not turn into opaque, chromatic pills.
     const variantConfig = {
       default: {
-        base: "bg-background/50 glass-border-glass-border/20 glass-text-primary",
-        selected: "bg-primary/20 glass-border-primary glass-text-primary",
-        hover: "hover:bg-background/70",
+        base: "glass-border-black/10",
+        selected: "glass-border-black/20",
+        hover: "hover:glass-border-black/20",
       },
       primary: {
-        base: "bg-primary/10 glass-border-primary glass-text-primary",
-        selected: "bg-primary/90 glass-border-primary glass-text-primary",
-        hover: "hover:bg-primary/20",
+        base: "glass-border-black/10",
+        selected: "glass-border-black/20",
+        hover: "hover:glass-border-black/20",
       },
       secondary: {
-        base: "bg-secondary/10 glass-border-secondary/20 glass-text-secondary",
-        selected:
-          "bg-secondary/90 glass-border-secondary glass-text-secondary-foreground",
-        hover: "hover:bg-secondary/20",
+        base: "glass-border-black/10",
+        selected: "glass-border-black/20",
+        hover: "hover:glass-border-black/20",
       },
       success: {
-        base: "glass-surface-success/10 glass-border/20 glass-text-success",
-        selected:
-          "glass-surface-success/90 glass-surface-success glass-text-primary",
-        hover: "hover:glass-surface-success/20",
+        base: "glass-border-black/10",
+        selected: "glass-border-black/20",
+        hover: "hover:glass-border-black/20",
       },
       warning: {
-        base: "glass-surface-warning/10 glass-border/20 glass-text-primary",
-        selected:
-          "glass-surface-warning/90 glass-surface-warning glass-text-primary",
-        hover: "hover:glass-surface-warning/20",
+        base: "glass-border-black/10",
+        selected: "glass-border-black/20",
+        hover: "hover:glass-border-black/20",
       },
       error: {
-        base: "glass-surface-danger/10 glass-border/20 glass-text-danger",
-        selected:
-          "glass-surface-danger/90 glass-surface-danger glass-text-primary",
-        hover: "hover:glass-surface-danger/20",
+        base: "glass-border-black/10",
+        selected: "glass-border-black/20",
+        hover: "hover:glass-border-black/20",
       },
       info: {
-        base: "glass-surface-info/10 glass-border/20 glass-text-primary",
-        selected: "glass-surface-info/90 glass-surface-info glass-text-primary",
-        hover: "hover:glass-surface-info/20",
+        base: "glass-border-black/10",
+        selected: "glass-border-black/20",
+        hover: "hover:glass-border-black/20",
       },
       outline: {
-        base: "bg-transparent glass-border-glass-border glass-text-primary",
-        selected: "bg-primary/10 glass-border-primary glass-text-primary",
-        hover: "hover:bg-background/10",
+        base: "bg-transparent glass-border-black/15",
+        selected: "glass-border-black/25",
+        hover: "hover:glass-border-black/25",
       },
       filled: {
-        base: "bg-muted glass-border-muted glass-text-secondary",
-        selected: "bg-primary glass-border-primary glass-text-primary",
-        hover: "hover:bg-muted/80",
+        base: "glass-border-black/10",
+        selected: "glass-border-black/20",
+        hover: "hover:glass-border-black/20",
       },
     };
 
@@ -234,7 +232,7 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
         )}
 
         {/* Content */}
-        <span className="glass-flex-1 glass-min-w-0 glass-truncate glass-font-medium">
+        <span className="glass-flex-1 glass-min-w-0 glass-whitespace-nowrap glass-font-medium">
           {children}
         </span>
 
@@ -245,12 +243,12 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
             onClick={handleRemove}
             disabled={disabled}
             className={cn(
-              "glass-flex-shrink-0 glass-ml-1 glass-radius-full transition-colors",
+              "glass-flex-shrink-0 glass-ml-1 glass-radius-full transition-colors glass-p-0",
               "hover:bg-current/20 focus:outline-none focus:ring-1 focus:ring-current",
               "glass-flex glass-items-center glass-justify-center",
-              config.iconSize,
+              "glass-w-5 glass-h-5",
               disabled && "opacity-50 cursor-not-allowed",
-              "glass-focus glass-touch-target glass-contrast-guard"
+              "glass-focus glass-contrast-guard"
             )}
             aria-label="Remove chip"
           >
@@ -258,8 +256,6 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
           </button>
         )}
 
-        {/* Glass overlay effect */}
-        <div className="glass-absolute glass-inset-0 glass-radius-full glass-gradient-primary glass-gradient-primary glass-via-transparent glass-gradient-primary glass-pointer-events-none" />
       </>
     );
 
@@ -276,18 +272,15 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
           elevation="level1"
           intensity="medium"
           depth={variant === "filled" ? 2 : 1}
-          tint={selected ? "primary" : "neutral"}
+          tint="neutral"
           border={variant === "outline" ? "strong" : "subtle"}
-          animation={
-            shouldAnimate && respectMotionPreference ? "shimmer" : "none"
-          }
+          animation="none"
           performanceMode="high"
           liftOnHover={isInteractive && !disabled}
           press={isInteractive ? true : false}
           className={cn(
             "glass-chip glass-relative glass-inline-flex glass-items-center glass-radius-full glass-border glass-backdrop-blur-md",
             "transition-all duration-200 select-none",
-            config.height,
             config.padding,
             config.text,
             config.gap,
@@ -300,6 +293,15 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
             disabled && "opacity-50 cursor-not-allowed",
             className
           )}
+          style={
+            {
+              minHeight: config.minHeight,
+              paddingTop: 4,
+              paddingBottom: 4,
+              "--glass-theme-text": "rgba(15, 23, 42, 0.92)",
+              color: "rgba(15, 23, 42, 0.92)",
+            } as React.CSSProperties
+          }
           onClick={isInteractive ? handleClick : undefined}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}

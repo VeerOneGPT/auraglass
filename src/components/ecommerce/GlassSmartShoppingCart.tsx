@@ -507,15 +507,29 @@ export const GlassSmartShoppingCart: React.FC<SmartShoppingCartProps> = ({
   if (displayCart.length === 0) {
     return (
       <Glass
-        className={cn(compact ? "glass-p-4" : "p-6", className)}
+        className={cn(compact ? "glass-p-4" : "glass-p-6", className)}
         data-testid={dataTestId}
       >
         <div className="glass-text-center">
-          <div className="glass-text-6xl glass-mb-4">🛒</div>
-          <h2 className="glass-text-xl glass-font-semibold glass-text-secondary glass-mb-2">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            className={cn(compact ? "glass-mb-2" : "glass-mb-4")}
+            style={{ width: compact ? 40 : 56, height: compact ? 40 : 56, marginInline: "auto", color: "#334155" }}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L20.4 8H6.1" />
+            <circle cx="10" cy="19" r="1" />
+            <circle cx="17" cy="19" r="1" />
+          </svg>
+          <h2 className="glass-text-xl glass-font-semibold glass-text-primary glass-mb-2">
             Your cart is empty
           </h2>
-          <p className="glass-text-secondary glass-mb-6">
+          <p className={cn("glass-text-primary", compact ? "glass-mb-3" : "glass-mb-6")}>
             Looks like you haven't added any items to your cart yet.
           </p>
           <button

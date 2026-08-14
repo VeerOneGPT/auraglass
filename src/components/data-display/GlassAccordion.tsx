@@ -5,10 +5,6 @@ import React, { forwardRef, useEffect, useRef, useState } from "react";
 import { OptimizedGlass } from "../../primitives";
 import { useA11yId } from "../../utils/a11y";
 import { useMotionPreferenceContext } from "../../contexts/MotionPreferenceContext";
-import {
-  ContrastGuard,
-  TextWithContrast,
-} from "@/components/accessibility/ContrastGuard";
 import { ANIMATION } from "../../tokens/designConstants";
 
 export interface AccordionItem {
@@ -369,6 +365,15 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
                   "glass-border-t-0": variant === "flush" && !isFirst,
                 }
               )}
+              style={{
+                background: isOpen
+                  ? "rgba(255, 255, 255, 0.30)"
+                  : "rgba(255, 255, 255, 0.20)",
+                border: "1px solid rgba(255, 255, 255, 0.68)",
+                color: "rgba(15, 23, 42, 0.92)",
+                boxShadow:
+                  "0 10px 26px rgba(15, 23, 42, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.30), inset 0 0 16px rgba(255, 255, 255, 0.14)",
+              }}
             >
               {/* Accordion Header/Trigger */}
               <button
@@ -393,6 +398,10 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
                 aria-controls={`accordion-content-${item?.id}`}
                 data-accordion-trigger={item?.id}
                 role="tab"
+                style={{
+                  minHeight: compact ? 44 : 48,
+                  color: "rgba(15, 23, 42, 0.92)",
+                }}
               >
                 <div className="glass-flex glass-items-center glass-gap-3 glass-min-w-0">
                   {item?.icon && (
@@ -400,11 +409,12 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
                       {item?.icon}
                     </span>
                   )}
-                  <ContrastGuard>
-                    <span className="glass-min-w-0 glass-break-words">
-                      {item?.title}
-                    </span>
-                  </ContrastGuard>
+                  <span
+                    className="glass-min-w-0 glass-break-words"
+                    style={{ color: "rgba(15, 23, 42, 0.92)" }}
+                  >
+                    {item?.title}
+                  </span>
                 </div>
 
                 {showIcons && !item?.disabled && (
@@ -514,7 +524,9 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
             }
           )}
         >
-          <ContrastGuard>{children}</ContrastGuard>
+          <div style={{ color: "rgba(15, 23, 42, 0.76)", lineHeight: 1.55 }}>
+            {children}
+          </div>
         </div>
       </div>
     );

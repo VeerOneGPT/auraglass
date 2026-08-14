@@ -376,8 +376,8 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
                   "select-none pointer-events-none"
                 )}
                 style={{
-                  color: colors.primary,
-                  textShadow: `0 0 10px ${colors.primary}80`,
+                  color: "rgba(15, 23, 42, 0.94)",
+                  textShadow: "0 1px 0 rgba(255,255,255,0.45)",
                   fontSize: `${config.scale}rem`,
                 }}
               >
@@ -547,18 +547,16 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
       if (!scanLines) return null;
 
       return (
-        <div className="glass-absolute glass-inset-0 glass-pointer-events-none glass-opacity-20">
-          <div
-            className="glass-w-full glass-h-full"
-            ref={(el) => {
-              if (!el) return;
-              el.style.background = `repeating-linear-gradient(0deg, transparent, transparent 2px, ${colors.primary}40 2px, ${colors.primary}40 4px)`;
-              el.style.animation = !prefersReducedMotion
-                ? "scan 2s linear infinite"
-                : "";
-            }}
-          />
-        </div>
+        <div
+          className="glass-absolute glass-inset-0 glass-pointer-events-none glass-opacity-20"
+          style={{
+            background: `repeating-linear-gradient(0deg, transparent, transparent 2px, ${colors.primary}40 2px, ${colors.primary}40 4px)`,
+            backgroundPosition: "0 0",
+            animation: !prefersReducedMotion
+              ? "hologram-scan-lines 2s linear infinite"
+              : undefined,
+          }}
+        />
       );
     };
 
@@ -592,11 +590,12 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
         tint="neutral"
         border="subtle"
         className={cn(
-          "glass-hologram relative glass-radius-lg glass-backdrop-blur-md border border-border/20 overflow-hidden",
+          "glass-hologram relative glass-radius-lg glass-backdrop-blur-md border border-border/20 glass-overflow-hidden",
           className
         )}
         style={{
           width: config.width,
+          maxWidth: "100%",
           height: config.height,
           background: `radial-gradient(circle, ${colors.primary}10 0%, transparent 70%)`,
         }}
@@ -629,7 +628,7 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
                 />
                 <div
                   className="glass-text-sm"
-                  style={{ color: colors.primary }}
+                  style={{ color: "rgba(15, 23, 42, 0.94)" }}
                 >
                   Initializing Hologram...
                 </div>
@@ -644,7 +643,7 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
                 <div className="glass-text-2xl glass-mb-2">⚠️</div>
                 <div
                   className="glass-text-sm"
-                  style={{ color: colors.primary }}
+                  style={{ color: "rgba(15, 23, 42, 0.94)" }}
                 >
                   {error}
                 </div>
@@ -706,7 +705,10 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
 
           {/* Controls */}
           {showControls && !loading && !error && (
-            <div className="glass-absolute glass-bottom-4 glass--left-1-2 glass-transform glass--translate-x-1-2">
+            <div
+              className="glass-absolute glass-bottom-4"
+              style={{ left: "50%", transform: "translateX(-50%)" }}
+            >
               <OptimizedGlass
                 elevation="level3"
                 intensity="strong"
@@ -724,7 +726,7 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
                   }
                   className="glass-p-1 glass-radius-md hover:glass-surface-overlay glass-transition-all"
                   title="Rotate"
-                  style={{ color: colors.primary }}
+                  style={{ color: "rgba(15, 23, 42, 0.88)" }}
                 >
                   🔄
                 </button>
@@ -738,14 +740,14 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
                   }
                   className="glass-p-1 glass-radius-md hover:glass-surface-overlay glass-transition-all"
                   title="Zoom"
-                  style={{ color: colors.primary }}
+                  style={{ color: "rgba(15, 23, 42, 0.88)" }}
                 >
                   🔍
                 </button>
 
                 <div
                   className="glass-text-xs"
-                  style={{ color: colors.primary }}
+                  style={{ color: "rgba(15, 23, 42, 0.88)" }}
                 >
                   Layers: {layers.length}
                 </div>
@@ -765,7 +767,7 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
             >
               <div
                 className="glass-text-xs glass-font-mono glass-gap-1"
-                style={{ color: colors.primary }}
+                style={{ color: "rgba(15, 23, 42, 0.88)" }}
               >
                 <div>Angle: {currentProjection.angle.toFixed(1)}°</div>
                 <div>Tilt: {currentProjection.tilt.toFixed(1)}°</div>
@@ -796,9 +798,14 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
             50% { background-position: 100% 0; }
           }
           
-          @keyframes scan {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100vh); }
+          @keyframes hologram-scan-lines {
+            from { background-position: 0 0; }
+            to { background-position: 0 4px; }
+          }
+
+          @keyframes hologram-layer-scan {
+            0%, 100% { opacity: 0.35; }
+            50% { opacity: 0.8; }
           }
           
           @keyframes noise {
@@ -824,7 +831,7 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
             right: 0;
             height: 2px;
             background: ${colors.primary};
-            animation: scan 2s linear infinite;
+            animation: hologram-layer-scan 2s ease-in-out infinite;
           }
         `}</style>
       </OptimizedGlass>

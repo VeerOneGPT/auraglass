@@ -95,6 +95,7 @@ export const CompactCookieNotice = forwardRef<
       position = "bottom-left",
       animate = true,
       forceVisible = false,
+      declineText,
       ...rest
     }: CompactCookieNoticeProps,
     ref
@@ -203,7 +204,12 @@ export const CompactCookieNotice = forwardRef<
         <Typography variant="p">{message}</Typography>
 
         <div className={styles.buttonGroup}>
-          <Button variant="link" onClick={handleMoreInfo} size="sm">
+          <Button
+            variant="link"
+            onClick={handleMoreInfo}
+            size="sm"
+            className={styles.moreInfoButton}
+          >
             {moreInfoText}
           </Button>
 

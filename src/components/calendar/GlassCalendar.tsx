@@ -16,6 +16,18 @@ import { CardContent, CardHeader, CardTitle, GlassCard } from "../card";
 import { ContrastGuard } from "../accessibility/ContrastGuard";
 import { ANIMATION } from "../../tokens/designConstants";
 
+const calendarSelectionSurfaceStyle: React.CSSProperties = {
+  background: "var(--glass-neutral-level2-surface)",
+};
+
+const calendarInkStyle: React.CSSProperties = {
+  "--glass-specular-intensity": 0.25,
+  "--glass-text-primary": "rgba(15, 23, 42, 0.94)",
+  "--glass-text-secondary": "rgba(15, 23, 42, 0.76)",
+  "--glass-text-tertiary": "rgba(15, 23, 42, 0.64)",
+  color: "rgba(15, 23, 42, 0.94)",
+} as React.CSSProperties;
+
 export interface CalendarEvent {
   id: string;
   title: string;
@@ -349,8 +361,9 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
     <div className="glass-w-full glass-typography-reset">
       <GlassCard
         variant="elevated"
-        className={cn("overflow-hidden", className)}
+        className={cn("overflow-hidden glass-calendar-shell", className)}
         style={{
+          ...calendarInkStyle,
           maxHeight:
             resolvedMaxHeight ?? (compact || contained ? "220px" : undefined),
           overflow:
@@ -459,6 +472,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                 return (
                   <div
                     key={day}
+                    aria-label={compact ? day : undefined}
                     className={cn(
                       "text-center glass-body font-medium glass-radius-lg",
                       compact ? "glass-py-1 glass-text-xs" : "glass-py-2",
@@ -466,8 +480,11 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                         ? "glass-text-primary/60"
                         : "glass-text-primary/80"
                     )}
+                    style={{ color: "rgba(15, 23, 42, 0.92)" }}
                   >
-                    {day}
+                    <span aria-hidden={compact ? "true" : undefined}>
+                      {compact ? day.slice(0, 1) : day}
+                    </span>
                   </div>
                 );
               }
@@ -478,7 +495,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
           <div
             className={cn(
               "glass-grid",
-              compact ? "glass-gap-1" : "glass-gap-2"
+              "glass-gap-2"
             )}
             style={{
               gridTemplateColumns: `repeat(${showWeekends ? 7 : 5}, minmax(0, 1fr))`,
@@ -495,11 +512,43 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
               return (
                 <div
                   key={`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`}
-                  className="glass-aspect-square"
+                  className={cn(
+                    "glass-min-w-0",
+                    compact ? "glass-calendar-compact-day" : "glass-aspect-square"
+                  )}
+                  style={
+                    compact
+                      ? {
+                          aspectRatio: "1 / 1",
+                          justifySelf: "center",
+                          width: "min(100%, 64px)",
+                        }
+                      : undefined
+                  }
                 >
                   <button
                     onClick={(e) => handleDateClick(date)}
                     disabled={isDisabled(date)}
+                    style={
+                      compact ||
+                      isSelected(date) ||
+                      (isToday(date) && showToday && !isSelected(date))
+                        ? {
+                            color: isCurrentMonth(date)
+                              ? "rgba(15, 23, 42, 0.92)"
+                              : "rgba(15, 23, 42, 0.62)",
+                            ...(compact ? { padding: "1px" } : {}),
+                            ...(isSelected(date) ||
+                            (isToday(date) && showToday && !isSelected(date))
+                              ? calendarSelectionSurfaceStyle
+                              : {}),
+                          }
+                        : {
+                            color: isCurrentMonth(date)
+                              ? "rgba(15, 23, 42, 0.92)"
+                              : "rgba(15, 23, 42, 0.62)",
+                          }
+                    }
                     className={cn(
                       "w-full h-full glass-radius-lg glass-focus glass-accent-primary glass-touch-target glass-contrast-guard",
                       "flex flex-col items-center justify-start",
@@ -518,7 +567,17 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                     )}
                     aria-label={`Select date ${date.toLocaleDateString(locale, { month: "long", day: "numeric", year: "numeric" })}`}
                   >
-                    <span className="glass-body glass-font-medium glass-leading-none glass-touch-target glass-contrast-guard">
+                    <span
+                      className="glass-body glass-font-medium glass-leading-none glass-contrast-guard"
+                      style={
+                        compact
+                          ? {
+                              fontSize: "clamp(0.625rem, 3vw, 0.875rem)",
+                              lineHeight: 1,
+                            }
+                          : undefined
+                      }
+                    >
                       {date.getDate()}
                     </span>
 

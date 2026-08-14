@@ -164,6 +164,8 @@ export interface GlassTeamCursorsProps {
   showVoiceIndicators?: boolean;
   cursorSize?: CursorSize;
   glassLevel?: CursorGlassLevel;
+  /** Render inside a parent cursor layer instead of creating a second overlay. */
+  contained?: boolean;
 }
 
 export interface GlassTeamCursorsWithEffectsProps
@@ -432,17 +434,21 @@ function WorkspaceContent({
     >
       <style>{`
         .glass-collaborative-workspace.workspace-glass-shell {
-          background: linear-gradient(135deg, #07111f 0%, #0f172a 44%, #111827 100%);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 55%, rgba(255, 255, 255, 0.14) 100%);
           color: var(--glass-text-primary);
         }
 
         .glass-collaborative-workspace .workspace-glass-panel {
-          background: var(--glass-neutral-level3-surface);
+          background: rgba(255, 255, 255, 0.18);
           border-color: var(--glass-neutral-level3-border-color);
-          color: var(--glass-neutral-level3-text-primary);
-          backdrop-filter: blur(var(--glass-neutral-level3-blur)) var(--glass-filter-base);
-          -webkit-backdrop-filter: blur(var(--glass-neutral-level3-blur)) var(--glass-filter-base);
+          color: rgba(15, 23, 42, 0.92);
+          backdrop-filter: blur(24px) saturate(1.45) brightness(1.04) contrast(1.03);
+          -webkit-backdrop-filter: blur(24px) saturate(1.45) brightness(1.04) contrast(1.03);
           box-shadow: var(--glass-neutral-level3-shadow);
+          min-width: 0;
+          max-width: 100%;
+          width: 100%;
+          overflow: hidden;
         }
 
         .glass-collaborative-workspace .workspace-glass-panel label,
@@ -466,9 +472,21 @@ function WorkspaceContent({
         }
 
         .glass-collaborative-workspace .workspace-glass-inset {
-          background: rgba(var(--glass-color-white) / 0.06);
+          background: rgba(var(--glass-color-white) / 0.08);
           border: 1px solid var(--glass-border-default);
           color: var(--glass-text-primary);
+          min-width: 0;
+          max-width: 100%;
+          width: 100%;
+          overflow: hidden;
+        }
+
+        .glass-collaborative-workspace .workspace-main-content {
+          flex-wrap: wrap;
+        }
+
+        .glass-collaborative-workspace .workspace-main-content > div {
+          min-width: min(100%, 300px);
         }
 
         .glass-collaborative-workspace .glass-collaboration-number,
@@ -497,13 +515,11 @@ function WorkspaceContent({
         .glass-collaborative-workspace .glass-collaboration-range {
           height: 0.625rem;
           border-radius: 999px;
-          border: 1px solid rgba(148, 163, 184, 0.42);
-          background:
-            linear-gradient(90deg, rgba(56, 189, 248, 0.9), rgba(34, 197, 94, 0.5)),
-            rgba(15, 23, 42, 0.72);
+          border: 1px solid rgba(15, 23, 42, 0.22);
+          background: rgba(255, 255, 255, 0.3);
           box-shadow:
-            inset 0 1px 2px rgba(2, 6, 23, 0.28),
-            0 1px 0 rgba(255, 255, 255, 0.08);
+            inset 0 1px 2px rgba(15, 23, 42, 0.12),
+            0 1px 0 rgba(255, 255, 255, 0.32);
           cursor: pointer;
         }
 
@@ -513,18 +529,18 @@ function WorkspaceContent({
           width: 1.125rem;
           height: 1.125rem;
           border-radius: 999px;
-          border: 2px solid rgba(248, 250, 252, 0.96);
-          background: #38bdf8;
-          box-shadow: 0 6px 18px rgba(14, 165, 233, 0.4);
+          border: 2px solid rgba(255, 255, 255, 0.96);
+          background: rgba(30, 41, 59, 0.86);
+          box-shadow: 0 4px 12px rgba(15, 23, 42, 0.22);
         }
 
         .glass-collaborative-workspace .glass-collaboration-range::-moz-range-thumb {
           width: 1.125rem;
           height: 1.125rem;
           border-radius: 999px;
-          border: 2px solid rgba(248, 250, 252, 0.96);
-          background: #38bdf8;
-          box-shadow: 0 6px 18px rgba(14, 165, 233, 0.4);
+          border: 2px solid rgba(255, 255, 255, 0.96);
+          background: rgba(30, 41, 59, 0.86);
+          box-shadow: 0 4px 12px rgba(15, 23, 42, 0.22);
         }
       `}</style>
       {/* Workspace Header */}
@@ -556,7 +572,7 @@ function WorkspaceContent({
       {/* Main Workspace Content */}
       <div
         className={cn(
-          "glass-flex-1 glass-flex glass-min-h-0",
+          "workspace-main-content glass-flex-1 glass-flex glass-min-h-0 glass-min-w-0 glass-w-full glass-overflow-hidden",
           layoutConfig.direction === "col" ? "glass-flex-col" : "glass-flex-row"
         )}
       >
@@ -739,24 +755,24 @@ function WorkspaceHeader({
 
   return (
     <div
-      className="workspace-header workspace-glass-panel glass-flex glass-items-center glass-justify-between glass-px-4 glass-py-3 glass-border-b glass-border-white/10"
+      className="workspace-header workspace-glass-panel glass-flex glass-items-center glass-justify-between glass-flex-wrap glass-gap-2 glass-px-4 glass-py-3 glass-border-b glass-border-white/10"
       style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
     >
       {/* Left Section */}
-      <div className="glass-flex glass-items-center glass-gap-4">
+      <div className="glass-flex glass-items-center glass-gap-4 glass-min-w-0">
         <h1 className="glass-text-xl glass-font-bold glass-text-primary">
           {workspace.name}
         </h1>
         <div
-          className="glass-text-sm glass-text-primary"
-          style={{ opacity: "var(--glass-opacity-60)" }}
+          className="glass-text-sm glass-text-primary glass-whitespace-nowrap"
+          style={{ color: "rgba(15, 23, 42, 0.9)" }}
         >
           {canEdit ? "✏️ Editing" : "👁️ Viewing"}
         </div>
       </div>
 
       {/* Center Section - Tools */}
-      <div className="glass-flex glass-items-center glass-gap-2">
+      <div className="glass-flex glass-items-center glass-gap-2 glass-min-w-0 glass-flex-wrap">
         {/* Undo/Redo */}
         {enableVersionControl && (
           <>
@@ -850,7 +866,7 @@ function WorkspaceHeader({
       </div>
 
       {/* Right Section */}
-      <div className="glass-flex glass-items-center glass-gap-2">
+      <div className="glass-flex glass-items-center glass-gap-2 glass-min-w-0 glass-flex-wrap">
         {/* Online Users */}
         {showOnlineUsers && (
           <div className="glass-flex glass-items-center glass-gap-2">
@@ -876,7 +892,7 @@ function WorkspaceHeader({
             </div>
             <span
               className="glass-text-sm glass-text-primary"
-              style={{ opacity: "var(--glass-opacity-60)" }}
+              style={{ color: "rgba(15, 23, 42, 0.9)" }}
             >
               {onlineUsers.length} online
             </span>
@@ -977,7 +993,7 @@ function CollaborativeGlassCanvas({
 }: CollaborativeGlassCanvasProps) {
   return (
     <div
-      className={`collaborative-canvas workspace-glass-panel relative ${className}`}
+      className={`collaborative-canvas workspace-glass-panel relative glass-w-full glass-min-w-0 ${className}`}
       style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
     >
       {showGrid && (
@@ -1012,7 +1028,7 @@ function MultiUserGlassEditor({
 }: MultiUserGlassEditorProps) {
   return (
     <div
-      className={`multi-user-editor workspace-glass-panel ${className}`}
+      className={`multi-user-editor workspace-glass-panel glass-w-full glass-min-w-0 ${className}`}
       style={createGlassStyle({ intent: "neutral", elevation: "level2" })}
     >
       <div className="glass-p-4">
@@ -1194,6 +1210,7 @@ export function GlassTeamCursors({
   showVoiceIndicators,
   cursorSize,
   glassLevel,
+  contained = false,
 }: GlassTeamCursorsProps) {
   const size = cursorSize === "lg" ? 18 : cursorSize === "sm" ? 12 : 15;
   const users = [
@@ -1203,7 +1220,14 @@ export function GlassTeamCursors({
   ];
 
   return (
-    <div className="glass-pointer-events-none glass-absolute glass-inset-0 glass-z-30">
+    <div
+      className={cn(
+        "glass-pointer-events-none glass-absolute glass-overflow-hidden",
+        contained
+          ? "glass-inset-0 glass-z-10"
+          : "glass-team-cursors-layer glass-z-30"
+      )}
+    >
       {users.map((user) => (
         <div
           key={user.id}
@@ -1258,7 +1282,7 @@ export function GlassTeamCursorsWithEffects({
   enableGlowEffect,
 }: GlassTeamCursorsWithEffectsProps) {
   return (
-    <>
+    <div className="glass-team-cursors-layer glass-pointer-events-none glass-absolute glass-z-30 glass-overflow-hidden">
       {enableRippleEffect && (
         <>
           <span
@@ -1291,8 +1315,9 @@ export function GlassTeamCursorsWithEffects({
         showVoiceIndicators={showVoiceIndicators}
         cursorSize={cursorSize}
         glassLevel={enableGlowEffect ? "high" : glassLevel}
+        contained
       />
-    </>
+    </div>
   );
 }
 

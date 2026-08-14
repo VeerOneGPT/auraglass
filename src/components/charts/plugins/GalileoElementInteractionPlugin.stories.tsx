@@ -168,7 +168,7 @@ export const Default: Story = {
     };
 
     return (
-      <div className="glass-p-8 space-y-6">
+      <div className="glass-neutral-level1 glass-rounded-3xl glass-p-8 space-y-6">
         <div className="glass-text-center">
           <h3 className="glass-text-xl glass-font-semibold glass-mb-2">
             Aura Element Interaction Plugin
@@ -181,17 +181,17 @@ export const Default: Story = {
 
         <div className="glass-flex glass-flex-wrap glass-gap-4 glass-justify-center">
           <LensCard
-            className="glass-p-4 glass-gradient-primary glass-gradient-primary glass-gradient-primary dark:glass-gradient-primary dark:glass-gradient-primary glass-glass-backdrop-blur glass-border glass-border-white/20 glass-radius-lg glass-cursor-pointer glass-contrast-guard"
+            className="glass-p-4 glass-glass-backdrop-blur glass-border glass-border-white/20 glass-radius-lg glass-cursor-pointer glass-contrast-guard"
             label="Data Point 1"
             dotColor="hsl(var(--glass-color-primary))"
           />
           <LensCard
-            className="glass-p-4 glass-gradient-primary glass-gradient-primary glass-gradient-primary glass-glass-backdrop-blur glass-border glass-border-white/20 glass-radius-lg glass-cursor-pointer glass-contrast-guard"
+            className="glass-p-4 glass-glass-backdrop-blur glass-border glass-border-white/20 glass-radius-lg glass-cursor-pointer glass-contrast-guard"
             label="Data Point 2"
             dotColor="hsl(var(--glass-color-success))"
           />
           <LensCard
-            className="glass-p-4 glass-gradient-primary glass-gradient-primary glass-gradient-primary dark:glass-gradient-primary dark:glass-gradient-primary glass-glass-backdrop-blur glass-border glass-border-white/20 glass-radius-lg glass-cursor-pointer glass-contrast-guard"
+            className="glass-p-4 glass-glass-backdrop-blur glass-border glass-border-white/20 glass-radius-lg glass-cursor-pointer glass-contrast-guard"
             label="Data Point 3"
             dotColor="#6366F1"
           />
@@ -239,7 +239,7 @@ export const DisabledEffects: Story = {
     const plugin = createAuraPlugin(config);
 
     return (
-      <div className="glass-p-8 space-y-6">
+      <div className="glass-neutral-level1 glass-rounded-3xl glass-p-8 space-y-6">
         <div className="glass-text-center">
           <h3 className="glass-text-xl glass-font-semibold glass-mb-2">
             Disabled Effects

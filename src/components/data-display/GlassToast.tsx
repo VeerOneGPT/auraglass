@@ -20,6 +20,16 @@ import {
 } from "@/components/accessibility/ContrastGuard";
 import { ANIMATION } from "../../tokens/designConstants";
 
+const toastSurfaceStyle: React.CSSProperties = {
+  width: "min(23rem, calc(100vw - 2rem))",
+  maxWidth: "calc(100vw - 2rem)",
+  background: "rgba(255, 255, 255, 0.30)",
+  border: "1px solid rgba(255, 255, 255, 0.62)",
+  boxShadow:
+    "inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 12px 32px rgba(15, 23, 42, 0.12)",
+  color: "rgba(15, 23, 42, 0.94)",
+};
+
 export interface ToastData {
   id: string;
   title?: string;
@@ -131,6 +141,7 @@ export const GlassToast: React.FC<GlassToastProps> = ({
     "aria-describedby": ariaDescribedBy,
     "aria-expanded": ariaExpanded,
     "data-testid": dataTestId,
+    style: toastStyle,
     ...motionProps
   } = props;
   const [isVisible, setIsVisible] = useState(true);
@@ -168,37 +179,29 @@ export const GlassToast: React.FC<GlassToastProps> = ({
       case "success":
         return {
           icon: (
-            <CheckCircle className="glass-w-5 glass-h-5 glass-text-primary" />
+            <CheckCircle className="glass-w-5 glass-h-5" aria-label="Success" />
           ),
-          borderColor: "glass-border-green-400/30",
-          bgColor: "bg-green-500/10",
         };
       case "error":
         return {
           icon: (
             <AlertCircle className="glass-w-5 glass-h-5 glass-text-primary" />
           ),
-          borderColor: "glass-border-red-400/30",
-          bgColor: "bg-red-500/10",
         };
       case "warning":
         return {
           icon: (
             <AlertTriangle className="glass-w-5 glass-h-5 glass-text-primary" />
           ),
-          borderColor: "glass-border-yellow-400/30",
-          bgColor: "bg-yellow-500/10",
         };
       default:
         return {
           icon: <Info className="glass-w-5 glass-h-5 glass-text-primary" />,
-          borderColor: "glass-border-blue-400/30",
-          bgColor: "bg-blue-500/10",
         };
     }
   };
 
-  const { icon, borderColor, bgColor } = getTypeStyles();
+  const { icon } = getTypeStyles();
 
   if (!isVisible) return null;
 
@@ -220,10 +223,10 @@ export const GlassToast: React.FC<GlassToastProps> = ({
         liftOnHover
         className={cn(
           "glass-relative glass-w-full glass-max-w-full glass-p-4 glass-backdrop-blur-md",
-          "glass-border glass-border-white/20 shadow-2xl",
-          bgColor,
+          "glass-border",
           className
         )}
+        style={{ ...toastSurfaceStyle, ...toastStyle }}
         aria-label={ariaLabel}
         aria-describedby={ariaDescribedBy}
         aria-expanded={ariaExpanded}
@@ -233,20 +236,17 @@ export const GlassToast: React.FC<GlassToastProps> = ({
       >
         {/* Progress bar */}
         {duration > 0 && (
-          <div className="glass-absolute glass-top-0 glass-left-0 glass-right-0 glass-h-1 glass-surface-subtle/20 glass-radius-t-lg glass-overflow-hidden">
+          <div className="glass-absolute glass-top-0 glass-left-0 glass-right-0 glass-h-1 glass-radius-t-lg glass-overflow-hidden" style={{ background: "rgba(15, 23, 42, 0.10)" }}>
             <div
-              className={cn(
-                `glass-h-full transition-all var(--glass-motion-duration-fast) var(--glass-motion-easing-linear)`,
-                borderColor.replace("glass-border-", "bg-")
-              )}
-              style={{ width: `${progress}%` }}
+              className="glass-h-full transition-all var(--glass-motion-duration-fast) var(--glass-motion-easing-linear)"
+              style={{ width: `${progress}%`, background: "rgba(15, 23, 42, 0.42)" }}
             />
           </div>
         )}
 
         <div className="glass-flex glass-items-start glass-gap-3 glass-min-w-0">
           {/* Icon */}
-          <div className="glass-flex-shrink-0 glass-mt-0-5">{icon}</div>
+          <div className="glass-flex-shrink-0 glass-mt-0-5" style={{ color: "rgba(15, 23, 42, 0.82)" }}>{icon}</div>
 
           {/* Content */}
           <div className="glass-flex-1 glass-min-w-0">
@@ -260,7 +260,7 @@ export const GlassToast: React.FC<GlassToastProps> = ({
 
             {description && (
               <ContrastGuard>
-                <p className="glass-text-primary-glass-opacity-80 glass-text-sm glass-leading-relaxed">
+                <p className="glass-text-sm glass-leading-relaxed" style={{ color: "rgba(15, 23, 42, 0.76)" }}>
                   {description}
                 </p>
               </ContrastGuard>
@@ -275,13 +275,15 @@ export const GlassToast: React.FC<GlassToastProps> = ({
           </div>
 
           {/* Close button */}
-          <GlassButton
+          <button
+            type="button"
             onClick={handleDismiss}
-            className={`glass-flex-shrink-0 glass-p-1 glass-radius-md hover:glass-surface-subtle/10 glass-transition-colors glass-duration-[${ANIMATION.DURATION.fast}ms]`}
+            className={`glass-flex-shrink-0 glass-flex glass-items-center glass-justify-center glass-radius-full glass-transition-colors glass-duration-[${ANIMATION.DURATION.fast}ms] glass-focus`}
+            style={{ width: 44, height: 44, color: "rgba(15, 23, 42, 0.76)" }}
             aria-label="Close toast"
           >
-            <X className="glass-w-4 glass-h-4 glass-text-primary-glass-opacity-60 hover:glass-text-primary" />
-          </GlassButton>
+            <X className="glass-w-4 glass-h-4" />
+          </button>
         </div>
       </OptimizedGlass>
     </Motion>
@@ -399,6 +401,7 @@ export const GlassToastViewport: React.FC<
         positionClasses[position],
         className
       )}
+      style={{ width: "min(23rem, calc(100vw - 2rem))", maxWidth: "calc(100vw - 2rem)" }}
     >
       {toasts.map((toast) => (
         <div
@@ -423,19 +426,25 @@ export const GlassToastAction: React.FC<
   }
 > = ({ children, className, onClick }) => {
   return (
-    <GlassButton
+    <button
+      type="button"
       onClick={onClick}
       className={cn(
-        "glass-inline-flex glass-items-center glass-justify-center glass-px-3 glass-py-2",
-        "glass-text-xs glass-font-medium glass-text-primary/90",
-        "bg-white/10 hover:bg-white/15 glass-border glass-border-white/30 hover:glass-border-white/40",
+        "glass-inline-flex glass-items-center glass-justify-center glass-px-3 glass-py-2 glass-min-h-11",
+        "glass-text-xs glass-font-semibold glass-border",
         `glass-radius-md transition-all var(--glass-motion-duration-fast)`,
-        "focus:outline-none focus:ring-2 glass-focus-ring-white-opacity-30",
+        "glass-focus",
         className
       )}
+      style={{
+        minHeight: 44,
+        color: "rgba(15, 23, 42, 0.88)",
+        background: "rgba(255, 255, 255, 0.24)",
+        borderColor: "rgba(15, 23, 42, 0.16)",
+      }}
     >
       {children}
-    </GlassButton>
+    </button>
   );
 };
 

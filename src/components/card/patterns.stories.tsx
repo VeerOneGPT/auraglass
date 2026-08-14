@@ -7,9 +7,9 @@ const previewShellStyle = {
   minHeight: '100vh',
   padding: '32px',
   boxSizing: 'border-box',
-  color: '#f8fafc',
+  color: '#111827',
   background:
-    'radial-gradient(circle at top left, rgba(45, 212, 191, 0.24), transparent 34%), linear-gradient(135deg, #111827 0%, #0f172a 48%, #1f2937 100%)',
+    'radial-gradient(circle at top left, rgba(255, 255, 255, 0.94), transparent 34%), linear-gradient(145deg, #f8fafc 0%, #eef1f5 48%, #e3e7ec 100%)',
 } satisfies CSSProperties;
 
 const previewGridStyle = {
@@ -27,11 +27,11 @@ const introStyle = {
   gap: 8,
 } satisfies CSSProperties;
 
-const cardClassName = 'card-pattern-preview-card glass-border glass-border-white/20 glass-text-white glass-shadow-2xl';
+const cardClassName = 'card-pattern-preview-card glass-border glass-shadow-2xl';
 
 const sectionLabelStyle = {
   margin: 0,
-  color: '#99f6e4',
+  color: '#526071',
   fontSize: 12,
   fontWeight: 700,
   letterSpacing: 0,
@@ -40,7 +40,7 @@ const sectionLabelStyle = {
 
 const headingStyle = {
   margin: 0,
-  color: '#ffffff',
+  color: '#111827',
   fontSize: 28,
   lineHeight: 1.15,
   letterSpacing: 0,
@@ -48,7 +48,7 @@ const headingStyle = {
 
 const bodyStyle = {
   margin: 0,
-  color: '#d1d5db',
+  color: '#526071',
   fontSize: 14,
   lineHeight: 1.55,
 } satisfies CSSProperties;
@@ -63,23 +63,23 @@ const metricRowStyle = {
 const metricStyle = {
   padding: '12px',
   borderRadius: 8,
-  background: 'rgba(15, 23, 42, 0.52)',
-  border: '1px solid rgba(255, 255, 255, 0.12)',
+  background: 'rgba(255, 255, 255, 0.30)',
+  border: '1px solid rgba(80, 102, 130, 0.18)',
 } satisfies CSSProperties;
 
 const buttonStyle = {
   minHeight: 36,
   padding: '0 14px',
-  border: '1px solid rgba(45, 212, 191, 0.72)',
+  border: '1px solid rgba(80, 102, 130, 0.30)',
   borderRadius: 8,
-  color: '#ffffff',
-  background: '#0f766e',
+  color: '#111827',
+  background: 'rgba(255, 255, 255, 0.42)',
   fontWeight: 700,
 } satisfies CSSProperties;
 
 const secondaryButtonStyle = {
   ...buttonStyle,
-  background: 'rgba(255, 255, 255, 0.10)',
+  background: 'rgba(255, 255, 255, 0.20)',
 } satisfies CSSProperties;
 
 function PatternPreview({ glass = false }: { glass?: boolean }) {
@@ -88,21 +88,21 @@ function PatternPreview({ glass = false }: { glass?: boolean }) {
       <style>
         {`
           .card-pattern-preview .glass-foundation-complete {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.30);
+            border-color: rgba(255, 255, 255, 0.82);
           }
 
           .card-pattern-preview .card-pattern-preview-card {
             min-height: 280px;
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.30);
           }
 
           .card-pattern-preview [class*="glass-text-primary"] {
-            color: #ffffff;
+            color: #111827;
           }
 
           .card-pattern-preview [class*="glass-text-secondary"] {
-            color: #cbd5e1;
+            color: #526071;
           }
         `}
       </style>
@@ -145,10 +145,10 @@ function PatternPreview({ glass = false }: { glass?: boolean }) {
               ['12', 'open checks'],
             ].map(([value, label]) => (
               <div key={label} style={metricStyle}>
-                <strong style={{ display: 'block', color: '#ffffff', fontSize: 22 }}>
+                <strong style={{ display: 'block', color: '#111827', fontSize: 22 }}>
                   {value}
                 </strong>
-                <span style={{ color: '#cbd5e1', fontSize: 12 }}>{label}</span>
+                <span style={{ color: '#526071', fontSize: 12 }}>{label}</span>
               </div>
             ))}
           </div>
@@ -167,8 +167,8 @@ function PatternPreview({ glass = false }: { glass?: boolean }) {
               ['Docs', 'Usage notes added to card composition examples'],
             ].map(([title, detail]) => (
               <div key={title} style={metricStyle}>
-                <strong style={{ display: 'block', color: '#ffffff' }}>{title}</strong>
-                <span style={{ color: '#cbd5e1', fontSize: 13 }}>{detail}</span>
+                <strong style={{ display: 'block', color: '#111827' }}>{title}</strong>
+                <span style={{ color: '#526071', fontSize: 13 }}>{detail}</span>
               </div>
             ))}
           </div>
@@ -202,7 +202,7 @@ function PatternPreview({ glass = false }: { glass?: boolean }) {
                   gridTemplateColumns: '28px 1fr',
                   gap: 10,
                   alignItems: 'center',
-                  color: '#e5e7eb',
+                  color: '#111827',
                 }}
               >
                 <span
@@ -212,10 +212,10 @@ function PatternPreview({ glass = false }: { glass?: boolean }) {
                     borderRadius: 8,
                     display: 'grid',
                     placeItems: 'center',
-                    color: '#042f2e',
+                    color: '#111827',
                     background: glass
-                      ? 'rgba(153, 246, 228, 0.92)'
-                      : 'rgba(191, 219, 254, 0.92)',
+                      ? 'rgba(255, 255, 255, 0.52)'
+                      : 'rgba(255, 255, 255, 0.36)',
                     fontWeight: 800,
                   }}
                 >
@@ -236,13 +236,6 @@ const meta: Meta<typeof CardPatterns> = {
   component: CardPatterns,
   parameters: {
     layout: 'fullscreen',
-    backgrounds: {
-      default: 'dark',
-      values: [
-        { name: 'dark', value: '#0a0a0a' },
-        { name: 'glass', value: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
-      ],
-    },
   },
 };
 

@@ -13,7 +13,7 @@ const meta: Meta<typeof GlassMotionController> = {
   component: GlassMotionController,
   parameters: {
     layout: "centered",
-    previewSurface: "media",
+    previewSurface: "component",
     docs: {
       description: {
         component: "A glass morphism glassmotioncontroller component.",
@@ -23,18 +23,18 @@ const meta: Meta<typeof GlassMotionController> = {
   decorators: [
     (Story) => (
       <div
-        className="motion-controller-story-shell"
+        className="glass-neutral-level1 motion-controller-story-shell"
         style={{
           width: "100%",
           maxWidth: 920,
           maxHeight: "min(720px, calc(100vh - 64px))",
           overflow: "auto",
           borderRadius: 20,
-          border: "1px solid rgba(255, 255, 255, 0.24)",
-          background:
-            "linear-gradient(135deg, rgba(15, 23, 42, 0.98), rgba(17, 94, 89, 0.92))",
-          boxShadow: "0 28px 72px rgba(2, 6, 23, 0.44)",
-          color: "#f8fafc",
+          border: "1px solid rgba(255, 255, 255, 0.28)",
+          boxShadow:
+            "0 24px 64px rgba(15, 23, 42, 0.12), inset 0 1px 10px rgba(255, 255, 255, 0.14)",
+          color: "rgba(15, 23, 42, 0.94)",
+          background: "linear-gradient(135deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.22) 48%, rgba(255, 255, 255, 0.16) 100%)",
           padding: "clamp(16px, 3vw, 28px)",
         }}
       >
@@ -45,20 +45,20 @@ const meta: Meta<typeof GlassMotionController> = {
           }
 
           .motion-controller-story-shell :where(h1, h2, h3, p, span, button, div) {
-            color: #f8fafc;
+            color: rgba(15, 23, 42, 0.94);
             overflow-wrap: anywhere;
           }
 
           .motion-controller-story-shell :where(.glass-body, .glass-caption) {
-            color: #e2e8f0;
+            color: rgba(15, 23, 42, 0.78);
             opacity: 1;
           }
 
           .motion-controller-story-shell :where(button, [role="button"]) {
             min-width: 0;
             max-width: 100%;
-            background: rgba(15, 23, 42, 0.72);
-            border-color: rgba(255, 255, 255, 0.34);
+            background: rgba(255, 255, 255, 0.28);
+            border-color: rgba(15, 23, 42, 0.12);
           }
 
           .motion-controller-story-shell :where(.glass-flex, .glass-glass-inline-glass-flex) {
@@ -102,6 +102,7 @@ type Story = StoryObj<typeof GlassMotionController>;
 
 export const Default: Story = {
   args: {
+    reduceMotion: true,
     children: (
       <div className="glass-foundation-complete glass-bg-transparent glass-border-white/40 glass-shadow-2xl glass-radius-2xl glass-p-8 glass-text-center glass-contrast-guard">
         <GlassAnimated animation={{ type: "fadeIn", duration: 650 }}>
@@ -133,7 +134,7 @@ export const Default: Story = {
           <GlassAnimated
             animation={{ type: "fadeIn", duration: 600, delay: 300 }}
           >
-            <span className="glass-caption glass-text-xs opacity-80">
+            <span className="glass-caption glass-text-xs">
               Animated on mount
             </span>
           </GlassAnimated>
@@ -179,6 +180,7 @@ export const Variants: Story = {
     </div>
   ),
   args: {
+    reduceMotion: true,
     children: null,
   },
 };
@@ -186,14 +188,14 @@ export const Variants: Story = {
 // Stories for GlassAnimationSequence
 export const AnimationSequence: Story = {
   render: (args) => (
-    <GlassMotionController enabled={true}>
+    <GlassMotionController enabled={true} reduceMotion={true}>
       <GlassAnimationSequence staggerDelay={200}>
         <div className="glass-grid glass-glass-grid-cols-3 glass-gap-4">
           <GlassAnimated className="glass-foundation-complete glass-glass-backdrop-blur glass-bg-transparent glass-border-white/40 glass-shadow-2xl glass-radius-xl glass-p-6 glass-text-center hover:glass-shadow-2xl transition-all glass-contrast-guard">
             <div className="glass-heading glass-text-xl glass-font-bold glass-mb-2">
               Step 1
             </div>
-            <div className="glass-body glass-text-sm glass-opacity-90">
+            <div className="glass-body glass-text-sm">
               Initialize
             </div>
           </GlassAnimated>
@@ -201,7 +203,7 @@ export const AnimationSequence: Story = {
             <div className="glass-heading glass-text-xl glass-font-bold glass-mb-2">
               Step 2
             </div>
-            <div className="glass-body glass-text-sm glass-opacity-90">
+            <div className="glass-body glass-text-sm">
               Process
             </div>
           </GlassAnimated>
@@ -209,7 +211,7 @@ export const AnimationSequence: Story = {
             <div className="glass-heading glass-text-xl glass-font-bold glass-mb-2">
               Step 3
             </div>
-            <div className="glass-body glass-text-sm glass-opacity-90">
+            <div className="glass-body glass-text-sm">
               Complete
             </div>
           </GlassAnimated>
@@ -222,7 +224,7 @@ export const AnimationSequence: Story = {
 // Stories for GlassAnimationTimeline
 export const AnimationTimeline: Story = {
   render: (args) => (
-    <GlassMotionController enabled={true}>
+    <GlassMotionController enabled={true} reduceMotion={true}>
       <GlassAnimationTimeline
         timeline={[
           {
@@ -266,7 +268,7 @@ export const InteractiveSequence: Story = {
     const [isPlaying, setIsPlaying] = React.useState(false);
 
     return (
-      <GlassMotionController enabled={true}>
+      <GlassMotionController enabled={true} reduceMotion={true}>
         <div className="glass-auto-gap glass-auto-gap-2xl">
           <div className="glass-flex glass-justify-center">
             <button
@@ -294,7 +296,7 @@ export const InteractiveSequence: Story = {
                   <div className="glass-text-4xl glass-mb-3 filter drop-glass-shadow-lg">
                     {emoji}
                   </div>
-                  <div className="glass-caption glass-text-xs glass-font-medium opacity-80 glass-uppercase tracking-wider">
+                  <div className="glass-caption glass-text-xs glass-font-medium glass-uppercase tracking-wider">
                     Item {index + 1}
                   </div>
                 </GlassAnimated>

@@ -26,12 +26,12 @@ interface GlassStepLabelProps {
 // Get label state classes
 const getLabelStateClasses = (active: boolean, completed: boolean) => {
   if (active) {
-    return "text-primary-600 font-semibold dark:text-primary-400";
+    return "text-slate-950 font-semibold";
   }
   if (completed) {
-    return "glass-text-secondary font-normal dark:glass-text-secondary";
+    return "text-slate-700 font-normal";
   }
-  return "glass-text-secondary font-normal dark:glass-text-secondary";
+  return "text-slate-700 font-normal";
 };
 
 // Get orientation classes

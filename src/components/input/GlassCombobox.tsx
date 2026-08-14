@@ -146,7 +146,7 @@ export const GlassCombobox = forwardRef<HTMLDivElement, GlassComboboxProps>(
           <div
             id={`${id}-listbox`}
             role="listbox"
-            className="glass-absolute glass-z-50 glass-mt-1 glass-max-h-72 glass-w-full glass-overflow-auto glass-rounded-lg glass-border glass-border-white/15 glass-bg-white/10 glass-backdrop-blur-lg glass-p-1 glass-shadow-xl"
+            className="glass-absolute glass-z-50 glass-mt-2 glass-max-h-72 glass-w-full glass-overflow-auto glass-rounded-xl glass-border glass-border-white/25 glass-bg-white/25 glass-backdrop-blur-xl glass-p-2 glass-shadow-xl"
           >
             {filteredOptions.length === 0 ? (
               <div className="glass-px-3 glass-py-2 glass-text-sm glass-text-secondary">
@@ -164,6 +164,7 @@ export const GlassCombobox = forwardRef<HTMLDivElement, GlassComboboxProps>(
                       {group}
                     </div>
                   ) : null}
+                  <div className="glass-grid glass-gap-2">
                   {groupOptions.map((option) => {
                     const enabledIndex = enabledOptions.findIndex(
                       (item) => item.value === option.value
@@ -178,8 +179,8 @@ export const GlassCombobox = forwardRef<HTMLDivElement, GlassComboboxProps>(
                         aria-selected={option.value === selectedValue}
                         disabled={option.disabled}
                         className={cn(
-                          "glass-flex glass-w-full glass-items-center glass-rounded-md glass-px-3 glass-py-2 glass-text-left glass-text-sm glass-text-primary",
-                          active && "glass-bg-white/12",
+                          "glass-flex glass-min-h-10 glass-w-full glass-items-center glass-rounded-lg glass-border glass-border-white/15 glass-bg-white/12 glass-px-3 glass-py-2 glass-text-left glass-text-sm glass-text-primary glass-transition-colors",
+                          active && "glass-bg-white/28 glass-border-white/30",
                           option.disabled &&
                             "glass-cursor-not-allowed glass-opacity-45"
                         )}
@@ -190,6 +191,7 @@ export const GlassCombobox = forwardRef<HTMLDivElement, GlassComboboxProps>(
                       </button>
                     );
                   })}
+                  </div>
                 </div>
               ))
             )}

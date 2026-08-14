@@ -3,6 +3,7 @@
 exports[`GlassPhysicsEngine matches snapshot 1`] = `
 <div
   class="glass-relative glass-overflow-hidden"
+  style="box-sizing: border-box; contain: paint; max-width: 100%;"
   tabindex="0"
 >
   <canvas

@@ -15,6 +15,20 @@ import {
 } from "@/components/accessibility/ContrastGuard";
 import { ANIMATION } from "../../tokens/designConstants";
 
+const notificationSurfaceStyle: React.CSSProperties = {
+  background: "rgba(255, 255, 255, 0.30)",
+  border: "1px solid rgba(255, 255, 255, 0.62)",
+  boxShadow:
+    "inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 12px 32px rgba(15, 23, 42, 0.12)",
+  color: "rgba(15, 23, 42, 0.94)",
+};
+
+const notificationControlStyle: React.CSSProperties = {
+  minWidth: 44,
+  minHeight: 44,
+  color: "rgba(15, 23, 42, 0.88)",
+};
+
 export type NotificationType = "success" | "error" | "warning" | "info";
 
 export interface GlassNotification {
@@ -160,42 +174,44 @@ export const GlassNotificationCenter = forwardRef<
         case "success":
           return {
             icon: "✓",
-            bgClass: "glass-border-green-500/20 bg-green-500/10",
-            iconClass: "text-green-400",
+            label: "Success",
           };
         case "error":
           return {
             icon: "✕",
-            bgClass: "glass-border-red-500/20 bg-red-500/10",
-            iconClass: "text-red-400",
+            label: "Error",
           };
         case "warning":
           return {
             icon: "⚠",
-            bgClass: "glass-border-yellow-500/20 bg-yellow-500/10",
-            iconClass: "text-yellow-400",
+            label: "Warning",
           };
         case "info":
         default:
           return {
             icon: "ℹ",
-            bgClass: "glass-border-blue-500/20 bg-blue-500/10",
-            iconClass: "text-blue-400",
+            label: "Information",
           };
       }
     };
 
     const containerClassName = cn(
-      "fixed z-50 glass-gap-2",
+      "fixed z-50 glass-flex glass-flex-col glass-gap-2",
       positionClasses[position],
       className
     );
+
+    const containerStyle: React.CSSProperties = {
+      width: "min(22rem, calc(100vw - 2rem))",
+      maxWidth: "calc(100vw - 2rem)",
+    };
 
     if (displayedNotifications.length === 0) {
       return (
         <div
           ref={ref}
           className={containerClassName}
+          style={containerStyle}
           aria-live="polite"
           data-empty
           {...props}
@@ -209,6 +225,7 @@ export const GlassNotificationCenter = forwardRef<
       <div
         ref={ref}
         className={containerClassName}
+        style={containerStyle}
         aria-live="polite"
         {...props}
       >
@@ -222,7 +239,13 @@ export const GlassNotificationCenter = forwardRef<
             border="subtle"
             animation="none"
             performanceMode="low"
-            className="glass-px-3 glass-py-1 glass-radius-full glass-text-xs glass-cursor-pointer hover:glass-surface-subtle/10 glass-transition-colors"
+            className="glass-self-end glass-px-3 glass-py-2 glass-radius-full glass-text-xs glass-font-medium glass-cursor-pointer glass-transition-colors"
+            style={{
+              ...notificationSurfaceStyle,
+              minHeight: 44,
+              width: "fit-content",
+              boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.22)",
+            }}
             onClick={clearAll}
           >
             <ContrastGuard>Clear All ({notifications.length})</ContrastGuard>
@@ -260,14 +283,17 @@ export const GlassNotificationCenter = forwardRef<
                 animation="none"
                 performanceMode="medium"
                 className={cn(
-                  "min-w-80 max-w-sm glass-p-4 glass-radius-lg glass-border glass-backdrop-blur-md",
-                  typeStyles.bgClass
+                  "glass-w-full glass-p-4 glass-radius-lg glass-border glass-backdrop-blur-md"
                 )}
+                style={notificationSurfaceStyle}
               >
                 <div className="glass-flex glass-items-start glass-gap-3">
                   {/* Icon */}
                   <div
-                    className={`glass-flex-shrink-0 glass-w-6 glass-h-6 glass-radius-full glass-flex glass-items-center glass-justify-center glass-text-sm glass-font-bold ${typeStyles.iconClass}`}
+                    className="glass-flex-shrink-0 glass-w-6 glass-h-6 glass-radius-full glass-flex glass-items-center glass-justify-center glass-text-sm glass-font-bold"
+                    style={{ color: "rgba(15, 23, 42, 0.82)" }}
+                    role="img"
+                    aria-label={typeStyles.label}
                   >
                     {typeStyles.icon}
                   </div>
@@ -292,7 +318,12 @@ export const GlassNotificationCenter = forwardRef<
                       <ContrastGuard>
                         <button
                           onClick={notification.action.onClick}
-                          className="glass-mt-2 glass-text-sm glass-font-medium glass-text-primary hover:glass-text-secondary glass-transition-colors glass-focus glass-touch-target glass-contrast-guard glass-focus glass-touch-target glass-contrast-guard"
+                          className="glass-mt-2 glass-px-3 glass-py-2 glass-radius-full glass-text-sm glass-font-semibold glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
+                          style={{
+                            ...notificationControlStyle,
+                            background: "rgba(255, 255, 255, 0.24)",
+                            border: "1px solid rgba(15, 23, 42, 0.16)",
+                          }}
                         >
                           {notification.action.label}
                         </button>
@@ -303,7 +334,8 @@ export const GlassNotificationCenter = forwardRef<
                   {/* Close Button */}
                   <button
                     onClick={(e) => removeNotification(notification.id)}
-                    className="glass-flex-shrink-0 glass-w-5 glass-h-5 glass-radius-full glass-flex glass-items-center glass-justify-center glass-text-primary-glass-opacity-60 hover:glass-text-primary-glass-opacity-90 hover:glass-surface-subtle/10 glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
+                    className="glass-flex-shrink-0 glass-radius-full glass-flex glass-items-center glass-justify-center glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
+                    style={notificationControlStyle}
                   >
                     ✕
                   </button>
@@ -311,10 +343,11 @@ export const GlassNotificationCenter = forwardRef<
 
                 {/* Progress Bar for Auto-hide */}
                 {!notification.persistent && notification.duration && (
-                  <div className="glass-mt-3 glass-h-1 glass-surface-subtle/20 glass-radius-full glass-overflow-hidden">
+                  <div className="glass-mt-3 glass-h-1 glass-radius-full glass-overflow-hidden" style={{ background: "rgba(15, 23, 42, 0.10)" }}>
                     <div
-                      className={`glass-h-full glass-surface-subtle/40 glass-radius-full glass-transition-all glass-duration-[${ANIMATION.DURATION.fast / 6}ms] glass-ease-linear`}
+                      className={`glass-h-full glass-radius-full glass-transition-all glass-duration-[${ANIMATION.DURATION.fast / 6}ms] glass-ease-linear`}
                       style={{
+                        background: "rgba(15, 23, 42, 0.42)",
                         animation: `shrink ${notification.duration}ms linear forwards`,
                       }}
                     />
@@ -342,7 +375,7 @@ export interface GlassNotificationItemProps extends React.HTMLAttributes<HTMLDiv
 export const GlassNotificationItem = forwardRef<
   HTMLDivElement,
   GlassNotificationItemProps
->(({ notification, onClose, className, ...props }, ref) => {
+>(({ notification, onClose, className, style, ...props }, ref) => {
   const typeStyles = getTypeStyles(notification.type);
 
   return (
@@ -356,15 +389,18 @@ export const GlassNotificationItem = forwardRef<
       animation="none"
       performanceMode="medium"
       className={cn(
-        "glass-p-4 glass-radius-lg glass-border",
-        typeStyles.bgClass,
+        "glass-w-full glass-p-4 glass-radius-lg glass-border",
         className
       )}
+      style={{ ...notificationSurfaceStyle, ...style }}
       {...props}
     >
       <div className="glass-flex glass-items-start glass-gap-3">
         <div
-          className={`glass-w-6 glass-h-6 glass-radius-full glass-flex glass-items-center glass-justify-center glass-text-sm ${typeStyles.iconClass}`}
+          className="glass-w-6 glass-h-6 glass-radius-full glass-flex glass-items-center glass-justify-center glass-text-sm glass-font-bold"
+          style={{ color: "rgba(15, 23, 42, 0.82)" }}
+          role="img"
+          aria-label={typeStyles.label}
         >
           {typeStyles.icon}
         </div>
@@ -382,7 +418,8 @@ export const GlassNotificationItem = forwardRef<
         </div>
         <button
           onClick={onClose}
-          className="glass-contrast-guard glass-focus glass-touch-target hover:glass-text-primary glass-text-primary-glass-opacity-60"
+          className="glass-contrast-guard glass-focus glass-touch-target glass-radius-full glass-flex glass-items-center glass-justify-center"
+          style={notificationControlStyle}
         >
           ✕
         </button>
@@ -399,27 +436,23 @@ const getTypeStyles = (type: NotificationType) => {
     case "success":
       return {
         icon: "✓",
-        bgClass: "glass-border-green-500/20 bg-green-500/10",
-        iconClass: "text-green-400",
+        label: "Success",
       };
     case "error":
       return {
         icon: "✕",
-        bgClass: "glass-border-red-500/20 bg-red-500/10",
-        iconClass: "text-red-400",
+        label: "Error",
       };
     case "warning":
       return {
         icon: "⚠",
-        bgClass: "glass-border-yellow-500/20 bg-yellow-500/10",
-        iconClass: "text-yellow-400",
+        label: "Warning",
       };
     case "info":
     default:
       return {
         icon: "ℹ",
-        bgClass: "glass-border-blue-500/20 bg-blue-500/10",
-        iconClass: "text-blue-400",
+        label: "Information",
       };
   }
 };

@@ -1,31 +1,44 @@
-import React from "react";
+import type { CSSProperties } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import * as ComponentModule from "./GlassTransitions";
-import {
-  CertificationCase,
-  type MissingComponentName,
-} from "../../stories/GlassMissingInventoryCertification.stories";
+import { GlassTransitions } from "./GlassTransitions";
 
-const componentName = "GlassTransitions" satisfies MissingComponentName;
-const Component = (ComponentModule as Record<string, any>)[componentName];
+const frameStyle: CSSProperties = {
+  minHeight: "100vh",
+  width: "100%",
+  display: "grid",
+  placeItems: "center",
+  padding: "clamp(20px, 5vw, 64px)",
+  boxSizing: "border-box",
+  background:
+    "radial-gradient(circle at 20% 15%, rgba(255,255,255,0.94) 0%, rgba(255,255,255,0.08) 34%), linear-gradient(145deg, #f5f5f5, #dddddd)",
+  color: "rgba(15, 23, 42, 0.92)",
+};
 
-const meta = {
-  title: 'Foundations/Motion/Glass Transitions',
-  component: Component,
+const meta: Meta = {
+  title: "Foundations/Motion/Glass Transitions",
+  component: GlassTransitions,
   parameters: {
-    layout: "centered",
+    layout: "fullscreen",
     docs: {
       description: {
         component:
-          "Component-owned Storybook coverage for GlassTransitions. This story renders the certified AuraGlass sample used by the full visual certification suite.",
+          "The actual composed GlassTransitions export with its page transition and swipeable card primitives.",
       },
     },
   },
-} satisfies Meta<typeof Component>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj;
 
 export const Default: Story = {
-  render: () => <CertificationCase name={componentName} />,
+  render: () => (
+    <main style={frameStyle}>
+      <GlassTransitions
+        variant="liquid"
+        className="glass-w-full glass-max-w-3xl"
+        aria-label="Liquid glass transitions demonstration"
+      />
+    </main>
+  ),
 };

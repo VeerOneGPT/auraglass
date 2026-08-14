@@ -110,7 +110,8 @@ export const GlassFluidSimulation = forwardRef<
       showTrails = true,
       trailLength = 10,
       fluidColor = DEFAULT_FLUID_COLOR,
-      backgroundColor = "rgba(var(--glass-color-black) / var(--glass-opacity-10))",
+      backgroundColor =
+        "var(--glass-theme-background-surface, var(--glass-gradient-neutral))",
       interactive = true,
       forceStrength = 1,
       forces = [],
@@ -423,9 +424,11 @@ export const GlassFluidSimulation = forwardRef<
         const ctx = canvas.getContext("2d");
         if (!ctx) return;
 
-        // Clear canvas
-        ctx.fillStyle = backgroundColor;
-        ctx.fillRect(0, 0, width, height);
+        // Keep the bitmap transparent and let CSS paint the glass surface.
+        // Canvas cannot resolve CSS custom properties (for example
+        // `rgba(var(--glass-color-black) / ...)`), so assigning the prop to
+        // `fillStyle` can silently leave an opaque black canvas behind.
+        ctx.clearRect(0, 0, width, height);
 
         // Draw trails
         if (showTrails && particleHistory.length > 1) {
@@ -677,7 +680,16 @@ export const GlassFluidSimulation = forwardRef<
           depth={1}
           tint="neutral"
           border="subtle"
-          className="glass-fluid-controls glass-flex glass-flex-wrap glass-items-center glass-gap-4 glass-p-4 glass-radius-lg glass-backdrop-blur-md glass-border glass-border-glass-border/20 glass-contrast-guard"
+          className="glass-fluid-controls glass-flex glass-flex-wrap glass-items-center glass-gap-4 glass-p-4 glass-radius-lg glass-backdrop-blur-md glass-border glass-border-glass-border/20 glass-surface-neutral glass-contrast-guard"
+          style={{
+            color: "rgba(var(--glass-color-black) / var(--glass-opacity-90))",
+            // OptimizedGlass carries its generated text tokens inline. Keep
+            // this neutral control surface readable on the light glass fill.
+            "--glass-theme-text":
+              "rgba(var(--glass-color-black) / var(--glass-opacity-90))",
+            "--glass-text-primary":
+              "rgba(var(--glass-color-black) / var(--glass-opacity-90))",
+          } as React.CSSProperties}
         >
           <div className="glass-flex glass-items-center glass-gap-2">
             <button
@@ -702,6 +714,14 @@ export const GlassFluidSimulation = forwardRef<
               onChange={(e) => setCurrentPreset(e.target.value as any)}
               className="glass-px-2 glass-py-1 glass-radius-md glass-surface-overlay glass-border glass-border-glass-border/20"
               aria-label="Select fluid simulation preset"
+              style={{
+                color: "rgba(var(--glass-color-black) / var(--glass-opacity-90))",
+                colorScheme: "light",
+                "--glass-theme-text":
+                  "rgba(var(--glass-color-black) / var(--glass-opacity-90))",
+                "--glass-text-primary":
+                  "rgba(var(--glass-color-black) / var(--glass-opacity-90))",
+              } as React.CSSProperties}
             >
               {Object.keys(fluidPresets).map((preset: any) => (
                 <option key={preset} value={preset}>
@@ -807,14 +827,14 @@ export const GlassFluidSimulation = forwardRef<
               width={width}
               height={height}
               className={cn(
-                "border border-border/20 glass-radius-md bg-black/10",
+                "border border-border/20 glass-radius-md glass-bg-transparent",
                 interactive && "cursor-crosshair"
               )}
               onMouseMove={handleMouseMove}
               onMouseDown={handleMouseDown}
               onMouseUp={handleMouseUp}
               onMouseLeave={handleMouseUp}
-              style={{ width, height }}
+              style={{ width, height, background: backgroundColor }}
             />
           </div>
         </Motion>

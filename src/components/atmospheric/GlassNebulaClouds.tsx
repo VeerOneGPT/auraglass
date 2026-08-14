@@ -156,6 +156,20 @@ export const GlassNebulaClouds = forwardRef<
       "formation" | "mature" | "dispersing"
     >("formation");
 
+    // The visualization uses luminance and density—not saturated RGB—to
+    // distinguish gas, dust, and stars. This keeps the media expressive while
+    // preserving AuraGlass's neutral Apple-like material language.
+    const neutralizeColor = useCallback(
+      (color: [number, number, number]): [number, number, number] => {
+        const luminance = Math.round(
+          color[0] * 0.2126 + color[1] * 0.7152 + color[2] * 0.0722
+        );
+        const silver = Math.max(112, Math.min(242, luminance));
+        return [silver, silver, silver];
+      },
+      []
+    );
+
     // Nebula type configurations
     const nebulaConfigs = {
       emission: {
@@ -540,7 +554,8 @@ export const GlassNebulaClouds = forwardRef<
           if (particle.opacity < 0.01) return;
 
           ctx.globalAlpha = particle.opacity;
-          ctx.fillStyle = `rgb(${particle.color[0]}, ${particle.color[1]}, ${particle.color[2]})`;
+          const dustColor = neutralizeColor(particle.color);
+          ctx.fillStyle = `rgb(${dustColor[0]}, ${dustColor[1]}, ${dustColor[2]})`;
           ctx.beginPath();
           ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
           ctx.fill();
@@ -562,10 +577,11 @@ export const GlassNebulaClouds = forwardRef<
           if (adjustedDensity < 0.1) return;
 
           const size = Math.max(10, (adjustedDensity * 30) / cameraDistance);
-          const tempColor =
+          const tempColor = neutralizeColor(
             ionizationLevel > 0.5
               ? layer.color
-              : getTemperatureColor(point.temperature);
+              : getTemperatureColor(point.temperature)
+          );
 
           const gradient = ctx.createRadialGradient(
             point.x,
@@ -598,7 +614,8 @@ export const GlassNebulaClouds = forwardRef<
         // Draw emission lines
         if (showEmissionLines && nebulaConfigs[nebulaType].ionizedGas) {
           ctx.globalAlpha = ionizationLevel * 0.3;
-          ctx.strokeStyle = `rgb(${layer.color[0]}, ${layer.color[1]}, ${layer.color[2]})`;
+          const emissionColor = neutralizeColor(layer.color);
+          ctx.strokeStyle = `rgb(${emissionColor[0]}, ${emissionColor[1]}, ${emissionColor[2]})`;
           ctx.lineWidth = 1;
 
           for (let i = 0; i < layer.points.length - 1; i += 10) {
@@ -618,7 +635,7 @@ export const GlassNebulaClouds = forwardRef<
 
       // Draw magnetic field lines
       if (showMagneticField) {
-        ctx.strokeStyle = "rgba(100, 255, 255, 0.2)";
+        ctx.strokeStyle = "rgba(220, 224, 230, 0.2)";
         ctx.lineWidth = 1;
         ctx.globalAlpha = 0.3;
 
@@ -645,6 +662,7 @@ export const GlassNebulaClouds = forwardRef<
       // Draw star clusters
       starClusters.forEach((cluster: any) => {
         cluster.stars.forEach((star: any) => {
+          const starColor = neutralizeColor(star.color);
           const twinkle =
             Math.sin(animationTime * 0.005 + star.twinklePhase) * 0.3 + 0.7;
           ctx.globalAlpha = star.brightness * twinkle;
@@ -660,15 +678,15 @@ export const GlassNebulaClouds = forwardRef<
           );
           starGradient.addColorStop(
             0,
-            `rgb(${star.color[0]}, ${star.color[1]}, ${star.color[2]})`
+            `rgb(${starColor[0]}, ${starColor[1]}, ${starColor[2]})`
           );
           starGradient.addColorStop(
             0.3,
-            `rgba(${star.color[0]}, ${star.color[1]}, ${star.color[2]}, 0.8)`
+            `rgba(${starColor[0]}, ${starColor[1]}, ${starColor[2]}, 0.8)`
           );
           starGradient.addColorStop(
             1,
-            `rgba(${star.color[0]}, ${star.color[1]}, ${star.color[2]}, 0)`
+            `rgba(${starColor[0]}, ${starColor[1]}, ${starColor[2]}, 0)`
           );
 
           ctx.fillStyle = starGradient;
@@ -683,7 +701,7 @@ export const GlassNebulaClouds = forwardRef<
           ctx.fill();
 
           // Draw star core
-          ctx.fillStyle = `rgb(${star.color[0]}, ${star.color[1]}, ${star.color[2]})`;
+          ctx.fillStyle = `rgb(${starColor[0]}, ${starColor[1]}, ${starColor[2]})`;
           ctx.beginPath();
           ctx.arc(
             cluster.x + star.x,
@@ -735,6 +753,7 @@ export const GlassNebulaClouds = forwardRef<
       nebulaAge,
       evolutionPhase,
       temperature,
+      neutralizeColor,
     ]);
 
     // Animation loop
@@ -791,6 +810,11 @@ export const GlassNebulaClouds = forwardRef<
           tint="neutral"
           border="subtle"
           className="glass-nebula-controls glass-flex glass-flex-wrap glass-items-center glass-gap-4 glass-p-4 glass-radius-lg glass-backdrop-blur-md glass-border glass-border-glass-border/20 glass-contrast-guard"
+          style={{
+            color: "rgba(15, 23, 42, 0.92)",
+            background: "rgba(255, 255, 255, 0.24)",
+            borderColor: "rgba(80, 102, 130, 0.18)",
+          }}
         >
           <div className="glass-flex glass-items-center glass-gap-2">
             <label htmlFor="nebula-type" className="glass-text-sm">
@@ -802,6 +826,11 @@ export const GlassNebulaClouds = forwardRef<
               onChange={(e) => {}}
               aria-label="Nebula type selection"
               className="glass-px-2 glass-py-1 glass-radius-md glass-surface-overlay glass-border glass-border-glass-border/20 glass-contrast-guard glass-focus glass-touch-target"
+              style={{
+                color: "rgba(15, 23, 42, 0.92)",
+                background: "rgba(255, 255, 255, 0.32)",
+                borderColor: "rgba(80, 102, 130, 0.24)",
+              }}
             >
               <option value="emission">Emission</option>
               <option value="reflection">Reflection</option>
@@ -825,6 +854,7 @@ export const GlassNebulaClouds = forwardRef<
               onChange={(e) => {}}
               aria-label="Nebula density"
               className='glass-w-20 glass-focus glass-touch-target glass-contrast-guard'
+              style={{ accentColor: "#526071" }}
             />
           </div>
 
@@ -842,6 +872,7 @@ export const GlassNebulaClouds = forwardRef<
               onChange={(e) => {}}
               aria-label="Nebula temperature in Kelvin"
               className='glass-w-20 glass-focus glass-touch-target glass-contrast-guard'
+              style={{ accentColor: "#526071" }}
             />
             <span className="glass-text-xs">
               {(temperature / 1000).toFixed(1)}K K
@@ -862,6 +893,7 @@ export const GlassNebulaClouds = forwardRef<
               onChange={(e) => {}}
               aria-label="Time scale multiplier"
               className='glass-w-20 glass-focus glass-touch-target glass-contrast-guard'
+              style={{ accentColor: "#526071" }}
             />
           </div>
 
@@ -873,6 +905,7 @@ export const GlassNebulaClouds = forwardRef<
                 onChange={(e) => {}}
                 aria-label="Show star clusters"
                 className="glass-mr-1 glass-focus glass-touch-target glass-contrast-guard"
+                style={{ accentColor: "#526071" }}
               />
               Stars
             </label>
@@ -883,6 +916,7 @@ export const GlassNebulaClouds = forwardRef<
                 onChange={(e) => {}}
                 aria-label="Show cosmic dust"
                 className="glass-mr-1 glass-focus glass-touch-target glass-contrast-guard"
+                style={{ accentColor: "#526071" }}
               />
               Dust
             </label>
@@ -893,6 +927,7 @@ export const GlassNebulaClouds = forwardRef<
                 onChange={(e) => {}}
                 aria-label="Show emission lines"
                 className="glass-mr-1 glass-focus glass-touch-target glass-contrast-guard"
+                style={{ accentColor: "#526071" }}
               />
               Emission
             </label>
@@ -903,6 +938,7 @@ export const GlassNebulaClouds = forwardRef<
                 onChange={(e) => {}}
                 aria-label="Show magnetic field"
                 className="glass-mr-1 glass-focus glass-touch-target glass-contrast-guard"
+                style={{ accentColor: "#526071" }}
               />
               Magnetic
             </label>

@@ -9,9 +9,6 @@ import React, {
   useRef,
 } from "react";
 import { OptimizedGlass } from "../../primitives";
-import { IconButton } from "../button/GlassButton";
-import { GlassInput } from "../input/GlassInput";
-import { GlassSelect } from "../input/GlassSelect";
 import {
   usePredictiveEngine,
   useInteractionRecorder,
@@ -25,6 +22,30 @@ import { ContrastGuard } from "@/components/accessibility/ContrastGuard";
 import { ANIMATION } from "../../tokens/designConstants";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { createGlassStyle } from "../../core/mixins/glassMixins";
+
+const TABLE_TEXT = "rgba(15, 23, 42, 0.94)";
+const TABLE_SECONDARY_TEXT = "rgba(15, 23, 42, 0.76)";
+const tableTextStyle: React.CSSProperties = { color: TABLE_TEXT };
+const tableSecondaryTextStyle: React.CSSProperties = {
+  color: TABLE_SECONDARY_TEXT,
+};
+const tableControlStyle: React.CSSProperties = {
+  minHeight: 40,
+  border: "1px solid rgba(71, 85, 105, 0.24)",
+  borderRadius: 12,
+  color: TABLE_TEXT,
+  background:
+    "linear-gradient(135deg, rgba(255,255,255,0.30), rgba(255,255,255,0.14))",
+  boxShadow:
+    "inset 0 1px 8px rgba(255,255,255,0.14), inset 0 1px 0 rgba(255,255,255,0.30), 0 8px 24px rgba(15,23,42,0.08)",
+};
+const tableNativeControlStyle: React.CSSProperties = {
+  ...tableControlStyle,
+  appearance: "none",
+  WebkitAppearance: "none",
+  fontFamily:
+    '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif',
+};
 
 export type GlassDataTableRow = Record<string, unknown>;
 export type GlassDataTableCellValue = unknown;
@@ -624,9 +645,15 @@ const GlassDataTableInnerBase = <
       data-glass-component
       ref={setContainerRef}
       className={cn("glass-w-full", className)}
-      style={{
-        color: "var(--glass-text-primary, rgba(248, 250, 252, 0.92))",
-      }}
+      style={
+        {
+          "--glass-theme-text": TABLE_TEXT,
+          "--glass-text-primary": TABLE_TEXT,
+          "--glass-text-secondary": TABLE_SECONDARY_TEXT,
+          "--glass-text-tertiary": "rgba(15, 23, 42, 0.64)",
+          color: TABLE_TEXT,
+        } as React.CSSProperties
+      }
       aria-label={ariaLabel}
       {...restProps}
     >
@@ -640,31 +667,44 @@ const GlassDataTableInnerBase = <
         >
           <div className="glass-flex glass-min-w-0 glass-flex-1 glass-items-center glass-gap-3">
             {searchable && (
-              <GlassInput
-                placeholder={searchPlaceholder}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                leftIcon={
-                  <svg
-                    className="glass-w-4 glass-h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                }
-                clearable
+              <div
                 className={cn(
-                  "glass-w-full",
+                  "glass-flex glass-w-full glass-items-center glass-gap-2 glass-px-3",
                   compact ? "sm:glass-w-48" : "sm:glass-w-64"
                 )}
-              />
+                style={tableControlStyle}
+              >
+                <svg
+                  aria-hidden="true"
+                  className="glass-w-4 glass-h-4 glass-flex-none"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+                <input
+                  type="search"
+                  aria-label={searchPlaceholder}
+                  placeholder={searchPlaceholder}
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="glass-min-w-0 glass-flex-1 glass-bg-transparent glass-outline-none"
+                  style={{
+                    color: TABLE_TEXT,
+                    width: "100%",
+                    border: 0,
+                    outline: 0,
+                    background: "transparent",
+                    appearance: "none",
+                  }}
+                />
+              </div>
             )}
           </div>
 
@@ -693,8 +733,15 @@ const GlassDataTableInnerBase = <
         )}
         style={{
           ...createGlassStyle({ intent: "neutral", elevation: "level2" }),
+          "--glass-theme-text": TABLE_TEXT,
+          "--glass-text-primary": TABLE_TEXT,
+          "--glass-text-secondary": TABLE_SECONDARY_TEXT,
+          background:
+            "linear-gradient(135deg, rgba(255,255,255,0.30), rgba(255,255,255,0.14))",
+          boxShadow:
+            "inset 0 1px 10px rgba(255,255,255,0.14), inset 0 1px 0 rgba(255,255,255,0.30), inset 0 -1px 0 rgba(255,255,255,0.12), 0 20px 48px rgba(15,23,42,0.12)",
           borderColor: "rgba(148, 163, 184, 0.24)",
-          color: "var(--glass-text-primary, rgba(248, 250, 252, 0.92))",
+          color: TABLE_TEXT,
           maxHeight:
             resolvedMaxHeight ?? (compact || contained ? "240px" : undefined),
           maxWidth:
@@ -703,11 +750,101 @@ const GlassDataTableInnerBase = <
             compact || contained || resolvedMaxHeight ? "auto" : undefined,
         }}
       >
-        <div className="glass-w-full glass-overflow-x-auto">
+        {/* Mobile rows use a labelled, stacked layout so values remain readable
+            without requiring precision horizontal scrolling. */}
+        <div
+          className="glass-flex glass-flex-col glass-gap-3 glass-p-3 sm:glass-hidden"
+          data-testid="glass-data-table-mobile"
+        >
+          {loading ? (
+            <div
+              className="glass-flex glass-min-h-24 glass-items-center glass-justify-center glass-text-sm"
+              role="status"
+              style={tableSecondaryTextStyle}
+            >
+              Loading...
+            </div>
+          ) : paginatedData.length === 0 ? (
+            <div
+              className="glass-flex glass-min-h-24 glass-items-center glass-justify-center glass-text-sm"
+              style={tableSecondaryTextStyle}
+            >
+              {emptyState?.message || emptyMessage}
+            </div>
+          ) : (
+            paginatedData.map((row, index) => {
+              const rowId = getRowId(row, index);
+              const isSelected = selectedRows.includes(rowId);
+
+              return (
+                <div
+                  key={`mobile-${rowId}`}
+                  className={cn(
+                    "glass-radius-xl glass-border glass-p-4",
+                    onRowClick && "glass-cursor-pointer",
+                    isSelected && "glass-ring-1 glass-ring-white/40"
+                  )}
+                  style={{
+                    background:
+                      "linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,255,255,0.16))",
+                    borderColor: "rgba(148, 163, 184, 0.22)",
+                    boxShadow:
+                      "inset 0 1px 8px rgba(255,255,255,0.14), 0 8px 20px rgba(15,23,42,0.08)",
+                  }}
+                  onClick={() => onRowClick?.(row)}
+                >
+                  <dl className="glass-flex glass-flex-col glass-gap-3">
+                    {columns.map((column, colIndex) => {
+                      const columnId = column.id || `col-${colIndex}`;
+                      const value = getColumnValue(row, column);
+                      const header =
+                        typeof column.header === "function"
+                          ? column.header({ column })
+                          : column.header;
+                      const rendererKey =
+                        column.id || (column.accessorKey as string) || "";
+                      const renderer = cellRenderers?.[rendererKey];
+
+                      return (
+                        <div
+                          key={`mobile-${rowId}-${columnId}`}
+                          className="glass-flex glass-min-w-0 glass-flex-col glass-gap-1"
+                        >
+                          <dt
+                            className="glass-text-xs glass-font-semibold"
+                            style={tableSecondaryTextStyle}
+                          >
+                            {header}:
+                          </dt>
+                          <dd
+                            className="glass-min-w-0 glass-pl-2 glass-text-sm"
+                            style={{
+                              ...tableTextStyle,
+                              overflowWrap: "anywhere",
+                              wordBreak: "break-word",
+                            }}
+                          >
+                            {column.cell
+                              ? column.cell({ row, value })
+                              : renderer
+                                ? renderer(value, row)
+                                : String(value ?? "")}
+                          </dd>
+                        </div>
+                      );
+                    })}
+                  </dl>
+                </div>
+              );
+            })
+          )}
+        </div>
+
+        <div className="glass-hidden glass-w-full glass-overflow-x-auto sm:glass-block">
           <table
             className="glass-w-full glass-table-fixed"
             style={{
-              color: "var(--glass-text-primary, rgba(248, 250, 252, 0.92))",
+              color: TABLE_TEXT,
               minWidth: compact
                 ? "100%"
                 : columns.length > 3
@@ -721,17 +858,19 @@ const GlassDataTableInnerBase = <
                 "glass-relative bg-muted/20 glass-border-b glass-border-glass-border/20",
                 stickyHeader && "sticky top-0 z-10"
               )}
+              style={{ background: "rgba(255, 255, 255, 0.18)" }}
             >
               <tr>
                 {selectable && (
                   <th
                     className={cn("glass-w-12", cellPaddingClasses[validSize])}
                   >
-                    <GlassInput
+                    <input
                       type="checkbox"
+                      aria-label="Select all rows"
                       checked={isAllSelected}
                       onChange={(e) => handleSelectAll(e.target.checked)}
-                      className="glass-radius-md glass-border-glass-border glass-focus-ring-primary"
+                      style={{ accentColor: "rgba(51, 65, 85, 0.92)" }}
                     />
                   </th>
                 )}
@@ -770,13 +909,15 @@ const GlassDataTableInnerBase = <
                       )}
                       style={{
                         width: column.width,
-                        color:
-                          "var(--glass-text-primary, rgba(248, 250, 252, 0.92))",
+                        color: TABLE_TEXT,
                       }}
                       onClick={() => canSort && handleSort(columnId)}
                     >
                       <div className="glass-flex glass-items-center glass-gap-2 glass-min-w-0">
-                        <ContrastGuard>
+                        <ContrastGuard
+                          autoAdjust={false}
+                          style={tableTextStyle}
+                        >
                           <span className="glass-min-w-0 glass-break-words">
                             {headerContent}
                           </span>
@@ -841,7 +982,10 @@ const GlassDataTableInnerBase = <
                           !prefersReducedMotion && "glass-animate-spin"
                         )}
                       />
-                      <ContrastGuard>
+                      <ContrastGuard
+                        autoAdjust={false}
+                        style={tableSecondaryTextStyle}
+                      >
                         <span className="glass-text-secondary">Loading...</span>
                       </ContrastGuard>
                     </div>
@@ -859,13 +1003,19 @@ const GlassDataTableInnerBase = <
                     {emptyState ? (
                       <div className="glass-flex glass-flex-col glass-items-center glass-gap-2">
                         {emptyState.icon}
-                        <ContrastGuard>
+                        <ContrastGuard
+                          autoAdjust={false}
+                          style={tableTextStyle}
+                        >
                           <div className="glass-font-medium">
                             {emptyState.message || emptyMessage}
                           </div>
                         </ContrastGuard>
                         {emptyState.description && (
-                          <ContrastGuard>
+                          <ContrastGuard
+                            autoAdjust={false}
+                            style={tableSecondaryTextStyle}
+                          >
                             <div className="glass-text-sm glass-text-secondary">
                               {emptyState.description}
                             </div>
@@ -873,7 +1023,12 @@ const GlassDataTableInnerBase = <
                         )}
                       </div>
                     ) : (
-                      <ContrastGuard>{emptyMessage}</ContrastGuard>
+                      <ContrastGuard
+                        autoAdjust={false}
+                        style={tableSecondaryTextStyle}
+                      >
+                        {emptyMessage}
+                      </ContrastGuard>
                     )}
                   </td>
                 </tr>
@@ -893,14 +1048,14 @@ const GlassDataTableInnerBase = <
                         {
                           "bg-muted/5":
                             variant === "striped" && index % 2 === 1,
-                          "bg-primary/10 shadow-md shadow-primary/20 ring-1 ring-primary/20":
+                          "glass-shadow-md glass-ring-1 glass-ring-white/30":
                             isSelected,
                           "hover:bg-muted/10 glass-cursor-pointer hover:shadow-lg hover:shadow-primary/10 glass-hover--translate-y-0-5 hover:ring-1 hover:ring-white/10":
                             onRowClick && !prefersReducedMotion,
                           "hover:bg-muted/10 glass-cursor-pointer hover:ring-1 hover:ring-white/10":
                             onRowClick && prefersReducedMotion,
                           // Consciousness feature styles
-                          "ring-1 ring-blue-400/20 bg-blue-400/5":
+                          "glass-ring-1 glass-ring-white/30":
                             gazeResponsive &&
                             interactionHeatmap[`${index}-0`] > 5,
                           "animate-pulse":
@@ -919,13 +1074,14 @@ const GlassDataTableInnerBase = <
                     >
                       {selectable && (
                         <td className={cellPaddingClasses[validSize]}>
-                          <GlassInput
+                          <input
                             type="checkbox"
+                            aria-label={`Select row ${index + 1}`}
                             checked={isSelected}
                             onChange={(e) =>
                               handleRowSelection(rowId, e.target.checked)
                             }
-                            className="glass-radius-md glass-border-glass-border glass-focus-ring-primary"
+                            style={{ accentColor: "rgba(51, 65, 85, 0.92)" }}
                             onClick={(e) => e.stopPropagation()}
                           />
                         </td>
@@ -949,12 +1105,14 @@ const GlassDataTableInnerBase = <
                               }
                             )}
                             style={{
-                              color:
-                                "var(--glass-text-primary, rgba(248, 250, 252, 0.86))",
+                              color: TABLE_TEXT,
                             }}
                           >
                             <div className="glass-min-w-0 glass-max-w-full glass-break-words">
-                              <ContrastGuard>
+                              <ContrastGuard
+                                autoAdjust={false}
+                                style={tableTextStyle}
+                              >
                                 {column.cell
                                   ? column.cell({ row, value })
                                   : (() => {
@@ -1008,65 +1166,100 @@ const GlassDataTableInnerBase = <
 
               <div className="glass-flex glass-flex-wrap glass-items-center glass-gap-4">
                 <div className="glass-flex glass-items-center glass-gap-2">
-                  <ContrastGuard>
+                  <ContrastGuard
+                    autoAdjust={false}
+                    style={tableSecondaryTextStyle}
+                  >
                     <span className="glass-text-sm glass-text-secondary">
                       Rows per page:
                     </span>
                   </ContrastGuard>
-                  <GlassSelect
+                  <select
+                    className="glass-control glass-frost-control"
+                    aria-label="Rows per page"
                     value={pageSize}
                     onChange={(e) => {
                       setPageSize(Number(e.target.value));
                       setCurrentPage(1);
                     }}
-                    options={(pageSizeOptions || []).map((size) => ({
-                      value: size,
-                      label: size.toString(),
-                    }))}
-                    size="sm"
-                  />
+                    style={{
+                      ...tableNativeControlStyle,
+                      minHeight: 36,
+                      padding: "0 30px 0 12px",
+                    }}
+                  >
+                    {(pageSizeOptions || []).map((optionSize) => (
+                      <option key={optionSize} value={optionSize}>
+                        {optionSize}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 <div className="glass-flex glass-items-center glass-gap-1">
-                  <IconButton
-                    icon="←"
-                    variant="ghost"
-                    size="sm"
+                  <button
+                    className="glass-control glass-frost-control"
+                    type="button"
                     disabled={currentPage === 1}
                     onClick={(e) => setCurrentPage(1)}
                     aria-label="First page"
-                  />
-                  <IconButton
-                    icon="‹"
-                    variant="ghost"
-                    size="sm"
+                    style={{
+                      ...tableNativeControlStyle,
+                      minHeight: 36,
+                      minWidth: 36,
+                    }}
+                  >
+                    ←
+                  </button>
+                  <button
+                    className="glass-control glass-frost-control"
+                    type="button"
                     disabled={currentPage === 1}
                     onClick={(e) => setCurrentPage((p) => p - 1)}
                     aria-label="Previous page"
-                  />
+                    style={{
+                      ...tableNativeControlStyle,
+                      minHeight: 36,
+                      minWidth: 36,
+                    }}
+                  >
+                    ‹
+                  </button>
 
-                  <ContrastGuard>
+                  <ContrastGuard autoAdjust={false} style={tableTextStyle}>
                     <span className="glass-px-3 glass-py-1 glass-text-sm">
                       {currentPage} of {totalPages}
                     </span>
                   </ContrastGuard>
 
-                  <IconButton
-                    icon="›"
-                    variant="ghost"
-                    size="sm"
+                  <button
+                    className="glass-control glass-frost-control"
+                    type="button"
                     disabled={currentPage === totalPages}
                     onClick={(e) => setCurrentPage((p) => p + 1)}
                     aria-label="Next page"
-                  />
-                  <IconButton
-                    icon="→"
-                    variant="ghost"
-                    size="sm"
+                    style={{
+                      ...tableNativeControlStyle,
+                      minHeight: 36,
+                      minWidth: 36,
+                    }}
+                  >
+                    ›
+                  </button>
+                  <button
+                    className="glass-control glass-frost-control"
+                    type="button"
                     disabled={currentPage === totalPages}
                     onClick={(e) => setCurrentPage(totalPages)}
                     aria-label="Last page"
-                  />
+                    style={{
+                      ...tableNativeControlStyle,
+                      minHeight: 36,
+                      minWidth: 36,
+                    }}
+                  >
+                    →
+                  </button>
                 </div>
               </div>
             </div>

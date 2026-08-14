@@ -11,31 +11,34 @@ exports[`EnhancementShowcase matches snapshot 1`] = `
       class="glass-max-w-7xl glass-mx-auto glass-px-4 sm:glass-px-6 lg:glass-px-8"
     >
       <div
-        class="glass-flex glass-items-center glass-justify-between glass-h-16"
+        class="headerContent"
       >
         <div
-          class="glass-flex glass-items-center glass-gap-4"
+          class="brand"
         >
           <div
-            class="glass-w-8 glass-h-8 glass-gradient-primary glass-gradient-primary glass-gradient-primary glass-radius-lg"
+            aria-hidden="true"
+            class="brandMark glass-w-8 glass-h-8 glass-gradient-primary glass-gradient-primary glass-gradient-primary glass-radius-lg"
           />
           <h1
-            class="glass-text-primary glass-text-xl glass-font-bold"
+            class="title glass-text-primary glass-text-xl glass-font-bold"
           >
             AuraGlass Enhancement Showcase
           </h1>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-4"
+          class="headerActions"
         >
           <div
-            class="glass-text-primary-opacity-70 glass-text-sm"
+            class="interactionCount glass-text-primary-opacity-70 glass-text-sm"
           >
             Interactions: 
             0
           </div>
           <button
-            class="glass-px-4 glass-py-2 glass-surface-subtle/10 hover:glass-surface-subtle/20 glass-text-primary glass-radius-lg glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
+            aria-pressed="false"
+            class="demoButton glass-px-4 glass-py-2 glass-surface-subtle/10 hover:glass-surface-subtle/20 glass-text-primary glass-radius-lg glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
+            type="button"
           >
             Full Demo Mode
           </button>
@@ -50,47 +53,113 @@ exports[`EnhancementShowcase matches snapshot 1`] = `
       class="glass-max-w-7xl glass-mx-auto glass-px-4 sm:glass-px-6 lg:glass-px-8"
     >
       <nav
-        class="glass-flex glass-space-x-8 glass-overflow-x-auto glass-py-4"
+        aria-label="Enhancement showcase sections"
+        class="sectionNavigation"
       >
         <button
-          class="whitespace-nowrap pb-2 glass-px-1 border-b-2 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard border-white glass-text-primary"
+          aria-current="page"
+          aria-label="AuraGlass Enhancement Overview"
+          class="sectionTab glass-px-1 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard activeSectionTab glass-text-primary"
+          type="button"
         >
-          AuraGlass Enhancement Overview
+          Overview
+          <span
+            aria-hidden="true"
+            class="fullSectionTitle"
+          >
+            AuraGlass Enhancement Overview
+          </span>
         </button>
         <button
-          class="whitespace-nowrap pb-2 glass-px-1 border-b-2 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard border-transparent glass-text-primary/60 hover:glass-text-primary/80 hover:border-white/30"
+          aria-label="Physics-Based Glass Effects"
+          class="sectionTab glass-px-1 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard glass-text-primary/60 hover:glass-text-primary/80"
+          type="button"
         >
-          Physics-Based Glass Effects
+          Physics
+          <span
+            aria-hidden="true"
+            class="fullSectionTitle"
+          >
+            Physics-Based Glass Effects
+          </span>
         </button>
         <button
-          class="whitespace-nowrap pb-2 glass-px-1 border-b-2 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard border-transparent glass-text-primary/60 hover:glass-text-primary/80 hover:border-white/30"
+          aria-label="Environmental Glass Morphing"
+          class="sectionTab glass-px-1 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard glass-text-primary/60 hover:glass-text-primary/80"
+          type="button"
         >
-          Environmental Glass Morphing
+          Morphing
+          <span
+            aria-hidden="true"
+            class="fullSectionTitle"
+          >
+            Environmental Glass Morphing
+          </span>
         </button>
         <button
-          class="whitespace-nowrap pb-2 glass-px-1 border-b-2 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard border-transparent glass-text-primary/60 hover:glass-text-primary/80 hover:border-white/30"
+          aria-label="Immersive 3D Glass Effects"
+          class="sectionTab glass-px-1 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard glass-text-primary/60 hover:glass-text-primary/80"
+          type="button"
         >
-          Immersive 3D Glass Effects
+          Immersive 3D
+          <span
+            aria-hidden="true"
+            class="fullSectionTitle"
+          >
+            Immersive 3D Glass Effects
+          </span>
         </button>
         <button
-          class="whitespace-nowrap pb-2 glass-px-1 border-b-2 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard border-transparent glass-text-primary/60 hover:glass-text-primary/80 hover:border-white/30"
+          aria-label="Organic Animation Engine"
+          class="sectionTab glass-px-1 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard glass-text-primary/60 hover:glass-text-primary/80"
+          type="button"
         >
-          Organic Animation Engine
+          Organic Motion
+          <span
+            aria-hidden="true"
+            class="fullSectionTitle"
+          >
+            Organic Animation Engine
+          </span>
         </button>
         <button
-          class="whitespace-nowrap pb-2 glass-px-1 border-b-2 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard border-transparent glass-text-primary/60 hover:glass-text-primary/80 hover:border-white/30"
+          aria-label="Emotional Intelligence & AI Personalization"
+          class="sectionTab glass-px-1 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard glass-text-primary/60 hover:glass-text-primary/80"
+          type="button"
         >
-          Emotional Intelligence & AI Personalization
+          Intelligence
+          <span
+            aria-hidden="true"
+            class="fullSectionTitle"
+          >
+            Emotional Intelligence & AI Personalization
+          </span>
         </button>
         <button
-          class="whitespace-nowrap pb-2 glass-px-1 border-b-2 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard border-transparent glass-text-primary/60 hover:glass-text-primary/80 hover:border-white/30"
+          aria-label="Spatial Computing Foundations"
+          class="sectionTab glass-px-1 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard glass-text-primary/60 hover:glass-text-primary/80"
+          type="button"
         >
-          Spatial Computing Foundations
+          Spatial
+          <span
+            aria-hidden="true"
+            class="fullSectionTitle"
+          >
+            Spatial Computing Foundations
+          </span>
         </button>
         <button
-          class="whitespace-nowrap pb-2 glass-px-1 border-b-2 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard border-transparent glass-text-primary/60 hover:glass-text-primary/80 hover:border-white/30"
+          aria-label="Complete System Integration"
+          class="sectionTab glass-px-1 font-medium glass-text-sm transition-colors glass-focus glass-touch-target glass-contrast-guard glass-text-primary/60 hover:glass-text-primary/80"
+          type="button"
         >
-          Complete System Integration
+          Integration
+          <span
+            aria-hidden="true"
+            class="fullSectionTitle"
+          >
+            Complete System Integration
+          </span>
         </button>
       </nav>
     </div>

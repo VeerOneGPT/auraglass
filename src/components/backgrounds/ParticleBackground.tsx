@@ -44,8 +44,8 @@ const ParticleBackgroundComponent = (
     children,
     className,
     style,
-    baseColor = "color-mix(in srgb, var(--glass-black) 80%, transparent)",
-    particleColor = "color-mix(in srgb, var(--glass-white) 70%, transparent)",
+    baseColor = "linear-gradient(145deg, rgb(250 251 252), rgb(220 224 230))",
+    particleColor = "rgba(69, 76, 87, 0.42)",
     particleCount = 50,
     particleSize = 2,
     particleSpeed = 1,
@@ -123,8 +123,7 @@ const ParticleBackgroundComponent = (
       // In a real implementation, you'd parse the CSS variable at runtime
       return { r: 255, g: 255, b: 255, a: 0.7 };
     }
-    // Default fallback - use CSS variable white
-    return { r: 255, g: 255, b: 255, a: 1 };
+    return { r: 69, g: 76, b: 87, a: 0.42 };
   };
 
   // CRITICAL SSR FIX: Generate particles only on client-side mount
@@ -149,8 +148,6 @@ const ParticleBackgroundComponent = (
 
   // Handle canvas animation
   useEffect(() => {
-    if (shouldReduceMotion) return;
-
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
@@ -177,6 +174,11 @@ const ParticleBackgroundComponent = (
     // Animation loop
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const field = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+      field.addColorStop(0, "rgba(250, 251, 252, 0.96)");
+      field.addColorStop(1, "rgba(220, 224, 230, 0.96)");
+      ctx.fillStyle = field;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Update and draw particles
       particles.forEach((particle, index) => {
@@ -250,8 +252,8 @@ const ParticleBackgroundComponent = (
         }
       });
 
-      // Continue animation
-      animationRef.current = requestAnimationFrame(animate);
+      if (!shouldReduceMotion)
+        animationRef.current = requestAnimationFrame(animate);
     };
 
     // Start animation
@@ -344,7 +346,7 @@ const ParticleBackgroundComponent = (
     >
       <div
         className={styles.backgroundLayer}
-        style={{ backgroundColor: baseColor }}
+        style={{ background: baseColor }}
       />
       <canvas
         ref={canvasRef}

@@ -11,7 +11,7 @@ const options = [
 ];
 
 const meta: Meta<typeof GlassSelect> = {
-  title: 'Controls/Inputs/Glass Select',
+  title: "Controls/Inputs/Glass Select",
   component: GlassSelect,
   parameters: {
     layout: "centered",
@@ -40,14 +40,40 @@ const SelectFrame = (args: ComponentProps<typeof GlassSelect>) => (
   <div className="glass-grid glass-w-[min(640px,calc(100vw-48px))] glass-gap-4 glass-rounded-3xl glass-border glass-border-white/25 glass-bg-white/35 glass-p-6 glass-shadow-xl glass-backdrop-blur-xl">
     <GlassSelect {...args} />
     <div className="glass-grid glass-gap-3 md:glass-grid-cols-2">
-      <GlassSelect label="Region" placeholder="Select region" options={[{ value: "na", label: "North America" }, { value: "eu", label: "Europe" }, { value: "apac", label: "Asia Pacific" }]} variant="filled" fullWidth />
-      <GlassSelect label="Approval lane" placeholder="Select lane" options={[{ value: "fast", label: "Fast track" }, { value: "standard", label: "Standard review" }]} state="warning" helperText="Review is required for external launches." fullWidth />
+      <GlassSelect
+        label="Region"
+        placeholder="Select region"
+        options={[
+          { value: "na", label: "North America" },
+          { value: "eu", label: "Europe" },
+          { value: "apac", label: "Asia Pacific" },
+        ]}
+        variant="filled"
+        fullWidth
+      />
+      <GlassSelect
+        label="Approval lane"
+        placeholder="Select lane"
+        options={[
+          { value: "fast", label: "Fast track" },
+          { value: "standard", label: "Standard review" },
+        ]}
+        state="warning"
+        helperText="Review is required for external launches."
+        fullWidth
+      />
     </div>
   </div>
 );
 
 export const Default: Story = {
   render: (args) => <SelectFrame {...args} />,
+  play: async ({ canvasElement }) => {
+    const trigger = canvasElement.querySelector<HTMLElement>(
+      '[role="combobox"], [aria-haspopup="listbox"]'
+    );
+    if (trigger?.getAttribute("aria-expanded") !== "true") trigger?.click();
+  },
 };
 
 export const Searchable: Story = {

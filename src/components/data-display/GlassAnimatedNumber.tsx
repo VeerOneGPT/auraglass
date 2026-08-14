@@ -182,7 +182,7 @@ export const GlassAnimatedNumber = forwardRef<
         case "glow":
           return {
             textShadow: isAnimating
-              ? '0 0 20px var(--glass-border-hover), 0 0 40px ${glassStyles.borderColor || "var(--glass-bg-hover)"}'
+              ? "0 0 18px rgba(255, 255, 255, 0.28), 0 2px 10px rgba(15, 23, 42, 0.12)"
               : "none",
             transition: `text-shadow var(--glass-motion-duration-normal) var(--glass-motion-easing-standard)`,
           };
@@ -201,7 +201,14 @@ export const GlassAnimatedNumber = forwardRef<
           sizeClassName,
           className
         )}
-        style={{ ...getVariantStyles() }}
+        style={{
+          color: "rgba(15, 23, 42, 0.92)",
+          background: "var(--glass-neutral-level2-surface)",
+          border: "1px solid rgba(148, 163, 184, 0.18)",
+          boxShadow:
+            "0 8px 20px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.26), inset 0 0 10px rgba(255, 255, 255, 0.12)",
+          ...getVariantStyles(),
+        }}
         elevation="level1"
         interactive={false}
         aria-label={ariaLabel}
@@ -256,6 +263,7 @@ export const GlassAnimatedCounter: React.FC<{
             "glass-text-sm glass-text-primary-70 glass-font-medium"
           )}
           elevation="level1"
+          style={{ color: "rgba(15, 23, 42, 0.78)" }}
         >
           {label}
         </OptimizedGlass>
@@ -307,6 +315,7 @@ export const GlassAnimatedStat: React.FC<{
         <OptimizedGlass
           className={cn("glass-text-sm glass-text-primary-70")}
           elevation="level1"
+          style={{ color: "rgba(15, 23, 42, 0.78)" }}
         >
           <ContrastGuard>{label}</ContrastGuard>
         </OptimizedGlass>
@@ -321,10 +330,10 @@ export const GlassAnimatedStat: React.FC<{
           elevation="level1"
         >
           <div
-            className={cn(
-              "glass-h-full glass-bg-gradient-to-r glass-from-blue-500 glass-to-purple-500 glass-radius-full glass-transition-all"
-            )}
+            className={cn("glass-h-full glass-radius-full glass-transition-all")}
             style={{
+              background:
+                "linear-gradient(90deg, rgba(15, 23, 42, 0.68), rgba(71, 85, 105, 0.56))",
               transitionDuration: `${ANIMATION.DURATION.normal}ms`,
               transitionTimingFunction: ANIMATION.EASING.easeOut,
               width: `${percentage}%`,

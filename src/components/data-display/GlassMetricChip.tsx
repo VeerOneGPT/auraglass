@@ -2,19 +2,19 @@
 import React from "react";
 import { OptimizedGlass } from "../../primitives";
 import { cn } from "../../lib/utilsComprehensive";
-import {
-  ContrastGuard,
-  TextWithContrast,
-} from "@/components/accessibility/ContrastGuard";
-import { ANIMATION } from "../../tokens/designConstants";
-import { useReducedMotion } from "../../hooks/useReducedMotion";
+import { ContrastGuard } from "@/components/accessibility/ContrastGuard";
 
 const metricChipSurfaceStyle: React.CSSProperties = {
   background:
-    "var(--glass-primary-level3-surface)",
+    "linear-gradient(145deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.14))",
   border: "1px solid rgba(148, 163, 184, 0.22)",
   boxShadow:
-    "0 8px 20px rgba(2, 6, 23, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.07)",
+    "0 8px 20px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 10px rgba(255, 255, 255, 0.14)",
+  color: "rgba(15, 23, 42, 0.94)",
+  ["--glass-text-primary" as string]: "rgba(15, 23, 42, 0.94)",
+  ["--glass-text-secondary" as string]: "rgba(30, 41, 59, 0.78)",
+  ["--typography-text-primary" as string]: "rgba(15, 23, 42, 0.94)",
+  ["--typography-text-secondary" as string]: "rgba(30, 41, 59, 0.78)",
 };
 
 export interface GlassMetricChipProps {
@@ -34,36 +34,38 @@ export function GlassMetricChip({
   icon,
   className,
 }: GlassMetricChipProps) {
-  const intentColor =
-    intent === "success"
-      ? "text-emerald-300"
-      : intent === "warning"
-        ? "text-amber-300"
-        : intent === "danger"
-          ? "text-red-300"
-          : "glass-text-primary";
+  const intentLabel = intent === "default" ? undefined : intent;
   return (
     <OptimizedGlass
       data-glass-component
       elevation={"level1"}
       className={cn(
-        "glass-inline-flex glass-items-center glass-gap-2 glass-px-3 glass-py-2 glass-radius-xl glass-border glass-border-white/10 glass-surface-dark/40",
+        "glass-inline-flex glass-items-center glass-gap-2 glass-px-3 glass-py-2 glass-radius-xl glass-border glass-border-white/10",
         className
       )}
       style={metricChipSurfaceStyle}
     >
-      {icon && <span className="glass-opacity-80">{icon}</span>}
+      {icon && <span className="glass-opacity-80" aria-hidden="true">{icon}</span>}
       <ContrastGuard>
         <span className="glass-text-xs glass-text-primary-opacity-70">
           {label}
         </span>
       </ContrastGuard>
       <ContrastGuard>
-        <span className={cn("glass-font-semibold", intentColor)}>{value}</span>
+        <span
+          className="glass-font-semibold"
+          style={{ color: "rgba(15, 23, 42, 0.96)" }}
+          aria-label={intentLabel ? `${value}, ${intentLabel}` : undefined}
+        >
+          {value}
+        </span>
       </ContrastGuard>
       {delta && (
         <ContrastGuard>
-          <span className="glass-text-xs glass-text-primary-glass-opacity-60">
+          <span
+            className="glass-text-xs"
+            style={{ color: "rgba(30, 41, 59, 0.78)" }}
+          >
             {delta}
           </span>
         </ContrastGuard>

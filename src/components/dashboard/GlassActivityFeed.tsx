@@ -23,6 +23,7 @@ import {
 } from "@/components/accessibility/ContrastGuard";
 import { ANIMATION } from "../../tokens/designConstants";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
+import "./dashboardNeutral.css";
 
 export interface ActivityItem {
   id: string;
@@ -181,51 +182,51 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
       case "user":
         return {
           icon: User,
-          color: "text-blue-400",
-          bgColor: "bg-blue-500/20",
-          borderColor: "border-blue-500/30",
+          color: "glass-text-secondary",
+          bgColor: "bg-white/15",
+          borderColor: "border-white/25",
         };
       case "system":
         return {
           icon: Settings,
-          color: "text-purple-400",
-          bgColor: "bg-purple-500/20",
-          borderColor: "border-purple-500/30",
+          color: "glass-text-secondary",
+          bgColor: "bg-white/15",
+          borderColor: "border-white/25",
         };
       case "notification":
         return {
           icon: Info,
-          color: "text-cyan-400",
-          bgColor: "bg-cyan-500/20",
-          borderColor: "border-cyan-500/30",
+          color: "glass-text-secondary",
+          bgColor: "bg-white/15",
+          borderColor: "border-white/25",
         };
       case "error":
         return {
           icon: XCircle,
-          color: "text-red-400",
-          bgColor: "bg-red-500/20",
-          borderColor: "border-red-500/30",
+          color: "glass-text-secondary",
+          bgColor: "bg-white/15",
+          borderColor: "border-white/25",
         };
       case "success":
         return {
           icon: CheckCircle,
-          color: "text-green-400",
-          bgColor: "bg-green-500/20",
-          borderColor: "border-green-500/30",
+          color: "glass-text-secondary",
+          bgColor: "bg-white/15",
+          borderColor: "border-white/25",
         };
       case "warning":
         return {
           icon: AlertCircle,
-          color: "text-yellow-400",
-          bgColor: "bg-yellow-500/20",
-          borderColor: "border-yellow-500/30",
+          color: "glass-text-secondary",
+          bgColor: "bg-white/15",
+          borderColor: "border-white/25",
         };
       default:
         return {
           icon: Activity,
           color: "glass-text-secondary",
-          bgColor: "bg-gray-500/20",
-          borderColor: "border-gray-500/30",
+          bgColor: "bg-white/15",
+          borderColor: "border-white/25",
         };
     }
   };
@@ -319,7 +320,7 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
   return (
     <Motion preset="fadeIn" className="glass-w-full">
       <GlassCard
-        className={cn("overflow-hidden", className)}
+        className={cn("overflow-hidden glass-dashboard-neutral", className)}
         style={{
           ...(boundedHeight !== undefined
             ? {
@@ -431,7 +432,7 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
                               key={activity.id}
                               className={cn(
                                 `flex glass-gap-3 glass-p-3 glass-radius-lg border transition-all duration-[${ANIMATION.DURATION.fast}ms] animate-slide-in-up`,
-                                "hover:bg-white/5 cursor-pointer glass-foundation-complete glass-backdrop-blur-md bg-transparent border-white/40 shadow-2xl",
+                                "glass-activity-neutral-row cursor-pointer glass-foundation-complete glass-backdrop-blur-md",
                                 config.bgColor,
                                 config.borderColor,
                                 isCompactMode && "glass-p-2"
@@ -636,7 +637,7 @@ export const GlassActivityFeed: React.FC<GlassActivityFeedProps> = ({
                         delay={index * 50}
                         className={cn(
                           `flex glass-gap-3 glass-p-3 glass-radius-lg border transition-all duration-[${ANIMATION.DURATION.fast}ms]`,
-                          "hover:bg-white/5 cursor-pointer",
+                          "glass-activity-neutral-row cursor-pointer",
                           config.bgColor,
                           config.borderColor,
                           isCompactMode && "glass-p-2"

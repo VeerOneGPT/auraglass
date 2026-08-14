@@ -13,8 +13,8 @@ const useResponsiveAtmosphericLayout = (desktopWidth: number, desktopHeight: num
     const updateLayout = () => {
       const mobile = window.innerWidth < 520;
       setLayout({
-        width: mobile ? Math.min(260, window.innerWidth - 96) : desktopWidth,
-        height: mobile ? 320 : desktopHeight,
+        width: mobile ? Math.max(240, window.innerWidth - 48) : desktopWidth,
+        height: mobile ? 300 : desktopHeight,
         mobile,
       });
     };
@@ -34,7 +34,7 @@ const ResponsiveBiomeSimulator = (args: React.ComponentProps<typeof GlassBiomeSi
       {...args}
       width={layout.width}
       height={layout.height}
-      showControls={layout.mobile ? false : args.showControls}
+      showControls={args.showControls}
     />
   );
 };
@@ -43,8 +43,16 @@ const meta = {
   title: 'Effects + Advanced/Glass Biome Simulator',
   component: GlassBiomeSimulator,
   parameters: {
-    layout: 'centered',
+    layout: 'fullscreen',
+    previewSurface: 'app',
   },
+  decorators: [
+    (Story) => (
+      <div style={{ minHeight: '100vh', padding: 'clamp(12px, 4vw, 40px)', boxSizing: 'border-box', display: 'grid', placeItems: 'center' }}>
+        <Story />
+      </div>
+    ),
+  ],
   tags: ['autodocs'],
   argTypes: {
     width: {

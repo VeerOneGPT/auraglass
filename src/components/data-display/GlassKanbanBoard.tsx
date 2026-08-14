@@ -266,6 +266,7 @@ export const GlassKanbanBoard = forwardRef<
     const effectiveShowAddCard = showActions && showAddCard;
     const effectiveColumnWidth =
       contained && compact && columnWidth === "300px" ? "180px" : columnWidth;
+    const compactContainedColumnWidth = 160;
 
     // Priority colors
     const priorityColors = {
@@ -347,9 +348,10 @@ export const GlassKanbanBoard = forwardRef<
       return (
         <div
           className={cn(
-            "glass-w-1 glass-h-full glass-absolute left-0 top-0 rounded-l-md",
+            "glass-w-1 glass-absolute left-0 rounded-l-md",
             colors[priority]
           )}
+          style={{ top: 0, bottom: 0 }}
         />
       );
     };
@@ -419,7 +421,7 @@ export const GlassKanbanBoard = forwardRef<
                 )}
                 style={{
                   margin: 0,
-                  color: "rgba(248,250,252,0.96)",
+                  color: "var(--glass-text-primary)",
                   fontSize: isCompact ? "0.78rem" : undefined,
                   lineHeight: isCompact ? 1.25 : undefined,
                   overflowWrap: "anywhere",
@@ -460,14 +462,16 @@ export const GlassKanbanBoard = forwardRef<
                         maxWidth: "100%",
                         padding: isCompact ? "0.15rem 0.35rem" : undefined,
                         borderRadius: 999,
-                        background:
-                          "color-mix(in srgb, hsl(var(--glass-color-primary)) 10%, transparent)",
-                        color: "rgba(191,232,255,0.92)",
+                        background: "var(--glass-neutral-level1-surface)",
+                        border:
+                          "1px solid var(--glass-accent-primary-border)",
+                        color: "var(--glass-text-primary)",
                         fontSize: isCompact ? "0.62rem" : undefined,
                         lineHeight: 1.1,
                         overflow: "hidden",
                         textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
+                        whiteSpace: isCompact ? "normal" : "nowrap",
+                        overflowWrap: isCompact ? "anywhere" : undefined,
                       }}
                     >
                       <ContrastGuard>{tag}</ContrastGuard>
@@ -586,7 +590,7 @@ export const GlassKanbanBoard = forwardRef<
                   style={{
                     margin: 0,
                     minWidth: 0,
-                    color: "rgba(248,250,252,0.96)",
+                    color: "var(--glass-text-primary)",
                     fontSize: isCompact ? "0.74rem" : "0.9rem",
                     lineHeight: 1.2,
                     overflow: "hidden",
@@ -673,11 +677,33 @@ export const GlassKanbanBoard = forwardRef<
       []
     );
 
-    const maxHeightStyle = maxHeight ? { maxHeight } : undefined;
+    // A contained board is a bounded application panel. Giving its flex shell a
+    // definite block size prevents a `height: 100%` descendant from sizing to
+    // its padded contents first and then being clipped by max-height.
+    const maxHeightStyle = maxHeight && contained
+      ? {
+          maxHeight,
+          ...(height == null ? { height: maxHeight } : {}),
+        }
+      : maxHeight
+        ? { minHeight: maxHeight }
+        : undefined;
     const columnsContainerStyle = {
-      minWidth: boardColumns.length > 0 ? "fit-content" : "100%",
+      minWidth: "100%",
+      width:
+        contained && isCompact
+          ? `max(100%, calc(${boardColumns.length * compactContainedColumnWidth}px + ${(Math.max(1, boardColumns.length) - 1) * 8 + 20}px))`
+          : contained
+            ? "100%"
+            : undefined,
+      gridTemplateColumns: contained
+        ? isCompact
+          ? `repeat(${Math.max(1, boardColumns.length)}, minmax(${compactContainedColumnWidth}px, 1fr))`
+          : `repeat(${Math.max(1, boardColumns.length)}, minmax(0, 1fr))`
+        : undefined,
       gap: isCompact ? 8 : undefined,
       padding: isCompact ? 10 : undefined,
+      boxSizing: "border-box" as const,
     };
 
     return (
@@ -694,10 +720,13 @@ export const GlassKanbanBoard = forwardRef<
           className
         )}
         style={{
-          ...(maxHeightStyle ?? {}),
           width,
           height,
-          overflow: "hidden",
+          ...(maxHeightStyle ?? {}),
+          // Uncontained boards grow to show their cards instead of presenting a
+          // visibly severed final row. Contained boards keep their app-panel
+          // clipping contract and scroll within the column bodies.
+          overflow: contained ? "hidden" : "visible",
           maxWidth: contained ? "100%" : undefined,
           color: "rgba(248,250,252,0.94)",
           ...style,
@@ -748,7 +777,7 @@ export const GlassKanbanBoard = forwardRef<
             ) : (
               <div
                 className={cn(
-                  "glass-flex glass-h-full",
+                  contained ? "glass-grid glass-h-full" : "glass-flex glass-h-full",
                   !isCompact && "glass-gap-6 glass-p-6"
                 )}
                 style={{ ...columnsContainerStyle }}
@@ -776,9 +805,9 @@ export const GlassKanbanBoard = forwardRef<
                           "ring-2 ring-primary/50"
                       )}
                       style={{
-                        width: effectiveColumnWidth,
-                        minWidth: effectiveColumnWidth,
-                        maxWidth: effectiveColumnWidth,
+                        width: contained ? "100%" : effectiveColumnWidth,
+                        minWidth: contained ? 0 : effectiveColumnWidth,
+                        maxWidth: contained ? "100%" : effectiveColumnWidth,
                         overflow: "hidden",
                       }}
                       onDragOver={(e: React.DragEvent) =>

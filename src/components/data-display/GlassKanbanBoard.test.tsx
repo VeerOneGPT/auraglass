@@ -163,5 +163,29 @@ describe('GlassKanbanBoard', () => {
     expect(screen.queryByText('Launch board')).not.toBeInTheDocument();
     expect(container.querySelector('[aria-label^="Add card to"]')).not.toBeInTheDocument();
     expect(container.querySelector('[aria-label="Add new column"]')).not.toBeInTheDocument();
+
+    const laneGrid = container.querySelector('.glass-grid') as HTMLElement;
+    expect(laneGrid).toHaveStyle({ boxSizing: 'border-box' });
+    expect(laneGrid.style.gridTemplateColumns).toContain('minmax(160px, 1fr)');
+
+    const priorityStripe = container.querySelector('.glass-kanban-card > .glass-absolute') as HTMLElement;
+    expect(priorityStripe).toHaveStyle({ top: '0px', bottom: '0px' });
+    expect(priorityStripe).not.toHaveClass('glass-h-full');
+  });
+
+  it('uses maxHeight as the definite height of a contained board', () => {
+    render(
+      <GlassKanbanBoard
+        contained
+        compact
+        maxHeight={360}
+        data-testid="bounded-kanban"
+      />
+    );
+
+    expect(screen.getByTestId('bounded-kanban')).toHaveStyle({
+      height: '360px',
+      maxHeight: '360px',
+    });
   });
 });

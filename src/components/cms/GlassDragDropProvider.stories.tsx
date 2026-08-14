@@ -1,31 +1,43 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import * as ComponentModule from "./GlassDragDropProvider";
-import {
-  CertificationCase,
-  type MissingComponentName,
-} from "../../stories/GlassMissingInventoryCertification.stories";
-
-const componentName = "GlassDragDropProvider" satisfies MissingComponentName;
-const Component = (ComponentModule as Record<string, any>)[componentName];
+import * as GlassDragDropProviderModule from "./GlassDragDropProvider";
+import { GlassCanvas } from "./GlassCanvas";
 
 const meta = {
-  title: 'Workflows/Glass Drag Drop Provider',
-  component: Component,
+  title: "Workflows/Glass Drag Drop Provider",
+  component: GlassDragDropProviderModule.GlassDragDropProvider,
   parameters: {
     layout: "centered",
+    previewSurface: "app",
     docs: {
       description: {
         component:
-          "Component-owned Storybook coverage for GlassDragDropProvider. This story renders the certified AuraGlass sample used by the full visual certification suite.",
+          "The real GlassDragDropProvider supplying live page-builder state to a GlassCanvas child.",
       },
     },
   },
-} satisfies Meta<typeof Component>;
+} satisfies Meta<typeof GlassDragDropProviderModule.GlassDragDropProvider>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  render: () => <CertificationCase name={componentName} />,
+export const GlassDragDropProvider: Story = {
+  render: () => (
+    <div
+      style={{
+        width: "min(920px, calc(100vw - 32px))",
+        height: "min(620px, calc(100vh - 32px))",
+        minWidth: 0,
+        minHeight: 360,
+        display: "flex",
+        overflow: "hidden",
+      }}
+    >
+      <GlassDragDropProviderModule.GlassDragDropProvider
+        data-testid="glass-drag-drop-provider-story"
+        style={{ width: "100%", minWidth: 0 }}
+      >
+        <GlassCanvas />
+      </GlassDragDropProviderModule.GlassDragDropProvider>
+    </div>
+  ),
 };

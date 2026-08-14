@@ -156,8 +156,8 @@ export const GlassWeatherGlass = forwardRef<
       255, 255, 255,
     ]);
     const [backgroundGradient, setBackgroundGradient] = useState<string[]>([
-      "rgba(14, 165, 233, 0.78)",
-      "rgba(59, 130, 246, 0.52)",
+      "rgba(249, 250, 252, 0.98)",
+      "rgba(218, 223, 230, 0.92)",
     ]);
 
     // Weather color mappings
@@ -166,36 +166,36 @@ export const GlassWeatherGlass = forwardRef<
       { sky: [string, string]; glass: [number, number, number] }
     > = {
       clear: {
-        sky: ["rgba(14, 165, 233, 0.78)", "rgba(59, 130, 246, 0.52)"],
+        sky: ["rgba(249, 250, 252, 0.98)", "rgba(218, 223, 230, 0.92)"],
         glass: [255, 255, 255],
       },
       sunny: {
-        sky: ["rgba(251, 191, 36, 0.82)", "rgba(249, 115, 22, 0.5)"],
-        glass: [255, 248, 220],
+        sky: ["rgba(252, 251, 247, 0.98)", "rgba(224, 222, 214, 0.9)"],
+        glass: [248, 247, 242],
       },
       cloudy: {
-        sky: ["rgba(107, 114, 128, 0.72)", "rgba(156, 163, 175, 0.58)"],
-        glass: [211, 211, 211],
+        sky: ["rgba(239, 241, 244, 0.98)", "rgba(197, 202, 209, 0.92)"],
+        glass: [218, 221, 225],
       },
       rainy: {
-        sky: ["rgba(14, 165, 233, 0.66)", "rgba(75, 85, 99, 0.64)"],
-        glass: [70, 130, 180],
+        sky: ["rgba(229, 233, 237, 0.98)", "rgba(177, 184, 193, 0.94)"],
+        glass: [199, 207, 215],
       },
       stormy: {
-        sky: ["rgba(31, 41, 55, 0.88)", "rgba(168, 85, 247, 0.42)"],
-        glass: [47, 79, 79],
+        sky: ["rgba(210, 214, 220, 0.98)", "rgba(137, 145, 156, 0.94)"],
+        glass: [171, 177, 185],
       },
       snowy: {
-        sky: ["rgba(255, 255, 255, 0.9)", "rgba(226, 232, 240, 0.72)"],
+        sky: ["rgba(255, 255, 255, 0.99)", "rgba(231, 234, 238, 0.94)"],
         glass: [240, 248, 255],
       },
       foggy: {
-        sky: ["rgba(156, 163, 175, 0.68)", "rgba(229, 231, 235, 0.58)"],
+        sky: ["rgba(241, 242, 244, 0.98)", "rgba(204, 208, 214, 0.94)"],
         glass: [192, 192, 192],
       },
       windy: {
-        sky: ["rgba(14, 165, 233, 0.62)", "rgba(168, 85, 247, 0.44)"],
-        glass: [176, 196, 222],
+        sky: ["rgba(244, 246, 248, 0.98)", "rgba(195, 201, 209, 0.92)"],
+        glass: [216, 221, 227],
       },
     };
 
@@ -274,8 +274,11 @@ export const GlassWeatherGlass = forwardRef<
 
       // Adjust colors based on time of day
       if (!isDaytime) {
-        setBackgroundGradient(["#191970", "#483D8B"]); // Night colors
-        setGlassColor([25, 25, 112]); // Midnight blue
+        setBackgroundGradient([
+          "rgba(80, 86, 96, 0.98)",
+          "rgba(32, 36, 43, 0.98)",
+        ]);
+        setGlassColor([126, 132, 141]);
       }
     }, [currentTimeOfDay, dayNightCycle]);
 
@@ -554,15 +557,7 @@ export const GlassWeatherGlass = forwardRef<
             const centerY = effect.position.y;
             const rainbowRadius = 100;
 
-            const colors = [
-              "#FF0000",
-              "#FF7F00",
-              "#FFFF00",
-              "#00FF00",
-              "#0000FF",
-              "#4B0082",
-              "#9400D3",
-            ];
+            const colors = ["#ffffff", "#eef0f3", "#d9dde3", "#c3c8d0"];
             colors.forEach((color, i) => {
               ctx.strokeStyle = color;
               ctx.lineWidth = 8;
@@ -698,10 +693,14 @@ export const GlassWeatherGlass = forwardRef<
       // Weather info overlay
       if (showWeatherInfo) {
         ctx.save();
-        ctx.fillStyle = "rgba(15, 23, 42, 0.72)";
-        ctx.fillRect(10, 10, 200, 120);
-
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "rgba(255, 255, 255, 0.72)";
+        ctx.strokeStyle = "rgba(31, 36, 44, 0.14)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.roundRect(10, 10, 210, 120, 18);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = "rgba(25, 29, 36, 0.92)";
         ctx.font = "14px sans-serif";
         ctx.fillText(`Weather: ${currentWeather.type}`, 20, 30);
         ctx.fillText(`Temperature: ${currentWeather.temperature}°C`, 20, 50);
@@ -804,8 +803,10 @@ export const GlassWeatherGlass = forwardRef<
       const canvas = canvasRef.current;
       if (!canvas) return;
 
-      canvas.width = width;
-      canvas.height = height;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      canvas.getContext("2d")?.setTransform(dpr, 0, 0, dpr, 0, 0);
     }, [width, height]);
 
     // Controls
@@ -837,7 +838,7 @@ export const GlassWeatherGlass = forwardRef<
                 onWeatherChange?.(newWeather);
               }}
               aria-label="Weather type selection"
-              className="glass-px-2 glass-py-1 glass-radius-md glass-surface-overlay glass-border glass-border-glass-border/20 glass-contrast-guard glass-focus glass-touch-target"
+              className="glass-px-3 glass-py-2 glass-radius-full glass-surface-overlay glass-border glass-border-subtle glass-text-primary glass-contrast-guard glass-focus glass-touch-target"
             >
               <option value="clear">Clear</option>
               <option value="sunny">Sunny</option>
@@ -870,6 +871,7 @@ export const GlassWeatherGlass = forwardRef<
               }}
               aria-label="Weather intensity"
               className="glass-w-20 glass-focus glass-touch-target glass-contrast-guard"
+              style={{ accentColor: "rgb(72 78 88)" }}
             />
           </div>
 
@@ -892,6 +894,7 @@ export const GlassWeatherGlass = forwardRef<
               }}
               aria-label="Temperature in Celsius"
               className="glass-w-20 glass-focus glass-touch-target glass-contrast-guard"
+              style={{ accentColor: "rgb(72 78 88)" }}
             />
             <span className="glass-text-sm glass-min-w-3ch">
               {currentWeather.temperature}°C
@@ -906,6 +909,7 @@ export const GlassWeatherGlass = forwardRef<
                 onChange={(e) => {}}
                 aria-label="Enable auto update"
                 className="glass-mr-1 glass-focus glass-touch-target glass-contrast-guard"
+                style={{ accentColor: "rgb(72 78 88)" }}
               />
               Auto Update
             </label>
@@ -916,6 +920,7 @@ export const GlassWeatherGlass = forwardRef<
                 onChange={(e) => {}}
                 aria-label="Enable weather responsive styling"
                 className="glass-mr-1 glass-focus glass-touch-target glass-contrast-guard"
+                style={{ accentColor: "rgb(72 78 88)" }}
               />
               Responsive
             </label>
@@ -934,7 +939,7 @@ export const GlassWeatherGlass = forwardRef<
         tint="neutral"
         border="subtle"
         className={cn(
-          "glass-weather-glass relative glass-radius-lg glass-backdrop-blur border border-border/20",
+          "glass-weather-glass glass-relative glass-w-full glass-radius-lg glass-backdrop-blur glass-border glass-border-subtle",
           className
         )}
         data-testid={props["data-testid"]}
@@ -948,13 +953,18 @@ export const GlassWeatherGlass = forwardRef<
         >
           {renderControls()}
 
-          <div className="glass-relative">
+          <div className="glass-relative glass-w-full glass-overflow-hidden glass-radius-md">
             <canvas
               ref={canvasRef}
               width={width}
               height={height}
               className="glass-border glass-border-glass-border/20 glass-radius-md"
-              style={{ width, height }}
+              style={{
+                display: "block",
+                width: `min(100%, ${width}px)`,
+                height: "auto",
+                aspectRatio: `${width} / ${height}`,
+              }}
             />
           </div>
         </Motion>

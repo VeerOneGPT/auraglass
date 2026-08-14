@@ -160,7 +160,13 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(
           <div style={{ position: "relative" }}>
             <OptimizedGlass
               className={cn("glass-radius-full", sizeClasses[size])}
-              style={{ ...getAnimationStyle() }}
+              style={{
+                background: "var(--glass-neutral-level2-surface)",
+                border: "1px solid rgba(148, 163, 184, 0.18)",
+                boxShadow:
+                  "0 8px 20px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 10px rgba(255, 255, 255, 0.16)",
+                ...getAnimationStyle(),
+              }}
               intensity="medium"
               elevation="level1"
               interactive={false}
@@ -188,11 +194,18 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(
               className="glass-px-4 glass-py-2 glass-radius-lg"
               intensity="subtle"
               elevation="level1"
+              style={{
+                background: "var(--glass-neutral-level2-surface)",
+                border: "1px solid rgba(148, 163, 184, 0.18)",
+                boxShadow:
+                  "0 8px 20px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.24), inset 0 0 10px rgba(255, 255, 255, 0.12)",
+              }}
             >
               <span
                 className={cn(
                   "glass-text-sm glass-text-primary-70 glass-font-medium"
                 )}
+                style={{ color: "rgba(15, 23, 42, 0.92)" }}
               >
                 {text}
               </span>

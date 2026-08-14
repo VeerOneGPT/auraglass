@@ -1,16 +1,16 @@
-import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { GlassDataGridPro } from './GlassDataGridPro';
-import { cn } from '../../lib/utils';
+import React from "react";
+import type { Meta, StoryObj } from "@storybook/react";
+import { GlassDataGridPro } from "./GlassDataGridPro";
+import { cn } from "../../lib/utils";
 
 const meta: Meta<typeof GlassDataGridPro> = {
-  title: 'Data + Visualization/Glass Data Grid Pro',
+  title: "Data + Visualization/Glass Data Grid Pro",
   component: GlassDataGridPro,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
-        component: 'A glass morphism glassdatagridpro component.',
+        component: "A glass morphism glassdatagridpro component.",
       },
     },
   },
@@ -26,28 +26,34 @@ const meta: Meta<typeof GlassDataGridPro> = {
   ],
   argTypes: {
     density: {
-      control: { type: 'select' },
-      options: ['compact', 'normal', 'spacious'],
-      description: 'Row density',
+      control: { type: "select" },
+      options: ["compact", "normal", "spacious"],
+      description: "Row density",
     },
     grouping: {
-      control: 'object',
-      description: 'Column grouping configuration',
+      control: "object",
+      description: "Column grouping configuration",
     },
   },
   args: {
-    density: 'normal',
+    density: "normal",
     grouping: [],
     columns: [
-      { key: 'name', header: 'Name', width: 200 },
-      { key: 'email', header: 'Email', width: 250 },
-      { key: 'role', header: 'Role', width: 150 },
+      { key: "name", header: "Name", width: 200 },
+      { key: "email", header: "Email", width: 250 },
+      { key: "role", header: "Role", width: 150 },
     ],
     rows: [
-      { id: 1, name: 'John Doe', email: 'john@example.com', role: 'Developer' },
-      { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'Designer' },
-      { id: 3, name: 'Bob Johnson', email: 'bob@example.com', role: 'Manager' },
+      { id: 1, name: "John Doe", email: "john@example.com", role: "Developer" },
+      {
+        id: 2,
+        name: "Jane Smith",
+        email: "jane@example.com",
+        role: "Designer",
+      },
+      { id: 3, name: "Bob Johnson", email: "bob@example.com", role: "Manager" },
     ],
+    contained: false,
   },
 };
 

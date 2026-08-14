@@ -11,17 +11,21 @@ exports[`CollaborativeGlassWorkspace matches snapshot 1`] = `
       <style>
         
         .glass-collaborative-workspace.workspace-glass-shell {
-          background: linear-gradient(135deg, #07111f 0%, #0f172a 44%, #111827 100%);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 55%, rgba(255, 255, 255, 0.14) 100%);
           color: var(--glass-text-primary);
         }
 
         .glass-collaborative-workspace .workspace-glass-panel {
-          background: var(--glass-neutral-level3-surface);
+          background: rgba(255, 255, 255, 0.18);
           border-color: var(--glass-neutral-level3-border-color);
-          color: var(--glass-neutral-level3-text-primary);
-          backdrop-filter: blur(var(--glass-neutral-level3-blur)) var(--glass-filter-base);
-          -webkit-backdrop-filter: blur(var(--glass-neutral-level3-blur)) var(--glass-filter-base);
+          color: rgba(15, 23, 42, 0.92);
+          backdrop-filter: blur(24px) saturate(1.45) brightness(1.04) contrast(1.03);
+          -webkit-backdrop-filter: blur(24px) saturate(1.45) brightness(1.04) contrast(1.03);
           box-shadow: var(--glass-neutral-level3-shadow);
+          min-width: 0;
+          max-width: 100%;
+          width: 100%;
+          overflow: hidden;
         }
 
         .glass-collaborative-workspace .workspace-glass-panel label,
@@ -45,9 +49,21 @@ exports[`CollaborativeGlassWorkspace matches snapshot 1`] = `
         }
 
         .glass-collaborative-workspace .workspace-glass-inset {
-          background: rgba(var(--glass-color-white) / 0.06);
+          background: rgba(var(--glass-color-white) / 0.08);
           border: 1px solid var(--glass-border-default);
           color: var(--glass-text-primary);
+          min-width: 0;
+          max-width: 100%;
+          width: 100%;
+          overflow: hidden;
+        }
+
+        .glass-collaborative-workspace .workspace-main-content {
+          flex-wrap: wrap;
+        }
+
+        .glass-collaborative-workspace .workspace-main-content &gt; div {
+          min-width: min(100%, 300px);
         }
 
         .glass-collaborative-workspace .glass-collaboration-number,
@@ -76,13 +92,11 @@ exports[`CollaborativeGlassWorkspace matches snapshot 1`] = `
         .glass-collaborative-workspace .glass-collaboration-range {
           height: 0.625rem;
           border-radius: 999px;
-          border: 1px solid rgba(148, 163, 184, 0.42);
-          background:
-            linear-gradient(90deg, rgba(56, 189, 248, 0.9), rgba(34, 197, 94, 0.5)),
-            rgba(15, 23, 42, 0.72);
+          border: 1px solid rgba(15, 23, 42, 0.22);
+          background: rgba(255, 255, 255, 0.3);
           box-shadow:
-            inset 0 1px 2px rgba(2, 6, 23, 0.28),
-            0 1px 0 rgba(255, 255, 255, 0.08);
+            inset 0 1px 2px rgba(15, 23, 42, 0.12),
+            0 1px 0 rgba(255, 255, 255, 0.32);
           cursor: pointer;
         }
 
@@ -92,27 +106,27 @@ exports[`CollaborativeGlassWorkspace matches snapshot 1`] = `
           width: 1.125rem;
           height: 1.125rem;
           border-radius: 999px;
-          border: 2px solid rgba(248, 250, 252, 0.96);
-          background: #38bdf8;
-          box-shadow: 0 6px 18px rgba(14, 165, 233, 0.4);
+          border: 2px solid rgba(255, 255, 255, 0.96);
+          background: rgba(30, 41, 59, 0.86);
+          box-shadow: 0 4px 12px rgba(15, 23, 42, 0.22);
         }
 
         .glass-collaborative-workspace .glass-collaboration-range::-moz-range-thumb {
           width: 1.125rem;
           height: 1.125rem;
           border-radius: 999px;
-          border: 2px solid rgba(248, 250, 252, 0.96);
-          background: #38bdf8;
-          box-shadow: 0 6px 18px rgba(14, 165, 233, 0.4);
+          border: 2px solid rgba(255, 255, 255, 0.96);
+          background: rgba(30, 41, 59, 0.86);
+          box-shadow: 0 4px 12px rgba(15, 23, 42, 0.22);
         }
       
       </style>
       <div
-        class="workspace-header workspace-glass-panel glass-flex glass-items-center glass-justify-between glass-px-4 glass-py-3 glass-border-b glass-border-white/10"
-        style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+        class="workspace-header workspace-glass-panel glass-flex glass-items-center glass-justify-between glass-flex-wrap glass-gap-2 glass-px-4 glass-py-3 glass-border-b glass-border-white/10"
+        style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15,23,42,0.94); --glass-text-secondary: rgba(15,23,42,0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
       >
         <div
-          class="glass-flex glass-items-center glass-gap-4"
+          class="glass-flex glass-items-center glass-gap-4 glass-min-w-0"
         >
           <h1
             class="glass-text-xl glass-font-bold glass-text-primary"
@@ -120,13 +134,14 @@ exports[`CollaborativeGlassWorkspace matches snapshot 1`] = `
             Collaborative Design Session
           </h1>
           <div
-            class="glass-text-sm glass-text-primary"
+            class="glass-text-sm glass-text-primary glass-whitespace-nowrap"
+            style="color: rgba(15, 23, 42, 0.9);"
           >
             ✏️ Editing
           </div>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-2"
+          class="glass-flex glass-items-center glass-gap-2 glass-min-w-0 glass-flex-wrap"
         >
           <button
             aria-label="Undo last action"
@@ -200,7 +215,7 @@ exports[`CollaborativeGlassWorkspace matches snapshot 1`] = `
           </div>
         </div>
         <div
-          class="glass-flex glass-items-center glass-gap-2"
+          class="glass-flex glass-items-center glass-gap-2 glass-min-w-0 glass-flex-wrap"
         >
           <div
             class="glass-flex glass-items-center glass-gap-2"
@@ -232,6 +247,7 @@ exports[`CollaborativeGlassWorkspace matches snapshot 1`] = `
             </div>
             <span
               class="glass-text-sm glass-text-primary"
+              style="color: rgba(15, 23, 42, 0.9);"
             >
               3
                online
@@ -301,14 +317,14 @@ exports[`CollaborativeGlassWorkspace matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="glass-flex-1 glass-flex glass-min-h-0 glass-flex-row"
+        class="workspace-main-content glass-flex-1 glass-flex glass-min-h-0 glass-min-w-0 glass-w-full glass-overflow-hidden glass-flex-row"
       >
         <div
           class="glass-flex-1 glass-min-w-0 glass-p-4"
         >
           <div
-            class="collaborative-canvas workspace-glass-panel relative glass-h-full"
-            style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+            class="collaborative-canvas workspace-glass-panel relative glass-w-full glass-min-w-0 glass-h-full"
+            style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15,23,42,0.94); --glass-text-secondary: rgba(15,23,42,0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
           >
             <div
               class="glass-absolute glass-inset-0 glass-opacity-20"
@@ -343,8 +359,8 @@ exports[`CollaborativeGlassWorkspace matches snapshot 1`] = `
           class="glass-flex-1 glass-min-w-0 glass-p-4"
         >
           <div
-            class="multi-user-editor workspace-glass-panel glass-h-full"
-            style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+            class="multi-user-editor workspace-glass-panel glass-w-full glass-min-w-0 glass-h-full"
+            style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15,23,42,0.94); --glass-text-secondary: rgba(15,23,42,0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
           >
             <div
               class="glass-p-4"
@@ -482,7 +498,7 @@ exports[`CollaborativeGlassWorkspace matches snapshot 1`] = `
         </div>
         <div
           class="workspace-sidebar workspace-glass-panel glass-w-80 glass-border-l glass-border-white/20 glass-p-4 glass-space-y-4"
-          style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+          style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15,23,42,0.94); --glass-text-secondary: rgba(15,23,42,0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
         >
           <div
             class="glass-space-y-2"
@@ -690,94 +706,98 @@ exports[`CollaborativeGlassWorkspace matches snapshot 1`] = `
           </div>
         </div>
       </div>
-      <span
-        class="glass-pointer-events-none glass-absolute glass-z-20 glass-radius-full"
-        style="left: 48%; top: 52%; width: 72px; height: 72px; border: 1px solid rgba(56,189,248,0.42); box-shadow: 0 0 38px rgba(56,189,248,0.16); transform: translate(-50%, -50%);"
-      />
-      <span
-        class="glass-pointer-events-none glass-absolute glass-z-20 glass-radius-full"
-        style="left: 48%; top: 52%; width: 34px; height: 34px; border: 1px solid rgba(192,132,252,0.5); transform: translate(-50%, -50%);"
-      />
       <div
-        class="glass-pointer-events-none glass-absolute glass-inset-0 glass-z-30"
+        class="glass-team-cursors-layer glass-pointer-events-none glass-absolute glass-z-30 glass-overflow-hidden"
       >
+        <span
+          class="glass-pointer-events-none glass-absolute glass-z-20 glass-radius-full"
+          style="left: 48%; top: 52%; width: 72px; height: 72px; border: 1px solid rgba(56,189,248,0.42); box-shadow: 0 0 38px rgba(56,189,248,0.16); transform: translate(-50%, -50%);"
+        />
+        <span
+          class="glass-pointer-events-none glass-absolute glass-z-20 glass-radius-full"
+          style="left: 48%; top: 52%; width: 34px; height: 34px; border: 1px solid rgba(192,132,252,0.5); transform: translate(-50%, -50%);"
+        />
         <div
-          class="glass-absolute glass-flex glass-items-start glass-gap-1.5"
-          style="left: 24%; top: 34%;"
+          class="glass-pointer-events-none glass-absolute glass-overflow-hidden glass-inset-0 glass-z-10"
         >
-          <svg
-            aria-hidden="true"
-            height="20"
-            style="color: rgb(56, 189, 248); filter: drop-shadow(0 0 12px #38bdf8);"
-            viewBox="0 0 18 24"
-            width="15"
+          <div
+            class="glass-absolute glass-flex glass-items-start glass-gap-1.5"
+            style="left: 24%; top: 34%;"
           >
-            <path
-              d="M2 2L16 14.5L10.3 15.2L7.4 22L2 2Z"
-              fill="currentColor"
-              stroke="rgba(255,255,255,0.88)"
-              stroke-linejoin="round"
-              stroke-width="1.4"
-            />
-          </svg>
-          <span
-            class="glass-radius-full glass-px-2 glass-py-0.5 glass-text-xs glass-font-medium glass-text-primary glass-shadow-lg glass-backdrop-blur-md"
-            style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid #38bdf8; border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+            <svg
+              aria-hidden="true"
+              height="20"
+              style="color: rgb(56, 189, 248); filter: drop-shadow(0 0 12px #38bdf8);"
+              viewBox="0 0 18 24"
+              width="15"
+            >
+              <path
+                d="M2 2L16 14.5L10.3 15.2L7.4 22L2 2Z"
+                fill="currentColor"
+                stroke="rgba(255,255,255,0.88)"
+                stroke-linejoin="round"
+                stroke-width="1.4"
+              />
+            </svg>
+            <span
+              class="glass-radius-full glass-px-2 glass-py-0.5 glass-text-xs glass-font-medium glass-text-primary glass-shadow-lg glass-backdrop-blur-md"
+              style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15,23,42,0.94); --glass-text-secondary: rgba(15,23,42,0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid #38bdf8; border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+            >
+              Aurora
+            </span>
+          </div>
+          <div
+            class="glass-absolute glass-flex glass-items-start glass-gap-1.5"
+            style="left: 58%; top: 48%;"
           >
-            Aurora
-          </span>
-        </div>
-        <div
-          class="glass-absolute glass-flex glass-items-start glass-gap-1.5"
-          style="left: 58%; top: 48%;"
-        >
-          <svg
-            aria-hidden="true"
-            height="20"
-            style="color: rgb(192, 132, 252); filter: drop-shadow(0 0 12px #c084fc);"
-            viewBox="0 0 18 24"
-            width="15"
+            <svg
+              aria-hidden="true"
+              height="20"
+              style="color: rgb(192, 132, 252); filter: drop-shadow(0 0 12px #c084fc);"
+              viewBox="0 0 18 24"
+              width="15"
+            >
+              <path
+                d="M2 2L16 14.5L10.3 15.2L7.4 22L2 2Z"
+                fill="currentColor"
+                stroke="rgba(255,255,255,0.88)"
+                stroke-linejoin="round"
+                stroke-width="1.4"
+              />
+            </svg>
+            <span
+              class="glass-radius-full glass-px-2 glass-py-0.5 glass-text-xs glass-font-medium glass-text-primary glass-shadow-lg glass-backdrop-blur-md"
+              style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15,23,42,0.94); --glass-text-secondary: rgba(15,23,42,0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid #c084fc; border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+            >
+              Lumen
+            </span>
+          </div>
+          <div
+            class="glass-absolute glass-flex glass-items-start glass-gap-1.5"
+            style="left: 72%; top: 26%;"
           >
-            <path
-              d="M2 2L16 14.5L10.3 15.2L7.4 22L2 2Z"
-              fill="currentColor"
-              stroke="rgba(255,255,255,0.88)"
-              stroke-linejoin="round"
-              stroke-width="1.4"
-            />
-          </svg>
-          <span
-            class="glass-radius-full glass-px-2 glass-py-0.5 glass-text-xs glass-font-medium glass-text-primary glass-shadow-lg glass-backdrop-blur-md"
-            style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid #c084fc; border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
-          >
-            Lumen
-          </span>
-        </div>
-        <div
-          class="glass-absolute glass-flex glass-items-start glass-gap-1.5"
-          style="left: 72%; top: 26%;"
-        >
-          <svg
-            aria-hidden="true"
-            height="20"
-            style="color: rgb(250, 204, 21); filter: drop-shadow(0 0 12px #facc15);"
-            viewBox="0 0 18 24"
-            width="15"
-          >
-            <path
-              d="M2 2L16 14.5L10.3 15.2L7.4 22L2 2Z"
-              fill="currentColor"
-              stroke="rgba(255,255,255,0.88)"
-              stroke-linejoin="round"
-              stroke-width="1.4"
-            />
-          </svg>
-          <span
-            class="glass-radius-full glass-px-2 glass-py-0.5 glass-text-xs glass-font-medium glass-text-primary glass-shadow-lg glass-backdrop-blur-md"
-            style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid #facc15; border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
-          >
-            Orbit
-          </span>
+            <svg
+              aria-hidden="true"
+              height="20"
+              style="color: rgb(250, 204, 21); filter: drop-shadow(0 0 12px #facc15);"
+              viewBox="0 0 18 24"
+              width="15"
+            >
+              <path
+                d="M2 2L16 14.5L10.3 15.2L7.4 22L2 2Z"
+                fill="currentColor"
+                stroke="rgba(255,255,255,0.88)"
+                stroke-linejoin="round"
+                stroke-width="1.4"
+              />
+            </svg>
+            <span
+              class="glass-radius-full glass-px-2 glass-py-0.5 glass-text-xs glass-font-medium glass-text-primary glass-shadow-lg glass-backdrop-blur-md"
+              style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15,23,42,0.94); --glass-text-secondary: rgba(15,23,42,0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid #facc15; border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+            >
+              Orbit
+            </span>
+          </div>
         </div>
       </div>
       <div
@@ -872,7 +892,7 @@ exports[`CollaborativeGlassWorkspace matches snapshot 1`] = `
         <button
           aria-label="Open floating actions menu"
           class="glass-w-14 glass-h-14 glass-radius-full glass-surface-overlay glass-text-primary glass-flex glass-items-center glass-justify-center glass-shadow-lg hover:bg-white/15 glass-mt-2"
-          style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+          style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15,23,42,0.94); --glass-text-secondary: rgba(15,23,42,0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 16px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
         >
           ⚡
         </button>

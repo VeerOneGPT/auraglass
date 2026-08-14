@@ -53,7 +53,7 @@ export const GlassFormField = forwardRef<HTMLDivElement, GlassFormFieldProps>(
             {required ? (
               <span
                 aria-hidden="true"
-                className="glass-ml-1 glass-text-red-300"
+                className="glass-ml-1 text-red-800"
               >
                 *
               </span>

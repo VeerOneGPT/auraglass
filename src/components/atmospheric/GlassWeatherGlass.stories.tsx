@@ -1,9 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import React from 'react';
-import { GlassWeatherGlass } from './GlassWeatherGlass';
-import { fn } from 'storybook/test';
+import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
+import { GlassWeatherGlass } from "./GlassWeatherGlass";
+import { fn } from "storybook/test";
 
-const useResponsiveAtmosphericLayout = (desktopWidth: number, desktopHeight: number) => {
+const useResponsiveAtmosphericLayout = (
+  desktopWidth: number,
+  desktopHeight: number
+) => {
   const [layout, setLayout] = React.useState({
     width: desktopWidth,
     height: desktopHeight,
@@ -21,51 +24,58 @@ const useResponsiveAtmosphericLayout = (desktopWidth: number, desktopHeight: num
     };
 
     updateLayout();
-    window.addEventListener('resize', updateLayout);
-    return () => window.removeEventListener('resize', updateLayout);
+    window.addEventListener("resize", updateLayout);
+    return () => window.removeEventListener("resize", updateLayout);
   }, [desktopHeight, desktopWidth]);
 
   return layout;
 };
 
-const ResponsiveWeatherGlass = (args: React.ComponentProps<typeof GlassWeatherGlass>) => {
-  const layout = useResponsiveAtmosphericLayout(args.width ?? 600, args.height ?? 400);
+const ResponsiveWeatherGlass = (
+  args: React.ComponentProps<typeof GlassWeatherGlass>
+) => {
+  const layout = useResponsiveAtmosphericLayout(
+    args.width ?? 600,
+    args.height ?? 400
+  );
   return (
-    <GlassWeatherGlass
-      {...args}
-      width={layout.width}
-      height={layout.height}
-      showControls={layout.mobile ? false : args.showControls}
-    />
+    <div style={{ width: "min(720px, 100%)", margin: "auto" }}>
+      <GlassWeatherGlass
+        {...args}
+        width={layout.width}
+        height={layout.height}
+        showControls={layout.mobile ? false : args.showControls}
+      />
+    </div>
   );
 };
 
 const meta = {
-  title: 'Effects + Advanced/Glass Weather Glass',
+  title: "Effects + Advanced/Glass Weather Glass",
   component: GlassWeatherGlass,
   parameters: {
-    layout: 'centered',
+    layout: "padded",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   args: { onWeatherChange: fn(), onAtmosphericEvent: fn() },
   argTypes: {
     width: {
-      control: { type: 'range', min: 300, max: 1000, step: 50 },
+      control: { type: "range", min: 300, max: 1000, step: 50 },
     },
     height: {
-      control: { type: 'range', min: 200, max: 600, step: 50 },
+      control: { type: "range", min: 200, max: 600, step: 50 },
     },
     particleDensity: {
-      control: { type: 'range', min: 0.1, max: 2, step: 0.1 },
+      control: { type: "range", min: 0.1, max: 2, step: 0.1 },
     },
     animationSpeed: {
-      control: { type: 'range', min: 0.1, max: 3, step: 0.1 },
+      control: { type: "range", min: 0.1, max: 3, step: 0.1 },
     },
     windStrength: {
-      control: { type: 'range', min: 0.1, max: 3, step: 0.1 },
+      control: { type: "range", min: 0.1, max: 3, step: 0.1 },
     },
     timeOfDay: {
-      control: { type: 'range', min: 0, max: 24, step: 1 },
+      control: { type: "range", min: 0, max: 24, step: 1 },
     },
   },
 } satisfies Meta<typeof GlassWeatherGlass>;
@@ -89,7 +99,7 @@ export const ClearSky: Story = {
     width: 500,
     height: 350,
     weather: {
-      type: 'clear',
+      type: "clear",
       intensity: 0.3,
       temperature: 22,
       humidity: 0.5,
@@ -97,7 +107,7 @@ export const ClearSky: Story = {
       windSpeed: 8,
       windDirection: 90,
       visibility: 15,
-      id: 'clear-weather'
+      id: "clear-weather",
     },
     dayNightCycle: true,
     timeOfDay: 14,
@@ -109,7 +119,7 @@ export const RainyDay: Story = {
     width: 600,
     height: 400,
     weather: {
-      type: 'rainy',
+      type: "rainy",
       intensity: 0.8,
       temperature: 16,
       humidity: 0.9,
@@ -117,7 +127,7 @@ export const RainyDay: Story = {
       windSpeed: 15,
       windDirection: 225,
       visibility: 5,
-      id: 'rainy-weather'
+      id: "rainy-weather",
     },
     particleDensity: 1.5,
     showAtmosphericEffects: true,
@@ -129,7 +139,7 @@ export const SnowyWeather: Story = {
     width: 600,
     height: 400,
     weather: {
-      type: 'snowy',
+      type: "snowy",
       intensity: 0.7,
       temperature: -5,
       humidity: 0.8,
@@ -137,7 +147,7 @@ export const SnowyWeather: Story = {
       windSpeed: 12,
       windDirection: 0,
       visibility: 3,
-      id: 'snowy-weather'
+      id: "snowy-weather",
     },
     particleDensity: 1.2,
     windStrength: 0.8,
@@ -149,7 +159,7 @@ export const StormyWeather: Story = {
     width: 700,
     height: 450,
     weather: {
-      type: 'stormy',
+      type: "stormy",
       intensity: 0.9,
       temperature: 18,
       humidity: 0.95,
@@ -157,7 +167,7 @@ export const StormyWeather: Story = {
       windSpeed: 35,
       windDirection: 270,
       visibility: 2,
-      id: 'stormy-weather'
+      id: "stormy-weather",
     },
     showAtmosphericEffects: true,
     animationSpeed: 1.5,
@@ -169,7 +179,7 @@ export const FoggyConditions: Story = {
     width: 500,
     height: 300,
     weather: {
-      type: 'foggy',
+      type: "foggy",
       intensity: 0.8,
       temperature: 12,
       humidity: 0.99,
@@ -177,7 +187,7 @@ export const FoggyConditions: Story = {
       windSpeed: 3,
       windDirection: 180,
       visibility: 0.5,
-      id: 'foggy-weather'
+      id: "foggy-weather",
     },
     particleDensity: 2,
     showAtmosphericEffects: true,
@@ -189,7 +199,7 @@ export const SunnyWeather: Story = {
     width: 600,
     height: 400,
     weather: {
-      type: 'sunny',
+      type: "sunny",
       intensity: 0.9,
       temperature: 28,
       humidity: 0.4,
@@ -197,7 +207,7 @@ export const SunnyWeather: Story = {
       windSpeed: 5,
       windDirection: 135,
       visibility: 20,
-      id: 'sunny-weather'
+      id: "sunny-weather",
     },
     timeOfDay: 12,
     dayNightCycle: true,
@@ -209,7 +219,7 @@ export const WindyConditions: Story = {
     width: 600,
     height: 350,
     weather: {
-      type: 'windy',
+      type: "windy",
       intensity: 0.7,
       temperature: 20,
       humidity: 0.6,
@@ -217,7 +227,7 @@ export const WindyConditions: Story = {
       windSpeed: 25,
       windDirection: 315,
       visibility: 12,
-      id: 'windy-weather'
+      id: "windy-weather",
     },
     windStrength: 2,
     particleDensity: 0.8,
@@ -229,7 +239,7 @@ export const NightTime: Story = {
     width: 600,
     height: 400,
     weather: {
-      type: 'clear',
+      type: "clear",
       intensity: 0.2,
       temperature: 10,
       humidity: 0.7,
@@ -237,7 +247,7 @@ export const NightTime: Story = {
       windSpeed: 8,
       windDirection: 90,
       visibility: 15,
-      id: 'night-weather'
+      id: "night-weather",
     },
     dayNightCycle: true,
     timeOfDay: 2,
@@ -265,7 +275,7 @@ export const MinimalInterface: Story = {
     showWeatherInfo: false,
     weatherResponsive: true,
     weather: {
-      type: 'cloudy',
+      type: "cloudy",
       intensity: 0.6,
       temperature: 18,
       humidity: 0.7,
@@ -273,7 +283,7 @@ export const MinimalInterface: Story = {
       windSpeed: 10,
       windDirection: 180,
       visibility: 8,
-      id: 'minimal-weather'
+      id: "minimal-weather",
     },
   },
 };
@@ -283,7 +293,7 @@ export const HighDensityParticles: Story = {
     width: 700,
     height: 500,
     weather: {
-      type: 'rainy',
+      type: "rainy",
       intensity: 1,
       temperature: 14,
       humidity: 1,
@@ -291,7 +301,7 @@ export const HighDensityParticles: Story = {
       windSpeed: 20,
       windDirection: 225,
       visibility: 3,
-      id: 'heavy-rain'
+      id: "heavy-rain",
     },
     particleDensity: 2.5,
     animationSpeed: 1.8,
@@ -304,7 +314,7 @@ export const TemperatureExtreme: Story = {
     width: 600,
     height: 400,
     weather: {
-      type: 'sunny',
+      type: "sunny",
       intensity: 0.9,
       temperature: 38,
       humidity: 0.2,
@@ -312,7 +322,7 @@ export const TemperatureExtreme: Story = {
       windSpeed: 3,
       windDirection: 90,
       visibility: 25,
-      id: 'extreme-heat'
+      id: "extreme-heat",
     },
     weatherResponsive: true,
     temperatureRange: [-20, 45],

@@ -147,6 +147,7 @@ const GlassMultiSelectInternal = <T extends string | number = string | number>(
     openUp,
     ariaLabel,
     autoFocus,
+    defaultOpen = false,
     dataTestId,
     id,
     className,
@@ -160,7 +161,7 @@ const GlassMultiSelectInternal = <T extends string | number = string | number>(
   const inputRef = useRef<HTMLInputElement | null>(null);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(defaultOpen);
   const [inputValue, setInputValue] = useState("");
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const [openDirectionUp, setOpenDirectionUp] = useState<boolean | undefined>(
@@ -786,7 +787,9 @@ const GlassMultiSelectInternal = <T extends string | number = string | number>(
                       {renderOption ? (
                         renderOption(option, isSelected)
                       ) : (
-                        <ContrastGuard>{option.label}</ContrastGuard>
+                        <span style={{ color: "rgba(15, 23, 42, 0.92)" }}>
+                          {option.label}
+                        </span>
                       )}
                     </li>
                   );

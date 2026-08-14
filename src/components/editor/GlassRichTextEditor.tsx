@@ -85,6 +85,20 @@ const defaultTools: GlassRichTextEditorProps["tools"] = [
   "clear",
 ];
 
+const editorToolbarStyles = `.glass-editor-tool:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.36) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28), 0 5px 14px rgba(15, 23, 42, 0.11) !important;
+  transform: translateY(-1px);
+}
+.glass-editor-tool:active:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: inset 0 1px 3px rgba(15, 23, 42, 0.12) !important;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .glass-editor-tool { transition: none !important; }
+}`;
+
 interface ToolConfig {
   icon: React.ReactNode;
   label: string;
@@ -348,36 +362,64 @@ export const GlassRichTextEditor = forwardRef<
         ref={ref}
         elevation={elevation}
         className={cn("overflow-hidden glass-radius-lg", className)}
+        style={{
+          "--glass-text-primary": "rgba(15, 23, 42, 0.94)",
+          "--glass-text-secondary": "rgba(15, 23, 42, 0.76)",
+          color: "rgba(15, 23, 42, 0.94)",
+        } as React.CSSProperties}
         {...props}
       >
         {showToolbar && !readOnly && (
-          <div className="glass-flex glass-flex-wrap glass-items-center glass-gap-1 glass-p-2 glass-border-b glass-border-subtle">
-            {tools.map((tool) => {
-              const config = toolConfigs[tool];
-              if (!config) return null;
+          <>
+            <div
+              className="glass-editor-toolbar glass-flex glass-flex-wrap glass-items-center glass-gap-2 glass-p-2"
+              role="toolbar"
+              aria-label="Text formatting"
+              style={{
+                background:
+                  "linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.1))",
+                borderBottom: "1px solid rgba(15, 23, 42, 0.14)",
+              }}
+            >
+              {tools.map((tool) => {
+                const config = toolConfigs[tool];
+                if (!config) return null;
 
-              return (
-                <button
-                  key={tool}
-                  type="button"
-                  onClick={() => executeCommand(config.command, config.value)}
-                  disabled={disabled}
-                  className={cn(
-                    "glass-p-2 glass-radius-md",
-                    "transition-all duration-200",
-                    "hover:bg-white/10 active:bg-white/20",
-                    "disabled:opacity-50 glass-disabled-cursor-not-allowed",
-                    "glass-text-primary",
-                    "glass-focus glass-touch-target glass-contrast-guard"
-                  )}
-                  title={config.label}
-                  aria-label={config.label}
-                >
-                  {config.icon}
-                </button>
-              );
-            })}
-          </div>
+                return (
+                  <button
+                    key={tool}
+                    type="button"
+                    onClick={() => executeCommand(config.command, config.value)}
+                    disabled={disabled}
+                    className={cn(
+                      "glass-editor-tool glass-p-2",
+                      "transition-all duration-200",
+                      "disabled:opacity-50 glass-disabled-cursor-not-allowed",
+                      "glass-text-primary",
+                      "glass-focus glass-touch-target glass-contrast-guard"
+                    )}
+                    style={{
+                      alignItems: "center",
+                      background:
+                        "linear-gradient(145deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.12))",
+                      border: "1px solid rgba(15, 23, 42, 0.16)",
+                      borderRadius: 12,
+                      boxShadow:
+                        "inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 3px 10px rgba(15, 23, 42, 0.08)",
+                      color: "rgba(15, 23, 42, 0.9)",
+                      display: "inline-flex",
+                      justifyContent: "center",
+                    }}
+                    title={config.label}
+                    aria-label={config.label}
+                  >
+                    {config.icon}
+                  </button>
+                );
+              })}
+            </div>
+            <style>{editorToolbarStyles}</style>
+          </>
         )}
 
         <div className='glass-relative'>
@@ -398,6 +440,7 @@ export const GlassRichTextEditor = forwardRef<
             style={{
               minHeight,
               maxHeight,
+              color: "rgba(15, 23, 42, 0.94)",
             }}
             role="textbox"
             aria-multiline="true"

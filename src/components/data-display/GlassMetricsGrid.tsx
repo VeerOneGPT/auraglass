@@ -14,12 +14,6 @@ import { cn } from "../../lib/utilsComprehensive";
 import { useA11yId } from "../../utils/a11y";
 import { useMotionPreferenceContext } from "../../contexts/MotionPreferenceContext";
 import { useGlassSound } from "../../utils/soundDesign";
-import {
-  ContrastGuard,
-  TextWithContrast,
-} from "@/components/accessibility/ContrastGuard";
-import { ANIMATION } from "../../tokens/designConstants";
-import { useReducedMotion } from "../../hooks/useReducedMotion";
 
 export interface MetricValue {
   current: number;
@@ -121,18 +115,32 @@ export interface GlassMetricsGridProps extends React.HTMLAttributes<HTMLDivEleme
 
 const metricsSurfaceStyle: React.CSSProperties = {
   background:
-    "var(--glass-primary-level3-surface)",
+    "linear-gradient(145deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.14))",
   border: "1px solid rgba(148, 163, 184, 0.2)",
   boxShadow:
-    "0 12px 30px rgba(2, 6, 23, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.07)",
+    "0 12px 30px rgba(15, 23, 42, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 12px rgba(255, 255, 255, 0.14)",
+  color: "rgba(15, 23, 42, 0.94)",
+  ["--glass-text-primary" as string]: "rgba(15, 23, 42, 0.94)",
+  ["--glass-text-secondary" as string]: "rgba(30, 41, 59, 0.78)",
+  ["--typography-text-primary" as string]: "rgba(15, 23, 42, 0.94)",
+  ["--typography-text-secondary" as string]: "rgba(30, 41, 59, 0.78)",
 };
 
 const metricsCardSurfaceStyle: React.CSSProperties = {
   background:
-    "var(--glass-primary-level3-surface)",
+    "linear-gradient(145deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.13))",
   border: "1px solid rgba(148, 163, 184, 0.2)",
   boxShadow:
-    "0 10px 24px rgba(2, 6, 23, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.08)",
+    "0 10px 24px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 10px rgba(255, 255, 255, 0.14)",
+  color: "rgba(15, 23, 42, 0.94)",
+};
+
+const metricsInsetSurfaceStyle: React.CSSProperties = {
+  background: "rgba(255, 255, 255, 0.16)",
+  border: "1px solid rgba(148, 163, 184, 0.20)",
+  boxShadow:
+    "inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 10px rgba(255, 255, 255, 0.12)",
+  color: "rgba(15, 23, 42, 0.94)",
 };
 
 export const GlassMetricsGrid = forwardRef<
@@ -253,11 +261,11 @@ export const GlassMetricsGrid = forwardRef<
 
     // Status colors
     const statusColors = {
-      success: "glass-border-green-500/30 bg-green-500/5",
-      warning: "glass-border-yellow-500/30 bg-yellow-500/5",
-      error: "glass-border-red-500/30 bg-red-500/5",
-      info: "glass-border-blue-500/30 bg-blue-500/5",
-      neutral: "glass-border-glass-border/30 bg-background/5",
+      success: "glass-border-glass-border/30",
+      warning: "glass-border-glass-border/30",
+      error: "glass-border-glass-border/30",
+      info: "glass-border-glass-border/30",
+      neutral: "glass-border-glass-border/30",
     };
 
     // Priority indicators
@@ -314,8 +322,8 @@ export const GlassMetricsGrid = forwardRef<
           <div
             className={cn(
               "glass-flex glass-items-center glass-gap-1 glass-text-xs",
-              isPositive && "text-green-600",
-              isNegative && "text-red-600",
+              isPositive && "glass-text-primary",
+              isNegative && "glass-text-primary",
               direction === "neutral" && "glass-text-secondary"
             )}
           >
@@ -361,7 +369,7 @@ export const GlassMetricsGrid = forwardRef<
                   points={`0,100 ${points} 100,100`}
                   fill="currentColor"
                   className="glass-opacity-10"
-                  style={{ color: spark.color || "currentColor" }}
+                  style={{ color: "rgba(71, 85, 105, 0.34)" }}
                 />
               )}
               <polyline
@@ -370,7 +378,7 @@ export const GlassMetricsGrid = forwardRef<
                 stroke="currentColor"
                 strokeWidth="2"
                 className="glass-transition-all glass-duration-300"
-                style={{ color: spark.color || "currentColor" }}
+                style={{ color: "rgba(51, 65, 85, 0.78)" }}
               />
             </svg>
           </div>
@@ -448,7 +456,7 @@ export const GlassMetricsGrid = forwardRef<
                   "glass-absolute top-2 right-2 glass-radius-full bg-current opacity-60",
                   priorityIndicators[metric.priority]
                 )}
-                style={{ color: metric.color || "currentColor" }}
+                style={{ color: "rgba(51, 65, 85, 0.66)" }}
               />
             )}
 
@@ -459,7 +467,7 @@ export const GlassMetricsGrid = forwardRef<
                   {metric.icon && (
                     <div
                       className="glass-flex-shrink-0"
-                      style={{ color: metric.color || "currentColor" }}
+                      style={{ color: "rgba(51, 65, 85, 0.78)" }}
                     >
                       {metric.icon}
                     </div>
@@ -540,7 +548,7 @@ export const GlassMetricsGrid = forwardRef<
 
             {/* Category Badge */}
             {metric.category && (
-              <div className="glass-absolute glass-bottom-2 glass-right-2">
+              <div className="glass-flex glass-justify-end glass-mt-3">
                 <span className="glass-px-2 glass-py-1 glass-text-xs glass-surface-overlay glass-text-secondary glass-radius-full">
                   {metric.category}
                 </span>
@@ -631,7 +639,12 @@ export const GlassMetricsGrid = forwardRef<
                     depth={1}
                     tint="neutral"
                     border="subtle"
-                    className="glass-relative"
+                    className="glass-relative glass-min-w-0"
+                    style={{
+                      ...metricsInsetSurfaceStyle,
+                      minHeight: 44,
+                      overflowY: "auto",
+                    }}
                   >
                     <input
                       type="text"
@@ -639,9 +652,9 @@ export const GlassMetricsGrid = forwardRef<
                       value={internalSearchQuery}
                       onChange={(e) => handleSearch(e.target.value)}
                       className={cn(
-                        "glass-w-64 glass-px-4 glass-py-2 bg-transparent glass-border-0 glass-radius-md",
+                        "glass-w-64 glass-max-w-full glass-px-4 glass-py-2 glass-pr-10 bg-transparent glass-border-0 glass-radius-md",
                         "placeholder:glass-text-secondary focus:outline-none focus:ring-2 focus:ring-primary/50",
-                        "glass-text-sm"
+                        "glass-text-sm glass-text-primary"
                       )}
                     />
                     <div className="glass-absolute glass-right-3 glass-top-1/2 glass--translate-y-1-2 glass-text-secondary">

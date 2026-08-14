@@ -440,7 +440,7 @@ export const GlassMultiStepForm: React.FC<GlassMultiStepFormProps> = ({
                               "bg-primary border-primary glass-text-primary",
                             !isCompleted &&
                               !isCurrent &&
-                              "bg-white/10 border-white/30 glass-text-primary/60",
+                              "bg-white/10 border-white/30 text-slate-700",
                             hasError && "border-red-500 bg-red-500/20"
                           )}
                         >
@@ -472,7 +472,7 @@ export const GlassMultiStepForm: React.FC<GlassMultiStepFormProps> = ({
                               "glass-text-xs font-medium transition-colors duration-200",
                               isCurrent
                                 ? "glass-text-primary"
-                                : "glass-text-primary/60"
+                                : "text-slate-700"
                             )}
                           >
                             {step.title}
@@ -654,7 +654,7 @@ export const GlassMultiStepForm: React.FC<GlassMultiStepFormProps> = ({
                               "glass-text-sm",
                               isCompleted
                                 ? "glass-text-primary"
-                                : "glass-text-primary/60"
+                                : "text-slate-700"
                             )}
                           >
                             {step.title}

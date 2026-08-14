@@ -11,13 +11,12 @@
   gap: var(--aura-space-1);
   padding: var(--aura-space-1);
   border-radius: var(--aura-radius-xl);
-  background: color-mix(
-    in srgb,
-    var(--aura-color-glass-overlay) 45%,
-    transparent
-  );
-  backdrop-filter: blur(var(--aura-glass-neutral-level1-backdrop-blur));
-  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level1-backdrop-blur));
+  border: 1px solid var(--glass-border-default);
+  background: var(--glass-neutral-level1-surface);
+  backdrop-filter: blur(var(--aura-glass-neutral-level1-backdrop-blur))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level1-backdrop-blur))
+    var(--glass-filter-base);
   box-shadow: var(
     --glass-elev-chart-type-selector,
     0 10px 24px rgba(15, 23, 42, 0.18)
@@ -115,13 +114,12 @@
 }
 
 .legendGlass {
-  backdrop-filter: blur(var(--aura-glass-neutral-level1-backdrop-blur));
-  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level1-backdrop-blur));
-  background: color-mix(
-    in srgb,
-    var(--aura-color-glass-overlay) 55%,
-    transparent
-  );
+  backdrop-filter: blur(var(--aura-glass-neutral-level1-backdrop-blur))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level1-backdrop-blur))
+    var(--glass-filter-base);
+  background: var(--glass-neutral-level1-surface);
+  border: 1px solid var(--glass-border-default);
   border-radius: var(--aura-radius-xl);
   box-shadow: var(
     --glass-elev-chart-legend,

@@ -51,12 +51,12 @@ export const GlassLabel = forwardRef<HTMLLabelElement, GlassLabelProps>(
     };
 
     const variantConfig = {
-      default: "text-foreground",
-      muted: "glass-text-secondary",
-      accent: "text-primary",
-      success: "text-green-400",
-      warning: "text-amber-400",
-      error: "text-red-400",
+      default: "text-slate-950",
+      muted: "text-slate-700",
+      accent: "text-slate-950",
+      success: "text-emerald-800",
+      warning: "text-amber-900",
+      error: "text-red-800",
     };
 
     return (
@@ -95,7 +95,7 @@ export const GlassLabel = forwardRef<HTMLLabelElement, GlassLabelProps>(
             {children}
             {required && (
               <span
-                className='glass-text-danger glass-ml-1'
+                className='glass-ml-1 text-red-800'
                 aria-label="required"
               >
                 *

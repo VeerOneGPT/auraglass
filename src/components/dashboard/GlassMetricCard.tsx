@@ -18,6 +18,7 @@ import {
 } from "@/components/accessibility/ContrastGuard";
 import { ANIMATION } from "../../tokens/designConstants";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
+import "./dashboardNeutral.css";
 
 export interface GlassMetricCardProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -300,7 +301,7 @@ export const GlassMetricCard = forwardRef<HTMLDivElement, GlassMetricCardProps>(
           onClick={onClick}
           className={cn(
             config.cardClass,
-            "group relative overflow-hidden",
+            "group relative overflow-hidden glass-dashboard-neutral",
             onClick && [
               "cursor-pointer",
               "hover:shadow-2xl hover:shadow-blue-500/20",

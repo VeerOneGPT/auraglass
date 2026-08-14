@@ -1,32 +1,41 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import * as ComponentModule from "./GlassCollaborationDashboard";
-import {
-  CertificationCase,
-  type MissingComponentName,
-} from "../../stories/GlassMissingInventoryCertification.stories";
+import * as GlassCollaborationDashboardModule from "./GlassCollaborationDashboard";
 
-const componentName =
-  "GlassCollaborationDashboard" satisfies MissingComponentName;
-const Component = (ComponentModule as Record<string, any>)[componentName];
+type DashboardComponent =
+  typeof GlassCollaborationDashboardModule.GlassCollaborationDashboard;
 
-const meta = {
-  title: 'Workflows/Glass Collaboration Dashboard',
-  component: Component,
+const meta: Meta<DashboardComponent> = {
+  title: "Workflows/Glass Collaboration Dashboard",
+  component: GlassCollaborationDashboardModule.GlassCollaborationDashboard,
   parameters: {
     layout: "centered",
+    previewSurface: "app",
     docs: {
       description: {
         component:
-          "Component-owned Storybook coverage for GlassCollaborationDashboard. This story renders the certified AuraGlass sample used by the full visual certification suite.",
+          "The real collaboration dashboard rendering its deterministic demo users and activity state.",
       },
     },
   },
-} satisfies Meta<typeof Component>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<DashboardComponent>;
 
-export const Default: Story = {
-  render: () => <CertificationCase name={componentName} />,
+export const GlassCollaborationDashboard: Story = {
+  render: () => (
+    <div
+      style={{
+        width: "min(352px, calc(100vw - 32px))",
+        minWidth: 0,
+        minHeight: 136,
+        display: "grid",
+        placeItems: "center",
+      }}
+    >
+      <GlassCollaborationDashboardModule.GlassCollaborationDashboard
+        data-testid="glass-collaboration-dashboard-story"
+      />
+    </div>
+  ),
 };

@@ -82,6 +82,10 @@ import { ContrastGuard } from "../accessibility/ContrastGuard";
 import { ANIMATION } from "../../tokens/designConstants";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 
+const DATA_GRID_TEXT = "rgba(15, 23, 42, 0.94)";
+const DATA_GRID_SECONDARY_TEXT = "rgba(15, 23, 42, 0.76)";
+const dataGridTextStyle: CSSProperties = { color: DATA_GRID_TEXT };
+
 // Define the component using forwardRef
 export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
   (props, ref) => {
@@ -97,6 +101,7 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
       contained = false,
       maxHeight,
       maxWidth,
+      sortable: _sortable,
       initialSort,
       enableRowDragging = false,
       onRowOrderChange,
@@ -226,13 +231,19 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
           animation="none"
           performanceMode="medium"
           className={cn("glass-w-full glass-p-6 glass-text-center", className)}
-          style={{ ...(style ?? {}) }}
+          style={{
+            "--glass-theme-text": DATA_GRID_TEXT,
+            "--glass-text-primary": DATA_GRID_TEXT,
+            "--glass-text-secondary": DATA_GRID_SECONDARY_TEXT,
+            color: DATA_GRID_TEXT,
+            ...(style ?? {}),
+          } as CSSProperties}
           role="region"
           aria-label={ariaLabel || "Data Grid"}
           data-testid={dataTestId}
           {...restProps}
         >
-          <ContrastGuard>
+          <ContrastGuard autoAdjust={false} style={dataGridTextStyle}>
             <p className="glass-text-sm glass-text-secondary">
               No columns configured for this data grid.
             </p>
@@ -259,6 +270,10 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
           className
         )}
         style={{
+          "--glass-theme-text": DATA_GRID_TEXT,
+          "--glass-text-primary": DATA_GRID_TEXT,
+          "--glass-text-secondary": DATA_GRID_SECONDARY_TEXT,
+          color: DATA_GRID_TEXT,
           ...style,
           ...(height && { height: resolvedHeight }),
           maxWidth:
@@ -268,7 +283,7 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
           overflowY:
             compact || contained || resolvedMaxHeight ? "auto" : undefined,
           perspective: "1000px",
-        }}
+        } as CSSProperties}
         data-testid={dataTestId}
         {...restProps}
       >
@@ -335,17 +350,22 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
                       columnHeader ? `Column ${columnHeader}` : undefined
                     }
                   >
-                    <ContrastGuard>{columnHeader}</ContrastGuard>
-                    <span
-                      className={styles.sortIndicator}
-                      style={{
-                        opacity: indicatorOpacity,
-                        transform: `translateY(${indicatorTranslateYPercent}%) scale(${indicatorScale})`,
-                      }}
-                      aria-hidden={!isSortingThisColumn}
-                    >
-                      {sortTargetValue > 0 ? "▲" : "▼"}
-                    </span>
+                    <ContrastGuard autoAdjust={false} style={dataGridTextStyle}>
+                      {columnHeader}
+                    </ContrastGuard>
+                    {isSortingThisColumn && (
+                      <span
+                        className={styles.sortIndicator}
+                        style={{
+                          opacity: 1,
+                          color: DATA_GRID_TEXT,
+                          transform: `translateY(-50%) scale(1)`,
+                        }}
+                        aria-hidden="true"
+                      >
+                        {sortTargetValue > 0 ? "▲" : "▼"}
+                      </span>
+                    )}
                   </th>
                 );
               })}
@@ -421,7 +441,12 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
                           key={`${columnId}-${originalIndex}`}
                           className={styles.cell}
                         >
-                          <ContrastGuard>{renderedCell}</ContrastGuard>
+                          <ContrastGuard
+                            autoAdjust={false}
+                            style={dataGridTextStyle}
+                          >
+                            {renderedCell}
+                          </ContrastGuard>
                         </td>
                       );
                     })}
@@ -431,7 +456,10 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
             ) : (
               <tr>
                 <td className={styles.cell} colSpan={Math.max(1, totalColumns)}>
-                  <ContrastGuard>
+                  <ContrastGuard
+                    autoAdjust={false}
+                    style={{ color: DATA_GRID_SECONDARY_TEXT }}
+                  >
                     <div className="glass-text-sm glass-text-secondary glass-text-center">
                       No data available.
                     </div>

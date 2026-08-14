@@ -3,7 +3,7 @@
 exports[`Glass3DEngine matches snapshot 1`] = `
 <div
   class="glass-3d-container "
-  style="position: relative; overflow: visible;"
+  style="position: relative; box-sizing: border-box; max-width: 100%; overflow: hidden;"
   tabindex="0"
 >
   <div

@@ -157,12 +157,14 @@ export function MultiUserGlassEditor({
       className={cn(
         "glass-radius-2xl glass-border glass-border-subtle",
         isCompact ? "glass-p-3 glass-space-y-2" : "glass-p-6 glass-space-y-4",
-        bounded && "glass-overflow-hidden glass-w-full",
+        bounded && "glass-w-full",
         className
       )}
       style={{
         background: "var(--glass-primary-level2-surface)",
-        maxHeight: resolvedMaxHeight ?? (bounded ? "220px" : undefined),
+        maxHeight: isCompact
+          ? resolvedMaxHeight ?? "220px"
+          : undefined,
         maxWidth: resolvedMaxWidth ?? (bounded ? "320px" : undefined),
       }}
     >
@@ -213,7 +215,7 @@ export function MultiUserGlassEditor({
               "glass-flex glass-items-center glass-gap-2 glass-radius-full glass-border glass-border-white/10 glass-surface-subtle/5 glass-text-xs glass-text-primary",
               isCompact ? "glass-px-2 glass-py-0.5" : "glass-px-3 glass-py-1"
             )}
-            style={{ boxShadow: `0 0 25px -12px ${user.color}` }}
+            style={{ boxShadow: "0 8px 24px -18px rgba(15, 23, 42, 0.32)" }}
           >
             <span
               className="glass-flex glass-radius-full"
@@ -236,7 +238,10 @@ export function MultiUserGlassEditor({
                 />
               )}
             </span>
-            <span className="glass-font-medium" style={{ color: user.color }}>
+            <span
+              className="glass-font-medium"
+              style={{ color: "rgba(15, 23, 42, 0.9)" }}
+            >
               {user.name}
             </span>
             <span

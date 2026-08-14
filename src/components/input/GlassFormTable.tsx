@@ -49,7 +49,8 @@ export function GlassFormTable<
       aria-label="Editable data table"
     >
       <table
-        className={cn("glass-w-full glass-text-sm")}
+        className={cn("glass-w-full glass-border-separate glass-text-sm")}
+        style={{ borderSpacing: "0 8px" }}
         role="table"
         aria-label="Form data table"
       >
@@ -81,7 +82,7 @@ export function GlassFormTable<
             <tr
               key={ri}
               role="row"
-              className={cn("glass-border-t glass-border-white-10")}
+              className={cn("glass-bg-white/12")}
             >
               {safeColumns.map((c) => (
                 <td

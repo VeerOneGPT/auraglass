@@ -39,10 +39,16 @@ export const GlassErrorState = forwardRef<HTMLDivElement, GlassErrorStateProps>(
         elevation="level1"
         intensity="medium"
         depth={1}
-        tint={severity === "error" ? "danger" : "warning"}
+        tint="neutral"
         border="visible"
         animation="none"
         className={cn("glass-space-y-4 glass-p-5", className)}
+        style={
+          {
+            "--glass-theme-text": "rgba(15, 23, 42, 0.92)",
+            color: "rgba(15, 23, 42, 0.92)",
+          } as React.CSSProperties
+        }
         {...props}
       >
         <div className="glass-flex glass-items-start glass-gap-3">
@@ -67,7 +73,7 @@ export const GlassErrorState = forwardRef<HTMLDivElement, GlassErrorStateProps>(
           </div>
         ) : null}
         {onRetry ? (
-          <GlassButton type="button" size="sm" onClick={onRetry}>
+          <GlassButton type="button" size="sm" intensity="subtle" glassVariant="clear" tint="neutral" onClick={onRetry}>
             <RefreshCw aria-hidden="true" className="glass-h-4 glass-w-4" />
             {retryLabel}
           </GlassButton>

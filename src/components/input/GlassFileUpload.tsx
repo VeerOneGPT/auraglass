@@ -460,7 +460,7 @@ export const GlassFileUpload: React.FC<GlassFileUploadProps> = ({
             "border-2 border-dashed glass-p-8 text-center transition-all duration-200",
             isDragOver && !disabled && "border-primary bg-primary/5",
             disabled
-              ? "opacity-50 cursor-not-allowed"
+              ? "cursor-not-allowed"
               : "hover:border-primary hover:bg-primary/5",
             files.length > 0 ? "glass-radius-t-xl" : "glass-radius-xl"
           )}

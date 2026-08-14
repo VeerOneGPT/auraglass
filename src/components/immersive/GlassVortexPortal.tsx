@@ -109,34 +109,34 @@ export interface GlassVortexPortalProps
 // Move color schemes outside component to keep reference stable across renders
 const COLOR_SCHEMES = {
   blue: {
-    primary: [100, 150, 255],
-    secondary: [150, 200, 255],
-    accent: [50, 100, 200],
+    primary: [210, 216, 224],
+    secondary: [246, 248, 250],
+    accent: [92, 101, 114],
   },
   purple: {
-    primary: [200, 100, 255],
-    secondary: [255, 150, 255],
-    accent: [150, 50, 200],
+    primary: [205, 210, 220],
+    secondary: [244, 246, 250],
+    accent: [98, 93, 108],
   },
   green: {
-    primary: [100, 255, 150],
-    secondary: [150, 255, 200],
-    accent: [50, 200, 100],
+    primary: [207, 216, 211],
+    secondary: [244, 248, 246],
+    accent: [88, 103, 95],
   },
   red: {
-    primary: [255, 100, 100],
-    secondary: [255, 150, 150],
-    accent: [200, 50, 50],
+    primary: [220, 211, 211],
+    secondary: [250, 246, 246],
+    accent: [112, 92, 92],
   },
   gold: {
-    primary: [255, 200, 100],
-    secondary: [255, 220, 150],
-    accent: [200, 150, 50],
+    primary: [220, 216, 205],
+    secondary: [250, 248, 242],
+    accent: [110, 101, 82],
   },
   cosmic: {
-    primary: [255, 100, 200],
-    secondary: [100, 200, 255],
-    accent: [200, 255, 100],
+    primary: [211, 214, 222],
+    secondary: [248, 249, 252],
+    accent: [88, 95, 108],
   },
 } as const;
 
@@ -674,8 +674,10 @@ export const GlassVortexPortal = forwardRef<
       const canvas = canvasRef.current;
       if (!canvas) return;
 
-      canvas.width = width;
-      canvas.height = height;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
+      canvas.getContext("2d")?.setTransform(dpr, 0, 0, dpr, 0, 0);
     }, [width, height]);
 
     // Handle portal interaction
@@ -724,10 +726,7 @@ export const GlassVortexPortal = forwardRef<
                 play("tap");
               }}
               className={cn(
-                "glass-px-3 glass-py-1 glass-radius-md transition-colors glass-focus glass-touch-target glass-contrast-guard",
-                portalActive
-                  ? "bg-red-500/20 hover:bg-red-500/30 text-red-400"
-                  : "bg-green-500/20 hover:bg-green-500/30 text-green-400"
+                "glass-px-3 glass-py-2 glass-radius-full glass-focus glass-touch-target glass-contrast-guard glass-border glass-border-subtle glass-surface-overlay glass-text-primary"
               )}
             >
               {portalActive ? "Deactivate" : "Activate"}
@@ -740,7 +739,7 @@ export const GlassVortexPortal = forwardRef<
                 initializeDistortions();
                 play("success");
               }}
-              className="glass-px-3 glass-py-1 glass-radius-md glass-bg-secondary/20 hover:glass-bg-secondary/30 glass-focus glass-touch-target glass-contrast-guard"
+              className="glass-px-3 glass-py-2 glass-radius-full glass-surface-overlay glass-border glass-border-subtle glass-text-primary glass-focus glass-touch-target glass-contrast-guard"
             >
               Reset
             </button>
@@ -754,7 +753,7 @@ export const GlassVortexPortal = forwardRef<
               id="vortex-type-select"
               value={type}
               onChange={(e) => {}}
-              className="glass-px-2 glass-py-1 glass-radius-md glass-surface-overlay glass-border glass-border-glass-border/20"
+              className="glass-px-3 glass-py-2 glass-radius-full glass-surface-overlay glass-border glass-border-subtle glass-text-primary glass-touch-target"
               aria-label="Select vortex type"
             >
               <option value="dimensional">Dimensional</option>
@@ -773,7 +772,7 @@ export const GlassVortexPortal = forwardRef<
               id="vortex-color-select"
               value={colorScheme}
               onChange={(e) => {}}
-              className="glass-px-2 glass-py-1 glass-radius-md glass-surface-overlay glass-border glass-border-glass-border/20"
+              className="glass-px-3 glass-py-2 glass-radius-full glass-surface-overlay glass-border glass-border-subtle glass-text-primary glass-touch-target"
               aria-label="Select color scheme"
             >
               <option value="blue">Blue</option>
@@ -797,7 +796,7 @@ export const GlassVortexPortal = forwardRef<
               step="0.1"
               value={currentIntensity}
               onChange={(e) => setCurrentIntensity(parseFloat(e.target.value))}
-              className="glass-w-20 glass-focus glass-touch-target glass-contrast-guard"
+              className="glass-w-20 glass-focus glass-touch-target glass-contrast-guard glass-accent-neutral"
               aria-label="Adjust vortex intensity"
             />
             <span className="glass-text-sm glass-min-w-3ch">
@@ -848,7 +847,7 @@ export const GlassVortexPortal = forwardRef<
         tint="neutral"
         border="subtle"
         className={cn(
-          "glass-vortex-portal relative glass-radius-lg glass-backdrop-blur-md border border-border/20",
+          "glass-vortex-portal glass-relative glass-w-full glass-radius-lg glass-backdrop-blur-md glass-border glass-border-subtle",
           className
         )}
         {...props}
@@ -859,17 +858,24 @@ export const GlassVortexPortal = forwardRef<
         >
           {renderControls()}
 
-          <div className="glass-relative">
+          <div className="glass-relative glass-w-full glass-overflow-hidden glass-radius-md">
             <canvas
               ref={canvasRef}
               width={width}
               height={height}
               className={cn(
-                "border border-border/20 glass-radius-md bg-black",
+                "glass-border glass-border-subtle glass-radius-md",
                 interactive && "cursor-pointer"
               )}
               onClick={handleCanvasClick}
-              style={{ width, height }}
+              style={{
+                display: "block",
+                width: `min(100%, ${width}px)`,
+                height: "auto",
+                aspectRatio: `${width} / ${height}`,
+                background:
+                  "linear-gradient(145deg, rgb(247 248 250), rgb(221 225 231))",
+              }}
             />
           </div>
         </Motion>

@@ -15,6 +15,7 @@ import { GlassPageStructure } from "./GlassPageStructure";
 import { ContrastGuard } from "../accessibility/ContrastGuard";
 import { ANIMATION } from "../../tokens/designConstants";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
+import "./GlassPageBuilder.css";
 
 export interface PageBuilderProps {
   className?: string;
@@ -102,11 +103,12 @@ const Toolbar: React.FC = () => {
   return (
     <div
       data-glass-component
-      className="glass-flex glass-items-center glass-justify-between glass-p-4 glass-surface-subtle glass-border-b glass-border-subtle"
+      className="glass-flex glass-items-center glass-justify-between glass-flex-wrap glass-p-4 glass-surface-subtle glass-border-b glass-border-subtle"
+      style={{ rowGap: 8 }}
     >
       {/* Left Side - Main Actions */}
-      <div className="glass-flex glass-items-center glass-gap-4">
-        <div className="glass-flex glass-items-center glass-gap-2">
+      <div className="glass-flex glass-items-center glass-gap-4 glass-flex-wrap">
+        <div className="glass-flex glass-items-center glass-gap-2 glass-flex-wrap">
           <h1 className="glass-text-xl glass-font-bold glass-text-secondary">
             Page Builder
           </h1>
@@ -118,7 +120,7 @@ const Toolbar: React.FC = () => {
         <div className="glass-w-px glass-h-6 glass-surface-subtle" />
 
         {/* File Actions */}
-        <div className="glass-flex glass-items-center glass-gap-2">
+        <div className="glass-flex glass-items-center glass-gap-2 glass-flex-wrap">
           <button
             onClick={clearPage}
             className="glass-flex glass-items-center glass-gap-2 glass-px-3 glass-py-2 glass-text-sm glass-text-secondary hover:glass-surface-subtle glass-radius-md glass-transition-colors glass-focus glass-touch-target glass-contrast-guard glass-focus glass-touch-target glass-contrast-guard"
@@ -145,7 +147,7 @@ const Toolbar: React.FC = () => {
         <div className="glass-w-px glass-h-6 glass-surface-subtle" />
 
         {/* Undo/Redo */}
-        <div className="glass-flex glass-items-center glass-gap-1">
+        <div className="glass-flex glass-items-center glass-gap-1 glass-flex-wrap">
           <button
             onClick={undo}
             disabled={!canUndo()}
@@ -176,7 +178,7 @@ const Toolbar: React.FC = () => {
       </div>
 
       {/* Center - Breakpoint Controls */}
-      <div className="glass-flex glass-items-center glass-gap-2 glass-surface-subtle glass-radius-lg glass-p-1">
+      <div className="glass-flex glass-items-center glass-gap-2 glass-surface-subtle glass-radius-lg glass-p-1 glass-flex-wrap">
         {breakpointOptions.map((breakpoint) => (
           <button
             key={breakpoint.key}
@@ -196,16 +198,16 @@ const Toolbar: React.FC = () => {
       </div>
 
       {/* Right Side - View Options & Actions */}
-      <div className="glass-flex glass-items-center glass-gap-4">
+      <div className="glass-flex glass-items-center glass-gap-4 glass-flex-wrap">
         {/* View Options */}
-        <div className="glass-flex glass-items-center glass-gap-2">
+        <div className="glass-flex glass-items-center glass-gap-2 glass-flex-wrap">
           <button
             onClick={toggleGrid}
             className={cn(
               "flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors",
               pageState.showGrid
-                ? "bg-blue-500/20 text-blue-200"
-                : "glass-text-secondary hover:bg-white/10"
+                ? "glass-cms-control-frost glass-text-primary glass-shadow-sm"
+                : "glass-text-secondary hover:glass-surface-subtle"
             )}
           >
             <span>⊞</span>
@@ -216,8 +218,8 @@ const Toolbar: React.FC = () => {
             className={cn(
               "flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors",
               pageState.snapToGrid
-                ? "bg-blue-500/20 text-blue-200"
-                : "glass-text-secondary hover:bg-white/10"
+                ? "glass-cms-control-frost glass-text-primary glass-shadow-sm"
+                : "glass-text-secondary hover:glass-surface-subtle"
             )}
           >
             <span>🧲</span>
@@ -228,14 +230,14 @@ const Toolbar: React.FC = () => {
         <div className="glass-w-px glass-h-6 glass-surface-subtle" />
 
         {/* Preview & Publish */}
-        <div className="glass-flex glass-items-center glass-gap-2">
+        <div className="glass-flex glass-items-center glass-gap-2 glass-flex-wrap">
           <button
             onClick={togglePreviewMode}
             className={cn(
               "flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors",
               pageState.previewMode
-                ? "bg-green-600 text-white hover:bg-green-700"
-                : "bg-white/10 glass-text-secondary hover:bg-white/15"
+                ? "glass-cms-control-frost glass-text-primary glass-shadow-sm"
+                : "glass-cms-control-frost glass-text-secondary hover:glass-text-primary"
             )}
           >
             <span>{pageState.previewMode ? "👁️" : "✏️"}</span>
@@ -246,7 +248,7 @@ const Toolbar: React.FC = () => {
               exportPage();
               alert("Page published! (Demo)");
             }}
-            className="glass-flex glass-items-center glass-gap-2 glass-px-4 glass-py-2 glass-text-sm glass-font-medium glass-surface-blue glass-text-primary hover:glass-surface-blue glass-radius-md glass-transition-colors"
+            className="glass-flex glass-items-center glass-gap-2 glass-px-4 glass-py-2 glass-text-sm glass-font-medium glass-cms-control-frost glass-text-primary glass-shadow-sm glass-radius-md glass-transition-colors"
           >
             <span>🚀</span>
             Publish
@@ -272,6 +274,21 @@ const PageBuilderCore: React.FC<PageBuilderProps> = ({
   const [activeLeftPanel, setActiveLeftPanel] = useState<
     "components" | "structure"
   >("components");
+  const [isNarrow, setIsNarrow] = useState(false);
+
+  useEffect(() => {
+    const updateNarrow = () => setIsNarrow(window.innerWidth < 1024);
+    updateNarrow();
+    window.addEventListener("resize", updateNarrow);
+    return () => window.removeEventListener("resize", updateNarrow);
+  }, []);
+
+  useEffect(() => {
+    if (isNarrow) {
+      setLeftPanelCollapsed(true);
+      setRightPanelCollapsed(true);
+    }
+  }, [isNarrow]);
 
   // Load initial data
   useEffect(() => {
@@ -327,7 +344,7 @@ const PageBuilderCore: React.FC<PageBuilderProps> = ({
   return (
     <div
       className={cn(
-        "h-screen flex flex-col overflow-auto glass-surface-subtle",
+        "h-screen flex flex-col glass-overflow-auto glass-surface-subtle",
         className
       )}
       data-testid={dataTestId}
@@ -341,14 +358,17 @@ const PageBuilderCore: React.FC<PageBuilderProps> = ({
         <div className="glass-flex">
           {/* Left Panel Tabs */}
           {!leftPanelCollapsed && (
-            <div className="glass-w-12 glass-surface-subtle glass-border-r glass-border-subtle glass-flex glass-flex-col">
+            <div
+              className="glass-w-12 glass-surface-subtle glass-border-r glass-border-subtle glass-flex glass-flex-col"
+              style={{ gap: 8, paddingBlock: 8 }}
+            >
               <button
                 onClick={() => setActiveLeftPanel("components")}
                 className={cn(
                   "flex flex-col items-center gap-1 p-3 text-xs transition-colors",
                   activeLeftPanel === "components"
-                    ? "bg-blue-500/20 text-blue-200"
-                    : "glass-text-secondary hover:bg-white/10"
+                    ? "glass-cms-control-frost glass-text-primary glass-shadow-sm"
+                    : "glass-text-secondary hover:glass-surface-subtle"
                 )}
                 title="Components"
               >
@@ -360,8 +380,8 @@ const PageBuilderCore: React.FC<PageBuilderProps> = ({
                 className={cn(
                   "flex flex-col items-center gap-1 p-3 text-xs transition-colors",
                   activeLeftPanel === "structure"
-                    ? "bg-blue-500/20 text-blue-200"
-                    : "glass-text-secondary hover:bg-white/10"
+                    ? "glass-cms-control-frost glass-text-primary glass-shadow-sm"
+                    : "glass-text-secondary hover:glass-surface-subtle"
                 )}
                 title="Structure"
               >

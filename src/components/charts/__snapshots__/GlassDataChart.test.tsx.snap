@@ -5,7 +5,7 @@ exports[`GlassDataChart matches snapshot 1`] = `
   aria-label="Data chart"
   class="container glass-data-chart"
   role="group"
-  style="border-radius: var(--glass-radius-md); box-shadow: var(--aura-shadow-elevation-md); --glass-data-chart-backdrop-filter: blur(var(--aura-glass-neutral-level1-backdrop-blur)); width: 100%; height: 400px;"
+  style="border-radius: var(--glass-radius-md); box-shadow: var(--aura-shadow-elevation-md); --glass-data-chart-backdrop-filter: blur(var(--aura-glass-neutral-level1-backdrop-blur)) var(--glass-filter-base); width: 100%; height: 400px;"
 >
   <svg
     height="0"

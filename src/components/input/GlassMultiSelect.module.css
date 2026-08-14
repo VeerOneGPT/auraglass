@@ -34,13 +34,11 @@
   border-radius: var(--aura-radius-xl);
   border: 1px solid
     color-mix(in srgb, var(--aura-color-global-border-soft) 80%, transparent);
-  background: color-mix(
-    in srgb,
-    var(--aura-color-glass-surface) 80%,
-    transparent
-  );
-  backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur));
-  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur));
+  background: var(--glass-neutral-level2-surface);
+  backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur))
+    var(--glass-filter-base);
+  -webkit-backdrop-filter: blur(var(--aura-glass-neutral-level2-backdrop-blur))
+    var(--glass-filter-base);
   transition:
     border var(--aura-motion-duration-fast) var(--aura-motion-easing-standard),
     box-shadow var(--aura-motion-duration-fast)
@@ -111,11 +109,7 @@
 }
 
 .placeholder {
-  color: color-mix(
-    in srgb,
-    var(--aura-color-global-text-secondary) 70%,
-    transparent
-  );
+  color: var(--glass-text-tertiary);
   font-size: 0.95rem;
 }
 
@@ -182,11 +176,14 @@
 }
 
 .input {
+  appearance: none;
+  -webkit-appearance: none;
   flex: 1;
   min-width: 120px;
   border: none;
   background: transparent;
   color: var(--aura-color-global-text-primary);
+  font: inherit;
   font-size: 0.95rem;
   padding: 0;
   line-height: 1.4;
@@ -197,11 +194,7 @@
 }
 
 .input::placeholder {
-  color: color-mix(
-    in srgb,
-    var(--aura-color-global-text-secondary) 55%,
-    transparent
-  );
+  color: var(--glass-text-tertiary);
 }
 
 .clearButton {
@@ -210,11 +203,7 @@
   justify-content: center;
   border: none;
   background: transparent;
-  color: color-mix(
-    in srgb,
-    var(--aura-color-global-text-secondary) 65%,
-    transparent
-  );
+  color: var(--glass-text-tertiary);
   cursor: pointer;
   padding: 0.25rem;
   border-radius: var(--aura-radius-sm);
@@ -242,11 +231,7 @@
   margin-top: var(--aura-space-2);
   z-index: 20;
   border-radius: var(--aura-radius-xl);
-  background: color-mix(
-    in srgb,
-    var(--aura-color-glass-surface) 92%,
-    transparent
-  );
+  background: var(--glass-neutral-level2-surface);
   border: 1px solid
     color-mix(in srgb, var(--aura-color-global-border-soft) 80%, transparent);
   box-shadow: var(
@@ -338,20 +323,12 @@
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: color-mix(
-    in srgb,
-    var(--aura-color-global-text-secondary) 65%,
-    transparent
-  );
+  color: var(--glass-text-tertiary);
 }
 
 .helperText {
   font-size: 0.8rem;
-  color: color-mix(
-    in srgb,
-    var(--aura-color-global-text-secondary) 75%,
-    transparent
-  );
+  color: var(--glass-text-tertiary);
 }
 
 .errorText {
@@ -366,11 +343,7 @@
   padding: 0.75rem 1rem;
   text-align: center;
   font-style: italic;
-  color: color-mix(
-    in srgb,
-    var(--aura-color-global-text-secondary) 70%,
-    transparent
-  );
+  color: var(--glass-text-tertiary);
 }
 
 .loading {

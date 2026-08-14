@@ -50,11 +50,14 @@ const ComponentItem: React.FC<{
       onDragStart={handleDragStart}
       onMouseDown={handleMouseDown}
       className={cn(
-        "flex items-center gap-3 p-3 rounded-lg border border-white/15 cursor-grab",
-        "hover:border-blue-400/50 hover:bg-blue-500/10 transition-colors",
-        "glass-active-cursor-grabbing active:scale-95",
-        isDragging && "opacity-50 scale-95"
+        "glass-flex glass-items-center glass-gap-3 glass-p-3 glass-radius-lg glass-border glass-border-soft glass-cursor-grab",
+        "glass-transition-colors glass-active-cursor-grabbing",
+        isDragging && "glass-opacity-50 glass-scale-95"
       )}
+      style={{
+        background: "rgba(255,255,255,.14)",
+        boxShadow: "inset 0 1px 0 rgba(255,255,255,.24)",
+      }}
       title={`Drag to add ${component.name}`}
     >
       <div className="glass-text-2xl">{component.icon}</div>
@@ -90,6 +93,15 @@ const CategorySection: React.FC<{
       <button
         onClick={onToggle}
         className="glass-flex glass-items-center glass-justify-between glass-w-full glass-p-2 glass-radius-lg hover:glass-surface-subtle glass-transition-colors glass-focus glass-touch-target glass-focus glass-touch-target glass-contrast-guard"
+        style={{
+          appearance: "none",
+          WebkitAppearance: "none",
+          border: "1px solid rgba(148,163,184,.28)",
+          background: "rgba(255,255,255,.14)",
+          boxShadow: "inset 0 1px 0 rgba(255,255,255,.24)",
+          color: "inherit",
+          font: "inherit",
+        }}
       >
         <div className="glass-flex glass-items-center glass-gap-2">
           <CategoryIcon category={category} />
@@ -198,6 +210,12 @@ export const GlassComponentPalette: React.FC<ComponentPaletteProps> = ({
           <button
             onClick={onToggleCollapse}
             className="glass-p-2 glass-text-secondary hover:glass-text-secondary glass-transition-colors glass-focus glass-touch-target glass-focus glass-touch-target glass-contrast-guard"
+            style={{
+              appearance: "none",
+              border: "1px solid rgba(148,163,184,.28)",
+              borderRadius: 12,
+              background: "rgba(255,255,255,.16)",
+            }}
             title="Collapse Palette"
           >
             ◀
@@ -213,6 +231,7 @@ export const GlassComponentPalette: React.FC<ComponentPaletteProps> = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="glass-w-full glass-px-3 glass-py-2 glass-pl-10 glass-text-sm glass-border glass-border-subtle glass-radius-lg glass-focus-outline-none glass-focus-ring-2 glass-focus-ring-blue-500"
+              style={{ outlineColor: "rgba(71,85,105,.5)" }}
             />
             <div className="glass-absolute glass-left-3 glass-top-1/2 glass-transform glass--translate-y-1-2 glass-text-secondary">
               🔍

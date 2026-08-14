@@ -11,7 +11,8 @@ import {
 } from "@/components/accessibility/ContrastGuard";
 import { ANIMATION } from "../../tokens/designConstants";
 
-export interface GlassProgressProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface GlassProgressProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   /**
    * Progress value (0-100)
    */
@@ -151,12 +152,21 @@ export const GlassProgress = forwardRef<HTMLDivElement, GlassProgressProps>(
     };
 
     const variantClasses = {
-      default: "glass-surface-primary",
-      success: "glass-surface-success",
-      warning: "glass-surface-warning",
-      error: "glass-surface-danger",
-      gradient: "bg-gradient-to-r from-primary via-secondary to-accent",
-      primary: "glass-surface-primary",
+      default: "",
+      success: "",
+      warning: "",
+      error: "",
+      gradient: "",
+      primary: "",
+    };
+
+    const fillSurface: React.CSSProperties = {
+      backgroundImage:
+        "linear-gradient(90deg, rgba(51, 65, 85, 0.88), rgba(100, 116, 139, 0.76))",
+      backgroundColor: "rgba(71, 85, 105, 0.88)",
+      border: "1px solid rgba(255, 255, 255, 0.22)",
+      boxShadow:
+        "inset 0 1px 8px rgba(255, 255, 255, 0.16), 0 1px 4px rgba(15, 23, 42, 0.18)",
     };
 
     const trackClasses = cn(
@@ -228,6 +238,14 @@ export const GlassProgress = forwardRef<HTMLDivElement, GlassProgressProps>(
           performanceMode="medium"
           id={progressId}
           className={trackClasses}
+          style={{
+            backgroundImage:
+              "linear-gradient(135deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.16))",
+            backgroundColor: "rgba(255, 255, 255, 0.18)",
+            border: "1px solid rgba(100, 116, 139, 0.22)",
+            boxShadow:
+              "inset 0 1px 8px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.40)",
+          }}
           role="progressbar"
           aria-valuenow={indeterminate ? undefined : value}
           aria-valuemin={0}
@@ -239,6 +257,7 @@ export const GlassProgress = forwardRef<HTMLDivElement, GlassProgressProps>(
           <div
             className={fillClasses}
             style={{
+              ...fillSurface,
               width: indeterminate ? "100%" : `${percentage}%`,
               transitionDuration: shouldAnimate
                 ? `${animationDuration}ms`
@@ -291,10 +310,8 @@ GlassProgress.displayName = "GlassProgress";
 /**
  * CircularProgress component
  */
-export interface CircularProgressProps extends Omit<
-  React.HTMLAttributes<HTMLDivElement>,
-  "size"
-> {
+export interface CircularProgressProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, "size"> {
   /**
    * Progress value (0-100)
    */

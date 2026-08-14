@@ -425,7 +425,9 @@ export const Glass3DEngine: React.FC<Glass3DEngineProps> = ({
           position: "relative",
           transformStyle: "preserve-3d",
           perspective: `${perspectiveDistance}px`,
-          overflow: "visible",
+          boxSizing: "border-box",
+          maxWidth: "100%",
+          overflow: "hidden",
         },
       }}
       animate={

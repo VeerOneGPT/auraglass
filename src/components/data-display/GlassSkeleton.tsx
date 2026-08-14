@@ -14,7 +14,8 @@ export type SkeletonVariant =
   | "circular"
   | "glass-radius-md";
 
-export interface GlassSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface GlassSkeletonProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   /** Shape variant of the skeleton */
   variant?: SkeletonVariant;
   /** Width of the skeleton */
@@ -51,19 +52,17 @@ const skeletonKeyframes = `
 `;
 
 const skeletonSurfaceStyle: React.CSSProperties = {
-  background:
-    "var(--glass-primary-level3-surface)",
+  background: "var(--glass-neutral-level2-surface)",
   border: "1px solid rgba(148, 163, 184, 0.18)",
   boxShadow:
-    "0 8px 20px rgba(2, 6, 23, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.06)",
+    "0 8px 20px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 10px rgba(255, 255, 255, 0.16)",
 };
 
 const skeletonContainerStyle: React.CSSProperties = {
-  background:
-    "var(--glass-primary-level3-surface)",
+  background: "var(--glass-neutral-level2-surface)",
   border: "1px solid rgba(148, 163, 184, 0.18)",
   boxShadow:
-    "0 12px 28px rgba(2, 6, 23, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.06)",
+    "0 12px 28px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 12px rgba(255, 255, 255, 0.14)",
 };
 
 /**
@@ -85,13 +84,13 @@ export const GlassSkeleton = forwardRef<HTMLDivElement, GlassSkeletonProps>(
     ref
   ) => {
     const getBaseStyles = (): React.CSSProperties => {
-      const baseWidth =
-        typeof width === "number" ? `${width}px` : width || "100%";
+      const explicitWidth = typeof width === "number" ? `${width}px` : width;
+      const baseWidth = explicitWidth || "100%";
       const baseHeight = typeof height === "number" ? `${height}px` : height;
 
       switch (variant) {
         case "circular":
-          const size = baseHeight || baseWidth || "2rem";
+          const size = baseHeight || explicitWidth || "2rem";
           return {
             width: size,
             height: size,
@@ -129,8 +128,7 @@ export const GlassSkeleton = forwardRef<HTMLDivElement, GlassSkeletonProps>(
           return {
             position: "relative",
             overflow: "hidden",
-            background:
-              "var(--glass-primary-level3-surface)",
+            background: "var(--glass-neutral-level2-surface)",
             backgroundSize: "200% 100%",
             animation: `skeleton-wave ${ANIMATION.DURATION.slower * 2}ms infinite`,
           };
@@ -226,17 +224,19 @@ export const GlassSkeletonAvatar: React.FC<{
   size?: "sm" | "md" | "lg" | "xl";
   className?: string;
 }> = ({ size = "md", className = "" }) => {
-  const sizeClasses = {
-    sm: "glass-w-8 glass-h-8",
-    md: "glass-w-10 glass-h-10",
-    lg: "glass-w-12 glass-h-12",
-    xl: "glass-w-16 glass-h-16",
+  const dimensions = {
+    sm: 32,
+    md: 40,
+    lg: 48,
+    xl: 64,
   };
 
   return (
     <GlassSkeleton
       variant="circular"
-      className={`${sizeClasses[size]} ${className}`}
+      width={dimensions[size]}
+      height={dimensions[size]}
+      className={className}
       animation="pulse"
     />
   );

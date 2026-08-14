@@ -607,7 +607,7 @@ export const GlassButton = forwardRef(function GlassButton(
     // Unified focus ring utility
     "glass-focus",
     "disabled:pointer-events-none disabled:opacity-50",
-    "relative overflow-hidden",
+    "relative overflow-hidden box-border",
     // Specular overlay + parallax support
     // Avoid specular overlay on icon-only and aurora buttons. Aurora already
     // owns its internal light layer; the generic specular pass reads as a
@@ -647,19 +647,19 @@ export const GlassButton = forwardRef(function GlassButton(
     },
     primary: {
       glassVariant: "liquid" as const,
-      tint: "blue" as const,
-      intensity: "strong" as const,
-      border: "glow" as const,
-      lighting: "volumetric" as const,
+      tint: "neutral" as const,
+      intensity: "medium" as const,
+      border: "subtle" as const,
+      lighting: "ambient" as const,
       caustics: true,
       className: "glass-text-primary hover:glass-text-secondary",
     },
     secondary: {
       glassVariant: "crystal" as const,
-      tint: "purple" as const,
-      intensity: "strong" as const,
-      border: "glow" as const,
-      lighting: "directional" as const,
+      tint: "neutral" as const,
+      intensity: "medium" as const,
+      border: "subtle" as const,
+      lighting: "ambient" as const,
       refraction: true,
       className: "glass-text-primary hover:glass-text-secondary",
     },
@@ -892,8 +892,8 @@ export const GlassButton = forwardRef(function GlassButton(
         tint={
           materialProps?.tint ||
           (variant === "primary"
-            ? { r: 59, g: 130, b: 246, a: 0.1 }
-            : { r: 0, g: 0, b: 0, a: 0.05 })
+            ? { r: 255, g: 255, b: 255, a: 0.1 }
+            : { r: 255, g: 255, b: 255, a: 0.06 })
         }
         variant={materialProps?.variant || "regular"}
         quality={materialProps?.quality || "high"}

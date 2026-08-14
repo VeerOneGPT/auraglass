@@ -23,6 +23,7 @@ import {
 } from "@/components/accessibility/ContrastGuard";
 import { ANIMATION } from "../../tokens/designConstants";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
+import "./dashboardNeutral.css";
 
 export interface ChartWidgetAction {
   label: string;
@@ -283,6 +284,7 @@ export const GlassChartWidget: React.FC<GlassChartWidgetProps> = ({
         elevation={"level3"}
         className={cn(
           cardPaddingClass,
+          "glass-dashboard-neutral",
           isFullscreen && "fixed inset-4 z-50",
           className
         )}
@@ -507,7 +509,7 @@ export const GlassChartWidget: React.FC<GlassChartWidgetProps> = ({
             </div>
           ) : (
             <div
-              className={cn(!isCompact && config.contentClass)}
+              className={cn(!isCompact && config.contentClass, "glass-chart-widget-neutral-content")}
               style={{
                 height: resolvedContentHeight,
                 minHeight: isCompact ? 0 : undefined,

@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`GlassComponentPalette matches snapshot 1`] = `
-<div>
+<div
+  style="box-sizing: border-box; width: 100%; min-width: 0; max-width: 100%; overflow-x: hidden;"
+>
   <div
     class="glass-dragdrop-provider"
     data-glass-component="true"
@@ -13,7 +15,7 @@ exports[`GlassComponentPalette matches snapshot 1`] = `
     >
       <div
         class="glass-foundation-basic glass-h-full glass-flex glass-flex-col glass-contrast-guard"
-        style="background-color: rgba(15, 23, 42, 0.22); --glass-text-primary: rgba(255,255,255,0.98); --glass-text-secondary: rgba(255,255,255,0.88); --typography-text-primary: rgba(255,255,255,0.98); --typography-text-secondary: rgba(255,255,255,0.88); border: 1px solid rgba(255,255,255,0.20); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); transition: all 200ms ease-out; position: relative; transform: translateZ(0);"
+        style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 8px; box-shadow: 0px 8px 32px 0px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.22), inset 0 0 12px rgba(255,255,255,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64);"
       >
         <div
           class="glass-flex glass-items-center glass-justify-between glass-p-4 glass-border-b glass-border-subtle"
@@ -25,6 +27,7 @@ exports[`GlassComponentPalette matches snapshot 1`] = `
           </h2>
           <button
             class="glass-p-2 glass-text-secondary hover:glass-text-secondary glass-transition-colors glass-focus glass-touch-target glass-focus glass-touch-target glass-contrast-guard"
+            style="appearance: none; border: 1px solid rgba(148,163,184,.28); border-radius: 12px; background: rgba(255, 255, 255, 0.16);"
             title="Collapse Palette"
           >
             ◀
@@ -39,6 +42,7 @@ exports[`GlassComponentPalette matches snapshot 1`] = `
             <input
               class="glass-w-full glass-px-3 glass-py-2 glass-pl-10 glass-text-sm glass-border glass-border-subtle glass-radius-lg glass-focus-outline-none glass-focus-ring-2 glass-focus-ring-blue-500"
               placeholder="Search components..."
+              style="outline-color: rgba(71, 85, 105, 0.5);"
               type="text"
               value=""
             />
@@ -58,6 +62,7 @@ exports[`GlassComponentPalette matches snapshot 1`] = `
             >
               <button
                 class="glass-flex glass-items-center glass-justify-between glass-w-full glass-p-2 glass-radius-lg hover:glass-surface-subtle glass-transition-colors glass-focus glass-touch-target glass-focus glass-touch-target glass-contrast-guard"
+                style="appearance: none; border: 1px solid rgba(148,163,184,.28); background: rgba(255, 255, 255, 0.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.24);"
               >
                 <div
                   class="glass-flex glass-items-center glass-gap-2"
@@ -90,9 +95,10 @@ exports[`GlassComponentPalette matches snapshot 1`] = `
                 class="glass-mt-2 glass-space-y-2 glass-pl-4"
               >
                 <div
-                  class="flex items-center gap-3 p-3 rounded-lg border border-white/15 cursor-grab hover:border-blue-400/50 hover:bg-blue-500/10 transition-colors glass-active-cursor-grabbing active:scale-95"
+                  class="glass-flex glass-items-center glass-gap-3 glass-p-3 glass-radius-lg glass-border glass-border-soft glass-cursor-grab glass-transition-colors glass-active-cursor-grabbing"
                   data-glass-component="true"
                   draggable="true"
+                  style="background: rgba(255, 255, 255, 0.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.24);"
                   title="Drag to add Container"
                 >
                   <div
@@ -121,9 +127,10 @@ exports[`GlassComponentPalette matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="flex items-center gap-3 p-3 rounded-lg border border-white/15 cursor-grab hover:border-blue-400/50 hover:bg-blue-500/10 transition-colors glass-active-cursor-grabbing active:scale-95"
+                  class="glass-flex glass-items-center glass-gap-3 glass-p-3 glass-radius-lg glass-border glass-border-soft glass-cursor-grab glass-transition-colors glass-active-cursor-grabbing"
                   data-glass-component="true"
                   draggable="true"
+                  style="background: rgba(255, 255, 255, 0.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.24);"
                   title="Drag to add Row"
                 >
                   <div
@@ -152,9 +159,10 @@ exports[`GlassComponentPalette matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="flex items-center gap-3 p-3 rounded-lg border border-white/15 cursor-grab hover:border-blue-400/50 hover:bg-blue-500/10 transition-colors glass-active-cursor-grabbing active:scale-95"
+                  class="glass-flex glass-items-center glass-gap-3 glass-p-3 glass-radius-lg glass-border glass-border-soft glass-cursor-grab glass-transition-colors glass-active-cursor-grabbing"
                   data-glass-component="true"
                   draggable="true"
+                  style="background: rgba(255, 255, 255, 0.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.24);"
                   title="Drag to add Column"
                 >
                   <div
@@ -189,6 +197,7 @@ exports[`GlassComponentPalette matches snapshot 1`] = `
             >
               <button
                 class="glass-flex glass-items-center glass-justify-between glass-w-full glass-p-2 glass-radius-lg hover:glass-surface-subtle glass-transition-colors glass-focus glass-touch-target glass-focus glass-touch-target glass-contrast-guard"
+                style="appearance: none; border: 1px solid rgba(148,163,184,.28); background: rgba(255, 255, 255, 0.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.24);"
               >
                 <div
                   class="glass-flex glass-items-center glass-gap-2"
@@ -221,9 +230,10 @@ exports[`GlassComponentPalette matches snapshot 1`] = `
                 class="glass-mt-2 glass-space-y-2 glass-pl-4"
               >
                 <div
-                  class="flex items-center gap-3 p-3 rounded-lg border border-white/15 cursor-grab hover:border-blue-400/50 hover:bg-blue-500/10 transition-colors glass-active-cursor-grabbing active:scale-95"
+                  class="glass-flex glass-items-center glass-gap-3 glass-p-3 glass-radius-lg glass-border glass-border-soft glass-cursor-grab glass-transition-colors glass-active-cursor-grabbing"
                   data-glass-component="true"
                   draggable="true"
+                  style="background: rgba(255, 255, 255, 0.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.24);"
                   title="Drag to add Text"
                 >
                   <div
@@ -252,9 +262,10 @@ exports[`GlassComponentPalette matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="flex items-center gap-3 p-3 rounded-lg border border-white/15 cursor-grab hover:border-blue-400/50 hover:bg-blue-500/10 transition-colors glass-active-cursor-grabbing active:scale-95"
+                  class="glass-flex glass-items-center glass-gap-3 glass-p-3 glass-radius-lg glass-border glass-border-soft glass-cursor-grab glass-transition-colors glass-active-cursor-grabbing"
                   data-glass-component="true"
                   draggable="true"
+                  style="background: rgba(255, 255, 255, 0.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.24);"
                   title="Drag to add Heading"
                 >
                   <div
@@ -289,6 +300,7 @@ exports[`GlassComponentPalette matches snapshot 1`] = `
             >
               <button
                 class="glass-flex glass-items-center glass-justify-between glass-w-full glass-p-2 glass-radius-lg hover:glass-surface-subtle glass-transition-colors glass-focus glass-touch-target glass-focus glass-touch-target glass-contrast-guard"
+                style="appearance: none; border: 1px solid rgba(148,163,184,.28); background: rgba(255, 255, 255, 0.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.24);"
               >
                 <div
                   class="glass-flex glass-items-center glass-gap-2"
@@ -323,6 +335,7 @@ exports[`GlassComponentPalette matches snapshot 1`] = `
             >
               <button
                 class="glass-flex glass-items-center glass-justify-between glass-w-full glass-p-2 glass-radius-lg hover:glass-surface-subtle glass-transition-colors glass-focus glass-touch-target glass-focus glass-touch-target glass-contrast-guard"
+                style="appearance: none; border: 1px solid rgba(148,163,184,.28); background: rgba(255, 255, 255, 0.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.24);"
               >
                 <div
                   class="glass-flex glass-items-center glass-gap-2"
@@ -357,6 +370,7 @@ exports[`GlassComponentPalette matches snapshot 1`] = `
             >
               <button
                 class="glass-flex glass-items-center glass-justify-between glass-w-full glass-p-2 glass-radius-lg hover:glass-surface-subtle glass-transition-colors glass-focus glass-touch-target glass-focus glass-touch-target glass-contrast-guard"
+                style="appearance: none; border: 1px solid rgba(148,163,184,.28); background: rgba(255, 255, 255, 0.14); box-shadow: inset 0 1px 0 rgba(255,255,255,.24);"
               >
                 <div
                   class="glass-flex glass-items-center glass-gap-2"

@@ -58,7 +58,12 @@ const HoudiniStoryFrame = ({
     </div>
     <style>{`
       .houdini-story-frame .glass-foundation-complete {
-        background-color: rgba(15, 23, 42, 0.78) !important;
+        background: linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.16)) !important;
+        background-color: rgba(255,255,255,0.22) !important;
+        border-color: rgba(255,255,255,0.28) !important;
+        color: rgba(15,23,42,0.92) !important;
+        backdrop-filter: blur(24px) saturate(1.6) brightness(1.06) contrast(1) !important;
+        -webkit-backdrop-filter: blur(24px) saturate(1.6) brightness(1.06) contrast(1) !important;
       }
 
       [data-storybook-preview-mode="dark"] .houdini-story-frame,

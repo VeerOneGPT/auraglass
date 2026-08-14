@@ -30,9 +30,7 @@ const badgeClusterStoryCss = `
     border: 1px solid var(--badge-story-border);
     border-radius: 28px;
     padding: 28px;
-    background:
-      linear-gradient(135deg, var(--badge-story-panel), rgba(224,242,254,0.42)),
-      repeating-linear-gradient(90deg, rgba(14,165,233,0.12) 0 68px, rgba(16,185,129,0.12) 68px 136px, rgba(168,85,247,0.1) 136px 204px);
+    background: linear-gradient(135deg, var(--badge-story-panel), rgba(255,255,255,0.28));
     box-shadow: 0 24px 80px rgba(15, 23, 42, 0.14);
   }
 
@@ -41,17 +39,10 @@ const badgeClusterStoryCss = `
   }
 
   .liquid-badge-cluster-story .liquid-glass-badge-cluster {
-    border: 1px solid rgba(255, 255, 255, 0.58) !important;
-    background:
-      linear-gradient(135deg, rgba(255,255,255,0.58), rgba(255,255,255,0.32)),
-      linear-gradient(90deg, rgba(14,165,233,0.1), rgba(16,185,129,0.1)) !important;
-    box-shadow: 0 18px 54px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255,255,255,0.48) !important;
+    border: 1px solid rgba(255, 255, 255, 0.32) !important;
+    background: linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.18)) !important;
+    box-shadow: 0 18px 54px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255,255,255,0.28) !important;
     color: var(--badge-story-ink);
-  }
-
-  .liquid-badge-cluster-story .liquid-glass-badge-cluster .glass-surface-primary {
-    color: #fff;
-    text-shadow: 0 1px 2px rgba(15, 23, 42, 0.28);
   }
 
   [data-storybook-preview-mode="dark"] .liquid-badge-cluster-story {
@@ -62,30 +53,22 @@ const badgeClusterStoryCss = `
   }
 
   [data-storybook-preview-mode="dark"] .liquid-badge-cluster-panel {
-    background:
-      linear-gradient(135deg, rgba(15,23,42,0.86), rgba(30,41,59,0.62)),
-      repeating-linear-gradient(90deg, rgba(56,189,248,0.18) 0 68px, rgba(45,212,191,0.15) 68px 136px, rgba(192,132,252,0.14) 136px 204px);
+    background: linear-gradient(135deg, rgba(255,255,255,0.30), rgba(255,255,255,0.14));
     box-shadow: 0 28px 90px rgba(0, 0, 0, 0.36);
   }
 
   [data-storybook-preview-mode="dark"] .liquid-badge-cluster-story .liquid-glass-badge-cluster {
     border-color: rgba(226, 232, 240, 0.28) !important;
-    background:
-      linear-gradient(135deg, rgba(15,23,42,0.66), rgba(30,41,59,0.42)),
-      linear-gradient(90deg, rgba(56,189,248,0.18), rgba(45,212,191,0.14)) !important;
+    background: linear-gradient(135deg, rgba(255,255,255,0.30), rgba(255,255,255,0.14)) !important;
     box-shadow: 0 22px 64px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255,255,255,0.16) !important;
   }
 
   [data-storybook-preview-mode="liquid"] .liquid-badge-cluster-panel {
-    background:
-      linear-gradient(135deg, rgba(255,255,255,0.66), rgba(236,253,245,0.38)),
-      repeating-linear-gradient(90deg, rgba(14,165,233,0.16) 0 68px, rgba(16,185,129,0.15) 68px 136px, rgba(168,85,247,0.12) 136px 204px);
+    background: linear-gradient(135deg, rgba(255,255,255,0.35), rgba(255,255,255,0.18));
   }
 
   [data-storybook-preview-mode="liquid"] .liquid-badge-cluster-story .liquid-glass-badge-cluster {
-    background:
-      linear-gradient(135deg, rgba(255,255,255,0.5), rgba(255,255,255,0.26)),
-      linear-gradient(90deg, rgba(14,165,233,0.14), rgba(16,185,129,0.12), rgba(168,85,247,0.08)) !important;
+    background: linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.16)) !important;
   }
 
   [data-storybook-preview-mode="high-contrast"] .liquid-badge-cluster-story {

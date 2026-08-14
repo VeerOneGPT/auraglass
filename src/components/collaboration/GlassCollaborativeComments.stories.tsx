@@ -1,32 +1,44 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import * as ComponentModule from "./GlassCollaborativeComments";
-import {
-  CertificationCase,
-  type MissingComponentName,
-} from "../../stories/GlassMissingInventoryCertification.stories";
+import * as GlassCollaborativeCommentsModule from "./GlassCollaborativeComments";
 
-const componentName =
-  "GlassCollaborativeComments" satisfies MissingComponentName;
-const Component = (ComponentModule as Record<string, any>)[componentName];
+type CommentsComponent =
+  typeof GlassCollaborativeCommentsModule.GlassCollaborativeComments;
 
-const meta = {
-  title: 'Workflows/Glass Collaborative Comments',
-  component: Component,
+const meta: Meta<CommentsComponent> = {
+  title: "Workflows/Glass Collaborative Comments",
+  component: GlassCollaborativeCommentsModule.GlassCollaborativeComments,
   parameters: {
     layout: "centered",
+    previewSurface: "app",
     docs: {
       description: {
         component:
-          "Component-owned Storybook coverage for GlassCollaborativeComments. This story renders the certified AuraGlass sample used by the full visual certification suite.",
+          "The real collaborative-comments overlay in its contained demo mode, including a visible seeded review thread.",
       },
     },
   },
-} satisfies Meta<typeof Component>;
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<CommentsComponent>;
 
-export const Default: Story = {
-  render: () => <CertificationCase name={componentName} />,
+export const GlassCollaborativeComments: Story = {
+  render: () => (
+    <div
+      style={{
+        width: "min(352px, calc(100vw - 32px))",
+        height: 260,
+        minWidth: 0,
+        overflow: "hidden",
+      }}
+    >
+      <GlassCollaborativeCommentsModule.GlassCollaborativeComments
+        contained
+        compact
+        maxHeight={260}
+        aria-label="Collaborative review comments"
+        data-testid="glass-collaborative-comments-story"
+      />
+    </div>
+  ),
 };

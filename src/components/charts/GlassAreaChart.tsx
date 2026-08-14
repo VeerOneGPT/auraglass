@@ -22,9 +22,9 @@ const DEFAULT_CHART_COLORS = [
   "#94a3b8",
 ];
 
-const AXIS_TEXT_FILL = "rgba(226, 232, 240, 0.78)";
-const AXIS_TITLE_FILL = "rgba(226, 232, 240, 0.88)";
-const CROSSHAIR_STROKE = "rgba(255, 255, 255, 0.28)";
+const AXIS_TEXT_FILL = "rgba(15, 23, 42, 0.76)";
+const AXIS_TITLE_FILL = "rgba(15, 23, 42, 0.88)";
+const CROSSHAIR_STROKE = "rgba(15, 23, 42, 0.32)";
 
 export interface AreaDataPoint {
   x: number | string;

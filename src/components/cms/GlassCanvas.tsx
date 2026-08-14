@@ -480,7 +480,10 @@ export const GlassCanvas: React.FC<
 
   return (
     <div
-      className={cn("flex-1 h-full flex flex-col overflow-hidden", className)}
+      className={cn(
+        "flex-1 h-full flex flex-col overflow-hidden min-w-0",
+        className
+      )}
       data-testid={props["data-testid"]}
       role="main"
       aria-label="Page canvas for drag and drop editing"
@@ -511,6 +514,7 @@ export const GlassCanvas: React.FC<
         <div
           className="glass-flex-1 glass-overflow-auto glass-p-6 glass-surface-subtle glass-contrast-guard"
           style={{
+            backgroundColor: "rgba(255, 255, 255, 0.18)",
             backgroundImage: pageState.showGrid
               ? "radial-gradient(circle, var(--glass-gray-200) 1px, transparent 1px)"
               : "none",

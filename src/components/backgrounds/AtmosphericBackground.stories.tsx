@@ -7,7 +7,7 @@ const meta: Meta<typeof AtmosphericBackground> = {
   component: AtmosphericBackground,
   parameters: {
     layout: 'fullscreen',
-    previewSurface: 'media',
+    previewSurface: 'component',
     docs: {
       description: {
         component: 'Atmospheric background constrained to a readable media-style composition.',
@@ -50,28 +50,28 @@ export const Default: Story = {
       {...args}
       className="glass-w-full glass-flex glass-items-center glass-justify-center"
       style={{ minHeight: 'min(100vh, 760px)' }}
-      baseColor="rgba(15, 23, 42, 0.92)"
+      baseColor="rgba(226, 232, 240, 0.72)"
       gradientColors={[
-        'rgba(59, 130, 246, 0.5)',
-        'rgba(20, 184, 166, 0.38)',
-        'rgba(168, 85, 247, 0.32)',
+        'rgba(255, 255, 255, 0.28)',
+        'rgba(241, 245, 249, 0.22)',
+        'rgba(226, 232, 240, 0.18)',
       ]}
       animate={false}
     >
       <section
-        className="glass-w-full glass-max-w-3xl glass-rounded-2xl glass-bg-black/35 glass-p-8 glass-text-white glass-shadow-2xl glass-backdrop-blur-md"
-        style={{ width: 'min(calc(100vw - 48px), 48rem)', maxWidth: '100%', minWidth: 0, color: '#f8fafc' }}
+        className="glass-w-full glass-max-w-3xl glass-rounded-2xl glass-p-8 glass-shadow-2xl glass-backdrop-blur-md"
+        style={{ width: 'min(calc(100vw - 48px), 48rem)', maxWidth: '100%', minWidth: 0, color: '#0f172a', background: 'rgba(255,255,255,.24)' }}
       >
-        <p className="glass-text-sm glass-font-semibold glass-uppercase glass-tracking-wide glass-text-white/70" style={{ color: 'rgba(248, 250, 252, 0.78)' }}>
+        <p className="glass-text-sm glass-font-semibold glass-uppercase glass-tracking-wide" style={{ color: 'rgba(15, 23, 42, 0.94)' }}>
           Atmospheric surface
         </p>
         <h1
           className="glass-mt-2 glass-font-semibold"
-          style={{ overflowWrap: 'anywhere', wordBreak: 'normal', color: '#ffffff', fontSize: 'clamp(1.45rem, 7vw, 1.875rem)', lineHeight: 1.1, maxWidth: '18ch' }}
+          style={{ overflowWrap: 'anywhere', wordBreak: 'normal', color: '#0f172a', fontSize: 'clamp(1.45rem, 7vw, 1.875rem)', lineHeight: 1.1, maxWidth: '18ch' }}
         >
           Command center backdrop
         </h1>
-        <p className="glass-mt-3 glass-max-w-2xl glass-text-sm glass-text-white/75" style={{ color: 'rgba(248, 250, 252, 0.82)' }}>
+        <p className="glass-mt-3 glass-max-w-2xl glass-text-sm" style={{ color: 'rgba(51, 65, 85, 0.92)' }}>
           Foreground panels remain legible while the background demonstrates depth and color.
         </p>
       </section>

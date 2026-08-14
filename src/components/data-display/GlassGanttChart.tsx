@@ -469,6 +469,7 @@ export const GlassGanttChart = forwardRef<HTMLDivElement, GlassGanttChartProps>(
             className={cn(
               `glass-absolute glass-cursor-pointer glass-transition-all glass-duration-[${ANIMATION.DURATION.fast}ms]`,
               "glass-backdrop-blur-sm glass-border glass-border-subtle glass-radius-md",
+              "glass-overflow-hidden",
               task.priority && priorityColors[task.priority],
               isHovered && "glass-shadow-lg"
             )}
@@ -477,8 +478,11 @@ export const GlassGanttChart = forwardRef<HTMLDivElement, GlassGanttChartProps>(
               top: bounds.y + 4,
               width: bounds.width,
               height: bounds.height - 8,
+              overflow: "hidden",
               marginLeft: showHierarchy ? level * 20 : 0,
-              transform: isHovered ? "scale(1.02)" : undefined,
+              // Keep bars inside their row. Scaling here caused the bottom bar
+              // to cross the chart's clipped viewport during pointer/QA passes.
+              transform: undefined,
               boxShadow: isSelected
                 ? "0 0 0 2px rgba(112, 214, 255, 0.45)"
                 : undefined,
@@ -494,7 +498,10 @@ export const GlassGanttChart = forwardRef<HTMLDivElement, GlassGanttChartProps>(
             }
           >
             {/* Task Bar */}
-            <div className="glass-relative glass-h-full glass-flex glass-items-center">
+            <div
+              className="glass-relative glass-flex glass-items-center"
+              style={{ height: "calc(100% - 2px)" }}
+            >
               {/* Status Color */}
               <div
                 className="glass-absolute glass-left-0 glass-top-0 glass-h-full glass-w-1 glass-rounded-l"
@@ -607,7 +614,12 @@ export const GlassGanttChart = forwardRef<HTMLDivElement, GlassGanttChartProps>(
           "glass-gantt-chart glass-radius-lg glass-backdrop-blur-md glass-border glass-border-subtle glass-overflow-hidden glass-max-w-full",
           className
         )}
-        style={{ height: "min(100%, " + height + "px)", minWidth: 0 }}
+        style={{
+          height: `${height}px`,
+          maxHeight: "calc(100vh - 48px)",
+          minHeight: Math.min(height, 260),
+          minWidth: 0,
+        }}
         onMouseMove={handleTaskDrag}
         onMouseUp={handleTaskDragEnd}
         onMouseLeave={handleTaskDragEnd}
@@ -631,8 +643,14 @@ export const GlassGanttChart = forwardRef<HTMLDivElement, GlassGanttChartProps>(
             {/* Timeline Header */}
             <div
               ref={timelineRef}
-              className="glass-flex-1 glass-overflow-x-hidden glass-surface-dark/20"
-              style={{ ...{ scrollbarWidth: "none", msOverflowStyle: "none" } }}
+              className="glass-flex-1 glass-surface-dark/20"
+              style={{
+                minWidth: 0,
+                overflowX: "auto",
+                overflowY: "hidden",
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+              }}
             >
               <div
                 className="glass-flex glass-h-16"
