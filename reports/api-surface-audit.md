@@ -1,23 +1,24 @@
 # API Surface Audit
 
-Generated: 2026-05-12T19:21:54.240Z
+Generated: 2026-08-13T22:23:17.001Z
 
 ## Summary
 
-- Public root exports audited: 819
-- Public source files audited: 417
-- Public declaration files audited: 417
-- Public source files with explicit `any`: 169
+- Public root exports audited: 881
+- Public source files audited: 432
+- Public declaration files audited: 432
+- Public source files with explicit `any`: 171
 - Public source explicit `any` count: 876
-- Public declaration files with explicit `any`: 2
-- Public declaration explicit `any` count: 2
-- Component-like value exports checked for ref signals: 435
-- Non-support component exports needing ref-forwarding review: 129
+- Public declaration files with explicit `any`: 3
+- Public declaration explicit `any` count: 4
+- Component-like value exports checked for ref signals: 470
+- Non-support component exports needing ref-forwarding review: 131
 - Provider/support exports needing intentional no-ref review: 34
 - Declaration files missing React type references: 0
 
 ## Public Declaration Files With `any`
 
+- dist/components/navigation/types.d.ts: 2
 - dist/components/collaboration/GlassCollaborationProvider.d.ts: 1
 - dist/primitives/OptimizedGlassCore.d.ts: 1
 
@@ -45,7 +46,6 @@ Generated: 2026-05-12T19:21:54.240Z
 - src/components/ai/GlassDeepDreamGlass.tsx: 10
 - src/components/interactive/GlassCarousel.tsx: 10
 - src/components/modal/GlassModal.tsx: 10
-- src/hooks/extended/useDraggableListPhysics.ts: 10
 - src/hooks/useAccessibilitySettings.ts: 10
 - src/utils/soundDesign.ts: 10
 - src/components/atmospheric/GlassWeatherGlass.tsx: 9
@@ -53,7 +53,8 @@ Generated: 2026-05-12T19:21:54.240Z
 - src/components/interactive/GlassGradientPicker.tsx: 9
 - src/components/navigation/GlassHeader.tsx: 9
 - src/components/navigation/GlassTabs.tsx: 9
-- ... 139 more
+- src/components/accessibility/GlassFocusIndicators.tsx: 8
+- ... 141 more
 
 ## Component Ref Follow-Ups
 
@@ -97,7 +98,7 @@ Generated: 2026-05-12T19:21:54.240Z
 - NeuromorphicLearningNetwork (src/components/ai/NeuromorphicLearningNetwork.tsx)
 - GlassTransitions (src/components/animations/GlassTransitions.tsx)
 - GlassCalendar (src/components/calendar/GlassCalendar.tsx)
-- ... 89 more
+- ... 91 more
 
 ## Provider/Support Ref Follow-Ups
 
@@ -119,13 +120,13 @@ Generated: 2026-05-12T19:21:54.240Z
 - GalileoElementInteractionPlugin (src/components/charts/plugins/GalileoElementInteractionPlugin.ts)
 - CollaborationProvider (src/components/collaboration/GlassCollaborationProvider.tsx)
 - GlassCollaborationProvider (src/components/collaboration/GlassCollaborationProvider.tsx)
+- GlassToastProvider (src/components/data-display/GlassToastProvider.tsx)
 - GlassEcommerceProvider (src/components/ecommerce/GlassEcommerceProvider.tsx)
 - Glass3DEngine (src/components/effects/Glass3DEngine.tsx)
 - GlassMorphingEngine (src/components/effects/GlassMorphingEngine.tsx)
 - GlassPhysicsEngine (src/components/effects/GlassPhysicsEngine.tsx)
 - GlassImageProcessingProvider (src/components/image/GlassImageProcessingProvider.tsx)
 - GlassMediaProvider (src/components/media/GlassMediaProvider.tsx)
-- QuantumNeuromorphicEngine (src/components/quantum/QuantumNeuromorphicEngine.ts)
 - SpatialComputingEngine (src/components/spatial/SpatialComputingEngine.tsx)
 - AuraGlassClientBoundary (src/components/ssr/AuraGlassClientBoundary.tsx)
 - PersonaPicker (src/components/theme/PersonaPicker.tsx)

@@ -4,16 +4,16 @@
     "publicExportAudit": "reports/public-export-audit.json"
   },
   "summary": {
-    "generatedAt": "2026-05-12T19:21:54.240Z",
-    "publicExportCount": 819,
-    "publicSourceFileCount": 417,
-    "publicDeclarationFileCount": 417,
-    "sourceFilesWithAnyCount": 169,
+    "generatedAt": "2026-08-13T22:23:17.001Z",
+    "publicExportCount": 881,
+    "publicSourceFileCount": 432,
+    "publicDeclarationFileCount": 432,
+    "sourceFilesWithAnyCount": 171,
     "sourceAnyCount": 876,
-    "declarationFilesWithAnyCount": 2,
-    "declarationAnyCount": 2,
-    "componentLikeValueExportCount": 435,
-    "componentRefFollowupCount": 129,
+    "declarationFilesWithAnyCount": 3,
+    "declarationAnyCount": 4,
+    "componentLikeValueExportCount": 470,
+    "componentRefFollowupCount": 131,
     "supportRefFollowupCount": 34,
     "declarationFilesMissingReactTypeReferenceCount": 0
   },
@@ -75,23 +75,23 @@
       "anyCount": 17,
       "samples": [
         {
-          "line": 159,
+          "line": 160,
           "text": "metrics.forEach((metric: any) => {"
         },
         {
-          "line": 338,
+          "line": 339,
           "text": "const value = (context.environment as any)[key];"
         },
         {
-          "line": 350,
+          "line": 351,
           "text": "const value = (context.biometrics as any)[key];"
         },
         {
-          "line": 362,
+          "line": 363,
           "text": "const value = (context.device as any)[key];"
         },
         {
-          "line": 533,
+          "line": 534,
           "text": "this.weights.forEach((layer: any) => {"
         }
       ]
@@ -127,23 +127,23 @@
       "anyCount": 17,
       "samples": [
         {
-          "line": 210,
+          "line": 211,
           "text": "(effect: any) => ![\"caustics\", \"refraction\"].includes(effect)"
         },
         {
-          "line": 212,
+          "line": 213,
           "text": "setEnabledEffectsState((prev: any) => {"
         },
         {
-          "line": 216,
+          "line": 217,
           "text": "prev.every((v: any, i: any) => v === reducedEffects[i]);"
         },
         {
-          "line": 231,
+          "line": 232,
           "text": "setEnabledEffectsState((prev: any) => {"
         },
         {
-          "line": 235,
+          "line": 236,
           "text": "sameLength && prev.every((v: any, i: any) => v === next[i]);"
         }
       ]
@@ -205,23 +205,23 @@
       "anyCount": 14,
       "samples": [
         {
-          "line": 246,
+          "line": 247,
           "text": "particles.forEach((particle: any) => {"
         },
         {
-          "line": 249,
+          "line": 250,
           "text": "particles.forEach((neighbor: any) => {"
         },
         {
-          "line": 273,
+          "line": 274,
           "text": "particles.forEach((particle: any) => {"
         },
         {
-          "line": 278,
+          "line": 279,
           "text": "particles.forEach((neighbor: any) => {"
         },
         {
-          "line": 304,
+          "line": 305,
           "text": "currentForces.forEach((force: any) => {"
         }
       ]
@@ -283,23 +283,23 @@
       "anyCount": 13,
       "samples": [
         {
-          "line": 235,
+          "line": 243,
           "text": "(window as any).webkitAudioContext)();"
         },
         {
-          "line": 258,
+          "line": 266,
           "text": "sourceRef.current = source as any;"
         },
         {
-          "line": 264,
+          "line": 272,
           "text": "sourceRef.current = source as any;"
         },
         {
-          "line": 513,
+          "line": 526,
           "text": "particles.current = particles.current.filter((particle: any) => {"
         },
         {
-          "line": 547,
+          "line": 560,
           "text": "particles.current.forEach((particle: any) => {"
         }
       ]
@@ -335,23 +335,23 @@
       "anyCount": 13,
       "samples": [
         {
-          "line": 138,
+          "line": 139,
           "text": "setSimulatedParticipants((prev: any) =>"
         },
         {
-          "line": 187,
+          "line": 188,
           "text": "setAudioData((prev: any) => {"
         },
         {
-          "line": 189,
+          "line": 190,
           "text": "snapshot.forEach((participant: any) => {"
         },
         {
-          "line": 197,
+          "line": 198,
           "text": "(current: any, index: any) =>"
         },
         {
-          "line": 202,
+          "line": 203,
           "text": "updated[participant.id] = prevData.map((v: any) => v * 0.9);"
         }
       ]
@@ -361,23 +361,23 @@
       "anyCount": 12,
       "samples": [
         {
-          "line": 403,
+          "line": 417,
           "text": "prevLayers.map((layer: any) => ({"
         },
         {
-          "line": 408,
+          "line": 422,
           "text": "points: layer.points.map((point: any) => ({"
         },
         {
-          "line": 436,
+          "line": 450,
           "text": "prevDust.map((dustCloud: any) => ({"
         },
         {
-          "line": 439,
+          "line": 453,
           "text": ".map((particle: any) => ({"
         },
         {
-          "line": 447,
+          "line": 461,
           "text": "(particle: any) =>"
         }
       ]
@@ -413,23 +413,23 @@
       "anyCount": 11,
       "samples": [
         {
-          "line": 595,
+          "line": 597,
           "text": ".map((particle: any) => {"
         },
         {
-          "line": 611,
+          "line": 613,
           "text": "(particle: any) =>"
         },
         {
-          "line": 653,
+          "line": 655,
           "text": "return baseColors.map((color: any) => {"
         },
         {
-          "line": 693,
+          "line": 718,
           "text": "biomeLayers.forEach((layer: any) => {"
         },
         {
-          "line": 701,
+          "line": 726,
           "text": "layer.elements.forEach((element: any) => {"
         }
       ]
@@ -517,23 +517,23 @@
       "anyCount": 10,
       "samples": [
         {
-          "line": 379,
+          "line": 382,
           "text": "setLayerActivations((prev: any) => ({"
         },
         {
-          "line": 457,
+          "line": 460,
           "text": "setSettings((prev: any) => {"
         },
         {
-          "line": 459,
+          "line": 462,
           "text": "? prev.layers.filter((id: any) => id !== layerId)"
         },
         {
-          "line": 546,
+          "line": 599,
           "text": "{layer.features.slice(0, 3).map((feature: any) => ("
         },
         {
-          "line": 604,
+          "line": 657,
           "text": "setSettings((prev: any) => ({"
         }
       ]
@@ -587,32 +587,6 @@
         {
           "line": 229,
           "text": "recordInteraction: (type: string, data?: any) => {},"
-        }
-      ]
-    },
-    {
-      "filePath": "src/hooks/extended/useDraggableListPhysics.ts",
-      "anyCount": 10,
-      "samples": [
-        {
-          "line": 116,
-          "text": ".map((item: any) => items.findIndex((i) => i.id === item?.id))"
-        },
-        {
-          "line": 192,
-          "text": "draggedItems = items.filter((item: any) =>"
-        },
-        {
-          "line": 245,
-          "text": "setDragState((prev: any) => ({"
-        },
-        {
-          "line": 283,
-          "text": "setDragState((prev: any) => ({"
-        },
-        {
-          "line": 306,
-          "text": "? items.filter((item: any) => selectedItems.includes(item?.id))"
         }
       ]
     },
@@ -673,23 +647,23 @@
       "anyCount": 9,
       "samples": [
         {
-          "line": 437,
+          "line": 440,
           "text": ".map((particle: any) => {"
         },
         {
-          "line": 462,
+          "line": 465,
           "text": "(particle: any) =>"
         },
         {
-          "line": 496,
+          "line": 499,
           "text": ".map((effect: any) => ({"
         },
         {
-          "line": 500,
+          "line": 503,
           "text": ".filter((effect: any) => effect.duration > 0);"
         },
         {
-          "line": 526,
+          "line": 529,
           "text": "atmosphericEffects.forEach((effect: any) => {"
         }
       ]
@@ -725,23 +699,23 @@
       "anyCount": 9,
       "samples": [
         {
-          "line": 153,
+          "line": 149,
           "text": ".map((stop: any) => `${stop.color} ${stop.position}%`)"
         },
         {
-          "line": 171,
+          "line": 167,
           "text": "setStops((prev: any) =>"
         },
         {
-          "line": 172,
+          "line": 168,
           "text": "prev.map((stop: any, i: any) =>"
         },
         {
-          "line": 188,
+          "line": 184,
           "text": "setStops((prev: any) => [...prev, newStop]);"
         },
         {
-          "line": 197,
+          "line": 193,
           "text": "setStops((prev: any) => prev.filter((_: any, i: any) => i !== index));"
         }
       ]
@@ -777,23 +751,23 @@
       "anyCount": 9,
       "samples": [
         {
-          "line": 210,
+          "line": 212,
           "text": "(listRef as any).current = node as HTMLDivElement | null;"
         },
         {
-          "line": 211,
+          "line": 213,
           "text": "if (typeof ref === \"function\") ref(node as any);"
         },
         {
-          "line": 214,
+          "line": 216,
           "text": "node as any;"
         },
         {
-          "line": 233,
+          "line": 240,
           "text": "{...(commonA11y as any)}"
         },
         {
-          "line": 250,
+          "line": 257,
           "text": "(listRef as any).current = node as HTMLDivElement | null;"
         }
       ]
@@ -829,23 +803,23 @@
       "anyCount": 8,
       "samples": [
         {
-          "line": 238,
+          "line": 240,
           "text": "setLocalReactions((prev: any) => [...prev, reaction]);"
         },
         {
-          "line": 242,
+          "line": 244,
           "text": "glassSoundDesign.playGlassSound(reactionType.sound as any);"
         },
         {
-          "line": 255,
+          "line": 257,
           "text": "setLocalReactions((prev: any) =>"
         },
         {
-          "line": 314,
+          "line": 317,
           "text": "{allReactions.map((reaction: any) => ("
         },
         {
-          "line": 613,
+          "line": 616,
           "text": "setReactions((prev: any) => [...prev, reaction]);"
         }
       ]
@@ -855,23 +829,23 @@
       "anyCount": 8,
       "samples": [
         {
-          "line": 195,
+          "line": 196,
           "text": "const rendererRef = useRef<any>(null);"
         },
         {
-          "line": 211,
+          "line": 212,
           "text": "(navigator as any).xr"
         },
         {
-          "line": 246,
+          "line": 247,
           "text": "cameraStream.getTracks().forEach((track: any) => track.stop());"
         },
         {
-          "line": 302,
+          "line": 303,
           "text": "objects.forEach((object: any) => {"
         },
         {
-          "line": 320,
+          "line": 321,
           "text": "markers.forEach((marker: any) => {"
         }
       ]
@@ -907,23 +881,23 @@
       "anyCount": 8,
       "samples": [
         {
-          "line": 114,
+          "line": 123,
           "text": "setRipples((prev: any) => [...prev, newRipple]);"
         },
         {
-          "line": 118,
+          "line": 127,
           "text": "setRipples((prev: any) =>"
         },
         {
-          "line": 147,
+          "line": 156,
           "text": "(event: any, info: PanInfo) => {"
         },
         {
-          "line": 473,
+          "line": 495,
           "text": "setRipples((prev: any) => {"
         },
         {
-          "line": 480,
+          "line": 502,
           "text": "setRipples((prev: any) =>"
         }
       ]
@@ -933,23 +907,23 @@
       "anyCount": 8,
       "samples": [
         {
-          "line": 129,
+          "line": 130,
           "text": ".filter((item: any) => !item.disabled)"
         },
         {
-          "line": 245,
+          "line": 246,
           "text": "setExpandedItems((prev: any) =>"
         },
         {
-          "line": 247,
+          "line": 248,
           "text": "? prev.filter((itemId: any) => itemId !== id)"
         },
         {
-          "line": 384,
+          "line": 385,
           "text": "assignRef(el as any);"
         },
         {
-          "line": 399,
+          "line": 400,
           "text": "assignRef(el as any);"
         }
       ]
@@ -975,7 +949,7 @@
           "text": "(prev: any) => [...prev.slice(-49), newDataPoint]"
         },
         {
-          "line": 265,
+          "line": 268,
           "text": "d={`M ${waveData.map((p: any) => `${p.x} ${p.y1}`).join(\" L \")}`}"
         }
       ]
@@ -1007,27 +981,53 @@
       ]
     },
     {
+      "filePath": "src/hooks/extended/useDraggableListPhysics.ts",
+      "anyCount": 8,
+      "samples": [
+        {
+          "line": 116,
+          "text": ".map((item: any) => items.findIndex((i) => i.id === item?.id))"
+        },
+        {
+          "line": 192,
+          "text": "draggedItems = items.filter((item: any) =>"
+        },
+        {
+          "line": 245,
+          "text": "setDragState((prev: any) => ({"
+        },
+        {
+          "line": 283,
+          "text": "setDragState((prev: any) => ({"
+        },
+        {
+          "line": 306,
+          "text": "? items.filter((item: any) => selectedItems.includes(item?.id))"
+        }
+      ]
+    },
+    {
       "filePath": "src/components/advanced/GlassLiquidTransition.tsx",
       "anyCount": 7,
       "samples": [
         {
-          "line": 149,
+          "line": 151,
           "text": "setIsActive((prev: any) => !prev);"
         },
         {
-          "line": 357,
+          "line": 364,
           "text": "setRipples((prev: any) => [...prev, ripple]);"
         },
         {
-          "line": 360,
+          "line": 367,
           "text": "setRipples((prev: any) => prev.filter((r: any) => r.id !== ripple.id));"
         },
         {
-          "line": 366,
+          "line": 373,
           "text": "{ripples.map((ripple: any) => ("
         },
         {
-          "line": 417,
+          "line": 424,
           "text": "{Array.from({ length: particleCount }).map((_: any, i: any) => {"
         }
       ]
@@ -1063,23 +1063,23 @@
       "anyCount": 7,
       "samples": [
         {
-          "line": 411,
+          "line": 414,
           "text": "(val: any) => val * params.truncation"
         },
         {
-          "line": 430,
+          "line": 433,
           "text": "setGeneratedImages((prev: any) =>"
         },
         {
-          "line": 433,
+          "line": 436,
           "text": "setLatentVectors((prev: any) =>"
         },
         {
-          "line": 704,
+          "line": 707,
           "text": "setParams((prev: any) => ({"
         },
         {
-          "line": 725,
+          "line": 728,
           "text": "setParams((prev: any) => ({"
         }
       ]
@@ -1089,23 +1089,23 @@
       "anyCount": 7,
       "samples": [
         {
-          "line": 420,
+          "line": 423,
           "text": "setTransferParams((prev: any) => ({"
         },
         {
-          "line": 437,
+          "line": 440,
           "text": "setTransferParams((prev: any) => ({"
         },
         {
-          "line": 439,
+          "line": 442,
           "text": "resolution: e.target.value as any,"
         },
         {
-          "line": 459,
+          "line": 462,
           "text": "setTransferParams((prev: any) => ({"
         },
         {
-          "line": 461,
+          "line": 464,
           "text": "blendMode: e.target.value as any,"
         }
       ]
@@ -1167,23 +1167,23 @@
       "anyCount": 7,
       "samples": [
         {
-          "line": 496,
+          "line": 506,
           "text": "recs = recs.filter((rec: any) => rec.reason === recommendationType);"
         },
         {
-          "line": 531,
+          "line": 541,
           "text": "setCurrentIndex((prev: any) =>"
         },
         {
-          "line": 539,
+          "line": 549,
           "text": "setCurrentIndex((prev: any) =>"
         },
         {
-          "line": 652,
+          "line": 662,
           "text": ".map((recommendation: any) => ("
         },
         {
-          "line": 670,
+          "line": 680,
           "text": "currentRecommendations.map((recommendation: any) => ("
         }
       ]
@@ -1201,15 +1201,15 @@
           "text": "setSavedItems((prev: any) => [...prev, item]);"
         },
         {
-          "line": 519,
+          "line": 533,
           "text": "Looks like you haven't added any items to your cart yet."
         },
         {
-          "line": 582,
+          "line": 596,
           "text": "{displayCart.slice(0, effectiveMaxItems).map((item: any) => ("
         },
         {
-          "line": 608,
+          "line": 622,
           "text": "{savedItems.map((item: any) => ("
         }
       ]
@@ -1245,24 +1245,24 @@
       "anyCount": 7,
       "samples": [
         {
-          "line": 344,
+          "line": 414,
           "text": "forces.forEach((force: any) => applyForce(particle, force, deltaTime));"
         },
         {
-          "line": 463,
+          "line": 533,
           "text": ".map((particle: any) => updateParticle(particle, deltaTime))"
         },
         {
-          "line": 477,
+          "line": 547,
           "text": "forces.forEach((force: any) => {"
         },
         {
-          "line": 633,
+          "line": 703,
           "text": "particles.forEach((particle: any) => {"
         },
         {
-          "line": 649,
-          "text": "`Emitters: ${emitters.filter((e: any) => e.enabled).length}`,"
+          "line": 719,
+          "text": "`Emitters: ${resolvedEmitters.filter((e: any) => e.enabled).length}`,"
         }
       ]
     },
@@ -1297,23 +1297,23 @@
       "anyCount": 7,
       "samples": [
         {
-          "line": 315,
+          "line": 317,
           "text": "drawingData.forEach((item: any) => {"
         },
         {
-          "line": 319,
+          "line": 321,
           "text": "(point: any) =>"
         },
         {
-          "line": 418,
+          "line": 420,
           "text": "elements.forEach((element: any) => {"
         },
         {
-          "line": 487,
+          "line": 489,
           "text": "selectedElements.forEach((elementId: any) => {"
         },
         {
-          "line": 489,
+          "line": 491,
           "text": "(item: any) => item?.id === elementId"
         }
       ]
@@ -1339,7 +1339,7 @@
           "text": "setBubbles((prev: any) => {"
         },
         {
-          "line": 489,
+          "line": 499,
           "text": "{availableEmojis.map((emoji: any) => ("
         }
       ]
@@ -1521,7 +1521,7 @@
           "text": "setRipples((prev: any) =>"
         },
         {
-          "line": 458,
+          "line": 459,
           "text": "ripples.map((ripple: any) => ("
         }
       ]
@@ -1531,23 +1531,23 @@
       "anyCount": 6,
       "samples": [
         {
-          "line": 191,
+          "line": 190,
           "text": "(effect: any) => ("
         },
         {
-          "line": 244,
+          "line": 243,
           "text": "{appliedEffects.map((effect: any) => ("
         },
         {
-          "line": 303,
+          "line": 302,
           "text": "setSelectedEffects((prev: any) =>"
         },
         {
-          "line": 305,
+          "line": 304,
           "text": "? prev.filter((id: any) => id !== effectId)"
         },
         {
-          "line": 364,
+          "line": 366,
           "text": "{presets.map((preset: any) => ("
         }
       ]
@@ -1557,23 +1557,23 @@
       "anyCount": 6,
       "samples": [
         {
-          "line": 599,
+          "line": 608,
           "text": "{playbackSpeeds.map((speed: any) => ("
         },
         {
-          "line": 641,
+          "line": 650,
           "text": "{qualities.map((q: any) => ("
         },
         {
-          "line": 691,
+          "line": 700,
           "text": "{chapters.map((chapter: any) => {"
         },
         {
-          "line": 758,
+          "line": 767,
           "text": "const results = transcript.filter((entry: any) =>"
         },
         {
-          "line": 812,
+          "line": 821,
           "text": "{(searchQuery ? highlightedResults : transcript).map((entry: any) => {"
         }
       ]
@@ -1657,19 +1657,19 @@
       "anyCount": 6,
       "samples": [
         {
-          "line": 377,
+          "line": 406,
           "text": "(el.style as any).webkitBackgroundClip = \"text\";"
         },
         {
-          "line": 379,
-          "text": "(el.style as any).webkitTextFillColor = \"transparent\";"
+          "line": 408,
+          "text": "(el.style as any).webkitTextFillColor ="
         },
         {
-          "line": 683,
+          "line": 727,
           "text": "{Array.from({ length: 5 }).map((_: any, i: any) => ("
         },
         {
-          "line": 851,
+          "line": 889,
           "text": "{Array.from({ length: isCompact ? 8 : 20 }).map((_: any, i: any) => ("
         }
       ]
@@ -1805,23 +1805,23 @@
       "anyCount": 5,
       "samples": [
         {
-          "line": 15,
-          "text": "const useSortableData = (data: any[], sortConfig: SortState | null) => ({"
+          "line": 30,
+          "text": "const useSortableData = (data: any[], initialSort: SortState | null) => {"
         },
         {
-          "line": 21,
+          "line": 66,
           "text": "const useDraggableListPhysics = (options: any) => ({"
         },
         {
-          "line": 28,
+          "line": 73,
           "text": "const useVectorSpring = (options: any) => ({"
         },
         {
-          "line": 100,
+          "line": 150,
           "text": ".map((index: any) => normalizedSortedData?.[index])"
         },
         {
-          "line": 112,
+          "line": 162,
           "text": ".map((originalIndex: any) => safeInitialData?.[originalIndex])"
         }
       ]
@@ -1843,11 +1843,11 @@
           "text": "new Set(images.map((img: any) => img.category).filter(Boolean))"
         },
         {
-          "line": 493,
+          "line": 507,
           "text": "images={images.map((img: any) => ({"
         },
         {
-          "line": 559,
+          "line": 573,
           "text": "{categories.map((category: any) => ("
         }
       ]
@@ -1895,11 +1895,11 @@
           "text": "return positionedNodes.map((node: any) => {"
         },
         {
-          "line": 533,
+          "line": 532,
           "text": "{positionedNodes.map((node: any) => ("
         },
         {
-          "line": 640,
+          "line": 638,
           "text": "?.filter((child: any) => {"
         }
       ]
@@ -1909,11 +1909,11 @@
       "anyCount": 5,
       "samples": [
         {
-          "line": 261,
+          "line": 263,
           "text": "if (typeof ref === \"function\") ref(node as any);"
         },
         {
-          "line": 263,
+          "line": 265,
           "text": "(ref as any).current = node;"
         },
         {
@@ -1979,15 +1979,15 @@
       "anyCount": 4,
       "samples": [
         {
-          "line": 123,
+          "line": 135,
           "text": "events.forEach((event: any) => {"
         },
         {
-          "line": 224,
+          "line": 236,
           "text": "setCurrentDate((prev: any) => {"
         },
         {
-          "line": 307,
+          "line": 319,
           "text": "{Array.from({ length: 35 }).map((_: any, i: any) => ("
         }
       ]
@@ -2019,19 +2019,19 @@
       "anyCount": 4,
       "samples": [
         {
-          "line": 159,
+          "line": 158,
           "text": "(dotVariantClasses as any)[variant] ?? dotVariantClasses.default,"
         },
         {
-          "line": 184,
+          "line": 183,
           "text": "ref={ref as any}"
         },
         {
-          "line": 191,
+          "line": 196,
           "text": "(variantClasses as any)[variant] ?? variantClasses.default,"
         },
         {
-          "line": 210,
+          "line": 215,
           "text": "(dotVariantClasses as any)[variant] ?? dotVariantClasses.default"
         }
       ]
@@ -2041,19 +2041,19 @@
       "anyCount": 4,
       "samples": [
         {
-          "line": 204,
+          "line": 212,
           "text": "(metric: any) =>"
         },
         {
-          "line": 215,
+          "line": 223,
           "text": "(metric: any) =>"
         },
         {
-          "line": 221,
+          "line": 229,
           "text": "(metric: any) =>"
         },
         {
-          "line": 227,
+          "line": 235,
           "text": "(metric: any) =>"
         }
       ]
@@ -2063,19 +2063,19 @@
       "anyCount": 4,
       "samples": [
         {
-          "line": 287,
+          "line": 288,
           "text": "setCurrentView((prev: any) => ({"
         },
         {
-          "line": 342,
+          "line": 343,
           "text": "matrix: any,"
         },
         {
-          "line": 375,
+          "line": 376,
           "text": "matrix: any,"
         },
         {
-          "line": 602,
+          "line": 604,
           "text": "setCurrentView((prev: any) => ({"
         }
       ]
@@ -2093,11 +2093,11 @@
           "text": "setCurrentProjection((prev: any) => ({"
         },
         {
-          "line": 720,
+          "line": 722,
           "text": "setCurrentProjection((prev: any) => ({"
         },
         {
-          "line": 734,
+          "line": 736,
           "text": "setCurrentProjection((prev: any) => ({"
         }
       ]
@@ -2133,15 +2133,15 @@
           "text": "? currentValues.filter((v: any) => v !== itemValue)"
         },
         {
-          "line": 220,
+          "line": 221,
           "text": "ref={ref as any}"
         },
         {
-          "line": 369,
+          "line": 371,
           "text": "setValue((prev: any) =>"
         },
         {
-          "line": 371,
+          "line": 373,
           "text": "? prev.filter((v: any) => v !== itemValue)"
         }
       ]
@@ -2151,19 +2151,19 @@
       "anyCount": 4,
       "samples": [
         {
-          "line": 161,
+          "line": 159,
           "text": "return items.filter((item: any) => {"
         },
         {
-          "line": 189,
+          "line": 187,
           "text": "filteredItems.forEach((item: any) => {"
         },
         {
-          "line": 206,
+          "line": 204,
           "text": "setSelectedIndex((prev: any) => (prev + 1) % totalItems);"
         },
         {
-          "line": 211,
+          "line": 209,
           "text": "setSelectedIndex((prev: any) => (prev - 1 + totalItems) % totalItems);"
         }
       ]
@@ -2173,19 +2173,19 @@
       "anyCount": 4,
       "samples": [
         {
-          "line": 150,
+          "line": 148,
           "text": "filtered = filtered.filter((file: any) =>"
         },
         {
-          "line": 157,
+          "line": 155,
           "text": "filtered = filtered.filter((file: any) => !file.name.startsWith(\".\"));"
         },
         {
-          "line": 181,
+          "line": 179,
           "text": "? selectedFiles.filter((id: any) => id !== file.id)"
         },
         {
-          "line": 198,
+          "line": 196,
           "text": ".map((f: any) => f.id);"
         }
       ]
@@ -2195,15 +2195,15 @@
       "anyCount": 4,
       "samples": [
         {
-          "line": 151,
+          "line": 192,
           "text": "const acceptedTypes = accept.split(\",\").map((type: any) => type.trim());"
         },
         {
-          "line": 292,
-          "text": "const updatedFiles = internalFiles.filter((f: any) => f.id !== fileId);"
+          "line": 329,
+          "text": "const updatedFiles = visibleFiles.filter((f: any) => f.id !== fileId);"
         },
         {
-          "line": 639,
+          "line": 694,
           "text": ".filter((f: any) => f.status === \"pending\")"
         }
       ]
@@ -2231,15 +2231,15 @@
       "anyCount": 3,
       "samples": [
         {
-          "line": 117,
+          "line": 125,
           "text": "setReconnectAttempts((prev: any) => prev + 1);"
         },
         {
-          "line": 133,
+          "line": 141,
           "text": "(message: any) => {"
         },
         {
-          "line": 353,
+          "line": 361,
           "text": "(cursor: any) =>"
         }
       ]
@@ -2257,7 +2257,7 @@
           "text": "Object.keys(trigger).forEach((key: any) => {"
         },
         {
-          "line": 1045,
+          "line": 1072,
           "text": "{metricsArray.map((metric: any) => ("
         }
       ]
@@ -2313,11 +2313,11 @@
       "anyCount": 3,
       "samples": [
         {
-          "line": 321,
+          "line": 323,
           "text": "intent={intent as any}"
         },
         {
-          "line": 322,
+          "line": 324,
           "text": "elevation={elevation as any}"
         }
       ]
@@ -2327,15 +2327,15 @@
       "anyCount": 3,
       "samples": [
         {
-          "line": 660,
+          "line": 664,
           "text": "const element = meta.dataset as any;"
         },
         {
-          "line": 1792,
+          "line": 1796,
           "text": "easing: (animation.easing || \"easeOutQuart\") as any,"
         },
         {
-          "line": 1798,
+          "line": 1802,
           "text": ": false) as any,"
         }
       ]
@@ -2363,15 +2363,15 @@
       "anyCount": 3,
       "samples": [
         {
-          "line": 88,
+          "line": 102,
           "text": "setNotifications((prev: any) => [newNotification, ...prev]);"
         },
         {
-          "line": 101,
+          "line": 115,
           "text": "setNotifications((prev: any) =>"
         },
         {
-          "line": 102,
+          "line": 116,
           "text": "prev.filter((notification: any) => notification.id !== id)"
         }
       ]
@@ -2381,15 +2381,15 @@
       "anyCount": 3,
       "samples": [
         {
-          "line": 148,
+          "line": 151,
           "text": ".map((particle: any) => {"
         },
         {
-          "line": 179,
+          "line": 182,
           "text": ".filter((particle: any) => particle.life > 0);"
         },
         {
-          "line": 195,
+          "line": 198,
           "text": "particles.forEach((particle: any) => {"
         }
       ]
@@ -2449,15 +2449,15 @@
       "anyCount": 3,
       "samples": [
         {
-          "line": 559,
+          "line": 561,
           "text": "const results = transcript.filter((entry: any) =>"
         },
         {
-          "line": 613,
+          "line": 615,
           "text": "{(searchQuery ? highlightedResults : transcript).map((entry: any) => {"
         },
         {
-          "line": 732,
+          "line": 734,
           "text": "(window as any).webkitAudioContext)();"
         }
       ]
@@ -2489,7 +2489,7 @@
           "text": "{section.items.map((item: any) => renderNavigationItem(item))}"
         },
         {
-          "line": 360,
+          "line": 361,
           "text": "{navigation.map((section: any) => renderSection(section))}"
         }
       ]
@@ -2563,7 +2563,7 @@
           "text": "onClick?.(e as any);"
         },
         {
-          "line": 209,
+          "line": 213,
           "text": "...(props as any),"
         }
       ]
@@ -2573,11 +2573,11 @@
       "anyCount": 3,
       "samples": [
         {
-          "line": 317,
-          "text": "setMouseVars({ ['--mx' as any]: `${mx}px`, ['--my' as any]: `${my}px` });"
+          "line": 394,
+          "text": "setMouseVars({ [\"--mx\" as any]: `${mx}px`, [\"--my\" as any]: `${my}px` });"
         },
         {
-          "line": 363,
+          "line": 443,
           "text": "setMetrics((prev: any) => ({"
         }
       ]
@@ -2587,16 +2587,16 @@
       "anyCount": 3,
       "samples": [
         {
-          "line": 65,
+          "line": 96,
           "text": "return React.cloneElement(children as React.ReactElement<any>, {"
         },
         {
-          "line": 67,
-          "text": "className: cn((children as React.ReactElement<any>).props.className, className),"
+          "line": 99,
+          "text": "(children as React.ReactElement<any>).props.className,"
         },
         {
-          "line": 68,
-          "text": "style: { ...cssVars, ...(children as React.ReactElement<any>).props.style, ...style },"
+          "line": 104,
+          "text": "...(children as React.ReactElement<any>).props.style,"
         }
       ]
     },
@@ -2609,11 +2609,11 @@
           "text": "React.ElementRef<any>,"
         },
         {
-          "line": 269,
+          "line": 274,
           "text": "} = (restProps as any) || {};"
         },
         {
-          "line": 275,
+          "line": 280,
           "text": "delete (domProps as any)[key];"
         }
       ]
@@ -2637,11 +2637,11 @@
       "anyCount": 2,
       "samples": [
         {
-          "line": 418,
+          "line": 444,
           "text": "setOpenItems((prev: any) => {"
         },
         {
-          "line": 420,
+          "line": 446,
           "text": "return prev.filter((item: any) => item !== id);"
         }
       ]
@@ -2655,7 +2655,7 @@
           "text": "interaction={features.physics.interaction as any}"
         },
         {
-          "line": 415,
+          "line": 418,
           "text": "(features.organicMotion.emotionalContext as any)"
         }
       ]
@@ -2665,11 +2665,11 @@
       "anyCount": 2,
       "samples": [
         {
-          "line": 249,
+          "line": 248,
           "text": "onPointerEnter(e as any);"
         },
         {
-          "line": 256,
+          "line": 255,
           "text": "onPointerLeave(e as any);"
         }
       ]
@@ -2693,11 +2693,11 @@
       "anyCount": 2,
       "samples": [
         {
-          "line": 317,
+          "line": 319,
           "text": "handleClick(e as any);"
         },
         {
-          "line": 414,
+          "line": 416,
           "text": "newSelected = currentSelected.filter((v: any) => v !== value);"
         }
       ]
@@ -2711,7 +2711,7 @@
           "text": "} as any),"
         },
         {
-          "line": 472,
+          "line": 474,
           "text": "style={{ ...(generateLayerStyles(layer, index) as any) }}"
         }
       ]
@@ -2721,12 +2721,12 @@
       "anyCount": 2,
       "samples": [
         {
-          "line": 366,
+          "line": 423,
           "text": "Object.keys(targetProperties).forEach((key: any) => {"
         },
         {
-          "line": 585,
-          "text": "return () => { subs.forEach((unsub: any) => unsub()); };"
+          "line": 728,
+          "text": "subs.forEach((unsub: any) => unsub());"
         }
       ]
     },
@@ -2833,11 +2833,11 @@
       "anyCount": 2,
       "samples": [
         {
-          "line": 88,
+          "line": 84,
           "text": "{fields.map((f: any) => ("
         },
         {
-          "line": 172,
+          "line": 167,
           "text": "group.combinator = v as any;"
         }
       ]
@@ -2913,6 +2913,20 @@
       ]
     },
     {
+      "filePath": "src/components/navigation/types.ts",
+      "anyCount": 2,
+      "samples": [
+        {
+          "line": 135,
+          "text": "responsiveConfig?: any;"
+        },
+        {
+          "line": 146,
+          "text": "animationConfig?: any;"
+        }
+      ]
+    },
+    {
       "filePath": "src/components/surfaces/FrostedGlass.tsx",
       "anyCount": 2,
       "samples": [
@@ -2969,26 +2983,22 @@
       ]
     },
     {
-      "filePath": "src/utils/dateAdapters.ts",
-      "anyCount": 2,
+      "filePath": "src/components/button/GlassButton.tsx",
+      "anyCount": 1,
       "samples": [
         {
-          "line": 40,
-          "text": "let dateFns: any;"
-        },
-        {
-          "line": 129,
-          "text": "let dayjs: any;"
+          "line": 358,
+          "text": "(interaction: any) => interaction.region.id === componentId"
         }
       ]
     },
     {
-      "filePath": "src/components/backgrounds/GlassDynamicAtmosphere.tsx",
+      "filePath": "src/components/button/GlassFab.tsx",
       "anyCount": 1,
       "samples": [
         {
-          "line": 246,
-          "text": "(containerStyle as any).WebkitBackdropFilter = `blur(${blurStrength}px)`;"
+          "line": 442,
+          "text": "(interaction: any) => interaction.region.id === componentId"
         }
       ]
     },
@@ -2997,7 +3007,7 @@
       "anyCount": 1,
       "samples": [
         {
-          "line": 134,
+          "line": 130,
           "text": "? (openItems || []).filter((id: any) => id !== itemId)"
         }
       ]
@@ -3027,7 +3037,7 @@
       "anyCount": 1,
       "samples": [
         {
-          "line": 851,
+          "line": 853,
           "text": "(GlassMultiSelect as any).displayName = \"GlassMultiSelect\";"
         }
       ]
@@ -3037,7 +3047,7 @@
       "anyCount": 1,
       "samples": [
         {
-          "line": 454,
+          "line": 463,
           "text": "{files.map((file: any) => ("
         }
       ]
@@ -3097,7 +3107,7 @@
       "anyCount": 1,
       "samples": [
         {
-          "line": 129,
+          "line": 130,
           "text": "const scrollTimer = useRef<any>(null);"
         }
       ]
@@ -3107,7 +3117,7 @@
       "anyCount": 1,
       "samples": [
         {
-          "line": 150,
+          "line": 152,
           "text": "[\"--a\" as any]: `${pct}%`,"
         }
       ]
@@ -3117,7 +3127,7 @@
       "anyCount": 1,
       "samples": [
         {
-          "line": 335,
+          "line": 350,
           "text": "setCurrentZoom((prev: any) =>"
         }
       ]
@@ -3127,7 +3137,7 @@
       "anyCount": 1,
       "samples": [
         {
-          "line": 405,
+          "line": 433,
           "text": "d={`M ${spiralPoints.map((p: any) => `${p.x},${p.y}`).join(\" L \")}`}"
         }
       ]
@@ -3148,7 +3158,7 @@
       "samples": [
         {
           "line": 239,
-          "text": "{items.map((item: any) => renderNavigationItem(item))}"
+          "text": "{items.map((item: any) => ("
         }
       ]
     },
@@ -3157,7 +3167,7 @@
       "anyCount": 1,
       "samples": [
         {
-          "line": 175,
+          "line": 162,
           "text": "setOpenMenus((prev: any) => new Set([...prev, item?.id]))"
         }
       ]
@@ -3237,7 +3247,7 @@
       "anyCount": 1,
       "samples": [
         {
-          "line": 725,
+          "line": 731,
           "text": "{actions.getAvailableVoices().map((voice: any) => ("
         }
       ]
@@ -3273,6 +3283,16 @@
       ]
     },
     {
+      "filePath": "src/utils/dateAdapters.ts",
+      "anyCount": 1,
+      "samples": [
+        {
+          "line": 38,
+          "text": "const loadOptionalDateLibrary = (packageName: string): any => {"
+        }
+      ]
+    },
+    {
       "filePath": "src/utils/errorBoundary.tsx",
       "anyCount": 1,
       "samples": [
@@ -3294,6 +3314,20 @@
     }
   ],
   "declarationAnyFiles": [
+    {
+      "filePath": "dist/components/navigation/types.d.ts",
+      "anyCount": 2,
+      "samples": [
+        {
+          "line": 127,
+          "text": "responsiveConfig?: any;"
+        },
+        {
+          "line": 138,
+          "text": "animationConfig?: any;"
+        }
+      ]
+    },
     {
       "filePath": "dist/components/collaboration/GlassCollaborationProvider.d.ts",
       "anyCount": 1,
@@ -3800,6 +3834,13 @@
       "hasForwardRefSignal": false
     },
     {
+      "exportName": "GlassToastViewport",
+      "sourcePath": "src/components/data-display/GlassToastProvider.tsx",
+      "declarationPath": "dist/components/data-display/GlassToastProvider.d.ts",
+      "supportExport": false,
+      "hasForwardRefSignal": false
+    },
+    {
       "exportName": "GlassVirtualTable",
       "sourcePath": "src/components/data-display/GlassVirtualTable.tsx",
       "declarationPath": "dist/components/data-display/GlassVirtualTable.d.ts",
@@ -3815,6 +3856,13 @@
     },
     {
       "exportName": "GlassSmartShoppingCart",
+      "sourcePath": "src/components/ecommerce/GlassSmartShoppingCart.tsx",
+      "declarationPath": "dist/components/ecommerce/GlassSmartShoppingCart.d.ts",
+      "supportExport": false,
+      "hasForwardRefSignal": false
+    },
+    {
+      "exportName": "SmartShoppingCart",
       "sourcePath": "src/components/ecommerce/GlassSmartShoppingCart.tsx",
       "declarationPath": "dist/components/ecommerce/GlassSmartShoppingCart.d.ts",
       "supportExport": false,
@@ -4348,6 +4396,13 @@
       "hasForwardRefSignal": false
     },
     {
+      "exportName": "GlassToastProvider",
+      "sourcePath": "src/components/data-display/GlassToastProvider.tsx",
+      "declarationPath": "dist/components/data-display/GlassToastProvider.d.ts",
+      "supportExport": true,
+      "hasForwardRefSignal": false
+    },
+    {
       "exportName": "GlassEcommerceProvider",
       "sourcePath": "src/components/ecommerce/GlassEcommerceProvider.tsx",
       "declarationPath": "dist/components/ecommerce/GlassEcommerceProvider.d.ts",
@@ -4386,13 +4441,6 @@
       "exportName": "GlassMediaProvider",
       "sourcePath": "src/components/media/GlassMediaProvider.tsx",
       "declarationPath": "dist/components/media/GlassMediaProvider.d.ts",
-      "supportExport": true,
-      "hasForwardRefSignal": false
-    },
-    {
-      "exportName": "QuantumNeuromorphicEngine",
-      "sourcePath": "src/components/quantum/QuantumNeuromorphicEngine.ts",
-      "declarationPath": "dist/components/quantum/QuantumNeuromorphicEngine.d.ts",
       "supportExport": true,
       "hasForwardRefSignal": false
     },
