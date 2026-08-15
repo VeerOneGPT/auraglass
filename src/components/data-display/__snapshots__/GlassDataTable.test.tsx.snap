@@ -4,7 +4,6 @@ exports[`GlassDataTable matches snapshot 1`] = `
 <div
   class="glass-w-full"
   data-glass-component="true"
-  style="--glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --glass-text-tertiary: rgba(15, 23, 42, 0.64); color: rgba(15, 23, 42, 0.94);"
 >
   <div
     class="glass-flex glass-flex-wrap glass-items-center glass-justify-between glass-gap-3 glass-mb-4"
@@ -14,7 +13,7 @@ exports[`GlassDataTable matches snapshot 1`] = `
     >
       <div
         class="glass-flex glass-w-full glass-items-center glass-gap-2 glass-px-3 sm:glass-w-64"
-        style="min-height: 40px; border: 1px solid rgba(71, 85, 105, 0.24); border-radius: 12px; color: rgba(15, 23, 42, 0.94); box-shadow: inset 0 1px 8px rgba(255,255,255,0.14), inset 0 1px 0 rgba(255,255,255,0.30), 0 8px 24px rgba(15,23,42,0.08);"
+        style="min-height: 40px; border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 12px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 8px 24px rgba(3,7,18,0.12);"
       >
         <svg
           aria-hidden="true"
@@ -34,7 +33,7 @@ exports[`GlassDataTable matches snapshot 1`] = `
           aria-label="Search..."
           class="glass-min-w-0 glass-flex-1 glass-bg-transparent glass-outline-none"
           placeholder="Search..."
-          style="color: rgba(15, 23, 42, 0.94); width: 100%; border: 0px; outline: 0; background: transparent; appearance: none;"
+          style="width: 100%; border: 0px; outline: 0; background: transparent; appearance: none;"
           type="search"
           value=""
         />
@@ -44,7 +43,7 @@ exports[`GlassDataTable matches snapshot 1`] = `
   <div
     class="optimized-glass-surface glass-neutral-level2 glass-tier-high glass-overflow-hidden glass-contrast-guard transition-all duration-[500ms]"
     data-performance-mode="medium"
-    style="background-color: rgba(255, 255, 255, 0.12); --glass-text-primary: rgba(15, 23, 42, 0.94); --glass-text-secondary: rgba(15, 23, 42, 0.76); --typography-text-primary: rgba(15,23,42,0.94); --typography-text-secondary: rgba(15,23,42,0.76); border: 1px solid rgba(255,255,255,0.28); border-radius: 16px; box-shadow: inset 0 1px 10px rgba(255,255,255,0.14), inset 0 1px 0 rgba(255,255,255,0.30), inset 0 -1px 0 rgba(255,255,255,0.12), 0 20px 48px rgba(15,23,42,0.12); color: rgba(15, 23, 42, 0.94); transition: all 200ms ease-out; position: relative; transform: translateZ(0); --glass-theme-text: rgba(15, 23, 42, 0.94); --glass-text-tertiary: rgba(15, 23, 42, 0.64); border-color: rgba(148, 163, 184, 0.24);"
+    style="background-color: rgba(255, 255, 255, 0.018); border: 1px solid rgba(255,255,255,0.18); border-radius: 16px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), inset 0 -1px 0 rgba(255,255,255,0.035), 0 20px 48px rgba(3,7,18,0.18); transition: all 200ms ease-out; position: relative; transform: translateZ(0); border-color: rgba(255, 255, 255, 0.16);"
   >
     <div
       class="glass-flex glass-flex-col glass-gap-3 glass-p-3 sm:glass-hidden"
@@ -52,7 +51,6 @@ exports[`GlassDataTable matches snapshot 1`] = `
     >
       <div
         class="glass-flex glass-min-h-24 glass-items-center glass-justify-center glass-text-sm"
-        style="color: rgba(15, 23, 42, 0.76);"
       >
         No data available
       </div>
@@ -62,11 +60,11 @@ exports[`GlassDataTable matches snapshot 1`] = `
     >
       <table
         class="glass-w-full glass-table-fixed"
-        style="color: rgba(15, 23, 42, 0.94); min-width: 100%;"
+        style="min-width: 100%;"
       >
         <thead
           class="glass-relative bg-muted/20 glass-border-b glass-border-glass-border/20"
-          style="background: rgba(255, 255, 255, 0.18);"
+          style="background: rgba(255, 255, 255, 0.065);"
         >
           <tr />
         </thead>
@@ -80,7 +78,6 @@ exports[`GlassDataTable matches snapshot 1`] = `
                 class="contrast-guard"
                 data-contrast-level="AA"
                 data-glass-component="true"
-                style="color: rgba(15, 23, 42, 0.76);"
               >
                 No data available
               </span>

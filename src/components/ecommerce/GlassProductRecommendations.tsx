@@ -18,6 +18,8 @@ export interface ProductRecommendationsProps {
   showPrices?: boolean;
   showRatings?: boolean;
   showQuickActions?: boolean;
+  /** Show the explanatory AI insight panel below the recommendations. */
+  showInsights?: boolean;
   recommendationType?:
     | "similar"
     | "trending"
@@ -434,6 +436,7 @@ export const GlassProductRecommendations: React.FC<
   showPrices = true,
   showRatings = true,
   showQuickActions = true,
+  showInsights = true,
   recommendationType = "all",
   className,
   onProductClick,
@@ -694,7 +697,7 @@ export const GlassProductRecommendations: React.FC<
       </div>
 
       {/* AI Insights */}
-      <div className="glass-mt-6 glass-p-4 glass-surface-subtle glass-radius-lg">
+      {showInsights && <div className="glass-mt-6 glass-p-4 glass-surface-subtle glass-radius-lg">
         <div className="glass-flex glass-items-start glass-gap-3">
           <div
             className="glass-flex glass-h-8 glass-w-8 glass-flex-shrink-0 glass-items-center glass-justify-center glass-text-2xl"
@@ -735,7 +738,7 @@ export const GlassProductRecommendations: React.FC<
             </div>
           </div>
         </div>
-      </div>
+      </div>}
     </Glass>
   );
 

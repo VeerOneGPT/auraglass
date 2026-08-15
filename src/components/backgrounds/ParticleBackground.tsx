@@ -33,6 +33,11 @@ interface Particle {
   color: string;
 }
 
+const DEFAULT_CANVAS_GRADIENT = [
+  "rgba(7, 12, 28, 0.96)",
+  "rgba(20, 28, 52, 0.96)",
+] as const;
+
 /**
  * ParticleBackground Component Implementation
  */
@@ -44,7 +49,9 @@ const ParticleBackgroundComponent = (
     children,
     className,
     style,
-    baseColor = "linear-gradient(145deg, rgb(250 251 252), rgb(220 224 230))",
+    baseColor =
+      "linear-gradient(145deg, rgb(6 9 17), rgb(16 20 31))",
+    canvasGradientColors = DEFAULT_CANVAS_GRADIENT,
     particleColor = "rgba(69, 76, 87, 0.42)",
     particleCount = 50,
     particleSize = 2,
@@ -175,8 +182,8 @@ const ParticleBackgroundComponent = (
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const field = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      field.addColorStop(0, "rgba(250, 251, 252, 0.96)");
-      field.addColorStop(1, "rgba(220, 224, 230, 0.96)");
+      field.addColorStop(0, canvasGradientColors[0]);
+      field.addColorStop(1, canvasGradientColors[1]);
       ctx.fillStyle = field;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -269,6 +276,7 @@ const ParticleBackgroundComponent = (
   }, [
     particles,
     connectParticles,
+    canvasGradientColors,
     interactive,
     mousePosition,
     shouldReduceMotion,

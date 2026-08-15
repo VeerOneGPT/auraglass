@@ -67,40 +67,40 @@ export function StorybookVisualShowcase({
 
   return (
     <section
-      className="ag-story-stage"
+      className='ag-story-stage'
       aria-label={`${name} visual audit scene`}
     >
       <style>{showcaseStyles}</style>
-      <div className="ag-story-header">
+      <div className='ag-story-header'>
         <div>
-          <p className="ag-story-eyebrow">{copy.eyebrow}</p>
+          <p className='ag-story-eyebrow'>{copy.eyebrow}</p>
           <h1>{name}</h1>
-          <p className="ag-story-summary">{summary ?? copy.summary}</p>
+          <p className='ag-story-summary'>{summary ?? copy.summary}</p>
         </div>
-        <div className="ag-story-pills" aria-label={`${name} status`}>
+        <div className='ag-story-pills' aria-label={`${name} status`}>
           {copy.status.map((item) => (
             <span key={item}>{item}</span>
           ))}
         </div>
       </div>
 
-      <div className="ag-story-layout">
+      <div className='ag-story-layout'>
         <div className={`ag-story-scene ag-story-scene-${kind}`}>
-          <div className="ag-story-ribbons" aria-hidden="true">
+          <div className='ag-story-ribbons' aria-hidden="true">
             <span />
             <span />
             <span />
           </div>
-          <div className="ag-story-scene-content">
+          <div className='ag-story-scene-content'>
             <p>{copy.title}</p>
-            <div className="ag-story-meter" aria-hidden="true">
+            <div className='ag-story-meter' aria-hidden="true">
               <span style={{ width: kind === "media" ? "46%" : "68%" }} />
             </div>
-            <div className="ag-story-visual-grid">
+            <div className='ag-story-visual-grid'>
               {copy.metrics.map((metric, index) => (
-                <div key={metric} className="ag-story-metric">
+                <div key={metric} className='ag-story-metric'>
                   <span
-                    className="ag-story-swatch"
+                    className='ag-story-swatch'
                     style={{ background: swatches[index] }}
                   />
                   <strong>{metric}</strong>
@@ -111,9 +111,9 @@ export function StorybookVisualShowcase({
           </div>
         </div>
 
-        <aside className="ag-story-panel" aria-label={`${name} quality checks`}>
-          <p className="ag-story-panel-label">Audit checks</p>
-          <div className="ag-story-checks">
+        <aside className='ag-story-panel' aria-label={`${name} quality checks`}>
+          <p className='ag-story-panel-label'>Audit checks</p>
+          <div className='ag-story-checks'>
             {[
               "Responsive spacing",
               "Clear liquid material",
@@ -129,7 +129,7 @@ export function StorybookVisualShowcase({
         </aside>
       </div>
 
-      <div className="ag-story-strip" aria-label={`${name} supporting states`}>
+      <div className='ag-story-strip' aria-label={`${name} supporting states`}>
         {["Default", "Hover", "Active", "Reduced"].map((state, index) => (
           <div key={state}>
             <span style={{ background: swatches[index] }} />

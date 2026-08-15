@@ -93,12 +93,12 @@ export interface PersonaConfig {
 /**
  * Persona identity belongs on the canvas, content accents, and state cues—not
  * in the glass material itself. Every persona therefore shares one neutral,
- * luminous white-channel surface. Keeping every stop inside the 0.08–0.35
- * alpha band prevents a persona from turning a liquid-glass panel into an
- * opaque navy or chromatic card while still allowing its canvas to vary.
+ * luminous white-channel surface. Keeping every stop inside the roughly
+ * 0.018–0.105 alpha band preserves refraction without turning a panel into
+ * opaque navy, chromatic glass, or a milky frost layer.
  */
 export const PERSONA_GLASS_SURFACE =
-  "linear-gradient(135deg, rgba(255,255,255,0.30) 0%, rgba(255,255,255,0.18) 48%, rgba(255,255,255,0.10) 100%)";
+  "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 55%, rgba(255,255,255,0.018) 100%)";
 
 export const DESIGN_MATRIX: Record<PersonaId, PersonaConfig> = {
   "midnight-slate": {

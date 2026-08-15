@@ -1,15 +1,21 @@
 .glass-dashboard-neutral,
 .glass-dashboard-neutral * {
-  --glass-text-primary: rgba(15, 23, 42, 0.96);
-  --glass-text-secondary: rgba(15, 23, 42, 0.76);
+  --glass-text-primary: var(--glass-theme-text, rgba(248, 250, 252, 0.96));
+  --glass-text-secondary: var(
+    --glass-theme-text-secondary,
+    rgba(226, 232, 240, 0.76)
+  );
 }
 
 .glass-dashboard-neutral :where(.contrast-guard, p, span, h1, h2, h3, h4) {
-  color: rgba(15, 23, 42, 0.96) !important;
+  color: var(--glass-theme-text, rgba(248, 250, 252, 0.96)) !important;
 }
 
 .glass-dashboard-neutral :where(.glass-text-secondary) {
-  color: rgba(30, 41, 59, 0.78) !important;
+  color: var(
+    --glass-theme-text-secondary,
+    rgba(226, 232, 240, 0.76)
+  ) !important;
 }
 
 .glass-dashboard-neutral
@@ -18,11 +24,14 @@
     [class*="text-primary"][class*="opacity-60"],
     [class*="text-primary"][class*="opacity-70"]
   ) {
-  color: rgba(15, 23, 42, 0.92) !important;
+  color: var(--glass-theme-text, rgba(248, 250, 252, 0.9)) !important;
 }
 
 .glass-dashboard-neutral :where(svg, [data-icon]) {
-  color: rgba(30, 41, 59, 0.74) !important;
+  color: var(
+    --glass-theme-text-secondary,
+    rgba(226, 232, 240, 0.74)
+  ) !important;
 }
 
 .glass-dashboard-neutral [data-glass-component] {
@@ -32,20 +41,18 @@
 .glass-activity-neutral-row {
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.2),
-    rgba(255, 255, 255, 0.12)
+    rgba(255, 255, 255, 0.075),
+    rgba(255, 255, 255, 0.018)
   ) !important;
-  border-color: rgba(255, 255, 255, 0.28) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
   box-shadow:
-    0 10px 28px rgba(15, 23, 42, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16),
-    inset 0 0 8px rgba(255, 255, 255, 0.12) !important;
-  backdrop-filter: blur(16px) saturate(1.5) brightness(1.04) contrast(1.04) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.5) brightness(1.04)
-    contrast(1.04) !important;
+    0 10px 28px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+  backdrop-filter: blur(16px) saturate(1.35) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.35) !important;
 }
 
 .glass-chart-widget-neutral-content,
 .glass-chart-widget-neutral-content * {
-  color: rgba(15, 23, 42, 0.96) !important;
+  color: var(--glass-theme-text, rgba(248, 250, 252, 0.96)) !important;
 }

@@ -106,37 +106,29 @@ export interface GlassHeatmapProps
 
 const heatmapSurfaceStyle: React.CSSProperties = {
   background:
-    "linear-gradient(145deg, rgba(255, 255, 255, 0.30), rgba(255, 255, 255, 0.14))",
-  border: "1px solid rgba(148, 163, 184, 0.22)",
+    "linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.008))",
+  border: "1px solid rgba(255, 255, 255, 0.16)",
   boxShadow:
-    "0 12px 30px rgba(15, 23, 42, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 12px rgba(255, 255, 255, 0.14)",
-  color: "rgba(15, 23, 42, 0.94)",
-  ["--glass-text-primary" as string]: "rgba(15, 23, 42, 0.94)",
-  ["--glass-text-secondary" as string]: "rgba(30, 41, 59, 0.78)",
-  ["--typography-text-primary" as string]: "rgba(15, 23, 42, 0.94)",
-  ["--typography-text-secondary" as string]: "rgba(30, 41, 59, 0.78)",
+    "0 14px 34px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.18)",
+  color:
+    "var(--glass-theme-text, var(--glass-text-primary, rgba(248, 250, 252, 0.96)))",
 };
 
 const heatmapInsetStyle: React.CSSProperties = {
-  background: "rgba(255, 255, 255, 0.12)",
-  border: "1px solid rgba(148, 163, 184, 0.18)",
+  background: "rgba(255, 255, 255, 0.035)",
+  border: "1px solid rgba(255, 255, 255, 0.12)",
   boxShadow:
-    "inset 0 1px 0 rgba(255, 255, 255, 0.26), inset 0 0 10px rgba(255, 255, 255, 0.12)",
+    "inset 0 1px 0 rgba(255, 255, 255, 0.10)",
 };
 
 const heatmapLegendStyle: React.CSSProperties = {
   background:
-    "linear-gradient(145deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.14))",
-  border: "1px solid rgba(148, 163, 184, 0.20)",
+    "linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.008))",
+  border: "1px solid rgba(255, 255, 255, 0.14)",
   boxShadow:
-    "0 10px 24px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 10px rgba(255, 255, 255, 0.14)",
-  color: "rgba(15, 23, 42, 0.94)",
-  ["--glass-theme-text" as string]: "rgba(15, 23, 42, 0.94)",
-  ["--glass-theme-text-secondary" as string]: "rgba(30, 41, 59, 0.82)",
-  ["--glass-text-primary" as string]: "rgba(15, 23, 42, 0.94)",
-  ["--glass-text-secondary" as string]: "rgba(30, 41, 59, 0.82)",
-  ["--typography-text-primary" as string]: "rgba(15, 23, 42, 0.94)",
-  ["--typography-text-secondary" as string]: "rgba(30, 41, 59, 0.82)",
+    "0 10px 24px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.14)",
+  color:
+    "var(--glass-theme-text, var(--glass-text-primary, rgba(248, 250, 252, 0.96)))",
   maxWidth: "100%",
   minWidth: 0,
 };
@@ -148,8 +140,8 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
       xAxis,
       yAxis,
       colorScale = {
-        min: "#eef2f6",
-        max: "#aab5c1",
+        min: "#163047",
+        max: "#25bde3",
       },
       cellSize: incomingCellSize = 28,
       cellGap: incomingCellGap = 8,
@@ -323,8 +315,8 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
           return fallback;
         };
 
-        const hex1 = resolveColor(color1, "#eef2f6").replace("#", "");
-        const hex2 = resolveColor(color2, "#aab5c1").replace("#", "");
+        const hex1 = resolveColor(color1, "#163047").replace("#", "");
+        const hex2 = resolveColor(color2, "#25bde3").replace("#", "");
 
         const r1 = parseInt(hex1.substr(0, 2), 16);
         const g1 = parseInt(hex1.substr(2, 2), 16);
@@ -429,19 +421,16 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
             )}
             style={{
               backgroundColor: cellColor,
-              color: "rgba(15, 23, 42, 0.96)",
-              ["--glass-theme-text" as string]: "rgba(15, 23, 42, 0.96)",
-              ["--glass-text-primary" as string]: "rgba(15, 23, 42, 0.96)",
-              ["--typography-text-primary" as string]: "rgba(15, 23, 42, 0.96)",
+              color: "rgba(255, 255, 255, 0.96)",
               width: cellSize * internalZoomLevel,
               height: cellSize * internalZoomLevel,
               fontSize: `${Math.max(8, cellSize * internalZoomLevel * 0.4)}px`,
               borderRadius: Math.max(4, cellSize * internalZoomLevel * 0.22),
               border: showGrid
-                ? "1px solid rgba(15, 23, 42, 0.26)"
+                ? "1px solid rgba(255, 255, 255, 0.14)"
                 : "1px solid transparent",
               boxShadow: isSelected
-                ? "0 0 0 2px rgba(15, 23, 42, 0.72), 0 8px 18px rgba(15, 23, 42, 0.14)"
+                ? "0 0 0 2px rgba(255, 255, 255, 0.82), 0 8px 18px rgba(0, 0, 0, 0.20)"
                 : "inset 0 1px 0 rgba(255, 255, 255, 0.16)",
               transform: isHovered ? "scale(1.08)" : "scale(1)",
               zIndex: isHovered ? 2 : 1,
@@ -546,7 +535,8 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
                 <div
                   className="glass-text-xs glass-font-medium"
                   style={{
-                    color: "rgba(15, 23, 42, 0.94)",
+                    color:
+                      "var(--glass-theme-text, var(--glass-text-primary, rgba(248, 250, 252, 0.96)))",
                     letterSpacing: "0.02em",
                   }}
                 >
@@ -557,7 +547,8 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
                 <div
                   className="glass-text-xs"
                   style={{
-                    color: "rgba(30, 41, 59, 0.78)",
+                    color:
+                      "var(--glass-theme-text-secondary, var(--glass-text-secondary, rgba(226, 232, 240, 0.78)))",
                     whiteSpace: "nowrap",
                   }}
                 >
@@ -588,7 +579,8 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
               <div
                 className="glass-text-xs"
                 style={{
-                  color: "rgba(30, 41, 59, 0.78)",
+                  color:
+                    "var(--glass-theme-text-secondary, var(--glass-text-secondary, rgba(226, 232, 240, 0.78)))",
                   minWidth: isHorizontal ? 28 : undefined,
                   textAlign: isHorizontal ? "right" : undefined,
                   whiteSpace: "nowrap",
@@ -629,7 +621,8 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
               <div
                 className="glass-text-xs"
                 style={{
-                  color: "rgba(30, 41, 59, 0.78)",
+                  color:
+                    "var(--glass-theme-text-secondary, var(--glass-text-secondary, rgba(226, 232, 240, 0.78)))",
                   minWidth: isHorizontal ? 32 : undefined,
                   whiteSpace: "nowrap",
                 }}

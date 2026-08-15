@@ -38,6 +38,9 @@ const normalizeValue = (value: string | number): string => {
 const RGBA_COLOR_PATTERN =
   /rgba\(\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*,\s*(\d+(?:\.\d+)?)\s*\)/gi;
 
+const MIN_NEUTRAL_GLASS_ALPHA = 0.015;
+const MAX_NEUTRAL_GLASS_ALPHA = 0.12;
+
 /**
  * A persona may own its canvas and accent palette, but never tint or darken
  * the shared liquid-glass material. Enforce that boundary at generation time
@@ -51,12 +54,12 @@ const assertNeutralGlassSurface = (persona: PersonaConfig): void => {
     const channels = [Number(red), Number(green), Number(blue)];
     const opacity = Number(alpha);
     return channels.some((channel) => channel < 248 || channel > 255) ||
-      opacity < 0.08 || opacity > 0.35;
+      opacity < MIN_NEUTRAL_GLASS_ALPHA || opacity > MAX_NEUTRAL_GLASS_ALPHA;
   });
 
   if (stops.length === 0 || invalidStop) {
     throw new Error(
-      `Persona "${persona.meta.id}" background.surface must use only neutral white rgba stops with alpha 0.08-0.35. Received: ${source}`
+      `Persona "${persona.meta.id}" background.surface must use only neutral white rgba stops with alpha ${MIN_NEUTRAL_GLASS_ALPHA}-${MAX_NEUTRAL_GLASS_ALPHA}. Received: ${source}`
     );
   }
 };

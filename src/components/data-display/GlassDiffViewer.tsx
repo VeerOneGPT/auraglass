@@ -85,15 +85,15 @@ function buildUnifiedRows(left: string, right: string): DiffRow[] {
 function rowStyle(kind: DiffKind): React.CSSProperties {
   if (kind === "added") {
     return {
-      background: "rgba(255, 255, 255, 0.22)",
-      boxShadow: "inset 3px 0 0 rgba(15, 23, 42, 0.48)",
+      background: "rgba(58, 216, 164, 0.09)",
+      boxShadow: "inset 3px 0 0 rgba(58, 216, 164, 0.55)",
     };
   }
 
   if (kind === "removed") {
     return {
-      background: "rgba(15, 23, 42, 0.055)",
-      boxShadow: "inset 3px 0 0 rgba(15, 23, 42, 0.72)",
+      background: "rgba(255, 122, 140, 0.08)",
+      boxShadow: "inset 3px 0 0 rgba(255, 122, 140, 0.50)",
     };
   }
 
@@ -131,7 +131,7 @@ function DiffTable({
         tableLayout: "fixed",
         fontSize: compact ? "0.72rem" : "0.78rem",
         lineHeight: compact ? 1.35 : 1.5,
-        color: "rgba(15, 23, 42, 0.92)",
+        color: "var(--glass-theme-text, var(--glass-text-primary, rgba(248,250,252,0.96)))",
       }}
     >
       <tbody>
@@ -148,7 +148,7 @@ function DiffTable({
                 width: compact ? 22 : 26,
                 padding: compact ? "1px 4px" : "2px 6px",
                 textAlign: "center",
-                color: "rgba(15, 23, 42, 0.72)",
+                color: "var(--glass-theme-text-secondary, var(--glass-text-secondary, rgba(226,232,240,0.76)))",
                 userSelect: "none",
               }}
             >
@@ -160,7 +160,7 @@ function DiffTable({
                 style={{
                   width: compact ? 44 : 56,
                   padding: compact ? "1px 4px" : "2px 6px",
-                  color: "rgba(15, 23, 42, 0.62)",
+                  color: "var(--glass-text-tertiary, rgba(184,194,209,0.70))",
                   userSelect: "none",
                   whiteSpace: "nowrap",
                 }}
@@ -202,11 +202,11 @@ function CodePanel({
       style={{
         padding: compact ? "0.5rem" : "0.75rem",
         minWidth: 0,
-        background: "rgba(255, 255, 255, 0.24)",
-        border: "1px solid rgba(255, 255, 255, 0.68)",
-        color: "rgba(15, 23, 42, 0.92)",
+        background: "linear-gradient(145deg, rgba(255,255,255,0.085), rgba(255,255,255,0.018))",
+        border: "1px solid rgba(255, 255, 255, 0.16)",
+        color: "var(--glass-theme-text, var(--glass-text-primary, rgba(248,250,252,0.96)))",
         boxShadow:
-          "0 12px 30px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.30), inset 0 0 16px rgba(255, 255, 255, 0.14)",
+          "0 12px 30px rgba(3, 7, 18, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.16)",
       }}
     >
       <div
@@ -215,7 +215,7 @@ function CodePanel({
           fontSize: compact ? "0.62rem" : "0.68rem",
           letterSpacing: "0.08em",
           textTransform: "uppercase",
-          color: "rgba(15, 23, 42, 0.64)",
+          color: "var(--glass-text-tertiary, rgba(184,194,209,0.70))",
         }}
       >
         {label}
@@ -228,7 +228,7 @@ function CodePanel({
           lineHeight: compact ? 1.35 : 1.5,
           whiteSpace: "pre-wrap",
           overflowWrap: "anywhere",
-          color: "rgba(15, 23, 42, 0.92)",
+          color: "var(--glass-theme-text, var(--glass-text-primary, rgba(248,250,252,0.96)))",
         }}
       >
         <code>{code}</code>
@@ -285,11 +285,11 @@ export function GlassDiffViewer({
           style={{
             padding: compact ? "0.35rem" : "0.5rem",
             minWidth: 0,
-            background: "rgba(255, 255, 255, 0.24)",
-            border: "1px solid rgba(255, 255, 255, 0.68)",
-            color: "rgba(15, 23, 42, 0.92)",
+            background: "linear-gradient(145deg, rgba(255,255,255,0.085), rgba(255,255,255,0.018))",
+            border: "1px solid rgba(255, 255, 255, 0.16)",
+            color: "var(--glass-theme-text, var(--glass-text-primary, rgba(248,250,252,0.96)))",
             boxShadow:
-              "0 12px 30px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.30), inset 0 0 16px rgba(255, 255, 255, 0.14)",
+              "0 12px 30px rgba(3, 7, 18, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.16)",
           }}
         >
           <DiffTable

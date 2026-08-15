@@ -23,21 +23,23 @@ import { ANIMATION } from "../../tokens/designConstants";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 import { createGlassStyle } from "../../core/mixins/glassMixins";
 
-const TABLE_TEXT = "rgba(15, 23, 42, 0.94)";
-const TABLE_SECONDARY_TEXT = "rgba(15, 23, 42, 0.76)";
+const TABLE_TEXT =
+  "var(--glass-theme-text, var(--glass-text-primary, rgba(248,250,252,0.96)))";
+const TABLE_SECONDARY_TEXT =
+  "var(--glass-theme-text-secondary, var(--glass-text-secondary, rgba(226,232,240,0.76)))";
 const tableTextStyle: React.CSSProperties = { color: TABLE_TEXT };
 const tableSecondaryTextStyle: React.CSSProperties = {
   color: TABLE_SECONDARY_TEXT,
 };
 const tableControlStyle: React.CSSProperties = {
   minHeight: 40,
-  border: "1px solid rgba(71, 85, 105, 0.24)",
+  border: "1px solid rgba(255, 255, 255, 0.16)",
   borderRadius: 12,
   color: TABLE_TEXT,
   background:
-    "linear-gradient(135deg, rgba(255,255,255,0.30), rgba(255,255,255,0.14))",
+    "linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.008))",
   boxShadow:
-    "inset 0 1px 8px rgba(255,255,255,0.14), inset 0 1px 0 rgba(255,255,255,0.30), 0 8px 24px rgba(15,23,42,0.08)",
+    "inset 0 1px 0 rgba(255,255,255,0.16), 0 8px 24px rgba(3,7,18,0.12)",
 };
 const tableNativeControlStyle: React.CSSProperties = {
   ...tableControlStyle,
@@ -647,10 +649,6 @@ const GlassDataTableInnerBase = <
       className={cn("glass-w-full", className)}
       style={
         {
-          "--glass-theme-text": TABLE_TEXT,
-          "--glass-text-primary": TABLE_TEXT,
-          "--glass-text-secondary": TABLE_SECONDARY_TEXT,
-          "--glass-text-tertiary": "rgba(15, 23, 42, 0.64)",
           color: TABLE_TEXT,
         } as React.CSSProperties
       }
@@ -733,14 +731,11 @@ const GlassDataTableInnerBase = <
         )}
         style={{
           ...createGlassStyle({ intent: "neutral", elevation: "level2" }),
-          "--glass-theme-text": TABLE_TEXT,
-          "--glass-text-primary": TABLE_TEXT,
-          "--glass-text-secondary": TABLE_SECONDARY_TEXT,
           background:
-            "linear-gradient(135deg, rgba(255,255,255,0.30), rgba(255,255,255,0.14))",
+            "linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.008))",
           boxShadow:
-            "inset 0 1px 10px rgba(255,255,255,0.14), inset 0 1px 0 rgba(255,255,255,0.30), inset 0 -1px 0 rgba(255,255,255,0.12), 0 20px 48px rgba(15,23,42,0.12)",
-          borderColor: "rgba(148, 163, 184, 0.24)",
+            "inset 0 1px 0 rgba(255,255,255,0.16), inset 0 -1px 0 rgba(255,255,255,0.035), 0 20px 48px rgba(3,7,18,0.18)",
+          borderColor: "rgba(255, 255, 255, 0.16)",
           color: TABLE_TEXT,
           maxHeight:
             resolvedMaxHeight ?? (compact || contained ? "240px" : undefined),
@@ -786,10 +781,10 @@ const GlassDataTableInnerBase = <
                   )}
                   style={{
                     background:
-                      "linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,255,255,0.16))",
-                    borderColor: "rgba(148, 163, 184, 0.22)",
+                      "linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.008))",
+                    borderColor: "rgba(255, 255, 255, 0.14)",
                     boxShadow:
-                      "inset 0 1px 8px rgba(255,255,255,0.14), 0 8px 20px rgba(15,23,42,0.08)",
+                      "inset 0 1px 0 rgba(255,255,255,0.14), 0 8px 20px rgba(3,7,18,0.12)",
                   }}
                   onClick={() => onRowClick?.(row)}
                 >
@@ -858,7 +853,7 @@ const GlassDataTableInnerBase = <
                 "glass-relative bg-muted/20 glass-border-b glass-border-glass-border/20",
                 stickyHeader && "sticky top-0 z-10"
               )}
-              style={{ background: "rgba(255, 255, 255, 0.18)" }}
+              style={{ background: "rgba(255, 255, 255, 0.065)" }}
             >
               <tr>
                 {selectable && (

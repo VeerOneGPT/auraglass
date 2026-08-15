@@ -432,7 +432,35 @@ export const GlassParticles = forwardRef<HTMLDivElement, GlassParticlesProps>(
 
         // Clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "rgba(248, 250, 252, 0.94)";
+        ctx.fillStyle = "rgb(6, 8, 14)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Give translucent particles real color information to refract without
+        // reverting to a milky frost or a flat navy canvas.
+        const cyanField = ctx.createRadialGradient(
+          canvas.width * 0.18,
+          canvas.height * 0.12,
+          0,
+          canvas.width * 0.18,
+          canvas.height * 0.12,
+          canvas.width * 0.72
+        );
+        cyanField.addColorStop(0, "rgba(18, 151, 180, 0.20)");
+        cyanField.addColorStop(1, "rgba(18, 151, 180, 0)");
+        ctx.fillStyle = cyanField;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        const iceField = ctx.createRadialGradient(
+          canvas.width * 0.86,
+          canvas.height * 0.82,
+          0,
+          canvas.width * 0.86,
+          canvas.height * 0.82,
+          canvas.width * 0.68
+        );
+        iceField.addColorStop(0, "rgba(124, 211, 255, 0.10)");
+        iceField.addColorStop(1, "rgba(124, 211, 255, 0)");
+        ctx.fillStyle = iceField;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         // Apply blur filter if enabled
@@ -534,6 +562,8 @@ export const GlassParticles = forwardRef<HTMLDivElement, GlassParticlesProps>(
         id={componentId}
         className={cn("relative overflow-hidden", className)}
         style={{
+          background:
+            "linear-gradient(145deg, rgba(6, 9, 13, 0.98), rgba(13, 20, 24, 0.96))",
           minHeight: resolvedHeight ?? (isBounded ? 220 : undefined),
           maxHeight: resolvedMaxHeight ?? (isBounded ? 240 : undefined),
           width: "100%",

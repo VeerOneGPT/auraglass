@@ -365,14 +365,15 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
                   "glass-border-t-0": variant === "flush" && !isFirst,
                 }
               )}
-              style={{
-                background: isOpen
-                  ? "rgba(255, 255, 255, 0.30)"
-                  : "rgba(255, 255, 255, 0.20)",
-                border: "1px solid rgba(255, 255, 255, 0.68)",
-                color: "rgba(15, 23, 42, 0.92)",
+                style={{
+                  background: isOpen
+                  ? "rgba(255, 255, 255, 0.05)"
+                  : "rgba(255, 255, 255, 0.018)",
+                border: "1px solid rgba(255, 255, 255, 0.15)",
+                color:
+                  "var(--glass-theme-text, var(--glass-text-primary, rgba(248, 250, 252, 0.96)))",
                 boxShadow:
-                  "0 10px 26px rgba(15, 23, 42, 0.09), inset 0 1px 0 rgba(255, 255, 255, 0.30), inset 0 0 16px rgba(255, 255, 255, 0.14)",
+                  "0 10px 26px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.14)",
               }}
             >
               {/* Accordion Header/Trigger */}
@@ -400,7 +401,8 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
                 role="tab"
                 style={{
                   minHeight: compact ? 44 : 48,
-                  color: "rgba(15, 23, 42, 0.92)",
+                  color:
+                    "var(--glass-theme-text, var(--glass-text-primary, rgba(248, 250, 252, 0.96)))",
                 }}
               >
                 <div className="glass-flex glass-items-center glass-gap-3 glass-min-w-0">
@@ -411,7 +413,10 @@ export const GlassAccordion = forwardRef<HTMLDivElement, GlassAccordionProps>(
                   )}
                   <span
                     className="glass-min-w-0 glass-break-words"
-                    style={{ color: "rgba(15, 23, 42, 0.92)" }}
+                    style={{
+                      color:
+                        "var(--glass-theme-text, var(--glass-text-primary, rgba(248, 250, 252, 0.96)))",
+                    }}
                   >
                     {item?.title}
                   </span>
@@ -524,7 +529,13 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
             }
           )}
         >
-          <div style={{ color: "rgba(15, 23, 42, 0.76)", lineHeight: 1.55 }}>
+          <div
+            style={{
+              color:
+                "var(--glass-theme-text-secondary, var(--glass-text-secondary, rgba(226, 232, 240, 0.78)))",
+              lineHeight: 1.55,
+            }}
+          >
             {children}
           </div>
         </div>

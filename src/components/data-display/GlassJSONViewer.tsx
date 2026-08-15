@@ -3,14 +3,14 @@ import React from "react";
 import { OptimizedGlass } from "../../primitives";
 import { cn } from "../../lib/utilsComprehensive";
 const codeSurfaceStyle: React.CSSProperties = {
-  background: "rgba(255, 255, 255, 0.24)",
-  backdropFilter: "blur(24px) saturate(1.5) brightness(1.05) contrast(1.02)",
+  background: "linear-gradient(145deg, rgba(255,255,255,0.085), rgba(255,255,255,0.018))",
+  backdropFilter: "blur(18px) saturate(1.34)",
   WebkitBackdropFilter:
-    "blur(24px) saturate(1.5) brightness(1.05) contrast(1.02)",
-  border: "1px solid rgba(255, 255, 255, 0.68)",
+    "blur(18px) saturate(1.34)",
+  border: "1px solid rgba(255, 255, 255, 0.16)",
   boxShadow:
-    "0 14px 34px rgba(15, 23, 42, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.30), inset 0 0 18px rgba(255, 255, 255, 0.14)",
-  color: "rgba(15, 23, 42, 0.92)",
+    "0 14px 34px rgba(3, 7, 18, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.16)",
+  color: "var(--glass-theme-text, var(--glass-text-primary, rgba(248,250,252,0.96)))",
   maxWidth: "100%",
   minWidth: 0,
 };
@@ -60,7 +60,7 @@ export function GlassJSONViewer({
         )}
         style={{
           margin: 0,
-          color: "rgba(15, 23, 42, 0.92)",
+          color: "var(--glass-theme-text, var(--glass-text-primary, rgba(248,250,252,0.96)))",
           whiteSpace: "pre-wrap",
           overflowWrap: "break-word",
           wordBreak: "normal",

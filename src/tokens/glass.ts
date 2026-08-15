@@ -994,8 +994,11 @@ export const glassTokenUtils = {
 
     return {
       background:
-        "linear-gradient(135deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.12) 100%)",
-      backgroundColor: surface.surface.overlay ?? undefined,
+        "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%)",
+      // Keep the material optically clear. Semantic intent belongs in local
+      // highlights and borders; stacking the token overlay under the white
+      // gradient produced an acrylic/frosted slab on colorful backdrops.
+      backgroundColor: "rgba(255,255,255,0.018)",
       backdropFilter:
         surface.backdropBlur.px === 16
           ? "blur(16px) saturate(1.4) brightness(1.08) contrast(1.04)"
@@ -1016,16 +1019,18 @@ export const glassTokenUtils = {
               : surface.backdropBlur.px === 40
                 ? "blur(40px) saturate(1.4) brightness(1.08) contrast(1.04)"
                 : "blur(48px) saturate(1.4) brightness(1.08) contrast(1.04)",
-      "--glass-text-primary": surface.text.primary,
-      "--glass-text-secondary": surface.text.secondary,
-      "--typography-text-primary": surface.text.primary,
-      "--typography-text-secondary": surface.text.secondary,
+      // Foreground roles belong to the active theme, not to an individual
+      // material. Authoring them inline here made a neutral surface permanently
+      // use the light-canvas (near-black) palette even when it was mounted in a
+      // dark application. The canonical CSS tokens already provide accessible
+      // defaults and [data-theme] overrides, while consumers can supply their
+      // own semantic roles at any ancestor.
       // Use createGlassStyle() instead,
       // Use createGlassStyle() instead,
-      border: "1px solid rgba(255,255,255,0.28)",
+      border: "1px solid rgba(255,255,255,0.18)",
       borderRadius: `${AURA_GLASS.radii.md}px`,
       boxShadow: shadowParts.length > 0 ? shadowParts.join(", ") : "none",
-      color: "var(--glass-text-primary)",
+      color: "var(--glass-theme-text, var(--glass-text-primary))",
       transition: `all ${AURA_GLASS.motion.defaultMs}ms ease-out`,
       position: "relative" as const,
       transform: "translateZ(0)",

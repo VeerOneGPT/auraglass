@@ -58,6 +58,8 @@ export interface ParticleBackgroundProps extends React.HTMLAttributes<HTMLDivEle
   interactive?: boolean;
   mouseInfluence?: number;
   baseColor?: string;
+  /** Two CSS colors used to paint the canvas field behind the particles. */
+  canvasGradientColors?: readonly [string, string];
   particleColor?: string;
   particleCount?: number;
   particleSize?: number;

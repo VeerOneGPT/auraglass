@@ -121,6 +121,7 @@ const GlassFileExplorer = React.forwardRef<
       variant = "default",
       size = "md",
       elevation = "medium",
+      style: styleProp,
       "data-testid": dataTestId,
       "aria-label": ariaLabel,
       ...props
@@ -415,7 +416,18 @@ const GlassFileExplorer = React.forwardRef<
         )}
         data-glass-component
         data-testid={dataTestId}
-        style={{ maxHeight: "100%", minWidth: 0 }}
+        style={{
+          maxHeight: "100%",
+          minWidth: 0,
+          background:
+            "linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.008))",
+          border: "1px solid rgba(255,255,255,0.14)",
+          boxShadow:
+            "0 16px 38px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.12)",
+          color:
+            "var(--glass-theme-text, var(--glass-text-primary, rgba(248,250,252,0.96)))",
+          ...styleProp,
+        }}
         aria-label={ariaLabel || "File explorer"}
         role="region"
         {...props}

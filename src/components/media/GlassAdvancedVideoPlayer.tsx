@@ -1155,7 +1155,11 @@ export const GlassAdvancedVideoPlayer: React.FC<AdvancedVideoPlayerProps> = ({
       )}
       data-testid={dataTestId || "glassadvancedvideoplayer"}
       style={{
-        background: "#020617",
+        background:
+          "linear-gradient(145deg, rgba(255,255,255,0.085), rgba(255,255,255,0.018))",
+        border: "1px solid rgba(255,255,255,0.16)",
+        backdropFilter: "blur(18px) saturate(1.35)",
+        WebkitBackdropFilter: "blur(18px) saturate(1.35)",
         color: "#f8fafc",
         minHeight: 320,
       }}
