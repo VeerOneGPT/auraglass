@@ -112,7 +112,7 @@ function parseColorToRgb(
 
 function getReadableTextColor(color: string | undefined) {
   const rgb = parseColorToRgb(color);
-  if (!rgb) return "rgba(15,23,42,0.92)";
+  if (!rgb) return "var(--glass-theme-text, var(--glass-text-primary))";
   const normalize = (channel: number) => {
     const c = channel / 255;
     return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);

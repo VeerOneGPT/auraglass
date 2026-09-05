@@ -1210,7 +1210,7 @@ export function GlassSelfHealingDashboard({
             maxWidth: "calc(100vw - 2rem)",
             maxHeight: "min(24rem, calc(100vh - 5.75rem))",
             overflowY: "auto",
-            color: "rgba(15,23,42,.94)",
+            color: "var(--glass-theme-text, var(--glass-text-primary))",
             background:
               "linear-gradient(145deg, rgba(255,255,255,.30), rgba(255,255,255,.16))",
             backgroundColor: "rgba(255,255,255,.18)",

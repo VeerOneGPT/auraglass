@@ -1,6 +1,6 @@
 # 3.3 Recipe Render Evidence
 
-Generated at: 2026-08-14T01:39:02.566Z
+Generated at: 2026-09-05T09:35:19.665Z
 
 Command:
 
@@ -8,7 +8,7 @@ Command:
 node scripts/ci/verify-recipes-render.js
 ```
 
-Result: pass. The script packed `aura-glass@3.5.0`, scaffolded every recipe with `aura-glass add all`, built a temporary Vite app, loaded it in Chromium, and captured one screenshot per recipe.
+Result: pass. The script packed `aura-glass@4.0.0`, scaffolded every recipe with `aura-glass add all`, built a temporary Vite app, loaded it in Chromium, and captured one screenshot per recipe.
 
 | Recipe | Screenshot |
 | --- | --- |

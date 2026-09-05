@@ -1,51 +1,97 @@
-# AI API Reference
+# AI API reference
 
-This page summarizes the AuraGlass AI service surface used by the AI setup and quick-start guides.
+Optional hosted AI routes and service classes. Package-only React apps do not need these endpoints.
 
-AuraGlass AI routes are optional hosted-runtime features. Package-only React apps do not need these endpoints.
+## Service imports
 
-## Runtime Services
+```ts
+import { OpenAIService } from 'aura-glass/services/ai/openai-service';
+import { VisionService } from 'aura-glass/services/ai/vision-service';
+import {
+  createAIConfig,
+  createRuntimeFeatureFlags,
+  ProviderUnconfiguredError,
+} from 'aura-glass/services/ai/config';
+```
 
-- OpenAI service: imported from `aura-glass/services/ai/openai-service` for text generation, form generation, and prompt orchestration.
-- Vision service: imported from `aura-glass/services/ai/vision-service` for image analysis workflows.
-- Collaboration service: imported from `aura-glass/services/websocket/collaboration-service` for presence and realtime collaboration.
-- Repo-local API server source imports service implementations from `src/services/ai/*` and `src/services/auth/*`.
+The repo-local production API (`server/index.ts`) constructs those services from `src/services/ai/*` and `src/services/auth/*`.
 
-## Runtime URLs
+Collaboration transport for browser clients is `aura-glass/services/websocket/collaboration-service`. The socket server itself is `server/websocket-server.js`.
 
-- API base URL: `http://localhost:3002` via `API_SERVER_PORT=3002`.
-- WebSocket URL: `ws://localhost:3001` via `WS_PORT=3001`.
-- Browser clients should use `NEXT_PUBLIC_API_URL=http://localhost:3002` and `NEXT_PUBLIC_WS_URL=ws://localhost:3001`.
+## URLs
 
-## Environment Inputs
+| Role | Default | Variable |
+| --- | --- | --- |
+| API | `http://localhost:3002` | `API_SERVER_PORT`, `NEXT_PUBLIC_API_URL` |
+| WebSocket | `ws://localhost:3001` | `WS_PORT`, `NEXT_PUBLIC_WS_URL` |
 
-- `OPENAI_API_KEY`: required for OpenAI-backed features.
-- `PINECONE_API_KEY`: required for semantic search deployments that use Pinecone.
-- `GOOGLE_CLOUD_PROJECT_ID` and `GOOGLE_APPLICATION_CREDENTIALS`: required for Google Vision deployments.
-- `REDIS_URL`: recommended for caching and backend coordination.
-- `JWT_SECRET`: required for hosted auth routes outside test environments.
+## Routes
 
-## Provider-Unconfigured Response
+Every `/api/ai/*` route requires `Authorization: Bearer <token>`. Auth routes are implemented in `server/index.ts`.
 
-When a route depends on a provider that is disabled or missing credentials, return a structured error instead of mock success data:
+| Method | Path | Body | Provider |
+| --- | --- | --- | --- |
+| `GET` | `/health` | — | none |
+| `GET` | `/ready` | — | JWT plus enabled feature flags |
+| `POST` | `/api/auth/login` | `{ email, password }` | JWT |
+| `POST` | `/api/auth/register` | `{ email, password, name }` | JWT |
+| `POST` | `/api/auth/refresh` | `{ refreshToken }` | JWT |
+| `POST` | `/api/auth/logout` | Bearer token | JWT |
+| `POST` | `/api/ai/generate-form` | `{ context, existingFields? }` | OpenAI (`ENABLE_SMART_FORMS`) |
+| `POST` | `/api/ai/search` | `{ query, options? }` | OpenAI + Pinecone |
+| `POST` | `/api/ai/index-documents` | `{ documents: [] }` | OpenAI + Pinecone |
+| `POST` | `/api/ai/analyze-image` | `{ image, analysisTypes? }` | Google Vision (`ENABLE_VISION_API`) |
+| `POST` | `/api/ai/remove-background` | `{ image }` | Remove.bg (`ENABLE_BACKGROUND_REMOVAL`) |
+| `POST` | `/api/ai/summarize` | `{ content, maxLength? }` | OpenAI |
+
+`image` is a data URI or raw base64. `analysisTypes` defaults to `["all"]` and may include `faces`, `objects`, `text`, `labels`.
+
+## Provider-unconfigured response
+
+HTTP `503`. Shape from `ProviderUnconfiguredError.toJSON()`:
 
 ```json
 {
   "error": "Provider not configured",
-  "message": "openai is not configured for generate-form",
+  "message": "openai is not configured for smart form generation",
   "code": "AURA_PROVIDER_UNCONFIGURED",
   "provider": "openai",
-  "feature": "generate-form",
+  "feature": "smart form generation",
+  "remediation": "Set OPENAI_API_KEY before using smart form generation.",
   "docsUrl": "https://auraglass.auraone.ai/docs/ai-providers"
 }
 ```
 
-Use the same shape for other providers by changing `provider` and `feature`, for example `pinecone` with `semantic-search` or `google-vision` with `analyze-image`.
+`provider` is one of `openai`, `pinecone`, `googleVision`, `removeBg`, `redis`.
 
-## cURL Examples
+## Feature flags
+
+From `createRuntimeFeatureFlags` in `src/services/ai/config.ts`:
+
+| Variable | Default |
+| --- | --- |
+| `ENABLE_SMART_FORMS` | `true` |
+| `ENABLE_SEMANTIC_SEARCH` | `false` |
+| `ENABLE_VISION_API` | `false` |
+| `ENABLE_BACKGROUND_REMOVAL` | `false` |
+| `ENABLE_AI_CACHING` | `true` |
+| `ENABLE_AI_BATCHING` | `true` |
+| `ENABLE_COLLABORATION` | `false` |
+
+Allowed OpenAI models in the config schema are `gpt-4`, `gpt-4-turbo`, and `gpt-3.5-turbo` (`OPENAI_MODEL`, default `gpt-4`).
+
+## Smoke
 
 ```bash
+npm run build:server
+API_SERVER_PORT=3002 WS_PORT=3001 npm run server:all
+
 curl http://localhost:3002/health
+curl http://localhost:3002/ready
+
+curl -X POST http://localhost:3002/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"test@example.com","password":"password123"}'
 
 curl -X POST http://localhost:3002/api/ai/generate-form \
   -H "Content-Type: application/json" \
@@ -53,6 +99,4 @@ curl -X POST http://localhost:3002/api/ai/generate-form \
   -d '{"context":"contact form"}'
 ```
 
-## Verification
-
-Use the AI quick start with `npm run build:server`, `npm run server:all`, and the documented cURL smoke checks before exposing AI routes in production.
+See [deployment.md](../deployment.md) for ports, Docker, and the collaboration editing boundary.

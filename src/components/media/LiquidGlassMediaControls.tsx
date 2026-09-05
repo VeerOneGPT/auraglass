@@ -24,7 +24,7 @@ const mediaButtonStyle: CSSProperties = {
     intent: "neutral",
     elevation: "level2",
   }),
-  color: "#0f172a",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
   background:
     "linear-gradient(180deg, rgba(255,255,255,.34), rgba(248,250,252,.24))",
 };
@@ -45,7 +45,7 @@ const rangeStyle: CSSProperties = {
 };
 
 const timeStyle: CSSProperties = {
-  color: "#0f172a",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
   fontVariantNumeric: "tabular-nums",
   fontSize: 13,
   lineHeight: 1,

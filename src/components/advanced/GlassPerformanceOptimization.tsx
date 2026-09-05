@@ -571,7 +571,7 @@ export function GlassPerformanceMonitor({
       )}
       style={{
         ...createGlassStyle({ intent: "neutral", elevation: "level2" }),
-        color: "rgba(15, 23, 42, 0.94)",
+        color: "var(--glass-theme-text, var(--glass-text-primary))",
       }}
       initial={{ opacity: 0, x: 50 }}
       animate={{ opacity: 1, x: 0 }}

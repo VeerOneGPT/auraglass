@@ -69,7 +69,7 @@ export const LiquidGlassSegmentedControl = forwardRef<
               style={{
                 border: "1px solid rgba(255,255,255,0.3)",
                 background: selected ? "rgba(255,255,255,0.28)" : "transparent",
-                color: "rgba(15,23,42,0.82)",
+                color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
               }}
               onClick={() => onValueChange?.(segment.id)}
             >

@@ -119,7 +119,7 @@ const metricsSurfaceStyle: React.CSSProperties = {
   border: "1px solid rgba(148, 163, 184, 0.2)",
   boxShadow:
     "0 12px 30px rgba(15, 23, 42, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 12px rgba(255, 255, 255, 0.14)",
-  color: "rgba(15, 23, 42, 0.94)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
   ["--glass-text-primary" as string]: "rgba(15, 23, 42, 0.94)",
   ["--glass-text-secondary" as string]: "rgba(30, 41, 59, 0.78)",
   ["--typography-text-primary" as string]: "rgba(15, 23, 42, 0.94)",
@@ -132,7 +132,7 @@ const metricsCardSurfaceStyle: React.CSSProperties = {
   border: "1px solid rgba(148, 163, 184, 0.2)",
   boxShadow:
     "0 10px 24px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 10px rgba(255, 255, 255, 0.14)",
-  color: "rgba(15, 23, 42, 0.94)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
 };
 
 const metricsInsetSurfaceStyle: React.CSSProperties = {
@@ -140,7 +140,7 @@ const metricsInsetSurfaceStyle: React.CSSProperties = {
   border: "1px solid rgba(148, 163, 184, 0.20)",
   boxShadow:
     "inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 10px rgba(255, 255, 255, 0.12)",
-  color: "rgba(15, 23, 42, 0.94)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
 };
 
 export const GlassMetricsGrid = forwardRef<
@@ -369,7 +369,7 @@ export const GlassMetricsGrid = forwardRef<
                   points={`0,100 ${points} 100,100`}
                   fill="currentColor"
                   className="glass-opacity-10"
-                  style={{ color: "rgba(71, 85, 105, 0.34)" }}
+                  style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
                 />
               )}
               <polyline
@@ -378,7 +378,7 @@ export const GlassMetricsGrid = forwardRef<
                 stroke="currentColor"
                 strokeWidth="2"
                 className="glass-transition-all glass-duration-300"
-                style={{ color: "rgba(51, 65, 85, 0.78)" }}
+                style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
               />
             </svg>
           </div>
@@ -456,7 +456,7 @@ export const GlassMetricsGrid = forwardRef<
                   "glass-absolute top-2 right-2 glass-radius-full bg-current opacity-60",
                   priorityIndicators[metric.priority]
                 )}
-                style={{ color: "rgba(51, 65, 85, 0.66)" }}
+                style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
               />
             )}
 
@@ -467,7 +467,7 @@ export const GlassMetricsGrid = forwardRef<
                   {metric.icon && (
                     <div
                       className="glass-flex-shrink-0"
-                      style={{ color: "rgba(51, 65, 85, 0.78)" }}
+                      style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
                     >
                       {metric.icon}
                     </div>

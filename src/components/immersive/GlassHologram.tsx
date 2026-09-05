@@ -376,8 +376,8 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
                   "select-none pointer-events-none"
                 )}
                 style={{
-                  color: "rgba(15, 23, 42, 0.94)",
-                  textShadow: "0 1px 0 rgba(255,255,255,0.45)",
+                  color: "var(--glass-theme-text, var(--glass-text-primary))",
+                  textShadow: "0 1px 0 rgba(255,255,255,0.18)",
                   fontSize: `${config.scale}rem`,
                 }}
               >
@@ -628,7 +628,7 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
                 />
                 <div
                   className="glass-text-sm"
-                  style={{ color: "rgba(15, 23, 42, 0.94)" }}
+                  style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
                 >
                   Initializing Hologram...
                 </div>
@@ -643,7 +643,7 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
                 <div className="glass-text-2xl glass-mb-2">⚠️</div>
                 <div
                   className="glass-text-sm"
-                  style={{ color: "rgba(15, 23, 42, 0.94)" }}
+                  style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
                 >
                   {error}
                 </div>
@@ -726,7 +726,7 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
                   }
                   className="glass-p-1 glass-radius-md hover:glass-surface-overlay glass-transition-all"
                   title="Rotate"
-                  style={{ color: "rgba(15, 23, 42, 0.88)" }}
+                  style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
                 >
                   🔄
                 </button>
@@ -740,14 +740,14 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
                   }
                   className="glass-p-1 glass-radius-md hover:glass-surface-overlay glass-transition-all"
                   title="Zoom"
-                  style={{ color: "rgba(15, 23, 42, 0.88)" }}
+                  style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
                 >
                   🔍
                 </button>
 
                 <div
                   className="glass-text-xs"
-                  style={{ color: "rgba(15, 23, 42, 0.88)" }}
+                  style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
                 >
                   Layers: {layers.length}
                 </div>
@@ -767,7 +767,7 @@ export const GlassHologram = forwardRef<HTMLDivElement, GlassHologramProps>(
             >
               <div
                 className="glass-text-xs glass-font-mono glass-gap-1"
-                style={{ color: "rgba(15, 23, 42, 0.88)" }}
+                style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
               >
                 <div>Angle: {currentProjection.angle.toFixed(1)}°</div>
                 <div>Tilt: {currentProjection.tilt.toFixed(1)}°</div>

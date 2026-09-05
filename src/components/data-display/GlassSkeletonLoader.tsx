@@ -205,7 +205,7 @@ export const GlassSkeletonLoader: React.FC<GlassSkeletonLoaderProps> = memo(
                 className={cn(
                   "glass-text-sm glass-text-primary-70 glass-font-medium"
                 )}
-                style={{ color: "rgba(15, 23, 42, 0.92)" }}
+                style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
               >
                 {text}
               </span>

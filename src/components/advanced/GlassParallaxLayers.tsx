@@ -299,7 +299,7 @@ export const GlassParallaxLayers = forwardRef<
                 : rotateYTransform,
             z: prefersReducedMotion ? 0 : layer.depth * 50,
             scale: layer.scale || 1 - depthFactor * 0.1,
-            opacity: layer.opacity || 1 - depthFactor * 0.2,
+            opacity: layer.opacity || 1 - depthFactor * 0.1,
             transformStyle: prefersReducedMotion ? "flat" : "preserve-3d",
           } as any;
 
@@ -308,7 +308,7 @@ export const GlassParallaxLayers = forwardRef<
               key={`layer-${index}`}
               initial={{ opacity: 0, scale: prefersReducedMotion ? 1 : 0.9 }}
               animate={{
-                opacity: layer.opacity || 1 - depthFactor * 0.2,
+                opacity: layer.opacity || 1 - depthFactor * 0.1,
                 scale: layer.scale || 1 - depthFactor * 0.1,
               }}
               transition={{
@@ -351,7 +351,7 @@ export const GlassParallaxLayers = forwardRef<
           <motion.div
             className="glass-absolute glass-bottom-4 glass-right-4 glass-text-xs glass-backdrop-blur-sm glass-p-2 glass-radius-md"
             style={{
-              color: "rgba(15, 23, 42, 0.94)",
+              color: "var(--glass-theme-text, var(--glass-text-primary))",
               background: "rgba(255, 255, 255, 0.24)",
               border: "1px solid rgba(255, 255, 255, 0.42)",
             }}

@@ -3,10 +3,10 @@ import React from "react";
 import { OptimizedGlass } from "../../primitives";
 import { cn } from "../../lib/utilsComprehensive";
 const codeSurfaceStyle: React.CSSProperties = {
-  background: "linear-gradient(145deg, rgba(255,255,255,0.085), rgba(255,255,255,0.018))",
-  backdropFilter: "blur(18px) saturate(1.34)",
+  background: "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%)",
+  backdropFilter: "blur(16px) saturate(1.4) brightness(1.08) contrast(1.04)",
   WebkitBackdropFilter:
-    "blur(18px) saturate(1.34)",
+    "blur(16px) saturate(1.4) brightness(1.08) contrast(1.04)",
   border: "1px solid rgba(255, 255, 255, 0.16)",
   boxShadow:
     "0 14px 34px rgba(3, 7, 18, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.16)",

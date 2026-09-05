@@ -282,7 +282,7 @@ export const GlassAvatar = forwardRef<HTMLImageElement, GlassAvatarProps>(
               width: 12,
               height: 12,
               borderRadius: 999,
-              border: "2px solid rgba(15, 23, 42, 0.92)",
+              border: "2px solid rgba(255, 255, 255, 0.92)",
             }}
             role="status"
             aria-label={`Status: ${status}`}

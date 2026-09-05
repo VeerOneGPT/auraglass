@@ -400,7 +400,7 @@ const GlassTreeNodeComponent = ({ node, level }: GlassTreeNodeProps) => {
             boxShadow: isSelected
               ? "0 10px 24px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.30), inset 0 0 14px rgba(255, 255, 255, 0.14)"
               : "0 6px 18px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.26), inset 0 0 12px rgba(255, 255, 255, 0.12)",
-            color: "rgba(15, 23, 42, 0.92)",
+            color: "var(--glass-theme-text, var(--glass-text-primary))",
           }}
           onClick={handleNodeClick}
           onDragStart={handleDragStart}
@@ -446,7 +446,7 @@ const GlassTreeNodeComponent = ({ node, level }: GlassTreeNodeProps) => {
                 style={{
                   width: 32,
                   height: 32,
-                  color: "rgba(15, 23, 42, 0.78)",
+                  color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
                 }}
                 aria-label={isExpanded ? "Collapse" : "Expand"}
               >
@@ -484,7 +484,7 @@ const GlassTreeNodeComponent = ({ node, level }: GlassTreeNodeProps) => {
           {/* Label */}
           <span
             className="glass-flex-1 glass-truncate"
-            style={{ color: "rgba(15, 23, 42, 0.92)" }}
+            style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
           >
             {node.label}
           </span>
@@ -687,7 +687,7 @@ export const GlassTreeView = forwardRef<HTMLDivElement, GlassTreeViewProps>(
             borderColor: "rgba(255, 255, 255, 0.70)",
             boxShadow:
               "0 14px 34px rgba(15, 23, 42, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.30), inset 0 0 18px rgba(255, 255, 255, 0.14)",
-            color: "rgba(15, 23, 42, 0.92)",
+            color: "var(--glass-theme-text, var(--glass-text-primary))",
           }}
           role="tree"
           aria-multiselectable={selectionMode === "multiple"}

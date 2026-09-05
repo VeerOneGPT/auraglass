@@ -23,11 +23,13 @@ import { ANIMATION } from "../../tokens/designConstants";
 const toastSurfaceStyle: React.CSSProperties = {
   width: "min(23rem, calc(100vw - 2rem))",
   maxWidth: "calc(100vw - 2rem)",
-  background: "rgba(255, 255, 255, 0.30)",
-  border: "1px solid rgba(255, 255, 255, 0.62)",
+  background:
+    "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%)",
+  backgroundColor: "rgba(255,255,255,0.018)",
+  border: "1px solid rgba(255,255,255,0.18)",
   boxShadow:
     "inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 12px 32px rgba(15, 23, 42, 0.12)",
-  color: "rgba(15, 23, 42, 0.94)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
 };
 
 export interface ToastData {
@@ -239,14 +241,14 @@ export const GlassToast: React.FC<GlassToastProps> = ({
           <div className="glass-absolute glass-top-0 glass-left-0 glass-right-0 glass-h-1 glass-radius-t-lg glass-overflow-hidden" style={{ background: "rgba(15, 23, 42, 0.10)" }}>
             <div
               className="glass-h-full transition-all var(--glass-motion-duration-fast) var(--glass-motion-easing-linear)"
-              style={{ width: `${progress}%`, background: "rgba(15, 23, 42, 0.42)" }}
+              style={{ width: `${progress}%`, background: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
             />
           </div>
         )}
 
         <div className="glass-flex glass-items-start glass-gap-3 glass-min-w-0">
           {/* Icon */}
-          <div className="glass-flex-shrink-0 glass-mt-0-5" style={{ color: "rgba(15, 23, 42, 0.82)" }}>{icon}</div>
+          <div className="glass-flex-shrink-0 glass-mt-0-5" style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}>{icon}</div>
 
           {/* Content */}
           <div className="glass-flex-1 glass-min-w-0">
@@ -260,7 +262,7 @@ export const GlassToast: React.FC<GlassToastProps> = ({
 
             {description && (
               <ContrastGuard>
-                <p className="glass-text-sm glass-leading-relaxed" style={{ color: "rgba(15, 23, 42, 0.76)" }}>
+                <p className="glass-text-sm glass-leading-relaxed" style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}>
                   {description}
                 </p>
               </ContrastGuard>
@@ -279,7 +281,7 @@ export const GlassToast: React.FC<GlassToastProps> = ({
             type="button"
             onClick={handleDismiss}
             className={`glass-flex-shrink-0 glass-flex glass-items-center glass-justify-center glass-radius-full glass-transition-colors glass-duration-[${ANIMATION.DURATION.fast}ms] glass-focus`}
-            style={{ width: 44, height: 44, color: "rgba(15, 23, 42, 0.76)" }}
+            style={{ width: 44, height: 44, color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
             aria-label="Close toast"
           >
             <X className="glass-w-4 glass-h-4" />
@@ -438,9 +440,9 @@ export const GlassToastAction: React.FC<
       )}
       style={{
         minHeight: 44,
-        color: "rgba(15, 23, 42, 0.88)",
+        color: "var(--glass-theme-text, var(--glass-text-primary))",
         background: "rgba(255, 255, 255, 0.24)",
-        borderColor: "rgba(15, 23, 42, 0.16)",
+        borderColor: "rgba(255, 255, 255, 0.18)",
       }}
     >
       {children}

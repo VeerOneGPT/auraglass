@@ -210,7 +210,7 @@ export function BrandColorIntegration({
 
   return (
     <motion.div
-      className={`brand-color-integration ${className}`}
+      className={`brand-color-integration glass-on-light ${className}`}
       style={{
         ...getBrandColorVars(),
         position: "relative",
@@ -340,13 +340,13 @@ export function BrandGlassButton({
       background: "var(--glass-primary-level2-surface)",
       border: "1px solid rgba(71, 85, 105, 0.22)",
       boxShadow: "var(--glass-elev-2)",
-      color: "rgba(15, 23, 42, 0.94)",
+      color: "var(--glass-theme-text, var(--glass-text-primary))",
     },
     secondary: {
       background: "var(--glass-primary-level2-surface)",
       border: "1px solid rgba(71, 85, 105, 0.22)",
       boxShadow: "var(--glass-elev-2)",
-      color: "rgba(15, 23, 42, 0.94)",
+      color: "var(--glass-theme-text, var(--glass-text-primary))",
     },
   };
 

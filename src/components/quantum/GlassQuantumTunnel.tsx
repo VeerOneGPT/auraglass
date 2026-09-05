@@ -98,9 +98,11 @@ const canvasColors = {
 };
 
 const neutralGlassStyle: React.CSSProperties = {
-  background: "rgba(255, 255, 255, 0.3)",
-  border: "1px solid rgba(148, 163, 184, 0.42)",
-  color: "rgba(15, 23, 42, 0.92)",
+  background:
+    "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%)",
+  backgroundColor: "rgba(255,255,255,0.018)",
+  border: "1px solid rgba(255,255,255,0.18)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
   backdropFilter: "blur(24px) saturate(1.5) brightness(1.06) contrast(1.04)",
   WebkitBackdropFilter:
     "blur(24px) saturate(1.5) brightness(1.06) contrast(1.04)",
@@ -683,7 +685,10 @@ export const GlassQuantumTunnel = forwardRef<
                   >
                     <div
                       className="glass-w-4 glass-h-4 glass-radius-full glass-shadow-lg"
-                      style={{ background: "rgba(51, 65, 85, 0.82)" }}
+                      style={{
+                        background:
+                          "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
+                      }}
                       aria-label={`Tunneling ${(transition.probability * 100).toFixed(1)} percent`}
                     />
                   </motion.div>

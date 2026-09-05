@@ -72,7 +72,7 @@ export const LiquidGlassNowPlayingBar = forwardRef<
             {title}
           </span>
           {subtitle && (
-            <span className="glass-block glass-truncate glass-text-xs" style={{ color: "rgba(15,23,42,.72)" }}>
+            <span className="glass-block glass-truncate glass-text-xs" style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}>
               {subtitle}
             </span>
           )}

@@ -1,10 +1,8 @@
-# AuraGlass Icons
+# Icons
 
-AuraGlass 3.3 keeps first-party icons as the supported package path for core app chrome, so consumers do not need a separate icon package for common product surfaces.
+First-party icons live on `aura-glass/icons` and the category subpaths. They replace Lucide for core app chrome. Do not add a separate icon package for symbols that already exist here.
 
 ## Entrypoints
-
-Public entrypoints:
 
 ```txt
 aura-glass/icons
@@ -18,36 +16,74 @@ aura-glass/icons/collaboration
 aura-glass/icons/ai
 ```
 
-Use category entrypoints when a surface only needs one icon family. Use `aura-glass/icons` when convenience matters more than a smaller import graph.
+Use a category entrypoint when a surface only needs one family. Use `aura-glass/icons` when convenience matters more than a smaller import graph.
 
 ## API
 
-Icons are React components. They support `ref`, `aria-hidden`, `role`, `title`, `className`, `style`, `strokeWidth`, `size`, and `color`. They use `currentColor` by default and render safely during SSR.
+Icons are React components created by `createGlassIcon`. They forward a ref and accept SVG props plus:
+
+| Prop | Default | Notes |
+| --- | --- | --- |
+| `size` | `24` | Number of pixels, or a CSS length string such as `"1.25rem"` |
+| `color` | `currentColor` | Stroke color |
+| `strokeWidth` | `2` | SVG stroke width |
+| `absoluteStrokeWidth` | unset | When set, stroke scales against a 24px viewBox |
+| `aria-hidden` | `true` | Decorative by default |
+
+There is no `tone` prop and no `sm` / `md` / `lg` size token. Set color with `color` or `className`.
 
 ```tsx
 import { GlassIcon, SearchIcon, SettingsIcon } from 'aura-glass/icons';
 
-<SearchIcon aria-hidden="true" size="sm" />
-<SettingsIcon title="Settings" />
-<GlassIcon name="search" tone="muted" />
+<SearchIcon aria-hidden="true" size={16} />
+<SettingsIcon aria-hidden="true" />
+<GlassIcon name="search" size={16} />
 ```
+
+`GlassIcon` looks up a small name registry and falls back to a circle if the name is unknown:
+
+`activity`, `alert`, `archive`, `calendar`, `check`, `close`, `command`, `data`, `filter`, `home`, `loading`, `menu`, `notification`, `search`, `settings`, `spark`, `user`, `users`, `warning`.
+
+## Named `*Icon` exports
+
+These aliases are exported from `aura-glass/icons` (`src/icons/components.tsx`):
+
+`ActivityIcon`, `AlertCircleIcon`, `AlertTriangleIcon`, `ArrowDownIcon`, `ArrowRightIcon`, `ArrowUpIcon`, `BellIcon`, `CalendarIcon`, `CheckIcon`, `ChevronDownIcon`, `ChevronLeftIcon`, `ChevronRightIcon`, `ChevronUpIcon`, `ClockIcon`, `CloseIcon`, `CommandIcon`, `CopyIcon`, `DashboardIcon`, `DatabaseIcon`, `DownloadIcon`, `ErrorIcon`, `FileIcon`, `FilterIcon`, `FolderIcon`, `GridIcon`, `HomeIcon`, `ImageIcon`, `InfoIcon`, `ListIcon`, `LoaderIcon`, `MediaIcon`, `MenuIcon`, `MicIcon`, `MoreHorizontalIcon`, `MoreVerticalIcon`, `NotificationIcon`, `PaletteIcon`, `PlayIcon`, `PlusIcon`, `RefreshIcon`, `SaveIcon`, `SearchIcon`, `SendIcon`, `SettingsIcon`, `SparkIcon`, `SuccessIcon`, `UserIcon`, `UsersIcon`, `VideoIcon`, `WarningIcon`, `XIcon`, `ZapIcon`.
+
+The same file also exports the unsuffixed `createGlassIcon` names (`Search`, `Settings`, `ArrowLeft`, `CreditCard`, and others). Prefer the `*Icon` aliases in product code.
+
+## Category subsets
+
+| Subpath | `*Icon` exports |
+| --- | --- |
+| `aura-glass/icons/action` | `ArrowDownIcon`, `ArrowRightIcon`, `ArrowUpIcon`, `CheckIcon`, `CloseIcon`, `CopyIcon`, `DownloadIcon`, `FilterIcon`, `LoaderIcon`, `PlusIcon`, `RefreshIcon`, `SaveIcon`, `SearchIcon`, `SendIcon`, `XIcon` |
+| `aura-glass/icons/navigation` | `CalendarIcon`, `ChevronDownIcon`, `ChevronLeftIcon`, `ChevronRightIcon`, `ChevronUpIcon`, `DashboardIcon`, `FolderIcon`, `GridIcon`, `HomeIcon`, `ListIcon`, `MenuIcon`, `MoreHorizontalIcon`, `MoreVerticalIcon`, `SearchIcon`, `SettingsIcon`, `UserIcon`, `UsersIcon` |
+| `aura-glass/icons/status` | `AlertCircleIcon`, `AlertTriangleIcon`, `BellIcon`, `ErrorIcon`, `InfoIcon`, `LoaderIcon`, `NotificationIcon`, `SuccessIcon`, `WarningIcon` |
+| `aura-glass/icons/media` | `ImageIcon`, `MediaIcon`, `MicIcon`, `PlayIcon`, `VideoIcon` |
+| `aura-glass/icons/data` | `ActivityIcon`, `DashboardIcon`, `DatabaseIcon`, `FileIcon`, `FilterIcon`, `GridIcon`, `ListIcon`, `SearchIcon` |
+| `aura-glass/icons/commerce` | `CheckIcon`, `DashboardIcon`, `ErrorIcon`, `PlusIcon`, `SuccessIcon`, `WarningIcon` |
+| `aura-glass/icons/collaboration` | `BellIcon`, `CopyIcon`, `MicIcon`, `NotificationIcon`, `SendIcon`, `UserIcon`, `UsersIcon` |
+| `aura-glass/icons/ai` | `CommandIcon`, `LoaderIcon`, `SearchIcon`, `SendIcon`, `SparkIcon`, `ZapIcon` |
 
 ## Accessibility
 
-Use `aria-hidden="true"` for decorative icons. For icon-only buttons, put the accessible name on the button:
+Icons default to `aria-hidden="true"`. For icon-only controls, put the accessible name on the control:
 
 ```tsx
-<button aria-label="Open settings">
+<button type="button" aria-label="Open settings">
   <SettingsIcon aria-hidden="true" />
 </button>
 ```
 
-## Tree-Shaking
+`GlassIconButton` from `aura-glass/app-shell` requires a `label` and sets `aria-label` for you.
 
-The icon system supports named imports without forcing a full registry into product bundles. Release verification is tracked by:
+## Migration
+
+Rewrite known Lucide named imports with the package CLI:
 
 ```bash
-node scripts/ci/verify-tree-shaking.js
+npx aura-glass migrate icons --from lucide --dry-run
+npx aura-glass migrate icons --from lucide --write
 ```
 
-Record final size evidence in `reports/3.3-release/README.md` and keep the historical 3.2 bundle baseline in `reports/3.2-release/bundle-analysis.md`.
+The CLI only rewrites names it can map. Review the report before committing. See [Lucide migration](../migration/lucide-to-auraglass-icons.md) and [CLI](../cli/migration.md).

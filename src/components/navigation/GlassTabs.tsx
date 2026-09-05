@@ -444,7 +444,7 @@ export const GlassTabsTrigger = forwardRef<
           data-state={isSelected ? "active" : "inactive"}
           className={cn(baseStyles, variantStyles[variant], className)}
           style={{
-            color: "rgba(15, 23, 42, 0.94)",
+            color: "var(--glass-theme-text, var(--glass-text-primary))",
             ...(className?.includes("glass-flex-1")
               ? {
                   width: "100%",
@@ -464,7 +464,7 @@ export const GlassTabsTrigger = forwardRef<
           {children && (
             <span
               className="glass-min-w-0 glass-truncate"
-              style={{ color: "rgba(15, 23, 42, 0.94)" }}
+              style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
             >
               {children}
             </span>

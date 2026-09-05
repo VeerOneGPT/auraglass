@@ -58,9 +58,11 @@ const quantumColors = {
 };
 
 const menuGlassStyle: React.CSSProperties = {
-  background: "rgba(255, 255, 255, 0.3)",
-  border: "1px solid rgba(148, 163, 184, 0.4)",
-  color: "rgba(15, 23, 42, 0.94)",
+  background:
+    "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%)",
+  backgroundColor: "rgba(255,255,255,0.018)",
+  border: "1px solid rgba(255,255,255,0.18)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
   backdropFilter: "blur(24px) saturate(1.5) brightness(1.06) contrast(1.04)",
   WebkitBackdropFilter:
     "blur(24px) saturate(1.5) brightness(1.06) contrast(1.04)",
@@ -531,7 +533,7 @@ export const GlassSuperpositionalMenu = forwardRef<
           className
         )}
         style={{
-          color: "rgba(15, 23, 42, 0.94)",
+          color: "var(--glass-theme-text, var(--glass-text-primary))",
           backgroundColor: "rgba(255, 255, 255, 0.3)",
         }}
         role="region"

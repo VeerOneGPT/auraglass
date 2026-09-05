@@ -434,14 +434,14 @@ function WorkspaceContent({
     >
       <style>{`
         .glass-collaborative-workspace.workspace-glass-shell {
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.2) 55%, rgba(255, 255, 255, 0.14) 100%);
+          background: linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%);
           color: var(--glass-text-primary);
         }
 
         .glass-collaborative-workspace .workspace-glass-panel {
           background: rgba(255, 255, 255, 0.18);
           border-color: var(--glass-neutral-level3-border-color);
-          color: rgba(15, 23, 42, 0.92);
+          color: var(--glass-theme-text, var(--glass-text-primary));
           backdrop-filter: blur(24px) saturate(1.45) brightness(1.04) contrast(1.03);
           -webkit-backdrop-filter: blur(24px) saturate(1.45) brightness(1.04) contrast(1.03);
           box-shadow: var(--glass-neutral-level3-shadow);
@@ -515,7 +515,7 @@ function WorkspaceContent({
         .glass-collaborative-workspace .glass-collaboration-range {
           height: 0.625rem;
           border-radius: 999px;
-          border: 1px solid rgba(15, 23, 42, 0.22);
+          border: 1px solid rgba(255, 255, 255, 0.18);
           background: rgba(255, 255, 255, 0.3);
           box-shadow:
             inset 0 1px 2px rgba(15, 23, 42, 0.12),
@@ -530,7 +530,7 @@ function WorkspaceContent({
           height: 1.125rem;
           border-radius: 999px;
           border: 2px solid rgba(255, 255, 255, 0.96);
-          background: rgba(30, 41, 59, 0.86);
+          background: rgba(255, 255, 255, 0.96);
           box-shadow: 0 4px 12px rgba(15, 23, 42, 0.22);
         }
 
@@ -539,7 +539,7 @@ function WorkspaceContent({
           height: 1.125rem;
           border-radius: 999px;
           border: 2px solid rgba(255, 255, 255, 0.96);
-          background: rgba(30, 41, 59, 0.86);
+          background: rgba(255, 255, 255, 0.96);
           box-shadow: 0 4px 12px rgba(15, 23, 42, 0.22);
         }
       `}</style>
@@ -765,7 +765,7 @@ function WorkspaceHeader({
         </h1>
         <div
           className="glass-text-sm glass-text-primary glass-whitespace-nowrap"
-          style={{ color: "rgba(15, 23, 42, 0.9)" }}
+          style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
         >
           {canEdit ? "✏️ Editing" : "👁️ Viewing"}
         </div>
@@ -892,7 +892,7 @@ function WorkspaceHeader({
             </div>
             <span
               className="glass-text-sm glass-text-primary"
-              style={{ color: "rgba(15, 23, 42, 0.9)" }}
+              style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
             >
               {onlineUsers.length} online
             </span>

@@ -140,7 +140,7 @@ export const GlassMenuPrimitiveItem = React.forwardRef<
         background: "rgba(255, 255, 255, 0.18)",
         boxShadow:
           "0 6px 18px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255,255,255,0.28)",
-        color: "rgba(15, 23, 42, 0.9)",
+        color: "var(--glass-theme-text, var(--glass-text-primary))",
         font: "inherit",
         ...style,
       }}

@@ -240,7 +240,7 @@ export function MultiUserGlassEditor({
             </span>
             <span
               className="glass-font-medium"
-              style={{ color: "rgba(15, 23, 42, 0.9)" }}
+              style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
             >
               {user.name}
             </span>

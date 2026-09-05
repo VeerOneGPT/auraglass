@@ -811,9 +811,9 @@ export const GlassNebulaClouds = forwardRef<
           border="subtle"
           className="glass-nebula-controls glass-flex glass-flex-wrap glass-items-center glass-gap-4 glass-p-4 glass-radius-lg glass-backdrop-blur-md glass-border glass-border-glass-border/20 glass-contrast-guard"
           style={{
-            color: "rgba(15, 23, 42, 0.92)",
+            color: "var(--glass-theme-text, var(--glass-text-primary))",
             background: "rgba(255, 255, 255, 0.24)",
-            borderColor: "rgba(80, 102, 130, 0.18)",
+            borderColor: "rgba(255, 255, 255, 0.18)",
           }}
         >
           <div className="glass-flex glass-items-center glass-gap-2">
@@ -827,9 +827,9 @@ export const GlassNebulaClouds = forwardRef<
               aria-label="Nebula type selection"
               className="glass-px-2 glass-py-1 glass-radius-md glass-surface-overlay glass-border glass-border-glass-border/20 glass-contrast-guard glass-focus glass-touch-target"
               style={{
-                color: "rgba(15, 23, 42, 0.92)",
+                color: "var(--glass-theme-text, var(--glass-text-primary))",
                 background: "rgba(255, 255, 255, 0.32)",
-                borderColor: "rgba(80, 102, 130, 0.24)",
+                borderColor: "rgba(255, 255, 255, 0.24)",
               }}
             >
               <option value="emission">Emission</option>

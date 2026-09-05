@@ -1,5 +1,5 @@
 {
-  "id": "recipe-commerce-operations-panel",
+  "id": "commerce-operations-panel",
   "name": "commerce-operations-panel",
   "viewport": {
     "name": "desktop",
@@ -122,33 +122,33 @@
       "webkitBackdropFilter": "blur(24px) saturate(1.4) brightness(1.08) contrast(1.04)",
       "backdropFilterAuthored": true,
       "webkitBackdropFilterAuthored": false,
-      "backgroundColor": "rgba(255, 255, 255, 0.12)",
-      "backgroundImage": "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)",
+      "backgroundColor": "rgba(255, 255, 255, 0.02)",
+      "backgroundImage": "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)",
       "backgroundImages": [
-        "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)"
+        "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)"
       ],
-      "borderTopColor": "rgba(255, 255, 255, 0.28)",
+      "borderTopColor": "rgba(255, 255, 255, 0.18)",
       "borderWidth": "1px",
       "borders": [
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         }
       ],
       "boxShadow": "rgba(0, 0, 0, 0.22) 0px 8px 32px 0px, rgba(255, 255, 255, 0.22) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.12) 0px 0px 12px 0px inset",
-      "color": "rgba(15, 23, 42, 0.94)",
+      "color": "rgb(23, 32, 51)",
       "overflowX": "visible",
       "overflowY": "visible",
       "scrollWidth": 1290,
@@ -199,7 +199,7 @@
         }
       ],
       "boxShadow": "none",
-      "color": "rgba(15, 23, 42, 0.94)",
+      "color": "rgb(23, 32, 51)",
       "overflowX": "visible",
       "overflowY": "visible",
       "scrollWidth": 1258,
@@ -224,33 +224,33 @@
       "webkitBackdropFilter": "blur(24px) saturate(1.4) brightness(1.08) contrast(1.04)",
       "backdropFilterAuthored": true,
       "webkitBackdropFilterAuthored": false,
-      "backgroundColor": "rgba(255, 255, 255, 0.12)",
-      "backgroundImage": "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)",
+      "backgroundColor": "rgba(255, 255, 255, 0.02)",
+      "backgroundImage": "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)",
       "backgroundImages": [
-        "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)"
+        "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)"
       ],
-      "borderTopColor": "rgba(255, 255, 255, 0.28)",
+      "borderTopColor": "rgba(255, 255, 255, 0.18)",
       "borderWidth": "1px",
       "borders": [
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         }
       ],
       "boxShadow": "rgba(0, 0, 0, 0.22) 0px 8px 32px 0px, rgba(255, 255, 255, 0.22) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.12) 0px 0px 12px 0px inset",
-      "color": "rgba(15, 23, 42, 0.94)",
+      "color": "rgb(23, 32, 51)",
       "overflowX": "visible",
       "overflowY": "visible",
       "scrollWidth": 1290,
@@ -866,27 +866,15 @@
       "y": 251,
       "width": 1292,
       "height": 410,
-      "backgroundColor": "rgba(255, 255, 255, 0.12)",
-      "backgroundImage": "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)",
+      "backgroundColor": "rgba(255, 255, 255, 0.02)",
+      "backgroundImage": "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)",
       "boxShadow": "rgba(0, 0, 0, 0.22) 0px 8px 32px 0px, rgba(255, 255, 255, 0.22) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.12) 0px 0px 12px 0px inset",
       "colors": [
         {
           "r": 255,
           "g": 255,
           "b": 255,
-          "a": 0.12
-        },
-        {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 0.24
-        },
-        {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 0.12
+          "a": 0.106
         },
         {
           "r": 0,
@@ -948,27 +936,15 @@
       "y": 661,
       "width": 1292,
       "height": 197,
-      "backgroundColor": "rgba(255, 255, 255, 0.12)",
-      "backgroundImage": "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)",
+      "backgroundColor": "rgba(255, 255, 255, 0.02)",
+      "backgroundImage": "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)",
       "boxShadow": "rgba(0, 0, 0, 0.22) 0px 8px 32px 0px, rgba(255, 255, 255, 0.22) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.12) 0px 0px 12px 0px inset",
       "colors": [
         {
           "r": 255,
           "g": 255,
           "b": 255,
-          "a": 0.12
-        },
-        {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 0.24
-        },
-        {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 0.12
+          "a": 0.106
         },
         {
           "r": 0,
@@ -1024,10 +1000,5 @@
     }
   ],
   "consoleErrors": [],
-  "pageErrors": [],
-  "runId": "runtime-audit-full-20260814035148-bd425d08-8e91-4f46-9c64-432aacd56a7d",
-  "kind": "recipe",
-  "sourcePath": "recipes/commerce-operations-panel",
-  "storyId": null,
-  "recipeHarness": "scripts/ci/verify-recipes-render.js"
+  "pageErrors": []
 }

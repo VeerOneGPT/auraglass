@@ -1,68 +1,63 @@
-# AuraGlass Migration CLI
+# CLI
 
-AuraGlass migration CLI commands audit and migrate away from MUI, Radix, and Lucide in core app chrome. For 3.3, the same CLI remains part of the release gate while package subpath, recipe render, Vite, and Next integration checks verify the expanded package surface.
+The package binary is `aura-glass` (`bin/aura-glass.cjs`). It lists and scaffolds recipes, audits forbidden core-UI dependencies, and reports or rewrites Lucide / Radix / MUI imports.
+
+```bash
+npx aura-glass --help
+```
 
 ## Commands
 
-```bash
-aura-glass audit deps
-aura-glass audit imports
-aura-glass migrate icons --from lucide
-aura-glass migrate radix
-aura-glass migrate mui
-aura-glass doctor
+```txt
+aura-glass list [--json]
+aura-glass info <recipe> [--json]
+aura-glass add <recipe|all> [--cwd <dir>] [--out <dir>] [--dry-run] [--force] [--json]
+aura-glass audit deps [--cwd <dir>] [--json]
+aura-glass audit imports [--cwd <dir>] [--json]
+aura-glass migrate icons --from lucide [--cwd <dir>] [--dry-run] [--write] [--json]
+aura-glass migrate radix [--cwd <dir>] [--dry-run] [--write] [--json]
+aura-glass migrate mui [--cwd <dir>] [--dry-run] [--write] [--json]
+aura-glass doctor [--cwd <dir>] [--json]
 ```
 
-All migration commands support:
+### Recipes
 
 ```bash
---cwd <dir>
---dry-run
---write
---json
+npx aura-glass list
+npx aura-glass info saas-dashboard
+npx aura-glass add saas-admin-shell --out src/components/auraglass/recipes
+npx aura-glass add all --dry-run --json
 ```
 
-`migrate icons --from lucide` can rewrite known named imports when `--write` is passed. `migrate radix` and `migrate mui` are report-first because behavior and layout replacements need intentional review.
+Recipe IDs and provider-safe behavior are documented in [recipes/readme.md](../recipes/readme.md).
 
-## JSON For CI
+### Audit and migrate
 
 ```bash
-aura-glass audit deps --json
-aura-glass audit imports --json
-aura-glass doctor --json
+npx aura-glass audit deps --json
+npx aura-glass audit imports --cwd apps/web
+npx aura-glass migrate icons --from lucide --dry-run
+npx aura-glass migrate icons --from lucide --write
+npx aura-glass migrate radix --json
+npx aura-glass migrate mui --json
+npx aura-glass doctor --json
 ```
 
-Use JSON output when a project wants to block new forbidden core UI dependencies before the full 3.3 CI gate is wired.
+`migrate icons --from lucide` rewrites known named imports when `--write` is passed. `migrate radix` and `migrate mui` are report-first: they do not silently replace layout or behavior.
 
-## Local Gate Scripts
+The audit commands flag Lucide, Radix, and MUI / Material packages and point at AuraGlass replacements. The exact package names and before/after import examples live on the migration pages:
 
-Package maintainers can run:
+- [Lucide → AuraGlass icons](../migration/lucide-to-auraglass-icons.md)
+- [Radix → AuraGlass primitives](../migration/radix-to-auraglass.md)
+- [MUI → AuraGlass app chrome](../migration/mui-to-auraglass.md)
 
-```bash
-node scripts/ci/verify-no-core-ui-deps.js
-node scripts/ci/verify-tree-shaking.js
-```
+## Recommended order
 
-The first script is the dependency and import gate. The second script is the export-map and bundle-sovereignty gate. Strict bundle checks can be enabled with:
+1. `aura-glass audit deps` and remove forbidden production dependencies.
+2. `aura-glass audit imports` to list source hits.
+3. `aura-glass migrate icons --from lucide --dry-run`, then `--write`.
+4. Replace Radix surfaces one component at a time.
+5. Replace MUI app shell, forms, overlays, and workflow surfaces by route.
+6. `aura-glass doctor`.
 
-```bash
-node scripts/ci/verify-tree-shaking.js --strict
-```
-
-## Recommended Migration Order
-
-1. Run `aura-glass audit deps` and remove forbidden core UI packages from production metadata.
-2. Run `aura-glass audit imports` to inventory source imports.
-3. Run `aura-glass migrate icons --from lucide --dry-run`.
-4. Apply icon rewrites with `--write`.
-5. Replace Radix surfaces one component at a time.
-6. Replace MUI app shell, forms, overlays, and workflow surfaces by route.
-7. Run `aura-glass doctor`.
-
-## 3.3 Evidence
-
-Current 3.3 package and migration-adjacent evidence is tracked in:
-
-- `reports/3.3-release/README.md`
-- `reports/3.3-release/recipe-evidence.md`
-- `reports/3.3-release/recipe-render-evidence.md`
+Related pages: [icons](../icons/readme.md), [MUI migration](../migration/mui-to-auraglass.md), [Radix migration](../migration/radix-to-auraglass.md), [Lucide migration](../migration/lucide-to-auraglass-icons.md).

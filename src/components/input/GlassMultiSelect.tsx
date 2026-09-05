@@ -787,7 +787,7 @@ const GlassMultiSelectInternal = <T extends string | number = string | number>(
                       {renderOption ? (
                         renderOption(option, isSelected)
                       ) : (
-                        <span style={{ color: "rgba(15, 23, 42, 0.92)" }}>
+                        <span style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}>
                           {option.label}
                         </span>
                       )}

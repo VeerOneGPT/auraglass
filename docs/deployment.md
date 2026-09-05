@@ -32,7 +32,7 @@ If a Dockerfile, process manager, deploy script, or cloud service starts `server
 | Public API URL | `http://localhost:3002` | `NEXT_PUBLIC_API_URL=http://localhost:3002` |
 | Public WebSocket URL | `ws://localhost:3001` | `NEXT_PUBLIC_WS_URL=ws://localhost:3001` |
 
-Set the API and WebSocket ports explicitly while the 3.3 hosted-runtime cleanup is in progress; older code and examples used both `3001` and `3002` for different roles.
+Current `server/index.ts` defaults the API to `API_SERVER_PORT || 3002`. Current `server/websocket-server.js` defaults the socket server to `WS_PORT || 3001`. Set both explicitly so older examples that swapped those ports cannot silently bind the wrong process.
 
 ## Prerequisites
 
@@ -60,13 +60,24 @@ REDIS_URL=redis://localhost:6379
 
 # Optional provider-backed features
 OPENAI_API_KEY=
+OPENAI_MODEL=gpt-4
 PINECONE_API_KEY=
 PINECONE_ENVIRONMENT=
 PINECONE_INDEX_NAME=
 GOOGLE_CLOUD_PROJECT_ID=
 GOOGLE_APPLICATION_CREDENTIALS=
+GOOGLE_VISION_API_KEY=
 REMOVEBG_API_KEY=
 SENTRY_DSN=
+
+# Feature flags (see src/services/ai/config.ts createRuntimeFeatureFlags)
+ENABLE_SMART_FORMS=true
+ENABLE_SEMANTIC_SEARCH=false
+ENABLE_VISION_API=false
+ENABLE_BACKGROUND_REMOVAL=false
+ENABLE_AI_CACHING=true
+ENABLE_AI_BATCHING=true
+ENABLE_COLLABORATION=false
 ```
 
 Generate a local secret for non-shared environments:
@@ -97,12 +108,30 @@ npm run dev
 
 `npm run server:api` should start the built API server from `server/index.ts`; `npm run server:websocket` starts `server/websocket-server.js`. Do not substitute `server/api-server.js` for production testing.
 
-## Health And Smoke Checks
+## HTTP Routes
 
-Process health:
+The production API in `server/index.ts` exposes:
+
+| Method | Path | Auth | Notes |
+| --- | --- | --- | --- |
+| `GET` | `/health` | no | Process health, provider status, feature flags |
+| `GET` | `/ready` | no | `200` when JWT and enabled features are configured; `503` otherwise |
+| `POST` | `/api/auth/login` | no | `{ email, password }` |
+| `POST` | `/api/auth/register` | no | `{ email, password, name }` |
+| `POST` | `/api/auth/refresh` | no | `{ refreshToken }` |
+| `POST` | `/api/auth/logout` | Bearer | Revokes the presented token |
+| `POST` | `/api/ai/generate-form` | Bearer | Requires `ENABLE_SMART_FORMS` and OpenAI |
+| `POST` | `/api/ai/search` | Bearer | Requires OpenAI + Pinecone |
+| `POST` | `/api/ai/index-documents` | Bearer | Requires OpenAI + Pinecone |
+| `POST` | `/api/ai/analyze-image` | Bearer | Requires `ENABLE_VISION_API` and Google Vision |
+| `POST` | `/api/ai/remove-background` | Bearer | Requires `ENABLE_BACKGROUND_REMOVAL` and Remove.bg |
+| `POST` | `/api/ai/summarize` | Bearer | Requires OpenAI |
+
+## Health And Smoke Checks
 
 ```bash
 curl http://localhost:3002/health
+curl http://localhost:3002/ready
 ```
 
 Authenticated AI route examples should use `http://localhost:3002`:
@@ -127,9 +156,12 @@ When a route depends on a missing optional provider, the hosted runtime should r
   "code": "AURA_PROVIDER_UNCONFIGURED",
   "provider": "openai",
   "feature": "generate-form",
+  "remediation": "Set OPENAI_API_KEY before using generate-form.",
   "docsUrl": "https://auraglass.auraone.ai/docs/ai-providers"
 }
 ```
+
+That payload is `ProviderUnconfiguredError.toJSON()` from `src/services/ai/config.ts`. The route returns HTTP `503`.
 
 ## Provider Scope
 
@@ -168,15 +200,19 @@ Docker or Compose deployments must follow the same contract:
 - WebSocket service exposes `3001` and starts `server/websocket-server.js`.
 - Redis is configured when hosted caching, rate limiting, or collaboration persistence is enabled.
 - Health checks target `http://localhost:3002/health`.
-- The legacy demo/mock `server/api-server.js` path is not used in production images.
-
-If your local Dockerfile or Compose file still references `server/api-server.js`, treat it as a pending 3.3 runtime cleanup item before production use.
+- The current `Dockerfile` starts `node dist/server/server/index.js`. The current `docker-compose.yml` `api` service uses the same command. Do not change those back to `server/api-server.js`.
 
 ## Collaboration Boundary
 
-The optional WebSocket server supports hosted realtime transport features such as authenticated connections, rooms, presence, cursor position, and selection events. Collaborative document editing is explicitly unsupported in 3.3 and emits `COLLABORATION_EDIT_UNSUPPORTED`; there is no hosted edit engine or env flag that turns editing on.
+The optional WebSocket server (`server/websocket-server.js`) accepts:
 
-The server persists room and cursor state in Redis, but 3.3 does not configure the Socket.IO Redis adapter for multi-process event fanout. Use one WebSocket process for verified 3.3 behavior, or add Redis-adapter integration tests before horizontally scaling the realtime transport.
+- `join-room`, `leave-room`, `create-room`
+- `cursor-move`, `selection-change`, `update-presence`
+- `collaborative-edit` — **unsupported**. The server emits `collaboration-edit-unsupported` with `code: "COLLABORATION_EDIT_UNSUPPORTED"`. `ENABLE_COLLABORATION` does not turn editing on.
+
+JWT verification runs when `socket.handshake.auth.token` is present (`JWT_SECRET` required). Anonymous sockets are allowed only when `ALLOW_ANONYMOUS_WS=true` or `ENABLE_DEMO_AUTH=true` **and** `NODE_ENV` is not `production`.
+
+The server persists room and cursor state in Redis. It does not configure the Socket.IO Redis adapter for multi-process fanout. Run one WebSocket process, or add Redis-adapter tests before scaling horizontally.
 
 ## Troubleshooting
 
@@ -208,7 +244,7 @@ docker run -d -p 6379:6379 redis:alpine
 
 ## Release Checks For Hosted Runtime Claims
 
-Before a 3.3 hosted-runtime claim is made, evidence should show:
+Before a hosted-runtime claim is made, evidence should show:
 
 - `npm run build:server` succeeds.
 - API health works at `http://localhost:3002/health`.

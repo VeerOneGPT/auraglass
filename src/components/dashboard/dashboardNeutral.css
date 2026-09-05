@@ -40,16 +40,17 @@
 
 .glass-activity-neutral-row {
   background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.075),
+    145deg,
+    rgba(255, 255, 255, 0.105),
+    rgba(255, 255, 255, 0.035) 52%,
     rgba(255, 255, 255, 0.018)
   ) !important;
-  border-color: rgba(255, 255, 255, 0.14) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
   box-shadow:
     0 10px 28px rgba(0, 0, 0, 0.14),
     inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
-  backdrop-filter: blur(16px) saturate(1.35) !important;
-  -webkit-backdrop-filter: blur(16px) saturate(1.35) !important;
+  backdrop-filter: blur(16px) saturate(1.4) brightness(1.08) contrast(1.04) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(1.4) brightness(1.08) contrast(1.04) !important;
 }
 
 .glass-chart-widget-neutral-content,

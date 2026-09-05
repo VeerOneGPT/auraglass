@@ -299,7 +299,7 @@ export const GlassChip = forwardRef<HTMLDivElement, GlassChipProps>(
               paddingTop: 4,
               paddingBottom: 4,
               "--glass-theme-text": "rgba(15, 23, 42, 0.92)",
-              color: "rgba(15, 23, 42, 0.92)",
+              color: "var(--glass-theme-text, var(--glass-text-primary))",
             } as React.CSSProperties
           }
           onClick={isInteractive ? handleClick : undefined}

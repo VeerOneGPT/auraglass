@@ -1,29 +1,36 @@
-# Theme Engine 2.0 And 3.3 Preset Guidance
+# Theme Engine 2.0
 
-AuraGlass 3.2 made brand generation, density, motion policy, contrast budgets, and SSR-safe runtime theming first-class package capabilities. AuraGlass 3.3 keeps that public API stable and documents domain presets that teams can create with `aura-glass/theme` without waiting for new exported preset constants.
+Import theme helpers from `aura-glass/theme`. The provider writes CSS variables onto a wrapper `div` and exposes density, motion, and mode through hooks.
 
-## Goals
+## Public API
 
-- Generate a usable brand theme from a small color input.
-- Keep density explicit for dashboard, admin, media, and marketing contexts.
-- Make motion policy configurable and reduced-motion-safe.
-- Track contrast budgets for glass surfaces.
-- Avoid browser globals during SSR.
-- Replace the need for MUI theme overrides in core app chrome.
-- Document starter themes for SaaS admin, AI command center, media review, commerce operations, support console, docs portal, and marketing launch surfaces.
-- Show density, motion, and contrast comparisons in Storybook for 3.3 release review.
+```ts
+import {
+  GlassThemeProvider,
+  createGlassTheme,
+  createBrandGlassTheme,
+  createGlassThemeCssVars,
+  useGlassTheme,
+  useGlassDensity,
+  useGlassMotionPolicy,
+  glassMaterialPresets,
+} from 'aura-glass/theme';
+```
 
-## Theme Inputs
-
-| Input | Purpose |
+| Export | Role |
 | --- | --- |
-| brand color | derive accent, focus, selection, and active states |
-| surface mode | light, dark, high contrast, or system |
-| density | compact, comfortable, or spacious |
-| motion policy | system, reduced, expressive, or none |
-| contrast budget | minimum text and control contrast per surface |
+| `createGlassTheme(options?)` | Build a typed theme. Defaults: brand `#7dd3fc`, accent `#c084fc`, mode `dark`, density `comfortable`, motion `system` |
+| `createBrandGlassTheme({ brandColor, accentShift?, ...options })` | Derive accent from `brandColor` (default `accentShift` `0.34`) |
+| `createGlassThemeCssVars(theme)` | Map the theme to `--glass-theme-*` CSS variables |
+| `GlassThemeProvider` | Accepts `theme?: GlassTheme \| CreateGlassThemeOptions` |
+| `useGlassTheme()` | `{ theme, setTheme, setMode, setDensity, setMotionPolicy }` |
+| `useGlassDensity()` | `{ density, setDensity, tokens }` |
+| `useGlassMotionPolicy()` | `{ motionPolicy, setMotionPolicy, tokens }` |
+| `glassMaterialPresets` | Token table for material looks |
 
-## Example Shape
+`CreateGlassThemeOptions` fields: `id`, `name`, `brandColor`, `accentColor`, `mode`, `density`, `motionPolicy`.
+
+## Provider
 
 ```tsx
 import { GlassThemeProvider } from 'aura-glass/theme';
@@ -44,23 +51,27 @@ export function Root({ children }: { children: React.ReactNode }) {
 }
 ```
 
-This page matches the implemented 3.2 public API.
+`mode` is `light` | `dark` | `system` | `high-contrast`.  
+`density` is `compact` | `comfortable` | `spacious`.  
+`motionPolicy` is `system` | `reduced` | `expressive` | `none`.
 
-## 3.3 Domain Presets
+The provider always wraps children in a `div` that sets `data-auraglass-theme`, `data-glass-theme-mode`, and the CSS variables from `createGlassThemeCssVars`.
 
-The current stable API is `createGlassTheme`, `createBrandGlassTheme`, `createGlassThemeCssVars`, and `GlassThemeProvider` from `aura-glass/theme`. Use these functions to define domain presets in application code.
+## CSS variables
 
-| Preset | Mode | Density | Motion Policy | Guidance |
-| --- | --- | --- | --- | --- |
-| SaaS admin | `light` | `compact` | `reduced` | Dense account, billing, and operations surfaces. |
-| AI command center | `dark` | `comfortable` | `reduced` | Provider status, telemetry, command input, and safety review. |
-| Media review | `dark` | `spacious` | `system` | Review rooms, preview canvases, media controls, and timeline panels. |
-| Commerce operations | `light` | `comfortable` | `reduced` | Orders, carts, fulfillment, and payment follow-up. |
-| Support console | `light` | `compact` | `none` | Ticket queues, SLA risk, notifications, and manual triage. |
-| Docs portal | `light` | `comfortable` | `none` | Documentation navigation, code examples, and package entrypoint selectors. |
-| Marketing launch | `dark` | `spacious` | `reduced` | Hero, install, feature grid, changelog, social proof, and visual evidence sections. |
+`createGlassThemeCssVars` emits:
 
-Example:
+`--glass-theme-brand`, `--glass-theme-brand-text`, `--glass-theme-accent`, `--glass-theme-background`, `--glass-theme-surface`, `--glass-theme-surface-strong`, `--glass-theme-text`, `--glass-theme-text-muted`, `--glass-theme-border`, `--glass-theme-focus`, `--glass-theme-control-height`, `--glass-theme-radius`, `--glass-theme-gap`, `--glass-theme-page-padding`, `--glass-theme-duration-fast`, `--glass-theme-duration-normal`, `--glass-theme-easing-standard`.
+
+## Material presets
+
+Shipped keys in `src/theme/materials.ts` are `clear`, `regular`, `dense`, `luminous`, and `inset`. There are no exported presets named `frosted`, `prism`, `aurora`, `chrome`, `holo`, or `tinted`.
+
+Each preset provides `backdropBlur`, `backdropFilter`, `WebkitBackdropFilter`, `background`, `border`, `shadow`, and `sheen`.
+
+## Application presets
+
+The package does not export named domain themes. Build them with `createGlassTheme`:
 
 ```tsx
 import { createGlassTheme, createGlassThemeCssVars } from 'aura-glass/theme';
@@ -78,38 +89,28 @@ export const supportConsoleTheme = createGlassTheme({
 export const supportConsoleCssVars = createGlassThemeCssVars(supportConsoleTheme);
 ```
 
-Use the generated CSS variables on an app shell, route container, or design-system provider boundary. Avoid hardcoding product surfaces around a single hue family; each preset should use brand and accent tokens with readable surface, text, focus, success, warning, and danger tokens.
+Suggested starting points (application code, not package exports):
 
-## Storybook Coverage
+| Surface | Mode | Density | Motion |
+| --- | --- | --- | --- |
+| SaaS admin | `light` | `compact` | `reduced` |
+| AI command center | `dark` | `comfortable` | `reduced` |
+| Media review | `dark` | `spacious` | `system` |
+| Commerce operations | `light` | `comfortable` | `reduced` |
+| Support console | `light` | `compact` | `none` |
+| Docs portal | `light` | `comfortable` | `none` |
+| Marketing launch | `dark` | `spacious` | `reduced` |
 
-AuraGlass 3.3 adds `3.3/Theme Preset Showcase` in Storybook. The story compares the documented domain presets and records:
+## Static tokens
 
-- brand and accent color choice,
-- density policy,
-- motion policy,
-- surface mode,
-- text-on-surface contrast.
+Build-pipeline tokens remain on the six token entrypoints documented in [package-entrypoints.md](../package-entrypoints.md).
 
-The story uses public theme helpers and disables progress animation so reduced-motion visual baselines remain stable.
+## MUI theme mapping
 
-## MUI Theme Migration
-
-Move MUI `createTheme` usage into AuraGlass tokens by mapping:
-
-| MUI theme area | AuraGlass theme area |
+| MUI theme area | AuraGlass |
 | --- | --- |
-| `palette.primary` | brand primary and accent tokens |
-| `palette.mode` | surface mode |
-| `spacing` | density and spacing scale |
-| `shape.borderRadius` | radius tokens |
-| `typography` | type scale tokens |
-| component overrides | AuraGlass component props and token overrides |
-
-## Evidence
-
-Record 3.3 verification in:
-
-- `reports/3.3-release/theme-evidence.md`
-- `reports/3.3-release/marketing-evidence.md`
-
-Historical 3.2 implementation evidence remains in `reports/3.2-release/theme-engine.md`.
+| `palette.primary` | `brandColor` / `accentColor` |
+| `palette.mode` | `mode` |
+| `spacing` | density tokens (`controlHeight`, `gap`, `pagePadding`) |
+| `shape.borderRadius` | density `radius` |
+| component overrides | AuraGlass component props and CSS variables |

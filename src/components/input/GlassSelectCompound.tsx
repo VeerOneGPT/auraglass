@@ -556,7 +556,7 @@ const GlassSelectLabel = React.forwardRef<
       "glass-select-label glass-py-1.5 pl-8 pr-2 glass-text-sm font-semibold",
       className
     )}
-    style={{ color: "rgba(15, 23, 42, 0.72)", ...style }}
+    style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))", ...style }}
     {...props}
   />
 ));

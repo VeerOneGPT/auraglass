@@ -808,7 +808,7 @@ export const GlassModal = forwardRef<HTMLDivElement, GlassModalProps>(
               )}
               style={{
                 background:
-                  "linear-gradient(rgba(255,255,255,0.08), rgba(255,255,255,0.08)), linear-gradient(rgba(15,23,42,0.24), rgba(15,23,42,0.24))",
+                  "linear-gradient(rgba(255,255,255,0.08), rgba(255,255,255,0.08)), linear-gradient(rgba(15,23,42,0.20), rgba(15,23,42,0.20))",
               }}
               onClick={handleBackdropClick}
               aria-hidden="true"

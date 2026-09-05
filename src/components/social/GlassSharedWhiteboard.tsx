@@ -529,7 +529,7 @@ export const GlassSharedWhiteboard = forwardRef<
                         backgroundColor: color,
                         boxShadow:
                           selectedColor === color
-                            ? "0 0 0 2px rgba(15, 23, 42, 0.78)"
+                            ? "0 0 0 2px var(--glass-theme-text, var(--glass-text-primary))"
                             : undefined,
                       }}
                       aria-label={`Select color ${color}`}

@@ -1,5 +1,5 @@
 {
-  "id": "recipe-settings-and-billing-suite",
+  "id": "settings-and-billing-suite",
   "name": "settings-and-billing-suite",
   "viewport": {
     "name": "mobile",
@@ -940,10 +940,5 @@
     }
   ],
   "consoleErrors": [],
-  "pageErrors": [],
-  "runId": "runtime-audit-full-20260814035148-bd425d08-8e91-4f46-9c64-432aacd56a7d",
-  "kind": "recipe",
-  "sourcePath": "recipes/settings-and-billing-suite",
-  "storyId": null,
-  "recipeHarness": "scripts/ci/verify-recipes-render.js"
+  "pageErrors": []
 }

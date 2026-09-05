@@ -122,8 +122,7 @@ const isAllowedHistoricalDoc = (relativePath) =>
   relativePath.startsWith("docs/migration/") ||
   relativePath.startsWith("reports/3.2-release/") ||
   relativePath.startsWith("reports/3.1-release/") ||
-  relativePath.startsWith("reports/3.0") ||
-  relativePath === "auraglass32PRD.md";
+  relativePath.startsWith("reports/3.0");
 
 const auditCurrentDocs = () => {
   const roots = ["README.md", "INSTALLATION.md", "docs", "reports"]

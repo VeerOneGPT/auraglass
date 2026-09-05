@@ -101,14 +101,7 @@ const defaultStyleModels: StyleModel[] = [
 ];
 
 const readableGlassTextStyle: React.CSSProperties = {
-  "--glass-text-primary": "rgba(15, 23, 42, 0.96)",
-  "--glass-text-secondary": "rgba(30, 41, 59, 0.84)",
-  "--glass-text-tertiary": "rgba(51, 65, 85, 0.72)",
-  "--typography-text-primary": "rgba(15, 23, 42, 0.96)",
-  "--typography-text-secondary": "rgba(30, 41, 59, 0.84)",
-  "--typography-text-tertiary": "rgba(51, 65, 85, 0.72)",
-  "--glass-theme-text": "rgba(15, 23, 42, 0.96)",
-  color: "rgba(15, 23, 42, 0.96)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
 } as React.CSSProperties;
 
 export const GlassStyleTransfer = forwardRef<

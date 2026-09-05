@@ -41,7 +41,7 @@ export const ChartLegend: React.FC<ChartLegendProps> = ({
       ? "linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.46))"
       : "transparent",
     borderRadius: glassEffect ? "var(--glass-radius-md)" : "0",
-    border: glassEffect ? "1px solid rgba(15, 23, 42, 0.14)" : "none",
+    border: glassEffect ? "1px solid rgba(255, 255, 255, 0.18)" : "none",
     boxShadow: glassEffect
       ? "inset 0 1px 0 rgba(255,255,255,0.72), 0 12px 34px rgba(15,23,42,0.12)"
       : "none",

@@ -1,5 +1,5 @@
 {
-  "id": "recipe-admin-data-table",
+  "id": "admin-data-table",
   "name": "admin-data-table",
   "viewport": {
     "name": "tablet",
@@ -916,10 +916,5 @@
     }
   ],
   "consoleErrors": [],
-  "pageErrors": [],
-  "runId": "runtime-audit-full-20260814035148-bd425d08-8e91-4f46-9c64-432aacd56a7d",
-  "kind": "recipe",
-  "sourcePath": "recipes/admin-data-table",
-  "storyId": null,
-  "recipeHarness": "scripts/ci/verify-recipes-render.js"
+  "pageErrors": []
 }

@@ -1,6 +1,6 @@
-# AuraGlass 3.3 Recipes
+# Recipes
 
-The package recipe registry is exported from `aura-glass/registry` and scaffolded through the `aura-glass` CLI. AuraGlass 3.3 keeps the 3.2 app-surface starters and adds deeper production starters for AI operations, provider-safe search and vision flows, collaboration readiness, support triage, release operations, docs portals, and marketing launch pages.
+The recipe registry is exported from `aura-glass/registry` and scaffolded through the `aura-glass` CLI. The current package ships 28 starters: 20 app-surface recipes plus 8 later recipes for AI operations, provider-safe search and vision, collaboration readiness, support triage, release operations, docs portals, and marketing launch pages.
 
 Recipes are product-surface starters, not decorative preview cards. They should scaffold without MUI, Radix, Lucide, or shadcn/ui for core UI, use AuraGlass icons and package-owned components, and include accessibility and performance notes.
 

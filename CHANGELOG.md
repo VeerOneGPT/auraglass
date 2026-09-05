@@ -1,5 +1,16 @@
 # Changelog
 
+## [4.1.0] - 2026-09-05
+
+### Fixed
+
+- Certified all 498 visual targets (470 component exports plus 28 recipes) green on token-purity plus layout gates across desktop, tablet, and mobile viewports.
+- Modal scrims in GlassDialog, GlassDrawer, and GlassModal now use the canonical slate scrim `rgb(15, 23, 42)` at alpha 0.20, satisfying both the gradient-stop band and the whole-viewport tint census.
+- Light-context tertiary text unified at 65% opacity (new `--glass-opacity-65` scale step) so small labels hold 4.5:1 contrast and the 0.50 effective-alpha floor on frosted backdrops.
+- GlassOrbitalMenu keyboard shortcut badge now renders at full primary contrast on mobile.
+- Recipe evidence regenerated: analytics heatmap cell values resolve to dark text on light cells via the luminance-aware contrast utility.
+- Audit harness settle now requires opacity stability across consecutive polls, so rAF entrance animations are measured at rest instead of mid-fade.
+
 ## [4.0.0] - 2026-08-14
 
 ### Changed

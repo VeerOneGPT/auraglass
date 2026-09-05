@@ -609,11 +609,13 @@ export const GlassVoiceWaveform = forwardRef<
         intensity="subtle"
         className={cn("glass-p-4 glass-space-y-4", className)}
         style={{
-          background: "rgba(255,255,255,.3)",
-          border: "1px solid rgba(148,163,184,.3)",
+          background:
+            "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%)",
+          backgroundColor: "rgba(255,255,255,0.018)",
+          border: "1px solid rgba(255,255,255,0.18)",
           boxShadow:
-            "0 24px 64px rgba(15,23,42,.14), inset 0 1px 0 rgba(255,255,255,.92)",
-          color: "rgba(15,23,42,.94)",
+            "0 24px 64px rgba(15,23,42,.14), inset 0 1px 0 rgba(255,255,255,.18)",
+          color: "var(--glass-theme-text, var(--glass-text-primary))",
         }}
         {...props}
       >

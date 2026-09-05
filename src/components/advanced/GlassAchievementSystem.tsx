@@ -788,7 +788,7 @@ export function GlassAchievementNotifications({
   return (
     <div
       className={cn(
-        "fixed z-50 glass-gap-2",
+        "fixed z-50 glass-flex glass-flex-col glass-gap-2",
         positionClasses[position],
         className
       )}

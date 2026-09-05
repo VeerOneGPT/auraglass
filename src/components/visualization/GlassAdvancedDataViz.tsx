@@ -735,7 +735,7 @@ export const GlassAdvancedDataViz: React.FC<AdvancedDataVizProps> = ({
                 y={chartDimensions.chartHeight + 20}
                 textAnchor="middle"
                 className="glass-text-xs"
-                fill="rgba(15, 23, 42, 0.72)"
+                fill="var(--glass-theme-text-secondary, var(--glass-text-secondary))"
               >
                 {formatValue(value)}
               </text>
@@ -768,7 +768,7 @@ export const GlassAdvancedDataViz: React.FC<AdvancedDataVizProps> = ({
                 y={y + 4}
                 textAnchor="end"
                 className="glass-text-xs"
-                fill="rgba(15, 23, 42, 0.72)"
+                fill="var(--glass-theme-text-secondary, var(--glass-text-secondary))"
               >
                 {formatValue(value)}
               </text>
@@ -783,7 +783,7 @@ export const GlassAdvancedDataViz: React.FC<AdvancedDataVizProps> = ({
             y={chartDimensions.chartHeight + 45}
             textAnchor="middle"
             className="glass-text-sm glass-font-medium"
-            fill="rgba(15, 23, 42, 0.82)"
+            fill="var(--glass-theme-text, var(--glass-text-primary))"
           >
             {xAxisLabel}
           </text>
@@ -795,7 +795,7 @@ export const GlassAdvancedDataViz: React.FC<AdvancedDataVizProps> = ({
             y={chartDimensions.chartHeight / 2}
             textAnchor="middle"
             className="glass-text-sm glass-font-medium"
-            fill="rgba(15, 23, 42, 0.82)"
+            fill="var(--glass-theme-text, var(--glass-text-primary))"
             transform={`rotate(-90, -40, ${chartDimensions.chartHeight / 2})`}
           >
             {yAxisLabel}

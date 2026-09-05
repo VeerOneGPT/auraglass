@@ -4,7 +4,7 @@
     "publicExportAudit": "reports/public-export-audit.json"
   },
   "summary": {
-    "generatedAt": "2026-08-13T22:23:17.001Z",
+    "generatedAt": "2026-09-04T14:12:39.897Z",
     "publicExportCount": 881,
     "publicSourceFileCount": 432,
     "publicDeclarationFileCount": 432,
@@ -923,7 +923,7 @@
           "text": "assignRef(el as any);"
         },
         {
-          "line": 400,
+          "line": 408,
           "text": "assignRef(el as any);"
         }
       ]
@@ -1167,23 +1167,23 @@
       "anyCount": 7,
       "samples": [
         {
-          "line": 506,
+          "line": 509,
           "text": "recs = recs.filter((rec: any) => rec.reason === recommendationType);"
         },
         {
-          "line": 541,
+          "line": 544,
           "text": "setCurrentIndex((prev: any) =>"
         },
         {
-          "line": 549,
+          "line": 552,
           "text": "setCurrentIndex((prev: any) =>"
         },
         {
-          "line": 662,
+          "line": 665,
           "text": ".map((recommendation: any) => ("
         },
         {
-          "line": 680,
+          "line": 683,
           "text": "currentRecommendations.map((recommendation: any) => ("
         }
       ]
@@ -1587,19 +1587,19 @@
           "text": "? React.cloneElement(children as any, {"
         },
         {
-          "line": 401,
+          "line": 403,
           "text": "(children as any).props?.onClick?.(e);"
         },
         {
-          "line": 405,
+          "line": 407,
           "text": "(children as any).props?.onMouseEnter?.(e);"
         },
         {
-          "line": 409,
+          "line": 411,
           "text": "(children as any).props?.onMouseLeave?.(e);"
         },
         {
-          "line": 413,
+          "line": 415,
           "text": "(children as any).props?.onFocus?.(e);"
         }
       ]
@@ -1669,7 +1669,7 @@
           "text": "{Array.from({ length: 5 }).map((_: any, i: any) => ("
         },
         {
-          "line": 889,
+          "line": 892,
           "text": "{Array.from({ length: isCompact ? 8 : 20 }).map((_: any, i: any) => ("
         }
       ]
@@ -2173,19 +2173,19 @@
       "anyCount": 4,
       "samples": [
         {
-          "line": 148,
+          "line": 149,
           "text": "filtered = filtered.filter((file: any) =>"
         },
         {
-          "line": 155,
+          "line": 156,
           "text": "filtered = filtered.filter((file: any) => !file.name.startsWith(\".\"));"
         },
         {
-          "line": 179,
+          "line": 180,
           "text": "? selectedFiles.filter((id: any) => id !== file.id)"
         },
         {
-          "line": 196,
+          "line": 197,
           "text": ".map((f: any) => f.id);"
         }
       ]
@@ -2313,11 +2313,11 @@
       "anyCount": 3,
       "samples": [
         {
-          "line": 323,
+          "line": 331,
           "text": "intent={intent as any}"
         },
         {
-          "line": 324,
+          "line": 332,
           "text": "elevation={elevation as any}"
         }
       ]
@@ -2345,15 +2345,15 @@
       "anyCount": 3,
       "samples": [
         {
-          "line": 115,
+          "line": 127,
           "text": "{components.map((component: any) => ("
         },
         {
-          "line": 163,
+          "line": 175,
           "text": "(component: any) =>"
         },
         {
-          "line": 239,
+          "line": 258,
           "text": "{filteredComponents.map((component: any) => ("
         }
       ]
@@ -2609,11 +2609,11 @@
           "text": "React.ElementRef<any>,"
         },
         {
-          "line": 274,
+          "line": 269,
           "text": "} = (restProps as any) || {};"
         },
         {
-          "line": 280,
+          "line": 275,
           "text": "delete (domProps as any)[key];"
         }
       ]
@@ -3037,7 +3037,7 @@
       "anyCount": 1,
       "samples": [
         {
-          "line": 853,
+          "line": 856,
           "text": "(GlassMultiSelect as any).displayName = \"GlassMultiSelect\";"
         }
       ]
@@ -3167,7 +3167,7 @@
       "anyCount": 1,
       "samples": [
         {
-          "line": 162,
+          "line": 167,
           "text": "setOpenMenus((prev: any) => new Set([...prev, item?.id]))"
         }
       ]

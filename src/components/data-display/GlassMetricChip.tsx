@@ -10,7 +10,7 @@ const metricChipSurfaceStyle: React.CSSProperties = {
   border: "1px solid rgba(148, 163, 184, 0.22)",
   boxShadow:
     "0 8px 20px rgba(15, 23, 42, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.28), inset 0 0 10px rgba(255, 255, 255, 0.14)",
-  color: "rgba(15, 23, 42, 0.94)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
   ["--glass-text-primary" as string]: "rgba(15, 23, 42, 0.94)",
   ["--glass-text-secondary" as string]: "rgba(30, 41, 59, 0.78)",
   ["--typography-text-primary" as string]: "rgba(15, 23, 42, 0.94)",
@@ -54,7 +54,7 @@ export function GlassMetricChip({
       <ContrastGuard>
         <span
           className="glass-font-semibold"
-          style={{ color: "rgba(15, 23, 42, 0.96)" }}
+          style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
           aria-label={intentLabel ? `${value}, ${intentLabel}` : undefined}
         >
           {value}
@@ -64,7 +64,7 @@ export function GlassMetricChip({
         <ContrastGuard>
           <span
             className="glass-text-xs"
-            style={{ color: "rgba(30, 41, 59, 0.78)" }}
+            style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
           >
             {delta}
           </span>

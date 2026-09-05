@@ -1,5 +1,5 @@
 {
-  "id": "recipe-customer-support-console",
+  "id": "customer-support-console",
   "name": "customer-support-console",
   "viewport": {
     "name": "tablet",
@@ -1000,10 +1000,5 @@
     }
   ],
   "consoleErrors": [],
-  "pageErrors": [],
-  "runId": "runtime-audit-full-20260814035148-bd425d08-8e91-4f46-9c64-432aacd56a7d",
-  "kind": "recipe",
-  "sourcePath": "recipes/customer-support-console",
-  "storyId": null,
-  "recipeHarness": "scripts/ci/verify-recipes-render.js"
+  "pageErrors": []
 }

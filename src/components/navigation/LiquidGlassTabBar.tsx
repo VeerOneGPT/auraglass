@@ -33,8 +33,8 @@ export interface LiquidGlassTabBarProps
 
 const tabButtonStyle = (selected: boolean): CSSProperties => ({
   border: 0,
-  background: selected ? "rgba(255, 255, 255, 0.28)" : "transparent",
-  color: "rgba(15, 23, 42, 0.88)",
+  background: selected ? "rgba(255, 255, 255, 0.18)" : "transparent",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
   cursor: "pointer",
   font: "inherit",
 });
@@ -100,8 +100,9 @@ export const LiquidGlassTabBar = forwardRef<
           variant={materialVariant}
           radius="full"
           style={{
-            background: "linear-gradient(145deg, rgba(255,255,255,.28), rgba(255,255,255,.14))",
-            color: "rgba(15,23,42,.94)",
+            background:
+              "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%)",
+            color: "var(--glass-theme-text, var(--glass-text-primary))",
           }}
         >
           <LiquidGlassEffectGroup className="glass-flex glass-max-w-full glass-items-center glass-gap-1 glass-overflow-x-auto glass-p-1">

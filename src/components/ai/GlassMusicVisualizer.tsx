@@ -139,14 +139,7 @@ const colorSchemes = {
 };
 
 const readableGlassTextStyle: React.CSSProperties = {
-  "--glass-text-primary": "rgba(15, 23, 42, 0.96)",
-  "--glass-text-secondary": "rgba(30, 41, 59, 0.84)",
-  "--glass-text-tertiary": "rgba(51, 65, 85, 0.72)",
-  "--typography-text-primary": "rgba(15, 23, 42, 0.96)",
-  "--typography-text-secondary": "rgba(30, 41, 59, 0.84)",
-  "--typography-text-tertiary": "rgba(51, 65, 85, 0.72)",
-  "--glass-theme-text": "rgba(15, 23, 42, 0.96)",
-  color: "rgba(15, 23, 42, 0.96)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
 } as React.CSSProperties;
 
 export const GlassMusicVisualizer = forwardRef<
@@ -752,7 +745,7 @@ export const GlassMusicVisualizer = forwardRef<
       >
         <style>{`.glass-music-visualizer,
           .glass-music-visualizer :where(h3, p, label, span, button) {
-            color: rgba(15, 23, 42, 0.96) !important;
+            color: var(--glass-theme-text, var(--glass-text-primary)) !important;
             -webkit-text-fill-color: currentColor;
           }
           .glass-music-visualizer :where(button) {
@@ -791,7 +784,7 @@ export const GlassMusicVisualizer = forwardRef<
           whileHover={shouldAnimate ? { scale: 1.1 } : {}}
           whileTap={shouldAnimate ? { scale: 0.9 } : {}}
           onClick={isPlaying ? handlePause : handlePlay}
-          style={{ color: "rgba(15, 23, 42, 0.96)" }}
+          style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
           aria-label={isPlaying ? "Pause visualization" : "Play visualization"}
         >
           {isPlaying ? (
@@ -809,21 +802,21 @@ export const GlassMusicVisualizer = forwardRef<
           whileHover={shouldAnimate ? { scale: 1.1 } : {}}
           whileTap={shouldAnimate ? { scale: 0.9 } : {}}
           onClick={handleStop}
-          style={{ color: "rgba(15, 23, 42, 0.96)" }}
+          style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
           aria-label="Stop visualization"
         >
           <Square className="glass-h-4 glass-w-4" aria-hidden="true" />
         </motion.button>
 
         <div className="glass-flex glass-items-center glass-gap-1">
-          <span className="glass-text-xs" style={{ color: "rgba(30, 41, 59, 0.88)" }}>
+          <span className="glass-text-xs" style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}>
             {Math.floor(currentTime / 60)}:
             {Math.floor(currentTime % 60)
               .toString()
               .padStart(2, "0")}
           </span>
-          <span style={{ color: "rgba(51, 65, 85, 0.82)" }}>/</span>
-          <span className="glass-text-xs" style={{ color: "rgba(30, 41, 59, 0.88)" }}>
+          <span style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}>/</span>
+          <span className="glass-text-xs" style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}>
             {Math.floor(duration / 60)}:
             {Math.floor(duration % 60)
               .toString()
@@ -835,7 +828,7 @@ export const GlassMusicVisualizer = forwardRef<
           <label
             htmlFor={volumeControlId}
             className="glass-text-xs"
-            style={{ color: "rgba(30, 41, 59, 0.92)" }}
+            style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
           >
             {compact ? "Vol" : "Volume:"}
           </label>
@@ -921,7 +914,7 @@ export const GlassMusicVisualizer = forwardRef<
                 "glass-font-semibold glass-truncate",
                 compact ? "glass-text-sm" : "glass-text-lg"
               )}
-              style={{ color: "rgba(15, 23, 42, 0.96)" }}
+              style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
             >
               Music Visualizer
             </h3>
@@ -932,7 +925,7 @@ export const GlassMusicVisualizer = forwardRef<
                   : "glass-truncate",
                 compact ? "glass-text-xs" : "glass-text-sm"
               )}
-              style={{ color: "rgba(30, 41, 59, 0.88)" }}
+              style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
             >
               Real-time audio visualization and analysis
             </p>

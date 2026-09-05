@@ -532,14 +532,10 @@ export const LiquidGlassMaterial = forwardRef<
     const combinedStyles = {
       ...dynamicStyles,
       background:
-        "linear-gradient(135deg, rgba(255,255,255,0.24) 0%, rgba(255,255,255,0.12) 100%)",
-      backgroundColor: "rgba(255,255,255,0.14)",
+        "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%)",
+      backgroundColor: "rgba(255,255,255,0.018)",
       opacity: disabled ? 0.6 : 1,
-      "--glass-theme-text": "rgba(15, 23, 42, 0.94)",
-      "--glass-text-primary": "rgba(15, 23, 42, 0.94)",
-      "--glass-text-secondary": "rgba(15, 23, 42, 0.76)",
-      "--glass-text-tertiary": "rgba(15, 23, 42, 0.64)",
-      color: "rgba(15, 23, 42, 0.94)",
+      color: "var(--glass-theme-text, var(--glass-text-primary))",
       ...style,
     } as React.CSSProperties;
 

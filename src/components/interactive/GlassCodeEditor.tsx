@@ -284,7 +284,7 @@ export const GlassCodeEditor: React.FC<GlassCodeEditorProps> = ({
         "--glass-theme-text": "rgba(15, 23, 42, 0.94)",
         "--glass-text-primary": "rgba(15, 23, 42, 0.94)",
         "--glass-text-secondary": "rgba(15, 23, 42, 0.76)",
-        color: "rgba(15, 23, 42, 0.94)",
+        color: "var(--glass-theme-text, var(--glass-text-primary))",
         maxHeight: effectiveMaxHeight,
         minHeight: effectiveMinHeight,
         minWidth: 0,

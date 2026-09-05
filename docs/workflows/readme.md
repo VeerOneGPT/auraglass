@@ -1,39 +1,78 @@
-# AuraGlass Workflows
+# Workflows and workspace
 
-AuraGlass 3.3 workflow components should let teams build real admin, settings, billing, AI, media, ecommerce, support, marketing, and collaboration surfaces without falling back to MUI for high-frequency product UI. New projects should prefer the focused `aura-glass/workflows`, `aura-glass/forms`, `aura-glass/data`, `aura-glass/navigation`, `aura-glass/overlays`, and `aura-glass/marketing` subpaths when they only need a specific surface family.
+There are two related surfaces:
 
-## Target Surfaces
+1. **Workspace chrome** on `aura-glass/workspace` (same runtime as `aura-glass/workflows`): room frame, header, tabs, inspector, canvas, timeline, and `GlassWorkflowShell`.
+2. **Product workflow components** on the root `aura-glass` entrypoint: tables, empty/error/loading states, filters, search, form fields, combobox, toasts, and notification center.
 
-| Workflow | AuraGlass components |
+`aura-glass/workflows` re-exports `src/workspace`. It does not export `GlassDataTable` or the other product workflow components.
+
+## Workspace chrome
+
+```tsx
+import {
+  GlassWorkspace,
+  GlassWorkspaceHeader,
+  GlassWorkspaceTabs,
+  GlassWorkspaceTab,
+  GlassWorkspacePanel,
+  GlassInspectorPanel,
+  GlassCanvasArea,
+  GlassTimelineRail,
+  GlassWorkflowShell,
+} from 'aura-glass/workspace';
+```
+
+You can import the same names from `aura-glass/workflows`.
+
+| Component | Role |
 | --- | --- |
-| settings and billing | `GlassForm`, `GlassInput`, `GlassSelect`, `GlassTabs`, `GlassCard` |
-| admin tables | `GlassDataTable`, `GlassDataGrid`, `GlassPagination`, `GlassFilterPanel` |
-| AI command centers | `GlassCommandPalette`, `GlassAdvancedSearch`, `GlassBadge`, `GlassToast` |
-| ecommerce panels | `GlassProductRecommendations`, `GlassSmartShoppingCart`, `GlassForm` |
-| collaboration hubs | `CollaborativeGlassWorkspace`, `GlassUserPresence`, `GlassChat` |
+| `GlassWorkspace` | Room frame. Props: `header`, `commandDock`, `inspector` |
+| `GlassWorkspaceHeader` | Extends `GlassPageHeader` |
+| `GlassWorkspaceTabs` / `GlassWorkspaceTab` | Workspace tab strip |
+| `GlassWorkspacePanel` | Titled panel |
+| `GlassInspectorPanel` | Side inspector |
+| `GlassCanvasArea` | Main canvas |
+| `GlassTimelineRail` | Timeline column |
+| `GlassWorkflowShell` | Titled workflow frame |
 
-## Required States
+App frame (top bar, sidebar rail, status bar) stays on `aura-glass/app-shell`. See [app-shell](../app-shell/readme.md).
 
-Every production workflow should document and test:
+## Product workflow components
 
-- empty state
-- loading state
-- error state
-- disabled state
-- keyboard navigation
-- mobile layout
-- reduced-motion behavior
+Import these from `aura-glass`:
 
-## Recipe Link
+| Product need | Components |
+| --- | --- |
+| Settings and billing | `GlassForm`, `GlassInput`, `GlassSelect`, `GlassTabs`, `GlassCard` |
+| Admin tables | `GlassDataTable`, `GlassDataGrid`, `GlassPagination`, `GlassFilterBar`, `GlassFilterPanel` |
+| Empty / load / fail | `GlassEmptyState`, `GlassLoadingState`, `GlassErrorState` |
+| Search and filters | `GlassSearchField`, `GlassFilterBar`, `GlassCombobox`, `GlassMultiSelect` |
+| Form fields | `GlassFormField`, `GlassFieldGroup`, `GlassValidationMessage`, `GlassDateField`, `GlassTimeField` |
+| Page tabs | `GlassPageTabs` |
+| Toasts and notifications | `GlassToastProvider`, `GlassNotificationCenter` |
+| Ecommerce panels | `GlassProductRecommendations`, `GlassSmartShoppingCart` |
+| Collaboration hubs | `CollaborativeGlassWorkspace`, `GlassUserPresence`, `GlassChat` |
 
-The 3.3 recipe pass expands the package registry to 28 production starters that use app shell, icons, primitives, and workflow states where natural. Hosted collaboration recipes must stay presence/cursor/selection-only unless a future release adds a real OT/CRDT editing engine.
+Props and accessibility contracts for the dedicated workflow layer are in [production-workflow-components.md](./production-workflow-components.md).
 
-Final 3.3 evidence belongs in:
+`GlassErrorState` accepts `severity?: "error" | "warning"`, `title`, `description`, `details`, and `onRetry`. Use it for provider-unconfigured UI:
 
-- `reports/3.3-release/recipe-evidence.md`
-- `reports/3.3-release/recipe-render-evidence.md`
-- `reports/3.3-release/README.md`
+```tsx
+import { GlassErrorState } from 'aura-glass';
 
-## Workflow Component Layer
+<GlassErrorState
+  severity="warning"
+  title="Provider not configured"
+  description="This action stays disabled until authenticated provider-backed routes are ready."
+  details={<code>OPENAI_API_KEY is unset.</code>}
+/>
+```
 
-The dedicated workflow component reference lives in [production-workflow-components.md](./production-workflow-components.md). It covers empty, error, loading, filter, search, form-field, validation, date/time, combobox, page-tabs, toast, notification, table, grid, and multiselect surfaces. Its historical 3.2 framing remains useful for the component layer; current 3.3 launch evidence is tracked in `reports/3.3-release`.
+## Collaboration editing
+
+Hosted collaborative **document editing** is not supported. The WebSocket server answers `collaborative-edit` with `COLLABORATION_EDIT_UNSUPPORTED`. Presence, cursor, and selection events are supported. See [deployment.md](../deployment.md).
+
+## Recipes
+
+The registry has 28 starters that compose app shell, workspace, icons, and these workflow states. Scaffold them with `npx aura-glass list` / `npx aura-glass add <id>`. See [recipes](../recipes/readme.md).

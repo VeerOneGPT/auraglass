@@ -126,14 +126,7 @@ const defaultSettings: DeepDreamSettings = {
 };
 
 const readableGlassTextStyle: React.CSSProperties = {
-  "--glass-text-primary": "rgba(15, 23, 42, 0.96)",
-  "--glass-text-secondary": "rgba(30, 41, 59, 0.84)",
-  "--glass-text-tertiary": "rgba(51, 65, 85, 0.72)",
-  "--typography-text-primary": "rgba(15, 23, 42, 0.96)",
-  "--typography-text-secondary": "rgba(30, 41, 59, 0.84)",
-  "--typography-text-tertiary": "rgba(51, 65, 85, 0.72)",
-  "--glass-theme-text": "rgba(15, 23, 42, 0.96)",
-  color: "rgba(15, 23, 42, 0.96)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
 } as React.CSSProperties;
 
 export const GlassDeepDreamGlass = forwardRef<
@@ -579,7 +572,7 @@ export const GlassDeepDreamGlass = forwardRef<
                       className="glass-px-2 glass-py-0.5 glass-radius-full glass-text-xs glass-font-medium"
                       style={{
                         background: "rgba(71,85,105,.1)",
-                        color: "rgba(30,41,59,.72)",
+                        color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
                       }}
                     >
                       {layer.type}
@@ -792,7 +785,7 @@ export const GlassDeepDreamGlass = forwardRef<
               style={{
                 background: "rgba(255,255,255,.5)",
                 border: "1px solid rgba(255,255,255,.72)",
-                color: "rgba(15,23,42,.88)",
+                color: "var(--glass-theme-text, var(--glass-text-primary))",
               }}
             >
               <span>{control.label}</span>

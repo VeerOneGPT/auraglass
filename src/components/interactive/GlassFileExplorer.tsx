@@ -420,7 +420,7 @@ const GlassFileExplorer = React.forwardRef<
           maxHeight: "100%",
           minWidth: 0,
           background:
-            "linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.008))",
+            "linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.018))",
           border: "1px solid rgba(255,255,255,0.14)",
           boxShadow:
             "0 16px 38px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.12)",

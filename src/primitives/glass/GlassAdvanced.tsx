@@ -221,10 +221,7 @@ export const GlassAdvanced = forwardRef<HTMLDivElement, GlassProps>(
         focusRing: isClickable || interactive,
       }),
       position: "relative",
-      "--glass-theme-text": "rgba(15, 23, 42, 0.94)",
-      "--glass-text-primary": "rgba(15, 23, 42, 0.94)",
-      "--glass-text-secondary": "rgba(15, 23, 42, 0.88)",
-      color: "rgba(15, 23, 42, 0.94)",
+      color: "var(--glass-theme-text, var(--glass-text-primary))",
       overflow: "hidden",
       minHeight:
         resolvedMinHeight ??

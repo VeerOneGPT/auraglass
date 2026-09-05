@@ -1,6 +1,8 @@
-# AuraGlass Primitives
+# Primitives
 
-AuraGlass 3.3 keeps native primitives as the foundation for app chrome and overlay behavior. These primitives power menus, selects, dialogs, drawers, popovers, tooltips, tabs, command palettes, and custom product surfaces.
+Native primitives power menus, selects, dialogs, drawers, popovers, tooltips, tabs, command palettes, and custom product surfaces. They live on `aura-glass/primitives` and the focused subpaths.
+
+Prefer a public AuraGlass component first. Reach for primitives only when you need a custom interaction the component layer does not cover.
 
 ## Entrypoints
 
@@ -14,36 +16,42 @@ aura-glass/primitives/roving-focus
 aura-glass/primitives/positioning
 ```
 
-## Primitive Set
+Each focused subpath has its own compiled file (`src/primitives/Slot.tsx`, `Portal.tsx`, `FocusScope.tsx`, `DismissableLayer.tsx`, `RovingFocusGroup.tsx`, `Positioner.tsx`).
 
-| Primitive | Job |
-| --- | --- |
-| `GlassSlot` | `asChild` composition, prop merging, handler composition, ref composition |
-| `GlassPortal` | SSR-safe portal rendering with custom containers |
-| `GlassFocusScope` | focus looping and focus lifecycle helpers for custom surfaces |
-| `GlassDismissableLayer` | Escape, outside pointer, outside focus hooks, and layer dismissal |
-| `GlassRovingFocusGroup` | arrow-key focus for menus, tabs, and option groups |
-| `GlassPositioner` | anchored placement, collision, flip, offset, viewport padding |
+## Primitive set
 
-## Usage Guidance
+| Export | Also exported as | Job |
+| --- | --- | --- |
+| `GlassSlot` | `Slot` | `asChild` composition, prop merging, handler composition, ref composition |
+| `GlassPortal` | `Portal` | SSR-safe portal rendering with a custom container |
+| `GlassFocusScope` | `FocusScope` | Focus looping and restore for custom overlays |
+| `GlassDismissableLayer` | `DismissableLayer` | Escape, outside pointer, outside focus, nested dismissal |
+| `GlassRovingFocusGroup` | `RovingFocusGroup` | Arrow-key focus for menus, tabs, and option groups |
+| `GlassPositioner` | `Positioner` | Anchored placement, collision, flip, offset, viewport padding |
 
-Use public AuraGlass components first:
+The barrel also exports Liquid Glass primitives (`LiquidGlassMaterial`, `LiquidGlassLayerProvider`, and related helpers). Those have their own usage pages under [liquid-glass](../liquid-glass/readme.md).
+
+## Usage
+
+Use a public component:
 
 ```tsx
 import { GlassDialog, GlassDropdownMenu, GlassTabs } from 'aura-glass';
 ```
 
-Use primitives when a product needs a custom interaction that the component layer does not cover:
+Compose a custom surface:
 
 ```tsx
 import { GlassFocusScope, GlassPortal } from 'aura-glass/primitives';
 ```
 
-## Accessibility Requirements
+Or import one primitive file:
 
-Each primitive needs tests for keyboard behavior, ARIA behavior where relevant, focus lifecycle, SSR safety, and nested composition. Current release evidence belongs in:
-
-```txt
-reports/3.3-release/accessibility-certification.md
-reports/3.2-release/accessibility-primitives.md
+```tsx
+import { Slot } from 'aura-glass/primitives/slot';
+import { Portal } from 'aura-glass/primitives/portal';
 ```
+
+## Accessibility
+
+Each primitive is covered by keyboard, ARIA, focus-lifecycle, SSR, and nested-composition tests under `src/primitives`. Automated app-chrome evidence is in `reports/3.3-release/accessibility-certification.md`. Manual screen-reader and physical-device certification is not recorded as complete.

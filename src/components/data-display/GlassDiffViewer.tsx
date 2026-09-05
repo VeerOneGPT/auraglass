@@ -215,7 +215,8 @@ function CodePanel({
           fontSize: compact ? "0.62rem" : "0.68rem",
           letterSpacing: "0.08em",
           textTransform: "uppercase",
-          color: "var(--glass-text-tertiary, rgba(184,194,209,0.70))",
+          color:
+            "var(--glass-theme-text-secondary, var(--glass-text-secondary, rgba(15, 23, 42, 0.72)))",
         }}
       >
         {label}

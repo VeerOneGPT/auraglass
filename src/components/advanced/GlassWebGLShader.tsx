@@ -31,8 +31,8 @@ interface ShaderProps {
 const shaderFallbackPanelStyle: React.CSSProperties = {
   ...createGlassStyle({ intent: "neutral", elevation: "level3" }),
   minHeight: 220,
-  borderColor: "rgba(15, 23, 42, 0.14)",
-  color: "rgba(15, 23, 42, 0.92)",
+  borderColor: "rgba(255, 255, 255, 0.18)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
   background:
     "linear-gradient(145deg, rgba(255,255,255,0.34), rgba(255,255,255,0.2))",
   contain: "layout paint",
@@ -44,7 +44,7 @@ const shaderFallbackLineStyle: React.CSSProperties = {
 
 const shaderFallbackTileStyle: React.CSSProperties = {
   ...createGlassStyle({ intent: "neutral", elevation: "level3" }),
-  borderColor: "rgba(15,23,42,0.14)",
+  borderColor: "rgba(255, 255, 255, 0.18)",
   boxShadow:
     "0 24px 80px rgba(15,23,42,0.12), inset 0 1px 0 rgba(255,255,255,0.28)",
   transform: "translate(-50%, -50%)",
@@ -567,20 +567,20 @@ export function GlassWebGLShader({
           <div>
             <p
               className="glass-text-xs glass-uppercase glass-tracking-widest"
-              style={{ color: "rgba(15, 23, 42, 0.72)" }}
+              style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
             >
               CSS shader
             </p>
             <p
               className="glass-mt-1 glass-text-base glass-font-semibold"
-              style={{ color: "rgba(15, 23, 42, 0.92)" }}
+              style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
             >
               {variant} glass field
             </p>
           </div>
           <p
             className="glass-text-sm"
-            style={{ color: "rgba(15, 23, 42, 0.76)" }}
+            style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
           >
             Lightweight preview mode active.
           </p>

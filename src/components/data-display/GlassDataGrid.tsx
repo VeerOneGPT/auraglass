@@ -82,8 +82,9 @@ import { ContrastGuard } from "../accessibility/ContrastGuard";
 import { ANIMATION } from "../../tokens/designConstants";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
 
-const DATA_GRID_TEXT = "rgba(15, 23, 42, 0.94)";
-const DATA_GRID_SECONDARY_TEXT = "rgba(15, 23, 42, 0.76)";
+const DATA_GRID_TEXT = "var(--glass-theme-text, var(--glass-text-primary))";
+const DATA_GRID_SECONDARY_TEXT =
+  "var(--glass-theme-text-secondary, var(--glass-text-secondary))";
 const dataGridTextStyle: CSSProperties = { color: DATA_GRID_TEXT };
 
 // Define the component using forwardRef
@@ -232,9 +233,6 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
           performanceMode="medium"
           className={cn("glass-w-full glass-p-6 glass-text-center", className)}
           style={{
-            "--glass-theme-text": DATA_GRID_TEXT,
-            "--glass-text-primary": DATA_GRID_TEXT,
-            "--glass-text-secondary": DATA_GRID_SECONDARY_TEXT,
             color: DATA_GRID_TEXT,
             ...(style ?? {}),
           } as CSSProperties}
@@ -270,9 +268,6 @@ export const GlassDataGrid = forwardRef<HTMLDivElement, GlassDataGridProps>(
           className
         )}
         style={{
-          "--glass-theme-text": DATA_GRID_TEXT,
-          "--glass-text-primary": DATA_GRID_TEXT,
-          "--glass-text-secondary": DATA_GRID_SECONDARY_TEXT,
           color: DATA_GRID_TEXT,
           ...style,
           ...(height && { height: resolvedHeight }),

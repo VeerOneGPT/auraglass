@@ -1125,7 +1125,7 @@ export const GlassBiomeSimulator = forwardRef<
         border: "1px solid rgba(255, 255, 255, 0.72)",
         background: "linear-gradient(180deg, rgba(255,255,255,.74), rgba(241,245,249,.48))",
         boxShadow: "inset 0 1px 0 rgba(255,255,255,.82), 0 8px 24px rgba(30,41,59,.08)",
-        color: "rgba(15, 23, 42, 0.9)",
+        color: "var(--glass-theme-text, var(--glass-text-primary))",
       };
 
       const Toggle = ({ checked, onChange, children }: { checked: boolean; onChange: () => void; children: React.ReactNode }) => (
@@ -1159,7 +1159,7 @@ export const GlassBiomeSimulator = forwardRef<
           tint="neutral"
           border="subtle"
           className="glass-biome-controls glass-grid glass-gap-3 glass-p-3 glass-radius-lg glass-backdrop-blur-md glass-border glass-border-glass-border/20 glass-contrast-guard"
-          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 150px), 1fr))", background: "rgba(248,250,252,.52)", color: "rgba(15,23,42,.92)" }}
+          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 150px), 1fr))", background: "rgba(248,250,252,.52)", color: "var(--glass-theme-text, var(--glass-text-primary))" }}
         >
           <div className="glass-flex glass-flex-col glass-gap-1">
             <label className="glass-text-xs glass-font-medium" htmlFor="biome-select">

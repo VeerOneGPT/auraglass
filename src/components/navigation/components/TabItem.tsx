@@ -107,7 +107,9 @@ const TabItemComponent: React.FC<TabItemProps> = ({
         background: active ? "rgba(255, 255, 255, 0.28)" : "transparent",
         border: "none",
         borderRadius: "6px",
-        color: active ? "rgba(15, 23, 42, 0.92)" : "rgba(15, 23, 42, 0.72)",
+        color: active
+          ? "var(--glass-theme-text, var(--glass-text-primary))"
+          : "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
         cursor: disabled ? "not-allowed" : "pointer",
         opacity: disabled ? 0.5 : 1,
         fontSize: "0.875rem", // body text
@@ -140,7 +142,7 @@ const TabItemComponent: React.FC<TabItemProps> = ({
           aria-label={`${badge} notifications`}
           style={{
             background: "rgba(255, 255, 255, 0.3)",
-            color: "rgba(15, 23, 42, 0.92)",
+            color: "var(--glass-theme-text, var(--glass-text-primary))",
             borderRadius: "10px",
             padding: "2px 6px",
             fontSize: "0.625rem",

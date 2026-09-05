@@ -363,9 +363,7 @@ export const GlassRichTextEditor = forwardRef<
         elevation={elevation}
         className={cn("overflow-hidden glass-radius-lg", className)}
         style={{
-          "--glass-text-primary": "rgba(15, 23, 42, 0.94)",
-          "--glass-text-secondary": "rgba(15, 23, 42, 0.76)",
-          color: "rgba(15, 23, 42, 0.94)",
+          color: "var(--glass-theme-text, var(--glass-text-primary))",
         } as React.CSSProperties}
         {...props}
       >
@@ -377,8 +375,8 @@ export const GlassRichTextEditor = forwardRef<
               aria-label="Text formatting"
               style={{
                 background:
-                  "linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.1))",
-                borderBottom: "1px solid rgba(15, 23, 42, 0.14)",
+                  "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%)",
+                borderBottom: "1px solid rgba(255,255,255,0.18)",
               }}
             >
               {tools.map((tool) => {
@@ -402,11 +400,11 @@ export const GlassRichTextEditor = forwardRef<
                       alignItems: "center",
                       background:
                         "linear-gradient(145deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.12))",
-                      border: "1px solid rgba(15, 23, 42, 0.16)",
+                      border: "1px solid rgba(255, 255, 255, 0.18)",
                       borderRadius: 12,
                       boxShadow:
                         "inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 3px 10px rgba(15, 23, 42, 0.08)",
-                      color: "rgba(15, 23, 42, 0.9)",
+                      color: "var(--glass-theme-text, var(--glass-text-primary))",
                       display: "inline-flex",
                       justifyContent: "center",
                     }}
@@ -440,7 +438,7 @@ export const GlassRichTextEditor = forwardRef<
             style={{
               minHeight,
               maxHeight,
-              color: "rgba(15, 23, 42, 0.94)",
+              color: "var(--glass-theme-text, var(--glass-text-primary))",
             }}
             role="textbox"
             aria-multiline="true"

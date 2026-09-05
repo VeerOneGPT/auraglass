@@ -781,8 +781,8 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
           background:
             linear-gradient(145deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.2)),
             rgba(255, 255, 255, 0.2) !important;
-          border-color: rgba(15, 23, 42, 0.13) !important;
-          color: rgba(15, 23, 42, 0.92) !important;
+          border-color: rgba(255, 255, 255, 0.18) !important;
+          color: var(--glass-theme-text, var(--glass-text-primary)) !important;
           box-shadow:
             inset 0 1px 0 rgba(255, 255, 255, 0.82),
             0 18px 48px rgba(15, 23, 42, 0.12);
@@ -792,11 +792,11 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
 
         .glass-intelligent-search-panel label,
         .glass-intelligent-search-panel h3 {
-          color: rgba(15, 23, 42, 0.9) !important;
+          color: var(--glass-theme-text, var(--glass-text-primary)) !important;
         }
 
         .glass-intelligent-search-panel p {
-          color: rgba(15, 23, 42, 0.7) !important;
+          color: var(--glass-theme-text-secondary, var(--glass-text-secondary)) !important;
         }
 
         .glass-intelligent-search-panel button {
@@ -804,8 +804,8 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
           background:
             linear-gradient(145deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.22)),
             rgba(255, 255, 255, 0.26) !important;
-          border: 1px solid rgba(15, 23, 42, 0.14) !important;
-          color: rgba(15, 23, 42, 0.9) !important;
+          border: 1px solid rgba(255, 255, 255, 0.18) !important;
+          color: var(--glass-theme-text, var(--glass-text-primary)) !important;
           border-radius: 14px;
           box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.84), 0 6px 18px rgba(15, 23, 42, 0.08);
         }
@@ -814,15 +814,15 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
           background:
             linear-gradient(145deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.22)),
             rgba(255, 255, 255, 0.3) !important;
-          border-color: rgba(15, 23, 42, 0.2) !important;
-          color: rgba(15, 23, 42, 0.94) !important;
+          border-color: rgba(255, 255, 255, 0.2) !important;
+          color: var(--glass-theme-text, var(--glass-text-primary)) !important;
           font-weight: 650;
         }
 
         .glass-intelligent-search-dropdown {
           background: rgba(255, 255, 255, 0.3) !important;
           background-image: none !important;
-          border: 1px solid rgba(15, 23, 42, 0.14);
+          border: 1px solid rgba(255, 255, 255, 0.18);
           backdrop-filter: blur(var(--glass-neutral-level4-blur)) var(--glass-filter-base);
           -webkit-backdrop-filter: blur(var(--glass-neutral-level4-blur)) var(--glass-filter-base);
         }
@@ -850,13 +850,13 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
           min-height: 44px;
           padding-left: 44px !important;
           background: rgba(255, 255, 255, 0.32) !important;
-          color: rgba(15, 23, 42, 0.92) !important;
-          border-color: rgba(15, 23, 42, 0.16) !important;
+          color: var(--glass-theme-text, var(--glass-text-primary)) !important;
+          border-color: rgba(255, 255, 255, 0.18) !important;
           box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         .glass-intelligent-search input[type="text"]::placeholder {
-          color: rgba(15, 23, 42, 0.58) !important;
+          color: var(--glass-theme-text-tertiary, var(--glass-text-tertiary)) !important;
         }
 
         .glass-search-input-row {
@@ -877,7 +877,7 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
           width: 20px;
           height: 20px;
           place-items: center;
-          color: rgba(15, 23, 42, 0.76) !important;
+          color: var(--glass-theme-text-secondary, var(--glass-text-secondary)) !important;
           pointer-events: none;
         }
 
@@ -903,12 +903,12 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
           align-items: center !important;
           gap: 10px !important;
           min-height: 36px;
-          color: rgba(15, 23, 42, 0.8) !important;
+          color: var(--glass-theme-text, var(--glass-text-primary)) !important;
         }
 
         .glass-search-filter-label,
         .glass-search-filter-count {
-          color: rgba(15, 23, 42, 0.76) !important;
+          color: var(--glass-theme-text-secondary, var(--glass-text-secondary)) !important;
         }
 
         .glass-search-filter-count { font-variant-numeric: tabular-nums; }
@@ -987,7 +987,7 @@ export const GlassIntelligentSearch: React.FC<IntelligentSearchProps> = ({
           height: 58px;
           margin: 0 auto 14px;
           place-items: center;
-          border: 1px solid rgba(15, 23, 42, 0.14);
+          border: 1px solid rgba(255, 255, 255, 0.18);
           border-radius: 50%;
           background: rgba(255, 255, 255, 0.3);
           box-shadow: inset 0 1px 0 rgba(255,255,255,.82), 0 12px 28px rgba(15,23,42,.1);

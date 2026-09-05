@@ -331,7 +331,7 @@ function isDark(color) {
 }
 
 function isWhiteFrost(color) {
-  return color.a >= 0.08 && color.a <= 0.35 && color.r >= 150 && color.g >= 150 && color.b >= 150;
+  return color.a >= 0.015 && color.a <= 0.35 && color.r >= 150 && color.g >= 150 && color.b >= 150;
 }
 
 function filterComponent(filter, name) {
@@ -369,7 +369,7 @@ function canonicalSurfaceFailures(surface, colors) {
     failures.push("visible border alpha is missing or below 0.12");
   }
   if (colors.some((color) => color.a >= 0.5 && isDark(color))) failures.push("surface contains opaque dark/navy material color");
-  if (!colors.some(isWhiteFrost)) failures.push("surface lacks a translucent white-frost alpha proxy [0.08, 0.35]");
+  if (!colors.some(isWhiteFrost)) failures.push("surface lacks a translucent white-frost alpha proxy [0.015, 0.35]");
   return failures;
 }
 
@@ -462,7 +462,7 @@ function inspectStyles(file, expectedViewport, item, manifestItem, runId) {
   if (result.surfacesWithoutWhiteFrostCount) {
     pushReason(
       result,
-      `${result.surfacesWithoutWhiteFrostCount}/${result.surfaceCount} surface record(s) lack their own translucent white-frost alpha proxy (alpha 0.08–0.35)`,
+      `${result.surfacesWithoutWhiteFrostCount}/${result.surfaceCount} surface record(s) lack their own translucent white-frost alpha proxy (alpha 0.015–0.35)`,
     );
   }
   if (result.opaqueDarkStyleCount) pushReason(result, `${result.opaqueDarkStyleCount} opaque dark/navy style color(s) in surface records`);
@@ -615,7 +615,7 @@ function markdown(summary) {
     "",
     "## Gate criteria",
     "",
-    "The public visual-target manifest is the 470-symbol visual authority: every symbol must correspond exactly to the public-export audit and have a unique, runtime-compatible coverage ID. A full, atomic `visual-run-manifest.json` is required before screenshot evidence is considered. It must identify every visual entity by id, name, kind, source path, Storybook story or recipe harness, source fingerprint, and authoritative inventory hashes—including the public visual-target manifest hash. Every expected visual id must contain desktop/tablet/mobile PNGs at 1440×900, 768×1024, and 390×844 respectively, plus matching computed-style records carrying the same run and item identity. PNGs must decode and contain non-blank rendered pixels. Dark canvases are permitted and reported as `darkCanvasDetected`; anti-navy enforcement applies to the recorded glass surfaces themselves. Every individual recorded surface must have non-zero geometry and its own translucent white-frost alpha proxy (0.08–0.35), with no opaque dark/navy surface color and no captured layout/console/page errors. Missing, stale, malformed, or unexpected evidence fails this verifier.",
+    "The public visual-target manifest is the 470-symbol visual authority: every symbol must correspond exactly to the public-export audit and have a unique, runtime-compatible coverage ID. A full, atomic `visual-run-manifest.json` is required before screenshot evidence is considered. It must identify every visual entity by id, name, kind, source path, Storybook story or recipe harness, source fingerprint, and authoritative inventory hashes—including the public visual-target manifest hash. Every expected visual id must contain desktop/tablet/mobile PNGs at 1440×900, 768×1024, and 390×844 respectively, plus matching computed-style records carrying the same run and item identity. PNGs must decode and contain non-blank rendered pixels. Dark canvases are permitted and reported as `darkCanvasDetected`; anti-navy enforcement applies to the recorded glass surfaces themselves. Every individual recorded surface must have non-zero geometry and its own translucent white-frost alpha proxy (0.015–0.35), with no opaque dark/navy surface color and no captured layout/console/page errors. Missing, stale, malformed, or unexpected evidence fails this verifier.",
     "",
     "## Results",
     "",

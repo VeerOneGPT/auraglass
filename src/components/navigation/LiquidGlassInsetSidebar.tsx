@@ -28,7 +28,7 @@ export interface LiquidGlassInsetSidebarProps
 const sidebarButtonStyle = (selected: boolean): CSSProperties => ({
   border: 0,
   background: selected ? "rgba(255, 255, 255, 0.28)" : "transparent",
-  color: "rgba(15, 23, 42, 0.88)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
   cursor: "pointer",
   font: "inherit",
   width: "100%",

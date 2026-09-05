@@ -341,10 +341,10 @@ export const GlassSpotlightSearch = forwardRef<
                 WebkitAppearance: "none",
                 background:
                   "var(--glass-neutral-level3-surface)",
-                border: "1px solid rgba(15,23,42,0.14)",
+                border: "1px solid rgba(255,255,255,0.18)",
                 borderRadius: 12,
                 padding: "10px 12px",
-                color: "#0f172a",
+                color: "var(--glass-theme-text, var(--glass-text-primary))",
               }}
             />
             <kbd
@@ -352,8 +352,9 @@ export const GlassSpotlightSearch = forwardRef<
               style={{
                 background:
                   "var(--glass-neutral-level3-surface)",
-                border: "1px solid rgba(15,23,42,0.14)",
-                color: "#334155",
+                border: "1px solid rgba(255,255,255,0.18)",
+                color:
+                  "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
               }}
             >
               ESC
@@ -407,8 +408,9 @@ export const GlassSpotlightSearch = forwardRef<
                                 : "rgba(255,255,255,0.22)",
                               border: isSelected
                                 ? "1px solid rgba(37,99,235,0.34)"
-                                : "1px solid rgba(15,23,42,0.08)",
-                              color: "#0f172a",
+                                : "1px solid rgba(255,255,255,0.18)",
+                              color:
+                                "var(--glass-theme-text, var(--glass-text-primary))",
                             }}
                           >
                             {action.icon && (
@@ -432,8 +434,9 @@ export const GlassSpotlightSearch = forwardRef<
                                 style={{
                                   background:
                                     "var(--glass-neutral-level3-surface)",
-                                  border: "1px solid rgba(15,23,42,0.12)",
-                                  color: "#334155",
+                                  border: "1px solid rgba(255,255,255,0.18)",
+                                  color:
+                                    "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
                                 }}
                               >
                                 {action.shortcut}

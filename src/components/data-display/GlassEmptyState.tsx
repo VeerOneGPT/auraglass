@@ -81,7 +81,7 @@ export const GlassEmptyState = forwardRef<HTMLDivElement, GlassEmptyStateProps>(
         style={
           {
             "--glass-theme-text": "rgba(15, 23, 42, 0.92)",
-            color: "rgba(15, 23, 42, 0.92)",
+            color: "var(--glass-theme-text, var(--glass-text-primary))",
           } as React.CSSProperties
         }
         {...props}

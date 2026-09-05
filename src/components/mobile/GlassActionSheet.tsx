@@ -243,7 +243,7 @@ export const GlassActionSheet = forwardRef<
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           className={cn(
-            "w-full max-w-2xl mx-auto glass-p-4 pb-safe",
+            "w-full max-w-2xl mx-auto glass-p-4 pb-safe glass-on-light",
             "transition-transform duration-300 ease-out",
             isAnimating ? "translate-y-0" : "translate-y-full",
             className

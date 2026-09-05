@@ -75,9 +75,11 @@ const audioButtonStyle: React.CSSProperties = {
   }),
   appearance: "none",
   WebkitAppearance: "none",
-  border: "1px solid rgba(148, 163, 184, 0.38)",
-  color: "rgba(15, 23, 42, 0.92)",
-  background: "linear-gradient(180deg, rgba(255,255,255,0.32), rgba(248,250,252,0.22))",
+  border: "1px solid rgba(255,255,255,0.18)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
+  background:
+    "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%)",
+  backgroundColor: "rgba(255,255,255,0.018)",
   boxShadow:
     "inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 28px rgba(2,6,23,0.24)",
 };
@@ -90,9 +92,11 @@ const audioPrimaryButtonStyle: React.CSSProperties = {
   }),
   appearance: "none",
   WebkitAppearance: "none",
-  color: "rgba(15, 23, 42, 0.94)",
-  background: "linear-gradient(180deg, rgba(255,255,255,0.35), rgba(248,250,252,0.25))",
-  borderColor: "rgba(148, 163, 184, 0.42)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
+  background:
+    "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%)",
+  backgroundColor: "rgba(255,255,255,0.018)",
+  borderColor: "rgba(255,255,255,0.18)",
   boxShadow:
     "inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 28px rgba(2,6,23,0.24)",
 };
@@ -100,8 +104,8 @@ const audioPrimaryButtonStyle: React.CSSProperties = {
 const audioRangeStyle: React.CSSProperties = {
   appearance: "none",
   WebkitAppearance: "none",
-  color: "#334155",
-  accentColor: "#334155",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
+  accentColor: "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
 };
 
 const audioComponentStyles = `
@@ -510,8 +514,8 @@ const PlaylistPanel: React.FC<{
                 media.id === currentMediaId
                   ? "rgba(219, 234, 254, 0.9)"
                   : "rgba(255, 255, 255, 0.74)",
-              border: "1px solid rgba(15, 23, 42, 0.12)",
-              color: "#0f172a",
+              border: "1px solid rgba(255, 255, 255, 0.18)",
+              color: "var(--glass-theme-text, var(--glass-text-primary))",
               minHeight: 84,
             }}
           >
@@ -625,8 +629,8 @@ const TranscriptPanel: React.FC<{
                 background: isActive
                   ? "rgba(219, 234, 254, 0.9)"
                   : "rgba(255, 255, 255, 0.74)",
-                border: "1px solid rgba(15, 23, 42, 0.12)",
-                color: "#0f172a",
+                border: "1px solid rgba(255, 255, 255, 0.18)",
+                color: "var(--glass-theme-text, var(--glass-text-primary))",
               }}
             >
               <div className="glass-flex glass-items-center glass-justify-between glass-w-full">
@@ -889,7 +893,10 @@ export const GlassAdvancedAudioPlayer: React.FC<AdvancedAudioPlayerProps> = (
   const renderCompactPlayer = () => (
     <div
       className="glass-flex glass-items-center glass-gap-4 glass-p-4"
-      style={{ color: "#0f172a", minHeight: 96 }}
+      style={{
+        color: "var(--glass-theme-text, var(--glass-text-primary))",
+        minHeight: 96,
+      }}
     >
       <img
         src={coverSrc}
@@ -919,7 +926,7 @@ export const GlassAdvancedAudioPlayer: React.FC<AdvancedAudioPlayerProps> = (
         className="glass-text-sm glass-text-secondary glass-font-mono"
         style={{
           ...createGlassStyle({ intent: "neutral", elevation: "level1" }),
-          color: "#0f172a",
+          color: "var(--glass-theme-text, var(--glass-text-primary))",
           border: "1px solid rgba(148,163,184,0.34)",
           borderRadius: 999,
           padding: "8px 12px",
@@ -932,7 +939,10 @@ export const GlassAdvancedAudioPlayer: React.FC<AdvancedAudioPlayerProps> = (
   );
 
   const renderFullPlayer = () => (
-    <div className="glass-p-6 glass-space-y-6" style={{ color: "#0f172a" }}>
+    <div
+      className="glass-p-6 glass-space-y-6"
+      style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
+    >
       {/* Header */}
       <div
         className="glass-flex glass-items-center glass-gap-4"
@@ -1085,7 +1095,7 @@ export const GlassAdvancedAudioPlayer: React.FC<AdvancedAudioPlayerProps> = (
       data-testid={props["data-testid"]}
       style={{
         ...createGlassStyle({ intent: "neutral", elevation: "level2" }),
-        color: "#0f172a",
+        color: "var(--glass-theme-text, var(--glass-text-primary))",
         border: "1px solid rgba(148, 163, 184, 0.28)",
         boxShadow: "0 24px 70px rgba(15, 23, 42, 0.18)",
         maxHeight:

@@ -954,7 +954,7 @@ export function GlassNeuroMetricsDashboard({
   const metricsArray = Object.entries(metrics).map(([name, value]) => ({
     name: name.charAt(0).toUpperCase() + name.slice(1),
     value: value || 0,
-    color: "rgba(15, 23, 42, 0.72)",
+    color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
   }));
 
   return (

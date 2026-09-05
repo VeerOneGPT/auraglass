@@ -113,7 +113,7 @@ const controlButtonStyle: React.CSSProperties = {
   appearance: "none",
   WebkitAppearance: "none",
   border: "1px solid rgba(148, 163, 184, 0.42)",
-  color: "#0f172a",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
   background: "linear-gradient(180deg, rgba(255,255,255,.32), rgba(248,250,252,.22))",
   boxShadow:
     "inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 28px rgba(2,6,23,0.28)",
@@ -127,7 +127,7 @@ const activeButtonStyle: React.CSSProperties = {
   }),
   appearance: "none",
   WebkitAppearance: "none",
-  color: "#0f172a",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
   background: "linear-gradient(180deg, rgba(255,255,255,.35), rgba(248,250,252,.25))",
   borderColor: "rgba(148, 163, 184, 0.48)",
   boxShadow:
@@ -136,7 +136,7 @@ const activeButtonStyle: React.CSSProperties = {
 
 const menuStyle: React.CSSProperties = {
   ...createGlassStyle({ intent: "neutral", elevation: "level4" }),
-  color: "#0f172a",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
   border: "1px solid rgba(148, 163, 184, 0.34)",
   boxShadow: "0 18px 38px rgba(2, 6, 23, 0.42)",
 };
@@ -144,8 +144,8 @@ const menuStyle: React.CSSProperties = {
 const rangeStyle: React.CSSProperties = {
   appearance: "none",
   WebkitAppearance: "none",
-  color: "#334155",
-  accentColor: "#334155",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
+  accentColor: "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
 };
 
 const videoComponentStyles = `
@@ -193,9 +193,9 @@ const videoComponentStyles = `
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.78));
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.105) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.018) 100%);
     border-radius: 0;
-    color: #f8fafc;
+    color: var(--glass-theme-text, var(--glass-text-primary));
   }
 
   .ag-advanced-video-player .ag-video-panel-scroll {
@@ -466,7 +466,7 @@ const VideoControls: React.FC<ControlsProps> = ({
         bottom: 0,
         left: 0,
         zIndex: 20,
-        color: "#0f172a",
+        color: "var(--glass-theme-text, var(--glass-text-primary))",
       }}
     >
       {/* Progress Bar */}
@@ -541,7 +541,7 @@ const VideoControls: React.FC<ControlsProps> = ({
             <button
               onClick={onMuteToggle}
               className="glass-w-10 glass-h-10 glass-flex glass-items-center glass-justify-center hover:glass-surface-subtle/20 glass-radius-full glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
-              style={{ ...controlButtonStyle, color: "rgba(248,250,252,.98)" }}
+              style={{ ...controlButtonStyle, color: "var(--glass-theme-text, var(--glass-text-primary))" }}
               aria-label={
                 isMuted || volume === 0 ? "Unmute video" : "Mute video"
               }
@@ -573,7 +573,7 @@ const VideoControls: React.FC<ControlsProps> = ({
             className="glass-text-sm glass-font-mono"
             style={{
               ...createGlassStyle({ intent: "neutral", elevation: "level3" }),
-              color: "#f8fafc",
+              color: "var(--glass-theme-text, var(--glass-text-primary))",
               border: "1px solid rgba(148, 163, 184, 0.3)",
               borderRadius: 999,
               padding: "8px 12px",
@@ -617,7 +617,10 @@ const VideoControls: React.FC<ControlsProps> = ({
                       speed === playbackRate && "glass-surface-primary"
                     )}
                     style={{
-                      color: "#f8fafc",
+                      color:
+                        speed === playbackRate
+                          ? "#f8fafc"
+                          : "var(--glass-theme-text, var(--glass-text-primary))",
                       background:
                         speed === playbackRate
                           ? "rgba(37, 99, 235, 0.96)"
@@ -659,7 +662,10 @@ const VideoControls: React.FC<ControlsProps> = ({
                       q === quality && "glass-surface-primary"
                     )}
                     style={{
-                      color: "#f8fafc",
+                      color:
+                        q === quality
+                          ? "#f8fafc"
+                          : "var(--glass-theme-text, var(--glass-text-primary))",
                       background:
                         q === quality
                           ? "rgba(37, 99, 235, 0.96)"
@@ -712,9 +718,11 @@ const ChapterList: React.FC<{
               style={{
                 background: isActive
                   ? "rgba(37, 99, 235, 0.84)"
-                  : "rgba(15, 23, 42, 0.66)",
+                  : "rgba(255, 255, 255, 0.12)",
                 border: "1px solid rgba(226, 232, 240, 0.18)",
-                color: "#f8fafc",
+                color: isActive
+                  ? "#f8fafc"
+                  : "var(--glass-theme-text, var(--glass-text-primary))",
                 minHeight: 84,
               }}
             >
@@ -834,9 +842,11 @@ const TranscriptPanel: React.FC<{
               style={{
                 background: isActive
                   ? "rgba(37, 99, 235, 0.84)"
-                  : "rgba(15, 23, 42, 0.66)",
+                  : "rgba(255, 255, 255, 0.12)",
                 border: "1px solid rgba(226, 232, 240, 0.18)",
-                color: "#f8fafc",
+                color: isActive
+                  ? "#f8fafc"
+                  : "var(--glass-theme-text, var(--glass-text-primary))",
               }}
             >
               <div className="glass-flex glass-items-center glass-justify-between glass-w-full">
@@ -1156,11 +1166,11 @@ export const GlassAdvancedVideoPlayer: React.FC<AdvancedVideoPlayerProps> = ({
       data-testid={dataTestId || "glassadvancedvideoplayer"}
       style={{
         background:
-          "linear-gradient(145deg, rgba(255,255,255,0.085), rgba(255,255,255,0.018))",
-        border: "1px solid rgba(255,255,255,0.16)",
-        backdropFilter: "blur(18px) saturate(1.35)",
-        WebkitBackdropFilter: "blur(18px) saturate(1.35)",
-        color: "#f8fafc",
+          "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%)",
+        border: "1px solid rgba(255,255,255,0.18)",
+        backdropFilter: "blur(16px) saturate(1.4) brightness(1.08) contrast(1.04)",
+        WebkitBackdropFilter: "blur(16px) saturate(1.4) brightness(1.08) contrast(1.04)",
+        color: "var(--glass-theme-text, var(--glass-text-primary, rgba(248,250,252,0.96)))",
         minHeight: 320,
       }}
     >

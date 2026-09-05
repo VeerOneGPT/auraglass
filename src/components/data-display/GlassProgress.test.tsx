@@ -114,7 +114,9 @@ describe("GlassProgress", () => {
     const track = screen.getByRole("progressbar");
     const fill = track.firstElementChild as HTMLElement;
     expect(track.getAttribute("style")).toContain("rgba(255, 255, 255, 0.18)");
-    expect(fill.style.backgroundColor).toBe("rgba(71, 85, 105, 0.88)");
+    expect(fill.style.backgroundColor).toBe(
+      "var(--glass-theme-text-secondary, var(--glass-text-secondary))"
+    );
   });
 
   /**

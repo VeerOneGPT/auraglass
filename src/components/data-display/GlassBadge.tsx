@@ -211,8 +211,7 @@ export const GlassBadge = forwardRef<HTMLSpanElement, GlassBadgeProps>(
         id={badgeId}
         style={
           {
-            "--glass-theme-text": "rgba(15, 23, 42, 0.92)",
-            color: "rgba(15, 23, 42, 0.92)",
+            color: "var(--glass-theme-text, var(--glass-text-primary))",
           } as React.CSSProperties
         }
         className={cn(

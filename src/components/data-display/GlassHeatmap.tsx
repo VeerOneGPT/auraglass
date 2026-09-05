@@ -10,6 +10,7 @@ import React, {
 import { useMotionPreferenceContext } from "../../contexts/MotionPreferenceContext";
 import { Motion, OptimizedGlass } from "../../primitives";
 import { useA11yId } from "../../utils/a11y";
+import { getTextColorForBackground } from "../../utils/contrast";
 import { ContrastGuard } from "@/components/accessibility/ContrastGuard";
 import { ANIMATION } from "../../tokens/designConstants";
 
@@ -106,7 +107,7 @@ export interface GlassHeatmapProps
 
 const heatmapSurfaceStyle: React.CSSProperties = {
   background:
-    "linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.008))",
+    "linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.018))",
   border: "1px solid rgba(255, 255, 255, 0.16)",
   boxShadow:
     "0 14px 34px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.18)",
@@ -123,7 +124,7 @@ const heatmapInsetStyle: React.CSSProperties = {
 
 const heatmapLegendStyle: React.CSSProperties = {
   background:
-    "linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.008))",
+    "linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.018))",
   border: "1px solid rgba(255, 255, 255, 0.14)",
   boxShadow:
     "0 10px 24px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.14)",
@@ -421,7 +422,11 @@ export const GlassHeatmap = forwardRef<HTMLDivElement, GlassHeatmapProps>(
             )}
             style={{
               backgroundColor: cellColor,
-              color: "rgba(255, 255, 255, 0.96)",
+              color: getTextColorForBackground(
+                cellColor,
+                "rgba(255, 255, 255, 0.96)",
+                "rgba(15, 23, 42, 0.92)"
+              ),
               width: cellSize * internalZoomLevel,
               height: cellSize * internalZoomLevel,
               fontSize: `${Math.max(8, cellSize * internalZoomLevel * 0.4)}px`,

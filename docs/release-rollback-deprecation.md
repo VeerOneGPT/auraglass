@@ -121,6 +121,6 @@ Include any migration steps or known workarounds after the install command.
 - [ ] Fixed patch passes `npm run release:dry-run`.
 - [ ] Registry integrity and shasum for the fixed version are recorded.
 - [ ] GitHub release notes identify the bad version and the fixed version.
-- [ ] `GoLiveCheckList.md` and release evidence files are updated if the incident changes launch readiness.
+- [ ] Release evidence under `reports/` and [deployment.md](./deployment.md) are updated if the incident changes hosted-runtime or package guidance.
 - [ ] A regression test or pack verification is added for the failure mode.
 

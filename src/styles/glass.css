@@ -92,7 +92,7 @@
     var(--glass-color-black) / var(--glass-opacity-70)
   );
   --glass-theme-text-tertiary: rgba(
-    var(--glass-color-black) / var(--glass-opacity-50)
+    var(--glass-color-black) / var(--glass-opacity-65)
   );
   --glass-text-primary: rgba(
     var(--glass-color-black) / var(--glass-opacity-90)
@@ -101,7 +101,7 @@
     var(--glass-color-black) / var(--glass-opacity-70)
   );
   --glass-text-tertiary: rgba(
-    var(--glass-color-black) / var(--glass-opacity-50)
+    var(--glass-color-black) / var(--glass-opacity-65)
   );
   --typography-text-primary: var(--glass-text-primary);
   --typography-text-secondary: var(--glass-text-secondary);
@@ -411,7 +411,7 @@
     var(--glass-color-black) / var(--glass-opacity-70)
   );
   --glass-text-tertiary: rgba(
-    var(--glass-color-black) / var(--glass-opacity-60)
+    var(--glass-color-black) / var(--glass-opacity-65)
   );
   --typography-text-primary: var(--glass-text-primary);
   --typography-text-secondary: var(--glass-text-secondary);
@@ -1198,7 +1198,7 @@
     var(--glass-color-black) / var(--glass-opacity-70)
   );
   --glass-text-tertiary: rgba(
-    var(--glass-color-black) / var(--glass-opacity-60)
+    var(--glass-color-black) / var(--glass-opacity-65)
   );
   --glass-text-disabled: rgba(
     var(--glass-color-black) / var(--glass-opacity-40)
@@ -1694,7 +1694,7 @@
     var(--glass-color-black) / var(--glass-opacity-70)
   );
   --glass-text-tertiary: rgba(
-    var(--glass-color-black) / var(--glass-opacity-60)
+    var(--glass-color-black) / var(--glass-opacity-65)
   );
   --glass-text-disabled: rgba(
     var(--glass-color-black) / var(--glass-opacity-40)
@@ -1742,7 +1742,7 @@
     var(--glass-color-black) / var(--glass-opacity-70)
   );
   --glass-text-tertiary: rgba(
-    var(--glass-color-black) / var(--glass-opacity-50)
+    var(--glass-color-black) / var(--glass-opacity-65)
   );
   --glass-text-disabled: rgba(
     var(--glass-color-black) / var(--glass-opacity-40)
@@ -1764,7 +1764,7 @@
     var(--glass-color-black) / var(--glass-opacity-70)
   );
   --glass-text-tertiary: rgba(
-    var(--glass-color-black) / var(--glass-opacity-60)
+    var(--glass-color-black) / var(--glass-opacity-65)
   );
   --glass-text-disabled: rgba(
     var(--glass-color-black) / var(--glass-opacity-40)

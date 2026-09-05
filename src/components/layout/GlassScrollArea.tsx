@@ -302,7 +302,7 @@ export const GlassScrollArea = forwardRef<HTMLDivElement, GlassScrollAreaProps>(
             {!hasContent && (
               <div
                 className="glass-flex glass-min-h-24 glass-items-center glass-justify-center glass-p-4 glass-text-sm"
-                style={{ color: "rgba(51, 65, 85, 0.82)" }}
+                style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
               >
                 No scrollable content
               </div>

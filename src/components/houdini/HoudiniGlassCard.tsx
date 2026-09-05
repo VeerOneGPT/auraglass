@@ -196,8 +196,8 @@ export function HoudiniGlassCard({
                     background: enabledEffects.includes(effect)
                       ? "rgba(255, 255, 255, 0.28)"
                       : "rgba(255, 255, 255, 0.12)",
-                    border: "1px solid rgba(15, 23, 42, 0.18)",
-                    color: "rgba(15, 23, 42, 0.92)",
+                    border: "1px solid rgba(255, 255, 255, 0.18)",
+                    color: "var(--glass-theme-text, var(--glass-text-primary))",
                   }}
                   title={`${enabledEffects.includes(effect) ? "Disable" : "Enable"} ${effect} effect`}
                 >
@@ -318,7 +318,7 @@ export function HoudiniGlassShowcase() {
           <div className="glass-text-center glass-p-3 glass-radius-lg glass-surface-subtle dark:glass-surface-primary">
             <div
               className="glass-text-2xl glass-mb-2"
-              style={{ color: "rgba(15, 23, 42, 0.9)" }}
+              style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
             >
               {isSupported ? "✅" : "❌"}
             </div>
@@ -331,7 +331,7 @@ export function HoudiniGlassShowcase() {
           <div className="glass-text-center glass-p-3 glass-radius-lg glass-surface-subtle dark:glass-surface-primary">
             <div
               className="glass-text-2xl glass-mb-2"
-              style={{ color: "rgba(15, 23, 42, 0.9)" }}
+              style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
             >
               {hasPropertyAPI ? "✅" : "❌"}
             </div>
@@ -344,7 +344,7 @@ export function HoudiniGlassShowcase() {
           <div className="glass-text-center glass-p-3 glass-radius-lg glass-surface-subtle dark:glass-surface-primary">
             <div
               className="glass-text-2xl glass-mb-2"
-              style={{ color: "rgba(15, 23, 42, 0.9)" }}
+              style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
             >
               {hasPaintAPI ? "✅" : "❌"}
             </div>
@@ -373,9 +373,9 @@ export function HoudiniGlassShowcase() {
                   ? "rgba(255, 255, 255, 0.28)"
                   : "rgba(255, 255, 255, 0.12)",
                 border: selectedPreset === preset.id
-                  ? "2px solid rgba(15, 23, 42, 0.28)"
-                  : "2px solid rgba(15, 23, 42, 0.14)",
-                color: "rgba(15, 23, 42, 0.92)",
+                  ? "2px solid rgba(255, 255, 255, 0.28)"
+                  : "2px solid rgba(255, 255, 255, 0.18)",
+                color: "var(--glass-theme-text, var(--glass-text-primary))",
               }}
             >
               <div className="glass-font-medium glass-text-sm">
@@ -406,9 +406,9 @@ export function HoudiniGlassShowcase() {
                   ? "rgba(255, 255, 255, 0.28)"
                   : "rgba(255, 255, 255, 0.12)",
                 border: selectedEffects.includes(effect.id)
-                  ? "2px solid rgba(15, 23, 42, 0.28)"
-                  : "2px solid rgba(15, 23, 42, 0.14)",
-                color: "rgba(15, 23, 42, 0.92)",
+                  ? "2px solid rgba(255, 255, 255, 0.28)"
+                  : "2px solid rgba(255, 255, 255, 0.18)",
+                color: "var(--glass-theme-text, var(--glass-text-primary))",
               }}
             >
               <div className="glass-font-medium glass-text-sm glass-flex glass-items-center glass-gap-2">

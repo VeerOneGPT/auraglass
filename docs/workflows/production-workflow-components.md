@@ -1,8 +1,8 @@
-# AuraGlass 3.3 Production Workflow Components
+# Production workflow components
 
-AuraGlass 3.3 keeps the first-party workflow layer for product screens that otherwise push teams toward MUI form wrappers, empty states, loading panels, filter bars, search controls, comboboxes, tabs, and notification plumbing.
+These first-party components cover high-frequency product screens: empty states, loading panels, filter bars, search, form fields, comboboxes, page tabs, and notifications.
 
-These components are package-owned, use AuraGlass icons, and are intended for settings, billing, admin, support, AI command, media review, commerce, and collaboration surfaces.
+Import them from `aura-glass`. They are not exported from `aura-glass/workflows` (that path is workspace chrome). See [workflows/readme.md](./readme.md).
 
 ## Components
 

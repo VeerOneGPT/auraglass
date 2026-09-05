@@ -89,7 +89,7 @@ export const LiquidGlassConcentricFrame = forwardRef<
       "--liquid-glass-frame-radius": computedRadius,
       borderRadius: "var(--liquid-glass-frame-radius)",
       boxShadow: "inset 0 0 8px rgba(255, 255, 255, 0.12)",
-      color: "rgba(15, 23, 42, 0.94)",
+      color: "var(--glass-theme-text, var(--glass-text-primary))",
     } as React.CSSProperties;
 
     if (asChild && React.isValidElement(children)) {

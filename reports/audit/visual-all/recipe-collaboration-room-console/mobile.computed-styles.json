@@ -1,5 +1,5 @@
 {
-  "id": "recipe-collaboration-room-console",
+  "id": "collaboration-room-console",
   "name": "collaboration-room-console",
   "viewport": {
     "name": "mobile",
@@ -122,28 +122,28 @@
       "webkitBackdropFilter": "blur(16px) saturate(1.4) brightness(1.08) contrast(1.04)",
       "backdropFilterAuthored": true,
       "webkitBackdropFilterAuthored": false,
-      "backgroundColor": "rgba(255, 255, 255, 0.1)",
-      "backgroundImage": "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)",
+      "backgroundColor": "rgba(255, 255, 255, 0.02)",
+      "backgroundImage": "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)",
       "backgroundImages": [
-        "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)"
+        "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)"
       ],
-      "borderTopColor": "rgba(255, 255, 255, 0.28)",
+      "borderTopColor": "rgba(255, 255, 255, 0.18)",
       "borderWidth": "1px",
       "borders": [
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         }
       ],
@@ -173,28 +173,28 @@
       "webkitBackdropFilter": "blur(24px) saturate(1.4) brightness(1.08) contrast(1.04)",
       "backdropFilterAuthored": true,
       "webkitBackdropFilterAuthored": false,
-      "backgroundColor": "rgba(255, 255, 255, 0.12)",
-      "backgroundImage": "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)",
+      "backgroundColor": "rgba(255, 255, 255, 0.02)",
+      "backgroundImage": "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)",
       "backgroundImages": [
-        "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)"
+        "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)"
       ],
-      "borderTopColor": "rgba(255, 255, 255, 0.28)",
+      "borderTopColor": "rgba(255, 255, 255, 0.18)",
       "borderWidth": "1px",
       "borders": [
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         }
       ],
@@ -224,28 +224,28 @@
       "webkitBackdropFilter": "blur(24px) saturate(1.4) brightness(1.08) contrast(1.04)",
       "backdropFilterAuthored": true,
       "webkitBackdropFilterAuthored": false,
-      "backgroundColor": "rgba(255, 255, 255, 0.12)",
-      "backgroundImage": "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)",
+      "backgroundColor": "rgba(255, 255, 255, 0.02)",
+      "backgroundImage": "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)",
       "backgroundImages": [
-        "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)"
+        "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)"
       ],
-      "borderTopColor": "rgba(255, 255, 255, 0.28)",
+      "borderTopColor": "rgba(255, 255, 255, 0.18)",
       "borderWidth": "1px",
       "borders": [
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         }
       ],
@@ -275,28 +275,28 @@
       "webkitBackdropFilter": "blur(24px) saturate(1.4) brightness(1.08) contrast(1.04)",
       "backdropFilterAuthored": true,
       "webkitBackdropFilterAuthored": false,
-      "backgroundColor": "rgba(255, 255, 255, 0.12)",
-      "backgroundImage": "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)",
+      "backgroundColor": "rgba(255, 255, 255, 0.02)",
+      "backgroundImage": "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)",
       "backgroundImages": [
-        "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)"
+        "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)"
       ],
-      "borderTopColor": "rgba(255, 255, 255, 0.28)",
+      "borderTopColor": "rgba(255, 255, 255, 0.18)",
       "borderWidth": "1px",
       "borders": [
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         }
       ],
@@ -326,28 +326,28 @@
       "webkitBackdropFilter": "blur(16px) saturate(1.4) brightness(1.08) contrast(1.04)",
       "backdropFilterAuthored": true,
       "webkitBackdropFilterAuthored": false,
-      "backgroundColor": "rgba(255, 255, 255, 0.1)",
-      "backgroundImage": "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)",
+      "backgroundColor": "rgba(255, 255, 255, 0.02)",
+      "backgroundImage": "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)",
       "backgroundImages": [
-        "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)"
+        "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)"
       ],
-      "borderTopColor": "rgba(255, 255, 255, 0.28)",
+      "borderTopColor": "rgba(255, 255, 255, 0.18)",
       "borderWidth": "1px",
       "borders": [
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         }
       ],
@@ -377,28 +377,28 @@
       "webkitBackdropFilter": "blur(16px) saturate(1.4) brightness(1.08) contrast(1.04)",
       "backdropFilterAuthored": true,
       "webkitBackdropFilterAuthored": false,
-      "backgroundColor": "rgba(255, 255, 255, 0.1)",
-      "backgroundImage": "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)",
+      "backgroundColor": "rgba(255, 255, 255, 0.02)",
+      "backgroundImage": "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)",
       "backgroundImages": [
-        "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)"
+        "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)"
       ],
-      "borderTopColor": "rgba(255, 255, 255, 0.28)",
+      "borderTopColor": "rgba(255, 255, 255, 0.18)",
       "borderWidth": "1px",
       "borders": [
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         },
         {
-          "color": "rgba(255, 255, 255, 0.28)",
+          "color": "rgba(255, 255, 255, 0.18)",
           "width": "1px"
         }
       ],
@@ -989,27 +989,15 @@
       "y": 382,
       "width": 250,
       "height": 230,
-      "backgroundColor": "rgba(255, 255, 255, 0.12)",
-      "backgroundImage": "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)",
+      "backgroundColor": "rgba(255, 255, 255, 0.02)",
+      "backgroundImage": "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)",
       "boxShadow": "rgba(15, 23, 42, 0.16) 0px 8px 32px 0px, rgba(255, 255, 255, 0.22) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.12) 0px 0px 12px 0px inset",
       "colors": [
         {
           "r": 255,
           "g": 255,
           "b": 255,
-          "a": 0.12
-        },
-        {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 0.24
-        },
-        {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 0.12
+          "a": 0.106
         },
         {
           "r": 15,
@@ -1039,27 +1027,15 @@
       "y": 613,
       "width": 250,
       "height": 285,
-      "backgroundColor": "rgba(255, 255, 255, 0.1)",
-      "backgroundImage": "linear-gradient(135deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.12) 100%)",
+      "backgroundColor": "rgba(255, 255, 255, 0.02)",
+      "backgroundImage": "linear-gradient(145deg, rgba(255, 255, 255, 0.106) 0%, rgba(255, 255, 255, 0.035) 52%, rgba(255, 255, 255, 0.02) 100%)",
       "boxShadow": "rgba(15, 23, 42, 0.14) 0px 4px 24px 0px, rgba(255, 255, 255, 0.18) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.12) 0px 0px 8px 0px inset",
       "colors": [
         {
           "r": 255,
           "g": 255,
           "b": 255,
-          "a": 0.1
-        },
-        {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 0.24
-        },
-        {
-          "r": 255,
-          "g": 255,
-          "b": 255,
-          "a": 0.12
+          "a": 0.106
         },
         {
           "r": 15,
@@ -1083,10 +1059,5 @@
     }
   ],
   "consoleErrors": [],
-  "pageErrors": [],
-  "runId": "runtime-audit-full-20260814035148-bd425d08-8e91-4f46-9c64-432aacd56a7d",
-  "kind": "recipe",
-  "sourcePath": "recipes/collaboration-room-console",
-  "storyId": null,
-  "recipeHarness": "scripts/ci/verify-recipes-render.js"
+  "pageErrors": []
 }

@@ -503,7 +503,7 @@ const SimplifiedChartView: React.FC<SimplifiedChartViewProps> = ({
           width: "100%",
           height: "100%",
           minHeight: 120,
-          color: "rgba(15,23,42,0.76)",
+          color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
           fontSize: "0.875rem",
         }}
       >
@@ -627,7 +627,7 @@ const SimplifiedChartView: React.FC<SimplifiedChartViewProps> = ({
       <text
         x={padX}
         y={height - 4}
-        fill="rgba(15,23,42,0.72)"
+        fill="var(--glass-theme-text-secondary, var(--glass-text-secondary))"
         fontSize="10"
         fontFamily="ui-monospace, SFMono-Regular, Menlo, monospace"
       >

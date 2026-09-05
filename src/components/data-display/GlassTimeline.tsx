@@ -6,16 +6,15 @@ import { useA11yId } from "../../utils/a11y";
 import { ContrastGuard } from "@/components/accessibility/ContrastGuard";
 
 const timelineInk: React.CSSProperties = {
-  "--glass-text-primary": "rgba(15, 23, 42, 0.94)",
-  "--glass-text-secondary": "rgba(15, 23, 42, 0.72)",
-  color: "rgba(15, 23, 42, 0.94)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
 } as React.CSSProperties;
 
 const timelineCard: React.CSSProperties = {
   ...timelineInk,
   background:
-    "linear-gradient(145deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.13))",
-  border: "1px solid rgba(15, 23, 42, 0.14)",
+    "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%)",
+  backgroundColor: "rgba(255,255,255,0.018)",
+  border: "1px solid rgba(255,255,255,0.18)",
   boxShadow:
     "inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 10px 28px rgba(15, 23, 42, 0.1)",
 };
@@ -210,7 +209,9 @@ export const GlassTimeline = forwardRef<HTMLDivElement, GlassTimelineProps>(
                   config.dot
                 )}
                 style={{
-                  backgroundColor: dotColor || "rgba(15, 23, 42, 0.82)",
+                  backgroundColor:
+                    dotColor ||
+                    "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
                   border: "2px solid rgba(255, 255, 255, 0.9)",
                   boxShadow: "0 0 0 3px rgba(15, 23, 42, 0.12)",
                 }}
@@ -305,7 +306,9 @@ export const GlassTimeline = forwardRef<HTMLDivElement, GlassTimelineProps>(
                     config.dot
                   )}
                   style={{
-                    backgroundColor: dotColor || "rgba(15, 23, 42, 0.82)",
+                    backgroundColor:
+                    dotColor ||
+                    "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
                     border: "2px solid rgba(255, 255, 255, 0.92)",
                     boxShadow: "0 0 0 3px rgba(15, 23, 42, 0.12)",
                   }}

@@ -70,7 +70,7 @@ export const LiquidGlassBadgeCluster = forwardRef<
         style={
           {
             "--glass-theme-text": "rgba(15, 23, 42, 0.92)",
-            color: "rgba(15, 23, 42, 0.92)",
+            color: "var(--glass-theme-text, var(--glass-text-primary))",
           } as React.CSSProperties
         }
         {...props}
@@ -88,7 +88,7 @@ export const LiquidGlassBadgeCluster = forwardRef<
                 background: item.selected
                   ? "rgba(255, 255, 255, 0.32)"
                   : "rgba(255, 255, 255, 0.14)",
-                color: "rgba(15, 23, 42, 0.92)",
+                color: "var(--glass-theme-text, var(--glass-text-primary))",
               }}
             >
               {item.label}

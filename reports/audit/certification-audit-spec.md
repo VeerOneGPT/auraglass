@@ -70,12 +70,13 @@ Sources of truth: `src/tokens/glass.ts` (AURA_GLASS),
 
 - **Every white surface gradient stop** (including the start, midpoint, and
   end stop, and every additional stop if present) must have white-channel
-  alpha ∈ **[0.08, 0.35]**. A single passing lightest stop is not sufficient;
-  any stop below 0.08 or above 0.35 fails. Canonical stops are:
-  l1 `0.12/0.08/0.08`, l2 `0.14/0.08/0.10`, l3 `0.16/0.08/0.11`,
-  l4 `0.18/0.08/0.12`, l5 `0.20/0.08/0.14` (start/50%/end).
+  alpha ∈ **[0.015, 0.35]**. A single passing lightest stop is not sufficient;
+  any stop below 0.015 or above 0.35 fails. Canonical hardened neutral
+  white-frost (c07fd71) is `0.105/0.035/0.018` (start/52%/end); legacy level
+  stops l1 `0.12/0.08/0.08`, l2 `0.14/0.08/0.10`, l3 `0.16/0.08/0.11`,
+  l4 `0.18/0.08/0.12`, l5 `0.20/0.08/0.14` remain valid.
 - Flat `background-color` used as a glass surface: white-channel alpha ∈
-  [0.08, 0.35]. Tailwind: `bg-white/5` fails; `bg-white/{10,15,20,25,30}`
+  [0.015, 0.35]. Tailwind: `bg-white/5` fails; `bg-white/{10,15,20,25,30}`
   passes unless composited under a dark overlay.
 
 ### 2c. Dark-channel prohibition (anti-navy)
@@ -108,7 +109,7 @@ Sources of truth: `src/tokens/glass.ts` (AURA_GLASS),
 ### 2f. Theme purity
 
 - All ten personas in `src/theme/designMatrix.ts` keep white-frost surfaces:
-  every gradient stop ∈ [0.08, 0.35] and the full backdrop chain. Dark canvases
+  every gradient stop ∈ [0.015, 0.35] and the full backdrop chain. Dark canvases
   are permitted; the glass surface itself must never be an opaque navy panel.
 - `data-theme="dark"` may darken text/scrim but not the fill frost or chain.
 

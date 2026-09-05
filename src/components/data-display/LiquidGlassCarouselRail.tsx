@@ -8,10 +8,10 @@ const carouselButtonStyle: React.CSSProperties = {
   width: 36,
   height: 36,
   padding: 0,
-  border: "1px solid rgba(15, 23, 42, 0.12)",
+  border: "1px solid rgba(255, 255, 255, 0.18)",
   borderRadius: 999,
   background: "rgba(255, 255, 255, 0.32)",
-  color: "rgba(15, 23, 42, 0.92)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
   boxShadow:
     "0 8px 24px rgba(15, 23, 42, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.28)",
   backdropFilter: "blur(16px) saturate(1.4) brightness(1.05) contrast(1.04)",

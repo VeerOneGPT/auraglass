@@ -404,7 +404,10 @@ export const GlassReactionBubbles = forwardRef<
         initial={{ scale: 0, opacity: 0 }}
         animate={
           prefersReducedMotion
-            ? {}
+            ? {
+                scale: getBubbleScale(bubble),
+                opacity: getBubbleOpacity(bubble),
+              }
             : {
                 scale: getBubbleScale(bubble),
                 opacity: getBubbleOpacity(bubble),
@@ -446,7 +449,7 @@ export const GlassReactionBubbles = forwardRef<
                 "glass-absolute glass-bottom-8-neg glass-left-1/2 glass-transform glass-translate-x-1/2-neg"
               )}
               initial={{ opacity: 0, y: 10 }}
-              animate={prefersReducedMotion ? {} : { opacity: 0.8, y: 0 }}
+              animate={{ opacity: 0.8, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               transition={shouldAnimate ? { delay: 0.2 } : { duration: 0 }}
             >
@@ -469,7 +472,7 @@ export const GlassReactionBubbles = forwardRef<
             }}
             animate={
               prefersReducedMotion
-                ? {}
+                ? { scale: 1, opacity: 0.2 }
                 : {
                     scale: [1, 1.5, 1],
                     opacity: [0.3, 0.1, 0.3],
@@ -496,7 +499,7 @@ export const GlassReactionBubbles = forwardRef<
           createGlassStyle({ blur: "sm", opacity: 0.8 }).background
         )}
         initial={{ opacity: 0, y: 20 }}
-        animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={shouldAnimate ? { duration: 0.3 } : { duration: 0 }}
       >
         {availableEmojis.map((emoji: any) => (
@@ -666,7 +669,7 @@ export const GlassReactionBubbles = forwardRef<
                 )}
               >
                 <span>{stats.totalReactions}</span>
-                <span style={{ color: "rgba(51, 65, 85, 0.9)" }}>total</span>
+                <span style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}>total</span>
               </div>
               <div
                 className={cn(
@@ -674,7 +677,7 @@ export const GlassReactionBubbles = forwardRef<
                 )}
               >
                 <span>{stats.recentReactions}</span>
-                <span style={{ color: "rgba(51, 65, 85, 0.9)" }}>recent</span>
+                <span style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}>recent</span>
               </div>
               {mostUsed && (
                 <div

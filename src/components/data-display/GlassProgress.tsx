@@ -161,9 +161,9 @@ export const GlassProgress = forwardRef<HTMLDivElement, GlassProgressProps>(
     };
 
     const fillSurface: React.CSSProperties = {
-      backgroundImage:
-        "linear-gradient(90deg, rgba(51, 65, 85, 0.88), rgba(100, 116, 139, 0.76))",
-      backgroundColor: "rgba(71, 85, 105, 0.88)",
+      backgroundImage: "none",
+      backgroundColor:
+        "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
       border: "1px solid rgba(255, 255, 255, 0.22)",
       boxShadow:
         "inset 0 1px 8px rgba(255, 255, 255, 0.16), 0 1px 4px rgba(15, 23, 42, 0.18)",

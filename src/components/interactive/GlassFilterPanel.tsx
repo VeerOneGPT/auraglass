@@ -249,7 +249,7 @@ const GlassFilterPanel = React.forwardRef<
               : elevation === "high"
                 ? "rgba(255, 255, 255, 0.32)"
                 : "rgba(255, 255, 255, 0.28)",
-          color: "rgba(15, 23, 42, 0.85)",
+          color: "var(--glass-theme-text, var(--glass-text-primary))",
           maxWidth: isCompactMode ? "100%" : "28rem",
           ...(boundedHeight !== undefined
             ? {

@@ -97,7 +97,10 @@ const main = async () => {
     `npm pack --dry-run=false --json --pack-destination ${tmpRoot}`,
     { cwd: projectRoot }
   );
-  const packInfo = JSON.parse(packOutput)[0];
+  const packParsed = JSON.parse(packOutput);
+  const packInfo = Array.isArray(packParsed)
+    ? packParsed[0]
+    : packParsed && packParsed[Object.keys(packParsed)[0]];
   if (!packInfo || !packInfo.filename) {
     throw new Error("Failed to generate npm pack tarball for AuraGlass.");
   }

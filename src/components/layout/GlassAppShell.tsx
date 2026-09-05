@@ -312,7 +312,7 @@ export const GlassAppShell = forwardRef<HTMLDivElement, GlassAppShellProps>(
           "--glass-theme-text": "rgba(15, 23, 42, 0.94)",
           "--glass-theme-text-secondary": "rgba(15, 23, 42, 0.76)",
           "--glass-theme-text-tertiary": "rgba(15, 23, 42, 0.64)",
-          color: "rgba(15, 23, 42, 0.94)",
+          color: "var(--glass-theme-text, var(--glass-text-primary))",
           boxShadow:
             "0 8px 32px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.18), inset 0 0 12px rgba(255, 255, 255, 0.12)",
         } as React.CSSProperties}

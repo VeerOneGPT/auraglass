@@ -504,7 +504,7 @@ export const GlassA11y = React.forwardRef<HTMLDivElement, GlassA11yProps>(
                 <div
                   className={cn(
                     "glass-grid glass-grid-cols-2",
-                    isCompact ? "glass-gap-1" : "glass-gap-2"
+                    isCompact ? "glass-gap-1" : "glass-gap-2-5"
                   )}
                 >
                   {quickSettings.map((setting) => (
@@ -945,9 +945,10 @@ export const GlassMotionControls = React.forwardRef<
             style={{
               appearance: "none",
               background:
-                "linear-gradient(135deg, rgba(255,255,255,0.32), rgba(255,255,255,0.14))",
-              border: "1px solid rgba(15,23,42,0.16)",
-              color: "rgba(15,23,42,0.92)",
+                "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%)",
+              backgroundColor: "rgba(255,255,255,0.018)",
+              border: "1px solid rgba(255,255,255,0.18)",
+              color: "var(--glass-theme-text, var(--glass-text-primary))",
               opacity: 1,
             }}
           >

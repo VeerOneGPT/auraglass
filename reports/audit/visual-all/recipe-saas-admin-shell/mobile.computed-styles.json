@@ -1,5 +1,5 @@
 {
-  "id": "recipe-saas-admin-shell",
+  "id": "saas-admin-shell",
   "name": "saas-admin-shell",
   "viewport": {
     "name": "mobile",
@@ -1428,10 +1428,5 @@
     }
   ],
   "consoleErrors": [],
-  "pageErrors": [],
-  "runId": "runtime-audit-full-20260814035148-bd425d08-8e91-4f46-9c64-432aacd56a7d",
-  "kind": "recipe",
-  "sourcePath": "recipes/saas-admin-shell",
-  "storyId": null,
-  "recipeHarness": "scripts/ci/verify-recipes-render.js"
+  "pageErrors": []
 }

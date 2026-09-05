@@ -20,13 +20,13 @@ const notificationSurfaceStyle: React.CSSProperties = {
   border: "1px solid rgba(255, 255, 255, 0.62)",
   boxShadow:
     "inset 0 1px 0 rgba(255, 255, 255, 0.24), 0 12px 32px rgba(15, 23, 42, 0.12)",
-  color: "rgba(15, 23, 42, 0.94)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
 };
 
 const notificationControlStyle: React.CSSProperties = {
   minWidth: 44,
   minHeight: 44,
-  color: "rgba(15, 23, 42, 0.88)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
 };
 
 export type NotificationType = "success" | "error" | "warning" | "info";
@@ -291,7 +291,7 @@ export const GlassNotificationCenter = forwardRef<
                   {/* Icon */}
                   <div
                     className="glass-flex-shrink-0 glass-w-6 glass-h-6 glass-radius-full glass-flex glass-items-center glass-justify-center glass-text-sm glass-font-bold"
-                    style={{ color: "rgba(15, 23, 42, 0.82)" }}
+                    style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
                     role="img"
                     aria-label={typeStyles.label}
                   >
@@ -322,7 +322,7 @@ export const GlassNotificationCenter = forwardRef<
                           style={{
                             ...notificationControlStyle,
                             background: "rgba(255, 255, 255, 0.24)",
-                            border: "1px solid rgba(15, 23, 42, 0.16)",
+                            border: "1px solid rgba(255, 255, 255, 0.18)",
                           }}
                         >
                           {notification.action.label}
@@ -347,7 +347,8 @@ export const GlassNotificationCenter = forwardRef<
                     <div
                       className={`glass-h-full glass-radius-full glass-transition-all glass-duration-[${ANIMATION.DURATION.fast / 6}ms] glass-ease-linear`}
                       style={{
-                        background: "rgba(15, 23, 42, 0.42)",
+                        background:
+                          "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
                         animation: `shrink ${notification.duration}ms linear forwards`,
                       }}
                     />
@@ -398,7 +399,7 @@ export const GlassNotificationItem = forwardRef<
       <div className="glass-flex glass-items-start glass-gap-3">
         <div
           className="glass-w-6 glass-h-6 glass-radius-full glass-flex glass-items-center glass-justify-center glass-text-sm glass-font-bold"
-          style={{ color: "rgba(15, 23, 42, 0.82)" }}
+          style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
           role="img"
           aria-label={typeStyles.label}
         >

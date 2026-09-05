@@ -2,7 +2,7 @@
 
 exports[`BrandColorIntegration matches snapshot 1`] = `
 <div
-  class="brand-color-integration "
+  class="brand-color-integration glass-on-light "
   style="position: relative;"
 >
   <style />

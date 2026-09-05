@@ -38,7 +38,7 @@ export const LiquidGlassBackdropSampler = forwardRef<
         .filter(Boolean)
         .join(" ")}
       style={{
-        color: "rgba(15, 23, 42, 0.94)",
+        color: "var(--glass-theme-text, var(--glass-text-primary))",
         boxShadow: "inset 0 0 8px rgba(255, 255, 255, 0.12)",
         ...style,
       }}

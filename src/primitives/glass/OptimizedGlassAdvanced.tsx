@@ -363,14 +363,12 @@ export const OptimizedGlassAdvanced = forwardRef<
       () => ({
         ...PERFORMANCE_STYLES[performanceMode],
         background:
-          "linear-gradient(135deg, rgba(255,255,255,0.24), rgba(255,255,255,0.12))",
-        backgroundColor: "rgba(255,255,255,0.12)",
-        border: "1px solid rgba(255,255,255,0.28)",
+          "linear-gradient(145deg, rgba(255,255,255,0.105) 0%, rgba(255,255,255,0.035) 52%, rgba(255,255,255,0.018) 100%)",
+        backgroundColor: "rgba(255,255,255,0.018)",
+        border: "1px solid rgba(255,255,255,0.18)",
         boxShadow:
           "0 8px 28px rgba(15,23,42,0.14), inset 0 0 12px rgba(255,255,255,0.12)",
-      "--glass-theme-text": "rgba(15,23,42,0.94)",
-      "--glass-text-secondary": "rgba(15,23,42,0.88)",
-        color: "rgba(15,23,42,0.94)",
+        color: "var(--glass-theme-text, var(--glass-text-primary))",
         ...style,
       }),
       [performanceMode, style]

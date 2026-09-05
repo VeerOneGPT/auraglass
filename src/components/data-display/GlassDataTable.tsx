@@ -37,7 +37,7 @@ const tableControlStyle: React.CSSProperties = {
   borderRadius: 12,
   color: TABLE_TEXT,
   background:
-    "linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.008))",
+    "linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.018))",
   boxShadow:
     "inset 0 1px 0 rgba(255,255,255,0.16), 0 8px 24px rgba(3,7,18,0.12)",
 };
@@ -732,7 +732,7 @@ const GlassDataTableInnerBase = <
         style={{
           ...createGlassStyle({ intent: "neutral", elevation: "level2" }),
           background:
-            "linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.008))",
+            "linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.018))",
           boxShadow:
             "inset 0 1px 0 rgba(255,255,255,0.16), inset 0 -1px 0 rgba(255,255,255,0.035), 0 20px 48px rgba(3,7,18,0.18)",
           borderColor: "rgba(255, 255, 255, 0.16)",
@@ -781,7 +781,7 @@ const GlassDataTableInnerBase = <
                   )}
                   style={{
                     background:
-                      "linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.008))",
+                      "linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.018))",
                     borderColor: "rgba(255, 255, 255, 0.14)",
                     boxShadow:
                       "inset 0 1px 0 rgba(255,255,255,0.14), 0 8px 20px rgba(3,7,18,0.12)",

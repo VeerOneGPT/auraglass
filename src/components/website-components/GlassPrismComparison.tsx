@@ -223,7 +223,7 @@ export function GlassPrismComparison({
                 fontSize: "0.68rem",
                 letterSpacing: "0.16em",
                 textTransform: "uppercase",
-                color: "rgba(15, 23, 42, 0.88)",
+                color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
               }}
             >
               Prism comparison
@@ -298,7 +298,7 @@ export function GlassPrismComparison({
                   fontSize: "1.25rem",
                   lineHeight: 1,
                   fontWeight: 820,
-                  color: "rgba(15, 23, 42, 0.94)",
+                  color: "var(--glass-theme-text, var(--glass-text-primary))",
                 }}
               >
                 {currentData.auraone.value}

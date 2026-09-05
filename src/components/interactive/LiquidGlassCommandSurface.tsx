@@ -72,7 +72,7 @@ export const LiquidGlassCommandSurface = forwardRef<
             {
               background:
                 "linear-gradient(135deg, rgba(255,255,255,0.30), rgba(255,255,255,0.18) 55%, rgba(255,255,255,0.12))",
-              color: "rgba(15,23,42,0.94)",
+              color: "var(--glass-theme-text, var(--glass-text-primary))",
               "--glass-theme-text": "rgba(15,23,42,0.94)",
               "--glass-theme-text-secondary": "rgba(15,23,42,0.76)",
             } as React.CSSProperties
@@ -124,7 +124,7 @@ export const LiquidGlassCommandSurface = forwardRef<
                     index === selectedIndex
                       ? "rgba(255,255,255,0.24)"
                       : "rgba(255,255,255,0.12)",
-                  color: "rgba(15,23,42,0.94)",
+                  color: "var(--glass-theme-text, var(--glass-text-primary))",
                 }}
                 onMouseEnter={() => setSelectedIndex(index)}
                 onClick={item.onSelect}
@@ -137,7 +137,7 @@ export const LiquidGlassCommandSurface = forwardRef<
                   {item.description && (
                     <span
                       className="glass-block glass-truncate glass-text-xs glass-text-secondary"
-                      style={{ color: "rgba(15,23,42,0.76)" }}
+                      style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
                     >
                       {item.description}
                     </span>
@@ -146,7 +146,7 @@ export const LiquidGlassCommandSurface = forwardRef<
                 {item.shortcut && (
                   <span
                     className="glass-shrink-0 glass-text-xs glass-text-secondary"
-                    style={{ color: "rgba(15,23,42,0.76)" }}
+                    style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
                   >
                     {item.shortcut}
                   </span>

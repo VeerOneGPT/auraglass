@@ -1,7 +1,7 @@
 {
   "objective": "Audit the src/index.ts public export surface against source, declarations, the frozen historical inventory, Storybook, tests, documentation, and the current visual-target manifest.",
   "summary": {
-    "generatedAt": "2026-08-13T22:23:16.597Z",
+    "generatedAt": "2026-09-04T14:12:39.187Z",
     "rootExportCount": 881,
     "valueExportCount": 695,
     "typeExportCount": 180,

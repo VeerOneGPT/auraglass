@@ -6,7 +6,7 @@
     var(--glass-color-black, 0 0 0) / var(--glass-opacity-70, 0.7)
   );
   --glass-theme-text-tertiary: rgba(
-    var(--glass-color-black, 0 0 0) / var(--glass-opacity-60, 0.6)
+    var(--glass-color-black, 0 0 0) / var(--glass-opacity-65, 0.65)
   );
   --glass-page-tabs-ink: rgba(
     var(--glass-color-black, 0 0 0) / var(--glass-opacity-90, 0.9)

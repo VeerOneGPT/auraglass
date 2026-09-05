@@ -524,7 +524,7 @@ function SidebarNavigationItem({ item, level }: SidebarNavigationItemProps) {
                 "relative z-10" // Ensure badge stays above any background effects
               )}
               style={{
-                color: "rgba(15, 23, 42, 0.9)",
+                color: "var(--glass-theme-text, var(--glass-text-primary))",
               }}
             >
               {item?.badge}

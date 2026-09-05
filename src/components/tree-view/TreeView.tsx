@@ -21,7 +21,7 @@ const TREE_COLOR_MAP: Record<
   { accent: string; highlight: string }
 > = {
   default: {
-    accent: "rgba(15, 23, 42, 0.94)",
+    accent: "var(--glass-theme-text, var(--glass-text-primary))",
     highlight: "rgba(255, 255, 255, 0.24)",
   },
   primary: {
@@ -199,7 +199,7 @@ function TreeViewComponent(
   const containerVars = useMemo<React.CSSProperties>(
     () =>
       ({
-        "--tree-view-color": "rgba(15, 23, 42, 0.94)",
+        "--tree-view-color": "var(--glass-theme-text, var(--glass-text-primary))",
         "--tree-view-selected-bg": "rgba(255, 255, 255, 0.24)",
       }) as React.CSSProperties,
     [color]

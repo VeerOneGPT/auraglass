@@ -1,5 +1,5 @@
 {
-  "id": "recipe-calendar-schedule",
+  "id": "calendar-schedule",
   "name": "calendar-schedule",
   "viewport": {
     "name": "desktop",
@@ -267,7 +267,7 @@
       "className": "w-full h-full glass-radius-lg glass-focus glass-accent-primary glass-touch-target glass-contrast-guard flex flex-col items-center justify-start glass-p-0.5 transition-all duration-200 hover:bg-white/10 focus:bg-white/15 focus:outline-none glass-hover-scale-105 disabled:opacity-50 glass-disabled-cursor-not-allowed glass-foundation-complete glass-backdrop-blur bg-transparent border-white/40 glass-text-primary/90",
       "inputType": null,
       "surfaceKind": "backdrop",
-      "x": 866.5625,
+      "x": 1223.703125,
       "y": 284.703125,
       "width": 64,
       "height": 64,
@@ -408,7 +408,7 @@
       "contrastRatio": 15.308421537959308,
       "fontSize": 16.96,
       "fontWeight": 600,
-      "text": "August"
+      "text": "September"
     },
     {
       "selector": "h2",
@@ -525,6 +525,136 @@
       "contrastRatio": 11.339718386465455,
       "fontSize": 14,
       "fontWeight": 400,
+      "text": "30"
+    },
+    {
+      "selector": "span",
+      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
+      "role": "primary",
+      "colorAlpha": 1,
+      "effectiveAlpha": 1,
+      "foregroundColor": "rgb(36, 49, 73)",
+      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
+      "contrastRatio": 11.339718386465455,
+      "fontSize": 14,
+      "fontWeight": 400,
+      "text": "31"
+    },
+    {
+      "selector": "span",
+      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
+      "role": "primary",
+      "colorAlpha": 1,
+      "effectiveAlpha": 1,
+      "foregroundColor": "rgb(36, 49, 73)",
+      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
+      "contrastRatio": 11.339718386465455,
+      "fontSize": 14,
+      "fontWeight": 400,
+      "text": "1"
+    },
+    {
+      "selector": "span",
+      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
+      "role": "primary",
+      "colorAlpha": 1,
+      "effectiveAlpha": 1,
+      "foregroundColor": "rgb(36, 49, 73)",
+      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
+      "contrastRatio": 11.339718386465455,
+      "fontSize": 14,
+      "fontWeight": 400,
+      "text": "2"
+    },
+    {
+      "selector": "span",
+      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
+      "role": "primary",
+      "colorAlpha": 1,
+      "effectiveAlpha": 1,
+      "foregroundColor": "rgb(36, 49, 73)",
+      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
+      "contrastRatio": 11.339718386465455,
+      "fontSize": 14,
+      "fontWeight": 400,
+      "text": "3"
+    },
+    {
+      "selector": "span",
+      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
+      "role": "primary",
+      "colorAlpha": 1,
+      "effectiveAlpha": 1,
+      "foregroundColor": "rgb(36, 49, 73)",
+      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
+      "contrastRatio": 11.339718386465455,
+      "fontSize": 14,
+      "fontWeight": 400,
+      "text": "4"
+    },
+    {
+      "selector": "span",
+      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
+      "role": "primary",
+      "colorAlpha": 1,
+      "effectiveAlpha": 1,
+      "foregroundColor": "rgb(36, 49, 73)",
+      "localBackdropColor": "rgba(255.0,255.0,255.0,1.000)",
+      "contrastRatio": 13.03905190733862,
+      "fontSize": 14,
+      "fontWeight": 400,
+      "text": "5"
+    },
+    {
+      "selector": "span",
+      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
+      "role": "primary",
+      "colorAlpha": 1,
+      "effectiveAlpha": 1,
+      "foregroundColor": "rgb(36, 49, 73)",
+      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
+      "contrastRatio": 11.339718386465455,
+      "fontSize": 14,
+      "fontWeight": 400,
+      "text": "6"
+    },
+    {
+      "selector": "span",
+      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
+      "role": "primary",
+      "colorAlpha": 1,
+      "effectiveAlpha": 1,
+      "foregroundColor": "rgb(36, 49, 73)",
+      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
+      "contrastRatio": 11.339718386465455,
+      "fontSize": 14,
+      "fontWeight": 400,
+      "text": "7"
+    },
+    {
+      "selector": "span",
+      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
+      "role": "primary",
+      "colorAlpha": 1,
+      "effectiveAlpha": 1,
+      "foregroundColor": "rgb(36, 49, 73)",
+      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
+      "contrastRatio": 11.339718386465455,
+      "fontSize": 14,
+      "fontWeight": 400,
+      "text": "8"
+    },
+    {
+      "selector": "span",
+      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
+      "role": "primary",
+      "colorAlpha": 1,
+      "effectiveAlpha": 1,
+      "foregroundColor": "rgb(36, 49, 73)",
+      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
+      "contrastRatio": 11.339718386465455,
+      "fontSize": 14,
+      "fontWeight": 400,
       "text": "9"
     },
     {
@@ -573,8 +703,8 @@
       "colorAlpha": 1,
       "effectiveAlpha": 1,
       "foregroundColor": "rgb(36, 49, 73)",
-      "localBackdropColor": "rgba(255.0,255.0,255.0,1.000)",
-      "contrastRatio": 13.03905190733862,
+      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
+      "contrastRatio": 11.339718386465455,
       "fontSize": 14,
       "fontWeight": 400,
       "text": "13"
@@ -747,136 +877,6 @@
       "fontSize": 14,
       "fontWeight": 400,
       "text": "26"
-    },
-    {
-      "selector": "span",
-      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
-      "role": "primary",
-      "colorAlpha": 1,
-      "effectiveAlpha": 1,
-      "foregroundColor": "rgb(36, 49, 73)",
-      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
-      "contrastRatio": 11.339718386465455,
-      "fontSize": 14,
-      "fontWeight": 400,
-      "text": "27"
-    },
-    {
-      "selector": "span",
-      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
-      "role": "primary",
-      "colorAlpha": 1,
-      "effectiveAlpha": 1,
-      "foregroundColor": "rgb(36, 49, 73)",
-      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
-      "contrastRatio": 11.339718386465455,
-      "fontSize": 14,
-      "fontWeight": 400,
-      "text": "28"
-    },
-    {
-      "selector": "span",
-      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
-      "role": "primary",
-      "colorAlpha": 1,
-      "effectiveAlpha": 1,
-      "foregroundColor": "rgb(36, 49, 73)",
-      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
-      "contrastRatio": 11.339718386465455,
-      "fontSize": 14,
-      "fontWeight": 400,
-      "text": "29"
-    },
-    {
-      "selector": "span",
-      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
-      "role": "primary",
-      "colorAlpha": 1,
-      "effectiveAlpha": 1,
-      "foregroundColor": "rgb(36, 49, 73)",
-      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
-      "contrastRatio": 11.339718386465455,
-      "fontSize": 14,
-      "fontWeight": 400,
-      "text": "30"
-    },
-    {
-      "selector": "span",
-      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
-      "role": "primary",
-      "colorAlpha": 1,
-      "effectiveAlpha": 1,
-      "foregroundColor": "rgb(36, 49, 73)",
-      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
-      "contrastRatio": 11.339718386465455,
-      "fontSize": 14,
-      "fontWeight": 400,
-      "text": "31"
-    },
-    {
-      "selector": "span",
-      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
-      "role": "primary",
-      "colorAlpha": 1,
-      "effectiveAlpha": 1,
-      "foregroundColor": "rgb(36, 49, 73)",
-      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
-      "contrastRatio": 11.339718386465455,
-      "fontSize": 14,
-      "fontWeight": 400,
-      "text": "1"
-    },
-    {
-      "selector": "span",
-      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
-      "role": "primary",
-      "colorAlpha": 1,
-      "effectiveAlpha": 1,
-      "foregroundColor": "rgb(36, 49, 73)",
-      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
-      "contrastRatio": 11.339718386465455,
-      "fontSize": 14,
-      "fontWeight": 400,
-      "text": "2"
-    },
-    {
-      "selector": "span",
-      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
-      "role": "primary",
-      "colorAlpha": 1,
-      "effectiveAlpha": 1,
-      "foregroundColor": "rgb(36, 49, 73)",
-      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
-      "contrastRatio": 11.339718386465455,
-      "fontSize": 14,
-      "fontWeight": 400,
-      "text": "3"
-    },
-    {
-      "selector": "span",
-      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
-      "role": "primary",
-      "colorAlpha": 1,
-      "effectiveAlpha": 1,
-      "foregroundColor": "rgb(36, 49, 73)",
-      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
-      "contrastRatio": 11.339718386465455,
-      "fontSize": 14,
-      "fontWeight": 400,
-      "text": "4"
-    },
-    {
-      "selector": "span",
-      "className": "glass-body glass-font-medium glass-leading-none glass-contrast-guard",
-      "role": "primary",
-      "colorAlpha": 1,
-      "effectiveAlpha": 1,
-      "foregroundColor": "rgb(36, 49, 73)",
-      "localBackdropColor": "rgba(239.0,239.0,239.0,1.000)",
-      "contrastRatio": 11.339718386465455,
-      "fontSize": 14,
-      "fontWeight": 400,
-      "text": "5"
     }
   ],
   "paints": [
@@ -1282,6 +1282,46 @@
       "y": 285,
       "width": 64,
       "height": 64,
+      "backgroundColor": "rgb(239, 239, 239)",
+      "backgroundImage": "none",
+      "boxShadow": "none",
+      "colors": [
+        {
+          "r": 239,
+          "g": 239,
+          "b": 239,
+          "a": 1
+        }
+      ]
+    },
+    {
+      "selector": "button",
+      "className": "w-full h-full glass-radius-lg glass-focus glass-accent-primary glass-touch-target glass-contrast-guard flex flex-col items-center justify-start glass-p-0.5 transition-all duration-200 hover:bg-white/10 focus:bg-white/15 ",
+      "paintRole": "interactive",
+      "x": 1045,
+      "y": 285,
+      "width": 64,
+      "height": 64,
+      "backgroundColor": "rgb(239, 239, 239)",
+      "backgroundImage": "none",
+      "boxShadow": "none",
+      "colors": [
+        {
+          "r": 239,
+          "g": 239,
+          "b": 239,
+          "a": 1
+        }
+      ]
+    },
+    {
+      "selector": "button",
+      "className": "w-full h-full glass-radius-lg glass-focus glass-accent-primary glass-touch-target glass-contrast-guard flex flex-col items-center justify-start glass-p-0.5 transition-all duration-200 hover:bg-white/10 focus:bg-white/15 ",
+      "paintRole": "interactive",
+      "x": 1224,
+      "y": 285,
+      "width": 64,
+      "height": 64,
       "backgroundColor": "rgba(0, 0, 0, 0)",
       "backgroundImage": "linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.08) 50%, rgba(255, 255, 255, 0.1) 100%), linear-gradient(rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.12))",
       "boxShadow": "rgba(24, 24, 24, 0.28) 0px 24px 60px -30px, rgba(255, 255, 255, 0.2) 0px 1px 0px 0px inset",
@@ -1327,46 +1367,6 @@
           "g": 255,
           "b": 255,
           "a": 0.2
-        }
-      ]
-    },
-    {
-      "selector": "button",
-      "className": "w-full h-full glass-radius-lg glass-focus glass-accent-primary glass-touch-target glass-contrast-guard flex flex-col items-center justify-start glass-p-0.5 transition-all duration-200 hover:bg-white/10 focus:bg-white/15 ",
-      "paintRole": "interactive",
-      "x": 1045,
-      "y": 285,
-      "width": 64,
-      "height": 64,
-      "backgroundColor": "rgb(239, 239, 239)",
-      "backgroundImage": "none",
-      "boxShadow": "none",
-      "colors": [
-        {
-          "r": 239,
-          "g": 239,
-          "b": 239,
-          "a": 1
-        }
-      ]
-    },
-    {
-      "selector": "button",
-      "className": "w-full h-full glass-radius-lg glass-focus glass-accent-primary glass-touch-target glass-contrast-guard flex flex-col items-center justify-start glass-p-0.5 transition-all duration-200 hover:bg-white/10 focus:bg-white/15 ",
-      "paintRole": "interactive",
-      "x": 1224,
-      "y": 285,
-      "width": 64,
-      "height": 64,
-      "backgroundColor": "rgb(239, 239, 239)",
-      "backgroundImage": "none",
-      "boxShadow": "none",
-      "colors": [
-        {
-          "r": 239,
-          "g": 239,
-          "b": 239,
-          "a": 1
         }
       ]
     },
@@ -1792,10 +1792,5 @@
     }
   ],
   "consoleErrors": [],
-  "pageErrors": [],
-  "runId": "runtime-audit-full-20260814035148-bd425d08-8e91-4f46-9c64-432aacd56a7d",
-  "kind": "recipe",
-  "sourcePath": "recipes/calendar-schedule",
-  "storyId": null,
-  "recipeHarness": "scripts/ci/verify-recipes-render.js"
+  "pageErrors": []
 }

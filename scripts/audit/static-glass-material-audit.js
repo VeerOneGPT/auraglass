@@ -684,11 +684,11 @@ const analyzeFill = ({ value, property, record, node, subject, propertyIndex, co
       if (color.a <= 0.00001) continue;
       if (isWhiteNeutral(color)) {
         sawWhite = true;
-        if (color.a < 0.08 || color.a > 0.35) {
+        if (color.a < 0.015 || color.a > 0.35) {
           collector.violation({
             ...findingBase(record, node, subject),
             code: "white-frost-alpha-outside-contract",
-            message: `${property} neutral-white stop alpha ${Number(color.a.toFixed(4))} is outside [0.08,0.35] (${color.raw}).`,
+            message: `${property} neutral-white stop alpha ${Number(color.a.toFixed(4))} is outside [0.015,0.35] (${color.raw}).`,
           });
         }
       } else if (isForbiddenMaterialColor(color)) {
@@ -704,7 +704,7 @@ const analyzeFill = ({ value, property, record, node, subject, propertyIndex, co
       collector.violation({
         ...findingBase(record, node, subject),
         code: "missing-white-frost",
-        message: `${property} has no neutral-white frost stop in [0.08,0.35]: ${JSON.stringify(variant.trim())}.`,
+            message: `${property} has no neutral-white frost stop in [0.015,0.35]: ${JSON.stringify(variant.trim())}.`,
       });
     }
   }

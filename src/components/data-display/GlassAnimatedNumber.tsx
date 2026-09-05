@@ -202,7 +202,7 @@ export const GlassAnimatedNumber = forwardRef<
           className
         )}
         style={{
-          color: "rgba(15, 23, 42, 0.92)",
+          color: "var(--glass-theme-text, var(--glass-text-primary))",
           background: "var(--glass-neutral-level2-surface)",
           border: "1px solid rgba(148, 163, 184, 0.18)",
           boxShadow:
@@ -263,7 +263,7 @@ export const GlassAnimatedCounter: React.FC<{
             "glass-text-sm glass-text-primary-70 glass-font-medium"
           )}
           elevation="level1"
-          style={{ color: "rgba(15, 23, 42, 0.78)" }}
+          style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
         >
           {label}
         </OptimizedGlass>
@@ -315,7 +315,7 @@ export const GlassAnimatedStat: React.FC<{
         <OptimizedGlass
           className={cn("glass-text-sm glass-text-primary-70")}
           elevation="level1"
-          style={{ color: "rgba(15, 23, 42, 0.78)" }}
+          style={{ color: "var(--glass-theme-text-secondary, var(--glass-text-secondary))" }}
         >
           <ContrastGuard>{label}</ContrastGuard>
         </OptimizedGlass>
@@ -333,7 +333,7 @@ export const GlassAnimatedStat: React.FC<{
             className={cn("glass-h-full glass-radius-full glass-transition-all")}
             style={{
               background:
-                "linear-gradient(90deg, rgba(15, 23, 42, 0.68), rgba(71, 85, 105, 0.56))",
+                "var(--glass-theme-text-secondary, var(--glass-text-secondary))",
               transitionDuration: `${ANIMATION.DURATION.normal}ms`,
               transitionTimingFunction: ANIMATION.EASING.easeOut,
               width: `${percentage}%`,

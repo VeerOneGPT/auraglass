@@ -180,7 +180,7 @@ const scans = [
     id: "manualCertificationGaps",
     description:
       "Manual screen-reader and physical-device certification gaps that must not be auto-completed.",
-    roots: ["reports/3.2-release", "reports/3.3-release", "GoLiveCheckList.md"],
+    roots: ["reports/3.2-release", "reports/3.3-release", "docs/deployment.md"],
     patterns: [
       {
         label: "manual/external certification",

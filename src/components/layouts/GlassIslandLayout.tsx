@@ -621,7 +621,7 @@ export const GlassIslandLayout = forwardRef<
             border: "1px solid rgba(148,163,184,.3)",
             borderRadius: 14,
             background: "rgba(255,255,255,.2)",
-            color: "rgba(15,23,42,.9)",
+            color: "var(--glass-theme-text, var(--glass-text-primary))",
           }}
         >
           🔍+
@@ -641,7 +641,7 @@ export const GlassIslandLayout = forwardRef<
             border: "1px solid rgba(148,163,184,.3)",
             borderRadius: 14,
             background: "rgba(255,255,255,.2)",
-            color: "rgba(15,23,42,.9)",
+            color: "var(--glass-theme-text, var(--glass-text-primary))",
           }}
         >
           🔍-
@@ -656,7 +656,7 @@ export const GlassIslandLayout = forwardRef<
             border: "1px solid rgba(148,163,184,.3)",
             borderRadius: 14,
             background: "rgba(255,255,255,.2)",
-            color: "rgba(15, 23, 42, 0.94)",
+            color: "var(--glass-theme-text, var(--glass-text-primary))",
           }}
           whileHover={shouldAnimate ? { scale: 1.05 } : {}}
           whileTap={shouldAnimate ? { scale: 0.95 } : {}}
@@ -677,7 +677,7 @@ export const GlassIslandLayout = forwardRef<
             border: "1px solid rgba(148,163,184,.3)",
             borderRadius: 14,
             background: "rgba(255,255,255,.2)",
-            color: "rgba(15,23,42,.9)",
+            color: "var(--glass-theme-text, var(--glass-text-primary))",
           }}
         >
           ⚡
@@ -838,7 +838,9 @@ export const GlassIslandLayout = forwardRef<
                   {island.category && (
                     <span
                       className="glass-px-2 glass-py-1 glass-surface-overlay glass-radius glass-text-xs"
-                      style={{ color: "rgb(15, 23, 42)" }}
+                      style={{
+                        color: "var(--glass-theme-text, var(--glass-text-primary))",
+                      }}
                     >
                       {island.category}
                     </span>
@@ -857,7 +859,9 @@ export const GlassIslandLayout = forwardRef<
                       );
                     }}
                     className="glass-w-6 glass-h-6 glass-surface-overlay hover:glass-surface-subtle glass-radius glass-text-xs glass-transition-colors glass-focus glass-touch-target glass-contrast-guard"
-                    style={{ color: "rgb(15, 23, 42)" }}
+                    style={{
+                      color: "var(--glass-theme-text, var(--glass-text-primary))",
+                    }}
                   >
                     {island.minimized ? "□" : "_"}
                   </button>

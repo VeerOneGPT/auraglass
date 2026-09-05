@@ -1,5 +1,5 @@
 {
-  "id": "recipe-marketing-launch-kit",
+  "id": "marketing-launch-kit",
   "name": "marketing-launch-kit",
   "viewport": {
     "name": "mobile",
@@ -97,7 +97,7 @@
         }
       ],
       "boxShadow": "rgba(0, 0, 0, 0.16) 0px 16px 42px 0px, rgba(255, 255, 255, 0.28) 0px 1px 0px 0px inset, rgba(255, 255, 255, 0.14) 0px 0px 18px 0px inset",
-      "color": "rgba(15, 23, 42, 0.94)",
+      "color": "rgba(0, 0, 0, 0.9)",
       "overflowX": "hidden",
       "overflowY": "hidden",
       "scrollWidth": 114,
@@ -299,7 +299,7 @@
     0.9,
     0.9,
     0.9,
-    0.94,
+    0.9,
     0.9,
     0.9,
     0.9,
@@ -358,11 +358,11 @@
       "selector": "span",
       "className": "glass-relative glass-z-10",
       "role": "primary",
-      "colorAlpha": 0.94,
-      "effectiveAlpha": 0.94,
-      "foregroundColor": "rgba(15, 23, 42, 0.94)",
+      "colorAlpha": 0.9,
+      "effectiveAlpha": 0.9,
+      "foregroundColor": "rgba(0, 0, 0, 0.9)",
       "localBackdropColor": "rgba(255.0,255.0,255.0,1.000)",
-      "contrastRatio": 15.308421537959308,
+      "contrastRatio": 17.49334507237235,
       "fontSize": 14,
       "fontWeight": 500,
       "text": "Start building"
@@ -938,10 +938,5 @@
     }
   ],
   "consoleErrors": [],
-  "pageErrors": [],
-  "runId": "runtime-audit-full-20260814035148-bd425d08-8e91-4f46-9c64-432aacd56a7d",
-  "kind": "recipe",
-  "sourcePath": "recipes/marketing-launch-kit",
-  "storyId": null,
-  "recipeHarness": "scripts/ci/verify-recipes-render.js"
+  "pageErrors": []
 }

@@ -128,7 +128,7 @@ export const GlassThemeDemo = forwardRef<HTMLDivElement, GlassThemeDemoProps>(
                 <Typography
                   variant="p"
                   className="glass-text-xs glass-text-primary glass-line-clamp-2"
-                  style={{ color: "rgba(15, 23, 42, 0.94)" }}
+                  style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
                 >
                   {description}
                 </Typography>

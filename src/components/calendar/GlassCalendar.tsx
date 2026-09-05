@@ -22,10 +22,7 @@ const calendarSelectionSurfaceStyle: React.CSSProperties = {
 
 const calendarInkStyle: React.CSSProperties = {
   "--glass-specular-intensity": 0.25,
-  "--glass-text-primary": "rgba(15, 23, 42, 0.94)",
-  "--glass-text-secondary": "rgba(15, 23, 42, 0.76)",
-  "--glass-text-tertiary": "rgba(15, 23, 42, 0.64)",
-  color: "rgba(15, 23, 42, 0.94)",
+  color: "var(--glass-theme-text, var(--glass-text-primary))",
 } as React.CSSProperties;
 
 export interface CalendarEvent {
@@ -480,7 +477,7 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                         ? "glass-text-primary/60"
                         : "glass-text-primary/80"
                     )}
-                    style={{ color: "rgba(15, 23, 42, 0.92)" }}
+                    style={{ color: "var(--glass-theme-text, var(--glass-text-primary))" }}
                   >
                     <span aria-hidden={compact ? "true" : undefined}>
                       {compact ? day.slice(0, 1) : day}
@@ -535,8 +532,8 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                       (isToday(date) && showToday && !isSelected(date))
                         ? {
                             color: isCurrentMonth(date)
-                              ? "rgba(15, 23, 42, 0.92)"
-                              : "rgba(15, 23, 42, 0.62)",
+                              ? "var(--glass-theme-text, var(--glass-text-primary))"
+                              : "var(--glass-theme-text-tertiary, var(--glass-text-tertiary))",
                             ...(compact ? { padding: "1px" } : {}),
                             ...(isSelected(date) ||
                             (isToday(date) && showToday && !isSelected(date))
@@ -545,8 +542,8 @@ export const GlassCalendar: React.FC<GlassCalendarProps> = ({
                           }
                         : {
                             color: isCurrentMonth(date)
-                              ? "rgba(15, 23, 42, 0.92)"
-                              : "rgba(15, 23, 42, 0.62)",
+                              ? "var(--glass-theme-text, var(--glass-text-primary))"
+                              : "var(--glass-theme-text-tertiary, var(--glass-text-tertiary))",
                           }
                     }
                     className={cn(

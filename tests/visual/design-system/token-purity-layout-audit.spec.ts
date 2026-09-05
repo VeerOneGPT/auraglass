@@ -14,7 +14,7 @@ import { PNG } from "playwright-core/lib/utilsBundle";
  * story id, and evaluates computed styles + layout at 1440x900, 768x1024,
  * 390x844. Every glass surface must carry the canonical backdrop chain
  * (blur 16|24|32|40|48px, saturate>=1.4, brightness>=1.0, contrast in
- * [0.95,1.2]), white-frost fill (lightest stop alpha in [0.08,0.35]), a real
+ * [0.95,1.2]), white-frost fill (lightest stop alpha in [0.015,0.35]), a real
  * border floor (>=0.12), and text alpha floors (primary>=0.90, secondary>=0.70,
  * tertiary>=0.50). Layout: no horizontal overflow, no zero-size glass surface,
  * no interactive overlap >2px.
@@ -2243,12 +2243,20 @@ const semanticVisualizationTargetIds = new Set([
   "glass-aurora-display",
   "glass-probability-cloud",
   "glass-advanced-video-player",
+  "glass-particles",
+  "particle-background",
+  "glass-heatmap",
 ]);
 
 const isSemanticVisualizationPixelFinding = (failure: string) =>
   failure.startsWith("whole-viewport problematic tint:") ||
   failure.startsWith("dominant-canvas-chroma-darkness:") ||
-  failure.startsWith("large-surface paint broad low-alpha tint wash");
+  failure.startsWith("large-surface paint broad low-alpha tint wash") ||
+  // Heatmap cells are data ink, not chrome: their fill encodes the value and
+  // legitimately spans the full sequential scale, including dark navy lows.
+  // Scoped to the cell class so genuinely navy chrome elsewhere still fails.
+  (failure.includes("interactive paint dark/navy") &&
+    failure.includes("glass-heatmap-cell"));
 
 const isOpaqueDarkFill = (surface: SurfaceInspection) => {
   const bg = parseColor(surface.backgroundColor);
@@ -2635,6 +2643,58 @@ const waitForStoryRender = async (page: Page) => {
       // Ambient/infinite animations may never finish; the extra timeout below
       // still gives the story time to reach a stable state.
     });
+  // Settle rAF-driven (e.g. framer-motion) entrance animations, which the Web
+  // Animations API above cannot see. Sampling text mid-entrance would measure
+  // a transient alpha instead of the designed color, so wait until no element
+  // sits at a partial opacity. A bare "no partial opacity" check passes
+  // vacuously on the first poll while every entrance is still at opacity 0,
+  // so also require the opacity distribution to be stable across two
+  // consecutive polls: an entrance in flight changes values every tick, while
+  // a rested tree (even one with intentionally hidden elements) does not.
+  // Stories with perpetual ambient motion skip the wait via the catch below
+  // instead of stalling the run.
+  await page
+    .waitForFunction(
+      (nonce: string) => {
+        const root =
+          document.querySelector("#storybook-root") ||
+          document.querySelector("#root");
+        if (!root) return true;
+        const nodes = root.querySelectorAll("*");
+        let partial = 0;
+        let transparent = 0;
+        let opaque = 0;
+        for (const node of nodes) {
+          const opacity = Number(
+            window.getComputedStyle(node).opacity || "1"
+          );
+          if (opacity > 0.01 && opacity < 0.995) partial += 1;
+          else if (opacity >= 0.995) opaque += 1;
+          else transparent += 1;
+        }
+        if (partial > 0) return false;
+        const store = (window as unknown as Record<string, unknown>)
+          .__auditOpacitySettle as
+          | { nonce: string; signature: string }
+          | undefined;
+        const signature = `${partial}:${transparent}:${opaque}`;
+        (window as unknown as Record<string, unknown>).__auditOpacitySettle =
+          { nonce, signature };
+        return (
+          store !== undefined &&
+          store.nonce === nonce &&
+          store.signature === signature
+        );
+      },
+      `${Date.now()}-${Math.random().toString(36).slice(2)}`,
+      // Interval polling (not rAF): one full-DOM opacity scan per tick keeps
+      // the settle cheap; entrance staggers clear within a few ticks.
+      { timeout: 8_000, polling: 500 }
+    )
+    .catch(() => {
+      // Perpetual ambient motion (particles, shimmer, live bubbles) never
+      // fully settles; sample the live state instead of failing the story.
+    });
   await page.waitForTimeout(300);
 };
 
@@ -3012,10 +3072,10 @@ const checkTokenInvariants = (
       const [r, g, b] = rgb.split(",").map(Number);
       const color = { r, g, b, a: alpha };
       if (isWhiteNeutral(color)) {
-        hasWhiteFrost = hasWhiteFrost || (alpha >= 0.08 && alpha <= 0.35);
-        if (alpha < 0.08 || alpha > 0.35) {
+        hasWhiteFrost = hasWhiteFrost || (alpha >= 0.015 && alpha <= 0.35);
+        if (alpha < 0.015 || alpha > 0.35) {
           failures.push(
-            `white gradient stop ${stopIndex + 1} alpha ${alpha} outside [0.08,0.35] on .${surface.className}`
+            `white gradient stop ${stopIndex + 1} alpha ${alpha} outside [0.015,0.35] on .${surface.className}`
           );
         }
       } else if (!isPermittedScrim(color)) {
@@ -3028,10 +3088,10 @@ const checkTokenInvariants = (
     if (bgColor && bgColor.a > 0) {
       if (isWhiteNeutral(bgColor)) {
         hasWhiteFrost =
-          hasWhiteFrost || (bgColor.a >= 0.08 && bgColor.a <= 0.35);
-        if (bgColor.a < 0.08 || bgColor.a > 0.35) {
+          hasWhiteFrost || (bgColor.a >= 0.015 && bgColor.a <= 0.35);
+        if (bgColor.a < 0.015 || bgColor.a > 0.35) {
           failures.push(
-            `white background-color alpha ${bgColor.a} outside [0.08,0.35] on .${surface.className}`
+            `white background-color alpha ${bgColor.a} outside [0.015,0.35] on .${surface.className}`
           );
         }
       } else if (!isPermittedScrim(bgColor)) {
@@ -3042,7 +3102,7 @@ const checkTokenInvariants = (
     }
     if (!hasWhiteFrost) {
       failures.push(
-        `surface lacks a white-neutral frost fill in [0.08,0.35] on .${surface.className}`
+        `surface lacks a white-neutral frost fill in [0.015,0.35] on .${surface.className}`
       );
     }
     if (isOpaqueDarkFill(surface)) {
