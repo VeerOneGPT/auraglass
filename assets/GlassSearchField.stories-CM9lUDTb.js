@@ -1,9 +1,0 @@
-import{j as r,r as m}from"./iframe-LDZ2lzKB.js";import{G as s}from"./GlassSearchField-HOR5v9ab.js";import"./preload-helper-PPVm8Dsz.js";import"./components-DD_B3kCE.js";import"./GlassInput-C0OsWLIJ.js";import"./LiquidGlassMaterial-CaM6UWgN.js";import"./LiquidGlassLayerProvider-CBLYPWsv.js";import"./a11y-Bm8A_Ibc.js";import"./GlassButton-DZX4OdrU.js";import"./GlassPredictiveEngine-DghIb6M7.js";import"./GlassAchievementSystem-B1AxFMcz.js";import"./OptimizedGlassCore-e1josnyx.js";import"./deviceCapabilities-DS6lz9Jr.js";import"./GlassBiometricAdaptation-BEoES9VD.js";import"./MotionPreferenceContext-YEn8QOBK.js";import"./GlassEyeTracking-B-vCk5-d.js";import"./GlassSpatialAudio-CiNSZr8_.js";import"./MotionFramer-Bx5TbHkD.js";import"./utilsCore-DCZK9AvP.js";const N={title:"Controls/Inputs/Glass Search Field",component:s,parameters:{layout:"centered",previewSurface:"component"},args:{label:"Search projects",placeholder:"Name, owner, or tag",helperText:"Results update as you type.",fullWidth:!0}},l=e=>{const[p,o]=m.useState("Northstar");return r.jsx("div",{style:{width:"min(480px, calc(100vw - 48px))"},children:r.jsx(s,{...e,value:p,onChange:i=>o(i.currentTarget.value),onClear:()=>o("")})})},t={render:e=>r.jsx(l,{...e})},a={render:e=>r.jsx("div",{style:{width:"min(480px, calc(100vw - 48px))"},children:r.jsx(s,{...e,defaultValue:""})})};t.parameters={...t.parameters,docs:{...t.parameters?.docs,source:{originalSource:`{
-  render: args => <SearchFieldExample {...args} />
-}`,...t.parameters?.docs?.source}}};a.parameters={...a.parameters,docs:{...a.parameters?.docs,source:{originalSource:`{
-  render: args => <div style={{
-    width: "min(480px, calc(100vw - 48px))"
-  }}>
-      <GlassSearchField {...args} defaultValue="" />
-    </div>
-}`,...a.parameters?.docs?.source}}};const R=["Default","Empty"];export{t as Default,a as Empty,R as __namedExportsOrder,N as default};
